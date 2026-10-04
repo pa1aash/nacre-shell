@@ -1,0 +1,2 @@
+#!/bin/sh
+exec uv run --quiet --frozen python "$(git rev-parse --show-toplevel)/tools/githooks/pre-merge-commit.py" "$@"

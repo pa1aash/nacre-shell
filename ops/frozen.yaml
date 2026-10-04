@@ -1,0 +1,11 @@
+# Frozen paths. A rule applies once its `after_tag` exists.
+#   paths        globs frozen by the rule.
+#   append_only  paths inside `paths` whose staged diff may only add lines.
+# A needed change to a frozen path is a dated entry in registration/deviations.md.
+# Model and dataset paths are added by the session that freezes them (S65), before g6.
+rules:
+  - paths: ["registration/**"]
+    after_tag: prereg-v1
+    append_only: ["registration/deviations.md"]
+  - paths: ["structures/v1/**", "structures/registry.csv"]
+    after_tag: g4

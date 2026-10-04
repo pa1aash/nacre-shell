@@ -1,0 +1,99 @@
+# Lane ownership registry. The authority for tools/githooks/_lanes.py, which the
+# pre-commit hook and `nacre verify` both use.
+#
+# Schema
+#   laptops.<A|B>.prefix   lane-id prefix that identifies the laptop (a-*, b-*).
+#   laptops.B.owns/except  globs owned by Laptop B. Laptop A owns everything else.
+#   carveouts.per_lane     paths any lane may write; {lane} is the lane id.
+#   carveouts.any          globs any lane may write.
+#   shared                 globs writable by any lane (conflicts are resolved in
+#                          an integration session, which re-runs `uv lock`).
+#   a_laptop_extra         globs writable by any A-lane.
+#   main_only              globs writable only on lane a-main.
+#   lanes.<id>             registered lanes. A lane with `owns` is narrowed to
+#                          that list (minus `except`); a lane without `owns` gets
+#                          its laptop's full ownership. `owns: []` means nothing
+#                          beyond the carve-outs. A key containing `*` is a
+#                          wildcard registration. `branch` pins the branch name.
+#                          `merge_writes_laptop_b` lets the lane write
+#                          Laptop-B-owned paths while a merge is in progress.
+#
+# Glob syntax: `*` matches within one path segment, `**` matches across segments.
+#
+# Branch to lane: main -> a-main; lane/<id> -> <id>; any other branch is refused.
+# An unregistered lane with an a- prefix is refused; b-* is registered by wildcard.
+
+laptops:
+  A:
+    prefix: "a-"
+  B:
+    prefix: "b-"
+    owns:
+      - "paper/**"
+      - "charter/venue/**"
+      - "figures/style/**"
+      - "figures/tikz/**"
+      - "figures/rdkit/**"
+      - "figures/src/validation_*"
+      - "src/nacre/morphology/**"
+      - "src/nacre/report/**"
+      - "review/personas/**"
+    except:
+      - "paper/sections/results.tex"
+      - "paper/generated/**"
+      - "paper/captions/**"
+
+carveouts:
+  per_lane:
+    - "ops/state/{lane}.json"
+    - "jobs/ledger/{lane}.jsonl"
+  any:
+    - "ops/reports/*.md"
+
+shared:
+  - "pyproject.toml"
+  - "uv.lock"
+
+a_laptop_extra:
+  - "ops/gates/**"
+  - "ops/packets/**"
+
+main_only:
+  - "ops/waves.yaml"
+
+lanes:
+  a-main:
+    branch: main
+    merge_writes_laptop_b: true
+  a-charter:
+    owns:
+      - "charter/**"
+      - "tests/charter/**"
+    except:
+      - "charter/venue/**"
+  a-retrieval:
+    owns:
+      - "src/nacre/retrieval/**"
+      - "tests/retrieval/**"
+      - "configs/retrieval/**"
+      - "lit/corpus/**"
+      - "lit/instrument_gaps.*"
+  a-infra:
+    owns:
+      - "env/**"
+      - "src/nacre/jobs/**"
+      - "src/nacre/hpc/**"
+      - "src/nacre/provenance/**"
+      - "tests/infra/**"
+      - "configs/pods/**"
+      - "jobs/**"
+      - "hpc/**"
+      - ".dvc/**"
+      - ".dvcignore"
+      - ".github/workflows/containers*.yml"
+      - "tools/pod.py"
+      - "tools/hpc.py"
+      - "tools/ingest.py"
+  b-setup:
+    owns: []
+  "b-*": {}
