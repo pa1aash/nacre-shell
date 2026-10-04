@@ -1,0 +1,26 @@
+# Wave ledger. Written only on main (lane a-main); read by every lane.
+#
+# Schema (one entry per wave under `waves`):
+#   wave          integer, consecutive from 0.
+#   base          full sha of the main commit the wave starts from; null for wave 0.
+#   required_tags tags that must exist before any session of the wave starts.
+#   sessions      mapping of window to the ordered list of sessions it runs,
+#                 e.g. {A1: [S02], A3: [S30, S31], B1: [S01, S03]}.
+#   lanes         mapping of session to lane id, e.g. {S02: a-charter, S01: b-venue}.
+#   status        open | closed. Exactly one wave is open at a time.
+#   opened_utc, closed_utc   timestamps (null while unset).
+#
+# `nacre wave check <session>` gates a session on the open wave, its lane branch,
+# the base commit and the required tags. `nacre wave open <n>` closes wave n-1 and
+# opens wave n, and only succeeds when every listed session of wave n-1 has its lane
+# state merged on main with status DONE. A lane's last_session must equal the last
+# session that window assigns to that lane.
+waves:
+  - wave: 0
+    base: null
+    required_tags: []
+    sessions: {A1: [S00], B1: [S00b]}
+    lanes: {S00: a-main, S00b: b-setup}
+    status: open
+    opened_utc: null
+    closed_utc: null
