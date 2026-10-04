@@ -1,0 +1,12 @@
+# Layer A criteria for gate G0. The session that produces the charter may refine this.
+gate: G0
+criteria:
+  - type: files_exist
+    paths:
+      - charter/claim_register.yaml
+      - charter/regimes.yaml
+      - charter/scope_guard.md
+      - charter/branches.md
+      - charter/deletion_register.yaml
+      - charter/credit.yaml
+  - type: tests_pass

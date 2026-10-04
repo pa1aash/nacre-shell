@@ -1,0 +1,13 @@
+{
+  "lane": "a-main",
+  "branch": "main",
+  "last_session": "S00",
+  "status": "DONE",
+  "next_sessions": [
+    "S00b (Laptop B)",
+    "S02 (A1)",
+    "S10 (A2)",
+    "S30 (A3)"
+  ],
+  "updated_utc": "2026-10-04T23:55:17Z"
+}
