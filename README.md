@@ -2,7 +2,7 @@
 
 Nacre Shell is a pre-registered computational feasibility study of a templated interfacial calcium-carbonate barrier against aluminium current-collector corrosion in fluorine-free lithium-ion cathodes.
 
-**Status:** private; pre-registration in progress.
+**Status:** public; pre-registration in progress.
 
 **Licences:** MIT for code (`LICENSE`), CC BY 4.0 for data (`LICENSE-DATA`).
 
