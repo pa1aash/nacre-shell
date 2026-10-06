@@ -1,0 +1,14 @@
+{
+  "lane": "b-setup",
+  "branch": "lane/b-setup",
+  "last_session": "S00b",
+  "status": "DONE",
+  "base": "110babfcbefc35277eff4c0394c6eef76254c92f",
+  "machine": "laptop-b-windows",
+  "next_sessions": [
+    "I0 (Laptop A integration)",
+    "S01 (B1)",
+    "S03 (B1)"
+  ],
+  "updated_utc": "2026-10-06T20:53:44Z"
+}
