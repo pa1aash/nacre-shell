@@ -1,13 +1,13 @@
 {
   "lane": "a-main",
   "branch": "main",
-  "last_session": "S00",
+  "last_session": "I0",
   "status": "DONE",
   "next_sessions": [
-    "S00b (Laptop B)",
-    "S02 (A1)",
-    "S10 (A2)",
-    "S30 (A3)"
+    "S02 (A1, lane a-charter)",
+    "S10 (A2, lane a-retrieval)",
+    "S30 then S31 (A3, lane a-infra)",
+    "S01 then S03 (B1, lane b-paper)"
   ],
-  "updated_utc": "2026-10-05T01:00:46Z"
+  "updated_utc": "2026-10-06T21:43:38Z"
 }
