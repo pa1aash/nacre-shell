@@ -3,11 +3,39 @@ import json
 import os
 import shutil
 import stat
+import sys
 from pathlib import Path
 
 from nacre import _util
 
 HOOKS = ["commit-msg", "pre-commit", "pre-merge-commit", "pre-push"]
+
+WINDOWS_OPENSSH_KEYGEN = "C:/Windows/System32/OpenSSH/ssh-keygen.exe"
+
+
+def _git_install_root(root):
+    """The Git-for-Windows install root, derived from `git --exec-path`."""
+    p = _util.git(root, "--exec-path")
+    if p.returncode != 0 or not p.stdout.strip():
+        return None
+    parents = Path(p.stdout.strip()).parents
+    # exec-path is typically <root>/mingw64/libexec/git-core
+    return parents[2] if len(parents) > 2 else None
+
+
+def ssh_program_candidates(root):
+    candidates = [WINDOWS_OPENSSH_KEYGEN]
+    install_root = _git_install_root(root)
+    if install_root is not None:
+        candidates.append(str(install_root / "usr" / "bin" / "ssh-keygen.exe"))
+    return candidates
+
+
+def resolve_ssh_program(root, path_exists):
+    for candidate in ssh_program_candidates(root):
+        if path_exists(candidate):
+            return candidate
+    return None
 
 
 def _cfg(root, key):
@@ -36,7 +64,7 @@ def desired_config(root, signing_key):
     return want
 
 
-def plan(root, signing_key=None):
+def plan(root, signing_key=None, ssh_program=None, path_exists=None):
     """List of (description, ok, apply) for everything setup manages."""
     root = Path(root)
     scan = _util.hooklib(root, "_scan")
@@ -50,6 +78,22 @@ def plan(root, signing_key=None):
         items.append(("git config %s = %s" % (key, value), have == value, apply))
     if not signing_key and not _cfg(root, "user.signingkey"):
         items.append(("signing is not configured (pass --signing-key PATH)", False, None))
+
+    if sys.platform == "win32" and (signing_key or _cfg(root, "user.signingkey")):
+        exists = path_exists or (lambda p: Path(p).exists())
+        current = _cfg(root, "gpg.ssh.program")
+        if ssh_program:
+            want = ssh_program
+        elif current and exists(current):
+            want = current
+        else:
+            want = resolve_ssh_program(root, exists)
+
+        def apply_ssh_program(want=want):
+            _util.git(root, "config", "--local", "gpg.ssh.program", want, check=True)
+        ok = bool(want) and current == want
+        desc = "git config gpg.ssh.program = %s" % (want or "<no ssh-keygen found>")
+        items.append((desc, ok, apply_ssh_program if want else None))
 
     exclude = _git_path(root, "info/exclude")
     wanted = [scan.LOCAL_GUIDE, scan.LOCAL_SETTINGS_DIR + "/", ".local/", ".env"]
@@ -111,7 +155,8 @@ def signer_line(root, signing_key=None):
 def _cmd(args):
     root = _util.repo_root()
     key = str(Path(args.signing_key).expanduser()) if args.signing_key else None
-    items = plan(root, key)
+    ssh_program = args.ssh_program
+    items = plan(root, key, ssh_program)
     drift = [i for i in items if not i[1]]
     for desc, ok, _ in items:
         print("%-5s %s" % ("ok" if ok else "DRIFT", desc))
@@ -122,7 +167,7 @@ def _cmd(args):
         if apply:
             apply()
             print("fixed %s" % desc)
-    still = [d for d, ok, a in plan(root, key) if not ok]
+    still = [d for d, ok, a in plan(root, key, ssh_program) if not ok]
     line = signer_line(root, key)
     if line:
         print("allowed_signers line for this machine (add it to ops/allowed_signers via main):")
@@ -133,5 +178,6 @@ def _cmd(args):
 def register(subparsers):
     p = subparsers.add_parser("setup", help="configure this clone or worktree (idempotent)")
     p.add_argument("--signing-key", metavar="PATH", help="SSH public key used to sign commits")
+    p.add_argument("--ssh-program", metavar="PATH", help="override gpg.ssh.program (Windows)")
     p.add_argument("--check", action="store_true", help="report drift without changing anything")
     p.set_defaults(func=_cmd)

@@ -1,9 +1,11 @@
 import sys
+from pathlib import Path
 
 import yaml
 
 import nacre
 from conftest import R1_EMAIL, git, nacre as run_nacre
+from nacre.cli.commands import setup
 
 
 def test_discovery_loads_subpackage_cli(tmp_path, monkeypatch, capsys):
@@ -60,6 +62,57 @@ def test_setup_check_and_apply_in_scratch_clone(scratch_clone, ssh_key):
     assert (scratch_clone / ".local" / "prompts").is_dir() and (scratch_clone / ".env").exists()
     exclude = (scratch_clone / ".git" / "info" / "exclude").read_text()
     assert ".local/" in exclude and ".env" in exclude
+
+
+def _ssh_program_item(items):
+    return next(i for i in items if "gpg.ssh.program" in i[0])
+
+
+def test_setup_windows_ssh_program_unset_uses_openssh_path(scratch_clone, ssh_key, monkeypatch):
+    run_nacre(["setup", "--signing-key", str(ssh_key) + ".pub"], scratch_clone)
+    monkeypatch.setattr(setup.sys, "platform", "win32")
+    desc, ok, apply = _ssh_program_item(
+        setup.plan(scratch_clone, path_exists=lambda p: p == setup.WINDOWS_OPENSSH_KEYGEN))
+    assert not ok and setup.WINDOWS_OPENSSH_KEYGEN in desc
+    apply()
+    got = git(scratch_clone, "config", "--local", "--get", "gpg.ssh.program").stdout.strip()
+    assert got == setup.WINDOWS_OPENSSH_KEYGEN
+
+
+def test_setup_windows_ssh_program_falls_back_to_git_path_when_openssh_absent(scratch_clone, ssh_key, monkeypatch):
+    run_nacre(["setup", "--signing-key", str(ssh_key) + ".pub"], scratch_clone)
+    monkeypatch.setattr(setup.sys, "platform", "win32")
+    monkeypatch.setattr(setup, "_git_install_root", lambda root: Path("C:/Program Files/Git"))
+    git_path = "C:/Program Files/Git/usr/bin/ssh-keygen.exe"
+    desc, ok, apply = _ssh_program_item(
+        setup.plan(scratch_clone, path_exists=lambda p: p == git_path))
+    assert not ok and git_path in desc
+
+
+def test_setup_windows_ssh_program_override_respected(scratch_clone, ssh_key, monkeypatch):
+    run_nacre(["setup", "--signing-key", str(ssh_key) + ".pub"], scratch_clone)
+    monkeypatch.setattr(setup.sys, "platform", "win32")
+    override = "D:/custom/ssh-keygen.exe"
+    desc, ok, apply = _ssh_program_item(
+        setup.plan(scratch_clone, ssh_program=override, path_exists=lambda p: False))
+    assert override in desc and not ok
+    apply()
+    got = git(scratch_clone, "config", "--local", "--get", "gpg.ssh.program").stdout.strip()
+    assert got == override
+
+
+def test_setup_windows_ssh_program_check_reports_drift(scratch_clone, ssh_key, monkeypatch):
+    run_nacre(["setup", "--signing-key", str(ssh_key) + ".pub"], scratch_clone)
+    monkeypatch.setattr(setup.sys, "platform", "win32")
+    _, ok, _ = _ssh_program_item(setup.plan(scratch_clone, path_exists=lambda p: False))
+    assert not ok
+
+
+def test_setup_ssh_program_noop_on_darwin(scratch_clone, ssh_key, monkeypatch):
+    run_nacre(["setup", "--signing-key", str(ssh_key) + ".pub"], scratch_clone)
+    monkeypatch.setattr(setup.sys, "platform", "darwin")
+    items = setup.plan(scratch_clone)
+    assert not any("gpg.ssh.program" in i[0] for i in items)
 
 
 def _gate_files(repo, extra_paths, audit, signoffs):
