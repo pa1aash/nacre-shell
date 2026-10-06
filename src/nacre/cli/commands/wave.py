@@ -1,4 +1,6 @@
 """nacre wave: the wave ledger that keeps the two laptops in lock-step."""
+import re
+
 import yaml
 
 from nacre import _util
@@ -6,6 +8,9 @@ from nacre import _util
 
 class Blocked(Exception):
     pass
+
+
+INTEGRATION_RE = re.compile(r"^I(\d+)$")
 
 
 def waves_path(root):
@@ -48,8 +53,32 @@ def window_order(wave, session):
     return None, []
 
 
+def check_integration(root, n):
+    """Raise Blocked unless integration session I<n> may run now.
+
+    Passes iff: current branch is main; wave n is the single open wave;
+    local main equals origin/main after a fetch.
+    """
+    branch = _util.current_branch(root)
+    if branch != "main":
+        raise Blocked("integration session I%d runs on main, current branch is %s" % (n, branch))
+    waves = load_waves(root)
+    wave = open_wave(waves)
+    if wave["wave"] != n:
+        raise Blocked("integration session I%d requires wave %d to be open, open wave is %d" % (n, n, wave["wave"]))
+    _util.git(root, "fetch", "origin", timeout=60)
+    local = _util.git(root, "rev-parse", "main", check=True).stdout.strip()
+    remote = _util.git(root, "rev-parse", "origin/main", check=True).stdout.strip()
+    if local != remote:
+        raise Blocked("local main %s does not equal origin/main %s" % (local, remote))
+    return wave, "a-main"
+
+
 def check(root, session):
     """Raise Blocked unless `session` may run now."""
+    m = INTEGRATION_RE.match(session)
+    if m:
+        return check_integration(root, int(m.group(1)))
     waves = load_waves(root)
     wave = open_wave(waves)
     window, _ = window_order(wave, session)

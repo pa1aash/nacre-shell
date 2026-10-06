@@ -93,6 +93,33 @@ def test_check_needs_exactly_one_open_wave(repo):
     assert "open wave" in blocked(wave.check, repo, "S00")
 
 
+# --- integration sessions -------------------------------------------------------
+
+def make_origin(repo, tmp_path):
+    bare = tmp_path / "origin.git"
+    git(tmp_path, "init", "-q", "--bare", str(bare))
+    git(repo, "remote", "add", "origin", str(bare))
+    assert git(repo, "push", "-q", "origin", "main").returncode == 0
+    return bare
+
+
+def test_integration_check_passes_on_main_while_wave_open(repo, tmp_path):
+    make_origin(repo, tmp_path)
+    w, lane = wave.check(repo, "I0")
+    assert lane == "a-main" and w["wave"] == 0
+
+
+def test_integration_check_fails_off_main(repo, tmp_path):
+    make_origin(repo, tmp_path)
+    git(repo, "checkout", "-q", "-b", "lane/a-charter")
+    assert "main" in blocked(wave.check, repo, "I0")
+
+
+def test_integration_check_fails_for_wrong_wave(repo, tmp_path):
+    make_origin(repo, tmp_path)
+    assert "wave 1" in blocked(wave.check, repo, "I1")
+
+
 # --- status -------------------------------------------------------------------
 
 def test_status_reports_states(repo):

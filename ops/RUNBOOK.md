@@ -67,6 +67,7 @@ A gate has three layers.
 - A session may run only if it is listed in the open wave, on its registered lane branch, with the wave's base commit in its history and the required tags present: `uv run nacre wave check <session-id>`.
 - `nacre wave status` shows each listed session as pending, running or DONE.
 - The next wave opens, with `nacre wave open <n>` on main, only when every session listed in the previous wave has its lane state merged on main with status DONE. Opening closes the previous wave and commits the ledger.
+- Integration session I<n> runs on main while wave n is open: it merges the lane work of wave n and then runs `nacre wave open n+1` to open the next wave. `nacre wave check I<n>` passes iff the current branch is main, wave n is the single open wave, and local main equals origin/main after a fetch. Integration sessions are not listed in the ledger's `sessions`/`lanes` maps.
 
 ## 9. Standing rules
 
