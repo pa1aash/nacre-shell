@@ -96,4 +96,5 @@ lanes:
       - "tools/ingest.py"
   b-setup:
     owns: []
+  b-paper: {}  # wave 1: S01 then S03, sequential in window B1
   "b-*": {}
