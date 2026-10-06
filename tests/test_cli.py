@@ -44,7 +44,7 @@ def test_status_in_scratch_clone(scratch_clone):
     assert r.returncode == 0, r.stderr
     assert "branch: main" in r.stdout
     assert "lane: a-main   laptop: A" in r.stdout
-    assert "wave 0 open" in r.stdout
+    assert "wave 1 open" in r.stdout
 
 
 def test_setup_check_and_apply_in_scratch_clone(scratch_clone, ssh_key):
