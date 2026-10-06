@@ -16,11 +16,25 @@
 # state merged on main with status DONE. A lane's last_session must equal the last
 # session that window assigns to that lane.
 waves:
-  - wave: 0
-    base: null
-    required_tags: []
-    sessions: {A1: [S00], B1: [S00b]}
-    lanes: {S00: a-main, S00b: b-setup}
-    status: open
-    opened_utc: null
-    closed_utc: null
+- wave: 0
+  base: null
+  required_tags: []
+  sessions:
+    A1: [S00]
+    B1: [S00b]
+  lanes: {S00: a-main, S00b: b-setup}
+  status: closed
+  opened_utc: null
+  closed_utc: '2026-10-06T21:43:38Z'
+- wave: 1
+  base: b958b7b5045851a6730b875e4375d96079d6eec4
+  required_tags: []
+  sessions:
+    A1: [S02]
+    A2: [S10]
+    A3: [S30, S31]
+    B1: [S01, S03]
+  lanes: {S02: a-charter, S10: a-retrieval, S30: a-infra, S31: a-infra, S01: b-paper, S03: b-paper}
+  status: open
+  opened_utc: '2026-10-06T21:43:38Z'
+  closed_utc: null
