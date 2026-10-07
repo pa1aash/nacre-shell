@@ -1,0 +1,41 @@
+# CRediT contributor roles. Role names must come from charter/credit_taxonomy.md
+# (fetched from https://credit.niso.org/), never typed from memory.
+#
+# YOU: roles for every contributor, the Braun-group member names and the UIUC corresponding author are supplied at G0.
+#
+# The author list is also pending for LICENSE ("The Nacre Shell authors").
+
+status: pending-G0
+taxonomy: charter/credit_taxonomy.md
+
+contributors:
+  - name: Palaash Gang
+    deck_listing: Palaash Gang
+    status: draft
+    roles:
+      - Conceptualization
+      - Methodology
+      - Software
+      - Formal analysis
+      - Project administration
+      - Visualization
+      - Writing – original draft
+  - name: Palash Bharti
+    deck_listing: Palash Bharti
+    roles: []
+  - name: Ahaana
+    deck_listing: Ahaana Goswamy
+    roles: []
+  - name: Kabir
+    deck_listing: Kabir Agarwal
+    roles: []
+  - name: Jayveer
+    deck_listing: Jayveer Kocchar
+    roles: []
+  - name: "Prof. Braun's group (members to be named)"
+    deck_listing: null
+    roles: []
+  - name: "UIUC corresponding author (to be named)"
+    deck_listing: null
+    corresponding: true
+    roles: []

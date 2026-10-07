@@ -1,0 +1,232 @@
+# Operating regimes, Phase 0 (session S02). Design flag 7.
+#
+# Two regimes with different chemistry. Every quantity below is an INPUT that the
+# computations are conditioned on; none is ever reported back as a result of the study.
+# All inputs are provisional: S12 (the parameter-table session) confirms or replaces
+# each range from fetched sources.
+#
+# Input schema:
+#   symbol, units, range {min, max} or null, range_basis, rationale,
+#   source: pending-S12, status: provisional
+# range_basis says where a non-null bound comes from: "definitional" (it follows
+# from what the regime is), or "deck slide N" (quoted from the deck, unsourced there).
+# No range is a literature value typed from memory.
+
+regimes:
+  R-slurry:
+    name: Aqueous slurry and drying
+    description: >-
+      Water-processed cathode slurry (fluorine-free binder: PDA and chitosan) in contact
+      with the native Al2O3/AlOOH on the Al foil, at room temperature, through casting and
+      drying. The corrosion mode is alkaline attack on the native oxide.
+    medium: aqueous
+    corrosion_mode: alkaline dissolution of the native Al2O3/AlOOH, exposing Al to water
+    inputs:
+      pH:
+        symbol: pH
+        units: dimensionless (-log10 a_H+)
+        range: {min: 7, max: null}
+        range_basis: definitional (the regime is alkaline; upper bound pending S12)
+        rationale: >-
+          Sets the protonation state of catechol and of chitosan amines (C1, C2), the
+          carbonate speciation and hence the CO3^2- activity in S (C3), the hydroxylation
+          state of the oxide surface, and the pH axis of the Pourbaix screen (C5).
+        source: pending-S12
+        status: provisional
+      electrode_potential:
+        symbol: E
+        units: V vs SHE
+        reference_electrode: standard hydrogen electrode (SHE), the Pourbaix convention
+        range: null
+        range_basis: null
+        rationale: >-
+          The open-circuit (mixed) potential of Al in the slurry fixes where on the
+          Pourbaix diagram the oxide and the CaCO3 phase sit (C5) and whether the native
+          oxide dissolves during processing.
+        source: pending-S12
+        status: provisional
+      temperature:
+        symbol: T
+        units: K
+        range: null
+        range_basis: null
+        rationale: >-
+          Room-temperature slurry, possibly warmer during drying. T converts every free
+          energy to k_B T, enters k_B T ln S in the nucleation barrier (C3) and the
+          Boltzmann enrichment factor (C2), and sets the MD sampling temperature.
+        source: pending-S12
+        status: provisional
+      ionic_strength:
+        symbol: I
+        units: mol kg^-1
+        range: null
+        range_basis: null
+        rationale: >-
+          Screens electrostatic Ca2+-template binding and sets the activity coefficients
+          that convert concentrations to activities in the C2 cycle and in S (C3).
+        source: pending-S12
+        status: provisional
+      calcium_activity:
+        symbol: a_Ca2+
+        units: dimensionless (activity, molal standard state)
+        range: null
+        range_basis: null
+        rationale: >-
+          Bulk Ca2+ activity of the slurry (a process input: the Ca source and counter-ion
+          are design choices). It is the reference state of Delta_G_seq (C2) and the bulk
+          factor of S before enrichment (C3).
+        source: pending-S12
+        status: provisional
+      carbonate_speciation:
+        symbol: "a_CO3^2-, with fractions of HCO3- and CO2(aq)"
+        units: dimensionless (activity) and mole fractions
+        range: null
+        range_basis: null
+        rationale: >-
+          The carbonate partner of S = a_Ca2+ a_CO3^2- / K_sp (C3). Its speciation follows
+          from pH and the carbonate source (added carbonate or CO2 uptake); it is fixed as
+          an input at the regime pH using fetched equilibrium constants, never fitted.
+        source: pending-S12
+        status: provisional
+      water_activity:
+        symbol: a_w
+        units: dimensionless
+        range: {min: null, max: 1}
+        range_basis: definitional (pure water has a_w = 1; drying lowers it; lower bound pending S12)
+        rationale: >-
+          Water is the competitor in C1 (displacement penalty) and the reference solvent in
+          C2; the stoichiometric water term in the C2 cycle and the ACC structural water
+          (C3) depend on a_w, which falls as the electrode dries.
+        source: pending-S12
+        status: provisional
+
+  R-cell:
+    name: In-cell, non-aqueous, anodic
+    description: >-
+      Assembled cell with a fluorine-free, non-aqueous electrolyte; the Al collector at the
+      cathode's anodic potential during charge. The corrosion mode is anodic Al dissolution
+      and pitting without the fluoride-derived passivation that LiPF6 systems provide
+      (deck slide 5).
+    medium: non-aqueous (fluorine-free salt in organic solvent)
+    corrosion_mode: anodic dissolution and pitting of Al at high potential
+    inputs:
+      pH_analogue:
+        symbol: a_H+ (non-aqueous proton activity)
+        units: dimensionless (activity in the electrolyte's own standard state)
+        range: null
+        range_basis: null
+        rationale: >-
+          Aqueous pH is undefined here. The analogue is the proton activity from trace
+          water and electrolyte oxidation products, which drives acid attack on CaCO3 and
+          on the oxide. In a fluorine-free electrolyte there is no HF contribution.
+        source: pending-S12
+        status: provisional
+      electrode_potential:
+        symbol: E
+        units: V vs Li+/Li
+        reference_electrode: Li+/Li (the cell's lithium reference)
+        range: {min: 4, max: null}
+        range_basis: >-
+          deck slide 9 ("anodic dissolution and pitting above roughly 4 V"; unsourced in the
+          deck, and the slide does not name the reference electrode, Li+/Li is assumed);
+          confirmed or replaced in S12
+        rationale: >-
+          The anodic potential the collector sees at the cathode during charge sets the Li
+          chemical potential of the grand-potential stability window (C5) and the driving
+          force for Al dissolution.
+        source: pending-S12
+        status: provisional
+      temperature:
+        symbol: T
+        units: K
+        range: null
+        range_basis: null
+        rationale: >-
+          Cell operating temperature; enters the stability window through the entropy terms
+          and any rate argument. No kinetics is claimed.
+        source: pending-S12
+        status: provisional
+      ionic_strength:
+        symbol: I (salt concentration)
+        units: mol kg^-1
+        range: null
+        range_basis: null
+        rationale: >-
+          Salt concentration of the fluorine-free electrolyte; it sets the anion activity
+          that coordinates dissolved Al3+ and the ion activities in the window construction.
+          Dilute-solution activity models may not apply.
+        source: pending-S12
+        status: provisional
+      calcium_activity:
+        symbol: a_Ca2+
+        units: dimensionless (activity in the electrolyte)
+        range: null
+        range_basis: null
+        rationale: >-
+          No Ca is added to the electrolyte; any Ca2+ comes from dissolution of the
+          interfacial layer, so its activity bounds the layer's thermodynamic stability
+          against dissolution in R-cell (C5).
+        source: pending-S12
+        status: provisional
+      carbonate_speciation:
+        symbol: a_CO3^2- (carbonate ion, distinct from organic carbonate solvents)
+        units: dimensionless (activity in the electrolyte)
+        range: null
+        range_basis: null
+        rationale: >-
+          Inorganic carbonate activity in the electrolyte governs CaCO3 dissolution
+          equilibrium; organic carbonate solvent molecules, if used, are not carbonate
+          ions and are not counted here.
+        source: pending-S12
+        status: provisional
+      water_activity:
+        symbol: a_w
+        units: dimensionless
+        range: null
+        range_basis: null
+        rationale: >-
+          Trace water in a non-aqueous cell; it hydrolyses or protonates the interface and
+          bounds how much ACC structural water can be retained or lost (C5).
+        source: pending-S12
+        status: provisional
+      electrolyte_composition:
+        symbol: "salt and solvent identity"
+        units: categorical
+        range: null
+        range_basis: null
+        rationale: >-
+          Fluorine-free salt and solvent choice determine which phases enter the
+          Li-referenced window construction (C5) and which anions compete for Al3+.
+        source: pending-S12
+        status: provisional
+
+claim_regimes:
+  C1:
+    regime: R-slurry
+    why: >-
+      Anchoring happens while the template meets the oxide through water in the slurry;
+      W_adh,wet is defined in water. Anchor retention in the cell is not claimed.
+  C2:
+    regime: R-slurry
+    why: >-
+      Sequestration is measured against hydrated Ca2+, which exists only in the aqueous
+      slurry; the cycle's reference state is undefined in the non-aqueous cell.
+  C3:
+    regime: R-slurry
+    why: >-
+      The layer nucleates in situ from the aqueous slurry and during drying; the Young
+      energies are solid-water energies and S is an aqueous supersaturation.
+  C4:
+    regime: both
+    why: >-
+      Morphology forms in R-slurry (items 15-17); the thickness versus electron-transfer
+      bound (item 18) is an R-cell question.
+  C5:
+    regime: both
+    why: >-
+      Aqueous Pourbaix screens R-slurry (items 19, 21); a Li-referenced grand-potential
+      window screens R-cell (item 20). Aqueous Pourbaix does not apply in the cell.
+
+rule: >-
+  Inputs never become outputs. No regime quantity is fitted, tuned or reported as a
+  finding; a change to any input after G2 is a dated deviation.
