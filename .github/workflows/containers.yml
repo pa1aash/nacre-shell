@@ -11,6 +11,11 @@ permissions:
   contents: read
   packages: write
 
+# A newer push to the same ref supersedes a running build instead of queueing behind it.
+concurrency:
+  group: containers-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   REGISTRY: ghcr.io
   OWNER: pa1aash
@@ -19,7 +24,7 @@ jobs:
   build:
     name: build ${{ matrix.role }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 360
+    timeout-minutes: 270
     strategy:
       fail-fast: false
       matrix:
@@ -55,8 +60,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # A cold gpu build (LAMMPS with Kokkos/CUDA) takes about 2 h; a warm one takes minutes.
+      # The step timeout turns a silent hang into a failure instead of a stalled run.
       - name: Build and push
         id: build
+        timeout-minutes: 210
         uses: docker/build-push-action@v7.4.0
         with:
           context: .
@@ -71,16 +79,13 @@ jobs:
           build-args: |
             GIT_SHA=${{ github.sha }}
             BUILD_DATE=${{ steps.meta.outputs.created }}
-          # gha at mode=min stays under the 10 GB repository cache cap; the heavy source-build
-          # stages are cached in the registry. A cache failure never fails the build.
-          cache-from: |
-            type=gha,scope=${{ matrix.role }}
-            type=registry,ref=${{ steps.meta.outputs.image }}:buildcache
-          cache-to: |
-            type=gha,scope=${{ matrix.role }},mode=min,ignore-error=true
-            type=registry,ref=${{ steps.meta.outputs.image }}:buildcache,mode=max,ignore-error=true,compression=zstd
+          # Registry cache only. The gha cache export hung for hours on a multi-GB layer after
+          # the image was already pushed (run 37628967602), and ignore-error does not cover a hang.
+          cache-from: type=registry,ref=${{ steps.meta.outputs.image }}:buildcache
+          cache-to: type=registry,ref=${{ steps.meta.outputs.image }}:buildcache,mode=max,ignore-error=true,compression=zstd
 
       - name: Smoke test by digest
+        timeout-minutes: 30
         env:
           REF: ${{ steps.meta.outputs.image }}@${{ steps.build.outputs.digest }}
         run: |
@@ -96,7 +101,8 @@ jobs:
           end=$(date -u +%s)
           python3 - <<PY
           import json
-          rec = {"digest": "$DIGEST",
+          rec = {"image": "${{ steps.meta.outputs.image }}",
+                 "digest": "$DIGEST",
                  "tags": ["sha-${{ steps.meta.outputs.short }}", "${{ steps.meta.outputs.branch }}"],
                  "git_sha": "${{ github.sha }}",
                  "built_utc": "${{ steps.meta.outputs.created }}",
@@ -114,6 +120,7 @@ jobs:
     name: collect digests
     needs: build
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/download-artifact@v8.0.1
         with:
@@ -122,10 +129,13 @@ jobs:
       - name: Merge
         run: |
           python3 - <<'PY'
-          import glob, json
-          out = {}
+          import glob, json, os
+          images = {}
           for f in sorted(glob.glob("digest-*.json")):
-              out.update(json.load(open(f)))
+              images.update(json.load(open(f)))
+          out = {"git_sha": os.environ["GITHUB_SHA"],
+                 "run_url": f"{os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}",
+                 "images": images}
           json.dump(out, open("digests.json", "w"), indent=2)
           print(json.dumps(out, indent=2))
           PY

@@ -93,6 +93,20 @@ def test_workflow_pins_actions_to_tags():
     assert matrix == list(ROLES)
 
 
+def test_workflow_guards_against_stalled_builds():
+    wf = yaml.safe_load(_text(".github/workflows/containers.yml"))
+    assert wf["concurrency"]["cancel-in-progress"] is True
+    for name, job in wf["jobs"].items():
+        assert 0 < job["timeout-minutes"] <= 300, name
+    steps = {s.get("name"): s for s in wf["jobs"]["build"]["steps"]}
+    build = steps["Build and push"]
+    assert 0 < build["timeout-minutes"] < wf["jobs"]["build"]["timeout-minutes"]
+    assert 0 < steps["Smoke test by digest"]["timeout-minutes"] <= 60
+    for key in ("cache-from", "cache-to"):
+        assert "type=gha" not in build["with"][key], "gha cache export can hang after the push"
+        assert "type=registry" in build["with"][key]
+
+
 def test_versions_md_lists_every_pinned_component():
     versions = _text("env/VERSIONS.md")
     for role in ROLES:
