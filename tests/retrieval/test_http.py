@@ -3,7 +3,7 @@ import json
 import pytest
 import requests
 
-from conftest import FakeResp, make_http, ok
+from retrieval_helpers import FakeResp, cfg, make_http, ok  # noqa: F401
 from nacre.retrieval.http import HttpError, parse_retry_after
 
 URL = "https://api.example.org/x"

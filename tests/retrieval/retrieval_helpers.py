@@ -28,6 +28,17 @@ class FakeSession:
         return item
 
 
+def make_http(cfg, script, sleeps=None, rng=lambda: 0.5, clock=None):
+    sleeps = sleeps if sleeps is not None else []
+    kw = {"clock": clock} if clock else {}
+    http = Http(cfg, session=FakeSession(script), sleep=sleeps.append, rng=rng, **kw)
+    return http, sleeps
+
+
+def ok(payload):
+    return FakeResp(200, json.dumps(payload))
+
+
 @pytest.fixture
 def cfg(tmp_path):
     c = Config(root=tmp_path, env={})
@@ -39,14 +50,3 @@ def cfg(tmp_path):
 @pytest.fixture
 def ledger(tmp_path):
     return GapLedger(tmp_path / "lit" / "instrument_gaps.csv")
-
-
-def make_http(cfg, script, sleeps=None, rng=lambda: 0.5, clock=None):
-    sleeps = sleeps if sleeps is not None else []
-    kw = {"clock": clock} if clock else {}
-    http = Http(cfg, session=FakeSession(script), sleep=sleeps.append, rng=rng, **kw)
-    return http, sleeps
-
-
-def ok(payload):
-    return FakeResp(200, json.dumps(payload))

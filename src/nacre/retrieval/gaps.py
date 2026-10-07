@@ -21,7 +21,7 @@ class GapLedger:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         new = not self.path.exists() or self.path.stat().st_size == 0
         with self.path.open("a", newline="") as fh:
-            w = csv.writer(fh)
+            w = csv.writer(fh, lineterminator="\n")
             if new:
                 w.writerow(COLUMNS)
             w.writerow([utcnow(), source, query_or_id, kind, " ".join(str(detail).split())[:500]])

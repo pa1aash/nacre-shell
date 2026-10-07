@@ -1,7 +1,7 @@
 import json
 
 from nacre.retrieval import arxiv, chemrxiv, crossref, lens, openaire, record, semanticscholar, unpaywall, wayback, zenodo
-from conftest import SECRET
+from retrieval_helpers import SECRET
 
 T, K = "2026-01-01T00:00:00Z", "key"
 

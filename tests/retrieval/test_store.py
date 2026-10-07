@@ -2,7 +2,7 @@ import json
 
 from nacre.retrieval import record as R
 from nacre.retrieval.store import Store
-from conftest import SECRET
+from retrieval_helpers import SECRET
 
 
 def rec(source="crossref", sid="1", **kw):
