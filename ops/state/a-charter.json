@@ -3,5 +3,6 @@
   "branch": "lane/a-charter",
   "last_session": "S02",
   "status": "GATE-C",
-  "updated_utc": "2026-10-07T08:53:25Z"
+  "updated_utc": "2026-10-07T08:53:25Z",
+  "note": "G0 deferred by operator"
 }
