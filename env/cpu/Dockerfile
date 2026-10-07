@@ -45,6 +45,9 @@ ARG BUILD_JOBS=4
 RUN git clone --branch "${QE_TAG}" --recurse-submodules --shallow-submodules --depth 1 https://github.com/QEF/q-e.git /src/q-e \
  && cd /src/q-e \
  && test "$(git rev-parse HEAD)" = "${QE_COMMIT}"
+# QE searches for a library named "scalapack"; Debian ships it as scalapack-openmpi.
+RUN ls /usr/lib/x86_64-linux-gnu/libscalapack-openmpi.so \
+ && ln -s libscalapack-openmpi.so /usr/lib/x86_64-linux-gnu/libscalapack.so
 RUN cmake -S /src/q-e -B /build/qe -G Ninja \
       -D CMAKE_BUILD_TYPE=Release \
       -D CMAKE_INSTALL_PREFIX=/opt/qe \

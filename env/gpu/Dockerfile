@@ -54,13 +54,18 @@ ARG LAMMPS_TAG=stable_30Sep2026
 ARG LAMMPS_COMMIT=8de817dd79bfe4525d5d39246a212d833e6dee07
 ARG KOKKOS_ARCH=AMPERE80
 ARG BUILD_JOBS=4
+COPY --from=uv /uv /usr/local/bin/uv
 COPY --from=pyenv /opt/venv /opt/venv
 COPY --from=plumed /opt/plumed /opt/plumed
 ENV PKG_CONFIG_PATH=/opt/plumed/lib/pkgconfig LD_LIBRARY_PATH=/opt/plumed/lib PATH=/opt/venv/bin:/usr/local/cuda/bin:${PATH}
 RUN git clone --branch "${LAMMPS_TAG}" --depth 1 https://github.com/lammps/lammps.git /src/lammps \
  && cd /src/lammps \
  && test "$(git rev-parse HEAD)" = "${LAMMPS_COMMIT}"
-RUN cmake -S /src/lammps/cmake -B /build/lammps -G Ninja \
+# The devel image carries only the libcuda stub; lmp links against libcuda.so.1 at link time.
+ENV LIBRARY_PATH=/usr/local/cuda/lib64/stubs
+RUN ln -s libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+RUN LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH} \
+    cmake -S /src/lammps/cmake -B /build/lammps -G Ninja \
       -D CMAKE_BUILD_TYPE=Release \
       -D CMAKE_INSTALL_PREFIX=/opt/lammps \
       -D CMAKE_CXX_COMPILER=/src/lammps/lib/kokkos/bin/nvcc_wrapper \
@@ -70,9 +75,13 @@ RUN cmake -S /src/lammps/cmake -B /build/lammps -G Ninja \
       -D PKG_ML-IAP=yes -D PKG_ML-SNAP=yes -D MLIAP_ENABLE_PYTHON=yes \
       -D PKG_PLUMED=yes -D PLUMED_MODE=shared -D DOWNLOAD_PLUMED=no \
       -D PKG_MOLECULE=yes -D PKG_KSPACE=yes -D PKG_MANYBODY=yes -D PKG_RIGID=yes -D PKG_EXTRA-FIX=yes -D PKG_EXTRA-PAIR=yes -D PKG_EXTRA-DUMP=yes -D PKG_EXTRA-MOLECULE=yes -D PKG_MISC=yes -D PKG_REPLICA=yes \
- && cmake --build /build/lammps -j"${BUILD_JOBS}" \
- && cmake --install /build/lammps \
- && cmake --build /build/lammps --target install-python
+ && LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH} \
+    cmake --build /build/lammps -j"${BUILD_JOBS}" \
+ && cmake --install /build/lammps
+# The venv has no pip, so build the python wheel without installing it and install it with uv.
+RUN cd /src/lammps/python \
+ && /opt/venv/bin/python install.py -n -p lammps -l /build/lammps/liblammps.so -w /build/lammps -v /src/lammps/src/version.h \
+ && uv pip install --python /opt/venv/bin/python --no-deps /build/lammps/lammps-*.whl
 
 # ---------------------------------------------------------------- final image
 FROM ${CUDA_RUNTIME} AS final
