@@ -1,0 +1,18 @@
+# Apptainer definition for the nacre cpu role: Quantum ESPRESSO plane-wave DFT reference labels (OpenMPI + OpenMP).
+# The digest is filled at HPC export time from env/digests.yaml (S31):
+#   apptainer build --build-arg DIGEST=<hex, no sha256: prefix> nacre-cpu.sif env/apptainer/cpu.def
+Bootstrap: docker
+From: ghcr.io/pa1aash/nacre-shell-cpu@sha256:{{DIGEST}}
+
+%labels
+    org.opencontainers.image.source https://github.com/pa1aash/nacre-shell
+    nacre.role cpu
+
+%environment
+    export LC_ALL=C
+
+%runscript
+    exec "$@"
+
+%help
+    nacre cpu image, run by digest. Use "apptainer exec nacre-cpu.sif <command>".

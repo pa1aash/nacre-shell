@@ -1,0 +1,46 @@
+# RunPod template specification for the nacre images (human-readable; entered in the
+# RunPod console by the operator). Images are referenced by digest only; the digests come
+# from env/digests.yaml. Nothing here purchases or starts a pod.
+#
+# Both roles share: SSH on 22/tcp, key injection through PUBLIC_KEY (set it in
+# RunPod account settings or the template env), non-root user `nacre` (uid 1000)
+# reachable over ssh next to root, workdir /home/nacre.
+
+templates:
+  nacre-shell-gpu:
+    image: ghcr.io/pa1aash/nacre-shell-gpu@sha256:<DIGEST_GPU>   # from env/digests.yaml
+    container_disk_gb: 50          # image is large (CUDA, torch, LAMMPS); keep headroom for model caches
+    volume:
+      mount_path: /workspace      # network volume; holds checkpoints, trajectories, caches
+      size_gb: 100
+    ports: ["22/tcp"]
+    env:
+      PUBLIC_KEY: "<operator ssh public key>"
+      HF_HOME: /workspace/cache/hf
+      TORCH_HOME: /workspace/cache/torch
+      XDG_CACHE_HOME: /workspace/cache
+    start_command: ""              # image entrypoint starts sshd and sleeps
+    pod_type_considerations:
+      - "Image LAMMPS is compiled for Kokkos AMPERE80 (sm_80); sm_86/89/90 run through PTX JIT, so the first launch on those is slower."
+      - "A100 80GB (sm_80): native target for the LAMMPS build; best fit for large-cell MACE-MP-0 MD."
+      - "H100 80GB (sm_90): fastest per step; PTX JIT on first LAMMPS launch."
+      - "RTX 4090 / L40S (sm_89, 24-48 GB): cost-efficient for cells that fit in memory; single precision is fast."
+      - "Need driver >= the CUDA 12.9 minimum (575); pick pods whose host driver supports CUDA 12.9."
+      - "Single-GPU pods are sufficient: LAMMPS here is built without MPI."
+
+  nacre-shell-cpu:
+    image: ghcr.io/pa1aash/nacre-shell-cpu@sha256:<DIGEST_CPU>   # from env/digests.yaml
+    container_disk_gb: 20
+    volume:
+      mount_path: /workspace      # scratch and results; pseudopotentials are fetched here (S33), not baked
+      size_gb: 100
+    ports: ["22/tcp"]
+    env:
+      PUBLIC_KEY: "<operator ssh public key>"
+      OMP_NUM_THREADS: "1"         # set ranks x threads explicitly per run
+      ESPRESSO_PSEUDO: /workspace/pseudo
+    start_command: ""
+    pod_type_considerations:
+      - "High-core-count CPU pods (32+ vCPU): plane-wave DFT scales with MPI ranks; keep ranks x threads <= vCPUs."
+      - "Memory: plan roughly 2-4 GB per rank for interface slabs; check against the cell sizes of the S33 labels."
+      - "No GPU is used by this image."

@@ -1,0 +1,129 @@
+name: containers
+
+on:
+  push:
+    paths:
+      - "env/**"
+      - ".github/workflows/containers.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  OWNER: pa1aash
+
+jobs:
+  build:
+    name: build ${{ matrix.role }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        role: [gpu, cpu]
+    steps:
+      - name: Free runner disk space
+        run: |
+          df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          sudo docker image prune --all --force >/dev/null
+          df -h /
+
+      - uses: actions/checkout@v7.0.1
+
+      - name: Compute tags and metadata
+        id: meta
+        run: |
+          branch=$(printf '%s' "$GITHUB_REF_NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's#[^a-z0-9_.-]+#-#g; s#^[-.]+##' | cut -c1-100)
+          image="${REGISTRY}/${OWNER}/nacre-shell-${{ matrix.role }}"
+          {
+            echo "image=${image}"
+            echo "short=${GITHUB_SHA::7}"
+            echo "branch=${branch}"
+            echo "created=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "start=$(date -u +%s)"
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v4.4.1
+
+      - uses: docker/login-action@v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v7.4.0
+        with:
+          context: .
+          file: env/${{ matrix.role }}/Dockerfile
+          platforms: linux/amd64
+          push: true
+          provenance: false
+          sbom: false
+          tags: |
+            ${{ steps.meta.outputs.image }}:sha-${{ steps.meta.outputs.short }}
+            ${{ steps.meta.outputs.image }}:${{ steps.meta.outputs.branch }}
+          build-args: |
+            GIT_SHA=${{ github.sha }}
+            BUILD_DATE=${{ steps.meta.outputs.created }}
+          cache-from: type=gha,scope=${{ matrix.role }}
+          cache-to: type=gha,scope=${{ matrix.role }},mode=max
+
+      - name: Smoke test by digest
+        env:
+          REF: ${{ steps.meta.outputs.image }}@${{ steps.build.outputs.digest }}
+        run: |
+          docker pull "$REF"
+          docker run --rm --user nacre --entrypoint bash \
+            -v "$PWD/env/smoke:/smoke:ro" "$REF" "/smoke/${{ matrix.role }}.sh"
+          docker inspect --format '{{json .Config.Labels}}' "$REF"
+
+      - name: Write digest record
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          end=$(date -u +%s)
+          python3 - <<PY
+          import json
+          rec = {"digest": "$DIGEST",
+                 "tags": ["sha-${{ steps.meta.outputs.short }}", "${{ steps.meta.outputs.branch }}"],
+                 "git_sha": "${{ github.sha }}",
+                 "built_utc": "${{ steps.meta.outputs.created }}",
+                 "build_seconds": $end - ${{ steps.meta.outputs.start }}}
+          json.dump({"${{ matrix.role }}": rec}, open("digest-${{ matrix.role }}.json", "w"), indent=2)
+          PY
+          cat "digest-${{ matrix.role }}.json"
+
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: digest-part-${{ matrix.role }}
+          path: digest-${{ matrix.role }}.json
+
+  digests:
+    name: collect digests
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v8.0.1
+        with:
+          pattern: digest-part-*
+          merge-multiple: true
+      - name: Merge
+        run: |
+          python3 - <<'PY'
+          import glob, json
+          out = {}
+          for f in sorted(glob.glob("digest-*.json")):
+              out.update(json.load(open(f)))
+          json.dump(out, open("digests.json", "w"), indent=2)
+          print(json.dumps(out, indent=2))
+          PY
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: digests-${{ github.run_id }}
+          path: digests.json
