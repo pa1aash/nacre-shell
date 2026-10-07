@@ -9,7 +9,7 @@ Every choice below is pinned in `env/*/Dockerfile`, `env/*/uv.lock` or `env/*/py
 | gpu build base | `nvidia/cuda:12.9.2-cudnn-devel-ubuntu24.04` @ `sha256:5a480db8cbf90098ca816d7e77f07ce5cb4c43353530b6a84915c2dd99c4e0b6` | CUDA 12.x with nvcc for the Kokkos/CUDA LAMMPS build; newest 12.x line, matches the cu129 torch wheels |
 | gpu runtime base | `nvidia/cuda:12.9.2-cudnn-runtime-ubuntu24.04` @ `sha256:070f8f2672df1b05b84c0409a5fd1d54ddfd646e5b9d8dee7878131271b563fc` | same CUDA and cuDNN as the build base, without the compiler toolchain |
 | cpu base | `ubuntu:24.04` @ `sha256:534baea6a22c03a63003dbc8dbe78fe34bc0d7e595d9a9dc9834884ff530eb55` | plain LTS userland for Quantum ESPRESSO; Python 3.12 matches the repository |
-| apt packages | Ubuntu snapshot `20260901T000000Z` (snapshot.ubuntu.com) | one dated mirror state pins every apt package without per-package version strings |
+| apt packages | Ubuntu snapshot `20261006T000000Z` (snapshot.ubuntu.com) | one dated mirror state pins every apt package without per-package version strings |
 | uv | `ghcr.io/astral-sh/uv:0.12.23` @ `sha256:61d393e44e249f2e4b526b6c7ddcecce245946826e608e11c93ad4f5bba55b21` | resolves nothing at build time; installs strictly from the lockfile (`--frozen`) |
 | Python | 3.12 (Ubuntu 24.04 `python3.12`) | `requires-python = ">=3.12,<3.13"` in the repository |
 

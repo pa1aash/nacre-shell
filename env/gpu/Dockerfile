@@ -12,7 +12,7 @@ FROM ${UV_IMAGE} AS uv
 # ---------------------------------------------------------------- build base
 # nvidia/cuda 12.9.2 + cuDNN, Ubuntu 24.04; apt is pinned to a dated snapshot.
 FROM ${CUDA_DEVEL} AS devel
-ARG APT_SNAPSHOT=20260901T000000Z
+ARG APT_SNAPSHOT=20261006T000000Z
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu/?#https://snapshot.ubuntu.com/ubuntu/${APT_SNAPSHOT}/#" /etc/apt/sources.list.d/ubuntu.sources \
  && apt-get update \
@@ -76,7 +76,7 @@ RUN cmake -S /src/lammps/cmake -B /build/lammps -G Ninja \
 
 # ---------------------------------------------------------------- final image
 FROM ${CUDA_RUNTIME} AS final
-ARG APT_SNAPSHOT=20260901T000000Z
+ARG APT_SNAPSHOT=20261006T000000Z
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu/?#https://snapshot.ubuntu.com/ubuntu/${APT_SNAPSHOT}/#" /etc/apt/sources.list.d/ubuntu.sources \
  && apt-get update \

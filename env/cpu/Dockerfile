@@ -10,7 +10,7 @@ FROM ${UV_IMAGE} AS uv
 
 # ---------------------------------------------------------------- build base
 FROM ${UBUNTU} AS devel
-ARG APT_SNAPSHOT=20260901T000000Z
+ARG APT_SNAPSHOT=20261006T000000Z
 ENV DEBIAN_FRONTEND=noninteractive
 # Bare ubuntu has no CA bundle: take ca-certificates from the stock archive over http, switch to the
 # https snapshot, then reinstall it from the snapshot so every package is date-pinned.
@@ -56,7 +56,7 @@ RUN cmake -S /src/q-e -B /build/qe -G Ninja \
 
 # ---------------------------------------------------------------- final image
 FROM ${UBUNTU} AS final
-ARG APT_SNAPSHOT=20260901T000000Z
+ARG APT_SNAPSHOT=20261006T000000Z
 ENV DEBIAN_FRONTEND=noninteractive
 # Bare ubuntu has no CA bundle: take ca-certificates from the stock archive over http, switch to the
 # https snapshot, then reinstall it from the snapshot so every package is date-pinned.
