@@ -1,1 +1,10 @@
 rsc_template/
+build/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz

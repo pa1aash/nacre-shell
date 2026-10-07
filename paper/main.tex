@@ -1,0 +1,51 @@
+% Manuscript skeleton. The class, packages, page setup and front-matter layout come from
+% the publisher template, which is provisioned locally (nacre paper template --ensure)
+% and rendered into build/rsc_head.tex. This file holds only its own text.
+% No numbers are typed here: every number comes from generated/macros.tex.
+
+\newcommand{\nacreTitle}{Title pending}
+\newcommand{\nacreAuthors}{Author list pending}
+\newcommand{\nacreAbstract}{Abstract pending.}
+\newcommand{\nacreTitleMark}{$^\dag$}
+\newcommand{\nacreFootnotes}{%
+  \footnotetext{\textit{$^{a}$~Affiliations pending.}}%
+  \footnotetext{\dag~Supplementary Information available. See DOI: pending.}}
+
+\input{build/rsc_head}
+
+\InputIfFileExists{generated/macros.tex}{}{%
+  \typeout{NACRE-WARNING: generated/macros.tex is absent}%
+  \par\noindent\textbf{\textcolor{red}{Warning: generated/macros.tex is absent.}}\par}
+
+\section{Introduction}
+\input{sections/introduction}
+
+\section{Methods}
+\input{sections/methods}
+
+% Results is written by another lane; the file brings its own heading.
+\InputIfFileExists{sections/results.tex}{}{}
+
+\section{Discussion}
+\input{sections/discussion}
+
+\section*{Conclusions}
+\input{sections/conclusions}
+
+\section*{Author contributions}
+\input{sections/author_contributions}
+
+\section*{Conflicts of interest}
+\input{sections/conflicts_of_interest}
+
+\section*{Data availability}
+\input{sections/data_availability}
+
+\section*{Acknowledgements}
+\input{sections/acknowledgements}
+
+\balance
+
+\bibliography{refs}
+\bibliographystyle{rsc}
+\end{document}
