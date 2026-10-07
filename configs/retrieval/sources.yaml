@@ -1,0 +1,10 @@
+# Per-source minimum seconds between requests, and request timeout in seconds.
+crossref:       {min_interval: 0.1,  timeout: 30}
+unpaywall:      {min_interval: 0.2,  timeout: 30}
+semanticscholar: {min_interval: 1.1, timeout: 30}
+arxiv:          {min_interval: 3.0,  timeout: 60}
+chemrxiv:       {min_interval: 1.0,  timeout: 30}
+openaire:       {min_interval: 0.5,  timeout: 45}
+zenodo:         {min_interval: 1.0,  timeout: 30}
+wayback:        {min_interval: 1.0,  timeout: 30}
+lens:           {min_interval: 1.0,  timeout: 30}

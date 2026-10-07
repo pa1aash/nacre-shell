@@ -4,7 +4,10 @@ version = "0.0.0"
 description = "Nacre Shell: a pre-registered computational feasibility study."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
-dependencies = ["pyyaml"]
+dependencies = [
+    "pyyaml",
+    "requests>=2.34.2",
+]
 
 [project.scripts]
 nacre = "nacre.cli:main"
@@ -21,3 +24,5 @@ packages = ["src/nacre"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "-m 'not network'"
+markers = ["network: live API calls, excluded by default; run with -m network"]
