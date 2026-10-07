@@ -71,8 +71,14 @@ jobs:
           build-args: |
             GIT_SHA=${{ github.sha }}
             BUILD_DATE=${{ steps.meta.outputs.created }}
-          cache-from: type=gha,scope=${{ matrix.role }}
-          cache-to: type=gha,scope=${{ matrix.role }},mode=max
+          # gha at mode=min stays under the 10 GB repository cache cap; the heavy source-build
+          # stages are cached in the registry. A cache failure never fails the build.
+          cache-from: |
+            type=gha,scope=${{ matrix.role }}
+            type=registry,ref=${{ steps.meta.outputs.image }}:buildcache
+          cache-to: |
+            type=gha,scope=${{ matrix.role }},mode=min,ignore-error=true
+            type=registry,ref=${{ steps.meta.outputs.image }}:buildcache,mode=max,ignore-error=true,compression=zstd
 
       - name: Smoke test by digest
         env:
