@@ -1,1 +1,5 @@
 utc,source,query_or_id,failure_kind,detail
+2026-10-07T04:38:27Z,chemrxiv,calcium carbonate polydopamine,http_error,HTTP 403 https://chemrxiv.org/engage/chemrxiv/public-api/v1/items
+2026-10-07T04:38:27Z,lens,calcium carbonate polydopamine,no_token,LENS_TOKEN is not set; patent search skipped
+2026-10-07T04:38:27Z,semanticscholar,DOI:10.1021/la102825p,not_indexed,no results
+2026-10-07T04:38:28Z,wayback,https://example.com,http_error,"TLS failure, not retried: HTTPSConnectionPool(host='archive.org', port=443): Max retries exceeded with url: /wayback/available?url=https%3A%2F%2Fexample.com (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"

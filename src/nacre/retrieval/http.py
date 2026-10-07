@@ -93,6 +93,8 @@ class Http:
             try:
                 r = self.session.request(method, url, params=params, headers=headers,
                                          json=json_body, timeout=timeout)
+            except requests.exceptions.SSLError as exc:
+                raise HttpError("http_error", "TLS failure, not retried: %s" % exc)
             except requests.RequestException as exc:
                 last_detail, last_status, retry_after = "%s: %s" % (type(exc).__name__, exc), None, None
             else:
@@ -128,6 +130,8 @@ class Http:
             self._throttle(source)
             try:
                 r = self.session.get(url, headers=headers, timeout=timeout, stream=True)
+            except requests.exceptions.SSLError as exc:
+                raise HttpError("http_error", "TLS failure, not retried: %s" % exc)
             except requests.RequestException as exc:
                 last, retry_after, status = "%s: %s" % (type(exc).__name__, exc), None, None
             else:

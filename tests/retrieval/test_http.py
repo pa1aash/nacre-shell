@@ -92,3 +92,11 @@ def test_retry_after_http_date_and_garbage():
     assert parse_retry_after(None) is None
     assert parse_retry_after("soon") is None
     assert parse_retry_after("Thu, 01 Jan 1970 00:00:10 GMT", now=4.0) == 6.0
+
+
+def test_tls_failure_is_not_retried(cfg):
+    http, sleeps = make_http(cfg, [requests.exceptions.SSLError("bad cert")])
+    with pytest.raises(HttpError) as ei:
+        http.get("other", URL)
+    assert ei.value.kind == "http_error" and "not retried" in ei.value.detail
+    assert sleeps == [] and len(http.session.calls) == 1
