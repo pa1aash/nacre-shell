@@ -12,8 +12,12 @@ FROM ${UV_IMAGE} AS uv
 FROM ${UBUNTU} AS devel
 ARG APT_SNAPSHOT=20260901T000000Z
 ENV DEBIAN_FRONTEND=noninteractive
-RUN sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu/?#http://snapshot.ubuntu.com/ubuntu/${APT_SNAPSHOT}/#" /etc/apt/sources.list.d/ubuntu.sources \
+# Bare ubuntu has no CA bundle: take ca-certificates from the stock archive over http, switch to the
+# https snapshot, then reinstall it from the snapshot so every package is date-pinned.
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu/?#https://snapshot.ubuntu.com/ubuntu/${APT_SNAPSHOT}/#" /etc/apt/sources.list.d/ubuntu.sources \
  && apt-get update \
+ && apt-get install -y --reinstall --no-install-recommends ca-certificates \
  && apt-get install -y --no-install-recommends \
       build-essential gfortran cmake ninja-build pkg-config git ca-certificates curl \
       openmpi-bin libopenmpi-dev libfftw3-dev libfftw3-mpi-dev libopenblas-dev liblapack-dev \
@@ -54,8 +58,12 @@ RUN cmake -S /src/q-e -B /build/qe -G Ninja \
 FROM ${UBUNTU} AS final
 ARG APT_SNAPSHOT=20260901T000000Z
 ENV DEBIAN_FRONTEND=noninteractive
-RUN sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu/?#http://snapshot.ubuntu.com/ubuntu/${APT_SNAPSHOT}/#" /etc/apt/sources.list.d/ubuntu.sources \
+# Bare ubuntu has no CA bundle: take ca-certificates from the stock archive over http, switch to the
+# https snapshot, then reinstall it from the snapshot so every package is date-pinned.
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu/?#https://snapshot.ubuntu.com/ubuntu/${APT_SNAPSHOT}/#" /etc/apt/sources.list.d/ubuntu.sources \
  && apt-get update \
+ && apt-get install -y --reinstall --no-install-recommends ca-certificates \
  && apt-get install -y --no-install-recommends \
       python3.12 openssh-server openssh-client git curl ca-certificates less procps \
       openmpi-bin libgfortran5 libgomp1 libfftw3-double3 libfftw3-mpi3 libopenblas0 liblapack3 libscalapack-openmpi2.2 \
