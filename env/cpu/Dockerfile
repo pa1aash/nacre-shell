@@ -12,7 +12,7 @@ FROM ${UV_IMAGE} AS uv
 FROM ${UBUNTU} AS devel
 ARG APT_SNAPSHOT=20260901T000000Z
 ENV DEBIAN_FRONTEND=noninteractive
-RUN sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu/?#https://snapshot.ubuntu.com/ubuntu/${APT_SNAPSHOT}/#" /etc/apt/sources.list.d/ubuntu.sources \
+RUN sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu/?#http://snapshot.ubuntu.com/ubuntu/${APT_SNAPSHOT}/#" /etc/apt/sources.list.d/ubuntu.sources \
  && apt-get update \
  && apt-get install -y --no-install-recommends \
       build-essential gfortran cmake ninja-build pkg-config git ca-certificates curl \
@@ -54,7 +54,7 @@ RUN cmake -S /src/q-e -B /build/qe -G Ninja \
 FROM ${UBUNTU} AS final
 ARG APT_SNAPSHOT=20260901T000000Z
 ENV DEBIAN_FRONTEND=noninteractive
-RUN sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu/?#https://snapshot.ubuntu.com/ubuntu/${APT_SNAPSHOT}/#" /etc/apt/sources.list.d/ubuntu.sources \
+RUN sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu/?#http://snapshot.ubuntu.com/ubuntu/${APT_SNAPSHOT}/#" /etc/apt/sources.list.d/ubuntu.sources \
  && apt-get update \
  && apt-get install -y --no-install-recommends \
       python3.12 openssh-server openssh-client git curl ca-certificates less procps \
