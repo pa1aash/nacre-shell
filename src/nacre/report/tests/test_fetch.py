@@ -128,7 +128,7 @@ def test_wayback_can_be_disabled(fetcher, server):
 
 
 def test_unreachable_host_is_an_error_not_a_crash(tmp_path):
-    f = Fetcher(venue_dir=tmp_path, wayback_prefix="http://127.0.0.1:9/wb", retries=1, backoff=0.0,
+    f = Fetcher(venue_dir=tmp_path, wayback_prefix="http://127.0.0.1:9/wb", retries=0, backoff=0.0,
                 sleep=lambda s: None, timeout=2)
     res = f.get("http://127.0.0.1:9/x")
     assert not res.ok and res.error
