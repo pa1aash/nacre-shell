@@ -1,12 +1,20 @@
-# Layer A criteria for gate G0. The session that produces the charter may refine this.
+# Layer A criteria for gate G0 (charter, claim register, regimes, branch policy).
+# Refined in session S02: adds the reconciliation, taxonomy and renderer files and the
+# charter test suite as an explicit criterion.
 gate: G0
 criteria:
   - type: files_exist
     paths:
       - charter/claim_register.yaml
+      - charter/numbering.md
       - charter/regimes.yaml
+      - charter/deletion_register.yaml
       - charter/scope_guard.md
       - charter/branches.md
-      - charter/deletion_register.yaml
       - charter/credit.yaml
+      - charter/credit_taxonomy.md
+      - charter/packet.py
+      - tests/charter/test_charter.py
+  - type: tests_pass
+    args: ["tests/charter"]
   - type: tests_pass
