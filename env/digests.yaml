@@ -1,0 +1,17 @@
+# Digests of the S30 images, built by .github/workflows/containers.yml (linux/amd64) and
+# smoke-tested in that run by digest. Pods and Apptainer reference these digests, never a tag.
+git_sha: 455771fd44bc7dd94e3c6c63b810b3054ea6a405
+run_url: https://github.com/pa1aash/nacre-shell/actions/runs/37660295178
+images:
+  gpu:
+    image: ghcr.io/pa1aash/nacre-shell-gpu
+    digest: sha256:902d39696eabf29e503f0321174daa599af16ec2acabd7de8463b5e75aa2f1d9
+    tags: [sha-455771f, lane-a-infra]
+    built_utc: '2026-10-07T17:38:19Z'
+    smoke: pass
+  cpu:
+    image: ghcr.io/pa1aash/nacre-shell-cpu
+    digest: sha256:0e0f9c1af8110df2a9097508731ed9c03556b4905ba964a21a3a913de2f9ddbf
+    tags: [sha-455771f, lane-a-infra]
+    built_utc: '2026-10-07T17:38:50Z'
+    smoke: pass

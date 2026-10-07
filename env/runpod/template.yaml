@@ -8,7 +8,7 @@
 
 templates:
   nacre-shell-gpu:
-    image: ghcr.io/pa1aash/nacre-shell-gpu@sha256:<DIGEST_GPU>   # from env/digests.yaml
+    image: ghcr.io/pa1aash/nacre-shell-gpu@sha256:902d39696eabf29e503f0321174daa599af16ec2acabd7de8463b5e75aa2f1d9   # from env/digests.yaml
     container_disk_gb: 50          # image is large (CUDA, torch, LAMMPS); keep headroom for model caches
     volume:
       mount_path: /workspace      # network volume; holds checkpoints, trajectories, caches
@@ -29,7 +29,7 @@ templates:
       - "Single-GPU pods are sufficient: LAMMPS here is built without MPI."
 
   nacre-shell-cpu:
-    image: ghcr.io/pa1aash/nacre-shell-cpu@sha256:<DIGEST_CPU>   # from env/digests.yaml
+    image: ghcr.io/pa1aash/nacre-shell-cpu@sha256:0e0f9c1af8110df2a9097508731ed9c03556b4905ba964a21a3a913de2f9ddbf   # from env/digests.yaml
     container_disk_gb: 20
     volume:
       mount_path: /workspace      # scratch and results; pseudopotentials are fetched here (S33), not baked

@@ -49,6 +49,10 @@ def test_runpod_spec_references_images_by_digest_only():
         assert "22/tcp" in tpl["ports"]
         assert tpl["volume"]["mount_path"] and tpl["container_disk_gb"]
         assert "PUBLIC_KEY" in tpl["env"]
+        recorded = ROOT / "env" / "digests.yaml"
+        if recorded.exists() and "<DIGEST_" not in image:
+            role = name.removeprefix("nacre-shell-")
+            assert image.endswith(yaml.safe_load(recorded.read_text())["images"][role]["digest"]), name
 
 
 @pytest.mark.parametrize("role", ROLES)
