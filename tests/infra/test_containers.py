@@ -88,7 +88,11 @@ def test_workflow_pins_actions_to_tags():
     assert wf["permissions"] == {"contents": "read", "packages": "write"}
     triggers = wf[True] if True in wf else wf["on"]
     assert "workflow_dispatch" in triggers
-    assert set(triggers["push"]["paths"]) == {"env/**", ".github/workflows/containers.yml"}
+    paths = triggers["push"]["paths"]
+    assert paths[0] == "env/**" and ".github/workflows/containers.yml" in paths
+    for record in ("env/digests.yaml", "env/VERSIONS.md", "env/runpod/**", "env/apptainer/**"):
+        assert f"!{record}" in paths, f"{record} must not trigger a rebuild"
+    assert not any(p.startswith("!env/" + d) for p in paths for d in ("gpu", "cpu", "common", "smoke"))
     matrix = wf["jobs"]["build"]["strategy"]["matrix"]["role"]
     assert matrix == list(ROLES)
 

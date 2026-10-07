@@ -2,8 +2,14 @@ name: containers
 
 on:
   push:
+    # Records and docs do not change an image. Excluding them keeps a digest commit from
+    # triggering a rebuild, which would produce a new digest (the labels carry date and sha).
     paths:
       - "env/**"
+      - "!env/digests.yaml"
+      - "!env/VERSIONS.md"
+      - "!env/runpod/**"
+      - "!env/apptainer/**"
       - ".github/workflows/containers.yml"
   workflow_dispatch:
 
