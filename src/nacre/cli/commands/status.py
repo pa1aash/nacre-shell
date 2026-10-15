@@ -25,7 +25,10 @@ def _cmd(args):
     lane, err = lib.resolve_lane(branch, cfg)
     print("repo root: %s" % root)
     print("branch: %s" % (branch or "(detached)"))
-    if lane:
+    tl = lib.track_lane(cfg, lane) if lane else None
+    if tl:
+        print("lane: %s   track: %s" % (lane, tl[0]))
+    elif lane:
         print("lane: %s   laptop: %s" % (lane, lib.laptop_of(lane, cfg)))
     else:
         print("lane: unresolved (%s)" % err)

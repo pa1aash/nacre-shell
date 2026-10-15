@@ -76,8 +76,56 @@ def check_signatures(root, strict):
     return _result("signatures", "FAIL" if bad else "PASS", "; ".join(bad[:5]) if bad else "%d commits (%s)" % (len(shas), mode))
 
 
+def _ref(root, name):
+    """origin/<name> when it exists, else the local <name>, else None."""
+    for ref in ("origin/" + name, name):
+        if _util.git(root, "rev-parse", "-q", "--verify", ref + "^{commit}").returncode == 0:
+            return ref
+    return None
+
+
+def _changed_paths(root, base, first_parent_only=False):
+    """Paths changed since merge-base(base, HEAD).
+
+    With first_parent_only, only non-merge commits on the first-parent chain
+    count: merges carry no ownership check, as on main.
+    """
+    mb = _util.git(root, "merge-base", base, "HEAD")
+    if mb.returncode != 0:
+        return None
+    mb = mb.stdout.strip()
+    if not first_parent_only:
+        names = _util.git(root, "diff", "--name-only", "-z", "--no-renames", mb, "HEAD").stdout
+        return [p for p in names.split("\0") if p]
+    paths = set()
+    shas = _util.git(root, "rev-list", "--first-parent", "--no-merges", "%s..HEAD" % mb).stdout.split()
+    for sha in shas:
+        names = _util.git(root, "diff-tree", "--root", "-r", "-z", "--name-only", "--no-renames",
+                          "--no-commit-id", sha).stdout
+        paths.update(p for p in names.split("\0") if p)
+    return sorted(paths)
+
+
+def check_track_lanes(root, branch, lib, cfg):
+    lane, err = lib.resolve_lane(branch, cfg)
+    if err:
+        return _result("lane ownership", "FAIL", err)
+    _, track, _ = lib.track_lane(cfg, lane)
+    integrator = lib.is_integrator(cfg, lane)
+    base = _ref(root, "main") if integrator else _ref(root, track["base"])
+    paths = _changed_paths(root, base, first_parent_only=integrator) if base else None
+    if paths is None:
+        return _result("lane ownership", "FAIL", "no merge-base with %s" % (base or track["base"]))
+    bad = lib.lane_violations(lane, paths, cfg)
+    return _result("lane ownership", "FAIL" if bad else "PASS",
+                   "; ".join("%s (%s)" % b for b in bad[:5]) if bad else "%d paths, lane %s" % (len(paths), lane))
+
+
 def check_lanes(root, strict):
     branch = _util.current_branch(root)
+    if branch and branch.startswith("preprint/"):
+        lib = _util.hooklib(root, "_lanes")
+        return check_track_lanes(root, branch, lib, lib.load_lanes(str(root)))
     if not branch or not branch.startswith("lane/"):
         return _result("lane ownership", "INACTIVE", "not a lane branch")
     lib = _util.hooklib(root, "_lanes")
