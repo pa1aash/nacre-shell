@@ -1,0 +1,17 @@
+[project]
+name = "nacre-env-cpu"
+version = "0.0.0"
+description = "Python environment of the nacre cpu image (the nacre package itself is installed from the build context)."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "ase==3.29.0",
+  "pymatgen",
+  "qe-tools",
+  "numpy",
+  "scipy",
+  "pyyaml",
+]
+
+[tool.uv]
+package = false
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]

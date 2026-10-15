@@ -1,0 +1,18 @@
+# Apptainer definition for the nacre gpu role: MLIP + MD + enhanced sampling (PyTorch/CUDA, MACE, CHGNet, ASE, TorchSim, LAMMPS ML-IAP, PLUMED).
+# The digest is filled at HPC export time from env/digests.yaml (S31):
+#   apptainer build --build-arg DIGEST=<hex, no sha256: prefix> nacre-gpu.sif env/apptainer/gpu.def
+Bootstrap: docker
+From: ghcr.io/pa1aash/nacre-shell-gpu@sha256:{{DIGEST}}
+
+%labels
+    org.opencontainers.image.source https://github.com/pa1aash/nacre-shell
+    nacre.role gpu
+
+%environment
+    export LC_ALL=C
+
+%runscript
+    exec "$@"
+
+%help
+    nacre gpu image, run by digest. Use "apptainer exec --nv nacre-gpu.sif <command>".

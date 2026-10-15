@@ -1,0 +1,10 @@
+# Build context is the repository root; only what the image needs gets in.
+*
+!pyproject.toml
+!README.md
+!src
+!env/common
+!env/cpu/pyproject.toml
+!env/cpu/uv.lock
+**/__pycache__
+**/*.pyc

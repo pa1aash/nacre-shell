@@ -1,0 +1,31 @@
+[project]
+name = "nacre-env-gpu"
+version = "0.0.0"
+description = "Python environment of the nacre gpu image (the nacre package itself is installed from the build context)."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "torch==2.13.0",
+  "mace-torch==0.3.16",
+  "chgnet==0.4.2",
+  "ase==3.29.0",
+  "torch-sim-atomistic==0.6.2",
+  "plumed==2.10.0",
+  "numpy",
+  "scipy",
+  "pymatgen",
+  "pyyaml",
+  "cython",
+  "cupy-cuda12x",
+]
+
+[tool.uv]
+package = false
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu129" }
+
+[[tool.uv.index]]
+name = "pytorch-cu129"
+url = "https://download.pytorch.org/whl/cu129"
+explicit = true
