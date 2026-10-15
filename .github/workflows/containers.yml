@@ -2,6 +2,8 @@ name: containers
 
 on:
   push:
+    # Preprint track branches reuse the recorded digests and never rebuild images.
+    branches-ignore: ["preprint/**"]
     # Records and docs do not change an image. Excluding them keeps a digest commit from
     # triggering a rebuild, which would produce a new digest (the labels carry date and sha).
     paths:

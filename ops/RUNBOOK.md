@@ -60,6 +60,8 @@ A gate has three layers.
 - `uv run nacre lane new <lane-id>` creates the worktree `nacre-shell-<lane-id>` beside the main checkout, on branch `lane/<lane-id>`, and refuses an unregistered lane.
 - Lane work reaches main only through an integration session that merges with `--no-ff`. Merges carry no ownership check, but the attribution scan and identity check still run. The integration session resolves conflicts in `pyproject.toml` and `uv.lock` and re-runs `uv lock`.
 - On a fresh clone or worktree, run `uv run nacre setup`. Use `--check` to report drift without changing anything.
+- **macOS hidden flag.** On the Macs, the editable-install `.pth` files in `.venv` can gain the `hidden` file flag (likely from Desktop file syncing), and Python then skips them, so `import nacre` fails. Run `chflags -R nohidden .venv` and retry; if it recurs within a session, run commands with `PYTHONPATH=src` and record that in the report.
+- **Shared test helpers.** A lane puts helpers shared by its tests in a uniquely named module, such as `tests/retrieval/retrieval_helpers.py`. It never adds `tests/<lane>/conftest.py`: a second `conftest` module shadows `tests/conftest.py` and breaks `from conftest import ...` in the older suites.
 
 ## 8. Wave ledger
 

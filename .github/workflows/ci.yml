@@ -2,6 +2,9 @@ name: ci
 
 on:
   push:
+    # Every lane and track branch runs the same tests and history scan as main.
+    branches: ["main", "lane/**", "preprint/**"]
+    tags: ["**"]
   pull_request:
 
 jobs:

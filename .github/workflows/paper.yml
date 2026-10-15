@@ -1,0 +1,46 @@
+name: paper
+
+# LaTeX build of the manuscript and SI (steps from ops/reports/S03.md). The journal
+# template is local-only: `nacre paper template --ensure` fetches it from the pinned
+# archive URL (live, then the recorded snapshot) and fails on any sha256 mismatch
+# against charter/venue/template.yaml.
+on:
+  push:
+    paths:
+      - "paper/**"
+      - "preprint/paper/**"
+      - ".github/workflows/paper.yml"
+  pull_request:
+    paths:
+      - "paper/**"
+      - "preprint/paper/**"
+      - ".github/workflows/paper.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended \
+            texlive-fonts-extra texlive-science cm-super latexmk
+      - uses: astral-sh/setup-uv@v6
+      - name: Sync environment
+        run: uv sync --frozen
+      - name: Provision the template
+        run: uv run nacre paper template --ensure
+      - name: Build and check
+        run: uv run nacre paper build --si --check
+      - name: Upload PDFs
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: paper-pdfs
+          path: |
+            paper/build/main.pdf
+            paper/build/si/si.pdf
+          if-no-files-found: warn
