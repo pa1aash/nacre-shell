@@ -31,9 +31,9 @@ lanes:
 - {id: p0-int, branch: preprint/p0, worktree: ~/Desktop/nacre-shell, model: Sonnet, integrator: true}
 days:
 - day: 0
-  status: open
+  status: closed
   opened_utc: '2026-10-15T17:33:58Z'
-  closed_utc: null
+  closed_utc: '2026-10-15T18:10:19Z'
   carried: []
   sessions:
   - id: P0-I0
@@ -43,10 +43,10 @@ days:
     master_trace: none
     requires: []
 - day: 1
-  status: pending
-  opened_utc: null
+  status: open
+  opened_utc: '2026-10-15T18:10:19Z'
   closed_utc: null
-  carried: []
+  carried: [P0-I0]
   sessions:
   - id: P0-W1.1
     lane: p0-w1
