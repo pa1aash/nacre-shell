@@ -174,3 +174,94 @@ def test_verify_refuses_unregistered_track_branch(track_repo):
     git(track_repo, "checkout", "-q", "-b", "preprint/zz")
     r = verify.check_lanes(track_repo, False)
     assert r["status"] == "FAIL" and "not registered" in r["detail"]
+
+
+# --- nacre lane new --track -------------------------------------------------------------
+
+from conftest import LOCAL_GUIDE, LOCAL_SETTINGS, nacre as run_nacre  # noqa: E402
+from nacre.cli.commands import lane as lane_cmd  # noqa: E402
+
+
+@pytest.fixture
+def track_origin(tmp_path):
+    """A main checkout with origin (bare) holding main and preprint/p0, plus local-only files."""
+    origin = tmp_path / "origin.git"
+    git(tmp_path, "init", "-q", "--bare", "-b", "main", str(origin))
+    main = init_repo(tmp_path / "nacre-shell")
+    (main / ".git" / "info" / "exclude").write_text(
+        "%s\n%s/\n.local/\n.env\n" % (LOCAL_GUIDE, LOCAL_SETTINGS))
+    (main / "README.md").write_text("x\n")
+    git(main, "add", "-A")
+    git(main, "commit", "-q", "--no-verify", "-m", "scratch: init")
+    git(main, "remote", "add", "origin", str(origin))
+    git(main, "push", "-q", "origin", "main")
+    git(main, "checkout", "-q", "-b", "preprint/p0")
+    (main / "ops" / "tracks").mkdir(parents=True)
+    (main / "ops" / "tracks" / "p0.yaml").write_text("meta: {}\n")
+    git(main, "add", "-A")
+    git(main, "commit", "-q", "--no-verify", "-m", "scratch: track")
+    git(main, "push", "-q", "origin", "preprint/p0")
+    (main / ".env").write_text("A=1\n")
+    (main / LOCAL_GUIDE).write_text("guide\n")
+    (main / LOCAL_SETTINGS).mkdir()
+    (main / LOCAL_SETTINGS / "settings.json").write_text("{}\n")
+    return main
+
+
+def test_lane_new_track_creates_worktree(track_origin):
+    calls = []
+    target, branch = lane_cmd.new_track_lane(track_origin, "p0", "w1", provision_fn=calls.append)
+    assert target == track_origin.parent / "nacre-shell-p-w1" and branch == "preprint/p0-w1"
+    assert calls == [target]
+    assert git(target, "symbolic-ref", "--short", "HEAD").stdout.strip() == "preprint/p0-w1"
+    assert git(target, "rev-parse", "HEAD").stdout == git(track_origin, "rev-parse", "origin/preprint/p0").stdout
+    env = target / ".env"
+    assert env.is_symlink() and env.resolve() == (track_origin / ".env").resolve()
+    assert (target / LOCAL_GUIDE).read_text() == "guide\n"
+    assert (target / LOCAL_SETTINGS / "settings.json").exists()
+    assert (target / ".local" / "prompts").is_dir()
+    assert git(target, "status", "--porcelain").stdout == ""
+    assert git(target, "diff", "--cached", "--name-only").stdout == ""
+
+
+def test_lane_new_track_accepts_full_lane_id(track_origin):
+    target, branch = lane_cmd.new_track_lane(track_origin, "p0", "p0-w2", provision_fn=lambda t: None)
+    assert target.name == "nacre-shell-p-w2" and branch == "preprint/p0-w2"
+
+
+def test_lane_new_track_matches_registry_worktree(cfg):
+    for lane_id, entry in cfg["tracks"]["p0"]["lanes"].items():
+        if lane_id != "p0-int":
+            assert entry["worktree"].rsplit("/", 1)[1] == "nacre-shell-p-" + lane_id[3:]
+
+
+@pytest.mark.parametrize("track,lane,why", [
+    ("p0", "w9", "not registered in track p0"),
+    ("p0", "int", "integrator"),
+    ("p9", "w1", "track 'p9' is not registered"),
+])
+def test_lane_new_track_refusals(track_origin, track, lane, why):
+    with pytest.raises(SystemExit) as exc:
+        lane_cmd.new_track_lane(track_origin, track, lane, provision_fn=lambda t: None)
+    assert why in str(exc.value)
+
+
+def test_lane_new_track_refuses_existing_target(track_origin):
+    (track_origin.parent / "nacre-shell-p-w3").mkdir()
+    with pytest.raises(SystemExit) as exc:
+        lane_cmd.new_track_lane(track_origin, "p0", "w3", provision_fn=lambda t: None)
+    assert "already exists" in str(exc.value)
+
+
+def test_lane_new_without_track_is_unchanged(track_origin):
+    r = run_nacre(["lane", "new", "w1"], track_origin)
+    assert r.returncode != 0 and "not registered in ops/lanes.yaml" in (r.stdout + r.stderr)
+    assert not (track_origin.parent / "nacre-shell-w1").exists()
+
+
+@pytest.mark.parametrize("platform,chflags", [("darwin", True), ("linux", False)])
+def test_provision_runs_sync_and_chflags(tmp_path, platform, chflags):
+    calls = []
+    lane_cmd.provision(tmp_path, run=lambda cmd, **kw: calls.append(cmd), platform=platform)
+    assert calls[0] == ["uv", "sync"]
+    assert (["chflags", "-R", "nohidden", ".venv"] in calls) is chflags
