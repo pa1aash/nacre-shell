@@ -1,0 +1,218 @@
+# Policy fetch index for preprint track p0 (session P0-I0, step 8).
+#
+# One entry per fetched page. Raw bytes are local-only (`local_path`, under the excluded .local/) and are
+# never committed; `sha256` is of those bytes. Live requests to chemrxiv.org and www.rsc.org returned
+# HTTP 403 to the headless client, so every page came from the newest status-200 Wayback capture found
+# through the CDX API (`snapshot_url`, `snapshot_timestamp`). requirements.md cites entries by `id`.
+#
+# reused: material already fetched in session S01 and cited by reference instead of refetching.
+pages:
+- id: T1-1
+  target: T1
+  title: '(no title element; first heading: Submission Process)'
+  url: https://chemrxiv.org/engage/assets/public/chemrxiv/term/submission-guide.htm
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20250812231624id_/https://chemrxiv.org/engage/assets/public/chemrxiv/term/submission-guide.htm
+  snapshot_timestamp: '20250812231624'
+  retrieved_at: '2026-10-15T17:45:21Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: 4dd2c5cfd68020a06d90db084e1ff517c416506edfca5549242ac76ef054c83c
+  bytes: 18457
+  local_path: .local/policy/p0/T1-1.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20250812231624'
+  - 'wayback fetch: 200'
+- id: T1-2
+  target: T1
+  title: '(no title element; first heading: FAQs for ChemRxiv Authors)'
+  url: https://chemrxiv.org/engage/assets/public/chemrxiv/term/author-faq.htm
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20251015162517id_/https://chemrxiv.org/engage/assets/public/chemrxiv/term/author-faq.htm
+  snapshot_timestamp: '20251015162517'
+  retrieved_at: '2026-10-15T17:46:00Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: e3a8ca018b985b2d14933b0bf457176d53edffbc7700817c6d4e9832df1652b5
+  bytes: 44921
+  local_path: .local/policy/p0/T1-2.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20251015162517'
+  - 'wayback fetch: 200'
+- id: T1-3
+  target: T1
+  title: '(no title element; first heading: FAQs for ChemRxiv Users)'
+  url: https://chemrxiv.org/engage/assets/public/chemrxiv/term/faq.htm
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20250812231614id_/https://chemrxiv.org/engage/assets/public/chemrxiv/term/faq.htm
+  snapshot_timestamp: '20250812231614'
+  retrieved_at: '2026-10-15T17:46:33Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: 19a8a66cbc90ab1f3ca81a6b8eb0aa01db874d43bf50eb7ae46e85458554c171
+  bytes: 18058
+  local_path: .local/policy/p0/T1-3.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20250812231614'
+  - 'wayback fetch: 200'
+- id: T2-1
+  target: T2
+  title: '(no title element; first heading: ChemRxiv Public Policies and Procedures)'
+  url: https://chemrxiv.org/engage/assets/public/chemrxiv/term/policy.htm
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20250812231430id_/https://chemrxiv.org/engage/assets/public/chemrxiv/term/policy.htm
+  snapshot_timestamp: '20250812231430'
+  retrieved_at: '2026-10-15T17:47:36Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: 12273604f088422006f6d80c1a70bd6899d12d346f5820b848a485e2e5f06234
+  bytes: 12758
+  local_path: .local/policy/p0/T2-1.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20250812231430'
+  - 'wayback fetch: 200'
+- id: T3-1
+  target: T3
+  title: '(no title element; first heading: Terms of Submission)'
+  url: https://chemrxiv.org/engage/assets/public/chemrxiv/term/terms-of-submission.htm
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20251015162457id_/https://chemrxiv.org/engage/assets/public/chemrxiv/term/terms-of-submission.htm
+  snapshot_timestamp: '20251015162457'
+  retrieved_at: '2026-10-15T17:49:26Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: 286b16af5e5e71ced46cfd878ed09626d2703bab7e8b8f95609b1e1db6036b6c
+  bytes: 7901
+  local_path: .local/policy/p0/T3-1.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20251015162457'
+  - 'wayback fetch: 200'
+- id: T4-1
+  target: T4
+  title: Author responsibilities
+  url: https://www.rsc.org/publishing/journals/processes-and-policies/author-responsibilities
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20260909120248id_/https://www.rsc.org/publishing/journals/processes-and-policies/author-responsibilities
+  snapshot_timestamp: '20260909120248'
+  retrieved_at: '2026-10-15T17:58:52Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: ad3d3b37bccf2ac0df8a43cac7a293fd467188b1c88beaa80ef737b1c01658c2
+  bytes: 190065
+  local_path: .local/policy/p0/T4-1.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20260909120248'
+  - 'wayback fetch: 200'
+- id: T4-2
+  target: T4
+  title: Licences, copyright and permissions
+  url: https://www.rsc.org/publishing/journals/processes-and-policies/licences-copyright-and-permissions
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20261005174154id_/https://www.rsc.org/publishing/journals/processes-and-policies/licences-copyright-and-permissions
+  snapshot_timestamp: '20261005174154'
+  retrieved_at: '2026-10-15T17:59:39Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: efcc4c350d08b9e9c68c3e43219ad540aa4f80dc61efb39e4705847bf8ac8d9f
+  bytes: 201531
+  local_path: .local/policy/p0/T4-2.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20261005174154'
+  - 'wayback fetch: 200'
+- id: T4-3
+  target: T4
+  title: Author guidelines for RSC Advances
+  url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20260806170935id_/https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+  snapshot_timestamp: '20260806170935'
+  retrieved_at: '2026-10-15T17:59:57Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: 01abdccab0050ba88049165213497f2b0482dd7c5d2589b90d23346ea738166c
+  bytes: 245076
+  local_path: .local/policy/p0/T4-3.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20260806170935'
+  - 'wayback fetch: 200'
+- id: T4-4
+  target: T4
+  title: Publish a journal article
+  url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20260926012714id_/https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article
+  snapshot_timestamp: '20260926012714'
+  retrieved_at: '2026-10-15T18:00:29Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: 785f957f9023e36921e16ec1202eeab4ac4aa149749c11cc2b4f4c965b5b19d9
+  bytes: 182342
+  local_path: .local/policy/p0/T4-4.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20260926012714'
+  - 'wayback fetch: 200'
+- id: T4-5
+  target: T4
+  title: Processes and policies
+  url: https://www.rsc.org/publishing/journals/processes-and-policies
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20261005133157id_/https://www.rsc.org/publishing/journals/processes-and-policies
+  snapshot_timestamp: '20261005133157'
+  retrieved_at: '2026-10-15T18:01:46Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: d082ce0af2334d91d6e8b3c555c8fbfe3e6ab9edd7e2c16729af6031ea784bf5
+  bytes: 249996
+  local_path: .local/policy/p0/T4-5.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20261005133157'
+  - 'wayback fetch: 200'
+- id: T5-1
+  target: T5
+  title: Guiding principles for artificial intelligence
+  url: https://www.rsc.org/publishing/journals/processes-and-policies/guiding-principles-for-artificial-intelligence
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20260909125339id_/https://www.rsc.org/publishing/journals/processes-and-policies/guiding-principles-for-artificial-intelligence
+  snapshot_timestamp: '20260909125339'
+  retrieved_at: '2026-10-15T18:00:55Z'
+  http_status: 200
+  content_type: text/html; charset=utf-8
+  sha256: ecc750396a344f7f38e2a08a67d28a3ad857657ffc1adc29a62c6686ed195810
+  bytes: 158712
+  local_path: .local/policy/p0/T5-1.html
+  redistribution: local-only
+  attempts:
+  - 'live: 403'
+  - 'wayback cdx: 20260909125339'
+  - 'wayback fetch: 200'
+reused:
+- id: V-1
+  target: T5
+  ref: charter/venue/manuscript.yaml
+  fields:
+  - sections.ai_disclosure
+  - sections.ai_authorship
+  - sections.acknowledgements.must_declare
+  - figures.ai_generated
+  note: S01 extraction of the RSC author-responsibilities and RSC Advances pages (Wayback captures 2026-09-09 and
+    2026-08-06); T4-1 and T4-3 here are newer captures of the same pages
