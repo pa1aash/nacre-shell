@@ -67,12 +67,59 @@ def laptop_of(lane_id, cfg):
     return None
 
 
+# --- tracks -----------------------------------------------------------------
+
+def track_lane(cfg, lane_id):
+    """(track name, track spec, lane entry) for a track lane, else None.
+
+    A lane registered in the master `lanes` map is never a track lane.
+    """
+    if lane_entry(cfg, lane_id) is not None:
+        return None
+    for name, track in (cfg.get("tracks") or {}).items():
+        lanes = (track or {}).get("lanes") or {}
+        if lane_id in lanes:
+            return name, track, lanes[lane_id] or {}
+    return None
+
+
+def track_of_branch(cfg, branch):
+    """(track name, lane id) whose registered branch is `branch`, else None."""
+    for name, track in (cfg.get("tracks") or {}).items():
+        for lane_id, entry in ((track or {}).get("lanes") or {}).items():
+            if (entry or {}).get("branch") == branch:
+                return name, lane_id
+    return None
+
+
+def is_integrator(cfg, lane_id):
+    """True for the lane whose branch is its track's base branch."""
+    tl = track_lane(cfg, lane_id)
+    return bool(tl) and tl[2].get("branch") == tl[1].get("base")
+
+
+def _check_track_path(lane, path, track, entry):
+    own = [p.format(lane=lane, LANE=lane.upper()) for p in track.get("carveouts") or []]
+    if matches(path, own):
+        return True, "track carve-out"
+    if matches(path, track.get("shared")):
+        return True, "shared path"
+    if matches(path, entry.get("owns")) and not matches(path, entry.get("except")):
+        return True, "owned by lane " + lane
+    return False, "outside the ownership list of lane " + lane
+
+
 def resolve_lane(branch, cfg):
     """Map a branch name to (lane_id, error). Exactly one of them is None."""
     if not branch:
         return None, "detached HEAD is not a lane branch"
     if branch == "main":
         return "a-main", None
+    found = track_of_branch(cfg, branch)
+    if found:
+        return found[1], None
+    if branch.startswith("preprint/"):
+        return None, "branch %r is not registered by any track in ops/lanes.yaml" % branch
     if branch.startswith("lane/"):
         lane = branch[len("lane/"):]
         if laptop_of(lane, cfg) is None:
@@ -94,6 +141,9 @@ def b_owned(path, cfg):
 def check_path(lane, path, cfg, merge=False):
     """Return (allowed, reason) for a lane writing a repo-relative path."""
     path = path.replace("\\", "/")
+    tl = track_lane(cfg, lane)
+    if tl:
+        return _check_track_path(lane, path, tl[1], tl[2])
     entry = lane_entry(cfg, lane)
     laptop = laptop_of(lane, cfg)
     if entry is None or laptop is None:

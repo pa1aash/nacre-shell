@@ -98,3 +98,128 @@ lanes:
     owns: []
   b-paper: {}  # wave 1: S01 then S03, sequential in window B1
   "b-*": {}
+
+# Tracks: parallel lane sets that branch from a track base instead of main.
+#
+# Schema (one entry per track under `tracks`)
+#   tracks.<t>.base        the track's integration branch (lane `<t>-int`).
+#   tracks.<t>.carveouts   per-lane paths every lane of the track may write;
+#                          {lane} is the lane id, {LANE} the upper-case lane id.
+#   tracks.<t>.shared      globs any lane of the track may write. For track
+#                          lanes, pyproject.toml and uv.lock are for dependency
+#                          additions only (checked in integration, not here).
+#   tracks.<t>.lanes.<id>  `branch` (required), `worktree` (documentation; the
+#                          tool derives <main checkout>-p-<short id>), `owns`
+#                          and optional `except`. Track lanes do not inherit
+#                          laptop ownership or the master carve-outs.
+#
+# Branch to lane: a track lane's `branch` maps to its id, e.g.
+# preprint/p0-w1 -> p0-w1 and preprint/p0 -> p0-int. Non-merge commits on the
+# base branch are limited to the integrator's paths; merge commits carry no
+# ownership check, as on main. Any other preprint/* branch is refused.
+tracks:
+  p0:
+    base: preprint/p0
+    carveouts:
+      - "ops/state/{lane}.json"
+      - "ops/reports/{LANE}.*.md"
+      - "jobs/ledger/{lane}.jsonl"
+    shared:
+      - "pyproject.toml"
+      - "uv.lock"
+    lanes:
+      p0-int:
+        branch: preprint/p0
+        worktree: "~/Desktop/nacre-shell"
+        owns:
+          - "ops/**"
+          - "charter/**"
+          - "src/nacre/cli/**"
+          - "tools/**"
+          - ".github/workflows/**"
+          - ".env.example"
+          - "tests/conftest.py"
+          - "tests/test_cli.py"
+          - "tests/test_hooks.py"
+          - "tests/test_lanes.py"
+          - "tests/test_wave.py"
+          - "tests/test_ci_scan.py"
+          - "tests/test_track.py"
+          - "tests/test_track_lanes.py"
+        except:
+          - "ops/waves.yaml"
+      p0-w1:
+        branch: preprint/p0-w1
+        worktree: "~/Desktop/nacre-shell-p-w1"
+        owns:
+          - "lit/corpus/**"
+          - "lit/evidence_table.csv"
+          - "lit/params.yaml"
+          - "lit/conflicts.md"
+          - "src/nacre/lit/**"
+          - "tests/lit/**"
+      p0-w2:
+        branch: preprint/p0-w2
+        worktree: "~/Desktop/nacre-shell-p-w2"
+        owns:
+          - "lit/novelty.md"
+          - "lit/contrary.md"
+          - "preprint/retrodiction/**"
+          - "preprint/package/**"
+          - "src/nacre/retro/**"
+          - "tests/retro/**"
+      p0-w3:
+        branch: preprint/p0-w3
+        worktree: "~/Desktop/nacre-shell-p-w3"
+        owns:
+          - "theory/**"
+      p0-w4:
+        branch: preprint/p0-w4
+        worktree: "~/Desktop/nacre-shell-p-w4"
+        owns:
+          - "src/nacre/physics/**"
+          - "src/nacre/screen/**"
+          - "tests/physics/**"
+          - "tests/screen/**"
+          - "configs/preprint/**"
+          - "results/preprint/screen/**"
+      p0-w5:
+        branch: preprint/p0-w5
+        worktree: "~/Desktop/nacre-shell-p-w5"
+        owns:
+          - "src/nacre/pourbaix/**"
+          - "src/nacre/anchor/**"
+          - "tests/pourbaix/**"
+          - "tests/anchor/**"
+          - "jobs/preprint/**"
+          - "results/preprint/pourbaix/**"
+          - "results/preprint/anchor/**"
+      p0-w6:
+        branch: preprint/p0-w6
+        worktree: "~/Desktop/nacre-shell-p-w6"
+        owns:
+          - "figures/style/**"
+          - "figures/src/**"
+          - "figures/tikz/**"
+          - "figures/rdkit/**"
+          - "figures/out/**"
+          - "src/nacre/figs/**"
+          - "tests/figs/**"
+      p0-w7:
+        branch: preprint/p0-w7
+        worktree: "~/Desktop/nacre-shell-p-w7"
+        owns:
+          - "figures/blender/**"
+          - "figures/renders/**"
+          - "structures/preprint/**"
+          - "src/nacre/structures/**"
+          - "tests/structures/**"
+      p0-w8:
+        branch: preprint/p0-w8
+        worktree: "~/Desktop/nacre-shell-p-w8"
+        owns:
+          - "preprint/paper/**"
+          - "preprint/claims.yaml"
+          - "preprint/generated/**"
+          - "src/nacre/preprint/**"
+          - "tests/preprint/**"
