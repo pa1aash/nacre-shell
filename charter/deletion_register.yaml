@@ -1,0 +1,124 @@
+# Deletion-test register, Phase 0 (session S02).
+#
+# For each mechanistic step: what survives if the nacre mechanism is deleted, the
+# control computations that demonstrate it (Phase 8 item 5), and the expected direction
+# of change of the claim's observable when the control replaces the template. Expected
+# directions are a-priori predictions of the hypothesis, not results.
+#
+# Schema per step:
+#   step, claim, survives_without_mechanism, controls: [{control, computation, expected_direction}]
+
+controls_defined:
+  bare_oxide: >-
+    Hydroxylated Al2O3/AlOOH in water with no polymer: removes the whole organic template.
+  chitosan_only: >-
+    Chitosan oligomers without PDA: removes the catechol/quinone anchor and Ca2+ ligand.
+  catechol_only: >-
+    Isolated catechol/quinone fragments without chitosan or the PDA network: isolates the
+    catechol group's own contribution.
+  carboxylate_substituted: >-
+    Template with catechol replaced by carboxylate motifs (aspartate-like, alginate
+    G-blocks, carboxymethyl-chitosan): the nacre-protein chemistry itself (design flag 4).
+  PVDF: >-
+    Incumbent fluoropolymer binder fragment: no coordinating anionic groups, no template.
+
+steps:
+  - step: anchor
+    claim: C1
+    survives_without_mechanism: >-
+      Generic polymer-oxide adhesion. Chitosan and PVDF still adhere to the oxide to some
+      degree; deleting PDA removes the catechol-specific anchor but not adhesion as such.
+      This is why adhesion alone is a step, not the endpoint (deck slide 10).
+    controls:
+      - control: bare_oxide
+        computation: oxide-water interface free energy (gamma_ox,w reference; W_adh,wet = 0 by construction)
+        expected_direction: no adhesion; defines the zero of W_adh,wet
+      - control: catechol_only
+        computation: W_adh,wet PMF of catechol/quinone fragments
+        expected_direction: retains most of the PDA anchoring if the catechol group carries the link
+      - control: chitosan_only
+        computation: W_adh,wet PMF of chitosan oligomers
+        expected_direction: lower W_adh,wet than PDA if the catechol anchor is decisive
+      - control: carboxylate_substituted
+        computation: W_adh,wet PMF of carboxylate motifs
+        expected_direction: open; carboxylate-oxide binding is a competing anchor
+      - control: PVDF
+        computation: W_adh,wet PMF of PVDF fragment (one axis only)
+        expected_direction: lower W_adh,wet than PDA in water
+
+  - step: sequester
+    claim: C2
+    survives_without_mechanism: >-
+      Whatever Ca2+ affinity the hydroxylated oxide has on its own; no template-driven
+      enrichment above the aqueous reference.
+    controls:
+      - control: bare_oxide
+        computation: Delta_G_seq for Ca2+ at bare oxide sites
+        expected_direction: less negative Delta_G_seq (smaller enrichment) than the template
+      - control: catechol_only
+        computation: Delta_G_seq at catechol/catecholate sites at the regime pH
+        expected_direction: weak binding if catechol is largely protonated (design flag 4)
+      - control: chitosan_only
+        computation: Delta_G_seq at chitosan sites
+        expected_direction: weaker than the combined PDA/chitosan template
+      - control: carboxylate_substituted
+        computation: Delta_G_seq at carboxylate sites
+        expected_direction: possibly more negative than PDA; if so the transplant table changes (design flag 4)
+      - control: PVDF
+        computation: Delta_G_seq near PVDF fragments
+        expected_direction: no enrichment (Delta_G_seq not negative)
+
+  - step: nucleate
+    claim: C3
+    survives_without_mechanism: >-
+      Homogeneous nucleation in bulk water and heterogeneous nucleation on the bare oxide,
+      i.e. incidental carbonate scaling (deck slides 10 and 11).
+    controls:
+      - control: bare_oxide
+        computation: f(theta) and absolute barrier on the bare oxide at bulk S
+        expected_direction: larger f(theta) and higher barrier than on the template
+      - control: catechol_only
+        computation: f(theta) and barrier on catechol fragments
+        expected_direction: higher barrier than the full template if enrichment needs chitosan
+      - control: chitosan_only
+        computation: f(theta) and barrier on chitosan
+        expected_direction: higher barrier than the full template
+      - control: carboxylate_substituted
+        computation: f(theta) and barrier on carboxylate-substituted template
+        expected_direction: open; retrodiction cases suggest carboxylate surfaces promote nucleation
+      - control: PVDF
+        computation: f(theta) and barrier on PVDF
+        expected_direction: larger f(theta) and higher barrier than on the template
+
+  - step: conformality (outcome condition)
+    claim: C4
+    survives_without_mechanism: >-
+      Island growth or porous scale on the bare oxide: the contrary-evidence morphology.
+    controls:
+      - control: bare_oxide
+        computation: registered C4 criterion on bare-oxide C3 outputs
+        expected_direction: criterion less satisfied (island growth, porous scale)
+      - control: carboxylate_substituted
+        computation: registered C4 criterion
+        expected_direction: open
+      - control: PVDF
+        computation: registered C4 criterion
+        expected_direction: criterion less satisfied than on the template
+
+  - step: stability (outcome condition)
+    claim: C5
+    survives_without_mechanism: >-
+      Phase stability is a property of the mineral and Al phases, not of the template, so
+      C5 survives deletion essentially unchanged. C5 therefore cannot carry the deletion
+      test; the degradation must appear in C1-C4.
+    controls:
+      - control: bare_oxide
+        computation: Pourbaix screen and Li-referenced window with no Ca phase
+        expected_direction: no change in the CaCO3 screen; the bare-oxide baseline shows native-oxide attack
+
+rule: >-
+  The verdict must degrade when the nacre mechanism is removed: with any deletion control
+  in place of the template, the study-level verdict must move toward falsified on at
+  least one of C2, C3 or C4. If it does not (or if only C1 degrades), the paper is a
+  generic adhesion study and the framing changes accordingly. The operational form of
+  "degrade" is registered at G2.

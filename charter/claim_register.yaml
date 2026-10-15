@@ -1,0 +1,525 @@
+# Claim register, Phase 0 (session S02). The single numbered register C1-C5.
+#
+# Numbering is fixed here for deck, paper and code; charter/numbering.md reconciles
+# the deck's slides onto it (design flag 8). Nothing in this file is a result:
+# every threshold value is null with status pending-G2, and every numeric form of a
+# kill criterion is fixed at G2 (pre-registration, Phase 2). Phase 7 item numbers
+# refer to the execution plan (C1: 1-4, C2: 5-8, C3: 9-14, C4: 15-18, C5: 19-21);
+# Phase 8 item 5 ("8.5") is the deletion-control set in charter/deletion_register.yaml.
+#
+# Field schema (per claim):
+#   id, name
+#   link                 anchor | sequester | nucleate | outcome-condition
+#   physical_observable  {symbol, definition, units}
+#   physics              why this observable decides the link
+#   computation          {method, phase, items, produced_by}
+#   regime               R-slurry | R-cell | both (defined in charter/regimes.yaml)
+#   regime_rationale     why the claim lives in that regime
+#   threshold            {value: null, status: pending-G2, proposed, proposed_source, objections}
+#   kill_criterion       {statement, numeric_form}
+#   depends_on           claim ids whose outputs this claim consumes
+#   controls             deletion and comparator computations
+#   open_items           conventions and choices not resolved in Phase 0
+#   verdict_bands        {feasible, inconclusive, falsified}, definitions only
+
+register_version: 1
+session: S02
+status: draft-for-G0
+
+hypothesis: >-
+  Aluminium current-collector corrosion in fluorine-free, water-processed lithium-ion
+  cathodes can be engineered out by transplanting nacre's biomineralisation mechanism to
+  the binder-collector interface: polydopamine (PDA) catechol/quinone groups anchor to
+  hydroxylated Al2O3/AlOOH (link 1, C1); PDA and chitosan sequester Ca2+ above the aqueous
+  reference (link 2, C2); a thin interfacial CaCO3 layer, plausibly polymer-stabilised
+  amorphous CaCO3 (ACC), nucleates heterogeneously on that template (link 3, C3) and forms
+  a conformal barrier (outcome conditions C4 and C5).
+
+licence_of_result: >-
+  A feasible verdict licenses a wet-lab experiment, not a battery. The study is purely
+  computational and its deliverables are a feasibility verdict with explicit kill
+  criteria and a reusable screening workflow.
+
+claims:
+  - id: C1
+    name: Anchoring
+    link: anchor
+    physical_observable:
+      symbol: W_adh,wet
+      definition: >-
+        Wet (Dupre) work of adhesion of a binder fragment on a hydroxylated oxide surface in
+        explicit water, W_adh,wet = gamma_ox,w + gamma_pol,w - gamma_ox,pol: the reversible
+        work per unit contact area to separate the oxide-polymer contact into an oxide-water
+        and a polymer-water interface. Obtained from a potential of mean force (PMF) along a
+        separation coordinate in explicit water, not from a static energy difference.
+      units: J m^-2 (reported also per adsorbed fragment in kJ mol^-1 where the contact area is ill-defined)
+    physics: >-
+      In the slurry the polymer never meets a dry oxide: every catechol-oxide contact must
+      first displace hydrogen-bonded interfacial water from the hydroxylated Al2O3/AlOOH
+      sites. W_adh,wet is the free energy of exactly that exchange, so its sign and size
+      decide whether the template is held at the interface at all. A static vacuum
+      adhesion energy cannot decide the link because it omits the water-displacement
+      penalty and the entropy of the released water; only the PMF in explicit water
+      carries both.
+    computation:
+      method: >-
+        Umbrella sampling or metadynamics PMF of the fragment-oxide separation in explicit
+        water with the frozen fine-tuned MLIP; binding modes (monodentate, bidentate,
+        bridging), catechol protonation states and site competition with interfacial water
+        enumerated; replicas with block-averaged error bars; DFT spot checks on selected
+        frames. The vacuum adhesion energy is computed as a comparator, one axis only.
+      phase: 7
+      items: [1, 2, 3, 4]
+      produced_by: Phase 7 (production, frozen model after G6)
+    regime: R-slurry
+    regime_rationale: >-
+      The template is laid down and anchored while the electrode is an aqueous, alkaline
+      slurry and while it dries; the PMF is an aqueous quantity. Retention of the anchor
+      in the non-aqueous cell is not computed by C1 and is not claimed.
+    threshold:
+      value: null
+      status: pending-G2
+      proposed: null
+      proposed_source: >-
+        Deck slide 21 kill row "Anchoring: adhesion does not exceed the water displacement
+        penalty" (qualitative; no number proposed).
+      objections:
+        - >-
+          Deck slide 18 defines W_adh = (E_oxide + E_polymer - E_interface)/A, a static
+          energy difference without water. The charter replaces it as the decisive
+          observable with the PMF-derived W_adh,wet (execution plan Phase 7 item 2); the
+          static quantity survives only as the item-1 comparator.
+        - >-
+          Design flag 6: foundation MLIPs lack long-range electrostatics and aqueous-ion
+          coverage and systematically underbind; the PMF is trusted only after the G6
+          tolerances (registered at G2) are met.
+    kill_criterion:
+      statement: >-
+        Killed if adhesion does not exceed the interfacial-water displacement penalty: the
+        PDA fragment-oxide contact does not lower the free energy relative to the separated,
+        water-wetted oxide and polymer surfaces (W_adh,wet not positive beyond its
+        registered uncertainty), on the substrate terminations populated in R-slurry.
+      numeric_form: pending-G2
+    depends_on: []
+    controls:
+      - "bare oxide: oxide-water interface with no polymer (zero-adhesion reference for gamma_ox,w)"
+      - "catechol only: isolated catechol/quinone fragments (anchor contribution of the catechol group alone)"
+      - "chitosan only: chitosan oligomers without PDA"
+      - "carboxylate-substituted: template with catechol replaced by carboxylate motifs"
+      - "PVDF: incumbent fluoropolymer binder fragment (comparator on the adhesion axis only)"
+      - "CMC and alginate reference fragments (comparators, Phase 7 item 1, one axis only)"
+    open_items:
+      - >-
+        Numeric margin and uncertainty rule for "exceeds the displacement penalty", and the
+        set of substrate terminations over which the test must hold (all populated, or the
+        majority by Phase 4 ranking): registered at G2.
+      - >-
+        Contact-area normalisation for fragment PMFs (per area vs per fragment): fixed in the
+        Phase 2 derivation freeze.
+      - >-
+        PDA structural hypothesis (covalent oligomer vs pi-stacked aggregate) is a
+        structural-sensitivity variable (Phase 8 item 3), not a choice made here.
+    verdict_bands:
+      feasible: >-
+        W_adh,wet exceeds the registered displacement margin under the registered decision
+        rule on the registered substrate set.
+      inconclusive: >-
+        The propagated W_adh,wet distribution straddles the registered margin, or the MLIP
+        validation fallback (G6) declares the free-energy route inconclusive.
+      falsified: >-
+        W_adh,wet lies at or below the registered margin under the registered decision rule.
+
+  - id: C2
+    name: Sequestration
+    link: sequester
+    physical_observable:
+      symbol: Delta_G_seq
+      definition: >-
+        Free energy of moving one Ca2+ from the hydrated bulk reference (Ca2+(aq) at the
+        regime activity) to a template binding site, built as a thermodynamic cycle with
+        protonation-state and ionic-strength corrections at the regime pH; mapped to a local
+        enrichment factor c_local/c_bulk = exp(-Delta_G_seq / RT) and hence to the local
+        supersaturation S consumed by C3.
+      units: kJ mol^-1 (also reported in k_B T at the regime temperature)
+    physics: >-
+      The template can only raise the local supersaturation if it holds Ca2+ more strongly
+      than water does. Delta_G_seq measures precisely that competition, with the hydration
+      free energy of Ca2+ on the reference side of the cycle, so a negative value means net
+      enrichment at the interface and a positive one means the polymer is a worse ligand
+      than bulk water. The enrichment factor is the physical bridge to nucleation: it sets
+      the Ca2+ activity, and therefore S, in the volume where the nucleus forms.
+    computation:
+      method: >-
+        Enhanced-sampling free energy of Ca2+ approach to each site (free and
+        surface-bound template), closed into a cycle against hydrated Ca2+; protonation
+        correction from Phase 1 pKa values at the regime pH; ionic-strength correction;
+        charge-neutral cells or explicit finite-size correction; conversion to the
+        enrichment factor and to local S for C3.
+      phase: 7
+      items: [5, 6, 7, 8]
+      produced_by: Phase 7 (production, frozen model after G6)
+    regime: R-slurry
+    regime_rationale: >-
+      Ca2+ sequestration and the hydrated-ion reference only exist in the aqueous slurry;
+      the cycle's reference state is Ca2+(aq), which is undefined in the non-aqueous cell.
+    threshold:
+      value: null
+      status: pending-G2
+      proposed: null
+      proposed_source: >-
+        Deck slide 21 kill row "Sequestration: Ca2+ binding is unfavourable against the
+        solvated reference" (qualitative; no number proposed).
+      objections:
+        - >-
+          Design flag 4: nacre's acidic proteins bind Ca2+ mainly through carboxylate and
+          sulfate groups; catechol is largely protonated near neutral pH, so catechol and
+          quinone Ca2+ binding must be tested, not assumed. Carboxylate-bearing controls
+          (aspartate-like motifs, alginate G-blocks, carboxymethyl-chitosan) are part of
+          C2. If they beat PDA the mechanism stays nacre-like but the deck's transplant
+          table (slide 12) changes.
+        - >-
+          Design flag 6: Delta_G_seq is a free energy of a charged species; it needs
+          enhanced sampling, charge-neutral setups and Ca2+ hydration benchmarked against
+          AIMD and experiment before it is trusted.
+    kill_criterion:
+      statement: >-
+        Killed if Ca2+ binding at the template is unfavourable against the solvated
+        reference: Delta_G_seq not negative beyond its registered uncertainty at the
+        regime pH and ionic strength, so the template depletes rather than enriches
+        Ca2+ at the interface.
+      numeric_form: pending-G2
+    depends_on: [C1]
+    depends_on_rationale: >-
+      Surface-bound template sites are taken from the anchored configurations of C1.
+    controls:
+      - "bare oxide: Ca2+ approach to the hydroxylated oxide with no polymer"
+      - "catechol only"
+      - "chitosan only"
+      - "carboxylate-substituted: aspartate-like motifs, alginate G-blocks, carboxymethyl-chitosan (design flag 4)"
+      - "PVDF: fluoropolymer fragment with no anionic coordinating groups"
+      - "competitor ions Li+ and Al3+ at the same sites (selectivity, Phase 7 item 7)"
+    open_items:
+      - >-
+        Activity versus concentration in the enrichment factor, the site-volume definition
+        that converts a site free energy into a local concentration, and how enrichment of
+        Ca2+ alone enters S (carbonate is not assumed enriched): Phase 2 derivation freeze.
+      - >-
+        Proof that the template's action through enrichment (C2 -> S) and through wetting
+        (C3 -> f(theta)) is not double counted: Phase 2 derivation freeze (S20/S21).
+      - >-
+        Numeric margin, and whether the test is on the best site or on a site-population
+        average: registered at G2.
+    verdict_bands:
+      feasible: >-
+        Delta_G_seq is negative beyond the registered margin under the registered decision
+        rule, giving local enrichment above the aqueous reference.
+      inconclusive: >-
+        The propagated Delta_G_seq straddles the registered margin, or the MLIP fallback
+        declares the free-energy route inconclusive.
+      falsified: >-
+        Delta_G_seq is at or above the registered margin: no enrichment against solvated
+        Ca2+.
+
+  - id: C3
+    name: Nucleation (crux)
+    link: nucleate
+    physical_observable:
+      symbol: f(theta)
+      definition: >-
+        Heterogeneous-nucleation shape factor of classical nucleation theory,
+        Delta_G*_het = f(theta) Delta_G*_hom with f(theta) = (2 + cos theta)(1 - cos theta)^2 / 4,
+        where theta follows the Young relation
+        cos theta = (gamma_sub,liq - gamma_sub,nuc) / gamma_nuc,liq for a spherical-cap
+        nucleus of the registered CaCO3 polymorph framing on the templated substrate.
+        Secondary observables: Delta_G*_het and Delta_G*_hom in k_B T at the regime
+        temperature, with and without the template, using the local S from C2.
+      units: dimensionless (f); k_B T (barriers); degrees (theta)
+    physics: >-
+      The template matters only if it lowers the barrier to forming CaCO3 at the interface
+      relative to the bulk. f(theta) is the fraction of the homogeneous barrier that
+      survives on the substrate; it depends only on the balance of the three interfacial
+      energies through Young, so it isolates the template's wetting action. The absolute
+      barrier in k_B T then folds in the template's second action, the local
+      supersaturation S from C2, and decides whether nucleation is kinetically accessible.
+      Both are needed: a small f(theta) at negligible S still forbids nucleation.
+    computation:
+      method: >-
+        Interfacial energies for the registered polymorph framing from Phase 1 priors plus
+        computed slab or cluster values in water, with uncertainty; contact angle from
+        Young under the registered convention, cross-checked by the geometric contact angle
+        of an ACC nanodroplet on the template in MD; Monte Carlo propagation and global
+        sensitivity over gamma_nuc,liq, gamma_sub,liq, gamma_sub,nuc, Delta_gamma_water, S,
+        T and molar volume, reporting the fraction of mass in each verdict band; absolute
+        barrier in k_B T with and without the template and the order-of-magnitude rate
+        implication; a demonstration of the size of the double-counting error; secondary,
+        non-decisive cluster-growth free energies by enhanced sampling.
+      phase: 7
+      items: [9, 10, 11, 12, 13, 14]
+      produced_by: Phase 7 (production, frozen model after G6)
+    regime: R-slurry
+    regime_rationale: >-
+      The layer is grown in situ from the aqueous slurry and during drying; the Young
+      energies are solid-liquid energies against water and S is an aqueous supersaturation.
+    threshold:
+      value: null
+      status: pending-G2
+      proposed:
+        feasible: "f(theta) <= 0.5"
+        inconclusive: "0.5 < f(theta) < 0.8"
+        falsified: "f(theta) >= 0.8"
+      proposed_status: "proposed (deck), status: pending G2"
+      proposed_source: >-
+        Deck slide 21 "Pre-registered thresholds and kill criteria" and kill row
+        "Nucleation: f(theta) >= 0.8". These bands are NOT registered.
+      objections:
+        - >-
+          Design flag 2: f(theta) <= 0.5 is not conformality. f(90 deg) = 0.5, so the
+          proposed feasible band admits contact angles up to 90 deg, i.e. partial wetting
+          and island growth, the porous-scale morphology of deck Figure 2. Conformality is
+          therefore a separate claim (C4) with its own criterion registered at G2.
+        - >-
+          Design flag 1: a calcite-framing estimate near 0.5 was seen before registration
+          (deck slides 21 and 27), and the ACC framing is what moves it into the proposed
+          feasible band. The primary framing (ACC or calcite) must be fixed at G2 with a
+          literature-only justification; S22 writes the formal disclosure.
+        - >-
+          The deck's slide 21 states the thresholds were "fixed in advance", but no
+          timestamped registration exists yet; they become registered only at G2.
+        - >-
+          Phase 2 item 4 calls for an additional absolute-barrier criterion in k_B T for
+          the template-lowered barrier; the deck proposes none.
+    kill_criterion:
+      statement: >-
+        Killed if the nucleation barrier on the template stays too high: the template does
+        not lower the heterogeneous barrier enough relative to the homogeneous one
+        (f(theta) in the registered falsified band) or the absolute template-lowered
+        barrier in k_B T at the C2 local supersaturation stays above the registered
+        accessibility bound.
+      numeric_form: pending-G2
+    depends_on: [C1, C2]
+    depends_on_rationale: >-
+      gamma_sub,liq and gamma_sub,nuc are energies of the anchored template from C1; the
+      local supersaturation S comes from the C2 enrichment factor.
+    controls:
+      - "bare oxide: f(theta) and barrier for CaCO3 on the bare hydroxylated oxide (incidental scaling)"
+      - "homogeneous reference: Delta_G*_hom in bulk water at the bulk (unenriched) S"
+      - "catechol only"
+      - "chitosan only"
+      - "carboxylate-substituted"
+      - "PVDF"
+      - "retrodiction (Phase 8 item 6): carboxylate- vs methyl-terminated organic surfaces with known nucleation outcomes"
+      - "double-counting demonstration (Phase 7 item 13): Delta_gamma_water applied both inside gamma_eff and again through f(theta)"
+    open_items:
+      - >-
+        OPEN (design flag 3): the definition and sign of Delta_gamma_water in
+        gamma_eff = gamma_nuc,liq - Delta_gamma_water, and whether the Young relation uses
+        gamma_eff or the bare gamma_nuc,liq. As written in the deck, a positive
+        displacement cost lowers gamma_eff, the opposite of what a cost should do. Owned by
+        the Phase 2 derivation (S20/S21); not resolved in Phase 0.
+      - >-
+        Primary polymorph framing (ACC or calcite) and the secondary sensitivity framing:
+        registered at G2 (design flag 1).
+      - >-
+        Registration of the deck bands, of an absolute-barrier criterion in k_B T, and of
+        the decision rule on the propagated distribution (fraction of prior-weighted mass
+        per band, upper credible bound): G2 (Phase 2 items 4 and 5).
+      - >-
+        The deck's form f(theta) = (2 - 3 cos theta + cos^3 theta)/4 and the charter's
+        (2 + cos theta)(1 - cos theta)^2/4 are the same polynomial in cos theta; the
+        physics-function unit tests (Phase 2 item 2, Phase 3 item 8) must cover both forms
+        and the limits theta = 0 and theta = 180 deg.
+    verdict_bands:
+      feasible: >-
+        The registered statistic of the propagated f(theta) distribution lies in the
+        registered feasible band and the absolute barrier meets the registered k_B T bound.
+      inconclusive: >-
+        The propagated distribution places the registered statistic in the registered
+        intermediate band, or the decision rule's credible bounds straddle a band edge.
+      falsified: >-
+        The registered statistic lies in the registered falsified band, or the absolute
+        barrier violates the registered k_B T bound.
+
+  - id: C4
+    name: Conformality
+    link: outcome-condition
+    physical_observable:
+      symbol: "pending-G2: one of theta (small-angle bound), S_spread, or h_c"
+      definition: >-
+        A morphology criterion separate from f(theta). Candidates (choice registered at G2):
+        (a) a small-contact-angle bound on the C3 theta; (b) the spreading coefficient
+        S_spread = gamma_sub,liq - (gamma_sub,nuc + gamma_nuc,liq), with S_spread >= 0
+        meaning complete wetting (layer-by-layer growth); (c) a coalescence condition from a
+        kinetic Monte Carlo or rate-equation model of island nucleation and coalescence,
+        giving the critical coalescence thickness h_c. Supporting observables: template
+        coverage and lateral continuity; a coarse film-thickness versus electronic
+        resistance bound (item 18).
+      units: degrees (a); J m^-2 (b); nm (c)
+    physics: >-
+      Barrier against corrosion requires a continuous film with no through-path for the
+      electrolyte to reach Al. A low nucleation barrier is compatible with island growth
+      (partial wetting), which leaves occluded gaps where local pH excursions and
+      differential aeration accelerate pitting (deck slide 11, Figure 2). Whether islands
+      spread and coalesce into a film before they thicken is set by the wetting balance
+      (S_spread or theta) and by the competition of nucleation density with lateral growth
+      (coalescence thickness), so these, not f(theta), decide conformality.
+    computation:
+      method: >-
+        Apply the registered conformality criterion to the C3 outputs; compute template
+        coverage and lateral continuity of the PDA/chitosan layer; kinetic Monte Carlo or
+        rate-equation island nucleation and coalescence model using computed barriers,
+        presented as an argument not a measurement; coarse film-thickness versus
+        electronic-resistance bound, stated as a limitation.
+      phase: 7
+      items: [15, 16, 17, 18]
+      produced_by: Phase 7 (production, frozen model after G6)
+    regime: both
+    regime_rationale: >-
+      The morphology forms in R-slurry (items 15-17 use aqueous C3 energies); the
+      thickness bound of item 18 concerns electron transfer to the collector in R-cell.
+    threshold:
+      value: null
+      status: pending-G2
+      proposed: null
+      proposed_source: >-
+        Deck slide 21 kill row "Conformality: favoured morphology is a porous scale"
+        (qualitative; no criterion or number proposed).
+      objections:
+        - >-
+          Design flag 2: the deck carries conformality on f(theta) <= 0.5, which admits
+          theta up to 90 deg (partial wetting, island growth). C4 needs its own
+          quantitative criterion, pre-registered at G2.
+        - >-
+          Design flag 8: a thick insulating CaCO3 film would impede electron transfer to
+          the collector; a coarse thickness bound (item 18) is required as a stated
+          limitation, so conformality cannot be bought with thickness.
+    kill_criterion:
+      statement: >-
+        Killed if the favoured morphology is a porous scale: under the registered criterion
+        the mineral grows as isolated islands that do not coalesce into a continuous film
+        below the registered thickness bound, leaving a continuous electrolyte path to Al.
+      numeric_form: pending-G2
+    depends_on: [C1, C3]
+    depends_on_rationale: >-
+      The criterion is applied to the C3 interfacial energies and barriers; template
+      continuity uses the anchored layer of C1.
+    controls:
+      - "bare oxide: morphology criterion for CaCO3 on the bare oxide (incidental, contrary-evidence scaling)"
+      - "carboxylate-substituted"
+      - "PVDF"
+    open_items:
+      - >-
+        Choice among small-theta bound, S_spread >= 0, or a coalescence condition (design
+        flag 2): registered at G2.
+      - >-
+        Numeric thickness bound from item 18 and how it combines with the conformality
+        criterion: method registered at G2, value computed in Phase 7.
+    verdict_bands:
+      feasible: >-
+        The registered conformality criterion is met under the registered decision rule
+        and a continuous film forms below the registered thickness bound.
+      inconclusive: >-
+        The criterion's propagated distribution straddles its registered boundary, or the
+        morphology model is not converged under the registered tests.
+      falsified: >-
+        The registered criterion indicates island growth or porous scale.
+
+  - id: C5
+    name: Thermodynamic stability
+    link: outcome-condition
+    physical_observable:
+      symbol: "Delta_G_pbx (R-slurry); Delta_Phi_Li window (R-cell)"
+      definition: >-
+        R-slurry: the Pourbaix decomposition free energy (energy above the aqueous
+        stability hull) of the CaCO3 phase and of the Al oxide/oxyhydroxide in the
+        Al-Ca-C-O-H system as a function of pH and potential, with the ACC phase placed by
+        an offset taken from fetched thermochemistry. R-cell: the Li-referenced
+        grand-potential stability window of CaCO3 and of Al-containing phases, i.e. the
+        range of electrode potential (Li chemical potential) over which they are stable
+        against reaction with lithium, since aqueous Pourbaix does not apply in a
+        non-aqueous electrolyte.
+      units: eV per atom (Delta_G_pbx); V vs Li+/Li (window)
+    physics: >-
+      A barrier that is thermodynamically unstable in its own environment dissolves or
+      reacts. In the slurry the question is whether CaCO3 and the native oxide survive the
+      alkaline water at the regime pH and potential; in the cell it is whether the mineral
+      and Al phases are stable at the anodic potential against the Li reservoir. These
+      are different chemistries (design flag 7) and need different observables. Both are
+      screening quantities: necessary, not sufficient, and blind to morphology.
+    computation:
+      method: >-
+        Aqueous Pourbaix analysis (pymatgen) of Al-Ca-C-O-H with a fetched ACC offset,
+        reported as screening only; Li-referenced grand-potential phase stability for the
+        in-cell regime; resolution of the red-team concern so that the Pourbaix proxy
+        cannot be satisfied by construction, with audit text.
+      phase: 7
+      items: [19, 20, 21]
+      produced_by: Phase 7 (screening; may run on pod CPU or locally)
+    regime: both
+    regime_rationale: >-
+      Item 19 is the R-slurry screen; item 20 is the R-cell window; item 21 audits the
+      R-slurry proxy.
+    threshold:
+      value: null
+      status: pending-G2
+      proposed: null
+      proposed_source: >-
+        Deck slide 21 kill row "Stability: the phase sits far above the Pourbaix hull at
+        operating pH and potential" ("far" is not quantified).
+      objections:
+        - >-
+          Design flag 7: the deck's aqueous Pourbaix row covers only the slurry regime; the
+          in-cell regime needs the Li-referenced window.
+        - >-
+          The Pourbaix proxy must not be satisfiable by construction (Phase 7 item 21,
+          red-team concern; audit text to be supplied by the operator in Phase 1).
+    kill_criterion:
+      statement: >-
+        Killed if the phase is thermodynamically unstable in its regime: in R-slurry the
+        CaCO3 phase sits above the aqueous Pourbaix hull at the regime pH and potential by
+        more than the registered tolerance; in R-cell CaCO3 or the protecting Al phases lie
+        outside their Li-referenced stability window at the regime potential.
+      numeric_form: pending-G2
+    depends_on: []
+    controls:
+      - "proxy falsifiability test: the same screen run on a phase set and condition where the proxy must fail, showing it is not satisfied by construction (item 21)"
+      - "polymorph comparison: calcite versus ACC offset"
+      - "bare-oxide stability without any Ca phase (native-oxide attack baseline in R-slurry)"
+    open_items:
+      - >-
+        Tolerance above the hull ("far above") and the regime grid of pH and potential over
+        which the screen must hold: registered at G2.
+      - >-
+        Exact form of the proxy test that cannot be satisfied by construction: operator
+        supplies the red-team audit text (Phase 1); resolved in Phase 7 item 21.
+      - >-
+        Which Al-containing phases and which electrolyte-derived phases enter the R-cell
+        grand-potential construction: Phase 2 derivation and analysis plan.
+    verdict_bands:
+      feasible: >-
+        The phase is within the registered tolerance of the hull in R-slurry and inside the
+        Li-referenced window in R-cell, and the proxy passes its falsifiability test.
+      inconclusive: >-
+        The result depends on the ACC offset or regime corner within the registered
+        uncertainty, or the proxy fails its falsifiability test.
+      falsified: >-
+        The phase is outside the registered tolerance in either regime.
+
+study_verdict:
+  rule: pending-G2
+  proposed: >-
+    Deck slide 28: "the mechanism has four sequential links, any one of which can kill it".
+    Proposed reading: the study is falsified if any of C1-C4 is falsified; C5 is a
+    necessary screen. Not registered; the decision rule under uncertainty is fixed at G2
+    (Phase 2 item 5).
+  deletion_rule: >-
+    The verdict must degrade when the nacre mechanism is removed (charter/deletion_register.yaml);
+    otherwise the framing changes to a generic adhesion study.
+
+disclosures:
+  - id: D-flag1
+    text: >-
+      A calcite-framing estimate of f(theta) near 0.5 was seen before registration (deck
+      slides 21 and 27). It is recorded here as a fact about the study's history, not as a
+      result. Session S22 writes the formal disclosure into the registration.
+
+design_flags_touched: [1, 2, 3, 4, 5, 6, 7, 8]
