@@ -379,7 +379,7 @@ inputs:
   heads_up: given 2026-10-15
   ai_disclosure: {placement: acknowledgements, source: local-only include at .local/p0/ai_ack.tex, release_build: must
       fail if missing, wording: Palaash at P0-W8.5}
-  mp_key: pending (set by P0-I0 step 7)
+  mp_key: present-validated
   cpu_pod: pending (needed by P0-W5.3; >=32 vCPU, >=128 GB RAM)
   authors: ops/tracks/p0_authors.yaml
   dispatch_tooling: 'S31 not run: P0-W5.3 has no pod dispatch; open ruling for the planning chat'
