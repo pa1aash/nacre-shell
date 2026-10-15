@@ -1,0 +1,514 @@
+journal: RSC Advances (Royal Society of Chemistry)
+retrieved_by: nacre.report.fetch
+fields:
+  figure.supplied_format:
+    value: TIFF
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.alternative_formats:
+    value: EPS or PDF (converted to TIFF)
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.applies_to_types:
+    value: Figures, Schemes and Charts
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.min_resolution:
+    value: 600 or greater
+    unit: dpi
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.width_single_column:
+    value: 8.3
+    unit: cm
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.width_double_column:
+    value: 17.1
+    unit: cm
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.max_height:
+    value: 23.3
+    unit: cm
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.max_size:
+    value: not larger than a single page
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.colour_charge:
+    value: colour free online and in print
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.legibility:
+    value: text, numerical data, scale bars clearly legible
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.logos_trademarks_allowed:
+    value: false
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.third_party_permission_required:
+    value: true
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.ai_tool_condition:
+    value: AI tool trained on fully licensed datasets
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.placement_in_manuscript:
+    value: within or at end of text
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > What to submit
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.revision_files:
+    value: figures as separate high-resolution files
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > Revising your article
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.error_bars:
+    value: include where appropriate
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/experimental-reporting
+    locator: Experimental reporting (general guidance)
+    retrieved_utc: '2026-10-07T12:24:21Z'
+    via: wayback
+    snapshot_utc: '2026-08-23T22:45:37Z'
+  figure.alteration_disclosure:
+    value: state processing, cropping, groupings in figure caption
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/experimental-reporting
+    locator: Post-acquisition processing of data
+    retrieved_utc: '2026-10-07T12:24:21Z'
+    via: wayback
+    snapshot_utc: '2026-08-23T22:45:37Z'
+  figure.gel_blot_lane_changes:
+    value: state cropping or rearranging of lanes in figure legend
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/experimental-reporting
+    locator: Electrophoretic gels and blots
+    retrieved_utc: '2026-10-07T12:24:21Z'
+    via: wayback
+    snapshot_utc: '2026-08-23T22:45:37Z'
+  figure.caption_image_reference:
+    value: images numerically referenced in figure caption
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Using images and copyright
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.caption_permission_statement:
+    value: permission acknowledged in figure caption
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Using images and copyright
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figure.reference_numbering_in_captions:
+    value: citation numbers in captions follow text sequence
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Referencing in the text
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  photo.min_resolution:
+    value: minimum 600
+    unit: dpi
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Photographs
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  photo.formats:
+    value: TIFF, PDF or JPEG
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Photographs
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  photo.biography_individual_size:
+    value: 4 cm wide x 5 cm high
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Photographs
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  photo.biography_group_size:
+    value: 8.3 cm wide x 5 cm high
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Photographs
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.formats:
+    value: TIFF, EPS or PDF
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.tiff_resolution:
+    value: 600
+    unit: dpi
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.chain_bond_angle:
+    value: 120
+    unit: degrees
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.fixed_bond_angle:
+    value: 15
+    unit: degrees
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.bond_length:
+    value: 0.43 cm or 12.2 pt
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.bond_width:
+    value: 0.016 cm or 0.5 pt
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.bold_bond_width:
+    value: 0.056 cm or 1.6 pt
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.double_bond_space:
+    value: 20% of bond length
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.stereo_bond_width:
+    value: 0.056 cm or 1.6 pt
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.hash_spacing:
+    value: 0.062 cm or 1.8 pt
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.label_font:
+    value: Arial/Helvetica
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.label_font_size:
+    value: 7
+    unit: pt
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  structure.templates_offered:
+    value: ChemDraw templates for Mac and PC
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structure templates
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  crystal_image.content:
+    value: line drawing plus one perspective diagram
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Crystal structure images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  crystal_image.packing_diagrams:
+    value: not included unless needed for a chemical point
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Crystal structure images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  crystal_image.atom_numbering:
+    value: shown clearly in one diagram
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Crystal structure images
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.required:
+    value: true
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.submission_stage:
+    value: revision stage
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.name_alias:
+    value: graphical abstract
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.image_size:
+    value: maximum 8 cm wide x 4 cm high
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.image_max_width:
+    value: 8
+    unit: cm
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.image_max_height:
+    value: 4
+    unit: cm
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.image_format:
+    value: TIFF
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.image_resolution:
+    value: 600 or greater
+    unit: dpi
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.text_length_sentences:
+    value: 1-2
+    unit: sentences
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.text_max_length:
+    value: 250
+    unit: characters
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.text_format:
+    value: editable, e.g. .docx
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.colour:
+    value: use of colour encouraged
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.image_text_limit:
+    value: labels and reaction arrows only
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.original_artwork:
+    value: original, unpublished, by a co-author
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.logos_trademarks_allowed:
+    value: false
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  table.data_duplication:
+    value: avoid same data in figures and tables without good reason
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Results and discussion
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  table.reference_numbering:
+    value: citation numbers in tables follow text sequence
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Referencing in the text
+    retrieved_utc: '2026-10-07T12:24:18Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  table.diffraction_tables:
+    value: 2-theta tables not normally published in print
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/experimental-reporting
+    locator: Crystallography (powder diffraction)
+    retrieved_utc: '2026-10-07T12:24:21Z'
+    via: wayback
+    snapshot_utc: '2026-08-23T22:45:37Z'
+  figure.min_font_size:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  figure.font_recommendation:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  figure.line_weight:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  figure.colour_mode:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  figure.min_resolution_line_art:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  figure.min_resolution_halftone:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  figure.min_resolution_combination:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  figure.panel_label_convention:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  figure.caption_format_rules:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  figure.min_height:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  table.formatting:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  table.placement:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  table.footnotes:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  table.width:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null

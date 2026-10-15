@@ -1,0 +1,112 @@
+source_page_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/article-templates
+source_page_via: wayback (live 403); page snapshot 20260909125239; link text 'LaTeX article template'; page says template use is optional and the article template covers all non-Communication types
+discovery_path:
+- https://www.rsc.org/ (wayback)
+- /publishing/publish-with-us/publish-a-journal-article/article-templates
+archive_url: https://www.rsc.org/getContentAsset/5484c665-5d01-46eb-9b23-121b16e8ecd4/f4c91d86-ac3e-4675-bdf3-f8325ded9710/royal-society-of-chemistry-article-template.zip?language=en&v=638889698008795103
+archive_url_fetched: https://web.archive.org/web/20250909050504id_/https://www.rsc.org/getContentAsset/5484c665-5d01-46eb-9b23-121b16e8ecd4/f4c91d86-ac3e-4675-bdf3-f8325ded9710/royal-society-of-chemistry-article-template.zip
+archive_fetch_note: Live asset URL returned 403 (with and without query string). Wayback has no capture of the exact URL with query string; the capture of the query-less URL dated 20250909050504 was used.
+  Equality with the current live v=638889698008795103 file cannot be verified headlessly.
+retrieved_utc: '2026-10-07T12:18:05Z'
+via: wayback
+archive_sha256: e481548ff4c520b25e341dcf84a55bc58752064fd1e584a834f7c2767174b6c5
+archive_bytes: 922010
+archive_filename: royal-society-of-chemistry-article-template.zip
+archive_layout: no single top-level folder; files at zip root plus head_foot/ subfolder; extracted as-is
+unpack_root: paper/rsc_template
+line_endings: text files (.tex .bst .bib .txt) contain LF only; extracted byte-for-byte; repo core.autocrlf=false
+files:
+- path: example.pdf
+  sha256: bef13cb6b42d1c85751caa9f25e4097eed296b3421f16b6caff73e54fcbf78b7
+  bytes: 57144
+- path: example1.pdf
+  sha256: 21bec91ba2fe35474564e960284ee4d4516f52b357afb089e99d3b65f98a03d0
+  bytes: 26110
+- path: example2.pdf
+  sha256: e7e4cc421f6f196f077b865b8e8047035cc11b0b9d51eadd6b429f50b519da2c
+  bytes: 25003
+- path: head_foot/dates.pdf
+  sha256: ac7a16c4c974f8b949d38ac1220edc97349f0355c5747b20ff9e5f6b1cdcb07d
+  bytes: 40248
+- path: head_foot/DOI.pdf
+  sha256: 8f947a5d6d99da03d3d1d5d6ff93dcc4587488dc2fcce6cd216de3344b0ffc4c
+  bytes: 46293
+- path: head_foot/header_bar.pdf
+  sha256: 539f22ebcc900b02cb7acbd06f231f968e1e03297c0ae220298ca41a77d879e1
+  bytes: 5448
+- path: head_foot/journal_name.pdf
+  sha256: 89fa8504235603e5600a43ad0ed316bb877470554907f24cc3c51ecaf14e8c3b
+  bytes: 131067
+- path: head_foot/LF.pdf
+  sha256: 382e8061aee72598b8511b7d92a63871dd502c9bc76e91ef9ee97ce3049717f4
+  bytes: 4437
+- path: head_foot/RF.pdf
+  sha256: 29f2445ed9204747a2feeb2a983b85e79b8ef5c03d15dfe0ee62db4ec81d4c23
+  bytes: 51507
+- path: head_foot/RSC_LOGO_CMYK.eps
+  sha256: cfb4dc2631af77e3fb12b519cc10017b8adf3c1e7869ba763c2831f8532e1a48
+  bytes: 527330
+- path: head_foot/RSC_LOGO_CMYK.pdf
+  sha256: 0eb4be2fe11978e5a73c739d521f013f0d37e6072f5a20e320d0acee46e5753d
+  bytes: 23915
+- path: head_foot/RSC_pub.pdf
+  sha256: cedfb2472bcbbb2a6c82b55ae50891ae2e137abc8d993081f73164ac077e2311
+  bytes: 12972
+- path: main.tex
+  sha256: a826db97898717e51c468e2ea4004c32ffc4a5d5d688ef8d6bfd673b4a67916b
+  bytes: 12307
+- path: README.txt
+  sha256: 2399d259af268ed4f6f78270bfdbffa799efc49706e88a6516fa05e2e316f6a1
+  bytes: 1014
+- path: Royal_Society_of_Chemistry_article_template.pdf
+  sha256: 978ea20e945fde9c20ab2c7bd4c269eb0ea3fe30c9c119766000ac0b1cc238b1
+  bytes: 464364
+- path: rsc.bib
+  sha256: 9b15e69c0e6e2f0ab2d7594b6d4f5a6010c023e272db13055dd04167a24d9474
+  bytes: 2824
+- path: rsc.bst
+  sha256: c6cc1b49f8bc79d0c78257c11cb7e751525f3a0a06d69355db9ac784cee1b453
+  bytes: 27173
+entry_points:
+  main_example_tex: main.tex (README.txt calls it rsc-articletemplate.tex; name mismatch inside archive)
+  class_files: none; standard article class plus packages (no RSC .cls/.sty in archive)
+  bibliography_style: rsc.bst
+  bibliography_example: rsc.bib
+  header_footer_images: head_foot/*.pdf and RSC_LOGO_CMYK.eps/pdf
+  reference_output:
+  - Royal_Society_of_Chemistry_article_template.pdf
+  - example.pdf
+  example_figures:
+  - example1.pdf
+  - example2.pdf
+licence_finding:
+  where_found: rsc.bst lines 11-13 and 1473-1490 (header and trailer comments); main.tex line 3 (copyright line); no licence statement found on the source page
+  name_or_summary: 'rsc.bst: LPPL 1.3c or later, author Joseph Wright (2006-2009), status maintained by that author, not RSC. main.tex and head_foot images: RSC copyright 2016 line only, no licence grant
+    found.'
+  permits_redistribution: unknown
+  basis: Explicit grant exists only for rsc.bst (LPPL). The template tex, logos, header images and PDFs carry only an RSC copyright line; neither archive nor page gives redistribution terms.
+decision: local-only
+decision_basis: Redistribution of the archive as a whole is not explicitly granted (only rsc.bst has an LPPL grant), so ambiguous means local-only. paper/.gitignore lists rsc_template/; only this template.yaml
+  is committed.
+skeleton_facts:
+  documentclass: main.tex:6 documentclass[twoside,twocolumn,9pt]{article}, extsizes at line 7
+  packages: main.tex:7-35; line 32 says do not disable packages; natbib [super,sort&compress,comma], mhchem version=3, geometry, balance, mathptmx, sectsty, graphicx, lastpage, caption, fancyhdr, fnpos,
+    babel, charter, droidsans, titlesec, hyperref, epstopdf
+  protected_blocks: main.tex:59-88 page setup, 105-120 figure setup, 145-147 font setup marked do-not-change; header 53-57, footer 90-103 (needs head_foot/LF and RF)
+  refname: main.tex:21-23 sets reference heading to Notes and references
+  title_authors_abstract: 'main.tex:123-143 inside twocolumn[ begin{@twocolumnfalse} ... ] as one tabular: DOI image cell plus title (LARGE) line 131, authors (large, superscript letters, star for corresponding)
+    line 134, abstract single paragraph (normalsize) line 136 beside head_foot/dates'
+  journal_masthead: main.tex:125-126 head_foot/journal_name, RSC_LOGO_CMYK, header_bar; journal_name.pdf is generic, no RSC Advances-specific image seen
+  affiliations: main.tex:154-155 footnotetext with italic superscript letters; extra symbols ddag, textsection, P at line 162
+  esi_marker: dag in title (main.tex:131) and commented ESI footnotetext 157-159; remove both if no ESI; footnote[num] numbering rule line 245 (corresponding author is 1, ESI is 2)
+  graphical_abstract_toc: none in this template
+  keywords: none in this template
+  section_structure: 'main.tex:148-150 empty section* then body from 168; subsection 170, subsubsection 173, paragraph 175 (last two end with full point); numbered section at 177 and 232; unnumbered end
+    matter 247-261 in order: Conclusions, Author contributions, Conflicts of interest, Data availability, Acknowledgements'
+  figures_tables: 'main.tex:181-193 figure and figure* with caption and label (prefix fgr:); 199-230 table and table* with tabular*, no vertical lines, label prefix tbl:'
+  bibliography: main.tex:269 balance, 275 bibliography{rsc} (name of the .bib), 276 bibliographystyle{rsc}; natbib superscript cite
+  supplementary_information: in-template guidance is only the dag footnote (main.tex:157-159); separate ESI guidance page https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    not fetched here
+  required_statements: data availability (main.tex:256), conflicts of interest (253) required; author contributions encouraged with CRediT (250)
+  submission_note: source page asks LaTeX authors to supply native files plus a PDF including figures
+  build_note: 'README.txt: head_foot/, example figures, rsc.bib, rsc.bst must sit beside the .tex; bibtex needed'

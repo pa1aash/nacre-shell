@@ -1,0 +1,15 @@
+# Claims ledger. Every sentence in the manuscript that makes a claim gets an entry here
+# before it is written; a claim without an entry does not go in.
+#
+# Schema (each entry of `claims`):
+#   id         unique, stable, short (for example: c-intro-gap).
+#   locator    where the sentence is: "<file>:<label or paragraph tag>" (no copied prose).
+#   type       one of: result | method | background | definition | scope.
+#   source     for type result: the result-file id; for type background: the citation key
+#              in refs.bib. Empty for method, definition and scope.
+#   status     one of: planned | drafted | verified | withdrawn.
+#
+# Rules: result claims cite a result-file id, never a typed number; background claims cite
+# a key that exists in refs.bib (and therefore has a provenance record).
+
+claims: []

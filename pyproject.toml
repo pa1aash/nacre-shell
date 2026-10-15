@@ -20,4 +20,4 @@ build-backend = "hatchling.build"
 packages = ["src/nacre"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "src/nacre/report/tests"]

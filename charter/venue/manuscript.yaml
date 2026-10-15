@@ -1,0 +1,1248 @@
+journal: RSC Advances (Royal Society of Chemistry)
+retrieved_by: nacre.report.fetch
+fields:
+  article_types.listed:
+    value:
+    - Full papers
+    - Reviews
+    - Comments
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  article_types.papers.page_limit:
+    value: none stated (no page limit)
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Papers
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  article_types.papers.length_note:
+    value: length appropriate to new science is considered
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Papers
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  article_types.papers.judged_on:
+    value: originality, quality, contribution to knowledge
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Papers
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  article_types.reviews.submission_process:
+    value: same as for articles
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Reviews
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  article_types.reviews.unpublished_research_allowed:
+    value: false
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Reviews
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  article_types.reviews.reference_selection:
+    value: selected to give a balanced view
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Reviews
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  article_types.reviews.audience_terms:
+    value: define specialist terms and symbols
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Reviews
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  article_types.comments.apc:
+    value: no Article Processing Charge
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Comments
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  article_types.comments.reply_published_together:
+    value: true
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Comments
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  article_types.comments.personal_attacks_allowed:
+    value: false
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Comments
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  research_paper.word_limit:
+    value: none stated (no page limit)
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article types > Papers
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  template.use_required:
+    value: optional
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article templates
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  template.article_template_for:
+    value: all types except communications, including reviews
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article templates
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  template.word_formats:
+    value:
+    - Article template
+    - Communication template
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article templates > Download Microsoft Word templates
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  template.latex_supplied_files:
+    value: native files and PDF with figures
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article templates > LaTeX templates
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  template.endnote_style_files_available:
+    value: true
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article templates > Endnote style files
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  template.language:
+    value: English; US or UK spelling, used consistently
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Format and layout
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  title.guidance_length:
+    value: as short as possible
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Title
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  title.abbreviations:
+    value: avoid non-standard abbreviations and symbols
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Title
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  title.nomenclature:
+    value: general terms rather than specific nomenclature
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Title
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  title.max_characters:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  authors.full_names_and_affiliations:
+    value: required for all authors
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Authorship
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  authors.contribution_statement_threshold:
+    value: more than 10 co-authors
+    unit: authors
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Authorship
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  authors.max_corresponding_authors:
+    value: 2
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Authorship
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  authors.present_address_location:
+    value: footnote, not affiliation
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Authorship
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  abstract.structure:
+    value: single paragraph
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Abstract
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  abstract.length:
+    value: around 50 to 250 words
+    unit: words
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Abstract
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  abstract.min_words:
+    value: 50
+    unit: words
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Abstract
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  abstract.max_words:
+    value: 250
+    unit: words
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Abstract
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  abstract.content:
+    value: main objectives and results
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Abstract
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  abstract.methods_detail:
+    value: avoid detailed methods
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Abstract
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  abstract.keywords_in_text:
+    value: use familiar searchable terms and keywords
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Abstract
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  keywords.count:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  keywords.separate_field_required:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  sections.introduction:
+    value: set the scene; start general, then specific
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Introduction
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.experimental:
+    value: enough detail to repeat; lengthy parts may go in SI
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Experimental
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.results_and_discussion:
+    value: logical sequence; no duplicate data in figures and tables
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Results and discussion
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.conclusions:
+    value: interpret key results; do not repeat abstract
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Conclusions
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.author_contributions.required:
+    value: strongly encouraged
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Author contributions
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.author_contributions.taxonomy:
+    value: CRediT
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Author contributions
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.conflicts_of_interest.required:
+    value: required for all manuscripts
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Conflicts of interest
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.conflicts_of_interest.none_wording:
+    value: There are no conflicts to declare
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Conflicts of interest
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.conflicts_of_interest.position:
+    value: last section before Acknowledgements
+    source_url: https://www.rsc.org/publishing/journals/processes-and-policies/author-responsibilities
+    locator: Conflicts of interest > Conflicts of interest statement
+    retrieved_utc: '2026-10-07T12:19:07Z'
+    via: wayback
+    snapshot_utc: '2026-09-09T12:02:48Z'
+  sections.data_availability.required:
+    value: required for all articles
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Data availability
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.data_availability.heading:
+    value: Data availability
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > Data availability statement
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.data_availability.position:
+    value: after conflicts of interest, before acknowledgements
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > Data availability statement
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.acknowledgements.length:
+    value: as brief as possible
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Acknowledgements
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.acknowledgements.must_declare:
+    value: funding sources and AI tool use
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Article content > Acknowledgements
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.notes.position:
+    value: end of article, just above references
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Notes and footnotes
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.notes.numbering:
+    value: same numbering as references
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Notes and footnotes
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.footnote_symbols:
+    value:
+    - †
+    - ‡
+    - §
+    - ¶
+    - ║
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Notes and footnotes
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  sections.ethics_statement:
+    value: in methods; name ethics committee; consent for human subjects
+    source_url: https://www.rsc.org/publishing/journals/processes-and-policies/author-responsibilities
+    locator: Human and animal welfare
+    retrieved_utc: '2026-10-07T12:19:07Z'
+    via: wayback
+    snapshot_utc: '2026-09-09T12:02:48Z'
+  sections.ethics_statement_animals:
+    value: ARRIVE 2.0 checklist encouraged
+    source_url: https://www.rsc.org/publishing/journals/processes-and-policies/author-responsibilities
+    locator: Human and animal welfare
+    retrieved_utc: '2026-10-07T12:19:07Z'
+    via: wayback
+    snapshot_utc: '2026-09-09T12:02:48Z'
+  sections.ai_disclosure:
+    value: declare in cover letter, methods and Acknowledgements
+    source_url: https://www.rsc.org/publishing/journals/processes-and-policies/author-responsibilities
+    locator: 'AI general guidance and best practice > Artificial Intelligence: disclosure and transparency'
+    retrieved_utc: '2026-10-07T12:19:07Z'
+    via: wayback
+    snapshot_utc: '2026-09-09T12:02:48Z'
+  sections.ai_authorship:
+    value: AI tools cannot be listed as authors
+    source_url: https://www.rsc.org/publishing/journals/processes-and-policies/author-responsibilities
+    locator: 'AI general guidance and best practice > Artificial Intelligence: authorship'
+    retrieved_utc: '2026-10-07T12:19:07Z'
+    via: wayback
+    snapshot_utc: '2026-09-09T12:02:48Z'
+  sections.funding_information:
+    value: declare all funding sources
+    source_url: https://www.rsc.org/publishing/journals/processes-and-policies/author-responsibilities
+    locator: Funding information
+    retrieved_utc: '2026-10-07T12:19:07Z'
+    via: wayback
+    snapshot_utc: '2026-09-09T12:02:48Z'
+  references.style:
+    value: Vancouver (not Harvard)
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.house_style_note:
+    value: content reformatted to RSC house style before publication
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.in_text_style:
+    value: superscript numbers
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Referencing in the text
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.in_text_position:
+    value: end of sentence, after punctuation
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Referencing in the text
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.in_text_order:
+    value: numbered in sequence of first citation
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Referencing in the text
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.in_text_multiple:
+    value: commas without spaces, e.g. 12,14,15
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Referencing in the text
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.in_text_range:
+    value: en-dash for consecutive runs over two, e.g. 14–20
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Referencing in the text
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.in_text_author_names:
+    value: surname; first author et al. for three or more
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Referencing in the text
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.list_order:
+    value: numerical order at end of article
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Listing your references
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.author_list:
+    value: names and initials of all authors
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Listing your references
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.journal_abbreviation_standard:
+    value: CASSI
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Journal articles
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.journal_abbreviation_fallback:
+    value: cite full journal title
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Journal articles
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.journal_article_format:
+    value: A. Name, Journal Title, year, volume, page/article number(s), DOI [optional]
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Journal articles
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.article_title:
+    value: optional for most journals
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Journal articles
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.doi:
+    value: optional; cite by DOI if pages not known
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Journal articles
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.book_format:
+    value: A. Name, Book Title, Publisher, Publisher Location, year
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Books
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.book_chapter_format:
+    value: A. Name, in Book Title, ed. Editor, Publisher, Location, edition, year, volume, chapter, pages
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Book chapters
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.thesis_format:
+    value: A. Name, PhD thesis, University Name, year
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Theses
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.website_format:
+    value: Name of resource, URL, (accessed date)
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Online resources (websites and wikis)
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.preprint_format:
+    value: authors, server, year, preprint, DOI
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Preprint servers
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.patent_format:
+    value: patentee, issuer, number, year
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Patents
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.unpublished_material:
+    value: provide copies to editor with submission
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Unpublished material
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.data_citation_format:
+    value: 'creators, repository: deposition number, year, DOI or URL'
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Data citations
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.data_citation_in_reference_list:
+    value: strongly encouraged
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Data and software citation
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  references.primary_literature_preference:
+    value: cite primary research over reviews where appropriate
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.si_references:
+    value: may be in main reference list; note in data availability
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Listing your references
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  references.si_references_alternate:
+    value: separate reference list within the SI document
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Preparing Supplementary Information
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  figures.file_format:
+    value: TIFF
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.resolution:
+    value: 600 dpi or greater
+    unit: dpi
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.alternative_formats:
+    value: EPS or PDF accepted, converted to TIFF
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.single_column_width:
+    value: 8.3
+    unit: cm
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.double_column_width:
+    value: 17.1
+    unit: cm
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.max_height:
+    value: 23.3
+    unit: cm
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.colour_charge:
+    value: colour free of charge online and in print
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.logos_trademarks:
+    value: not to be used
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.third_party_permission:
+    value: permission required; acknowledged in caption
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Using images and copyright
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.ai_generated:
+    value: AI tool trained on fully licensed datasets, commercial reuse allowed
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Figures, graphics and images
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.photograph_resolution:
+    value: minimum 600 dpi
+    unit: dpi
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Photographs
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.photograph_formats:
+    value:
+    - TIFF
+    - PDF
+    - JPEG
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Photographs
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.chemical_structure_formats:
+    value:
+    - TIFF
+    - EPS
+    - PDF
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.chemical_structure_bond_length:
+    value: 0.43 cm or 12.2 pt
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.chemical_structure_label_font:
+    value: Arial/Helvetica, 7 pt
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Chemical structures
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.image_processing:
+    value: state alterations in caption and SI
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/experimental-reporting
+    locator: Post-acquisition processing of data
+    retrieved_utc: '2026-10-07T12:20:35Z'
+    via: wayback
+    snapshot_utc: '2026-08-23T22:45:37Z'
+  figures.caption_numbering:
+    value: images numerically referenced in figure caption
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Using images and copyright
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  figures.max_count:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  tables.max_count:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  toc_entry.required:
+    value: required, submitted at revision stage
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.max_size:
+    value: 8 cm wide x 4 cm high
+    unit: cm
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.text_max_characters:
+    value: 250
+    unit: characters
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.text_length:
+    value: 1-2 sentences
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.graphic_format:
+    value: TIFF, 600 dpi or greater
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry > Table of contents specifications
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  toc_entry.text_file_format:
+    value: editable format, e.g. .docx
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Table of contents entry
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  experimental.reproducibility:
+    value: enough detail for skilled researchers to reproduce
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Experimental reporting requirements
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  experimental.uncertainty:
+    value: error bars where appropriate; state accuracy of measurements
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Experimental reporting requirements
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  experimental.significant_figures:
+    value: report correct number of significant figures
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Experimental reporting requirements
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  experimental.hazards:
+    value: identify unusual hazards
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Experimental reporting requirements
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  experimental.yield_format:
+    value: in parentheses after name, e.g. (7.1 g, 56%)
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/experimental-reporting
+    locator: Presentation of experimental data > Yield
+    retrieved_utc: '2026-10-07T12:20:35Z'
+    via: wayback
+    snapshot_utc: '2026-08-23T22:45:37Z'
+  experimental.nmr_shift:
+    value: use delta values
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/experimental-reporting
+    locator: Presentation of experimental data > NMR data
+    retrieved_utc: '2026-10-07T12:20:35Z'
+    via: wayback
+    snapshot_utc: '2026-08-23T22:45:37Z'
+  experimental.coupling_constant_units:
+    value: state units (e.g. Hz) in experimental preamble
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/experimental-reporting
+    locator: Presentation of experimental data > NMR data
+    retrieved_utc: '2026-10-07T12:20:35Z'
+    via: wayback
+    snapshot_utc: '2026-08-23T22:45:37Z'
+  experimental.synthetic_procedure_amounts:
+    value: amounts in g and mmol; state how yield calculated
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/experimental-reporting
+    locator: Synthetic procedures
+    retrieved_utc: '2026-10-07T12:20:35Z'
+    via: wayback
+    snapshot_utc: '2026-08-23T22:45:37Z'
+  experimental.crystal_data_repository:
+    value: CCDC required for small-molecule crystal data
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Subject specific repositories > Structural
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  experimental.crystallographic_submission_files:
+    value: CCDC numbers and CheckCIF files
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > What to submit > On submission
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  data_policy.availability_statement_required:
+    value: required with all articles
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Our data sharing policy
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.data_available_on_submission:
+    value: data needed to verify research available on submission
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Our data sharing policy
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.fallback_if_no_repository:
+    value: include data in Supplementary Information
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Our data sharing policy
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.fair_principles:
+    value: FAIR encouraged
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Our data sharing policy
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.repository_choice:
+    value: author decision, per institutional or funder rules
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Recommended repositories
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.repository_principles:
+    value: TRUST principles; persistent identifiers such as DOIs
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Choosing a repository
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.statement_heading:
+    value: Data availability
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Data availability statements
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.statement_position:
+    value: after conflicts of interest, before acknowledgements
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Data availability statements
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.statement_links:
+    value: full URL to datasets, not embedded behind text
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > Data availability statement
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  data_policy.statement_if_unavailable:
+    value: state reason, e.g. legal or ethical confidentiality
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Data availability statements
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.statement_if_in_si:
+    value: state that data are in the SI
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > Data availability statement
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  data_policy.statement_review_article:
+    value: state no new data generated or analysed
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > Data availability statement
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  data_policy.statement_not_acceptable:
+    value: data available upon request from the authors
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Data availability statements
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.statement_si_references_note:
+    value: note that SI references are in reference list
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > References, notes and footnotes > Listing your references
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  data_policy.code_citation:
+    value: cite specific release where possible
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Data and software citation
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.code_repositories_listed:
+    value:
+    - GitHub
+    - Code Ocean
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/data-sharing
+    locator: Subject specific repositories > Software code and models
+    retrieved_utc: '2026-10-07T12:18:54Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:18Z'
+  data_policy.unprocessed_data_on_request:
+    value: original unprocessed data may be requested in review
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/experimental-reporting
+    locator: Post-acquisition processing of data
+    retrieved_utc: '2026-10-07T12:20:35Z'
+    via: wayback
+    snapshot_utc: '2026-08-23T22:45:37Z'
+  esi.name_used:
+    value: Supplementary Information
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Preparing Supplementary Information
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.submit_with:
+    value: with original submission (peer-reviewed)
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Preparing Supplementary Information
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.edited_by_publisher:
+    value: published as is; not edited for style or content
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Preparing Supplementary Information
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.file_formats:
+    value: common, widely known, machine-readable formats
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Preparing Supplementary Information
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.compound_files:
+    value: mol files, unique compounds, no R-groups
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Preparing Supplementary Information
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.spectral_format:
+    value: JCAMP-DX (.jdx)
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Preparing Supplementary Information
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.suitable_content:
+    value: repetitive experimental details, 3D models, movies
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Prepare your article > Supplementary information
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  esi.archiving:
+    value: archived and permanently linked using CrossMark
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Preparing Supplementary Information
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.large_files:
+    value: large files may be hard to download
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Preparing Supplementary Information
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.video_length:
+    value: approx. two-three minutes
+    unit: minutes
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Multimedia files & videos > Content
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.video_max_minutes:
+    value: 4
+    unit: minutes
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Multimedia files & videos > Content
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.video_resolution:
+    value:
+    - 720p
+    - 1080p
+    - 4k
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Multimedia files & videos > Technical
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.video_fps:
+    value: 25 to 30
+    unit: frames per second
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Multimedia files & videos > Technical
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.video_formats:
+    value:
+    - MPG
+    - MOV
+    - AVI
+    - WMV
+    - MP4
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Multimedia files & videos > Technical
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.video_transcript:
+    value: transcript to be submitted with video
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Multimedia files & videos > Notes
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.multimedia_cited_in_text:
+    value: refer to the file within the paper
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/preparing-supplementary-information
+    locator: Multimedia files & videos
+    retrieved_utc: '2026-10-07T12:20:33Z'
+    via: wayback
+    snapshot_utc: '2026-09-14T12:14:29Z'
+  esi.citation_in_main_text_format:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  esi.max_file_size:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  submission.article_text_formats:
+    value: Word, PDF or LaTeX (with PDF)
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > What to submit > On submission
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.figures_placement:
+    value: within text or at end, numbered
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > What to submit > On submission
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.cover_letter:
+    value: required, with statement of importance
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > What to submit > On submission
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.preferred_reviewers:
+    value: entered in submission system
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > What to submit > On submission
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.files_per_upload:
+    value: 5
+    unit: files
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > What to submit
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.zip_max_files:
+    value: 20
+    unit: files
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > What to submit
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.system:
+    value: ScholarOne Manuscripts
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > How to submit
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.email_or_post:
+    value: not accepted
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > How to submit
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.reviewers_not_in_cover_letter:
+    value: reviewer lists in system only
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Submit your article > Cover letter
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.revision_files:
+    value: response to referees, separate figure files, TOC entry
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Assessment and review > Revising your article
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.peer_review_model:
+    value: single-anonymised or transparent peer review
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Assessment and review > How does it work?
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  submission.open_access_licences:
+    value: CC BY or CC BY-NC
+    source_url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    locator: Publication > Discounts and waivers
+    retrieved_utc: '2026-10-07T12:21:43Z'
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+  section_headings.required_order_full:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  units.si_required:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  nomenclature.standard:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  line_numbers.required:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  font.required:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  spacing.required:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  page_size.required:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null
+  references.max_count:
+    value: null
+    source_url: null
+    locator: null
+    retrieved_utc: null
+    via: null

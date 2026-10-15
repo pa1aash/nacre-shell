@@ -1,0 +1,9 @@
+# Locate the publisher template by reference; its files are never copied or edited.
+use Cwd qw(abs_path);
+my $sep = ($^O eq 'MSWin32') ? ';' : ':';
+my $tpl = abs_path('rsc_template');
+# A trailing separator keeps the default search paths.
+$ENV{TEXINPUTS} = join($sep, '.', $tpl) . $sep;
+$ENV{BSTINPUTS} = join($sep, '.', $tpl) . $sep;
+$ENV{BIBINPUTS} = '.' . $sep;
+$pdf_mode = 1;
