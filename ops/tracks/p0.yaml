@@ -1,0 +1,385 @@
+# Day ledger of preprint track p0. Read and written by `nacre track` (src/nacre/cli/commands/track.py).
+#
+# Schema
+#   meta          title_working, venue, base (the integrator branch).
+#   lanes         id, branch, worktree, model (default model for the lane); integrator: true marks p0-int.
+#   days          day, status (pending | open | closed), opened_utc, closed_utc, carried (sessions of the
+#                 previous day carried into this one unfinished) and sessions.
+#   sessions      id, lane, day, model, master_trace (master-plan session it traces, or none) and
+#                 requires (checkpoints that must be satisfied before it starts).
+#   checkpoints   id, day, title, packet, satisfied_by (tags; any one satisfies the checkpoint).
+#   post          operator items after day 5.
+#   inputs        external inputs and their state.
+#
+# Exactly one day is open. `nacre track open-day <n>` (integrator, on preprint/p0) closes day n-1 and
+# opens day n with the commit "ops(p0): open day <n>".
+meta: {title_working: 'Thermodynamic screening of a biomimetic calcium-carbonate barrier on aluminium
+    current collectors: governing parameters and the precision required for first-principles validation',
+  venue: ChemRxiv, base: preprint/p0}
+lanes:
+- {id: p0-w1, branch: preprint/p0-w1, worktree: ~/Desktop/nacre-shell-p-w1, model: Opus}
+- {id: p0-w2, branch: preprint/p0-w2, worktree: ~/Desktop/nacre-shell-p-w2, model: Opus; Sonnet from P0-W2.4}
+- {id: p0-w3, branch: preprint/p0-w3, worktree: ~/Desktop/nacre-shell-p-w3, model: Opus}
+- {id: p0-w4, branch: preprint/p0-w4, worktree: ~/Desktop/nacre-shell-p-w4, model: Opus; Sonnet for P0-W4.3}
+- {id: p0-w5, branch: preprint/p0-w5, worktree: ~/Desktop/nacre-shell-p-w5, model: Opus; Sonnet for dispatch
+    (P0-W5.3)}
+- {id: p0-w6, branch: preprint/p0-w6, worktree: ~/Desktop/nacre-shell-p-w6, model: Sonnet for execution;
+    Opus for design}
+- {id: p0-w7, branch: preprint/p0-w7, worktree: ~/Desktop/nacre-shell-p-w7, model: Opus for design; Sonnet
+    for renders}
+- {id: p0-w8, branch: preprint/p0-w8, worktree: ~/Desktop/nacre-shell-p-w8, model: Opus}
+- {id: p0-int, branch: preprint/p0, worktree: ~/Desktop/nacre-shell, model: Sonnet, integrator: true}
+days:
+- day: 0
+  status: open
+  opened_utc: '2026-10-15T17:33:58Z'
+  closed_utc: null
+  carried: []
+  sessions:
+  - id: P0-I0
+    lane: p0-int
+    day: 0
+    model: Sonnet
+    master_trace: none
+    requires: []
+- day: 1
+  status: pending
+  opened_utc: null
+  closed_utc: null
+  carried: []
+  sessions:
+  - id: P0-W1.1
+    lane: p0-w1
+    day: 1
+    model: Opus
+    master_trace: S11
+    requires: []
+  - id: P0-W2.1
+    lane: p0-w2
+    day: 1
+    model: Opus
+    master_trace: S13
+    requires: []
+  - id: P0-W3.1
+    lane: p0-w3
+    day: 1
+    model: Opus
+    master_trace: S20
+    requires: []
+  - id: P0-W4.1
+    lane: p0-w4
+    day: 1
+    model: Opus
+    master_trace: S21
+    requires: []
+  - id: P0-W5.1
+    lane: p0-w5
+    day: 1
+    model: Opus
+    master_trace: S72
+    requires: []
+  - id: P0-W6.1
+    lane: p0-w6
+    day: 1
+    model: Sonnet (execution) / Opus (design)
+    master_trace: none
+    requires: []
+  - id: P0-W7.1
+    lane: p0-w7
+    day: 1
+    model: Opus (design) / Sonnet (renders)
+    master_trace: none
+    requires: []
+  - id: P0-W8.1
+    lane: p0-w8
+    day: 1
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: P0-I1
+    lane: p0-int
+    day: 1
+    model: Sonnet
+    master_trace: none
+    requires: []
+- day: 2
+  status: pending
+  opened_utc: null
+  closed_utc: null
+  carried: []
+  sessions:
+  - id: P0-W1.2
+    lane: p0-w1
+    day: 2
+    model: Opus
+    master_trace: S12
+    requires: []
+  - id: P0-W2.2
+    lane: p0-w2
+    day: 2
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: P0-W3.2
+    lane: p0-w3
+    day: 2
+    model: Opus
+    master_trace: S20
+    requires: []
+  - id: P0-W4.2
+    lane: p0-w4
+    day: 2
+    model: Opus
+    master_trace: S21
+    requires: []
+  - id: P0-W5.2
+    lane: p0-w5
+    day: 2
+    model: Opus
+    master_trace: S72
+    requires: []
+  - id: P0-W6.2
+    lane: p0-w6
+    day: 2
+    model: Sonnet (execution) / Opus (design)
+    master_trace: none
+    requires: []
+  - id: P0-W7.2
+    lane: p0-w7
+    day: 2
+    model: Opus (design) / Sonnet (renders)
+    master_trace: none
+    requires: []
+  - id: P0-W8.2
+    lane: p0-w8
+    day: 2
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: P0-I2
+    lane: p0-int
+    day: 2
+    model: Sonnet
+    master_trace: none
+    requires: []
+- day: 3
+  status: pending
+  opened_utc: null
+  closed_utc: null
+  carried: []
+  sessions:
+  - id: P0-W1.3
+    lane: p0-w1
+    day: 3
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: P0-W2.3
+    lane: p0-w2
+    day: 3
+    model: Opus
+    master_trace: none
+    requires: [cp1, cp2]
+  - id: P0-W3.3
+    lane: p0-w3
+    day: 3
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: P0-W4.3
+    lane: p0-w4
+    day: 3
+    model: Sonnet
+    master_trace: none
+    requires: [cp1, cp2]
+  - id: P0-W5.3
+    lane: p0-w5
+    day: 3
+    model: Sonnet
+    master_trace: none
+    requires: [cp1, cp2]
+  - id: P0-W6.3
+    lane: p0-w6
+    day: 3
+    model: Sonnet (execution) / Opus (design)
+    master_trace: none
+    requires: []
+  - id: P0-W7.3
+    lane: p0-w7
+    day: 3
+    model: Opus (design) / Sonnet (renders)
+    master_trace: none
+    requires: []
+  - id: P0-W8.3
+    lane: p0-w8
+    day: 3
+    model: Opus
+    master_trace: none
+    requires: [cp1, cp2]
+  - id: P0-I3
+    lane: p0-int
+    day: 3
+    model: Sonnet
+    master_trace: none
+    requires: []
+- day: 4
+  status: pending
+  opened_utc: null
+  closed_utc: null
+  carried: []
+  sessions:
+  - id: P0-W1.4
+    lane: p0-w1
+    day: 4
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: P0-W2.4
+    lane: p0-w2
+    day: 4
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: P0-W3.4
+    lane: p0-w3
+    day: 4
+    model: Opus
+    master_trace: none
+    requires: [cp2]
+  - id: P0-W4.4
+    lane: p0-w4
+    day: 4
+    model: Opus
+    master_trace: none
+    requires: [cp3]
+  - id: P0-W5.4
+    lane: p0-w5
+    day: 4
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: P0-W6.4
+    lane: p0-w6
+    day: 4
+    model: Sonnet (execution) / Opus (design)
+    master_trace: none
+    requires: []
+  - id: P0-W7.4
+    lane: p0-w7
+    day: 4
+    model: Opus (design) / Sonnet (renders)
+    master_trace: none
+    requires: []
+  - id: P0-W8.4
+    lane: p0-w8
+    day: 4
+    model: Opus
+    master_trace: none
+    requires: [cp3]
+  - id: P0-I4
+    lane: p0-int
+    day: 4
+    model: Sonnet
+    master_trace: none
+    requires: []
+- day: 5
+  status: pending
+  opened_utc: null
+  closed_utc: null
+  carried: []
+  sessions:
+  - id: P0-W1.5
+    lane: p0-w1
+    day: 5
+    model: Opus
+    master_trace: none
+    requires: [cp4]
+  - id: P0-W2.5
+    lane: p0-w2
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: [cp4]
+  - id: P0-W3.5
+    lane: p0-w3
+    day: 5
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: P0-W4.5
+    lane: p0-w4
+    day: 5
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: P0-W5.5
+    lane: p0-w5
+    day: 5
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: P0-W6.5
+    lane: p0-w6
+    day: 5
+    model: Sonnet (execution) / Opus (design)
+    master_trace: none
+    requires: []
+  - id: P0-W7.5
+    lane: p0-w7
+    day: 5
+    model: Opus (design) / Sonnet (renders)
+    master_trace: none
+    requires: []
+  - id: P0-W8.5
+    lane: p0-w8
+    day: 5
+    model: Opus
+    master_trace: none
+    requires: [cp4]
+  - id: P0-I5
+    lane: p0-int
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+checkpoints:
+- id: cp1
+  day: 0
+  title: G0 science
+  packet: ops/packets/p0-1.md
+  satisfied_by: [p0-cp1, g0]
+- id: cp2
+  day: 2
+  title: equation sheet and derivation signs
+  packet: ops/packets/p0-2.md
+  satisfied_by: [p0-cp2]
+- id: cp3
+  day: 3
+  title: parameter table and conflicts
+  packet: ops/packets/p0-3.md
+  satisfied_by: [p0-cp3]
+- id: cp4
+  day: 4
+  title: screen, retrodiction and anchor
+  packet: ops/packets/p0-4.md
+  satisfied_by: [p0-cp4]
+- id: cp5
+  day: 5
+  title: final manuscript
+  packet: ops/packets/p0-5.md
+  satisfied_by: [p0-cp5]
+post:
+  days: [6, 7, 8, 9]
+  owner: operator
+  items:
+  - {id: C1, title: consent and fixes}
+  - {id: C2, title: ChemRxiv submission}
+  - {id: C3, title: post-posting}
+inputs:
+  heads_up: given 2026-10-15
+  ai_disclosure: {placement: acknowledgements, source: local-only include at .local/p0/ai_ack.tex, release_build: must
+      fail if missing, wording: Palaash at P0-W8.5}
+  mp_key: pending (set by P0-I0 step 7)
+  cpu_pod: pending (needed by P0-W5.3; >=32 vCPU, >=128 GB RAM)
+  authors: ops/tracks/p0_authors.yaml
+  dispatch_tooling: 'S31 not run: P0-W5.3 has no pod dispatch; open ruling for the planning chat'
