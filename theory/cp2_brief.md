@@ -198,3 +198,20 @@ are ruled on.
 - `verdict_bands`: replaced by `finding_bands`: holds "Delta_G_seq < 0 with at least the credible
   mass"; fails "Delta_G_seq >= 0 with at least the credible mass"; undecided otherwise.
 - `threshold.status`: "descriptor in P0 (theory/thresholds.md, cp2 fix F3); no threshold".
+
+### D. N_req (fix F4; registered rule)
+
+N_req = 1/A_patch, with A_patch the particle-collector contact patch, a literature process input
+under `regimes.R-slurry.parameters.patch_area`. The C4 closure density stays in C4 only.
+
+**Proposal for cp3: a Poisson-occupancy form.** The registered rule asks for an expected count
+of one nucleus per patch, N_nuc A_patch >= 1. If nuclei land independently, the fraction of
+patches with no nucleus is exp(-N_nuc A_patch). A rule that names that fraction directly is
+N_req = ln(1/q_0)/A_patch, where q_0 is the admissible fraction of empty patches. It reduces to
+1/A_patch at q_0 = 1/e, and it states what "enough" means instead of leaving it to the
+convention.
+
+I found no geometry-independent definition that is better. The one geometry-free candidate is
+the C4 closure density, which ties C3 to the island geometry of C4. That is the coupling the
+ruling removes. The Poisson form keeps A_patch, so it is a refinement of the registered rule,
+not a replacement. It is recorded here for cp3 and is not applied.

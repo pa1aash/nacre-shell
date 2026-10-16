@@ -143,12 +143,22 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
   DG_het <= B_acc = k_B T ln(J_0 t_p / N_req),
 
   with DG_het at Omega_bulk. A count N on a collector area A enters as N_req = N / A.
+- **N_req (cp2 fix F4).** N_req is a separately fixed areal density, not the C4 closure density:
+
+  N_req = 1 / A_patch,
+
+  with A_patch the particle-collector contact patch, a literature process input. The criterion
+  asks for at least one nucleus, in expectation, under every contact patch through which the
+  cathode particles touch the collector. The closure density N_s_closure stays in C4 only.
 - **Keys.**
   - J_0 = `regimes.R-slurry.parameters.J0_het`: a loguniform prior over its fetched range, because
     only ln J_0 enters.
   - t_p = `regimes.R-slurry.parameters.t_proc`: per registered state, slurry contact and drying.
-  - N_req = `thresholds.C3.N_req`: the required areal density. Proposal for cp2: the C4 closure
-    density, so that "enough nuclei" means "enough to close the film" (decision 4).
+  - A_patch = `regimes.R-slurry.parameters.patch_area`: the particle-collector contact patch
+    (literature process input), with N_req = 1/A_patch. The former key `thresholds.C3.N_req` is
+    no longer an independent input: W1 records it as derived from `patch_area`.
+  - A proposal for cp3 (a Poisson-occupancy refinement of 1/A_patch) is in
+    `theory/cp2_brief.md`, section D. It is not applied.
 - **Margin.** None beyond the J_0 prior. N_nuc ignores exclusion zones, so it is an upper estimate
   and the criterion is necessary, not sufficient. A state with Omega_bulk <= 1 contributes no
   nuclei.
@@ -298,7 +308,7 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `regimes.R-slurry.parameters.framing` | framing | registration (cp3, N5) | C3, C5 |
 | `regimes.R-slurry.parameters.J0_het` | J0_het | literature | C3 (b), C4 |
 | `regimes.R-slurry.parameters.t_proc` | t_proc | literature or process input | C3 (b), C4 |
-| `thresholds.C3.N_req` | N_req | registration (cp2, decision 4) | C3 (b) |
+| `regimes.R-slurry.parameters.patch_area` | A_patch | literature (process input; N_req = 1/A_patch, cp2 fix F4) | C3 (b) |
 | `thresholds.C4.margin_S_spread` | m_S | literature (method error) | C4 |
 | `regimes.R-cell.parameters.R_A_max` | R_A_max | registration input | C4 (d_max) |
 | `regimes.R-cell.parameters.j_req` | j_req | registration input | C4 (d_max) |
@@ -392,10 +402,11 @@ links:
         aggregation: path_sum
         quantity: N_nuc
         comparator: '>='
-        edge: N_req
-        equivalent_single_state: {quantity: DG_het, comparator: '<=', edge: k_B*T*log(J0_het*t_proc/N_req)}
+        edge: 1/A_patch
+        N_req: {equals: 1/A_patch, rule: cp2 fix F4, not the C4 closure density}
+        equivalent_single_state: {quantity: DG_het, comparator: '<=', edge: k_B*T*log(J0_het*t_proc*A_patch)}
         params: {J0_het: regimes.R-slurry.parameters.J0_het, t_proc: regimes.R-slurry.parameters.t_proc,
-                 N_req: thresholds.C3.N_req}
+                 A_patch: regimes.R-slurry.parameters.patch_area}
         report: [DG_het/(k_B*T), DG_hom/(k_B*T)]
     combine: 'C3a and C3b'
   C4:
