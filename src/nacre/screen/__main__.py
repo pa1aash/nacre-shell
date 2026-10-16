@@ -4,6 +4,8 @@
     python -m nacre.screen dryrun --mock [--params P] [--out O] [--independence]
                                                               dry run, output under results/preprint/screen/dryrun/
     python -m nacre.screen production --out O                 P0-W4.3 only: refused before cp3
+    python -m nacre.screen thresholds copy|check --ref R      copy or check the thresholds block of
+                                                              theory/thresholds.md at a git ref
 """
 import argparse
 import sys
@@ -11,6 +13,7 @@ from pathlib import Path
 
 from nacre._util import repo_root
 from nacre.screen import run, smoke
+from nacre.screen import thresholds as thr
 from nacre.screen.priors import MockPriorsRefused
 
 DEFAULT_PRIORS = Path("configs") / "preprint" / "mock_priors.yaml"
@@ -35,8 +38,29 @@ def main(argv=None):
     dr.add_argument("--independence", action="store_true", help="sample the inputs independently")
     pr = sub.add_parser("production", help="production screen (P0-W4.3, after cp3)")
     pr.add_argument("--out", default=str(run.SCREEN_DIR / "summary.json"))
+    th = sub.add_parser("thresholds", help="copy or check configs/preprint/thresholds.yaml")
+    th.add_argument("action", choices=("copy", "check"))
+    th.add_argument("--ref", default="origin/preprint/p0-w3", help="git ref holding theory/thresholds.md")
     args = ap.parse_args(argv)
     root = repo_root()
+    if args.cmd == "thresholds":
+        try:
+            text, sha = thr.source_at(root, args.ref)
+        except Exception:
+            print("%s is not present at %s" % (thr.THEORY, args.ref), file=sys.stderr)
+            return 2
+        target = root / thr.COPY
+        if args.action == "copy":
+            target.write_text(thr.make_copy(text, sha), encoding="utf-8")
+            print("wrote %s from %s@%s" % (thr.COPY, thr.THEORY, sha))
+            return 0
+        try:
+            thr.equal(text, target.read_text(encoding="utf-8"))
+        except (thr.ThresholdsMismatch, FileNotFoundError) as exc:
+            print("MISMATCH against %s@%s: %s" % (thr.THEORY, sha, exc), file=sys.stderr)
+            return 1
+        print("EQUAL: %s matches %s@%s" % (thr.COPY, thr.THEORY, sha))
+        return 0
     if args.cmd in ("dryrun", "production"):
         try:
             if args.cmd == "dryrun":

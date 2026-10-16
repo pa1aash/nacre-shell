@@ -1,33 +1,112 @@
-"""Per-link threshold evaluator (interface only).
+"""Thresholds and the decision rule of the screen (rule R-thr).
 
-Thresholds and the decision rule on the propagated distributions are frozen in P0-W4.2,
-written from physics before any screen runs (rule R7). Until then this module defines the
-interface and refuses to evaluate, so no verdict can be produced from an unfrozen rule.
+theory/thresholds.md (lane p0-w3, set at cp2) is the threshold authority. Its fenced
+``thresholds`` block is copied verbatim into configs/preprint/thresholds.yaml under a
+comment header naming the source commit; equal() checks the two agree (as parsed YAML and
+as text), against the working tree or against a commit of W3's branch. After tag p0-cp3
+both files change only through a dated entry in ops/tracks/p0_deviations.md.
 
-Interface
-    load_thresholds(path) -> dict
-        Read the frozen per-link thresholds (configs/preprint/thresholds.yaml, written in
-        W4.2) with their physical justification and freeze commit.
-    evaluate_link(link, samples, thresholds) -> dict
-        Fraction of prior-weighted mass of the link's decisive quantity in each verdict
-        band (feasible / inconclusive / falsified) and the registered statistic; the
-        result fills ``threshold_evaluation`` of the link in the results summary.
+The per-link evaluators and the study-level decision rule implement the rule exactly as
+written in that block; until the copy exists every evaluator call raises
+ThresholdsNotFrozen, so no verdict can come from an unfrozen rule.
 """
+import re
+import subprocess
+from pathlib import Path
+
+import yaml
+
+THEORY = Path("theory") / "thresholds.md"
+COPY = Path("configs") / "preprint" / "thresholds.yaml"
+_FENCE = re.compile(r"^(?P<fence>```+|~~~+)[ \t]*(?P<info>[^\n`]*)\n(?P<body>.*?)^(?P=fence)[ \t]*$",
+                    re.MULTILINE | re.DOTALL)
+_SHA = re.compile(r"^# source-sha: ([0-9a-f]{40})$", re.MULTILINE)
 
 
 class ThresholdsNotFrozen(RuntimeError):
-    """Raised by every evaluator call until the thresholds are frozen (P0-W4.2)."""
+    """Raised by every evaluator call until configs/preprint/thresholds.yaml exists."""
 
 
-_MESSAGE = ("per-link thresholds are not frozen: they are written from physics in P0-W4.2 "
-            "before any screen runs")
+class ThresholdsMismatch(ValueError):
+    """The copy and theory/thresholds.md disagree, or the source has no unique block."""
 
 
-def load_thresholds(path):
-    """Load the frozen per-link thresholds from path. Not available before P0-W4.2."""
-    raise ThresholdsNotFrozen(_MESSAGE)
+_MESSAGE = ("per-link thresholds are not frozen: configs/preprint/thresholds.yaml is copied from "
+            "theory/thresholds.md once W3 marks it ready (cp2)")
+
+
+def extract_block(markdown):
+    """Text of the single fenced code block whose info string names ``thresholds``."""
+    blocks = [m.group("body") for m in _FENCE.finditer(markdown)
+              if "thresholds" in m.group("info").replace(",", " ").split()]
+    if len(blocks) != 1:
+        raise ThresholdsMismatch("theory/thresholds.md must hold exactly one fenced `thresholds` block, found %d"
+                                 % len(blocks))
+    return blocks[0]
+
+
+def header(source_sha):
+    return ("# Machine-readable copy of the fenced `thresholds` block of theory/thresholds.md.\n"
+            "# Copied verbatim; the authority is theory/thresholds.md (rule R-thr). Do not edit:\n"
+            "# after tag p0-cp3 a change goes through a dated entry in ops/tracks/p0_deviations.md.\n"
+            "# source: theory/thresholds.md\n"
+            "# source-sha: %s\n" % source_sha)
+
+
+def make_copy(markdown, source_sha):
+    """Contents of configs/preprint/thresholds.yaml for the given source text and commit."""
+    if not re.fullmatch(r"[0-9a-f]{40}", source_sha or ""):
+        raise ValueError("source sha must be a full 40-character commit id")
+    block = extract_block(markdown)
+    yaml.safe_load(block)                      # the block must be valid YAML
+    return header(source_sha) + block
+
+
+def split_copy(text):
+    """(source sha, block text) of a thresholds.yaml copy."""
+    m = _SHA.search(text)
+    if not m:
+        raise ThresholdsMismatch("thresholds.yaml has no '# source-sha:' header")
+    lines = text.splitlines(keepends=True)
+    i = 0
+    while i < len(lines) and lines[i].startswith("#"):
+        i += 1
+    return m.group(1), "".join(lines[i:])
+
+
+def equal(markdown, copy_text):
+    """Raise ThresholdsMismatch unless the copy's block equals the source block (text and YAML)."""
+    block = extract_block(markdown)
+    _, body = split_copy(copy_text)
+    if body != block:
+        raise ThresholdsMismatch("thresholds.yaml text differs from the fenced block of theory/thresholds.md")
+    if yaml.safe_load(body) != yaml.safe_load(block):
+        raise ThresholdsMismatch("thresholds.yaml parses differently from the fenced block")
+    return True
+
+
+def source_at(root, ref):
+    """theory/thresholds.md at a git ref, and the commit it resolves to."""
+    sha = subprocess.run(["git", "-C", str(root), "rev-parse", ref], capture_output=True, text=True,
+                         check=True).stdout.strip()
+    text = subprocess.run(["git", "-C", str(root), "show", "%s:%s" % (sha, THEORY.as_posix())],
+                          capture_output=True, text=True, check=True).stdout
+    return text, sha
+
+
+def load_thresholds(path=COPY):
+    """Parsed thresholds block with its source commit: {"source_sha": ..., "rule": {...}}."""
+    path = Path(path)
+    if not path.exists():
+        raise ThresholdsNotFrozen(_MESSAGE)
+    text = path.read_text(encoding="utf-8")
+    sha, body = split_copy(text)
+    return {"source_sha": sha, "rule": yaml.safe_load(body)}
 
 
 def evaluate_link(link, samples, thresholds):
-    """Verdict-band masses of one link's decisive quantity. Not available before P0-W4.2."""
-    raise ThresholdsNotFrozen(_MESSAGE)
+    """Verdict-band evaluation of one link's decisive quantity under the frozen rule."""
+    if thresholds is None:
+        raise ThresholdsNotFrozen(_MESSAGE)
+    raise ThresholdsNotFrozen("the evaluators are implemented from the frozen block in P0-W4.2 once W3 marks "
+                              "thresholds ready")
