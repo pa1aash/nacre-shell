@@ -15,7 +15,7 @@ Documented directions (partial wetting, enrichment Delta_G_seq < 0):
 """
 import numpy as np
 import pytest
-from hypothesis import assume, given
+from hypothesis import given
 from hypothesis import strategies as st
 
 from nacre.physics import template
@@ -64,14 +64,26 @@ def test_without_a_template_effect_the_variants_coincide_with_the_contract():
     assert double_counted_water_barrier(*_args(d)) == pytest.approx(right, rel=1e-14)
 
 
-@given(st.floats(min_value=0.0, max_value=0.5), st.floats(min_value=0.1, max_value=1.0),
-       st.floats(min_value=1e-7, max_value=1e-5), st.floats(min_value=-2e4, max_value=-10.0))
-def test_sn_direction_holds_across_partial_wetting(excess, nl, gamma_s, dg):
+@st.composite
+def partial_wetting_with_enrichment(draw):
+    """(excess, nl, gamma_s, dg) with both Young numerators strictly inside (-nl, nl).
+
+    Built inside the domain (lane note N9), without filtering: the contract numerator is
+    excess and the sn-shifted one is excess - Gamma_s dg = excess + |shift| (dg < 0). |dg| is
+    capped so that |shift| <= 0.9 nl, and excess is a fraction of the room nl - |shift| left.
+    """
+    nl = draw(st.floats(min_value=0.1, max_value=1.0))
+    gamma_s = draw(st.floats(min_value=1e-7, max_value=1e-5))
+    dg_cap = min(2e4, 0.9 * nl / gamma_s)
+    dg = -draw(st.floats(min_value=10.0, max_value=dg_cap))
+    excess = draw(st.floats(min_value=0.0, max_value=1 - 1e-9)) * (nl + gamma_s * dg)
+    return excess, nl, gamma_s, dg
+
+
+@given(partial_wetting_with_enrichment())
+def test_sn_direction_holds_across_partial_wetting(inputs):
+    excess, nl, gamma_s, dg = inputs
     d = dict(BASE, gamma_sl=0.4 + 0.05 + excess, gamma_nl=nl, Gamma_s=gamma_s, Delta_G_seq=dg)
-    shift = gamma_s * dg
-    for num in (excess, excess - shift):
-        assume(abs(num / nl) < 1)
-    assume(abs(shift) > 1e-9)
     right = template.template_heterogeneous_barrier(*_args(d))
     wrong = double_counted_sequestration_barrier(*_args(d), interface="sn")
     assert wrong < right

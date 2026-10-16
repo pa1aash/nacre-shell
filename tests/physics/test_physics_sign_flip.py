@@ -10,7 +10,7 @@ import math
 
 import numpy as np
 import pytest
-from hypothesis import HealthCheck, assume, given, settings
+from hypothesis import given
 from hypothesis import strategies as st
 
 from nacre.physics.constants import GAS_CONSTANT
@@ -60,15 +60,33 @@ def test_sf1_statement_catches_a_sign_slip():
     assert not cost_raises_barrier(slipped)
 
 
-energies = st.floats(min_value=-1.0, max_value=1.0)
+# The generators below build only inputs inside the domain of the relation under test, by
+# construction (lane note N9): no assume() filtering and no health-check suppression. The
+# margin keeps the Young ratio a rounding error away from |cos theta| = 1, where the
+# physics functions raise by design.
+_MARGIN = 1e-9
 positive_energies = st.floats(min_value=0.05, max_value=1.0)
-costs = st.floats(min_value=1e-4, max_value=0.5)
+cost_fractions = st.floats(min_value=1e-3, max_value=0.5)
+ratios = st.floats(min_value=-(1 - _MARGIN), max_value=1 - _MARGIN)
 
 
-@given(energies, energies, positive_energies, costs)
-def test_sf1_flipping_the_cost_sign_reverses_the_barrier_inequality(sl, sn0, nl, dw):
-    for d in (dw, -dw, 0.0):
-        assume(abs((sl - sn0 - d) / nl) <= 1)
+@st.composite
+def registered_young_inputs(draw):
+    """(sl, sn0, nl, dw) with |sl - sn0 - d| / nl < 1 for every d in {dw, -dw, 0}.
+
+    nl is drawn first, the cost as a fraction of it (dw = r nl, 0 < r <= 1/2), and the
+    reference numerator m = sl - sn0 as a fraction of the room nl - dw left after the cost.
+    """
+    nl = draw(positive_energies)
+    dw = draw(cost_fractions) * nl
+    m = draw(ratios) * (nl - dw)
+    sn0 = draw(st.floats(min_value=-1.0, max_value=1.0))
+    return sn0 + m, sn0, nl, dw
+
+
+@given(registered_young_inputs())
+def test_sf1_flipping_the_cost_sign_reverses_the_barrier_inequality(inputs):
+    sl, sn0, nl, dw = inputs
     barrier = lambda d: heterogeneous_barrier_from_saturation(
         contact_angle_young(sl, sn0, d, nl), nl, 1e-5, 10.0, 300.0)
     b0 = barrier(0.0)
@@ -76,16 +94,51 @@ def test_sf1_flipping_the_cost_sign_reverses_the_barrier_inequality(sl, sn0, nl,
     assert barrier(-dw) <= b0 * (1 + 1e-12)
 
 
-# strategy filters heavily; W4.2 replaces it with a direct generator of the valid region (decision D9)
-@settings(suppress_health_check=[HealthCheck.filter_too_much])
-@given(st.floats(min_value=0.05, max_value=1.0), st.floats(min_value=0.0, max_value=1.0),
-       positive_energies, costs)
-def test_sf1_deck_form_lowers_the_barrier_on_the_wetting_side(excess, sn0, nl, dw):
+@st.composite
+def deck_wetting_side_inputs(draw):
+    """(excess, sn0, nl, dw) on the wetting side with the deck ratio strictly inside (0, 1).
+
+    The deck ratio is excess / (nl - dw). nl is drawn first, then the cost as a fraction of
+    it (0 < dw < nl, so gamma_eff > 0), then the deck ratio c in (0, 1); excess = c (nl - dw)
+    is positive (gamma_sl > gamma_sn0) and the deck ratio cannot leave [-1, 1].
+    """
+    nl = draw(positive_energies)
+    dw = draw(st.floats(min_value=1e-3, max_value=0.9)) * nl
+    c = draw(st.floats(min_value=1e-3, max_value=1 - _MARGIN))
+    sn0 = draw(st.floats(min_value=0.0, max_value=1.0))
+    return c * (nl - dw), sn0, nl, dw
+
+
+@given(deck_wetting_side_inputs())
+def test_sf1_deck_form_lowers_the_barrier_on_the_wetting_side(inputs):
+    excess, sn0, nl, dw = inputs
     sl = sn0 + excess          # gamma_sl > gamma_sn0: the wetting side
-    assume(dw < nl)
-    assume(abs(excess / (nl - dw)) <= 1)
     assert shape_factor_from_cos(contact_angle_cosine_deck(sl, sn0, nl, dw)) < \
         shape_factor_from_cos(contact_angle_cosine_deck(sl, sn0, nl, 0.0))
+
+
+# Regression case of lane note N9 (the failing example of --hypothesis-seed=19 under the old
+# filtering strategy): excess / (nl - dw) = 1 exactly, and sl - sn0 rounds to just above
+# excess, so the deck ratio is 1 + 2.2e-16.
+SEED19 = dict(excess=0.5, sn0=0.698451471401042, nl=1.0, dw=0.5)
+
+
+def test_sf1_seed19_case_is_a_domain_error_in_the_physics():
+    sl = SEED19["sn0"] + SEED19["excess"]
+    ratio = contact_angle_cosine_deck(sl, SEED19["sn0"], SEED19["nl"], SEED19["dw"])
+    assert ratio > 1.0                                   # complete spreading, by rounding
+    with pytest.raises(ValueError, match="cos_theta must lie in"):
+        shape_factor_from_cos(ratio)
+
+
+def test_sf1_seed19_case_is_clipped_and_counted_only_in_the_screen():
+    from nacre.screen.boundary import clip_cos_theta
+    sl = SEED19["sn0"] + SEED19["excess"]
+    ratio = contact_angle_cosine_deck(sl, SEED19["sn0"], SEED19["nl"], SEED19["dw"])
+    cos_theta, mass = clip_cos_theta([ratio])
+    assert cos_theta[0] == 1.0                           # theta = 0
+    assert shape_factor_from_cos(cos_theta[0]) == 0.0     # f = 0: no barrier
+    assert (mass.n_finite, mass.n_spread, mass.n_nonwetting) == (1, 1, 0)
 
 
 def _barrier_with_enrichment(dg, omega_bulk=2.0, t=300.0):
@@ -98,11 +151,24 @@ def test_sf2_witness_sequestration_sign_orders_the_barrier():
     assert _barrier_with_enrichment(+q) > _barrier_with_enrichment(0.0) > _barrier_with_enrichment(-q)
 
 
-@given(st.floats(min_value=1.5, max_value=1e3), st.floats(min_value=1e-3, max_value=2.0),
-       st.floats(min_value=100.0, max_value=1000.0))
-def test_sf2_flipping_the_sequestration_sign_reverses_the_inequality(omega_bulk, x, t):
+@st.composite
+def depletion_inputs(draw):
+    """(omega_bulk, x, t) with the depleted state still supersaturated: Omega_bulk e^-x > 1.
+
+    x = Delta_G_seq / RT is drawn as a fraction of the room ln(Omega_bulk) leaves, capped
+    at 2, so Omega_bulk e^-x >= Omega_bulk^0.1 > 1 by construction.
+    """
+    omega_bulk = draw(st.floats(min_value=1.5, max_value=1e3))
+    room = min(2.0, 0.9 * math.log(omega_bulk))
+    x = draw(st.floats(min_value=1e-3, max_value=1.0)) * room
+    t = draw(st.floats(min_value=100.0, max_value=1000.0))
+    return omega_bulk, x, t
+
+
+@given(depletion_inputs())
+def test_sf2_flipping_the_sequestration_sign_reverses_the_inequality(inputs):
+    omega_bulk, x, t = inputs
     dg = x * GAS_CONSTANT * t
-    assume(omega_bulk * math.exp(-x) > 1 + 1e-6)
     b0 = _barrier_with_enrichment(0.0, omega_bulk, t)
     assert _barrier_with_enrichment(-dg, omega_bulk, t) < b0 < _barrier_with_enrichment(+dg, omega_bulk, t)
 
