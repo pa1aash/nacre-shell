@@ -36,6 +36,40 @@ JANAF = {
     "CO2": "https://janaf.nist.gov/tables/C-095.txt",
 }
 
+# Day 2 additions (P0-W5.2), fetched by `extend` without touching the Day 1 files.
+# The sinks of the registered electrolyte salts (lit/params.yaml key electrolyte_salts: LiClO4,
+# LiBOB = LiB(C2O4)2, LiPCP = Li pentacyanopropenide, C8N5Li).
+CELL_CHEMSYS_DAY2 = ["Li-Ca-Cl-O", "Li-Al-Cl-O", "Li-Ca-B-C-O", "Li-Al-B-C-O", "Li-Ca-C-N",
+                     "Li-Al-C-N"]
+# Condensed-phase JANAF tables: the carbonate benchmark reactions of the gas-reference
+# benchmark (Li2CO3, Li2O, Na2CO3, Na2O, CaO) and sink salts (LiClO4, LiCl, CaCl2, AlCl3).
+# Table ids follow the JANAF formula index (https://janaf.nist.gov/formula.html).
+JANAF_DAY2 = {
+    "Li2CO3": "https://janaf.nist.gov/tables/C-076.txt",
+    "Li2O": "https://janaf.nist.gov/tables/Li-014.txt",
+    "Na2CO3": "https://janaf.nist.gov/tables/C-090.txt",
+    "Na2O": "https://janaf.nist.gov/tables/Na-012.txt",
+    "CaO": "https://janaf.nist.gov/tables/Ca-027.txt",
+    "LiClO4": "https://janaf.nist.gov/tables/Cl-046.txt",
+    "LiCl": "https://janaf.nist.gov/tables/Cl-041.txt",
+    "CaCl2": "https://janaf.nist.gov/tables/Ca-009.txt",
+    "AlCl3": "https://janaf.nist.gov/tables/Al-025.txt",
+}
+
+# The NBS tables (Wagman et al. 1982, J. Phys. Chem. Ref. Data 11, Suppl. 2), open scanned PDF
+# at NIST. The text layer is empty, so the pages that hold the missing sink salts are rendered
+# and read by OCR; the cache stores the OCR text of each page with the PDF's sha256. The
+# machine-readable NIST release (doi:10.18434/M32124, data.nist.gov mds2-2124) returned HTTP 524
+# and connection resets on 2026-10-17 and is logged as an attempt.
+NBS_1982 = {
+    "url": "https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf",
+    # pdf page -> printed page and what it holds
+    "pages": {136: ("2-128", "Al table: AlCl3"), 137: ("2-129", "Al table: Al(NO3)3, hydrates"),
+              276: ("2-268", "Ca table: Ca(ClO4)2")},
+    "dpi": 200,
+    "ocr": ["tesseract", "--psm", "6"],
+}
+
 THERMO_TYPES = ["GGA_GGA+U"]
 MANIFEST = "manifest.json"
 LIBRARIES = ["mp-api", "pymatgen", "emmet-core", "mpcontribs-client", "requests"]
@@ -186,6 +220,124 @@ def fetch(out_dir=CACHE_DIR, env_path=REPO / ".env"):
     return manifest
 
 
+def _janaf_payload(species, url):
+    import requests
+
+    r = requests.get(url, timeout=60)
+    r.raise_for_status()
+    header = r.text.splitlines()[0] if r.text else ""
+    return {"kind": "janaf_table", "species": species,
+            "request": {"method": "HTTP GET", "url": url}, "retrieved_utc": _now(),
+            "locator": "NIST-JANAF Thermochemical Tables, table for %s (%s), row T=298.15 K "
+                       "and neighbours" % (species, header.strip()),
+            "text_sha256": sha256_bytes(r.content), "text": r.text}
+
+
+def _nbs_payload():
+    """OCR text of the NBS 1982 pages listed in NBS_1982 (network, pymupdf and tesseract)."""
+    import subprocess
+    import tempfile
+
+    import pymupdf
+    import requests
+
+    r = requests.get(NBS_1982["url"], timeout=300)
+    r.raise_for_status()
+    pages = {}
+    with tempfile.TemporaryDirectory() as tmp:
+        pdf = Path(tmp) / "nbs.pdf"
+        pdf.write_bytes(r.content)
+        doc = pymupdf.open(pdf)
+        for pno, (printed, what) in sorted(NBS_1982["pages"].items()):
+            png = Path(tmp) / ("p%d.png" % pno)
+            doc[pno - 1].get_pixmap(dpi=NBS_1982["dpi"]).save(png)
+            out = subprocess.run(NBS_1982["ocr"][:1] + [str(png), "-"] + NBS_1982["ocr"][1:],
+                                 capture_output=True, text=True, check=True).stdout
+            pages[str(pno)] = {"printed_page": printed, "holds": what, "ocr_text": out}
+        version = subprocess.run([NBS_1982["ocr"][0], "--version"], capture_output=True,
+                                 text=True).stdout.splitlines()[:1]
+    return {"kind": "nbs_ocr", "request": {"method": "HTTP GET", "url": NBS_1982["url"]},
+            "retrieved_utc": _now(), "pdf_sha256": sha256_bytes(r.content),
+            "citation": "Wagman, Evans, Parker, Schumm, Halow, Bailey, Churney and Nuttall, The NBS "
+                        "tables of chemical thermodynamic properties, J. Phys. Chem. Ref. Data 11, "
+                        "Suppl. 2 (1982); erratum doi:10.1063/1.555845",
+            "render": {"dpi": NBS_1982["dpi"], "library": "pymupdf %s" % version_or_none("pymupdf")},
+            "ocr": {"command": NBS_1982["ocr"], "version": version},
+            "pages": pages}
+
+
+def version_or_none(name):
+    try:
+        return version(name)
+    except PackageNotFoundError:
+        return None
+
+
+def extend(out_dir=CACHE_DIR, env_path=REPO / ".env", session="P0-W5.2"):
+    """Fetch the Day 2 additions that the manifest does not list yet (network access).
+
+    Existing cache files are never rewritten: only new files are written and appended to the
+    manifest, with the session that added them. The cache hash changes because the manifest
+    does, and every run records the hash it used.
+    """
+    from mp_api.client import MPRester
+
+    out_dir = Path(out_dir)
+    man = manifest(out_dir)
+    have = {f["file"] for f in man["files"]}
+    libs = library_versions()
+    added = []
+    todo = [cs for cs in CELL_CHEMSYS_DAY2 if "mp_entries_cell_%s.json" % cs not in have]
+    if todo:
+        key = _read_key(env_path)
+        with MPRester(key) as mpr:
+            db_version = mpr.get_database_version()
+            if db_version != man["mp_database_version"]:
+                raise SystemExit("database version %s differs from the cache's %s; refetch the "
+                                 "whole cache instead of mixing versions"
+                                 % (db_version, man["mp_database_version"]))
+            for cs in todo:
+                elements = sorted(cs.split("-"))
+                req = {"method": "MPRester.get_entries_in_chemsys", "elements": elements,
+                       "compatible_only": True, "additional_criteria": {"thermo_types": THERMO_TYPES},
+                       "use_gibbs": None}
+                got = mpr.get_entries_in_chemsys(elements, compatible_only=True,
+                                                 additional_criteria={"thermo_types": THERMO_TYPES})
+                got = sorted(got, key=lambda e: (str(e.entry_id), e.energy))
+                name = "mp_entries_cell_%s.json" % cs
+                payload = {"kind": "mp_entries", "request": req, "retrieved_utc": _now(),
+                           "mp_database_version": db_version, "client_versions": libs,
+                           "n": len(got), "response": [_entry_dict(e) for e in got]}
+                sha = _write(out_dir / name, payload)
+                added.append({"file": name, "kind": "mp_entries", "request": req, "n": len(got),
+                              "retrieved_utc": payload["retrieved_utc"], "sha256": sha,
+                              "added_by": session})
+                print("  %-34s %5d entries" % (name, len(got)))
+    if "nbs1982_ocr.json" not in have:
+        payload = _nbs_payload()
+        sha = _write(out_dir / "nbs1982_ocr.json", payload)
+        added.append({"file": "nbs1982_ocr.json", "kind": "nbs_ocr", "request": payload["request"],
+                      "retrieved_utc": payload["retrieved_utc"], "sha256": sha, "added_by": session})
+        print("  %-34s %d pages" % ("nbs1982_ocr.json", len(payload["pages"])))
+    for species, url in JANAF_DAY2.items():
+        name = "janaf_%s.json" % species
+        if name in have:
+            continue
+        payload = _janaf_payload(species, url)
+        sha = _write(out_dir / name, payload)
+        added.append({"file": name, "kind": "janaf_table", "request": payload["request"],
+                      "retrieved_utc": payload["retrieved_utc"], "sha256": sha, "added_by": session})
+        print("  %-34s table" % name)
+    if added:
+        man["files"] = man["files"] + added
+        man.setdefault("extensions", []).append({"session": session, "utc": _now(),
+                                                 "files": [a["file"] for a in added],
+                                                 "client_versions": libs})
+        (out_dir / MANIFEST).write_text(json.dumps(man, indent=1, sort_keys=True) + "\n",
+                                        encoding="utf-8")
+    return added
+
+
 # ---------------------------------------------------------------------------------- offline API
 def manifest(cache_dir=CACHE_DIR):
     return json.loads((Path(cache_dir) / MANIFEST).read_text(encoding="utf-8"))
@@ -228,11 +380,17 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     f = sub.add_parser("fetch", help="fetch the Materials Project and JANAF data (network)")
     f.add_argument("--out", default=str(CACHE_DIR))
+    x = sub.add_parser("extend", help="fetch the Day 2 additions only (network)")
+    x.add_argument("--out", default=str(CACHE_DIR))
     sub.add_parser("verify", help="check cached files against the manifest")
     args = ap.parse_args(argv)
     if args.cmd == "fetch":
         m = fetch(Path(args.out))
         print("database version %s, %d files" % (m["mp_database_version"], len(m["files"])))
+        return 0
+    if args.cmd == "extend":
+        added = extend(Path(args.out))
+        print("%d file(s) added" % len(added))
         return 0
     bad = verify()
     print("cache OK" if not bad else "\n".join(bad))

@@ -14,7 +14,7 @@ def test_every_file_records_request_time_and_version(offline):  # noqa: F811
     m = cache.manifest()
     assert m["mp_database_version"]
     kinds = {f["kind"] for f in m["files"]}
-    assert kinds == {"mp_entries", "mp_ion_reference_data", "janaf_table"}
+    assert kinds == {"mp_entries", "mp_ion_reference_data", "janaf_table", "nbs_ocr"}
     for f in m["files"]:
         rec = cache.load(f["file"])
         assert rec["request"] and rec["retrieved_utc"].endswith("Z")
