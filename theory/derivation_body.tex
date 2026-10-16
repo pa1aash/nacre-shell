@@ -480,8 +480,16 @@ $\Dmu=\kB T\ln\Omb$ and the in-situ $\gsl$.
 
 \paragraph{Template--liquid interface.} At fixed $T$ the Gibbs adsorption equation is
 $\dd\gsl=-\sum_i\Gamma_i\,\dd\mu_i$. The Ca$^{2+}$ binding computations use charge-neutral cells,
-so the adsorbing component is Ca$^{2+}$ with its compensating charge, and the electrostatic terms
-cancel as in Section~\ref{th:sec:supersaturation}(ii). Raising the Ca$^{2+}$ activity from zero
+and the adsorbing component is taken to be Ca$^{2+}$ with its compensating charge, that is, a
+neutral solute. This is an approximation, and Section~\ref{th:sec:supersaturation}(ii) does not
+justify it. The cancellation there concerns the ion product: the factors $\e^{\mp2e\psi/\kB T}$ of
+the two ions cancel in $\aCa\aCO$ and in the neutral solid. It says nothing about the double-layer
+(electrocapillary) part of $\gsl$. Binding Ca$^{2+}$ to anionic sites changes the surface charge
+density $\sigma$, and with it the free energy of the diffuse layer, which is part of $\gsl$; for an
+electrified interface the Gibbs equation carries the additional Lippmann term $-\sigma\,\dd\psi_0$,
+with $\psi_0$ the surface potential. Equation~\eqref{th:eq:gibbs} is the neutral-solute
+(Gibbs--Langmuir) term only, and the neglected double-layer term is a stated limitation (below).
+Raising the Ca$^{2+}$ activity from zero
 (the Ca-free template, $\gslz$) to the regime value at fixed pH and ionic strength, with the
 Langmuir excess of Eq.~\eqref{th:eq:excess} and $\dd\mu_\mathrm{Ca}=\Rg T\,\dd\ln c$ (dilute
 bulk, fixed activity coefficient):
@@ -508,6 +516,18 @@ a pure site-exclusion correction that vanishes as $y^{2}/2$ in the dilute limit.
 \end{itemize}
 If $\gsl$ is computed directly at the regime activities, the adsorption is already inside it and
 $\dga\equiv0$, the same rule as for $\dgw$ (Section~\ref{th:sec:young}).
+
+\paragraph{Limitation: the double-layer term.} Equation~\eqref{th:eq:gibbs} omits the change of
+the diffuse-layer free energy when binding changes the surface charge. In the low-potential
+(Debye--H\"uckel) limit of Gouy--Chapman theory, a surface of charge density $\sigma$ carries a
+diffuse-layer free energy $\sigma^{2}/(2\varepsilon_\mathrm{r}\varepsilon_0\kappa_\mathrm{D})$ per
+area, where $\kappa_\mathrm{D}^{-1}$ is the Debye length and $\kappa_\mathrm{D}^{2}\propto I$, the
+ionic strength. Units: C$^{2}$\,m$^{-4}$ over F\,m$^{-1}\cdot$m$^{-1}$ is J\,m$^{-2}$. At a fixed
+change of charge the term therefore falls as $I^{-1/2}$: ionic strength screens it, and it
+vanishes when binding leaves the charge unchanged. P0 does not add it, and does not assign it a
+sign: it is an unquantified correction to $\dga$, largest for a template whose Ca$^{2+}$ binding
+changes its charge strongly at low ionic strength. A $\gsl$ computed in situ with explicit ions
+contains it, which is one more reason to prefer an in-situ $\gsl$ when one exists.
 
 \paragraph{Template--nucleus interface.} $\gsn$ is a grand-canonical excess in the same sense as
 $\gsl$: the excess grand potential per area of the template--crystal contact at the regime

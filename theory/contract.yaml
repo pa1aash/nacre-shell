@@ -89,7 +89,12 @@ conventions:
   adsorption: >-
     gamma_sl = gamma_sl0 + Delta_gamma_ads, with Delta_gamma_ads = -R T (Gamma_s ln(1 + x)
     - delta_s c_bulk) from the Gibbs adsorption equation and the Langmuir isotherm, and
-    x = E_enr c_bulk / c_max. If gamma_sl is supplied directly at the regime activities
+    x = E_enr c_bulk / c_max. The Gibbs-Langmuir term is a neutral-solute approximation:
+    Ca2+ adsorbs with its compensating charge. The cancellation of the mean potential in the
+    ion product (derivation, Section 4 (ii)) does not cover the double-layer (electrocapillary)
+    contribution to gamma_sl; the change of the diffuse-layer free energy with the surface
+    charge is neglected and is a stated limitation. Ionic strength screens it (low-potential
+    Gouy-Chapman: it falls as I^(-1/2) at a fixed change of charge). If gamma_sl is supplied directly at the regime activities
     (grand-canonical), Delta_gamma_ads is already inside it and must not be added again
     (the same rule as Delta_gamma_w). gamma_sn is the grand-canonical excess of the
     template-crystal contact at the regime chemical potentials: any Ca2+ excess at that contact
@@ -254,7 +259,9 @@ functions:
     note: >-
       change of the template-liquid interfacial energy by Ca2+ adsorption at the regime
       activity: the Gibbs adsorption integral -int Gamma_Ca d mu_Ca from zero to the regime
-      activity with the Langmuir isotherm (ideal dilute bulk). Zero when gamma_sl is already
+      activity with the Langmuir isotherm (ideal dilute bulk), for Ca2+ with its compensating
+      charge as a neutral solute; the double-layer (electrocapillary) term is neglected (stated
+      limitation, screened by ionic strength). Zero when gamma_sl is already
       evaluated at the regime activities. It is the only route by which Delta_G_seq, Gamma_s
       and delta_s reach the barrier.
     derivative_identities:
