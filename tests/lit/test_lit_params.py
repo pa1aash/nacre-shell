@@ -211,3 +211,23 @@ def test_committed_params_validate():
         ps = P.prior_set(regime, p)
         draws = sample_inputs(ps.parameters(regime), 64, np.random.default_rng(0))
         assert all(np.all(np.isfinite(v)) for v in draws.values())
+
+
+def with_alias(doc):
+    leaf = {"key": "gamma_nl_calcite", **copy.deepcopy(doc["params"]["gamma_nl_calcite"])}
+    doc["regimes"] = {"R-slurry": {"parameters": {"gamma_nl": leaf}}}
+    return doc
+
+
+def test_alias_resolves_and_must_match(root):
+    p = P.load_params(write(root, with_alias(base_doc())), root)
+    assert P.resolve("regimes.R-slurry.parameters.gamma_nl", p) == "gamma_nl_calcite"
+    assert P.resolve("params.v_m_calcite", p) == "v_m_calcite"
+    assert P.prior("regimes.R-slurry.parameters.gamma_nl", p).key == "gamma_nl_calcite"
+    assert P.priors(["regimes.R-slurry.parameters.gamma_nl"], p).keys == ["gamma_nl_calcite"]
+    doc = with_alias(base_doc())
+    doc["regimes"]["R-slurry"]["parameters"]["gamma_nl"]["value"] = 0.11
+    assert any("differs" in e for e in problems(root, doc))
+    doc = with_alias(base_doc())
+    doc["regimes"]["R-slurry"]["parameters"]["gamma_nl"]["key"] = "nope"
+    assert any("not in params" in e for e in problems(root, doc))

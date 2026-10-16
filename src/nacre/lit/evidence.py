@@ -192,6 +192,11 @@ def _norm_text(s):
     return " ".join((s or "").lower().split())
 
 
+def _d1_value(r):
+    """The value part of the D1 key: the printed value, or the lo..hi range of a range-only row."""
+    return r["value"].strip() or r["range_or_uncertainty"].strip()
+
+
 def merge(thread_rows):
     """thread_rows: iterable of row lists in thread order. Dedupe on doi + locator + quantity.
 
@@ -209,12 +214,12 @@ def merge(thread_rows):
             if r["unit"] == QUALITATIVE:
                 hit = next((rid for rid, thread in base.get(k0, []) if thread != r["thread"]), None)
             else:
-                hit = index.get(k0 + (_norm_text(r["symbol"]), r["value"].strip()))
+                hit = index.get(k0 + (_norm_text(r["symbol"]), _d1_value(r)))
             if hit:
                 dups.append((r["row_id"], hit))
                 continue
             if r["unit"] != QUALITATIVE:
-                index[k0 + (_norm_text(r["symbol"]), r["value"].strip())] = r["row_id"]
+                index[k0 + (_norm_text(r["symbol"]), _d1_value(r))] = r["row_id"]
             base.setdefault(k0, []).append((r["row_id"], r["thread"]))
             kept.append(r)
     return kept, dups

@@ -42,6 +42,7 @@ TRANSFORMS = ("none", "log10")
 REQUIRED = ("symbol", "transform", "unit", "regimes", "status", "value", "range", "prior", "rule", "sources",
             "best_grade", "method", "conditions", "correlation_group", "notes")
 GROUP_KINDS = ("rank", "assumed independent")
+VIEW_ROOTS = ("regimes", "thresholds")  # alias views addressed by dotted paths (theory/thresholds.md)
 
 
 class ParamsError(ValueError):
@@ -322,7 +323,40 @@ def validate(params, root=None):
                 gbad("a rank-correlated group needs source rows that exist")
         if not str(grp.get("reason") or "").strip():
             gbad("reason missing")
+    for path, leaf in _view_leaves(doc):
+        k = leaf.get("key")
+        if k not in entries:
+            errs.append("alias %s: key %r is not in params" % (path, k))
+        elif {f: v for f, v in leaf.items() if f != "key"} != entries[k]:
+            errs.append("alias %s: differs from params.%s" % (path, k))
     return errs
+
+
+def _view_leaves(doc, roots=VIEW_ROOTS):
+    """(dotted path, leaf) for every alias leaf under the view roots; a leaf is a mapping with `key`."""
+    def walk(node, path):
+        if isinstance(node, dict) and "key" in node and "prior" in node:
+            yield ".".join(path), node
+        elif isinstance(node, dict):
+            for k, v in node.items():
+                yield from walk(v, path + [str(k)])
+    for r in roots:
+        if r in doc:
+            yield from walk(doc[r], [r])
+
+
+def resolve(path, params=None):
+    """The key behind a dotted path: `params.<key>`, `<key>` or an alias such as
+    `regimes.R-slurry.parameters.J0_het`."""
+    p = _params(params)
+    if path in p.entries:
+        return path
+    if path.startswith("params.") and path[7:] in p.entries:
+        return path[7:]
+    for alias, leaf in _view_leaves(p.doc):
+        if alias == path:
+            return leaf["key"]
+    raise KeyError("lit/params.yaml has no key or alias %r" % path)
 
 
 def load_params(path=None, root=None, strict=True):
@@ -358,8 +392,7 @@ def _params(params):
 def prior(key, params=None):
     """The prior of one key as a screen Prior (ParamPrior)."""
     p = _params(params)
-    if key not in p.entries:
-        raise KeyError("lit/params.yaml has no key %r" % key)
+    key = resolve(key, p)
     e = p.entries[key]
     pr = e["prior"]
     fam = pr["family"]
@@ -393,6 +426,7 @@ def correlation_matrix(keys, params=None):
 def priors(keys, params=None):
     """Priors of several keys with their rank correlation (PriorTuple)."""
     p = _params(params)
+    keys = [resolve(k, p) for k in keys]
     items = [prior(k, p) for k in keys]
     groups = {}
     for it in items:

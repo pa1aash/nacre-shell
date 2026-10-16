@@ -44,3 +44,10 @@ def test_merge_skips_unstarted_threads_and_writes_ledger(tmp_path):
                                                     "lit/corpus/gaps.md"}
     assert [i["path"] for i in rec["inputs"]] == ["lit/corpus/T-C/rows.csv"]
     assert "### T-F" not in (tmp_path / "lit" / "corpus" / "gaps.md").read_text()
+
+
+def test_d1_key_uses_the_range_of_range_only_rows():
+    a = good_row(row_id="TH-008", thread="T-H", value="", range_or_uncertainty="111..142")
+    b = good_row(row_id="TH-009", thread="T-H", value="", range_or_uncertainty="120..147")
+    kept, dups = E.merge([[a, b]])
+    assert len(kept) == 2 and dups == []
