@@ -1,4 +1,4 @@
-% Derivation body (session P0-W3.1). SI-ready: \input-able into the SI or the paper.
+% Derivation body (sessions P0-W3.1, P0-W3.2; contract v2). SI-ready: \input-able into the SI or the paper.
 % Requirements of the including document: amsmath, array, and \input of theory/macros.tex.
 % Labels carry the prefix th: so they do not collide with the paper's labels.
 % Symbolic only: no literature value appears in this file. Numbers reach paper text only
@@ -16,8 +16,8 @@ whose reference states it uses. Every relation below is therefore tagged with it
 none is carried across without saying so.
 
 Table~\ref{th:tab:regimes} states, for each link, the necessary condition the link must meet
-in its regime. These are directions of inequalities, not thresholds: every numeric margin is
-registered at G2. Meeting them makes the mechanism thermodynamically possible under the
+in its regime. These are directions of inequalities, not thresholds: the P0 thresholds, margins and
+decision rules are in \texttt{theory/thresholds.md}. Meeting them makes the mechanism thermodynamically possible under the
 stated framing; it does not show that a barrier works, and no rate, capacity or device statement
 follows from any of them.
 
@@ -28,8 +28,8 @@ follows from any of them.
 Link & Regime & What the link must achieve & Relation\\
 \hline
 C1 anchor & \Rs & template held at the oxide against water & $\Wwet>0$, Eq.~\eqref{th:eq:dupre}\\
-C2 sequester & \Rs & Ca$^{2+}$ enriched at the layer against hydrated Ca$^{2+}$ & $\DGseq<0$, $\Eenr>1$, Eq.~\eqref{th:eq:enr}\\
-C3 nucleate & \Rs & heterogeneous barrier lowered, and accessible at $\Oml$ & $f(\theta)$ small; $\DGhet(\Oml)$ low, Eq.~\eqref{th:eq:het}\\
+C2 sequester & \Rs & Ca$^{2+}$ held at the template against hydrated Ca$^{2+}$ & $\DGseq<0$, Eq.~\eqref{th:eq:enr}; it acts on C3 only through $\dga$, Eq.~\eqref{th:eq:gibbs}\\
+C3 nucleate & \Rs & heterogeneous barrier lowered, and accessible at $\Omb$ & $f(\theta)$ small; $\DGhet(\Omb)\le B_\mathrm{acc}$, Eqs.~\eqref{th:eq:het}, \eqref{th:eq:access}\\
 C4 conformal & \Rs, \Rc & a continuous film that closes below the thickness bound & $\Ssp\ge0$ or closure below $d_\mathrm{max}$, Eqs.~\eqref{th:eq:spread}, \eqref{th:eq:combined}\\
 C5 stable & \Rs & mineral and oxide on the aqueous Pourbaix hull & $\DGpbx=0$ (tolerance at G2), Eq.~\eqref{th:eq:pbx}\\
 C5 stable & \Rc & phases inside their Li-referenced window & $E_\mathrm{red}<\ELi<E_\mathrm{ox}$, Eq.~\eqref{th:eq:window}\\
@@ -138,13 +138,14 @@ The choice of $\Vsite$ shifts $\DGsite$ by $\Rg T\ln(\Vsite'/\Vsite)$, so it is 
 (open question Q4).
 
 \paragraph{Activity versus concentration.} Equation~\eqref{th:eq:site} defines a concentration
-ratio. If $w$ contains every interaction of the ion with its surroundings, the chemical
-potential of Ca$^{2+}$ is uniform at equilibrium and the activity in the layer equals the bulk
-activity; the whole enrichment then sits in a local activity coefficient. The screen instead
-uses a \emph{local-ideal} bookkeeping: the local Ca$^{2+}$ activity is the local concentration
-times the bulk activity coefficient, and the binding free energy is carried explicitly by
-$\DGseq$. This is a definition, not an approximation, provided the binding free energy is not
-counted a second time elsewhere (Section~\ref{th:sec:template}).
+ratio. Because $w$ contains every interaction of the ion with its surroundings, the
+electrochemical potential of Ca$^{2+}$ is uniform at equilibrium (Section~\ref{th:sec:supersaturation}):
+the ion in the layer carries the same chemical potential as in bulk, and the whole enrichment
+sits in its local standard potential, equivalently in a local activity coefficient
+$\gamma_\mathrm{loc}=\gamma_\mathrm{bulk}/\Eenr$. $\Eenr$ is therefore a concentration ratio and
+never an activity ratio. Contract v1 used a \emph{local-ideal} bookkeeping that gave the
+enriched ions the bulk standard state; Section~\ref{th:sec:template} shows that it is inconsistent
+at equilibrium and replaces it.
 
 \paragraph{Enrichment and its validity range.} With the local-ideal bookkeeping and dilute,
 non-interacting sites,
@@ -154,7 +155,8 @@ non-interacting sites,
 $\DGseq<0$ gives enrichment ($\Eenr>1$); $\DGseq>0$ gives depletion: the template is then a worse
 ligand than water. Equation~\eqref{th:eq:enr} holds when (a) Ca$^{2+}$ is dilute in bulk, (b)
 the sites are far from saturation, (c) one ion binds per site and sites do not interact, and (d)
-the local and bulk activity coefficients are equal. Condition (b) is quantified next.
+the non-specific (ionic-strength) activity coefficient is the same in the layer as in bulk, so
+that $\Eenr$ is fixed by the PMF alone. Condition (b) is quantified next.
 
 \paragraph{Saturation bound.} The layer has $\Gs$ sites per unit area in a thickness $\ds$, so
 its Ca$^{2+}$ content cannot exceed $\cmax=\Gs/\ds$ (mol\,m$^{-2}$ over m gives mol\,m$^{-3}$).
@@ -168,40 +170,88 @@ $\cmax/\cb$ however negative $\DGseq$ is. A strongly binding but sparse template
 bounded by its site density, not by its binding free energy. Electrostatic coupling between
 charged sites, which Langmuir ignores, is open question Q3.
 
-\section{Local supersaturation}\label{th:sec:supersaturation}
+\paragraph{Occupancy and surface excess.} The same closure gives the fraction of occupied sites
+and the Gibbs relative excess of Ca$^{2+}$ at the template--liquid interface, the bound amount
+per area less the amount the layer volume would hold at the bulk concentration:
+\begin{equation}\label{th:eq:excess}
+\Theta=\frac{x}{1+x}=\frac{\cl}{\cmax},\qquad x=\frac{\Eenr\cb}{\cmax} \un{1},\qquad
+\GCa=\Gs\Theta-\ds\cb \un{mol\,m^{-2}}.
+\end{equation}
+$x$ is the occupancy odds of a site at the regime activity. $\GCa>0$ for net binding and
+$\GCa<0$ for a template that repels Ca$^{2+}$. These, not a local supersaturation, are what
+C2 hands to C3 (Section~\ref{th:sec:template}).
 
-\textit{Physics.} Crystallisation is driven by the excess chemical potential of the dissolved
-ions over the solid. For a 1:1 salt that excess is set by the product of the two ion activities
-relative to its value at saturation. The template can change that product only where the
-nucleus forms, and only through the ion it binds.
+\section{The driving force at the template}\label{th:sec:supersaturation}
 
-One definition is used throughout:
+\textit{Physics.} A nucleus is built from ions taken out of the solution, and the free energy it
+gains per formula unit is the chemical potential those ions carry minus that of the solid. The
+template sits in an open interfacial region that exchanges ions with the slurry. At equilibrium
+nothing can be gained by moving an ion between the bulk and the layer, so every ion carries the
+same electrochemical potential everywhere: the template can concentrate ions, but it cannot make
+them carry more free energy. The driving force at the template is therefore the bulk one. The
+algebra below shows this for the two ways a template enriches Ca$^{2+}$, specific binding and a
+mean electrostatic potential.
+
+\paragraph{One definition.} Throughout,
 \begin{equation}\label{th:eq:omega}
 \Om=\frac{\mathrm{IAP}}{\Ksp}=\frac{\aCa\,\aCO}{\Ksp} \un{1},\qquad \Dmu=\kB T\ln\Om \un{J},
 \end{equation}
-with $\Ksp$ the solubility product of the registered framing (ACC or calcite) and $\Dmu$ the
-chemical-potential drop per formula unit on crystallisation. Units: activities and $\Ksp$ are
-pure numbers on the molal scale; $\kB T$ is in J. Nucleation requires $\Om>1$. The per-ion form
-$S=\Om^{1/2}$, $\Dmu=2\kB T\ln S$, is the same statement and is not used, so that no factor of
-two can be lost between lanes. The charter's $S$ for C3 is this $\Om$.
+with $\Ksp$ the solubility product of the registered framing (ACC or calcite), $\Dmu$ the
+chemical-potential drop per CaCO$_3$ formula unit on crystallisation, and $\Vm$ the molar volume per
+CaCO$_3$ formula unit. Units: activities and $\Ksp$ are pure numbers on the molal scale; $\kB T$ is
+in J. Nucleation requires $\Om>1$. This is the charter's convention (F3): its $S$ is this $\Om$.
+The per-ion square root $\Om^{1/2}$ with a factor $2\kB T$ is the same statement and is not used,
+so that no factor of two can be lost between lanes.
 
-\paragraph{Enrichment of Ca$^{2+}$ alone.} In the local-ideal bookkeeping the local Ca$^{2+}$
-activity is $\aCa\,\cl/\cb$, while the carbonate activity is held at its bulk value (carbonate is
-not assumed enriched). Then
-\begin{equation}\label{th:eq:omlocal}
-\Oml=\frac{\cl}{\cb}\,\Omb\;\xrightarrow{\ \Eenr\cb\ll\cmax\ }\;\Eenr\,\Omb \un{1},\qquad
-\Dmu_\mathrm{local}=\Dmu_\mathrm{bulk}-\frac{\DGseq}{\NA} \un{J}.
+\paragraph{Equilibrium of the open interfacial region.} Write the electrochemical potential of ion
+$i$ (charge number $z_i$) at position $\mathbf r$ as
+\begin{equation}\label{th:eq:echem}
+\tilde\mu_i(\mathbf r)=\mu_i^{\circ}+w_i^\mathrm{sp}(\mathbf r)+\kB T\ln\frac{\gamma_i(\mathbf r)\,m_i(\mathbf r)}{m^{\circ}}+z_ie\psi(\mathbf r) \un{J},
 \end{equation}
-Units: $\DGseq/\NA$ is J per ion, matching $\Dmu$ per formula unit, since one Ca$^{2+}$ enters
-each formula unit. The saturation bound carries over: $\Oml\le(\cmax/\cb)\,\Omb$.
+where $\mu_i^{\circ}$ is the bulk standard potential, $w_i^\mathrm{sp}$ the specific (non-electrostatic)
+interaction with the template ($w^\mathrm{sp}\to0$ in bulk), $\gamma_i$ the non-specific activity
+coefficient, $m_i$ the molality and $\psi$ the mean electrostatic potential ($\psi\to0$ in bulk).
+Equilibrium of the region with the slurry, which acts as a reservoir, is the statement
+\begin{equation}\label{th:eq:uniform}
+\tilde\mu_i(\mathbf r)=\tilde\mu_{i,\mathrm{bulk}}\quad\text{for every ion }i\text{ and every }\mathbf r.
+\end{equation}
+Solving Eq.~\eqref{th:eq:echem} for $m_i$ gives the local enrichment,
+$m_i(\mathbf r)/m_{i,\mathrm{bulk}}=(\gamma_{i,\mathrm{bulk}}/\gamma_i)\exp[-(w_i^\mathrm{sp}+z_ie\psi)/\kB T]$:
+the Boltzmann factor of Section~\ref{th:sec:sequestration} is a \emph{consequence} of
+Eq.~\eqref{th:eq:uniform}, not an exception to it.
 
-Two cautions belong to this step. (1) A template that attracts Ca$^{2+}$ is usually anionic and
-repels CO$_3^{2-}$. Holding $\aCO$ at its bulk value is then an upper estimate of $\Oml$, biased in
-favour of the mechanism; the bound is acceptable for a screen only if it is reported as such (Q2).
-(2) Because the true chemical potential is uniform at equilibrium, the increase of $\Om$ from
-$\Omb$ to $\Oml$ is the binding free energy moved into the driving force by the bookkeeping. It
-is legitimate only if the same free energy is not also credited through the interfacial
-energies (Section~\ref{th:sec:template}).
+The driving force for adding one formula unit to a nucleus at $\mathbf r$ is
+\begin{equation}\label{th:eq:dmu-uniform}
+\Dmu(\mathbf r)=\tilde\mu_\mathrm{Ca}(\mathbf r)+\tilde\mu_{\mathrm{CO_3}}(\mathbf r)-\mu_\mathrm{CaCO_3(s)}
+=\tilde\mu_\mathrm{Ca,bulk}+\tilde\mu_\mathrm{CO_3,bulk}-\mu_\mathrm{CaCO_3(s)}=\kB T\ln\Omb \un{J}.
+\end{equation}
+It does not depend on $\mathbf r$: it is the same at a binding site, in the diffuse layer and in
+the bulk.
+
+\paragraph{(i) Specific binding.} At a site, $w_\mathrm{Ca}^\mathrm{sp}$ adds $\DGseq/\NA$ per ion to the
+standard part of $\tilde\mu_\mathrm{Ca}$ (a lowering when $\DGseq<0$) (with the site-volume standard state of
+Eq.~\eqref{th:eq:site}) and raises the concentration term by $\kB T\ln\Eenr=-\DGseq/\NA$. The two
+changes are equal and opposite, which is why $\tilde\mu_\mathrm{Ca}$ stays at its bulk value. The
+local enrichment $\cl/\cb=\Eenr=\exp(-\DGseq/\Rg T)$ therefore changes the driving force by
+\begin{equation}\label{th:eq:no-gain}
+\Dmu_\mathrm{site}-\Dmu_\mathrm{bulk}=\underbrace{\kB T\ln\Eenr}_{\text{concentration}}+\underbrace{\DGseq/\NA}_{\text{standard potential}}=0 \un{J}.
+\end{equation}
+
+\paragraph{(ii) A mean potential.} At an anionic template ($\psi<0$) Ca$^{2+}$ is enriched by
+$\e^{-2e\psi/\kB T}$ and CO$_3^{2-}$ depleted by $\e^{+2e\psi/\kB T}$. Even counting concentrations
+alone, the ion product is unchanged, $(\aCa\aCO)_\mathrm{local}=(\aCa\aCO)_\mathrm{bulk}$, and in
+Eq.~\eqref{th:eq:dmu-uniform} the potential enters as $(z_\mathrm{Ca}+z_\mathrm{CO_3})e\psi=0$
+because the solid is neutral. A mean potential changes neither $\Om$ nor $\Dmu$. This settles
+Q2: carbonate needs no separate treatment, and holding it at its bulk activity (the v1 choice) is
+not the issue; crediting the enriched Ca$^{2+}$ was.
+
+\paragraph{Result.} At equilibrium the nucleus at the template is driven by $\kB T\ln\Omb$,
+evaluated at the regime activities. The template changes the barrier only through the
+interfacial energies: the diffuse-layer free energy is part of $\gsl$ and $\gnl$, and the specific
+binding enters $\gsl$ through the Gibbs adsorption equation (Section~\ref{th:sec:template}).
+The local-ideal ratio $\Omega_\mathrm{li}=(\cl/\cb)\Omb$, with
+$\Dmu_\mathrm{li}=\Dmu_\mathrm{bulk}-\DGseq/\NA$, survives only as the named double-counting
+demonstration of the contract (\texttt{Omega\_local\_ideal}, \texttt{Delta\_mu\_local\_ideal}).
 
 \section{Homogeneous and heterogeneous nucleation}\label{th:sec:nucleation}
 
@@ -272,6 +322,30 @@ substrate, no line tension, and a cluster of the bulk phase's composition. A non
 pathway (prenucleation clusters, liquid precursors) is outside this framework and is a
 limitation, not a parameter.
 
+\paragraph{Accessibility of the barrier.} A barrier is low enough only relative to the number of
+attempts the system makes in the time available. Nuclei form on the template at the rate per
+unit area
+\begin{equation}\label{th:eq:rate}
+J=J_0\,\e^{-\DGhet/\kB T} \un{m^{-2}\,s^{-1}},
+\end{equation}
+with $J_0$ the kinetic prefactor of heterogeneous nucleation per unit template area (attachment
+frequency, Zeldovich factor and site density). Over the time $t_\mathrm{p}$ that the template
+spends at the registered \Rs\ state (slurry contact and drying), the expected areal density of
+nuclei is $N_\mathrm{nuc}=J\,t_\mathrm{p}$; along a path of registered states $k$ held for
+$\Delta t_k$ it is $\sum_kJ_0\Delta t_k\,\e^{-\Delta G^{*}_{\mathrm{het},k}/\kB T}$. Requiring at least the areal
+density $N_\mathrm{req}$ gives the absolute-barrier criterion
+\begin{equation}\label{th:eq:access}
+N_\mathrm{nuc}\ge N_\mathrm{req}\iff \DGhet\le B_\mathrm{acc}=\kB T\ln\frac{J_0\,t_\mathrm{p}}{N_\mathrm{req}} \un{J}.
+\end{equation}
+Units: $J_0t_\mathrm{p}$ and $N_\mathrm{req}$ are both m$^{-2}$, so the logarithm is of a pure
+number. Equivalently, a count $\mathcal N$ on a collector area $A$ is $N_\mathrm{req}=\mathcal N/A$.
+Four properties make the criterion usable without a precise kinetic theory: only $\ln J_0$
+enters, so an order-of-magnitude prefactor moves $B_\mathrm{acc}$ by a few $\kB T$; the barrier
+is evaluated at $\Omb$ (Section~\ref{th:sec:template}); the non-stationary time lag is neglected;
+and $N_\mathrm{nuc}$ ignores exclusion zones around growing islands, so it is an upper estimate
+and the criterion is necessary, not sufficient. It is a statement about nucleation in the slurry,
+not about corrosion, and no rate of anything else follows from it.
+
 \section{Young's relation and the fixed sign convention}\label{th:sec:young}
 
 \textit{Physics.} At the contact line, moving the line outward by a small amount replaces
@@ -330,69 +404,193 @@ reversal as sign-flip test SF1 (Table~\ref{th:tab:signflip}).
 
 \begin{table}[h]
 \centering\small
-\begin{tabular}{@{}l l l@{}}
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{\dimexpr\textwidth*40/99\relax} >{\raggedright\arraybackslash}p{\dimexpr\textwidth*40/99\relax}@{}}
 \hline
-Change & Registered convention & Deck form ($\geff$ in the denominator), $\gsl>\gsnz$\\
+Test, change & Registered convention (contract v2) & Rejected form\\
 \hline
-$\dgw>0$ & $\cos\theta\downarrow$, $\DGhet\ge\DGhet|_{\dgw=0}$ & $\cos\theta\uparrow$, $\DGhet\le\DGhet|_{\dgw=0}$\\
-$\dgw<0$ & $\DGhet\le\DGhet|_{\dgw=0}$ & reversed\\
-$\DGseq<0$ & $\Oml>\Omb$, barrier lowered & (not affected by the Young form)\\
-$\DGseq>0$ & $\Oml<\Omb$, barrier raised & \\
+SF1, $\dgw>0$ & $\cos\theta\downarrow$, $\DGhet\ge\DGhet|_{\dgw=0}$ & deck ($\geff$ in the denominator), $\gsl>\gsnz$: $\cos\theta\uparrow$, $\DGhet\le\DGhet|_{\dgw=0}$\\
+SF1, $\dgw<0$ & $\DGhet\le\DGhet|_{\dgw=0}$ & reversed\\
+SF2, $\DGseq\downarrow$ & $\Om=\Omb$; $\cos\theta\downarrow$ through $\dga$; barrier raised at fixed $\gslz,\gsn$ & local-ideal (v1): $\Oml>\Omb$, barrier lowered\\
+SF3, $\gnl\downarrow$ & $f\downarrow$ if $\gsl>\gsn$; $f\uparrow$ if $\gsl<\gsn$; $f=\tfrac12$ fixed if equal & ``lowering $\gnl$ always lowers $f$''\\
 \hline
 \end{tabular}
-\caption{Sign-flip tests SF1 and SF2 of \texttt{theory/contract.yaml}.}\label{th:tab:signflip}
+\caption{Sign-flip tests SF1--SF3 of \texttt{theory/contract.yaml}.}\label{th:tab:signflip}
 \end{table}
 
-\section{Where the template acts, and the no-double-counting condition}\label{th:sec:template}
+\section{Where the template acts: bookkeeping and the no-double-counting proof}\label{th:sec:template}
 
-\textit{Physics.} The template is both an interface and a ligand field. As an interface it
-changes the energies of the surfaces the nucleus replaces and creates; as a ligand field it
-concentrates Ca$^{2+}$ where the nucleus forms. In classical nucleation the barrier depends on
-exactly four quantities, $(\gsl,\gsn,\gnl,\Dmu)$, so the template can act only through $\theta$
-and through $\Om$. The risk is that one microscopic interaction, the binding of Ca$^{2+}$ to the
-template, is counted in both.
+\textit{Physics.} The template is both an interface and a ligand field. In classical nucleation
+the barrier depends on four quantities, $(\gsl,\gsn,\gnl,\Dmu)$; $\gnl$ belongs to the nucleus
+and the solution, so the template can act only through $\gsl$, $\gsn$ and $\Dmu$.
+Section~\ref{th:sec:supersaturation} showed that at equilibrium it cannot act through $\Dmu$. What
+remains is to find where its Ca$^{2+}$ binding goes, to show that it is counted exactly once, and
+to state the rule the screen follows.
 
-\paragraph{Statement.} Combining Eqs.~\eqref{th:eq:omlocal}, \eqref{th:eq:hom}, \eqref{th:eq:het}
-and \eqref{th:eq:young},
-\begin{equation}\label{th:eq:composite}
-\DGhet=f\big(\theta[\gsl,\gsnz,\dgw]\big)\,
-\frac{16\pi\gnl^{3}\vm^{2}}{3\big(\kB T\ln\Oml[\DGseq,\Gs,\ds]\big)^{2}} \un{J}.
+\subsection{Two bookkeepings}\label{th:sec:bookkeeping}
+
+\paragraph{Uniform chemical potential (U).} Every ion carries its bulk electrochemical potential,
+Eq.~\eqref{th:eq:uniform}; the driving force is $\kB T\ln\Omb$, Eq.~\eqref{th:eq:dmu-uniform}; and
+every interaction between the template and the ions near it is an excess quantity per area inside
+the grand-canonical interfacial energies $\gsl$ and $\gsn$, evaluated at the bulk chemical
+potentials.
+
+\paragraph{Local-ideal (L).} The enriched Ca$^{2+}$ is given the bulk standard state at the local
+concentration, so the enrichment raises the supersaturation, $\Omega_\mathrm{li}=(\cl/\cb)\Omb$, and
+the interfacial energies are taken for the template without its Ca$^{2+}$ excess. This was
+contract v1.
+
+\paragraph{Which is consistent.} (U) is the equilibrium statement. (L) makes a hidden
+assumption: an ion in the layer carries $\tilde\mu_\mathrm{Ca,bulk}-\DGseq/\NA$, more than the bulk
+ion when $\DGseq<0$. That is the electrochemical potential of a layer that is \emph{not} in
+equilibrium with the slurry, a separate reservoir held above the bulk. (L) is therefore
+self-contradictory: $\Eenr$ is computed from the equilibrium condition~\eqref{th:eq:uniform} and
+then used as if that condition did not hold. The binding free energy is spent once to hold the ion
+at the site and credited a second time as driving force.
+
+\paragraph{When a local excess of driving force is real.} A genuine $\Dmu_\mathrm{local}>\Dmu_\mathrm{bulk}$
+needs a non-equilibrium state with a time scale: (a) concentration during drying, when
+evaporation or a drying front outruns diffusive exchange with the remaining liquid; (b) slow
+exchange of the layer with the reservoir, for example a layer loaded with Ca$^{2+}$ at one
+activity and then exposed to another, or Ca$^{2+}$ released by protonation of the sites when the
+pH changes, which leaves the layer above the bulk chemical potential until diffusion relaxes it;
+(c) local pH excursions that shift the carbonate speciation at the interface. Each needs
+transport and kinetics with a stated time scale. They lie outside a thermodynamic screen, which
+evaluates equilibrium states at registered inputs, and P0 makes no statement about them. What a
+screen can do is evaluate $\Omb$ at each registered state along the drying path, because
+evaporation does change the bulk activities; that is the bulk driving force at a later state, not
+a local excess.
+
+\subsection{Exact reference: the grand potential of a cap}
+
+At fixed $T$ and fixed bulk chemical potentials the open system minimises its grand potential.
+Forming a cap of radius $r$ on the template transfers $n=V_\mathrm{cap}/\vm$ formula units from the
+reservoir, each at the bulk chemical potentials, creates the cap surface and replaces template--liquid
+interface by template--nucleus interface over the base:
+\begin{equation}\label{th:eq:grand}
+\Delta\Omega_\mathrm{G}(r)=-n\,\kB T\ln\Omb+\gnl A_\mathrm{cap}+(\gsn-\gsl)A_\mathrm{base} \un{J},
 \end{equation}
-\textbf{No-double-counting condition.} (a) Every template-dependent input enters exactly one
-channel: $\gsl,\gsnz,\dgw$ only $\theta$; $\DGseq,\Gs,\ds$ only $\Om$; so
-$\partial\theta/\partial\DGseq=0$ and $\partial\Om/\partial\gamma_{\mathrm{s}\cdot}=0$. Bulk inputs
-($\gnl$, $\Vm$, $T$) may enter both. (b) The interfacial energies $\gsl$ and $\gsn$ are evaluated
-for the template \emph{without} the Ca$^{2+}$ excess that $\Oml$ already credits. Part (a) is
-checked mechanically by \texttt{theory/tools/check\_contract.py}; part (b) is the physical content
-and is proved in P0-W3.2.
+with $\gsl,\gsn,\gnl$ the grand-canonical (excess grand potential per area) energies at the bulk
+chemical potentials. Within capillarity this is exact. The reservoir term carries no template
+dependence, and by Gibbs' construction every effect of the template on the ions around it is an
+excess per area: there is no other place for it to sit. Equation~\eqref{th:eq:grand} has the form
+of Eq.~\eqref{th:eq:dg-cap}, so the factorisation of Section~\ref{th:sec:nucleation} applies with
+$\Dmu=\kB T\ln\Omb$ and the in-situ $\gsl$.
 
-\paragraph{Outline of the proof (P0-W3.2).}
+\subsection{Gibbs adsorption: where the bound Ca$^{2+}$ goes}
+
+\paragraph{Template--liquid interface.} At fixed $T$ the Gibbs adsorption equation is
+$\dd\gsl=-\sum_i\Gamma_i\,\dd\mu_i$. The Ca$^{2+}$ binding computations use charge-neutral cells,
+so the adsorbing component is Ca$^{2+}$ with its compensating charge, and the electrostatic terms
+cancel as in Section~\ref{th:sec:supersaturation}(ii). Raising the Ca$^{2+}$ activity from zero
+(the Ca-free template, $\gslz$) to the regime value at fixed pH and ionic strength, with the
+Langmuir excess of Eq.~\eqref{th:eq:excess} and $\dd\mu_\mathrm{Ca}=\Rg T\,\dd\ln c$ (dilute
+bulk, fixed activity coefficient):
+\begin{equation}\label{th:eq:gibbs}
+\dga\equiv\gsl-\gslz=-\int_0^{\cb}\GCa(c)\,\Rg T\frac{\dd c}{c}
+=-\Rg T\Big[\Gs\ln(1+x)-\ds\cb\Big] \un{J\,m^{-2}},
+\end{equation}
+because $\int_0^{\cb}\Gs\frac{x(c)}{1+x(c)}\frac{\dd c}{c}=\Gs\ln(1+x)$ with $x(c)=\Eenr c/\cmax$
+linear in $c$, and $\int_0^{\cb}\ds c\,\frac{\dd c}{c}=\ds\cb$. Units: $\Rg T\Gs$ is
+J\,mol$^{-1}\cdot$mol\,m$^{-2}=$ J\,m$^{-2}$, and $\ds\cb$ is mol\,m$^{-2}$. In terms of the C2 inputs,
+$x=\exp(-\DGseq/\Rg T)\,\cb\ds/\Gs$, so $\dga$ is a function of $\DGseq$, $\aCa$ (through $\cb$),
+$\Gs$ and $\ds$ only. Its properties:
+\begin{itemize}
+\item $\partial\dga/\partial\DGseq=\Gs\Theta>0$: each site contributes its occupancy, so deeper
+binding lowers $\gsl$;
+\item $\partial\dga/\partial\mu_\mathrm{Ca}=-\GCa$: the Gibbs equation itself;
+\item at strong binding ($x\gg1$), $\dga\to\Gs\DGseq+\Rg T\Gs\ln(\cmax/\cb)$ plus terms that
+vanish: each site gives its binding free energy, less the free energy of concentrating the ion
+from the bulk concentration to that of a filled site;
+\item a template that repels Ca$^{2+}$ ($\DGseq\to+\infty$) has $\dga\to+\Rg T\ds\cb>0$: negative
+adsorption raises $\gsl$;
+\item with no specific interaction ($\DGseq=0$) $\dga=\Rg T\Gs[y-\ln(1+y)]$ with $y=\cb\ds/\Gs$,
+a pure site-exclusion correction that vanishes as $y^{2}/2$ in the dilute limit.
+\end{itemize}
+If $\gsl$ is computed directly at the regime activities, the adsorption is already inside it and
+$\dga\equiv0$, the same rule as for $\dgw$ (Section~\ref{th:sec:young}).
+
+\paragraph{Template--nucleus interface.} Under the contact disc the solution is gone. A site there
+is coordinated by an ion of the nucleus lattice, which came from the reservoir at the bulk
+chemical potential and is counted in $n$ like every other formula unit, or it is left to carbonate
+or to the residual hydration layer. In either case the template--nucleus interface holds no
+solution-side adsorption excess: with the dividing surface at the template and a stoichiometric
+nucleus, $\gsn$ is the excess free energy of the template--crystal contact (with $\dgw$ for the
+displaced water) and does not depend on $\mu_\mathrm{Ca}$. \textbf{The adsorbed Ca$^{2+}$ belongs to
+the template--liquid interface only.} The template's affinity for Ca$^{2+}$ can favour nucleation
+only through $\gsn$, if its ligands coordinate lattice Ca$^{2+}$ well; that is a property of the
+template--crystal contact, and it is computed or fetched as such (the C3 inputs), never inferred
+from $\DGseq$.
+
+\paragraph{Consequence for the barrier (Q1).} Young's relation becomes
+\begin{equation}\label{th:eq:young-ads}
+\cos\theta=\frac{\gslz+\dga-\gsnz-\dgw}{\gnl},\qquad
+\frac{\partial\cos\theta}{\partial\DGseq}=\frac{\Gs\Theta}{\gnl}>0 \un{1;\ mol\,J^{-1}}.
+\end{equation}
+At fixed $\gslz$ and $\gsn$, stronger binding lowers $\cos\theta$ and raises $\theta$, $f$ and
+$\DGhet$. Ions held at the template--liquid interface must be stripped from the area the nucleus
+covers, which is a cost; the physics is that of an adsorbed inhibitor. A Ca-binding template
+promotes nucleation only if $\gsl-\gsn$ stays positive after the adsorption term, that is, if
+$\gsn$ falls by more than $\gsl$ does. The sign of the template's effect is the sign of the
+difference between the Ca$^{2+}$ excess at the template--liquid interface (here $\GCa$) and at the
+template--nucleus interface (here zero). This is the possibility v1 flagged in Q1, now settled:
+bookkeeping (L) gave $\DGseq<0$ a barrier-lowering effect it does not have (sign-flip test SF2).
+
+\subsection{The no-double-counting proof}
+
+\paragraph{Statement.} In the screen composite
+\begin{equation}\label{th:eq:composite}
+\DGhet=f\Big(\theta\big[\gslz+\dga(\DGseq,\cb,\Gs,\ds),\ \gsnz,\ \dgw\big]\Big)\,
+\frac{16\pi\gnl^{3}\vm^{2}}{3\big(\kB T\ln\Omb\big)^{2}} \un{J}
+\end{equation}
+every effect of the template on the barrier is counted exactly once.
+
+\paragraph{Proof.} (1) \emph{Exactness.} Equation~\eqref{th:eq:grand} is the free energy of cap
+formation in the open system within capillarity; Eq.~\eqref{th:eq:composite} is its stationary
+value after the factorisation of Section~\ref{th:sec:nucleation}, with $\gsl=\gslz+\dga$.
+(2) \emph{Channel separation.} $\Omb$ depends on bulk activities only, so
+$\partial\Om/\partial(\text{any template input})=0$. All template dependence is in $\gsl$ and $\gsn$,
+hence in $\theta$; $\gnl$, $\Vm$ and $T$ are template-independent and may appear in both factors.
+(3) \emph{Single entry of the binding.} $\DGseq$, $\Gs$ and $\ds$ enter $\gsl$ through
+Eq.~\eqref{th:eq:gibbs} only, and only when $\gsl$ is built from $\gslz$. They do not enter
+$\gsn$ (template--nucleus interface, above) and do not enter $\Om$
+(Eq.~\eqref{th:eq:dmu-uniform}). The water-displacement correction enters $\gsn$ once, by the
+convention of Section~\ref{th:sec:young}. (4) Hence each template-dependent input appears once,
+in one interfacial energy, and only through $\theta$. This completes the proof.
+
+\noindent The checker verifies the syntactic form of (2) and (3) on the contract: the template
+inputs are partitioned into the $\theta$ channel, the $\Om$ channel holds bulk inputs only, and
+$\DGseq$, $\Gs$, $\ds$ reach the composite only through $\dga$.
+
+\paragraph{The two errors, demonstrated.} The contract keeps two wrong composites, named and never
+used for a verdict (C3 item 13):
+\begin{itemize}
+\item \texttt{DG\_het\_local\_ideal} (contract v1): Ca-free $\gslz$ with $\Omega_\mathrm{li}$. The
+binding is counted once, but in a channel that does not exist at equilibrium, and it lowers the
+barrier where the exact result raises it.
+\item \texttt{DG\_het\_double}: the in-situ $\gsl$ (Gibbs term inside) with $\Omega_\mathrm{li}$. The
+same binding free energy is charged to $\gsl$ and credited to $\Dmu$.
+\end{itemize}
+Both exceed the exact driving force by $\kB T\ln(\cl/\cb)$ per formula unit, which is
+$-\DGseq/\NA$ in the dilute limit. The barrier of either is smaller than that of the exact
+$\Om$-factor by $\big[\ln\Omb/\ln\Omega_\mathrm{li}\big]^{2}$, and \texttt{DG\_het\_double} reduces to
+the v1 composite without the Gibbs term and to the screen composite without the local credit
+(both checked). Together with the double application of $\dgw$ of Section~\ref{th:sec:young},
+these are the double-counting demonstrations.
+
+\subsection{Rule for the screen}\label{th:sec:rule}
+
 \begin{enumerate}
-\item \emph{Exact reference.} Write the free energy of a cap on the template in the grand
-ensemble at the bulk chemical potentials of Ca$^{2+}$ and CO$_3^{2-}$. In this bookkeeping (A)
-the driving force is $\Dmu_\mathrm{bulk}$ everywhere, and all template--ion interactions are
-inside grand-canonical interfacial energies $\gsl^{(\mu)}$, $\gsn^{(\mu)}$.
-\item \emph{Gibbs adsorption.} At fixed $T$, $\dd\gsl^{(\mu)}=-\sum_i\Gamma_i\,\dd\mu_i$, so the
-Ca$^{2+}$ excess $\Gamma_\mathrm{Ca}$ at the template lowers $\gsl^{(\mu)}$ relative to the
-Ca-free template by $\int\Gamma_\mathrm{Ca}\,\dd\mu_\mathrm{Ca}$; the same holds at the
-substrate--nucleus interface with its own excess.
-\item \emph{Local-ideal bookkeeping (B), the one registered here.} Move the binding free energy
-out of the interfacial energies and into the driving force: $\Dmu_\mathrm{local}$ from
-Eq.~\eqref{th:eq:omlocal}, with $\gsl,\gsn$ of the Ca-free template.
-\item \emph{Equivalence or bound.} Show under which conditions (A) and (B) give the same
-$\DGhet$, or bound their difference. The key quantity is the Ca$^{2+}$ excess at the
-substrate--liquid interface \emph{minus} that at the substrate--nucleus interface: in (A),
-adsorption that stabilises only the template--water interface \emph{raises} $\theta$; it lowers
-the barrier only if the nucleus incorporates the bound ions at a lower cost than water holds
-them.
-\item \emph{Error demonstration.} Mixing (A)'s Ca-loaded $\gsl$ with (B)'s $\Oml$ counts the same
-binding twice; the size of that error is C3 item 13, together with the $\dgw$ double application
-of Section~\ref{th:sec:young}.
+\item The driving force is $\Dmu=\kB T\ln\Omb$ at the regime activities of Ca$^{2+}$ and
+CO$_3^{2-}$. Neither $\Eenr$, $\cl$ nor $\Omega_\mathrm{li}$ enters the barrier.
+\item C2's $\DGseq$ maps into the barrier only through $\dga(\DGseq,\cb,\Gs,\ds)$ of
+Eq.~\eqref{th:eq:gibbs}, added once to the Ca-free $\gslz$. If $\gsl$ is supplied at the regime
+activities, nothing is added.
+\item $\gsn$ is the energy of the template--crystal contact with lattice ions at the sites (plus
+$\dgw$ if it comes from a dry reference); it carries no term in $\DGseq$ or $\aCa$.
+\item Carbonate needs no correction: a mean potential cancels in $\Om$ and in $\Dmu$.
+\item The same rule governs R-slurry stability: dissolution of CaCO$_3$ is decided by $\Omb$. An
+evaluation at an ``enriched'' state is a non-equilibrium sensitivity, never an equilibrium result.
 \end{enumerate}
-Step 4 matters for the screen, and is flagged as an open question (Q1), because bookkeeping (B)
-always lowers the barrier when $\DGseq<0$, while in (A) the sign of the template's effect depends
-on a difference of adsorption excesses. The choice of bookkeeping is therefore not neutral, and
-the proof must settle it before any C3 output is read.
 
 \section{Film conformality}\label{th:sec:conformality}
 
@@ -434,9 +632,31 @@ thin islands and early closure for a given $\Ns$. It does not fix $\Ns$, which d
 nucleation rate relative to lateral growth; it says nothing about places where the template is
 absent, where the bare-oxide angle applies; and it is silent on porosity, on dissolution and
 reprecipitation of the amorphous phase, and on cracking when a hydrated film shrinks on drying.
-The proposed C3 band $f(\theta)\le\tfrac12$ admits $\theta$ up to $\pi/2$, which is island growth;
-conformality is therefore a separate criterion (C4, design flag 2), chosen at G2 among a
-small-angle bound, $\Ssp\ge0$, and a closure condition such as Eq.~\eqref{th:eq:combined}.
+A C3 band $f(\theta)\le\tfrac12$ admits $\theta$ up to $\pi/2$, which is island growth;
+conformality is therefore a separate criterion (C4, design flag 2).
+
+\paragraph{The three C4 candidates and what each contains (lane note N1).} (a) A small-angle bound
+$\theta\le\theta_\mathrm{max}$ and (b) $\Ssp\ge-s$ (with $s\ge0$ a margin) carry the same
+information. On the partial-wetting branch Eq.~\eqref{th:eq:spread} gives $\Ssp=\gnl(\cos\theta-1)$,
+so
+\begin{equation}\label{th:eq:n1}
+\Ssp\ge-s\iff\cos\theta\ge1-\frac{s}{\gnl}\iff\theta\le\theta_\mathrm{max}=\arccos\Big(1-\frac{s}{\gnl}\Big),
+\end{equation}
+because $\cos$ is decreasing on $[0,\pi]$ and $\gnl>0$. Both test one quantity, the Young
+numerator $\gsl-\gsn$ relative to $\gnl$; they differ only in strictness. $\Ssp\ge0$ ($s=0$,
+$\theta_\mathrm{max}=0$) is the strict end, complete wetting; it is also the better-posed form,
+because it is defined when Young has no solution ($\gsl-\gsn>\gnl$), where $\theta$ is not. A
+finite $\theta_\mathrm{max}$ needs a physical scale, and the only one the theory supplies is the
+coalescence condition: closure below $d_\mathrm{max}$ at island density $\Ns$ requires
+$\tan(\theta/2)\le d_\mathrm{max}\sqrt{2\Ns}$, i.e. $\theta_\mathrm{max}=2\arctan\big(d_\mathrm{max}\sqrt{2\Ns}\big)$.
+(c) The coalescence condition $h_\mathrm{cl}\le d_\mathrm{max}$, equivalently
+\begin{equation}\label{th:eq:nclosure}
+\Ns\ge N_\mathrm{s,cl}=\frac{\tan^{2}(\theta/2)}{2d_\mathrm{max}^{2}} \un{m^{-2}},
+\end{equation}
+brings in $\Ns$, set by nucleation relative to lateral growth, and $d_\mathrm{max}$, set by
+electron transport (Section~\ref{th:sec:film}). Neither (a) nor (b) contains either quantity, so
+(c) is the independent condition. C4 therefore registers one criterion from the (a)/(b) family
+and uses (c) as the independent supporting condition (\texttt{theory/thresholds.md}).
 
 \section{Thermodynamic stability}\label{th:sec:stability}
 
@@ -488,6 +708,30 @@ stability of CaCO$_3$ and of the Al phases needs oxidation reactions that releas
 dissolved Ca$^{2+}$ and Al$^{3+}$ into the electrolyte, which require the electrolyte species as
 additional open components (Q9). Kinetics and electrolyte oxidation are outside both screens.
 
+\paragraph{The oxidation sink is fixed by the electrolyte (Q9).} When the collector oxidises
+CaCO$_3$, the carbonate gives up its electrons and leaves as CO$_2$ and O$_2$. The Ca$^{2+}$ must go
+somewhere, and the cell offers only what the electrolyte contains: Li$^{+}$, the salt anion A$^{-}$
+and the solvent. Electroneutrality pairs each released Ca$^{2+}$ with two A$^{-}$, either as the solid
+salt CaA$_2$ or as solvated ions, and the electrons reach the Li$^{+}$/Li reference as Li plated from
+the salt LiA. Referenced to Li$^{+}$/Li, the reactions are
+\begin{equation}\label{th:eq:sink}
+\mathrm{CaCO_3}+2\,\mathrm{LiA}\to\mathrm{CaA_2}+\mathrm{CO_2}+\tfrac12\mathrm{O_2}+2\,\mathrm{Li},\qquad
+\mathrm{Al_2O_3}+6\,\mathrm{LiA}\to2\,\mathrm{AlA_3}+\tfrac32\mathrm{O_2}+6\,\mathrm{Li},
+\end{equation}
+each with $\Delta n>0$ and a limit $E^{*}=\Delta G_\mathrm{r}/(\Delta n\,\Fc)$ from
+Eq.~\eqref{th:eq:window}. The sink is therefore not a free choice: it is the anion of the
+registered electrolyte (\texttt{charter/regimes.yaml}, \texttt{electrolyte\_composition}). The rule
+for choosing among candidate salts, once \texttt{lit/params.yaml} lists the fluorine-free salts:
+(1) only the anions of the registered salt or salts are admissible; (2) the oxidation limit is the
+minimum over the admissible sinks and over the products each can form, because a phase is
+unstable if any accessible reaction is downhill; (3) the true product is the lower-free-energy of
+the solid salt and the solvated ions, so a limit computed with the solid salt alone is an upper
+bound on the true onset, and it is reported as conditional on that sink; (4) a sink whose
+thermochemistry is missing makes the limit \emph{undetermined}, which never counts as a pass;
+(5) where the CO$_2$ (or O$_2$) reference is uncertain, the limit is evaluated under each registered
+reference scheme and the lowest is used. The electrolyte's own anodic limit is a separate
+quantity: above it the electrolyte reacts first, and it is not assessed here.
+
 \section{The insulating-film limitation}\label{th:sec:film}
 
 \textit{Physics.} CaCO$_3$ is an electronic insulator. The film lies between the cathode coating and
@@ -538,18 +782,18 @@ Link & Regime & Contract functions & Inputs consumed (symbol ids) & Source\\
 C1 adhesion & \Rs & \texttt{W\_adh\_wet}, \texttt{W\_adh\_wet\_from\_pmf}, \texttt{W\_adh\_dry\_fn} &
 \texttt{Delta\_F\_pmf}, \texttt{A\_c}; comparator \texttt{gamma\_o}, \texttt{gamma\_p}, \texttt{gamma\_op}, \texttt{gamma\_w} &
 computed PMF; W1 for comparators\\
-C2 sequestration & \Rs & \texttt{Delta\_G\_seq\_cycle}, \texttt{E\_enr}, \texttt{c\_max}, \texttt{c\_local} &
+C2 sequestration & \Rs & \texttt{Delta\_G\_seq\_cycle}, \texttt{E\_enr}, \texttt{c\_max}, \texttt{c\_local}, \texttt{x\_bind}, \texttt{Theta\_occ}, \texttt{Gamma\_Ca}, \texttt{Delta\_gamma\_ads} &
 \texttt{Delta\_G\_site}, \texttt{pKa}, \texttt{pH}, \texttt{T}, \texttt{c\_bulk}, \texttt{Gamma\_s}, \texttt{delta\_s}, \texttt{V\_site} &
 computed PMF; W1 for pKa, pH, c\_bulk\\
-Super\-saturation & \Rs & \texttt{Omega\_bulk}, \texttt{Omega\_local}, \texttt{Delta\_mu} &
-\texttt{a\_Ca}, \texttt{a\_CO3}, \texttt{K\_sp}, \texttt{T}, with C2 outputs &
+Super\-saturation & \Rs & \texttt{Omega\_bulk}, \texttt{Delta\_mu}; demonstration: \texttt{Omega\_local\_ideal}, \texttt{Delta\_mu\_local\_ideal} &
+\texttt{a\_Ca}, \texttt{a\_CO3}, \texttt{K\_sp}, \texttt{T} &
 W1 (activities from speciation at the regime pH and ionic strength)\\
-C3 nucleation & \Rs & \texttt{r\_star}, \texttt{DG\_hom}, \texttt{f\_theta}, \texttt{DG\_het}, \texttt{cos\_theta\_young}, \texttt{theta\_young}; audit: \texttt{gamma\_eff\_deck}, \texttt{cos\_theta\_deck} &
-\texttt{gamma\_nl}, \texttt{gamma\_sl}, \texttt{gamma\_sn0}, \texttt{Delta\_gamma\_w}, \texttt{V\_m}, \texttt{T}, with $\Oml$ &
+C3 nucleation & \Rs & \texttt{r\_star}, \texttt{DG\_hom}, \texttt{f\_theta}, \texttt{DG\_het}, \texttt{cos\_theta\_young}, \texttt{cos\_theta\_template}, \texttt{gamma\_sl\_insitu}, \texttt{theta\_young}, \texttt{B\_acc}, \texttt{N\_nuc}; audit: \texttt{gamma\_eff\_deck}, \texttt{cos\_theta\_deck} &
+\texttt{gamma\_nl}, \texttt{gamma\_sl0} (or \texttt{gamma\_sl} in situ), \texttt{gamma\_sn0}, \texttt{Delta\_gamma\_w}, \texttt{V\_m}, \texttt{T}, \texttt{J0\_het}, \texttt{t\_proc}, \texttt{N\_req}, with $\Omb$ and \texttt{Delta\_gamma\_ads} &
 W1 priors and computed slabs; framing at G2\\
-C4 conformality & \Rs & \texttt{S\_spread}, \texttt{h\_c}, \texttt{h\_cl} &
-C3 energies, \texttt{N\_s} &
-nucleation-and-growth model (item 17)\\
+C4 conformality & \Rs & \texttt{S\_spread}, \texttt{h\_c}, \texttt{h\_cl}, \texttt{N\_s\_closure} &
+C3 energies, \texttt{N\_s}, \texttt{d\_max} &
+nucleation-and-growth model (item 17); \texttt{N\_nuc} as an upper estimate\\
 C4 film bound & \Rc & \texttt{R\_A}, \texttt{d\_max\_ohm}, \texttt{kappa}, \texttt{d\_max\_tun} &
 \texttt{rho\_e}, \texttt{R\_A\_max}, \texttt{phi\_B}, \texttt{m\_e}, \texttt{j\_0}, \texttt{j\_req}, \texttt{d\_film} &
 W1; \texttt{R\_A\_max}, \texttt{j\_req} registered at G2\\
