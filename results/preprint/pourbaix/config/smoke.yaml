@@ -1,0 +1,85 @@
+# Smoke run configuration, session P0-W5.1 (Day 1): the mock inputs on a coarse grid.
+#
+# mock: true. Every input with `source: mock` is a placeholder that exercises the pipeline. It
+# is not an input of the study and never reaches the paper. The code refuses this file
+# without --mock. Inputs with `source: charter` are read from charter/regimes.yaml, and
+# `source: choice` marks a method choice with its reason. Final runs (P0-W5.2) replace each
+# mock value with `source: lit/params.yaml` (key from P0-W1.2) or a charter bound.
+#
+# Run: uv run python -m nacre.pourbaix.run --config results/preprint/pourbaix/config/smoke.yaml --mock
+mock: true
+run: smoke
+regimes:
+  R-slurry:
+    temperature_K: {value: 298.15, source: mock, note: "charter T is null; the aqueous construction is fixed at 298.15 K"}
+    pH:
+      min: {source: charter, charter_key: pH, bound: min}
+      max: {value: 14.0, source: mock, note: "charter upper bound pending S12"}
+    potential_V_SHE:
+      min: {value: -3.0, source: mock, note: "charter E range is null"}
+      max: {value: 2.0, source: mock}
+    concentrations_mol_kg:
+      Al: {value: 1.0e-6, source: mock}
+      Ca: {value: 1.0e-3, source: mock, note: "charter a_Ca2+ is null"}
+      C: {value: 1.0e-3, source: mock, note: "total dissolved carbonate C_T of the closed system; charter carbonate_speciation is null"}
+    composition:
+      Al: {value: 1.0, source: mock, note: "element ratio of the multi-element diagram"}
+      Ca: {value: 1.0, source: mock}
+      C: {value: 1.0, source: mock}
+    carbonate_system: {value: closed, source: choice}
+    carbonate_reason: >-
+      Closed: the charter fixes the carbonate speciation as an input at the regime pH from the
+      carbonate source (added carbonate or CO2 uptake), and C3 uses a_CO3 as a stated input. A
+      slurry cast and dried in a mixer is not assumed to equilibrate with air. An open system
+      would tie a_CO3 to p(CO2) and make it grow a hundredfold per pH unit across the alkaline
+      range, turning an input into an output of the screen. Total dissolved carbonate is
+      therefore held fixed, and its speciation follows from pH.
+    acc_offset:
+      value: 10.0
+      unit: kJ/mol
+      basis: "free energy of ACC minus calcite, per CaCO3 formula unit"
+      source: mock
+      note: "from lit/params.yaml once P0-W1.2 publishes it; evidence rows TC-030, TC-031 (excess free energy), TC-037 to TC-041 and TC-114 (K_sp of ACC), TC-026 to TC-029 (crystallisation enthalpy)"
+    acc_offset_scan_kj_per_mol: {value: [0.0, 5.0, 10.0, 20.0, 40.0], source: mock, note: "sensitivity scan for the boundary-direction check"}
+    numerics: {n_pH: 15, n_E: 26}
+
+  R-cell:
+    temperature_K: {value: 298.15, source: mock, note: "charter T is null"}
+    phases:
+      CaCO3: {material_id: mp-3953, note: "calcite, R-3c"}
+      Al2O3: {material_id: mp-1143, note: "corundum, R-3c"}
+    gas:
+      O2:
+        pressure_bar: {value: 1.0, source: mock}
+        enthalpy_scheme: mp_fitted_reference
+      CO2:
+        pressure_bar: {value: 1.0, source: mock}
+        enthalpy_scheme: janaf
+    sinks:
+      nitrate:
+        kind: salt
+        anion: NO3-
+        li_source: LiNO3
+        products: {Ca: ["Ca(NO3)2"], Al: ["Al(NO3)3"]}
+      sulfate:
+        kind: salt
+        anion: SO4^2-
+        li_source: Li2SO4
+        products: {Ca: [CaSO4], Al: ["Al2(SO4)3"]}
+      chloride:
+        kind: salt
+        anion: Cl-
+        li_source: LiCl
+        products: {Ca: [CaCl2], Al: [AlCl3]}
+      solvated:
+        kind: solvated
+        reason: >-
+          Ca2+ (or Al3+) dissolved in the electrolyte and paired with its anion: needs the
+          free energy of the dissolved cation relative to Li+ in the chosen solvent, which is
+          not in the cached data
+    active_sink: {value: nitrate, source: mock, note: "the cp2 ruling on Q9 sets this"}
+    sink_statement: >-
+      The cation leaves as the solid salt of the electrolyte anion. The anion comes from the Li
+      salt, whose Li is plated at the Li+/Li reference. Mock choice: nitrate, a fluorine-free
+      Li salt whose Ca salt is in the Materials Project database. The charter has not yet
+      chosen the electrolyte.
