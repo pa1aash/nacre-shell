@@ -1,5 +1,35 @@
 {
-  "last_session": null,
-  "status": "READY",
-  "day": 1
+  "last_session": "P0-W3.1",
+  "status": "DONE",
+  "day": 1,
+  "equation_sheet": {
+    "status": "ready",
+    "sha": "4d03ab0a3db0e866825ebc99684a7bf7203f0f2a",
+    "contract_superset_sha": "b5a944c",
+    "check_contract": "PASS",
+    "functions": 32
+  },
+  "artifacts": [
+    "theory/equation_sheet.tex",
+    "theory/build/equation_sheet.pdf",
+    "theory/macros.tex",
+    "theory/symbols.yaml",
+    "theory/generated/symbol_table.tex",
+    "theory/contract.yaml",
+    "theory/tools/check_contract.py",
+    "theory/tools/gen_symbol_table.py",
+    "theory/derivation.tex",
+    "theory/derivation_body.tex",
+    "theory/build/derivation.pdf",
+    "theory/open_questions.md",
+    "ops/reports/P0-W3.1.md"
+  ],
+  "notes": [
+    "Young: theta measured through the nucleus; cos(theta) = (gamma_sl - gamma_sn)/gamma_nl with gamma_sn = gamma_sn0 + Delta_gamma_w; Delta_gamma_w > 0 is a cost.",
+    "gamma_eff = gamma_nl - Delta_gamma_w is not used in Young or DG_hom; kept as the deck diagnostic only.",
+    "Derivation complete in all 11 sections; section 7 carries the no-double-counting outline, full proof in P0-W3.2.",
+    "16 open questions for cp2; Q1 (enrichment bookkeeping), Q2 (carbonate), Q6, Q8 and Q9 are sign-relevant.",
+    "Contract extended additively after the ready mark (h_cl, Delta_Phi_r, E_window); no existing function changed.",
+    ".venv is a symlink to ~/.nacre-venvs/p-w3, excluded locally via .git/info/exclude."
+  ]
 }
