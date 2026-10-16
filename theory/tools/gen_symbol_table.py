@@ -22,6 +22,7 @@ DOMAIN_TITLES = {
     "sequestration": "Sequestration (C2)",
     "supersaturation": "Supersaturation",
     "nucleation": "Nucleation and Young (C3)",
+    "accessibility": "Accessibility of the barrier (C3)",
     "conformality": "Conformality (C4)",
     "stability": "Stability (C5)",
     "film": "Insulating film (C4, R-cell)",

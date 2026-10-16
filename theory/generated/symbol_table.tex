@@ -37,6 +37,9 @@ $c_\mathrm{max}$ & saturation concentration of the layer & $\mathrm{mol}\,\mathr
 $\Gamma_\mathrm{s}$ & areal binding-site density & $\mathrm{mol}\,\mathrm{m}^{-2}$ & S\\
 $\delta_\mathrm{s}$ & binding-layer thickness & $\mathrm{m}$ & S\\
 $V_\mathrm{site}$ & volume per binding site & $\mathrm{m}^{3}$ & S\\
+$x$ & Langmuir binding variable & -- & S\\
+$\Theta$ & fraction of sites occupied by Ca\textsuperscript{2+} & -- & S\\
+$\Gamma_\mathrm{Ca}$ & Ca\textsuperscript{2+} surface excess (Gibbs) & $\mathrm{mol}\,\mathrm{m}^{-2}$ & S\\
 \multicolumn{4}{@{}l}{\textit{Supersaturation}}\\
 $a_{\mathrm{Ca}^{2+}}$ & bulk Ca\textsuperscript{2+} activity & -- & S\\
 $a_{\mathrm{CO}_3^{2-}}$ & bulk carbonate activity & -- & S\\
@@ -46,11 +49,13 @@ $\Omega$ & saturation ratio where the nucleus forms & -- & S\\
 $\Delta\mu$ & driving force per formula unit & $\mathrm{J}$ & S\\
 \multicolumn{4}{@{}l}{\textit{Nucleation and Young (C3)}}\\
 $\gamma_\mathrm{nl}$ & nucleus-liquid interfacial free energy & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
-$\gamma_\mathrm{sl}$ & template-liquid interfacial free energy & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$\gamma_\mathrm{sl}$ & template-liquid energy at the regime activities & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$\gamma_\mathrm{sl}^{(0)}$ & template-liquid energy without Ca\textsuperscript{2+} binding & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$\Delta\gamma_\mathrm{ads}$ & Ca\textsuperscript{2+} adsorption change of gamma\_sl & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$\gamma_\mathrm{sn}$ & template-nucleus energy in water (= ref + correction) & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 \hline\end{tabular}\end{minipage}\hfill
 \begin{minipage}[t]{\dimexpr(\textwidth-2mm)/2\relax}\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}[t]{@{}l p{\dimexpr\linewidth*3/5\relax} l l@{}}\hline
 Symbol & Meaning & SI unit & Reg.\\\hline
-$\gamma_\mathrm{sn}$ & template-nucleus energy in water (= ref + correction) & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\gamma_\mathrm{sn}^{(0)}$ & template-nucleus energy, reference without water displacement & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\Delta\gamma_\mathrm{w}$ & water-displacement correction (cost $>$ 0) & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\gamma_\mathrm{eff}$ & deck effective nucleus-liquid energy (audit only) & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
@@ -60,6 +65,12 @@ $V_\mathrm{m}$ & molar volume of the registered framing & $\mathrm{m}^{3}\,\math
 $r^{*}$ & critical radius & $\mathrm{m}$ & S\\
 $\Delta G^{*}_\mathrm{hom}$ & homogeneous nucleation barrier per nucleus & $\mathrm{J}$ & S\\
 $\Delta G^{*}_\mathrm{het}$ & heterogeneous barrier on the template & $\mathrm{J}$ & S\\
+\multicolumn{4}{@{}l}{\textit{Accessibility of the barrier (C3)}}\\
+$J_{0}$ & heterogeneous nucleation prefactor per area & $\mathrm{m}^{-2}\,\mathrm{s}^{-1}$ & S\\
+$t_\mathrm{p}$ & time available for nucleation & $\mathrm{s}$ & S\\
+$N_\mathrm{req}$ & required areal density of nuclei & $\mathrm{m}^{-2}$ & S\\
+$B_\mathrm{acc}$ & largest accessible barrier & $\mathrm{J}$ & S\\
+$N_\mathrm{nuc}$ & expected areal density of nuclei & $\mathrm{m}^{-2}$ & S\\
 \multicolumn{4}{@{}l}{\textit{Conformality (C4)}}\\
 $S_\mathrm{spread}$ & spreading coefficient & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $N_\mathrm{s}$ & island density at coalescence & $\mathrm{m}^{-2}$ & S\\
@@ -95,5 +106,6 @@ $\kappa$ & tunnelling decay constant & $\mathrm{m}^{-1}$ & C\\
 $j_0$ & tunnelling prefactor current density & $\mathrm{A}\,\mathrm{m}^{-2}$ & C\\
 $j_\mathrm{req}$ & required current density (input) & $\mathrm{A}\,\mathrm{m}^{-2}$ & C\\
 $d_\mathrm{max}^\mathrm{tun}$ & thickness bound, direct tunnelling & $\mathrm{m}$ & C\\
+$d_\mathrm{max}$ & admissible film thickness & $\mathrm{m}$ & C\\
 $d_\mathrm{max}^\mathrm{ohm}$ & thickness bound, ohmic limit & $\mathrm{m}$ & C\\
 \hline\end{tabular}\end{minipage}

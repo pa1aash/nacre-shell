@@ -23,9 +23,42 @@
 #
 # Auxiliary symbols named aux_* are positive reparametrisation variables used only inside
 # checks (for example Omega = 1 + aux_u to state Omega > 1); they are not physical symbols.
+#
+# Top-level blocks besides `functions`
+#   changes             per version: the functions added, changed (expression, inputs or
+#                       meaning) and removed, so an implementation can be diffed by name
+#   sign_flips          directional tests whose registered and rejected forms differ in sign
+#   no_double_counting  the screen composite (the barrier the screen evaluates) and its channels
+#   demonstrations      named composites that are wrong on purpose, implemented only to show
+#                       the size of an error (C3 item 13); never used for a verdict
 
-version: 1
-session: P0-W3.1
+version: 2
+session: P0-W3.2
+changes:
+  - version: 2
+    session: P0-W3.2
+    reason: >-
+      Q1 and Q2 settled by derivation (theory/derivation_body.tex, Section 7). At equilibrium
+      the electrochemical potentials of Ca2+ and CO3^2- are uniform, so the driving force at
+      the template is k_B T ln Omega_bulk; Ca2+ binding acts only through the template-liquid
+      interfacial energy (Gibbs adsorption with the Langmuir isotherm). The local-ideal
+      Omega_local survives only as a named demonstration.
+    added: [x_bind, Theta_occ, Gamma_Ca, Delta_gamma_ads, gamma_sl_insitu, cos_theta_template,
+            Omega_local_ideal, Delta_mu_local_ideal, B_acc, N_nuc, N_s_closure]
+    changed:
+      - {name: Delta_mu, what: 'identity "enrichment adds -Delta_G_seq/N_A" removed (moved to Delta_mu_local_ideal); Omega is Omega_bulk in the screen'}
+      - {name: E_enr, what: 'meaning: a concentration ratio, not an activity ratio; it no longer feeds Omega'}
+      - {name: c_local, what: 'meaning: reported C2 quantity; it no longer feeds Omega'}
+      - {name: cos_theta_young, what: 'meaning of gamma_sl: the template-liquid energy at the regime activities (gamma_sl0 + Delta_gamma_ads); expression unchanged'}
+      - {name: S_spread, what: 'meaning of gamma_sl as for cos_theta_young; expression unchanged'}
+      - {name: no_double_counting, what: 'composite rewritten: theta channel carries every template input including Delta_G_seq, Gamma_s and delta_s through Delta_gamma_ads; Omega channel is Omega_bulk; inputs gamma_sl -> gamma_sl0'}
+      - {name: SF2, what: 'sign reversed: at fixed gamma_sl0 and gamma_sn, stronger binding (Delta_G_seq more negative) raises the barrier; the local-ideal form, which lowers it, is the rejected alternative'}
+      - {name: SF3, what: 'new sign-flip test (lane note N3): the direction in which gamma_nl moves f follows the sign of gamma_sl - gamma_sn'}
+    removed:
+      - {name: Omega_local, replaced_by: Omega_local_ideal, why: 'local-ideal bookkeeping is inconsistent at equilibrium; kept only as a named demonstration'}
+  - version: 1
+    session: P0-W3.1
+    reason: first contract (29 functions at the ready mark 4d03ab0; h_cl, Delta_Phi_r, E_window added in b5a944c)
 conventions:
   young: >-
     theta is the contact angle of the spherical-cap nucleus measured through the nucleus;
@@ -42,11 +75,25 @@ conventions:
     use the bare gamma_nl, because gamma_nl multiplies the cap area in the free energy whose
     factorisation gives Delta_G*_het = f(theta) Delta_G*_hom.
   supersaturation: >-
-    One definition: Omega = IAP / K_sp = a_Ca a_CO3 / K_sp for the registered framing;
-    Delta_mu = k_B T ln Omega per formula unit. The charter's S for C3 is this Omega.
-  enrichment: >-
-    Ca2+ alone is enriched, carbonate is held at its bulk activity:
-    Omega_local = (c_local / c_bulk) Omega_bulk.
+    One definition: Omega = IAP / K_sp = a_Ca a_CO3 / K_sp for the registered framing, with
+    bulk activities; Delta_mu = k_B T ln Omega per CaCO3 formula unit, and V_m per CaCO3
+    formula unit. The charter's S (F3: S = IAP/K_sp) is this Omega; the per-ion square root
+    never appears.
+  bookkeeping: >-
+    Uniform chemical potential (contract v2). At equilibrium the electrochemical potentials
+    of Ca2+ and CO3^2- are the same in the bulk, in the interfacial layer and at the binding
+    sites, so the driving force for a nucleus at the template is k_B T ln Omega_bulk.
+    Enrichment (specific binding, E_enr, or a mean potential psi) changes local
+    concentrations, never the driving force. Template-ion interactions enter only the
+    interfacial energies.
+  adsorption: >-
+    gamma_sl = gamma_sl0 + Delta_gamma_ads, with Delta_gamma_ads = -R T (Gamma_s ln(1 + x)
+    - delta_s c_bulk) from the Gibbs adsorption equation and the Langmuir isotherm, and
+    x = E_enr c_bulk / c_max. If gamma_sl is supplied directly at the regime activities
+    (grand-canonical), Delta_gamma_ads is already inside it and must not be added again
+    (the same rule as Delta_gamma_w). The bound Ca2+ belongs to the template-liquid
+    interface only: under the nucleus it is lattice Ca2+ at the bulk chemical potential, and
+    gamma_sn is the energy of the template coordinating lattice ions, independent of a_Ca.
 
 functions:
   # ------------------------------------------------------------------ C1, adhesion in water
@@ -113,6 +160,10 @@ functions:
     monotonicity:
       - {wrt: Delta_G_seq, direction: decreasing}
     validity: dilute Ca2+ and unsaturated binding sites (E_enr c_bulk << c_max)
+    note: >-
+      a concentration ratio (C2 reporting quantity); at equilibrium the local Ca2+ activity
+      equals the bulk activity and the enrichment sits in a local activity coefficient, so
+      E_enr does not enter Omega or Delta_mu (contract v2)
 
   - name: c_max
     claim: C2
@@ -125,7 +176,9 @@ functions:
     regime: R-slurry
     unit: mol m^-3
     expression: E_enr*c_bulk/(1 + E_enr*c_bulk/c_max)
-    note: Langmuir closure of the binding layer; reduces to E_enr c_bulk when dilute
+    note: >-
+      Langmuir closure of the binding layer; reduces to E_enr c_bulk when dilute. Reported for
+      C2; it does not feed Omega (contract v2).
     limits:
       - {limit: {var: c_max, to: oo}, expected: E_enr*c_bulk}
       - {limit: {var: c_bulk, to: oo}, expected: c_max}
@@ -138,6 +191,87 @@ functions:
       - {wrt: c_bulk, direction: increasing}
       - {wrt: c_max, direction: increasing}
 
+  - name: x_bind
+    claim: C2
+    regime: R-slurry
+    unit: '1'
+    expression: exp(-Delta_G_seq/(R_gas*T))*c_bulk*delta_s/Gamma_s
+    note: Langmuir binding variable, the occupancy odds of a site at the regime activity
+    identities:
+      - note: x = E_enr c_bulk / c_max
+        equals: '@E_enr*c_bulk/@c_max'
+    limits:
+      - {limit: {var: Delta_G_seq, to: oo}, expected: '0'}
+      - {limit: {var: Delta_G_seq, to: -oo}, expected: oo}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: decreasing}
+      - {wrt: c_bulk, direction: increasing}
+      - {wrt: Gamma_s, direction: decreasing}
+
+  - name: Theta_occ
+    claim: C2
+    regime: R-slurry
+    unit: '1'
+    expression: '@x_bind/(1 + @x_bind)'
+    note: fraction of sites occupied (Langmuir); equals c_local / c_max
+    identities:
+      - note: occupancy is the Langmuir c_local over the saturation concentration
+        equals: '(@E_enr*c_bulk/(1 + @E_enr*c_bulk*delta_s/Gamma_s))*delta_s/Gamma_s'
+    limits:
+      - {limit: {var: Delta_G_seq, to: oo}, expected: '0'}
+      - {limit: {var: Delta_G_seq, to: -oo}, expected: '1'}
+    inequalities:
+      - {expr: '@Theta_occ', relation: '<', rhs: '1'}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: decreasing}
+      - {wrt: c_bulk, direction: increasing}
+
+  - name: Gamma_Ca
+    claim: C2
+    regime: R-slurry
+    unit: mol m^-2
+    expression: Gamma_s*@Theta_occ - delta_s*c_bulk
+    note: >-
+      Gibbs relative excess of Ca2+ at the template-liquid interface: the bound amount per area
+      minus the bulk amount that the layer volume would hold without the template
+    limits:
+      - {limit: {var: Delta_G_seq, to: oo}, expected: -delta_s*c_bulk}
+      - {limit: {var: Delta_G_seq, to: -oo}, expected: Gamma_s - delta_s*c_bulk}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: decreasing}
+
+  - name: Delta_gamma_ads
+    claim: C2
+    regime: R-slurry
+    unit: J m^-2
+    expression: -R_gas*T*(Gamma_s*log(1 + @x_bind) - delta_s*c_bulk)
+    note: >-
+      change of the template-liquid interfacial energy by Ca2+ adsorption at the regime
+      activity: the Gibbs adsorption integral -int Gamma_Ca d mu_Ca from zero to the regime
+      activity with the Langmuir isotherm (ideal dilute bulk). Zero when gamma_sl is already
+      evaluated at the regime activities. It is the only route by which Delta_G_seq, Gamma_s
+      and delta_s reach the barrier.
+    derivative_identities:
+      - {wrt: Delta_G_seq, equals: 'Gamma_s*@Theta_occ', note: 'each site contributes its occupancy: d gamma_sl / d Delta_G_seq = Gamma_s Theta'}
+      - {wrt: c_bulk, equals: '-(R_gas*T/c_bulk)*@Gamma_Ca', note: 'Gibbs adsorption equation: d gamma_sl / d mu_Ca = -Gamma_Ca, with d mu_Ca = R T d ln c_bulk'}
+    limits:
+      - {limit: {var: Delta_G_seq, to: oo}, expected: R_gas*T*delta_s*c_bulk, note: 'a repulsive template is depleted and its gamma_sl rises (negative adsorption)'}
+      - {limit: {var: Gamma_s, to: '0', dir: '+'}, expected: R_gas*T*delta_s*c_bulk}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: increasing}
+
+  - name: gamma_sl_insitu
+    claim: C3
+    regime: R-slurry
+    unit: J m^-2
+    expression: gamma_sl0 + @Delta_gamma_ads
+    note: template-liquid energy at the regime activities, built from the Ca-free energy
+    limits:
+      - {limit: {var: Delta_G_seq, to: oo}, expected: gamma_sl0 + R_gas*T*delta_s*c_bulk}
+    monotonicity:
+      - {wrt: gamma_sl0, direction: increasing}
+      - {wrt: Delta_G_seq, direction: increasing}
+
   # ------------------------------------------------------------------ supersaturation
   - name: Omega_bulk
     claim: C3
@@ -148,14 +282,17 @@ functions:
       - {wrt: a_Ca, direction: increasing}
       - {wrt: K_sp, direction: decreasing}
 
-  - name: Omega_local
+  - name: Omega_local_ideal
     claim: C3
     regime: R-slurry
     unit: '1'
     expression: (c_local/c_bulk)*a_Ca*a_CO3/K_sp
+    demonstration: true
     note: >-
-      only Ca2+ is enriched; the carbonate activity stays at its bulk value and the local
-      Ca2+ activity coefficient is taken equal to the bulk one (open questions Q2, Q3)
+      DEMONSTRATION ONLY (C3 item 13): the local-ideal bookkeeping of contract v1, which gives
+      the locally enriched Ca2+ the bulk standard state and so credits the binding free energy
+      to the driving force. Inconsistent at equilibrium (derivation, Section 7); never used for
+      a verdict.
     identities:
       - note: dilute, unsaturated limit
         subs: {c_local: E_enr*c_bulk}
@@ -171,14 +308,29 @@ functions:
     regime: R-slurry
     unit: J
     expression: k_B*T*log(Omega)
+    note: per CaCO3 formula unit; the screen evaluates it at Omega = Omega_bulk (uniform chemical potential)
     limits:
       - {at: {Omega: '1'}, expected: '0'}
     identities:
-      - note: Ca2+ enrichment adds -Delta_G_seq/N_A to the driving force per formula unit (dilute limit)
-        subs: {Omega: exp(-Delta_G_seq/(R_gas*T))*Omega_bulk}
-        equals: k_B*T*log(Omega_bulk) - k_B*T*Delta_G_seq/(R_gas*T)
+      - note: at the template the driving force is the bulk one
+        subs: {Omega: '@Omega_bulk'}
+        equals: k_B*T*log(a_Ca*a_CO3/K_sp)
     monotonicity:
       - {wrt: Omega, direction: increasing}
+
+  - name: Delta_mu_local_ideal
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: k_B*T*log(@Omega_local_ideal)
+    demonstration: true
+    note: >-
+      DEMONSTRATION ONLY: the driving force the local-ideal bookkeeping would assign; its excess
+      over k_B T ln Omega_bulk is the binding free energy counted as driving force
+    identities:
+      - note: in the dilute limit the excess credit is exactly -Delta_G_seq per Ca2+
+        subs: {c_local: exp(-Delta_G_seq/(R_gas*T))*c_bulk}
+        equals: k_B*T*log(@Omega_bulk) - k_B*T*Delta_G_seq/(R_gas*T)
 
   # ------------------------------------------------------------------ C3, nucleation
   - name: r_star
@@ -253,12 +405,43 @@ functions:
       - {wrt: theta, direction: nondecreasing}
       - {wrt: Omega, direction: nonincreasing}
 
+  - name: B_acc
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: k_B*T*log(J0_het*t_proc/N_req)
+    note: >-
+      largest barrier that still gives N_req nuclei per template area within t_proc, from
+      J = J_0 exp(-DG_het / k_B T) and N = J t_proc (derivation, Section 5)
+    limits:
+      - {at: {N_req: J0_het*t_proc}, expected: '0'}
+    monotonicity:
+      - {wrt: J0_het, direction: increasing}
+      - {wrt: t_proc, direction: increasing}
+      - {wrt: N_req, direction: decreasing}
+
+  - name: N_nuc
+    claim: C3
+    regime: R-slurry
+    unit: m^-2
+    expression: J0_het*t_proc*exp(-DG_het/(k_B*T))
+    note: expected areal density of nuclei within t_proc (no exclusion zones, so an upper estimate)
+    limits:
+      - {at: {DG_het: '@B_acc'}, expected: N_req}
+      - {at: {DG_het: '0'}, expected: J0_het*t_proc}
+    monotonicity:
+      - {wrt: DG_het, direction: decreasing}
+      - {wrt: t_proc, direction: increasing}
+
   - name: cos_theta_young
     claim: C3
     regime: R-slurry
     unit: '1'
     expression: (gamma_sl - gamma_sn0 - Delta_gamma_w)/gamma_nl
-    note: registered convention; bare gamma_nl in the denominator; displacement cost on the substrate side
+    note: >-
+      registered convention; bare gamma_nl in the denominator; displacement cost on the
+      substrate side. gamma_sl is the template-liquid energy at the regime activities
+      (gamma_sl0 + Delta_gamma_ads, or computed in situ).
     limits:
       - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w + gamma_nl}, expected: '1'}
       - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w - gamma_nl}, expected: '-1'}
@@ -268,6 +451,23 @@ functions:
       - {wrt: gamma_sl, direction: increasing}
       - {wrt: gamma_sn0, direction: decreasing}
     validity: a finite contact angle exists only for |cos_theta_young| <= 1; above 1 the nucleus phase spreads (S_spread >= 0)
+
+  - name: cos_theta_template
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: (gamma_sl0 + @Delta_gamma_ads - gamma_sn0 - Delta_gamma_w)/gamma_nl
+    note: >-
+      Young for the screen, with the Ca2+ adsorption on the substrate-liquid side; the form the
+      composite uses when gamma_sl is supplied Ca-free
+    identities:
+      - note: registered Young with the in-situ template-liquid energy
+        equals: (@gamma_sl_insitu - gamma_sn0 - Delta_gamma_w)/gamma_nl
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: increasing, note: 'stronger binding at fixed gamma_sl0 and gamma_sn lowers cos theta and raises the barrier'}
+      - {wrt: gamma_sl0, direction: increasing}
+      - {wrt: gamma_sn0, direction: decreasing}
+      - {wrt: Delta_gamma_w, direction: decreasing}
 
   - name: theta_young
     claim: C3
@@ -356,6 +556,22 @@ functions:
       - {expr: '@h_c', relation: '<', rhs: '@h_cl'}
     monotonicity:
       - {wrt: theta, direction: increasing}
+
+  - name: N_s_closure
+    claim: C4
+    regime: R-slurry
+    unit: m^-2
+    expression: tan(theta/2)**2/(2*d_max**2)
+    domains: {theta: '(0, pi)'}
+    note: >-
+      smallest island density for which equal caps close the square lattice at the admissible
+      thickness: h_cl(theta, N_s) <= d_max is N_s >= N_s_closure
+    limits:
+      - {at: {theta: pi/2}, expected: 1/(2*d_max**2)}
+      - {limit: {var: theta, to: '0', dir: '+'}, expected: '0'}
+    monotonicity:
+      - {wrt: theta, direction: increasing}
+      - {wrt: d_max, direction: decreasing}
 
   # ------------------------------------------------------------------ C5, stability
   - name: Psi_pbx
@@ -491,38 +707,107 @@ sign_flips:
         registered: 'f(+) > f(0) > f(-)'
         alternative: 'f(+) < f(0)'
   - id: SF2
+    kind: channel
     parameter: Delta_G_seq
     statement: >-
-      Delta_G_seq < 0 gives Omega_local > Omega_bulk and therefore a lower barrier
-      (Delta_G*_hom at Omega_local below its bulk value); Delta_G_seq > 0 reverses both
-      inequalities. Derivative identity: d Delta_G*_hom(Omega_local)/d Delta_G_seq =
-      2 Delta_G*_hom / (R T ln Omega_local), positive whenever Omega_local > 1.
-    barrier: '@DG_hom'
-    omega_subs: exp(-Delta_G_seq/(R_gas*T))*Omega_bulk
-    derivative_equals: 2*aux_B/(R_gas*T*log(exp(-Delta_G_seq/(R_gas*T))*Omega_bulk))
-    note: aux_B stands for the barrier itself
+      Registered (contract v2, uniform chemical potential): Delta_G_seq reaches the barrier only
+      through Delta_gamma_ads in gamma_sl. d cos(theta)/d Delta_G_seq = Gamma_s Theta/gamma_nl > 0
+      and d Omega/d Delta_G_seq = 0, so at fixed gamma_sl0 and gamma_sn stronger binding
+      (Delta_G_seq more negative) lowers cos(theta) and raises f and Delta_G*_het. Binding helps
+      nucleation only if the template-nucleus energy gamma_sn falls by more than gamma_sl does.
+      Rejected alternative (local-ideal, contract v1): Omega_local = E_enr Omega_bulk with Ca-free
+      interfacial energies, for which d Delta_G*/d Delta_G_seq = 2 Delta_G*/(R T ln Omega_local)
+      > 0, the opposite sign.
+    registered:
+      cos_function: cos_theta_template
+      dcos_equals: Gamma_s*@Theta_occ/gamma_nl
+      expected_sign: positive
+      omega_function: Omega_bulk
+    alternative:
+      barrier: '@DG_hom'
+      omega_subs: exp(-Delta_G_seq/(R_gas*T))*Omega_bulk
+      derivative_equals: 2*aux_B/(R_gas*T*log(exp(-Delta_G_seq/(R_gas*T))*Omega_bulk))
+      note: aux_B stands for the barrier itself
     witness:
-      values: {Omega_bulk: '2', R_gas: '1', T: '1'}
+      values: {gamma_sl0: '3', gamma_sn0: '2', Delta_gamma_w: '0', gamma_nl: '4', Gamma_s: '1',
+               delta_s: '1', c_bulk: '1', R_gas: '1', T: '1', Omega_bulk: '2'}
       delta_plus: 1/4
       delta_minus: -1/4
-      expect: 'barrier(+) > barrier(0) > barrier(-)'
+      expect:
+        registered: 'barrier(+) < barrier(0) < barrier(-)'
+        alternative: 'barrier(+) > barrier(0) > barrier(-)'
+  - id: SF3
+    kind: gamma_nl
+    parameter: gamma_nl
+    note: lane note N3
+    statement: >-
+      d f/d gamma_nl = (3 sin(theta)^2/4) (gamma_sl - gamma_sn)/gamma_nl^2. Lowering gamma_nl
+      lowers f only when gamma_sl - gamma_sn > 0 (the wetting side, theta < pi/2); when
+      gamma_sl - gamma_sn < 0 lowering gamma_nl raises f, and at gamma_sl = gamma_sn it leaves f
+      unchanged at 1/2. Both signs are tested; the reparametrisation gamma_nl = aux_u + aux_v
+      keeps |cos(theta)| < 1. On the wetting side the full barrier f gamma_nl^3 also rises with
+      gamma_nl.
+    cos_function: cos_theta_young
+    cases:
+      - {name: 'gamma_sl - gamma_sn > 0', reparam: {gamma_sl: gamma_sn0 + Delta_gamma_w + aux_u, gamma_nl: aux_u + aux_v}, df_sign: positive, barrier_sign: positive}
+      - {name: 'gamma_sl - gamma_sn < 0', reparam: {gamma_sl: gamma_sn0 + Delta_gamma_w - aux_u, gamma_nl: aux_u + aux_v}, df_sign: negative}
+      - {name: 'gamma_sl - gamma_sn = 0', reparam: {gamma_sl: gamma_sn0 + Delta_gamma_w}, df_sign: zero}
+    witness:
+      values: {gamma_sn0: '2', Delta_gamma_w: '0'}
+      excess: ['1', '-1']
+      gamma_nl: ['2', '3']
+      expect: 'excess > 0: f(2) < f(3); excess < 0: f(2) > f(3)'
 
 no_double_counting:
   statement: >-
-    The template acts on the barrier only through theta (interfacial energies) and only
-    through Omega (Ca2+ enrichment). Each template-dependent input enters exactly one of the
-    two channels; template-independent bulk inputs (gamma_nl, V_m, T, constants) may enter
-    both. This is the syntactic part of the condition and is checked here; the physical
-    proof that the two channels do not count the same free energy twice (the Gibbs
-    adsorption link between Ca2+ binding and gamma_sl) is session P0-W3.2.
+    Contract v2. The exact reference is the grand potential of a cap on the template in an open
+    system at the bulk chemical potentials (derivation, Section 7): Delta Omega(r) =
+    -n Delta mu_bulk + gamma_nl A_cap + (gamma_sn - gamma_sl) A_base, with every template-ion
+    interaction inside the grand-canonical interfacial energies. The template therefore acts on
+    the barrier only through theta. Its Ca2+ binding (Delta_G_seq, Gamma_s, delta_s) enters once,
+    through Delta_gamma_ads in gamma_sl; the Omega channel holds bulk inputs only. Rule for the
+    screen: if gamma_sl is supplied Ca-free (gamma_sl0) add Delta_gamma_ads once; if it is
+    computed at the regime activities add nothing; never raise Omega above Omega_bulk.
   composite: DG_het_template
   composite_expression: >-
-    (2 + c_young)*(1 - c_young)**2/4 * 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(Om_local))**2)
+    (2 + c_young)*(1 - c_young)**2/4 * 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(Om))**2)
   channel_theta:
-    c_young: (gamma_sl - gamma_sn0 - Delta_gamma_w)/gamma_nl
+    c_young: (gamma_sl0 + D_ads - gamma_sn0 - Delta_gamma_w)/gamma_nl
+    D_ads: -R_gas*T*(Gamma_s*log(1 + x_b) - delta_s*c_bulk)
+    x_b: exp(-Delta_G_seq/(R_gas*T))*c_bulk*delta_s/Gamma_s
   channel_omega:
-    Om_local: (E_enr/(1 + E_enr*c_bulk/c_max))*a_Ca*a_CO3/K_sp
-    E_enr: exp(-Delta_G_seq/(R_gas*T))
-    c_max: Gamma_s/delta_s
-  template_dependent: [gamma_sl, gamma_sn0, Delta_gamma_w, Delta_G_seq, Gamma_s, delta_s]
+    Om: a_Ca*a_CO3/K_sp
+  single_entry:
+    via: D_ads
+    inputs: [Delta_G_seq, Gamma_s, delta_s]
+  template_dependent: [gamma_sl0, gamma_sn0, Delta_gamma_w, Delta_G_seq, Gamma_s, delta_s]
   template_independent: [gamma_nl, V_m, T, k_B, N_A, R_gas, a_Ca, a_CO3, K_sp, c_bulk]
+
+demonstrations:
+  - name: DG_het_local_ideal
+    note: >-
+      contract v1 as registered: Ca-free interfacial energies with the local-ideal Omega. The
+      binding is counted once but in a channel that does not exist at equilibrium, and with the
+      opposite effect on the barrier (SF2).
+    composite_expression: >-
+      (2 + c_young)*(1 - c_young)**2/4 * 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(Om))**2)
+    channels:
+      c_young: (gamma_sl0 - gamma_sn0 - Delta_gamma_w)/gamma_nl
+      Om: (E/(1 + E*c_bulk*delta_s/Gamma_s))*a_Ca*a_CO3/K_sp
+      E: exp(-Delta_G_seq/(R_gas*T))
+  - name: DG_het_double
+    note: >-
+      the double count: the Ca-loaded gamma_sl of the uniform bookkeeping together with the
+      local-ideal Omega. The same binding free energy is credited to the driving force and
+      charged to the interfacial energy.
+    composite_expression: >-
+      (2 + c_young)*(1 - c_young)**2/4 * 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(Om))**2)
+    channels:
+      c_young: (gamma_sl0 + D_ads - gamma_sn0 - Delta_gamma_w)/gamma_nl
+      D_ads: -R_gas*T*(Gamma_s*log(1 + x_b) - delta_s*c_bulk)
+      x_b: E*c_bulk*delta_s/Gamma_s
+      Om: (E/(1 + E*c_bulk*delta_s/Gamma_s))*a_Ca*a_CO3/K_sp
+      E: exp(-Delta_G_seq/(R_gas*T))
+    reduces_to:
+      - {subs: {D_ads: '0'}, equals: DG_het_local_ideal, note: 'without the Gibbs term it is the v1 composite'}
+      - {subs: {Om: a_Ca*a_CO3/K_sp}, equals: DG_het_template, note: 'without the local-ideal credit it is the screen composite'}
