@@ -31,5 +31,13 @@
     "16 open questions for cp2; Q1 (enrichment bookkeeping), Q2 (carbonate), Q6, Q8 and Q9 are sign-relevant.",
     "Contract extended additively after the ready mark (h_cl, Delta_Phi_r, E_window); no existing function changed.",
     ".venv is a symlink to ~/.nacre-venvs/p-w3, excluded locally via .git/info/exclude."
-  ]
+  ],
+  "contract_v2": {
+    "status": "ready",
+    "sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
+    "version": 2,
+    "functions": 42,
+    "check_contract": "PASS",
+    "summary": "uniform chemical potential: Omega = Omega_bulk at the template; Delta_G_seq enters once, through Delta_gamma_ads in gamma_sl; composite inputs gamma_sl -> gamma_sl0; Omega_local renamed Omega_local_ideal (demonstration); 11 added functions; changelog in contract.yaml `changes`"
+  }
 }
