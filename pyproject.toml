@@ -16,6 +16,8 @@ dependencies = [
     "cmcrameri==1.10",
     "colorspacious>=1.1.2",
     "matplotlib>=3.11.2",
+    "ase>=3.29.0",
+    "mp-api>=0.46.5",
     "pyyaml",
     "rdkit>=2026.9.1",
     "requests>=2.34.2",

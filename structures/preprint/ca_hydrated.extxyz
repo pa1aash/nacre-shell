@@ -1,0 +1,21 @@
+19
+Properties=species:S:1:pos:R:3:component:S:1 builder=nacre.structures.ion.build params="{\"angle_hoh_deg\": 104.52, \"cn\": 6, \"r_ca_o\": 2.4, \"r_oh\": 0.9572, \"sphere_iterations\": 2000}" seed=3 library_versions="{\"ase\": \"3.29.0\", \"mp-api\": \"0.46.5\", \"numpy\": \"2.5.4\", \"pymatgen\": \"2026.9.24\", \"rdkit\": \"2026.9.1\"}" source_ids="{}" total_charge=2 illustrative=T label="illustrative construction for a schematic figure; not a simulated structure" notes="Ca2+ with a first hydration shell; coordination number and Ca-O distance are drawing parameters, not results" pbc="F F F"
+Ca       0.00000000       0.00000000       0.00000000 ion
+O        1.68251200      -1.07582800       1.33107000 hydration
+H        1.77726400      -2.01101900       1.51182100 hydration
+H        2.40922200      -0.66589300       1.80019400 hydration
+O       -1.66805200      -1.44858500       0.93765900 hydration
+H       -2.42642900      -1.20299900       1.46754900 hydration
+H       -1.72407600      -2.40142000       0.86556800 hydration
+O       -1.68251200       1.07582800      -1.33107000 hydration
+H       -2.16655200       1.87640400      -1.12855000 hydration
+H       -2.01993400       0.80050800      -2.18346500 hydration
+O        1.66805200       1.44858500      -0.93765900 hydration
+H        2.31642500       1.23777100      -1.60952400 hydration
+H        1.83408100       2.36664900      -0.72359300 hydration
+O        0.38308700      -1.58246600      -1.76324900 hydration
+H        0.55820000      -2.51993700      -1.68130800 hydration
+H        0.39500900      -1.41760900      -2.70607100 hydration
+O       -0.38308700       1.58246600       1.76324900 hydration
+H       -0.72618000       2.47281400       1.68710400 hydration
+H       -0.22703000       1.46473200       2.70027500 hydration

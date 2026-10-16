@@ -1,0 +1,45 @@
+# Build targets for the illustrative structures of Figures 1 and 2 (lane p0-w7).
+# Every output is an illustrative construction, not a simulated structure.
+# Rebuild: uv run python -m nacre.structures.build
+# Parameters left out take the builder's DEFAULTS, which are written into each file's metadata.
+targets:
+  al2o3_0001_oh:
+    builder: slab
+    seed: 0
+    params: {nx: 4, ny: 4, n_o_layers: 7, vacuum: 10.0}
+  al2o3_0001_oh_water:
+    builder: water_layer
+    substrate: al2o3_0001_oh
+    seed: 1
+    params: {thickness: 8.0, density_g_cm3: 1.0}
+  catechol_oligomer:
+    builder: oligomer
+    seed: 7
+    params: {n_units: 4}
+  ca_hydrated:
+    builder: hydrated_ion
+    seed: 3
+    params: {cn: 6, r_ca_o: 2.40}
+  acc_cluster:
+    builder: acc_cluster
+    seed: 5
+    params: {n_fu: 8, density_g_cm3: 1.9}
+
+  # Day 1 smoke scene: a small slab, a few waters and one hydrated Ca2+.
+  smoke_slab:
+    builder: slab
+    seed: 0
+    write: false
+    params: {nx: 3, ny: 3, n_o_layers: 5, vacuum: 10.0}
+  smoke_slab_water:
+    builder: water_layer
+    substrate: smoke_slab
+    seed: 2
+    write: false
+    params: {n_molecules: 5, thickness: 3.0}
+  smoke_interface:
+    builder: assembly
+    seed: 0
+    parts:
+      - {name: slab, target: smoke_slab_water}
+      - {name: ion, target: ca_hydrated, place: {xy: [0.5, 0.5], gap: 2.6}}
