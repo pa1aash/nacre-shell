@@ -215,3 +215,19 @@ I found no geometry-independent definition that is better. The one geometry-free
 the C4 closure density, which ties C3 to the island geometry of C4. That is the coupling the
 ruling removes. The Poisson form keeps A_patch, so it is a refinement of the registered rule,
 not a replacement. It is recorded here for cp3 and is not applied.
+
+### E. The h_c rename (fix F9; for the integrator)
+
+The theory's `h_c` keeps its geometric meaning: the cap height of equal islands at first contact.
+The charter's kinetic critical coalescence thickness, from a kinetic Monte Carlo or rate-equation
+model, is renamed **h_coal**. Charter edits, in `charter/claim_register.yaml`, claim C4:
+
+- `physical_observable.symbol`: "pending-G2: one of theta (small-angle bound), S_spread, or
+  h_coal".
+- `physical_observable.definition`, candidate (c): "...giving the critical coalescence thickness
+  h_coal." (replaces "h_c").
+
+Wherever else the charter writes h_c for the kinetic quantity, it becomes h_coal. In `theory/**`
+the rename is applied in `symbols.yaml` (new id `h_coal`), `contract.yaml` (the `h_c` note),
+`derivation_body.tex` (Section 8), `thresholds.md` (C4) and the equation sheet (Section 7).
+

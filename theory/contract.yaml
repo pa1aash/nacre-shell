@@ -563,7 +563,9 @@ functions:
     note: >-
       geometric coalescence thickness: equal caps of contact angle theta on a square lattice
       of density N_s touch when their base radius is half the spacing; cap height is base
-      radius times tan(theta/2). Island-to-film is possible only as h_c -> 0.
+      radius times tan(theta/2). Island-to-film is possible only as h_c -> 0. h_c is geometric
+      only; the charter's kinetic critical coalescence thickness (C4 candidate (c), from a
+      nucleation-and-growth model) is h_coal (cp2 fix F9) and is not a contract function in P0.
     limits:
       - {limit: {var: theta, to: '0', dir: '+'}, expected: '0'}
       - {limit: {var: theta, to: pi, dir: '-'}, expected: oo}

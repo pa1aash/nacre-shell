@@ -198,6 +198,9 @@ inconclusive otherwise.
     [th:eq:nclosure], with d_max = max(d_max_ohm, d_max_tun), Eqs. (41) to (43).
   - The island density is N_s = N_nuc from C3(b), an upper estimate. A failure of closure with
     N_nuc is therefore conservative, and a success is only optimistic.
+  - The condition is geometric: it uses the geometric thicknesses h_c and h_cl. The charter's
+    kinetic critical coalescence thickness (C4 candidate (c)) is named h_coal (cp2 fix F9). It
+    needs a nucleation-and-growth model and is not computed in P0.
 - **Decision.**
   - feasible if `P(S_spread >= m_S) >= p`;
   - falsified if `P(S_spread < m_S) >= p` **and** `P(N_nuc < N_s_closure) >= p`: islands that do

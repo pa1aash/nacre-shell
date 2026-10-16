@@ -680,7 +680,10 @@ h_\mathrm{cl}=\frac{\tan(\theta/2)}{\sqrt{2\Ns}}=\sqrt2\,\hc \un{m}.
 Units: $\Ns^{-1/2}$ is a length. Both vanish as $\theta\to0$ and diverge as $\theta\to\pi$. They
 are geometric estimates that treat caps as growing self-similarly up to contact; they are
 arguments, not measurements, and $\Ns$ comes from a nucleation-and-growth model (item 17), not
-from thermodynamics.
+from thermodynamics. The kinetic counterpart, the thickness at which islands actually coalesce in a
+kinetic Monte Carlo or rate-equation model of nucleation and lateral growth (charter C4,
+candidate (c)), is a different quantity and carries its own name, $\hcoal$ (cp2 fix F9). $\hc$
+keeps its geometric meaning throughout; P0 does not compute $\hcoal$.
 
 \paragraph{What a contact angle does and does not imply about coverage.} A small $\theta$ means
 thin islands and early closure for a given $\Ns$. It does not fix $\Ns$, which depends on the
@@ -704,7 +707,8 @@ because it is defined when Young has no solution ($\gsl-\gsn>\gnl$), where $\the
 finite $\theta_\mathrm{max}$ needs a physical scale, and the only one the theory supplies is the
 coalescence condition: closure below $d_\mathrm{max}$ at island density $\Ns$ requires
 $\tan(\theta/2)\le d_\mathrm{max}\sqrt{2\Ns}$, i.e. $\theta_\mathrm{max}=2\arctan\big(d_\mathrm{max}\sqrt{2\Ns}\big)$.
-(c) The coalescence condition $h_\mathrm{cl}\le d_\mathrm{max}$, equivalently
+(c) The coalescence condition, here in its geometric form $h_\mathrm{cl}\le d_\mathrm{max}$ (the
+charter's kinetic form uses $\hcoal$), equivalently
 \begin{equation}\label{th:eq:nclosure}
 \Ns\ge N_\mathrm{s,cl}=\frac{\tan^{2}(\theta/2)}{2d_\mathrm{max}^{2}} \un{m^{-2}},
 \end{equation}
