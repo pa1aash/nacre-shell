@@ -339,6 +339,24 @@ functions:
       - {wrt: theta, direction: increasing}
       - {wrt: N_s, direction: decreasing}
 
+  - name: h_cl
+    claim: C4
+    regime: R-slurry
+    unit: m
+    expression: tan(theta/2)/sqrt(2*N_s)
+    domains: {theta: '(0, pi)'}
+    note: geometric closure thickness; the base discs cover the square cells when the base radius is the spacing over sqrt(2)
+    identities:
+      - note: closure is sqrt(2) times first contact
+        equals: sqrt(2)*@h_c
+    limits:
+      - {limit: {var: theta, to: '0', dir: '+'}, expected: '0'}
+      - {limit: {var: theta, to: pi, dir: '-'}, expected: oo}
+    inequalities:
+      - {expr: '@h_c', relation: '<', rhs: '@h_cl'}
+    monotonicity:
+      - {wrt: theta, direction: increasing}
+
   # ------------------------------------------------------------------ C5, stability
   - name: Psi_pbx
     claim: C5
@@ -382,6 +400,31 @@ functions:
       - {at: {N_Li: '0'}, expected: G_phase, note: 'a Li-free phase has a potential-independent grand potential'}
     monotonicity:
       - {wrt: E_Li, direction: nondecreasing, domains: {N_Li: '[0, oo)'}}
+
+  - name: Delta_Phi_r
+    claim: C5
+    regime: R-cell
+    unit: J mol^-1
+    expression: Delta_G_r - Delta_n_Li*F_c*E_Li
+    note: Li conservation turns the grand-potential change of a reaction into this linear function of E_Li
+    limits:
+      - {at: {E_Li: '@E_window'}, expected: '0'}
+      - {at: {E_Li: '0'}, expected: Delta_G_r}
+    monotonicity:
+      - {wrt: E_Li, direction: decreasing, subs: {Delta_n_Li: aux_u}, note: 'delithiation (oxidation) is favoured by raising E_Li'}
+      - {wrt: E_Li, direction: increasing, subs: {Delta_n_Li: -aux_u}, note: 'lithiation (reduction) is disfavoured by raising E_Li'}
+
+  - name: E_window
+    claim: C5
+    regime: R-cell
+    unit: V
+    expression: Delta_G_r/(Delta_n_Li*F_c)
+    note: >-
+      one reaction's limit; E_ox is the minimum over reactions with Delta_n_Li > 0 and E_red the
+      maximum over reactions with Delta_n_Li < 0. A Li-free phase has no reaction with
+      Delta_n_Li > 0, so its Li-open E_ox is unbounded (open question Q9).
+    limits:
+      - {at: {Delta_G_r: '0'}, expected: '0'}
 
   # ------------------------------------------------------------------ insulating-film limitation
   - name: R_A
