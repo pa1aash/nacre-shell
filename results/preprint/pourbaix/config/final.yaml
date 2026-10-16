@@ -113,3 +113,51 @@ R-slurry:
         experimental Omega > 1, so the proxy must report calcite within its edge (a check that the
         screen is not failed by construction either)
   numerics: {}
+
+R-cell:
+  question: >-
+    Between which potentials vs Li+/Li are CaCO3 and the native Al oxide at equilibrium against
+    lithiation (Li-open grand potential) and against oxidation that releases CO2 and O2 with the
+    cation taken up by the anion of each registered electrolyte salt? Does the registered regime
+    range [E_cell_min, E_cell_max] lie inside each window under every gas-reference scheme?
+    (thermodynamic windows; no kinetic statement)
+  temperature_K:
+    value: 298.15
+    source: choice
+    reason: >-
+      298.15 K lies inside the sourced cell range (key t_cell, range min to max), and it is the
+      temperature of the benchmark and of every tabulated free energy used by the expt scheme.
+    cites: [t_cell]
+  E_min: {key: e_cell_min}
+  E_max: {key: e_cell_max}
+  window_margin: {key: window_margin}
+  phases:
+    CaCO3: {material_id: mp-3953, cation: Ca, gases: [O2, CO2], lithiation_chemsys: Li-Ca-C-O}
+    Al2O3: {material_id: mp-1143, cation: Al, gases: [O2], lithiation_chemsys: Li-Al-O,
+            note: "corundum; key al_phases is registered at cp2 and is null at this sha"}
+  gas_pressure_bar: {O2: 1.0, CO2: 1.0, source: choice, reason: standard state of the benchmark}
+  schemes: [janaf, mp, expt]
+  salts:
+    # the registered salts (key electrolyte_salts); each gives the admissible sink of its anion
+    LiClO4: {li_source: LiClO4, products: {Ca: [Ca(ClO4)2], Al: [Al(ClO4)3]}}
+    LiBOB: {li_source: LiB(C2O4)2, products: {Ca: [CaB2C8O16], Al: [AlB3C12O24]},
+            note: "BOB = bis(oxalato)borate, B(C2O4)2-"}
+    LiPCP: {li_source: LiC8N5, products: {Ca: [Ca(C8N5)2], Al: [Al(C8N5)3]},
+            note: "PCP = pentacyanopropenide, C3(CN)5-"}
+  solvated:
+    keys: [solvation_ca_vs_li, solvation_al_vs_li]
+    reason: >-
+      The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte
+      solvent; both keys are gaps at this params sha, so it is undetermined.
+  exchange:
+    reason: >-
+      Where a sink salt has a tabulated enthalpy of formation but no free energy and no DFT entry,
+      it enters through the exchange Ca + 2 LiA -> CaA2 + 2 Li, whose enthalpy is taken from the
+      tables (solid entropies of the exchange neglected, as every scheme neglects solid entropy):
+      G(CaA2) = 2 G(LiA) + [dfH(CaA2) - 2 dfH(LiA)] under each scheme.
+    salts: {Ca(ClO4)2: LiClO4}
+  comparators:
+    note: anions of salts that are not registered; reported, never part of a verdict
+    LiNO3: {li_source: LiNO3, products: {Ca: [Ca(NO3)2], Al: [Al(NO3)3]}}
+    Li2SO4: {li_source: Li2SO4, products: {Ca: [CaSO4], Al: [Al2(SO4)3]}}
+    LiCl: {li_source: LiCl, products: {Ca: [CaCl2], Al: [AlCl3]}}
