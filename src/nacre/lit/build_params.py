@@ -21,11 +21,13 @@ Specification per key:
       reason: <text>                                 range_reason for keys without admitted rows
       admit:                                         admitted rows (E1-E5)
         - row: TC-033
-          op: none | log10 | neglog10 | negate        applied to the row's number before unit conversion
+          op: none | log10 | neglog10 | negate | exp  applied to the row's number before unit conversion
           unit: <unit>                               override the row's unit (for example "kJ mol^-1")
           uncertainty: sd | se | pm | range | none   how to read range_or_uncertainty (default: pm for ±,
                                                      range for lo..hi)
           original: <id>                             rows with one original id count once (E3; default: doi)
+          offset_row: <row_id>                       add that row's value (a reference-electrode potential
+                                                     vs SHE) to convert the scale; the row becomes a source
       fixed_from: <row_id>                           X3: a definitional value printed in that row
       categorical: [{label, sources: [...]}]         X3 categorical input
       comparators: [<row_id>, ...]                   named in notes, never admitted (E2)
@@ -79,7 +81,8 @@ def _convert(x, from_unit, to_unit):
         return x
     u = E.ureg()
     q = u.Quantity(x, from_unit.replace("Ohm", "ohm"))
-    return float(q.to(to_unit.replace("Ohm", "ohm")).magnitude)
+    to = "dimensionless" if to_unit in ("1", "dimensionless") else to_unit.replace("Ohm", "ohm")
+    return float(q.to(to).magnitude)
 
 
 def _apply_op(x, op):
@@ -91,6 +94,8 @@ def _apply_op(x, op):
         return -math.log10(x)
     if op == "negate":
         return -x
+    if op == "exp":
+        return math.exp(x)
     raise SpecError("unknown op %r" % op)
 
 
@@ -104,7 +109,7 @@ def admitted_value(row, adm, key_unit):
 
     def conv(x):
         y = _apply_op(x, op)
-        return y if op in ("log10", "neglog10") else _convert(y, unit, key_unit)
+        return y if op in ("log10", "neglog10") else _convert(y, unit, key_unit)  # exp: unit is that of A
 
     out = {"row": row["row_id"], "grade": row["grade"], "original": adm.get("original") or row["doi"].lower(),
            "u": None, "cmp": ""}
@@ -170,13 +175,24 @@ def build_entry(key, spec, rows, symbols):
             raise SpecError("%s: row %s not in the evidence table" % (key, adm["row"]))
         if spec.get("distinct") and not adm.get("original"):
             adm = {**adm, "original": "%s#%s" % (r["doi"].lower(), r["row_id"])}
-        vals.append(admitted_value(r, adm, unit))
+        v = admitted_value(r, adm, unit)
+        if adm.get("offset_row"):
+            # potential against a reference electrode + that reference's potential printed in another row
+            o = rows.get(adm["offset_row"])
+            if o is None:
+                raise SpecError("%s: offset row %s not in the evidence table" % (key, adm["offset_row"]))
+            off = admitted_value(o, {"row": o["row_id"], "uncertainty": "none"}, unit)["point"]
+            for f in ("point", "lo", "hi", "mid"):
+                if v.get(f) is not None:
+                    v[f] += off
+            v["offset_rows"] = [o["row_id"]]
+        vals.append(v)
     # E5: grade D only when no A-C row is admitted
     if any(v["grade"] in "ABC" for v in vals) and any(v["grade"] == "D" for v in vals):
         raise SpecError("%s: grade-D rows are admitted only when no grade A-C row exists (E5)" % key)
     base = {"symbol": spec["symbol"], "transform": transform, "unit": unit, "regimes": spec["regimes"]}
-    sources = [v["row"] for v in vals]
-    best = min((v["grade"] for v in vals), key=GRADE_ORDER.get) if vals else None
+    sources = [v["row"] for v in vals] + sorted({o for v in vals for o in v.get("offset_rows", [])})
+    best = min((rows[x]["grade"] for x in sources), key=GRADE_ORDER.get) if sources else None
     notes = str(spec.get("notes") or "").strip()
     comps = spec.get("comparators") or []
     if comps:
@@ -224,8 +240,8 @@ def build_entry(key, spec, rows, symbols):
     if shadowed:
         # E3: only the row standing for each original is a source; the others are named in notes
         vals = indep
-        common["sources"] = [v["row"] for v in indep]
-        common["best_grade"] = min((v["grade"] for v in indep), key=GRADE_ORDER.get)
+        common["sources"] = [v["row"] for v in indep] + sorted({o for v in indep for o in v.get("offset_rows", [])})
+        common["best_grade"] = min((rows[x]["grade"] for x in common["sources"]), key=GRADE_ORDER.get)
         common["notes"] = (common["notes"] + " " if common["notes"] else "") + \
             "Same original as an admitted row, not counted again (E3): %s." % ", ".join(shadowed)
     ends = [x for v in vals for x in (v["lo"], v["hi"])]
