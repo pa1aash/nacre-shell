@@ -9,17 +9,20 @@
     AI-disclosure include) and build/template_dir.txt (read by build.sh);
   - regenerates numbers.tex and the declarations files in preprint/generated (git-ignored,
     build-time artefacts; see generate);
+  - refuses a \\cite key with no entry in refs.bib, and writes build/bib/refs_build.bib, the copy
+    bibtex reads (see nacre.preprint.refs);
   - in release mode, runs the release guard and refuses on any problem.
 
 The release guard fails when the local-only AI disclosure is missing, when any placeholder,
 pending marker or TBD remains in the manuscript or generated files, when a mock macro is
-used, or when either linter fails. The LaTeX layer (nacre-preamble.tex) repeats the
+used, when a cited reference has no pages or article number, when a \\cite key is unresolved,
+or when either linter fails. The LaTeX layer (nacre-preamble.tex) repeats the
 placeholder, missing-input and mock checks at use time, so a release PDF cannot carry them.
 """
 import re
 from pathlib import Path
 
-from nacre.preprint import declarations, lint_numbers, lint_scope, macros, paths, texscan
+from nacre.preprint import declarations, lint_numbers, lint_scope, macros, paths, refs, texscan
 from nacre.report import template
 
 _SAFE_PATH = re.compile(r"^[A-Za-z0-9/._-]+$")
@@ -80,6 +83,9 @@ def guard(root):
             if mock_rx and not is_numbers:
                 for name in mock_rx.findall(text):
                     problems.append("%s:%d: mock macro \\%s used" % (rel, no, name))
+    problems += ["refs: " + p for p in refs.unresolved(root)]
+    problems += ["refs: %s has no pages or article number (the fetched entry lacks them)" % k
+                 for k in refs.without_pages(root)]
     problems += ["lint-numbers: " + p for p in lint_numbers.lint(root)]
     problems += ["lint-scope: " + p for p in lint_scope.lint(root)]
     return problems
@@ -109,9 +115,16 @@ def prepare(root, mode, out=print):
         encoding="utf-8", newline="\n")
     (b / "template_dir.txt").write_text(str(tdir) + "\n", encoding="utf-8", newline="\n")
     nmacros = generate(root)
+    unresolved = refs.unresolved(root)
+    if unresolved:
+        raise PrepareError("citations: %d unresolved\n  %s" % (len(unresolved), "\n  ".join(unresolved)))
+    _, marked = refs.write_build_copy(root)
     out("template: %s (%d files verified)" % (tdir, nfiles))
     out("macros: %d written to %s" % (nmacros, texscan.rel(root, paths.numbers_tex(root))))
     derivation = root / "theory" / "derivation_body.tex"
+    out("references: %d cited, all resolve in %s; %d without pages (marked in the build copy%s)"
+        % (len(refs.cited(root)), texscan.rel(root, refs.source(root)), len(marked),
+           ": " + ", ".join(marked) if marked else ""))
     out("derivation: %s" % ("present" if derivation.is_file() else "absent (W3 has not delivered it; SI shows a draft marker)"))
     if mode == "release":
         problems = guard(root)

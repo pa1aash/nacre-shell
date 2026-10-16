@@ -31,7 +31,10 @@ tpl=$(<build/template_dir.txt)
 # The template is referenced in place, never copied; a trailing colon keeps the default paths.
 export TEXINPUTS=".:$tpl:"
 export BSTINPUTS=".:$tpl:"
-export BIBINPUTS=".:$root/paper:"
+# The preprint keeps its own bibliography, preprint/paper/refs.bib (filled only by
+# `nacre bib add --bib preprint/paper/refs.bib <doi>`). bibtex reads the copy that prepare
+# writes to build/bib/refs_build.bib (entries without pages carry a marker there); paper/refs.bib is never searched.
+export BIBINPUTS="$here/build/bib:"
 
 out=build/$mode
 rm -rf "$out"   # every build starts clean, so a stale failure never masks the current state
