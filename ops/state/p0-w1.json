@@ -1,5 +1,23 @@
 {
-  "last_session": null,
-  "status": "READY",
-  "day": 1
+  "last_session": "P0-W1.1",
+  "status": "DONE",
+  "day": 1,
+  "artifacts": [
+    "lit/corpus/README.md",
+    "lit/evidence_table.csv",
+    "lit/corpus/coverage.yaml",
+    "lit/corpus/coverage_notes.yaml",
+    "lit/corpus/gaps.md",
+    "lit/corpus/records.jsonl",
+    "lit/corpus/T-A/",
+    "lit/corpus/T-B/",
+    "lit/corpus/T-C/",
+    "lit/corpus/T-D/",
+    "lit/corpus/T-E/",
+    "src/nacre/lit/",
+    "tests/lit/",
+    "jobs/ledger/p0-w1.jsonl",
+    "ops/reports/P0-W1.1.md"
+  ],
+  "notes": "396 evidence rows from 173 DOIs (A 8, B 184, C 123, D 81); coverage: 15 covered, 5 single-source, 3 gap; 13 covered targets carry independence or proxy caveats in lit/corpus/coverage_notes.yaml. Trace audit: 0 untraced rows. Next: P0-W1.2 parameter table."
 }
