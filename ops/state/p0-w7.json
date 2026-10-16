@@ -29,6 +29,7 @@
     "palette copy at .local/w7/palette.yaml is local-only; recreate with git show before rendering",
     "smoke render byte-reproducible; 42% memory free at start; peak renderer RSS 417 MB",
     "xtb outstanding: oligomer is MMFF94 only; availability is not recorded in structure files",
-    "fix-up: machine-independent metadata"
+    "fix-up: machine-independent metadata",
+    "fix-up 2: unique test module name"
   ]
 }
