@@ -39,5 +39,15 @@
     "functions": 42,
     "check_contract": "PASS",
     "summary": "uniform chemical potential: Omega = Omega_bulk at the template; Delta_G_seq enters once, through Delta_gamma_ads in gamma_sl; composite inputs gamma_sl -> gamma_sl0; Omega_local renamed Omega_local_ideal (demonstration); 11 added functions; changelog in contract.yaml `changes`"
+  },
+  "thresholds": {
+    "status": "ready",
+    "sha": "3c9568b3cceea3733e412aa09ac70db97365735b",
+    "file": "theory/thresholds.md",
+    "machine_block": "fenced block tagged thresholds (W4 copies it into configs/preprint/thresholds.yaml)",
+    "written_before_screen_output": true,
+    "base_commit": "49100a9d92b5dc48f1db1d15529967dfeeece12d",
+    "params_keys": 25,
+    "check_contract": "PASS"
   }
 }
