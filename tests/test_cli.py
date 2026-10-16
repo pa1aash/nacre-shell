@@ -176,8 +176,80 @@ def test_verify_json_in_scratch_clone(scratch_clone):
     data = json.loads(r.stdout)
     names = [c["name"] for c in data["checks"]]
     assert names == ["tests", "attribution", "identity", "signatures", "lane ownership",
-                     "frozen paths", "provenance", "number linter"]
+                     "frozen paths", "provenance", "number linter", "preprint linters", "test basenames"]
     status = {c["name"]: c["status"] for c in data["checks"]}
     assert status["attribution"] == "PASS" and status["identity"] == "PASS"
     assert status["signatures"] == "FAIL"  # the scratch snapshot commit is unsigned
     assert status["number linter"] == "INACTIVE"
+
+
+def _verify_repo(tmp_path, files):
+    root = tmp_path
+    git(root, "init", "-q")
+    for rel, text in files.items():
+        f = root / rel
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(text)
+    git(root, "add", "-A")
+    return root
+
+
+def test_verify_test_basenames_flags_duplicates(tmp_path):
+    from nacre.cli.commands import verify
+    root = _verify_repo(tmp_path, {"tests/a/test_x.py": "", "tests/b/test_x.py": "", "tests/c/test_y.py": "",
+                                   "src/pkg/tests/test_z.py": "", "tools/test_x.py": ""})
+    r = verify.check_test_basenames(root, False)
+    assert r["status"] == "FAIL" and "test_x.py" in r["detail"] and "tools" not in r["detail"]
+    assert "test_y.py" not in r["detail"]
+
+
+def test_verify_test_basenames_pass_when_unique(tmp_path):
+    from nacre.cli.commands import verify
+    root = _verify_repo(tmp_path, {"tests/a/test_x.py": "", "tests/b/test_y.py": "", "src/pkg/tests/test_z.py": "",
+                                   "tests/a/helpers.py": "", "tests/b/helpers.py": ""})
+    assert verify.check_test_basenames(root, False)["status"] == "PASS"
+
+
+def test_verify_runs_the_repo_test_basename_check():
+    from nacre.cli.commands import verify
+    r = verify.check_test_basenames(Path(__file__).resolve().parent.parent, False)
+    assert r["status"] == "PASS", r["detail"]
+
+
+def test_verify_preprint_linters_inactive_without_paper(tmp_path):
+    from nacre.cli.commands import verify
+    assert verify.check_preprint_linters(tmp_path, False)["status"] == "INACTIVE"
+
+
+def test_verify_preprint_linters_run_when_paper_exists(monkeypatch, tmp_path):
+    from nacre.cli.commands import verify
+    from nacre.preprint import lint_numbers, lint_scope
+    (tmp_path / "preprint" / "paper").mkdir(parents=True)
+    monkeypatch.setattr(lint_numbers, "lint", lambda root, files: [])
+    monkeypatch.setattr(lint_scope, "lint", lambda root, files: [])
+    r = verify.check_preprint_linters(tmp_path, False)
+    assert r["status"] == "PASS" and "draft" in r["detail"]
+    monkeypatch.setattr(lint_numbers, "lint", lambda root, files: ["sec.tex:3 digit in prose"])
+    monkeypatch.setattr(lint_scope, "lint", lambda root, files: ["sec.tex:9 [SG01] working device"])
+    r = verify.check_preprint_linters(tmp_path, False)
+    assert r["status"] == "FAIL" and "digit in prose" in r["detail"] and "SG01" in r["detail"]
+
+
+def test_verify_preprint_linters_report_scope_config_error(monkeypatch, tmp_path):
+    from nacre.cli.commands import verify
+    from nacre.preprint import lint_numbers, lint_scope
+    (tmp_path / "preprint" / "paper").mkdir(parents=True)
+    monkeypatch.setattr(lint_numbers, "lint", lambda root, files: [])
+
+    def boom(root, files):
+        raise lint_scope.ScopeConfigError("no block")
+
+    monkeypatch.setattr(lint_scope, "lint", boom)
+    assert verify.check_preprint_linters(tmp_path, False)["status"] == "FAIL"
+
+
+def test_verify_preprint_linters_pass_on_repo_draft():
+    from nacre.cli.commands import verify
+    root = Path(__file__).resolve().parent.parent
+    r = verify.check_preprint_linters(root, False)
+    assert r["status"] == "PASS", r["detail"]

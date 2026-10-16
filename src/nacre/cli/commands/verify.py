@@ -191,8 +191,45 @@ def check_number_linter(root, strict):
     return _result("number linter", "FAIL", "enabled in ops/config.yaml but not implemented yet")
 
 
+def check_test_basenames(root, strict):
+    """Test module basenames are unique: pytest's default import mode cannot load two modules
+    with one basename (found at integration, a W5/W7 collision)."""
+    files = [f for f in _util.git(root, "ls-files", "-z").stdout.split("\0") if f.endswith(".py")]
+    seen = {}
+    for rel in files:
+        name = Path(rel).name
+        parts = Path(rel).parts
+        in_tests = "tests" in parts[:-1]
+        if in_tests and (name.startswith("test_") or name.endswith("_test.py")):
+            seen.setdefault(name, []).append(rel)
+    dup = {n: ps for n, ps in seen.items() if len(ps) > 1}
+    if dup:
+        return _result("test basenames", "FAIL", "; ".join("%s: %s" % (n, ", ".join(ps)) for n, ps in sorted(dup.items())[:5]))
+    return _result("test basenames", "PASS", "%d test modules, all unique" % len(seen))
+
+
+def check_preprint_linters(root, strict):
+    """lint-numbers and lint-scope whenever preprint/paper/ exists.
+
+    Draft state: mock-marked macros are accepted by the linters. The release build
+    (`nacre preprint guard`) stays the hard gate for mocks and placeholders.
+    """
+    if not (Path(root) / "preprint" / "paper").is_dir():
+        return _result("preprint linters", "INACTIVE", "no preprint/paper/")
+    from nacre.preprint import lint_numbers, lint_scope
+    problems = ["lint-numbers: %s" % p for p in lint_numbers.lint(root, None)]
+    try:
+        problems += ["lint-scope: %s" % p for p in lint_scope.lint(root, None)]
+    except lint_scope.ScopeConfigError as exc:
+        problems.append("lint-scope: config error: %s" % exc)
+    if problems:
+        return _result("preprint linters", "FAIL", "; ".join(problems[:5]) + (" (+%d more)" % (len(problems) - 5) if len(problems) > 5 else ""))
+    return _result("preprint linters", "PASS", "lint-numbers and lint-scope (draft state)")
+
+
 CHECKS = [check_tests, check_attribution, check_identity, check_signatures,
-          check_lanes, check_frozen, check_provenance, check_number_linter]
+          check_lanes, check_frozen, check_provenance, check_number_linter, check_preprint_linters,
+          check_test_basenames]
 
 
 def run_checks(root, strict=False):
