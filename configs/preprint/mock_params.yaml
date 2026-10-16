@@ -1,0 +1,84 @@
+# MOCK PARAMETER TABLE in the layout of lit/params.yaml (lit/corpus/params_README.md).
+# Synthetic round numbers chosen only to lie inside each input's physical domain and to
+# exercise every code path of the screen (correlated groups, log10 keys, unsampled keys,
+# draws outside the Young domain, undersaturated draws). They are not literature values,
+# carry no physical meaning and never feed a reported result: the adapter refuses this
+# file unless allow_mock / --mock is given, and dry runs write only under
+# results/preprint/screen/dryrun/ (git-ignored).
+mock: true
+meta: {session: P0-W4.2, note: synthetic test table}
+params:
+  temperature:
+    {symbol: T, transform: none, unit: K, regimes: [shared], status: design-input,
+     prior: {family: uniform, low: 280.0, high: 320.0}, sources: [], correlation_group: null}
+  ph:
+    {symbol: pH, transform: none, unit: "1", regimes: [R-slurry], status: design-input,
+     prior: {family: uniform, low: 9.0, high: 13.0}, sources: [], correlation_group: null}
+  site_free_energy:
+    {symbol: Delta_G_site, transform: none, unit: J mol^-1, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: -20000.0, high: -1000.0}, sources: [], correlation_group: null}
+  site_pka:
+    {symbol: pKa, transform: none, unit: "1", regimes: [shared], status: sourced,
+     prior: {family: normal, mean: 10.0, sd: 0.5}, sources: [], correlation_group: null}
+  ca_bulk_concentration:
+    {symbol: c_bulk, transform: none, unit: mol m^-3, regimes: [shared], status: design-input,
+     prior: {family: loguniform, low: 0.1, high: 10.0}, sources: [], correlation_group: null}
+  site_density:
+    {symbol: Gamma_s, transform: none, unit: mol m^-2, regimes: [shared], status: sourced,
+     prior: {family: loguniform, low: 1.0e-7, high: 1.0e-5}, sources: [], correlation_group: null}
+  layer_thickness:
+    {symbol: delta_s, transform: none, unit: m, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 1.0e-9, high: 2.0e-9}, sources: [], correlation_group: null}
+  ca_activity:
+    {symbol: a_Ca, transform: none, unit: "1", regimes: [shared], status: design-input,
+     prior: {family: loguniform, low: 1.0e-4, high: 1.0e-2}, sources: [], correlation_group: null}
+  co3_activity:
+    {symbol: a_CO3, transform: none, unit: "1", regimes: [shared], status: design-input,
+     prior: {family: loguniform, low: 1.0e-4, high: 1.0e-2}, sources: [], correlation_group: null}
+  log_ksp:
+    {symbol: K_sp, transform: log10, unit: "1", regimes: [shared], status: sourced,
+     prior: {family: normal, mean: -6.0, sd: 0.5}, sources: [], correlation_group: null}
+  gamma_nucleus_liquid:
+    {symbol: gamma_nl, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 1.0, high: 2.0}, sources: [], correlation_group: young}
+  gamma_template_liquid:
+    {symbol: gamma_sl, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 0.0, high: 2.0}, sources: [], correlation_group: young}
+  gamma_template_nucleus:
+    {symbol: gamma_sn0, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 0.0, high: 2.0}, sources: [], correlation_group: young}
+  water_displacement:
+    {symbol: Delta_gamma_w, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 0.0, high: 0.5}, sources: [], correlation_group: young}
+  molar_volume:
+    {symbol: V_m, transform: none, unit: m^3 mol^-1, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 1.0e-6, high: 2.0e-6}, sources: [], correlation_group: null}
+  gamma_oxide_water:
+    {symbol: gamma_ow, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 1.0, high: 2.0}, sources: [], correlation_group: anchor}
+  gamma_polymer_water:
+    {symbol: gamma_pw, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 0.0, high: 1.0}, sources: [], correlation_group: anchor}
+  gamma_oxide_polymer:
+    {symbol: gamma_op, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 0.5, high: 1.5}, sources: [], correlation_group: anchor}
+  pmf_free_energy:
+    {symbol: Delta_F_pmf, transform: none, unit: J, regimes: [shared], status: computed,
+     range: null, range_reason: computed in the study (mock), prior: {family: none},
+     sources: [], correlation_group: null}
+correlation_groups:
+  young:
+    members: [gamma_nucleus_liquid, gamma_template_liquid, gamma_template_nucleus, water_displacement]
+    kind: rank
+    matrix: [[1.0, 0.0, 0.3, 0.0],
+             [0.0, 1.0, 0.6, 0.0],
+             [0.3, 0.6, 1.0, 0.0],
+             [0.0, 0.0, 0.0, 1.0]]
+    sources: [mock]
+    reason: synthetic correlation exercising the copula
+  anchor:
+    members: [gamma_oxide_water, gamma_polymer_water, gamma_oxide_polymer]
+    kind: assumed independent
+    matrix: [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+    sources: []
+    reason: synthetic group exercising the independence default
