@@ -1,4 +1,4 @@
-"""pre-commit: banned strings, identity, lane ownership and frozen paths."""
+"""pre-commit: banned strings, identity, lane ownership, dependency groups and frozen paths."""
 import os
 import sys
 
@@ -27,6 +27,16 @@ def main():
         for path, reason in _lanes.lane_violations(lane, _scan.staged_paths(), cfg):
             _scan.report("lane-ownership", path, None, "lane %s: %s" % (lane, reason))
             failures += 1
+
+    if lane and not err and not merging:
+        staged = _scan.staged_paths()
+        if "pyproject.toml" in staged or "uv.lock" in staged:
+            rc_old, old_text = _scan.git("show", "HEAD:pyproject.toml")
+            rc_new, new_text = _scan.git("show", ":pyproject.toml")
+            for path, reason in _lanes.dependency_violations(
+                    lane, old_text if rc_old == 0 else "", new_text if rc_new == 0 else "", staged, cfg):
+                _scan.report("dependency-groups", path, None, reason)
+                failures += 1
 
     def tag_exists(tag):
         return _scan.git("rev-parse", "-q", "--verify", "refs/tags/" + tag)[0] == 0

@@ -122,6 +122,46 @@ def test_hook_rejects_unregistered_track_branch(hook_repo):
     assert r.returncode != 0 and "[branch]" in r.stderr
 
 
+_TOML = """[project]
+name = "x"
+dependencies = ["pyyaml"]
+
+[dependency-groups]
+dev = ["pytest"]
+p0-w1 = []
+p0-w2 = []
+
+[tool.uv]
+default-groups = ["dev", "p0-w1", "p0-w2"]
+"""
+
+
+def test_hook_worker_changes_only_its_dependency_group(hook_repo):
+    assert commit(hook_repo, {"pyproject.toml": _TOML}, branch="preprint/p0").returncode == 0
+    git(hook_repo, "checkout", "-q", "-B", "preprint/p0-w1")
+    ok_change = _TOML.replace("p0-w1 = []", 'p0-w1 = ["pint"]')
+    assert commit(hook_repo, {"pyproject.toml": ok_change}).returncode == 0
+
+
+def test_hook_worker_rejects_other_group_tool_uv_and_lock(hook_repo):
+    assert commit(hook_repo, {"pyproject.toml": _TOML}, branch="preprint/p0").returncode == 0
+    git(hook_repo, "checkout", "-q", "-B", "preprint/p0-w1")
+    r = commit(hook_repo, {"pyproject.toml": _TOML.replace("p0-w2 = []", 'p0-w2 = ["numpy"]')})
+    assert r.returncode != 0 and "[dependency-groups]" in r.stderr and "dependency-groups.p0-w2" in r.stderr
+    git(hook_repo, "reset", "-q", "--hard")
+    r = commit(hook_repo, {"pyproject.toml": _TOML.replace('"p0-w2"]', '"p0-w2", "x"]')})
+    assert r.returncode != 0 and "[tool.uv]" in r.stderr
+    git(hook_repo, "reset", "-q", "--hard")
+    r = commit(hook_repo, {"uv.lock": "version = 1\n"})
+    assert r.returncode != 0 and "never stages uv.lock" in r.stderr
+
+
+def test_hook_integrator_may_change_everything_in_pyproject(hook_repo):
+    assert commit(hook_repo, {"pyproject.toml": _TOML}, branch="preprint/p0").returncode == 0
+    r = commit(hook_repo, {"pyproject.toml": _TOML.replace('["pyyaml"]', '["pyyaml", "numpy"]'), "uv.lock": "v\n"})
+    assert r.returncode == 0, r.stderr
+
+
 # --- verify --------------------------------------------------------------------------
 
 @pytest.fixture

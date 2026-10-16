@@ -896,15 +896,7 @@ version = "0.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "ase" },
-    { name = "cmcrameri" },
-    { name = "colorspacious" },
-    { name = "jsonschema" },
-    { name = "matplotlib" },
     { name = "mp-api", extra = ["contribs"] },
-    { name = "numpy" },
-    { name = "pint" },
-    { name = "pymatgen" },
-    { name = "pymupdf" },
     { name = "pyyaml" },
     { name = "rdkit" },
     { name = "requests" },
@@ -913,23 +905,30 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "hypothesis" },
     { name = "pytest" },
+]
+p0-w1 = [
+    { name = "pint" },
+    { name = "pymupdf" },
+]
+p0-w4 = [
+    { name = "hypothesis" },
+    { name = "jsonschema" },
+    { name = "numpy" },
+]
+p0-w5 = [
+    { name = "pymatgen" },
+]
+p0-w6 = [
+    { name = "cmcrameri" },
+    { name = "colorspacious" },
+    { name = "matplotlib" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "ase", specifier = ">=3.29.0" },
-    { name = "cmcrameri", specifier = "==1.10" },
-    { name = "colorspacious", specifier = ">=1.1.2" },
-    { name = "jsonschema", specifier = ">=4.26.0" },
-    { name = "matplotlib", specifier = ">=3.11.2" },
-    { name = "mp-api", specifier = ">=0.46.5" },
     { name = "mp-api", extras = ["contribs"], specifier = ">=0.46.5" },
-    { name = "numpy", specifier = ">=2.5.4" },
-    { name = "pint", specifier = ">=0.26.1" },
-    { name = "pymatgen", specifier = ">=2026.9.24" },
-    { name = "pymupdf", specifier = ">=1.28.2" },
     { name = "pyyaml" },
     { name = "rdkit", specifier = ">=2026.9.1" },
     { name = "requests", specifier = ">=2.34.2" },
@@ -937,10 +936,26 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [
-    { name = "hypothesis", specifier = ">=6.170.0" },
-    { name = "pytest" },
+dev = [{ name = "pytest" }]
+p0-w1 = [
+    { name = "pint", specifier = ">=0.26.1" },
+    { name = "pymupdf", specifier = ">=1.28.2" },
 ]
+p0-w2 = []
+p0-w3 = []
+p0-w4 = [
+    { name = "hypothesis", specifier = ">=6.170.0" },
+    { name = "jsonschema", specifier = ">=4.26.0" },
+    { name = "numpy", specifier = ">=2.5.4" },
+]
+p0-w5 = [{ name = "pymatgen", specifier = ">=2026.9.24" }]
+p0-w6 = [
+    { name = "cmcrameri", specifier = "==1.10" },
+    { name = "colorspacious", specifier = ">=1.1.2" },
+    { name = "matplotlib", specifier = ">=3.11.2" },
+]
+p0-w7 = []
+p0-w8 = []
 
 [[package]]
 name = "narwhals"

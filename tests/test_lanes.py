@@ -139,3 +139,67 @@ def test_frozen_rules():
 
 def test_parse_numstat():
     assert _lanes.parse_numstat("1\t2\ta.txt\0-\t-\tb.bin\0") == {"a.txt": (1, 2), "b.bin": (None, None)}
+
+
+# --- dependency groups (track workers) ------------------------------------------------
+
+OLD_TOML = """\
+[project]
+name = "x"
+dependencies = ["pyyaml"]
+
+[dependency-groups]
+dev = ["pytest"]
+p0-w1 = ["pint"]
+p0-w2 = []
+
+[tool.uv]
+default-groups = ["dev", "p0-w1", "p0-w2"]
+"""
+
+
+def _dep(lane, new, staged=("pyproject.toml",), old=OLD_TOML):
+    cfg = _lanes.load_lanes(str(REPO))
+    return _lanes.dependency_violations(lane, old, new, list(staged), cfg)
+
+
+def test_worker_may_change_only_its_own_group():
+    new = OLD_TOML.replace('p0-w1 = ["pint"]', 'p0-w1 = ["pint", "pymupdf"]')
+    assert _dep("p0-w1", new) == []
+    out = _dep("p0-w2", new)
+    assert len(out) == 1 and "dependency-groups.p0-w1" in out[0][1]
+
+
+def test_worker_may_not_change_project_dependencies_or_tool_uv():
+    out = _dep("p0-w1", OLD_TOML.replace('["pyyaml"]', '["pyyaml", "numpy"]'))
+    assert out and "also changed: project" in out[0][1]
+    out = _dep("p0-w1", OLD_TOML.replace('"p0-w2"]', '"p0-w2", "p0-w3"]'))
+    assert any("[tool.uv]" in r for _, r in out)
+
+
+def test_worker_may_not_stage_uv_lock():
+    assert _dep("p0-w1", OLD_TOML, staged=("uv.lock",)) == [
+        ("uv.lock", "a worker lane never stages uv.lock; the integrator regenerates it (run `git restore uv.lock`)")]
+    out = _dep("p0-w1", OLD_TOML.replace("[]", '["a"]'), staged=("pyproject.toml", "uv.lock"))
+    assert {p for p, _ in out} == {"uv.lock", "pyproject.toml"}
+
+
+def test_worker_adding_its_own_group_when_absent_is_allowed_and_other_edits_are_not():
+    new = OLD_TOML.replace("p0-w2 = []\n", "p0-w2 = []\np0-w3 = [\"sympy\"]\n")
+    assert _dep("p0-w3", new) == []
+    assert _dep("p0-w1", new)
+
+
+def test_integrator_and_master_lanes_are_not_checked_for_dependency_groups():
+    new = OLD_TOML.replace('["pyyaml"]', '["pyyaml", "numpy"]')
+    assert _dep("p0-int", new, staged=("pyproject.toml", "uv.lock")) == []
+    assert _dep("a-main", new, staged=("pyproject.toml", "uv.lock")) == []
+
+
+def test_unparseable_pyproject_is_reported():
+    out = _dep("p0-w1", "this is = = not toml")
+    assert out and "does not parse" in out[0][1]
+
+
+def test_unchanged_pyproject_staged_is_fine():
+    assert _dep("p0-w1", OLD_TOML) == []

@@ -184,6 +184,51 @@ def lane_violations(lane, paths, cfg, merge=False):
     return out
 
 
+# --- dependency groups (track workers) --------------------------------------------
+
+def _without_group(doc, group):
+    out = {k: v for k, v in doc.items() if k != "dependency-groups"}
+    groups = {k: v for k, v in (doc.get("dependency-groups") or {}).items() if k != group}
+    out["dependency-groups"] = groups
+    return out
+
+
+def dependency_violations(lane, old_text, new_text, staged, cfg):
+    """Rules for a track worker lane (p0-w1 ..): it may change only [dependency-groups].<its lane id>
+    in pyproject.toml, never [tool.uv], and never stage uv.lock (the integrator regenerates it).
+
+    Returns [(path, reason)]. Integrators and non-track lanes are not checked here.
+    """
+    import tomllib
+    tl = track_lane(cfg, lane)
+    if not tl or is_integrator(cfg, lane):
+        return []
+    out = []
+    if "uv.lock" in staged:
+        out.append(("uv.lock", "a worker lane never stages uv.lock; the integrator regenerates it (run `git restore uv.lock`)"))
+    if "pyproject.toml" not in staged:
+        return out
+    try:
+        old = tomllib.loads(old_text) if old_text else {}
+        new = tomllib.loads(new_text) if new_text else {}
+    except tomllib.TOMLDecodeError as exc:
+        return out + [("pyproject.toml", "does not parse: %s" % exc)]
+    if (old.get("tool") or {}).get("uv") != (new.get("tool") or {}).get("uv"):
+        out.append(("pyproject.toml", "[tool.uv] is the integrator's; a worker lane does not change it"))
+    a, b = _without_group(old, lane), _without_group(new, lane)
+    a.get("tool", {}).pop("uv", None)
+    b.get("tool", {}).pop("uv", None)
+    if a != b:
+        keys = sorted(k for k in set(a) | set(b) if a.get(k) != b.get(k))
+        if "dependency-groups" in keys:
+            ga, gb = a["dependency-groups"], b["dependency-groups"]
+            keys.remove("dependency-groups")
+            keys += ["dependency-groups.%s" % g for g in sorted(set(ga) | set(gb)) if ga.get(g) != gb.get(g)]
+        out.append(("pyproject.toml", "lane %s may change only [dependency-groups].%s; also changed: %s"
+                    % (lane, lane, ", ".join(keys))))
+    return out
+
+
 # --- frozen paths -----------------------------------------------------------
 
 def load_frozen(root):

@@ -4,20 +4,11 @@ version = "0.0.0"
 description = "Nacre Shell: a pre-registered computational feasibility study."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
+# Dependencies that more than one Day 1 lane added, or that no lane owns, stay here. A lane's
+# own dependencies live in its entry under the dependency-groups table below (RUNBOOK section 14).
 dependencies = [
-    "jsonschema>=4.26.0",
-    "numpy>=2.5.4",
-    "pint>=0.26.1",
-    "pymupdf>=1.28.2",
     "ase>=3.29.0",
     "mp-api[contribs]>=0.46.5",
-    "pymatgen>=2026.9.24",
-    "ase>=3.29.0",
-    "cmcrameri==1.10",
-    "colorspacious>=1.1.2",
-    "matplotlib>=3.11.2",
-    "ase>=3.29.0",
-    "mp-api>=0.46.5",
     "pyyaml",
     "rdkit>=2026.9.1",
     "requests>=2.34.2",
@@ -29,9 +20,33 @@ nacre = "nacre.cli:main"
 
 [dependency-groups]
 dev = [
-    "hypothesis>=6.170.0",
     "pytest",
 ]
+p0-w1 = [
+    "pint>=0.26.1",
+    "pymupdf>=1.28.2",
+]
+p0-w2 = []
+p0-w3 = []
+p0-w4 = [
+    "hypothesis>=6.170.0",
+    "jsonschema>=4.26.0",
+    "numpy>=2.5.4",
+]
+p0-w5 = [
+    "pymatgen>=2026.9.24",
+]
+p0-w6 = [
+    "cmcrameri==1.10",
+    "colorspacious>=1.1.2",
+    "matplotlib>=3.11.2",
+]
+p0-w7 = []
+p0-w8 = []
+
+[tool.uv]
+# `uv sync` and `uv run` install every worker group; only the integrator edits this table.
+default-groups = ["dev", "p0-w1", "p0-w2", "p0-w3", "p0-w4", "p0-w5", "p0-w6", "p0-w7", "p0-w8"]
 
 [build-system]
 requires = ["hatchling"]
