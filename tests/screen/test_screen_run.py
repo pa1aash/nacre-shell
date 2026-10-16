@@ -77,3 +77,26 @@ def test_independence_option_samples_without_correlations():
     assert reg["dependence"] == {"method": "independent"}
     assert reg["dependence_check"] is None
     assert np.isfinite(reg["links"]["anchor"]["quantities"]["W_adh_wet"]["mean"])
+
+
+def test_claims_and_study_from_screen_outputs_conform_to_the_schema():
+    from nacre.screen import decision, thresholds as thr
+    from screen_helpers import synthetic_resolver as _resolver
+    rule = thr.load_thresholds(ROOT / thr.COPY)["rule"]
+    rp = params_adapter.regime_priors(MOCK, "R-slurry", allow_mock=True)
+    cfg = run.load_config(ROOT)
+    for k, v in TINY.items():
+        cfg[k] = {**cfg[k], **v}
+    reg, outputs = run.run_regime(rp, cfg, seed=2, dependence_check=False, return_outputs=True)
+    claims = run.evaluate_claims(rule, {"R-slurry": outputs}, _resolver())
+    assert set(claims) == {"C1", "C2", "C3", "C4", "C5"}
+    assert claims["C5"]["verdict"] == "inconclusive"               # no stability section given
+    regimes = {"R-slurry": reg}
+    run._attach_link_records(regimes, claims)
+    assert "C3.C3a" in reg["links"]["nucleate"]["threshold_evaluation"]
+    study = decision.study_verdict(rule, claims, None)
+    doc = summary.build(regimes, {"git_sha": "0" * 40, "git_dirty": False, "config_hash": "sha256:" + "a" * 64,
+                                  "prior_file": "p", "prior_file_hash": "sha256:" + "b" * 64},
+                        mock=True, claims={c: {k: v for k, v in r.items()} for c, r in claims.items()}, study=study)
+    jsonschema.validate(json.loads(json.dumps(doc, default=float)), summary.load_schema())
+    assert study["verdict"] in ("inconclusive", "falsified")       # no deletion test: never feasible

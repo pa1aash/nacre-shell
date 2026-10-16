@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from nacre.screen import chain, params_adapter, propagate, shapley, sobol, summary
+from nacre.screen import chain, decision, params_adapter, propagate, shapley, sobol, summary
 from nacre.screen import thresholds as thr
 
 CONFIG = Path("configs") / "preprint" / "screen.yaml"
@@ -97,8 +97,13 @@ def _round_quantiles(levels):
     return tuple(float(q) for q in levels)
 
 
-def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None, independence=False):
-    """Results entry of one regime (schema $defs/regime). rp: params_adapter.RegimePriors."""
+def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None, independence=False,
+               return_outputs=False):
+    """Results entry of one regime (schema $defs/regime). rp: params_adapter.RegimePriors.
+
+    With return_outputs the propagated draws ({link: {quantity: array}}) are returned too,
+    for the decision rule.
+    """
     joint = rp.joint.independent() if independence else rp.joint
     pc, sc, hc = cfg["propagation"], cfg["sobol"], cfg["shapley"]
     links = links or chain.evaluable_links(joint.symbols)
@@ -136,8 +141,6 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
         if check and not sub.is_independent:
             rec, _, _ = shapley.dependence_check(link_model(link), sub, names, np.random.default_rng(d_seq), **kw)
             agreement[link] = rec["rank_agreement"]
-        if thresholds is not None:
-            entry["threshold_evaluation"] = thr.evaluate_link(link, outputs[link], thresholds)
         out_links[link] = entry
         convergences.append(conv)
         designs.append(design)
@@ -160,7 +163,51 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
             "converged": all(c["converged"] for c in convergences),
             "capped": any(c["capped"] for c in convergences)},
     }
-    return regime
+    return (regime, outputs) if return_outputs else regime
+
+
+def _state_samples(outputs):
+    """Decision-rule samples of one state: the chain outputs keyed by quantity."""
+    s = {}
+    for q, (link, name) in decision.QUANTITY_SOURCE.items():
+        if link in outputs and name in outputs[link]:
+            s[q] = outputs[link][name]
+    if "nucleate" in outputs:
+        s["cos_theta"] = outputs["nucleate"]["cos_theta"]
+    return s
+
+
+def evaluate_claims(rule, outputs_by_regime, resolver, stability=None, control_fails_where_it_must=None,
+                    solid_salt_registered=False):
+    """C1 to C5 under the frozen rule. C1 to C4 read the R-slurry draws (one registered state per
+    regime run); C5 reads the deterministic stability section when given."""
+    states = {"R-slurry": _state_samples(outputs_by_regime["R-slurry"])} if "R-slurry" in outputs_by_regime else {}
+    claims = {}
+    for claim in ("C1", "C2", "C3", "C4"):
+        need = {t["quantity"] for t in rule["links"][claim]["tests"]}
+        if states and all(q in states["R-slurry"] for q in need):
+            claims[claim] = decision.evaluate_link(rule, claim, states, resolver)
+        else:
+            claims[claim] = {"verdict": "inconclusive", "tests": {}, "falsified_mass": None}
+    if stability is not None:
+        claims["C5"] = decision.evaluate_c5(rule, stability, resolver, control_fails_where_it_must, solid_salt_registered)
+    else:
+        claims["C5"] = {"verdict": "inconclusive", "tests": {}, "falsified_mass": None}
+    return claims
+
+
+def _attach_link_records(regimes_out, claims):
+    """Each test record also goes to threshold_evaluation of the link that carries its quantity."""
+    reg = regimes_out.get("R-slurry")
+    if reg is None:
+        return
+    for claim, rec in claims.items():
+        for tid, t in rec["tests"].items():
+            src = decision.QUANTITY_SOURCE.get(t.get("quantity"))
+            if src and src[0] in reg["links"]:
+                ev = reg["links"][src[0]]["threshold_evaluation"] or {}
+                ev["%s.%s" % (claim, tid)] = t
+                reg["links"][src[0]]["threshold_evaluation"] = ev
 
 
 def load_config(root, path=CONFIG):
@@ -174,10 +221,7 @@ def _provenance(root, cfg, cfg_path, rp_list, thresholds_path, dry):
     check = Path(root) / CONTRACT_CHECK
     contract = json.loads(check.read_text(encoding="utf-8")).get("contract_sha") if check.exists() else None
     th = Path(root) / thresholds_path
-    th_source = None
-    if th.exists():
-        head = yaml.safe_load(th.read_text(encoding="utf-8")) or {}
-        th_source = (head.get("source") or {}).get("sha") if isinstance(head, dict) else None
+    th_source = thr.split_copy(th.read_text(encoding="utf-8"))[0] if th.exists() else None
     return {"git_sha": sha, "git_dirty": dirty,
             "config_hash": summary.config_hash({"screen": cfg, "regimes": [r.regime for r in rp_list]}),
             "config_file": _rel(root, cfg_path), "config_file_hash": _sha256_file(cfg_path),
@@ -215,8 +259,14 @@ def production_guard(root, rp_list, out_path, thresholds_path=THRESHOLDS):
 
 
 def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_run=True, allow_mock=False,
-        config_path=CONFIG, independence=False, dependence_check=None, overrides=None):
-    """Run the screen and write the results document; returns (path, doc)."""
+        config_path=CONFIG, independence=False, dependence_check=None, overrides=None, stability_path=None,
+        controls=None, control_fails_where_it_must=None, solid_salt_registered=False):
+    """Run the screen and write the results document; returns (path, doc).
+
+    Production only: stability_path is a results document with the C5 stability section
+    (lane p0-w5); controls maps each deletion-test control (bare_oxide, PVDF) to the
+    parameter table of the screen rerun with that control in place of the template.
+    """
     root = Path(root)
     out_path = Path(out_path)
     cfg_path = root / config_path
@@ -244,11 +294,37 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
         thresholds = thr.load_thresholds(root / THRESHOLDS)
     seeds = np.random.SeedSequence(cfg["propagation"]["seed"]).spawn(len(params_adapter.REGIMES))
     seed_of = {r: int(s.generate_state(1)[0]) for r, s in zip(params_adapter.REGIMES, seeds)}
-    regimes_out = {rp.regime: run_regime(rp, cfg, seed_of[rp.regime], dependence_check=dependence_check,
-                                         thresholds=thresholds, independence=independence)
-                   for rp in rp_list}
+    regimes_out, outputs = {}, {}
+    for rp in rp_list:
+        regimes_out[rp.regime], outputs[rp.regime] = run_regime(
+            rp, cfg, seed_of[rp.regime], dependence_check=dependence_check, thresholds=thresholds,
+            independence=independence, return_outputs=True)
+    claims = study = None
+    if thresholds is not None:
+        rule = thresholds["rule"]
+        resolver = decision.Resolver.from_table(yaml.safe_load(Path(params_path).read_text(encoding="utf-8")))
+        stability = (json.loads(Path(stability_path).read_text(encoding="utf-8")).get("stability")
+                     if stability_path else None)
+        claims = evaluate_claims(rule, outputs, resolver, stability, control_fails_where_it_must, solid_salt_registered)
+        _attach_link_records(regimes_out, claims)
+        deletion = None
+        if controls:
+            control_claims = {}
+            for name, table in controls.items():
+                c_out = {}
+                for regime in regimes:
+                    try:
+                        crp = params_adapter.regime_priors(table, regime)
+                    except params_adapter.PriorFileError:
+                        continue
+                    _, c_out[regime] = run_regime(crp, cfg, seed_of[regime], dependence_check=False,
+                                                  return_outputs=True)
+                control_claims[name] = evaluate_claims(rule, c_out, resolver, stability,
+                                                       control_fails_where_it_must, solid_salt_registered)
+            deletion = decision.deletion_test(rule, claims, control_claims, resolver)
+        study = decision.study_verdict(rule, claims, deletion)
     prov = _provenance(root, cfg, cfg_path, rp_list, THRESHOLDS, dry_run)
-    doc = summary.build(regimes_out, prov, mock=dry_run or any(rp.mock for rp in rp_list))
+    doc = summary.build(regimes_out, prov, mock=dry_run or any(rp.mock for rp in rp_list), claims=claims, study=study)
     path = summary.write(doc, out_path)
     if not dry_run:
         line = {"kind": "screen", "session": "P0-W4.3", "git_sha": prov["git_sha"], "git_dirty": prov["git_dirty"],

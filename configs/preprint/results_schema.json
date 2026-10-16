@@ -59,6 +59,25 @@
         "type": "object"
       },
       "description": "Lane-specific metadata that is not part of the shared contract (for example W5's provenance_pourbaix, resolved inputs and session id), keyed by lane id. Nothing in it is read by another lane."
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/claim"
+      },
+      "description": "Link verdicts under the frozen thresholds (configs/preprint/thresholds.yaml), C1 to C5.",
+      "propertyNames": {
+        "enum": [
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "C5"
+        ]
+      }
+    },
+    "study": {
+      "$ref": "#/$defs/study"
     }
   },
   "$defs": {
@@ -755,6 +774,10 @@
                     "minimum": 0
                   }
                 }
+              },
+              "formula": {
+                "type": "string",
+                "description": "Formula of the phase (for the per non-O, non-H atom normalisation of the C5 edge)."
               }
             }
           }
@@ -866,6 +889,14 @@
             },
             "switch": {
               "type": "string"
+            },
+            "kind": {
+              "enum": [
+                "solid_salt",
+                "solvated",
+                "other"
+              ],
+              "description": "solid_salt: the cation leaves as the solid salt of the electrolyte anion; a pass under it is conditional on cp2 decision 5."
             }
           }
         },
@@ -897,6 +928,20 @@
                 "type": "array",
                 "items": {
                   "type": "string"
+                }
+              },
+              "oxidation_by_scheme": {
+                "type": "object",
+                "description": "Oxidation limit per registered gas reference scheme; the limit used is the lowest.",
+                "additionalProperties": {
+                  "$ref": "#/$defs/window_limit"
+                }
+              },
+              "reduction_by_scheme": {
+                "type": "object",
+                "description": "Reduction limit per registered gas reference scheme; the limit used is the highest.",
+                "additionalProperties": {
+                  "$ref": "#/$defs/window_limit"
                 }
               }
             }
@@ -1052,6 +1097,105 @@
           }
         }
       }
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "verdict",
+        "tests"
+      ],
+      "properties": {
+        "verdict": {
+          "enum": [
+            "feasible",
+            "inconclusive",
+            "falsified"
+          ]
+        },
+        "tests": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "verdict"
+            ],
+            "properties": {
+              "verdict": {
+                "enum": [
+                  "feasible",
+                  "inconclusive",
+                  "falsified"
+                ]
+              },
+              "P_good": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "P_bad": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        "falsified_mass": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "study": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict",
+        "links",
+        "deletion_test"
+      ],
+      "properties": {
+        "verdict": {
+          "enum": [
+            "feasible",
+            "inconclusive",
+            "falsified"
+          ]
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "feasible",
+              "inconclusive",
+              "falsified"
+            ]
+          }
+        },
+        "deletion_test": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "framing": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
     }
   },
   "allOf": [
@@ -1096,6 +1240,16 @@
             {
               "required": [
                 "extensions"
+              ]
+            },
+            {
+              "required": [
+                "claims"
+              ]
+            },
+            {
+              "required": [
+                "study"
               ]
             }
           ]

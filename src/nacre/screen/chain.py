@@ -29,7 +29,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from nacre.physics import adhesion, nucleation, sequestration, template, wetting
+from nacre.physics import adhesion, conformality, nucleation, sequestration, template, wetting
 from nacre.physics import supersaturation as sat
 from nacre.physics.constants import BOLTZMANN, GAS_CONSTANT
 from nacre.screen.boundary import EMPTY, clip_cos_theta
@@ -71,6 +71,7 @@ OUTPUTS = {
         "barrier_hom_bulk_kT": Output("Delta_G*_hom(Omega_bulk) / k_B T", "k_B T", "log10"),
         "barrier_het_template_kT": Output("f(theta) Delta_G*_hom(Omega_bulk) / k_B T", "k_B T", "log10"),
         "r_star": Output("r*(Omega_bulk)", "m", "log10"),
+        "S_spread": Output("S_spread", "J m^-2"),
         "B_acc_kT": Output("B_acc / k_B T", "k_B T"),
         "accessibility_margin_kT": Output("(B_acc - Delta_G*_het) / k_B T", "k_B T"),
         "N_nuc": Output("N_nuc", "m^-2", "log10"),
@@ -190,8 +191,9 @@ def nucleate(x, seq=None):
     het = _apply(nucleation.heterogeneous_barrier, base & np.isfinite(f), n, f, hom)
     hom_kt = _apply(nucleation.barrier_in_kT, base, n, hom, t)
     het_kt = _apply(nucleation.barrier_in_kT, np.isfinite(het), n, het, t)
+    spread = _apply(conformality.spreading_coefficient, ok_y, n, sl, sn0, dw, nl)
     out = {"Omega_bulk": om, "gamma_sl_insitu": sl, "cos_theta": cos_t, "f_theta": f,
-           "barrier_hom_bulk_kT": hom_kt, "barrier_het_template_kT": het_kt, "r_star": r,
+           "barrier_hom_bulk_kT": hom_kt, "barrier_het_template_kT": het_kt, "r_star": r, "S_spread": spread,
            "B_acc_kT": np.full(n, np.nan), "accessibility_margin_kT": np.full(n, np.nan), "N_nuc": np.full(n, np.nan)}
     if has(x, ACCESS_INPUTS):
         j0, tp, nr = (_arr(x, k, n) for k in ACCESS_INPUTS)
@@ -200,6 +202,8 @@ def nucleate(x, seq=None):
         out["B_acc_kT"] = b_acc / (BOLTZMANN * t)          # negative when J0 t_proc < N_req
         out["accessibility_margin_kT"] = out["B_acc_kT"] - het_kt
         out["N_nuc"] = _apply(nucleation.nucleus_areal_density, ok_a & np.isfinite(het), n, j0, tp, het, t)
+        # a state with Omega_bulk <= 1 forms no nuclei (thresholds, C3 accessibility)
+        out["N_nuc"][ok_a & np.isfinite(om) & (om <= 1)] = 0.0
     return out, {"cos_theta": mass}
 
 

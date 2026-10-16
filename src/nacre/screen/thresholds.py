@@ -6,9 +6,9 @@ comment header naming the source commit; equal() checks the two agree (as parsed
 as text), against the working tree or against a commit of W3's branch. After tag p0-cp3
 both files change only through a dated entry in ops/tracks/p0_deviations.md.
 
-The per-link evaluators and the study-level decision rule implement the rule exactly as
-written in that block; until the copy exists every evaluator call raises
-ThresholdsNotFrozen, so no verdict can come from an unfrozen rule.
+The per-link evaluators and the study-level decision rule (nacre.screen.decision)
+implement the rule as written in that block; load_thresholds raises ThresholdsNotFrozen
+while the copy is missing, so no verdict can come from an unfrozen rule.
 """
 import re
 import subprocess
@@ -107,10 +107,3 @@ def load_thresholds(path=COPY):
     sha, body = split_copy(text)
     return {"source_sha": sha, "rule": yaml.safe_load(body)}
 
-
-def evaluate_link(link, samples, thresholds):
-    """Verdict-band evaluation of one link's decisive quantity under the frozen rule."""
-    if thresholds is None:
-        raise ThresholdsNotFrozen(_MESSAGE)
-    raise ThresholdsNotFrozen("the evaluators are implemented from the frozen block in P0-W4.2 once W3 marks "
-                              "thresholds ready")

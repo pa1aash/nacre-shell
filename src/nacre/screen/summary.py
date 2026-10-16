@@ -37,7 +37,7 @@ def provenance(root, config, prior_set, contract_sha=None):
 SCHEMA_VERSION = "2"
 
 
-def build(regimes, prov, mock, stability=None, required_precision=None):
+def build(regimes, prov, mock, stability=None, required_precision=None, claims=None, study=None):
     """Assemble a results document (schema v2); regimes and/or stability must be given."""
     doc = {"schema_version": SCHEMA_VERSION, "mock": bool(mock),
            "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "provenance": prov}
@@ -47,6 +47,10 @@ def build(regimes, prov, mock, stability=None, required_precision=None):
         doc["stability"] = stability
     if required_precision is not None:
         doc["required_precision"] = required_precision
+    if claims is not None:
+        doc["claims"] = claims
+    if study is not None:
+        doc["study"] = study
     return doc
 
 
