@@ -1,0 +1,21 @@
+% Standalone build of the derivation (session P0-W3.1). The body is theory/derivation_body.tex,
+% which the SI inputs directly after \input{theory/macros}.
+% Build: latexmk -pdf -outdir=build derivation.tex (inside theory/).
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=22mm]{geometry}
+\usepackage{amsmath}
+\usepackage{array}
+\input{macros}
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{3em}
+\title{Governing relations of the CaCO$_3$-barrier screen:\\ derivation}
+\author{}
+\date{Session P0-W3.1 (symbolic; no values)}
+\begin{document}
+\maketitle
+\noindent Each section opens with the physical argument, and the algebra follows it. Every displayed
+relation carries its SI units in brackets. The notation is that of \texttt{theory/symbols.yaml}, the
+functions are those of \texttt{theory/contract.yaml}, and open choices for the sign audit are listed in
+\texttt{theory/open\_questions.md} (cited here as Q1, Q2, \dots).
+\input{derivation_body}
+\end{document}
