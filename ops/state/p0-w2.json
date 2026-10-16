@@ -1,5 +1,16 @@
 {
-  "last_session": null,
-  "status": "READY",
-  "day": 1
+  "last_session": "P0-W2.1",
+  "status": "DONE",
+  "day": 1,
+  "artifacts": [
+    "lit/novelty.md",
+    "lit/contrary.md",
+    "ops/reports/P0-W2.1.md"
+  ],
+  "notes": [
+    "Novelty wording N1/N2 supported within the searched literature; patents not searched (LENS_TOKEN empty) and ChemRxiv API returned 403.",
+    "Contrary dossier: blocking 2 (B1, B2), material 9 (B3-B11), minor 1 (B12).",
+    "p0-w1 evidence_table.csv not yet pushed; row_id cross-check due Day 2 (P0-W2.2).",
+    "Full text of top-five prior art and of B2/B7/B9/B10 sources outstanding (publisher copies refused headless clients)."
+  ]
 }
