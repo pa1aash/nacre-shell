@@ -1,5 +1,33 @@
 {
-  "last_session": null,
-  "status": "READY",
-  "day": 1
+  "last_session": "P0-W7.1",
+  "status": "DONE",
+  "day": 1,
+  "blender_version": "5.2.2 LTS",
+  "palette_sha": "9307edc (blob a64f5e8452abf5d511194e92302fed42e3e9dc0b, unchanged at 2be89de)",
+  "artifacts": [
+    "src/nacre/structures/",
+    "structures/preprint/build.yaml",
+    "structures/preprint/manifest.json",
+    "structures/preprint/sources/al2o3_corundum.json",
+    "structures/preprint/al2o3_0001_oh.extxyz",
+    "structures/preprint/al2o3_0001_oh_water.extxyz",
+    "structures/preprint/catechol_oligomer.extxyz",
+    "structures/preprint/ca_hydrated.extxyz",
+    "structures/preprint/acc_cluster.extxyz",
+    "structures/preprint/smoke_interface.extxyz",
+    "figures/blender/scene.py",
+    "figures/blender/rig.py",
+    "figures/blender/render.yaml",
+    "figures/blender/scenes/smoke.yaml",
+    "figures/renders/smoke/smoke.png",
+    "tests/structures/",
+    "ops/reports/P0-W7.1.md"
+  ],
+  "notes": [
+    "bulk corundum mp-1143, Materials Project database 2026.04.13",
+    "materials use palette linear_rgb; Al as pushed by W6 (#D7C1A9), operator confirmation pending",
+    "xtb outstanding: ~/.nacre-envs/xtb absent, oligomer is MMFF94 only",
+    "palette copy at .local/w7/palette.yaml is local-only; recreate with git show before rendering",
+    "smoke render byte-reproducible; 42% memory free at start; peak renderer RSS 417 MB"
+  ]
 }
