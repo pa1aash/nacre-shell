@@ -137,3 +137,34 @@ def test_check_flags_missing_provenance_and_orphans(env):
     (root / "paper" / "bib" / "provenance.jsonl").write_text(
         json.dumps({"doi": "10.0000/o", "key": "gone", "original_key": "g", "url": "u", "retrieved_utc": "t", "sha256": "s"}) + "\n")
     assert bib.check(root, out=lambda *a: None) == 1
+
+
+def test_target_bib_path_keeps_provenance_beside_it(env):
+    root, kw = env
+    _serve_doi("10.0000/nacre.test")
+    assert bib.add(root, "10.0000/nacre.test", bib="preprint/paper/refs.bib", **kw) == 0
+    target = root / "preprint" / "paper"
+    assert (target / "refs.bib").read_text(encoding="utf-8").startswith("@article{")
+    rec = json.loads((target / "bib" / "provenance.jsonl").read_text().splitlines()[0])
+    assert rec["doi"] == "10.0000/nacre.test"
+    assert not (root / "paper" / "refs.bib").exists()
+    assert bib.check(root, bib="preprint/paper/refs.bib", out=lambda *a: None) == 0
+    bib.add(root, "10.0000/NACRE.test", bib="preprint/paper/refs.bib", **kw)
+    assert (target / "refs.bib").read_text().count("@article") == 1
+
+
+def test_default_target_is_unchanged(env):
+    root, kw = env
+    _serve_doi("10.0000/nacre.test")
+    bib.add(root, "10.0000/nacre.test", **kw)
+    assert bib.paths(root)["bib"] == root / "paper" / "refs.bib"
+    assert (root / "paper" / "refs.bib").exists()
+    assert bib.paths(root, "x/y.bib")["prov"] == root / "x" / "bib" / "provenance.jsonl"
+    assert bib.paths(root, str(root / "abs.bib"))["bib"] == root / "abs.bib"
+
+
+def test_cli_accepts_bib_option():
+    from nacre.cli import build_parser
+    ns = build_parser().parse_args(["bib", "add", "--bib", "preprint/paper/refs.bib", "10.1/x"])
+    assert ns.bib == "preprint/paper/refs.bib" and ns.doi == "10.1/x"
+    assert build_parser().parse_args(["bib", "check"]).bib is None

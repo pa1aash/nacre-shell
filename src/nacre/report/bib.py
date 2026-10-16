@@ -24,9 +24,16 @@ class BibError(Exception):
     pass
 
 
-def paths(root):
-    p = Path(root) / "paper"
-    return {"bib": p / "refs.bib", "prov": p / "bib" / "provenance.jsonl", "fetch": p / "build" / "_fetch"}
+def paths(root, bib=None):
+    """File locations. With `bib` (a path to a .bib file, relative to root or absolute), the
+    provenance log and fetch cache sit beside it; the default is paper/refs.bib."""
+    if bib is None:
+        p = Path(root) / "paper"
+        bibfile = p / "refs.bib"
+    else:
+        bibfile = Path(bib) if Path(bib).is_absolute() else Path(root) / bib
+        p = bibfile.parent
+    return {"bib": bibfile, "prov": p / "bib" / "provenance.jsonl", "fetch": p / "build" / "_fetch"}
 
 
 def normalise_doi(value):
@@ -106,10 +113,10 @@ def split_entries(text):
     return [p for p in parts if p.strip().startswith("@")]
 
 
-def bib_index(root):
+def bib_index(root, bib=None):
     """{key: doi or None} for every entry in refs.bib."""
     out = {}
-    for e in split_entries(_read_bib(paths(root)["bib"])):
+    for e in split_entries(_read_bib(paths(root, bib)["bib"])):
         _, key, _ = parse_head(e)
         raw = field(e, "doi")
         try:
@@ -119,8 +126,8 @@ def bib_index(root):
     return out
 
 
-def read_provenance(root):
-    p = paths(root)["prov"]
+def read_provenance(root, bib=None):
+    p = paths(root, bib)["prov"]
     rows = []
     if p.exists():
         for line in p.read_text(encoding="utf-8").splitlines():
@@ -147,12 +154,12 @@ def _obtain(fetcher, doi, doi_base, crossref_base):
     raise BibError("could not fetch BibTeX for %s:\n  %s" % (doi, "\n  ".join(attempts)))
 
 
-def add(root, doi_in, dry_run=False, fetcher=None, doi_base=DOI_BASE, crossref_base=CROSSREF_BASE, out=print):
+def add(root, doi_in, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE, crossref_base=CROSSREF_BASE, out=print):
     root = Path(root)
     doi = normalise_doi(doi_in)
-    p = paths(root)
-    index = bib_index(root)
-    prov = read_provenance(root)
+    p = paths(root, bib)
+    index = bib_index(root, bib)
+    prov = read_provenance(root, bib)
     if doi in index.values() or any(r["doi"] == doi for r in prov):
         out("already present: %s" % doi)
         return 0
@@ -182,9 +189,9 @@ def add(root, doi_in, dry_run=False, fetcher=None, doi_base=DOI_BASE, crossref_b
     return 0
 
 
-def check(root, out=print):
-    index = bib_index(root)
-    prov = read_provenance(root)
+def check(root, bib=None, out=print):
+    index = bib_index(root, bib)
+    prov = read_provenance(root, bib)
     by_key = {r["key"]: r for r in prov}
     problems = []
     for key, doi in index.items():

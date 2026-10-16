@@ -56,7 +56,7 @@ def _paper_build(args):
 def _bib_add(args):
     from nacre.report import bib
     try:
-        return bib.add(_util.repo_root(), args.doi, dry_run=args.dry_run)
+        return bib.add(_util.repo_root(), args.doi, dry_run=args.dry_run, bib=args.bib)
     except bib.BibError as exc:
         print("bib add: " + str(exc))
         return 1
@@ -64,7 +64,7 @@ def _bib_add(args):
 
 def _bib_check(args):
     from nacre.report import bib
-    return bib.check(_util.repo_root())
+    return bib.check(_util.repo_root(), bib=args.bib)
 
 
 def register(subparsers):
@@ -85,8 +85,10 @@ def register(subparsers):
     p = bsub.add_parser("add", help="fetch a BibTeX entry by DOI")
     p.add_argument("doi")
     p.add_argument("--dry-run", action="store_true", help="print the entry; write nothing")
+    p.add_argument("--bib", default=None, help="target .bib file (default paper/refs.bib); provenance is kept beside it")
     p.set_defaults(func=_bib_add)
     p = bsub.add_parser("check", help="every entry has provenance and every record has an entry")
+    p.add_argument("--bib", default=None, help="target .bib file (default paper/refs.bib)")
     p.set_defaults(func=_bib_check)
 
     venue = subparsers.add_parser("venue", help="venue constraints (RSC Advances)")
