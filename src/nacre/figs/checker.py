@@ -122,9 +122,9 @@ def _families(texts):
     return fams
 
 
-def _thin(lw, minimum):
+def _thin(lw, minimum, tol=_TOL_PT):
     """A visible stroke thinner than the minimum (zero width means no stroke)."""
-    return lw > _TOL_PT and lw + _TOL_PT < minimum
+    return lw > tol and lw + tol < minimum
 
 
 def _overlaps(a, b):
@@ -211,6 +211,7 @@ def assert_clean(fig, root=None):
 # ------------------------------------------------------------------------- PDF-level checks
 
 _PT_PER_IN = 72.0
+_PDF_TOL_PT = 1e-3  # numbers in a PDF content stream carry about five significant digits
 _BOX_PAD_PT = 1.0
 
 
@@ -316,7 +317,7 @@ def check_pdf_schematic(pdf_path, min_line_pt, widths_pt, max_height_pt, text_fr
             # PDF user space is in PostScript points (1/72 in), the unit the spec's pt values use.
             thin = sorted({round(d["width"], 3) for d in page.get_drawings()
                            if d.get("type") in ("s", "fs") and d.get("width") is not None
-                           and _thin(d["width"], min_line_pt)})
+                           and _thin(d["width"], min_line_pt, _PDF_TOL_PT)})
             if thin:
                 problems.append("schematic strokes below %.1f pt: %s" % (min_line_pt, ", ".join("%g" % t for t in thin)))
     return problems

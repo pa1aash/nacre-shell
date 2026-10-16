@@ -2,9 +2,10 @@
 
 The structure set (figures/rdkit/structures.yaml) takes every SMILES from shared code when it
 exists: the oligomer from nacre.structures.oligomer, the catecholates and acetate from
-nacre.anchor.builders.LIGANDS. Catechol, 1,2-benzoquinone and the glucosamine residue of
-chitosan are defined nowhere in the repository, so their records are fetched from PubChem
-(PUG REST, headless) and stored byte for byte in figures/rdkit/sources/. Each fetch appends
+nacre.anchor.builders.LIGANDS. Catechol, 1,2-benzoquinone, the glucosamine residue of
+chitosan, water and the carbonate ion are defined nowhere in the repository, so their records
+are fetched from PubChem (PUG REST, headless) and stored byte for byte in
+figures/rdkit/sources/. Each fetch appends
 one row to figures/style/fetch_log.jsonl with its sha256.
 
 Run: uv run python figures/rdkit/fetch_sources.py
@@ -27,6 +28,8 @@ FETCHES = {
     "F6": (289, "catechol"),
     "F7": (11421, "1,2-benzoquinone (oxidised catechol)"),
     "F8": (441477, "beta-D-glucosamine, the residue of the chitosan repeat unit"),
+    "F9": (962, "water, for the hydration-shell pictograms of the schematics"),
+    "F10": (19660, "carbonate ion, for the pictograms of the schematics"),
 }
 
 

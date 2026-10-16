@@ -1,0 +1,48 @@
+# TikZ schematics built by `nacre figs` (nacre.figs.schematic). Paths are relative to figures/tikz.
+#
+# Schema per entry
+#   tex        source file
+#   engine     pdflatex | xelatex (latexmk -pdf | -xelatex)
+#   out        output path relative to figures/out/ (PDF; a 600 dpi PNG and CVD simulations beside it)
+#   width      single | double (RSC column); the page must be exactly that wide
+#   text_free  true: the PDF must contain no text at all (R7 default schematics)
+#   claim      the one physical claim the figure carries (R4)
+#   caption    caption draft (identifies every state and mark by position)
+#   source     where the depicted states and arrows are taken from
+schematics:
+  fig2:
+    tex: fig2.tex
+    engine: pdflatex
+    out: fig2.pdf
+    width: double
+    text_free: true
+    claim: >-
+      The coating can only act through a chain of interfacial steps: the catechol-bearing layer must displace
+      interfacial water to adhere, binds a few Ca2+ at its sites without raising the bulk supersaturation, hosts
+      an amorphous CaCO3 nucleus whose contact with the template sets the barrier, and the nuclei must
+      coalesce into a continuous film.
+    caption: figures/src/captions/fig2.md
+    source: theory/derivation_body.tex Sections 2 (adhesion in water), 3 and 7 (sequestration, template), 8 (conformality)
+  fig3:
+    tex: fig3.tex
+    engine: pdflatex
+    out: fig3.pdf
+    width: double
+    text_free: true
+    claim: >-
+      Ca2+ binding enters the nucleation barrier once, through the template-liquid energy; the nucleus is fed
+      from the bulk reservoir at the bulk driving force, and the template helps only through how well the
+      nucleus wets it.
+    caption: figures/src/captions/fig3.md
+    source: theory/derivation_body.tex Section 7 (lane p0-w3); commit in w3_commit
+    w3_commit: 800d5ea3de41a0fb16084519d5c2680eeb14952d
+  fig3_symbols:
+    tex: variants/fig3_symbols.tex
+    engine: xelatex
+    out: variants/fig3_symbols.pdf
+    width: double
+    text_free: false
+    variant_of: fig3
+    claim: as fig3
+    caption: figures/src/captions/fig3.md
+    source: as fig3

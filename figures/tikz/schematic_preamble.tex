@@ -1,0 +1,34 @@
+% Shared preamble of the TikZ schematics (Fig. 2, Fig. 3), lane p0-w6.
+% Built by `nacre figs` (nacre.figs.schematic) with pdflatex through latexmk. The PDF omits its
+% dates and trailer id so that a rebuild is byte-identical.
+\ifdefined\pdftrailerid
+  \pdfinfoomitdate=1 \pdftrailerid{} \pdfsuppressptexinfo=-1
+\fi% XeLaTeX (symbol variants): dates and id are fixed by SOURCE_DATE_EPOCH at build time
+\usetikzlibrary{arrows.meta,calc}
+\input{generated/pictograms.tex}
+\tikzset{
+  proc/.style={bold, draw=okblack, -{Stealth[length=7bp,width=5.5bp]}},
+  force/.style={bold, -{Stealth[length=6bp,width=4.5bp]}},
+  statebox/.style={fill=okgray!14, draw=none, rounded corners=3bp},
+  oxide/.style={fill=elAl!55, draw=okblack, thin},
+  template/.style={fill=okorange!30, draw=none},
+  nucleus/.style={fill=okskyblue!35, draw=none},
+  ion/.style={atom, fill=elCa},
+  placeholder/.style={draw=okblack, thin, dash pattern=on 2bp off 1.5bp, fill=white},
+}
+% Ca2+ ion disc and a hydrated Ca2+ (six waters, oxygen towards the ion).
+\newcommand{\caion}[1]{\filldraw[ion] (#1) circle (0.16);}
+\newcommand{\hydratedca}[2]{% #1 centre, #2 pictogram scale (cm per bond length)
+  \foreach \a in {0,60,...,300} {\pic[scale=#2, rotate=\a+90] at ($(#1)+(\a:0.58)$) {water};}
+  \caion{#1}}
+% Oxide strip with surface hydroxyls, from x=#1 to x=#2, top at y=#3 (illustrative).
+\newcommand{\oxidestrip}[3]{%
+  \fill[oxide] (#1,#3-0.55) rectangle (#2,#3);
+  \draw[thin] (#1,#3) -- (#2,#3);
+  \pgfmathsetmacro{\oxa}{#1+0.2}\pgfmathsetmacro{\oxb}{#1+0.6}\pgfmathsetmacro{\oxe}{#2-0.1}%
+  \foreach \x in {\oxa,\oxb,...,\oxe} {\filldraw[atom, fill=elO] (\x,#3) circle (0.075);}}
+% A placeholder slot for a render supplied later (lane p0-w7): dashed frame with diagonals.
+\newcommand{\placeholder}[4]{% lower left (#1,#2), upper right (#3,#4)
+  \filldraw[placeholder] (#1,#2) rectangle (#3,#4);
+  \draw[thin, okgray] (#1,#2) -- (#3,#4);
+  \draw[thin, okgray] (#3,#2) -- (#1,#4);}

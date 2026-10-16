@@ -188,9 +188,11 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
     if only:
         wanted = set(only)
         templates = [t for t in templates if t.stem in wanted]
-        missing = wanted - {t.stem for t in templates}
+        from nacre.figs import schematic
+        others = set(schematic.table(root)) | {"rdkit"}
+        missing = wanted - {t.stem for t in templates} - others
         for m in sorted(missing):
-            failures.append("%s: no template figures/src/%s.py" % (m, m))
+            failures.append("%s: no template figures/src/%s.py, schematic or structure set" % (m, m))
     for path in templates:
         try:
             mod = load_template(path)
@@ -215,4 +217,32 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
         for r in records:
             figs[r["id"]] = r
         manifest.write_text(json.dumps({"mock": mock, "figures": dict(sorted(figs.items()))}, indent=1) + "\n")
-    return records, failures
+    n_other, other_failures = build_drawings(root, only=only, cvd=cvd, log=log)
+    failures += other_failures
+    return records + [None] * n_other, failures
+
+
+def build_drawings(root, only=None, cvd=True, log=print):
+    """The schematics (figures/tikz) and the RDKit structure set: no data, so the same with or
+    without --mock. Writes figures/out/manifest.json. Returns (count built, failures)."""
+    from nacre.figs import schematic, structures
+    root = Path(root)
+    want_s = only is None or any(o in schematic.table(root) for o in only)
+    want_r = only is None or "rdkit" in only
+    if not (want_s or want_r):
+        return 0, []
+    manifest = paths(root)["out"] / "manifest.json"
+    old = json.loads(manifest.read_text()) if manifest.exists() else {}
+    failures, n = [], 0
+    if want_s:
+        recs, fails = schematic.build(root, only=only, cvd=cvd, log=log)
+        old.setdefault("schematics", {}).update(recs)
+        failures += fails
+        n += len(recs)
+    if want_r:
+        recs = structures.build_all(root, cvd=cvd, log=log)
+        old["rdkit"] = recs
+        n += len(recs)
+    manifest.parent.mkdir(parents=True, exist_ok=True)
+    manifest.write_text(json.dumps({k: dict(sorted(v.items())) for k, v in sorted(old.items())}, indent=1) + "\n")
+    return n, failures

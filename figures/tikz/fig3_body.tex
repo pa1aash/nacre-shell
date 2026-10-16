@@ -1,0 +1,81 @@
+% Fig. 3 body: the single-entry thermodynamic cycle of theory/derivation_body.tex Section 7
+% (lane p0-w3; the commit drawn from is recorded in figures/tikz/schematics.yaml). Included by
+% fig3.tex (default, no text) and variants/fig3_symbols.tex (\symbolstrue: symbols on arrows).
+% Every state and arrow is identified by position in figures/src/captions/fig3.md.
+%
+% States and arrows taken from Section 7 (no step added):
+%   A  bulk reservoir: hydrated Ca2+ and CO3 2- at the regime activities (bulk chemical potentials)
+%   B  template-liquid interface at the regime Ca2+ activity: Ca2+ adsorbed at catecholate and
+%      carboxylate sites; its free energy is gamma_sl = gamma_sl0 + Delta_gamma_ads (Gibbs-Langmuir)
+%   C  cap on the template (base 12.1..15.1 cm) (grand potential of a cap): template-nucleus contact (gamma_sn) with
+%      lattice Ca2+ at the sites (ion bridging, part of the contact), nucleus-liquid surface
+%      (gamma_nl), template-liquid interface outside the contact (gamma_sl); Young at the contact line
+%   1  A -> B  Ca2+ from the hydrated bulk to a site, Delta_G_seq; enters only gamma_sl (blue)
+%   2  B -> C  the cap replaces template-liquid interface by template-nucleus contact over its base
+%   3  A -> C  the formula units of the nucleus come from the reservoir at the bulk chemical
+%              potentials (driving force k_B T ln Omega_bulk); none comes from the bound layer
+\def\b{0.2}        % pictogram bond length (cm)
+\def\yt{1.6}       % template-liquid interface
+\def\ybase{1.0}    % oxide top / template bottom
+\begin{tikzpicture}
+\useasboundingbox (0,0) rectangle (17.1,6.0);
+
+% ---------------------------------------------------------------- state boxes
+\fill[statebox] (0.15,3.15) rectangle (4.6,5.85);
+\fill[statebox] (4.75,0.3) rectangle (10.5,3.05);
+\fill[statebox] (10.95,0.3) rectangle (16.95,3.05);
+
+% ---------------------------------------------------------------- A: bulk reservoir
+\hydratedca{1.45,4.45}{0.26}
+\pic[scale=0.24] at (3.45,4.5) {carbonate};
+
+% ---------------------------------------------------------------- B: adsorbed template-liquid interface
+\oxidestrip{4.9}{10.35}{\ybase}
+\fill[template] (4.9,\ybase) rectangle (10.35,\yt);
+\foreach \x in {5.7,7.0,8.3} {\pic[scale=\b] at (\x,1.35) {catecholatedianion};}
+\pic[scale=\b] at (9.5,1.56) {acetate};
+\draw[bold, draw=okblue] (4.9,\yt) -- (10.35,\yt);
+\caion{7.0,1.83}
+\caion{9.5,1.83}
+
+% ---------------------------------------------------------------- C: cap on the template
+\oxidestrip{11.1}{16.8}{\ybase}
+\fill[template] (11.1,\ybase) rectangle (16.8,\yt);
+\foreach \x in {11.55,12.9,13.6,14.3} {\pic[scale=\b] at (\x,1.35) {catecholatedianion};}
+\pic[scale=\b] at (16.35,1.56) {acetate};
+% nucleus (amorphous CaCO3 cap): base 12.1..15.1, contact angle 50 deg (radius 1.958, centre y 0.3414)
+\fill[nucleus] (15.1,\yt) arc[start angle=40, end angle=140, radius=1.958] -- cycle;
+\pic[scale=0.17, rotate=20] at (13.05,2.03) {carbonate};
+\pic[scale=0.17, rotate=-15] at (14.15,2.03) {carbonate};
+\filldraw[ion] (13.6,2.12) circle (0.11);
+\filldraw[ion] (12.55,1.86) circle (0.11);
+\filldraw[ion] (14.65,1.86) circle (0.11);
+% interfaces: template-liquid outside the contact, template-nucleus contact, nucleus-liquid surface
+\draw[bold, draw=okblue] (11.1,\yt) -- (12.1,\yt);
+\draw[bold, draw=okblue] (15.1,\yt) -- (16.8,\yt);
+\draw[bold, draw=okvermillion] (12.1,\yt) -- (15.1,\yt);
+\draw[bold, draw=okblack] (15.1,\yt) arc[start angle=40, end angle=140, radius=1.958];
+% ion-bridged Ca2+: lattice Ca2+ of the nucleus at the sites under the contact (part of gamma_sn)
+\foreach \x in {12.9,13.6,14.3} {\filldraw[ion] (\x,1.72) circle (0.11);}
+% Ca2+ adsorbed at the template-liquid interface outside the contact
+\caion{11.55,1.83}
+\caion{16.35,1.83}
+% Young's relation at the right contact line: the three interfacial energies as line tensions
+\draw[force, draw=okblue] (15.1,\yt) -- (15.95,\yt);
+\draw[force, draw=okvermillion] (15.1,\yt) -- (14.47,\yt);
+\draw[force, draw=okblack] (15.1,\yt) -- ++(130:0.85);
+
+% ---------------------------------------------------------------- arrows of the cycle
+\draw[proc, draw=okblue] (2.05,3.75) to[out=-30, in=125] (6.85,2.3);              % 1: Delta_G_seq
+\draw[proc] (10.3,2.6) -- (11.15,2.6);                                            % 2: cap formation
+\draw[proc] (3.95,4.95) to[out=12, in=100] (13.6,2.45);                           % 3: reservoir -> nucleus
+
+\ifsymbols
+  \begingroup\fontsize{7}{8.4}\selectfont
+  \node[okblue, anchor=south west] at (4.3,3.35) {\sym{Δ\textit{G}}{seq}};
+  \node[okblue, anchor=north] at (15.75,\yt-0.08) {\sym{\textit{γ}}{sl}};
+  \node[okvermillion, anchor=north] at (14.7,\yt-0.08) {\sym{\textit{γ}}{sn}};
+  \node[okblack, anchor=east] at ($(15.1,\yt)+(130:0.85)$) {\sym{\textit{γ}}{nl}};
+  \endgroup
+\fi
+\end{tikzpicture}
