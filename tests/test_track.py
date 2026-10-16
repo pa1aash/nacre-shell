@@ -235,3 +235,88 @@ def test_track_command_is_discovered():
     parser = build_parser()
     for cmd in (["track", "status"], ["track", "check", "P0-I0"], ["track", "open-day", "1", "--carry", "P0-I0"]):
         assert parser.parse_args(cmd).func is not None
+
+
+# --- freeze rule after cp3 -------------------------------------------------------------
+
+FROZEN = ["lit/params.yaml", "configs/preprint/thresholds.yaml", "theory/thresholds.md"]
+
+
+def _write(repo, files):
+    for rel, text in files.items():
+        p = repo / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(text)
+
+
+@pytest.fixture
+def frozen_repo(repo):
+    _write(repo, {rel: "v1\n" for rel in FROZEN})
+    commit_all(repo, "scratch: inputs")
+    return repo
+
+
+def _today():
+    import datetime
+    return datetime.date.today().isoformat()
+
+
+def test_freeze_rule_is_inactive_before_cp3(frozen_repo):
+    _write(frozen_repo, {"lit/params.yaml": "v2\n"})
+    commit_all(frozen_repo)
+    assert track.freeze_problems(frozen_repo, "p0") == []
+    assert track.check(frozen_repo, "p0", "P0-I0")
+
+
+def test_freeze_rule_passes_when_nothing_changed_since_cp3(frozen_repo):
+    git(frozen_repo, "tag", "p0-cp3")
+    _write(frozen_repo, {"README.md": "other\n"})
+    commit_all(frozen_repo)
+    assert track.freeze_problems(frozen_repo, "p0") == []
+
+
+@pytest.mark.parametrize("rel", FROZEN)
+def test_freeze_rule_fails_on_each_frozen_input(frozen_repo, rel):
+    git(frozen_repo, "tag", "p0-cp3")
+    _write(frozen_repo, {rel: "v2\n"})
+    commit_all(frozen_repo)
+    assert track.freeze_problems(frozen_repo, "p0") == [rel]
+    msg = blocked(track.check, frozen_repo, "p0", "P0-I0")
+    assert "frozen since p0-cp3" in msg and rel in msg
+
+
+def test_freeze_rule_accepts_a_dated_entry_with_reaudit(frozen_repo):
+    git(frozen_repo, "tag", "p0-cp3")
+    _write(frozen_repo, {"lit/params.yaml": "v2\n",
+                         "ops/tracks/p0_deviations.md": "# Deviations\n\n## %s lit/params.yaml\nChange: ksp.\nRe-audit: screen, fig5\n" % _today()})
+    commit_all(frozen_repo)
+    assert track.freeze_problems(frozen_repo, "p0") == []
+    assert track.check(frozen_repo, "p0", "P0-I0")
+
+
+def test_freeze_rule_needs_the_path_the_date_and_the_reaudit_line(frozen_repo):
+    git(frozen_repo, "tag", "p0-cp3")
+    _write(frozen_repo, {"lit/params.yaml": "v2\n", "theory/thresholds.md": "v2\n"})
+    commit_all(frozen_repo)
+    entry = lambda date, body: "# Deviations\n\n## %s x\n%s\n" % (date, body)
+    # names only one of the two changed paths
+    _write(frozen_repo, {"ops/tracks/p0_deviations.md": entry(_today(), "lit/params.yaml\nRe-audit: screen")})
+    assert track.freeze_problems(frozen_repo, "p0") == ["theory/thresholds.md"]
+    # no Re-audit line
+    _write(frozen_repo, {"ops/tracks/p0_deviations.md": entry(_today(), "lit/params.yaml theory/thresholds.md")})
+    assert sorted(track.freeze_problems(frozen_repo, "p0")) == ["lit/params.yaml", "theory/thresholds.md"]
+    # empty Re-audit
+    _write(frozen_repo, {"ops/tracks/p0_deviations.md": entry(_today(), "lit/params.yaml theory/thresholds.md\nRe-audit:")})
+    assert len(track.freeze_problems(frozen_repo, "p0")) == 2
+    # dated before the tag
+    _write(frozen_repo, {"ops/tracks/p0_deviations.md": entry("2000-01-01", "lit/params.yaml theory/thresholds.md\nRe-audit: all")})
+    assert len(track.freeze_problems(frozen_repo, "p0")) == 2
+    # a covering entry
+    _write(frozen_repo, {"ops/tracks/p0_deviations.md": entry(_today(), "lit/params.yaml theory/thresholds.md\nRe-audit: all")})
+    assert track.freeze_problems(frozen_repo, "p0") == []
+
+
+def test_repo_deviations_file_exists_with_header_only():
+    from pathlib import Path
+    text = (Path(__file__).resolve().parent.parent / "ops" / "tracks" / "p0_deviations.md").read_text()
+    assert text.startswith("# Deviations of track p0") and track._ENTRY.search(text) is None

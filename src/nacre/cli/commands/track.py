@@ -6,13 +6,25 @@ may run only on its lane branch, in its open day (or as a session carried into
 it), on a clean tree that contains the commit that opened the day, with every
 checkpoint it requires satisfied. Checkpoint cpN is satisfied by tag <track>-cpN;
 cp1 is also satisfied by tag g0.
+
+Freeze rule: once tag <track>-cp3 exists, a change since that tag to a frozen input (FROZEN_AFTER_CP3)
+fails the check unless <track>_deviations.md carries a dated entry that names the changed path and the
+outputs to re-audit.
 """
+import re
+
 import yaml
 
 from nacre import _util
 
 PASSING = ("DONE", "HOLD-P", "GATE-C", "GATE-H")
 CHECKPOINT_ALIASES = {"cp1": ["g0"]}
+
+
+# Inputs frozen once checkpoint cp3 (parameter table and conflicts) is satisfied.
+FREEZE_CHECKPOINT = "cp3"
+FROZEN_AFTER_CP3 = ["lit/params.yaml", "configs/preprint/thresholds.yaml", "theory/thresholds.md"]
+_ENTRY = re.compile(r"^##\s+(\d{4}-\d{2}-\d{2})\b.*$", re.MULTILINE)
 
 
 class Blocked(Exception):
@@ -102,6 +114,39 @@ def session_status(data, session, state):
     return None
 
 
+def deviation_entries(root, track):
+    """[(date, block text)] for the dated '## YYYY-MM-DD ...' entries of ops/tracks/<track>_deviations.md."""
+    path = _util.Path(root) / "ops" / "tracks" / (track + "_deviations.md")
+    if not path.exists():
+        return []
+    text = path.read_text(encoding="utf-8")
+    marks = list(_ENTRY.finditer(text))
+    out = []
+    for i, m in enumerate(marks):
+        end = marks[i + 1].start() if i + 1 < len(marks) else len(text)
+        out.append((m.group(1), text[m.start():end]))
+    return out
+
+
+def freeze_problems(root, track):
+    """Frozen inputs changed since tag <track>-cp3 without a covering deviation entry."""
+    tag = "%s-%s" % (track, FREEZE_CHECKPOINT)
+    if not _util.tag_exists(root, tag):
+        return []
+    names = _util.git(root, "diff", "--name-only", "-z", "--no-renames", tag, "HEAD", "--", *FROZEN_AFTER_CP3)
+    changed = [p for p in names.stdout.split("\0") if p]
+    if not changed:
+        return []
+    since = _util.git(root, "log", "-1", "--format=%cs", tag).stdout.strip()
+    entries = [(d, block) for d, block in deviation_entries(root, track) if d >= since]
+    problems = []
+    for path in changed:
+        covered = any(path in block and re.search(r"(?mi)^\s*re-?audit:\s*\S", block) for _, block in entries)
+        if not covered:
+            problems.append(path)
+    return problems
+
+
 def day_open_commit(root, track, data, day, ref):
     """The latest commit on `ref` that opened `day` (day 0: the commit adding the ledger)."""
     if day == 0:
@@ -148,6 +193,10 @@ def check(root, track, session_id):
     if missing:
         raise Blocked("required checkpoints not satisfied: %s (tags %s)" % (
             ", ".join(missing), ", ".join(" or ".join(checkpoint_tags(track, cp)) for cp in missing)))
+    frozen = freeze_problems(root, track)
+    if frozen:
+        raise Blocked("frozen since %s-%s and changed without a dated entry in ops/tracks/%s_deviations.md "
+                      "naming the change and a 'Re-audit:' line: %s" % (track, FREEZE_CHECKPOINT, track, ", ".join(frozen)))
     return session, current
 
 
