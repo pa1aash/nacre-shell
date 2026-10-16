@@ -1,0 +1,273 @@
+{
+ "mock": true,
+ "note": "Exported by lane p0-w5 from slurry.json. R-cell has no (pH, E) plane and is not exported here; see cell.json and the schema checks.",
+ "provenance": {
+  "cache_hash": "sha256:a0d055c72668051fd7568d7d0e689742a0b1a6aa8d4f9d772be8c6a210dbebb4",
+  "config_hash": "sha256:21abdecf9800099a86f1c12543ceed0dd63a42b941aa7b83300c7a69c6e94734",
+  "contract_sha": "b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3",
+  "git_dirty": false,
+  "git_sha": "16c06a76dd2fbacf26c3d8be25809b10973c463f",
+  "mp_database_version": "2026.04.13",
+  "prior_file": "results/preprint/pourbaix/config/smoke.yaml",
+  "prior_file_hash": "sha256:54f943e6de4cfdcde8207637e6ebf9c9c7a59c72aa1be3bc41c4dde290c3e210"
+ },
+ "regimes": [
+  {
+   "conditions": {
+    "acc_offset": {
+     "basis": "free energy of ACC minus calcite, per CaCO3 formula unit",
+     "unit": "kJ/mol",
+     "value": 10.0
+    },
+    "carbonate_system": "closed",
+    "composition": {
+     "Al": 1.0,
+     "C": 1.0,
+     "Ca": 1.0
+    },
+    "concentrations_mol_kg": {
+     "Al": 1e-06,
+     "C": 0.001,
+     "Ca": 0.001
+    },
+    "pH": {
+     "max": 14.0,
+     "min": 7
+    },
+    "potential_V_SHE": {
+     "max": 2.0,
+     "min": -3.0
+    },
+    "temperature_K": 298.15
+   },
+   "domains": [
+    {
+     "phase": "mixed",
+     "polygon": [
+      [
+       9.077247,
+       -2.004409
+      ],
+      [
+       14.0,
+       -2.392322
+      ],
+      [
+       14.0,
+       -1.738256
+      ],
+      [
+       12.666837,
+       -1.679163
+      ],
+      [
+       9.077247,
+       -1.573091
+      ]
+     ],
+     "species": "Al(OH)4[-] + CH4(aq) + CaH2(s)"
+    },
+    {
+     "phase": "aqueous",
+     "polygon": [
+      [
+       12.666837,
+       -1.679163
+      ],
+      [
+       14.0,
+       -1.738256
+      ],
+      [
+       14.0,
+       -0.778379
+      ],
+      [
+       12.666837,
+       -0.68974
+      ]
+     ],
+     "species": "Al(OH)4[-] + CH4(aq) + CaOH[+]"
+    },
+    {
+     "phase": "aqueous",
+     "polygon": [
+      [
+       9.077247,
+       -1.573091
+      ],
+      [
+       12.666837,
+       -1.679163
+      ],
+      [
+       12.666837,
+       -0.68974
+      ],
+      [
+       9.077247,
+       -0.424559
+      ]
+     ],
+     "species": "Al(OH)4[-] + CH4(aq) + Ca[2+]"
+    },
+    {
+     "phase": "mixed",
+     "polygon": [
+      [
+       9.077247,
+       -0.424559
+      ],
+      [
+       12.666837,
+       -0.68974
+      ],
+      [
+       14.0,
+       -0.778379
+      ],
+      [
+       14.0,
+       2.0
+      ],
+      [
+       9.077247,
+       2.0
+      ]
+     ],
+     "species": "Al(OH)4[-] + CaCO3(s)"
+    },
+    {
+     "phase": "mixed",
+     "polygon": [
+      [
+       7.0,
+       -3.0
+      ],
+      [
+       14.0,
+       -3.0
+      ],
+      [
+       14.0,
+       -2.392322
+      ],
+      [
+       9.077247,
+       -2.004409
+      ],
+      [
+       7.0,
+       -1.881644
+      ]
+     ],
+     "species": "Al(s) + CH4(aq) + CaH2(s)"
+    },
+    {
+     "phase": "mixed",
+     "polygon": [
+      [
+       7.0,
+       -1.881644
+      ],
+      [
+       9.077247,
+       -2.004409
+      ],
+      [
+       9.077247,
+       -1.573091
+      ],
+      [
+       7.0,
+       -1.511708
+      ]
+     ],
+     "species": "Al2O3(s) + CH4(aq) + CaH2(s)"
+    },
+    {
+     "phase": "mixed",
+     "polygon": [
+      [
+       7.0,
+       -1.511708
+      ],
+      [
+       9.077247,
+       -1.573091
+      ],
+      [
+       9.077247,
+       -0.424559
+      ],
+      [
+       7.0,
+       -0.271102
+      ]
+     ],
+     "species": "Al2O3(s) + CH4(aq) + Ca[2+]"
+    },
+    {
+     "phase": "solid",
+     "polygon": [
+      [
+       7.0,
+       -0.271102
+      ],
+      [
+       9.077247,
+       -0.424559
+      ],
+      [
+       9.077247,
+       2.0
+      ],
+      [
+       7.0,
+       2.0
+      ]
+     ],
+     "species": "Al2O3(s) + CaCO3(s)"
+    }
+   ],
+   "id": "R-slurry",
+   "ph_range": [
+    7.0,
+    14.0
+   ],
+   "potential_range": [
+    -3.0,
+    2.0
+   ],
+   "water_lines": [
+    {
+     "kind": "upper",
+     "points": [
+      [
+       7.0,
+       0.81545
+      ],
+      [
+       14.0,
+       0.40175
+      ]
+     ]
+    },
+    {
+     "kind": "lower",
+     "points": [
+      [
+       7.0,
+       -0.4137
+      ],
+      [
+       14.0,
+       -0.8274
+      ]
+     ]
+    }
+   ]
+  }
+ ],
+ "schema": "fig7-pourbaix/assumed-v0"
+}

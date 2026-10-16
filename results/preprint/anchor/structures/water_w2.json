@@ -1,0 +1,42 @@
+{
+ "bonds": [
+  [
+   0,
+   1
+  ],
+  [
+   0,
+   2
+  ],
+  [
+   3,
+   4
+  ],
+  [
+   3,
+   5
+  ]
+ ],
+ "builder_version": "0.1.0",
+ "charge": 0,
+ "coordination_mode": "none",
+ "formula": "H4O2",
+ "fragments": [
+  0,
+  0,
+  0,
+  1,
+  1,
+  1
+ ],
+ "geometry": "starting geometry, not optimised",
+ "kind": "reference",
+ "min_distance_A": 0.969,
+ "min_interfragment_distance_A": 1.94,
+ "multiplicity": 1,
+ "n_atoms": 6,
+ "n_water": 2,
+ "name": "water_w2",
+ "role": "water cluster",
+ "seed": 7
+}

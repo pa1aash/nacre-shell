@@ -1,0 +1,135 @@
+{
+ "bonds": [
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   2
+  ],
+  [
+   2,
+   3
+  ],
+  [
+   3,
+   4
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   6,
+   1
+  ],
+  [
+   2,
+   8
+  ],
+  [
+   3,
+   9
+  ],
+  [
+   4,
+   10
+  ],
+  [
+   5,
+   11
+  ],
+  [
+   7,
+   12
+  ],
+  [
+   14,
+   15
+  ],
+  [
+   14,
+   16
+  ],
+  [
+   17,
+   18
+  ],
+  [
+   17,
+   19
+  ],
+  [
+   20,
+   21
+  ],
+  [
+   20,
+   22
+  ],
+  [
+   23,
+   24
+  ],
+  [
+   23,
+   25
+  ]
+ ],
+ "builder_version": "0.1.0",
+ "ca_o_initial_A": 2.42,
+ "charge": 1,
+ "coordination_mode": "bidentate",
+ "coordination_number_initial": 6,
+ "denticity": 2,
+ "formula": "C6H13CaO6",
+ "fragments": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  2,
+  2,
+  2,
+  3,
+  3,
+  3,
+  4,
+  4,
+  4,
+  5,
+  5,
+  5
+ ],
+ "geometry": "starting geometry, not optimised",
+ "kind": "complex",
+ "ligand": "catecholate_monoanion",
+ "ligand_charge": -1,
+ "ligand_smiles": "[O-]c1ccccc1O",
+ "min_distance_A": 0.962,
+ "min_interfragment_distance_A": 2.42,
+ "multiplicity": 1,
+ "n_atoms": 26,
+ "n_water": 4,
+ "name": "Ca_catecholate_monoanion_bidentate_w4",
+ "seed": 7
+}

@@ -1,0 +1,253 @@
+{
+ "client_versions": {
+  "emmet-core": "0.87.3",
+  "mp-api": "0.46.5",
+  "mpcontribs-client": null,
+  "pymatgen": "2026.9.24",
+  "requests": "2.34.2"
+ },
+ "files": [
+  {
+   "file": "mp_ion_reference_data.json",
+   "kind": "mp_ion_reference_data",
+   "n": 362,
+   "request": {
+    "method": "MPRester.get_ion_reference_data",
+    "project": "ion_ref_data"
+   },
+   "retrieved_utc": "2026-10-16T12:38:52Z",
+   "sha256": "sha256:64feb8a726d65b549a16de634e2b819f508e9069e46893c393f7b5747dfb8298"
+  },
+  {
+   "file": "mp_entries_slurry_Al-C-Ca-H-Na-O.json",
+   "kind": "mp_entries",
+   "n": 704,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "C",
+     "Ca",
+     "H",
+     "Na",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T12:39:04Z",
+   "sha256": "sha256:babeda0bc595d93de2a596600b79b12b1546e2c4eabe6f90e7ffdd7f0a2077c5"
+  },
+  {
+   "file": "mp_entries_cell_Li-Ca-C-O.json",
+   "kind": "mp_entries",
+   "n": 247,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "C",
+     "Ca",
+     "Li",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T12:39:10Z",
+   "sha256": "sha256:66fb89bd11406f22cdcac2b10c0fce9cdad3d462860df2c58c1ee7e0d9810f26"
+  },
+  {
+   "file": "mp_entries_cell_Li-Al-O.json",
+   "kind": "mp_entries",
+   "n": 196,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "Li",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T12:39:14Z",
+   "sha256": "sha256:56ad63680787d70bf28b1ca40811a310266fe7a4ba1bd4b8fdf88de06dc4937e"
+  },
+  {
+   "file": "mp_entries_cell_Li-Ca-N-O.json",
+   "kind": "mp_entries",
+   "n": 166,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Ca",
+     "Li",
+     "N",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T12:39:19Z",
+   "sha256": "sha256:7fd4002938dc99903395dacd75bbc95f9c17845b8b8c0230dea64c44a5696406"
+  },
+  {
+   "file": "mp_entries_cell_Li-Al-N-O.json",
+   "kind": "mp_entries",
+   "n": 265,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "Li",
+     "N",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T12:39:31Z",
+   "sha256": "sha256:abc46a72d465c1ef356638702a0f196004c9cc4a6d729283d4e353e15963137d"
+  },
+  {
+   "file": "mp_entries_cell_Li-Ca-S-O.json",
+   "kind": "mp_entries",
+   "n": 166,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Ca",
+     "Li",
+     "O",
+     "S"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T12:39:34Z",
+   "sha256": "sha256:51755814d3a6b235499cacad47518eebf550813bf4ac48897e471fa1ba58900c"
+  },
+  {
+   "file": "mp_entries_cell_Li-Al-S-O.json",
+   "kind": "mp_entries",
+   "n": 271,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "Li",
+     "O",
+     "S"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T12:39:39Z",
+   "sha256": "sha256:3b26cb9f66f4b00330dab7c91b82e16c3b15bd7ad1ea2ca8aa6a660849d9dedf"
+  },
+  {
+   "file": "mp_entries_cell_Li-Ca-Cl.json",
+   "kind": "mp_entries",
+   "n": 37,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Ca",
+     "Cl",
+     "Li"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T12:39:40Z",
+   "sha256": "sha256:d321f3ef3fe330736bd4caa0ed2a634b823525b74809c5f47c7e112717190af4"
+  },
+  {
+   "file": "mp_entries_cell_Li-Al-Cl.json",
+   "kind": "mp_entries",
+   "n": 38,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "Cl",
+     "Li"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T12:39:41Z",
+   "sha256": "sha256:b64ce996b05cfed0e81f90c04ef4164a56a2fb0b79a9200873220799a128d267"
+  },
+  {
+   "file": "janaf_O2.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/O-029.txt"
+   },
+   "retrieved_utc": "2026-10-16T12:39:42Z",
+   "sha256": "sha256:f7af6b09ff4a1ff76499227e334ed6e15e79bda866eb0f5ed90495ef96ac15db"
+  },
+  {
+   "file": "janaf_CO2.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/C-095.txt"
+   },
+   "retrieved_utc": "2026-10-16T12:39:42Z",
+   "sha256": "sha256:0606bdb8b1bf9906711bcd7d7a9d025dcad7771afb5ca6641838dfa27aa73234"
+  }
+ ],
+ "mp_database_version": "2026.04.13",
+ "thermo_types": [
+  "GGA_GGA+U"
+ ],
+ "written_utc": "2026-10-16T12:39:42Z"
+}

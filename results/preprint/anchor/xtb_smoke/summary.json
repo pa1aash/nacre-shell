@@ -1,0 +1,29 @@
+{
+ "charge": 1,
+ "command": "xtb in.xyz --opt normal --gfn 2 --chrg 1 --uhf 0 --alpb water -P 1",
+ "converged": true,
+ "crest_version": "2.12",
+ "environment_spec": "src/nacre/anchor/xtb_env.yaml",
+ "geometry": {
+  "ca_o_distances_A": [
+   2.111,
+   2.113,
+   2.131,
+   2.131,
+   2.154,
+   2.155
+  ],
+  "n_atoms": 20
+ },
+ "iterations": 79,
+ "multiplicity": 1,
+ "normal_termination": true,
+ "question": "Does the pinned xtb/CREST environment run a GFN2-xTB optimisation of the smallest Ca2+ complex on this machine? (tooling smoke test; the energy is not a binding energy and is not used)",
+ "returncode": 0,
+ "species": "Ca_acetate_bidentate_w4",
+ "status": "ok",
+ "threads": 1,
+ "total_energy_Eh": -34.642419025114,
+ "wall_s": 2.15,
+ "xtb_version": "6.6.1"
+}
