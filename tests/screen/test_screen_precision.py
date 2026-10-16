@@ -76,3 +76,15 @@ def test_decided_and_nearest_edge():
     assert pr.decided((0.1, 0.4), [0.5, 0.8])
     assert not pr.decided((0.4, 0.6), [0.5, 0.8])
     assert pr.nearest_edge((0.6, 0.75), [0.5, 0.8]) == 0.8
+
+
+def test_interval_at_level_2p_minus_1_reproduces_the_band_mass_verdict():
+    from nacre.screen import decision as dc
+    rng = np.random.default_rng(3)
+    x = rng.normal(0.0, 1.0, 200_001)
+    p = 0.9
+    level = pr.rule_level(p)
+    for edge in (-2.0, -1.0, 0.0, 1.0, 1.5, 2.0):
+        undecided = not pr.decided(pr.credible_interval(x, level), [edge])
+        verdict = dc.verdict_from_mass(dc.band_mass(x, "<=", edge)["P_good"], p)
+        assert undecided == (verdict == "inconclusive"), edge

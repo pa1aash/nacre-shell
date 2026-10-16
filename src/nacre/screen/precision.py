@@ -28,6 +28,17 @@ PRIOR_WIDTH_LEVEL = 0.95
 GRID = 11
 
 
+def rule_level(credible_level):
+    """Interval level equivalent to the band-mass rule at credible level p: 2p - 1.
+
+    Under the frozen rule a test is inconclusive exactly when its edge lies inside the
+    equal-tailed interval [q_(1-p), q_p], whose level is 2p - 1.
+    """
+    if not 0.5 < credible_level < 1:
+        raise ValueError("the credible level must lie in (1/2, 1)")
+    return 2.0 * credible_level - 1.0
+
+
 def credible_interval(values, level=0.95):
     """Equal-tailed credible interval of the finite values at the given level."""
     v = np.asarray(values, float)

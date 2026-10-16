@@ -1,6 +1,7 @@
 # Required precision: operational definition
 
-Written in P0-W4.2, before any production screen output exists (rule R7). P0-W4.4 applies it on
+Written in P0-W4.2, before any production screen output exists (rule R7). Section 2 states the
+statistic of the frozen rule (thresholds at `3c9568b`). P0-W4.4 applies it on
 Day 4 to the production screens. Implementation: `src/nacre/screen/precision.py`. Tests on the
 analytic benchmark: `tests/screen/test_screen_precision.py`.
 
@@ -13,15 +14,20 @@ first-principles calculation how accurate it has to be to matter.
 
 ## 2. Definitions
 
-- **Decisive quantity Q and verdict statistic.** For each link these come from the frozen decision
-  rule in `configs/preprint/thresholds.yaml`, the copy of `theory/thresholds.md`. The statistic is
-  the credible interval of Q under the propagated prior, `[q_lo, q_hi]`, at the level the decision
-  rule registers. The default is the equal-tailed 95 % interval; the rule's own level and form
-  replace it when frozen.
+- **Decisive quantity Q and verdict statistic.** For each gating test of a link, these come from
+  the frozen decision rule in `configs/preprint/thresholds.yaml`, the copy of
+  `theory/thresholds.md` at `3c9568b`. The registered statistic is the band mass: `P_good`, the
+  prior-weighted fraction of draws on the side of the edge the test needs, and
+  `P_bad = 1 - P_good`. The verdict at the registered credible level `p > 1/2` is feasible if
+  `P_good >= p`, falsified if `P_bad >= p`, and inconclusive otherwise. Equivalently, the verdict
+  is inconclusive exactly when the edge lies inside the equal-tailed credible interval of Q at
+  level `2p - 1`, `[q_(1-p), q_p]`. So the operational statistic of this method is that interval,
+  at level `2p - 1`, with `p` read from `thresholds.decision.credible_level`. The deterministic
+  C5 limits carry no prior width and have no required precision.
 - **Band edges.** These are the thresholds that separate the verdict bands of Q (feasible,
   inconclusive, falsified), including an absolute-barrier bound where the rule has one.
-- **Decided.** The verdict is decided when no band edge lies inside the open interval
-  `(q_lo, q_hi)`, so that the whole interval lies in one band. The **nearest threshold** is the band
+- **Decided.** The verdict is decided (feasible or falsified) when no band edge lies inside the
+  open interval `(q_lo, q_hi)`, so that the whole interval lies in one band. The **nearest threshold** is the band
   edge closest to the interval's centre. When the verdict is undecided, it is the edge the interval
   straddles.
 - **Stated variable v of a parameter.** This is the variable in which its prior is stated:
