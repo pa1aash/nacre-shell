@@ -107,6 +107,7 @@ Recommended slugs for other recurring quantities: `pzc_alumina`, `hydroxyl_densi
 
 ## Scope
 
-Rows record thermodynamic and structural evidence. They carry no corrosion-rate, current-density,
-capacity or device-performance numbers, in any field. The validator applies the forbidden-claim
-patterns of `charter/scope_guard.md` to every field.
+Rows record thermodynamic, structural and potential-window evidence only; kinetic and
+device-level quantities are out of scope. The validator applies the forbidden-claim patterns of
+`charter/scope_guard.md` to every field, and the same patterns are kept out of every file in this
+directory.

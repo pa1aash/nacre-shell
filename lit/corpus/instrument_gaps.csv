@@ -1,0 +1,8 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-16T10:46:47Z,crossref,10.48550/arxiv.1303.6451,not_indexed,HTTP 404 https://api.crossref.org/works/10.48550/arxiv.1303.6451
+2026-10-16T10:46:47Z,crossref,10.48550/arxiv.1404.2405,not_indexed,HTTP 404 https://api.crossref.org/works/10.48550/arxiv.1404.2405
+2026-10-16T10:46:48Z,crossref,10.48550/arxiv.1503.04892,not_indexed,HTTP 404 https://api.crossref.org/works/10.48550/arxiv.1503.04892
+2026-10-16T10:46:48Z,crossref,10.48550/arxiv.1703.05799,not_indexed,HTTP 404 https://api.crossref.org/works/10.48550/arxiv.1703.05799
+2026-10-16T10:46:48Z,crossref,10.48550/arxiv.1810.11696,not_indexed,HTTP 404 https://api.crossref.org/works/10.48550/arxiv.1810.11696
+2026-10-16T10:46:49Z,crossref,10.48550/arxiv.2009.01147,not_indexed,HTTP 404 https://api.crossref.org/works/10.48550/arxiv.2009.01147
+2026-10-16T10:46:49Z,crossref,10.48550/arxiv.2503.23124,not_indexed,HTTP 404 https://api.crossref.org/works/10.48550/arxiv.2503.23124

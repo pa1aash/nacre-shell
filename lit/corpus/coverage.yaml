@@ -1,0 +1,628 @@
+generated_utc: '2026-10-16T10:46:24Z'
+rule: 'covered: >=2 independent sources (distinct DOIs) with numeric rows; single-source: 1; gap: 0'
+rows: 396
+duplicates_dropped:
+- dropped: TB-011
+  kept: TA-006
+- dropped: TB-013
+  kept: TA-007
+- dropped: TD-060
+  kept: TC-110
+targets:
+- id: gamma_nuc_water_acc
+  label: ACC-water interfacial free energy
+  slugs:
+  - gamma_acc_water
+  status: covered
+  independent_sources: 2
+  grades:
+    A: 0
+    B: 1
+    C: 1
+    D: 0
+  best_grade: B
+  row_ids:
+  - TC-024
+  - TC-025
+  dois:
+  - 10.1126/sciadv.aao6283
+  - 10.3390/cryst11111318
+  rank: 1
+  role: gamma_nw in the barrier prefactor (cubed) and in the Young denominator; ACC framing
+  independent_originals: 2
+  caveat: One CNT fit to a literature nucleation data set (TC-024, grade C) and one simulation range (TC-025); no
+    direct measurement.
+- id: gamma_nuc_water_calcite
+  label: calcite-water interfacial free energy
+  slugs:
+  - gamma_calcite_water
+  status: covered
+  independent_sources: 7
+  grades:
+    A: 0
+    B: 4
+    C: 8
+    D: 2
+  best_grade: B
+  row_ids:
+  - TC-006
+  - TC-007
+  - TC-008
+  - TC-009
+  - TC-010
+  - TC-011
+  - TC-012
+  - TC-013
+  - TC-014
+  - TC-015
+  - TC-017
+  - TC-018
+  - TC-019
+  - TC-020
+  dois:
+  - 10.1016/j.jcrysgro.2022.126978
+  - 10.1021/acs.cgd.0c00029
+  - 10.1021/acs.langmuir.4c04738
+  - 10.1021/cg3015817
+  - 10.1021/es3014826
+  - 10.1039/c2fd20124k
+  - 10.1073/pnas.1423898112
+  rank: 1
+  role: gamma_nw in the barrier prefactor (cubed) and in the Young denominator; calcite framing
+  independent_originals: null
+  caveat: null
+- id: gamma_sub_nuc_or_contact_angle
+  label: substrate-nucleus interfacial energy or measured contact angle
+  slugs:
+  - gamma_sub_nuc
+  - contact_angle_caco3
+  - gamma_eff_het
+  status: covered
+  independent_sources: 9
+  grades:
+    A: 0
+    B: 3
+    C: 20
+    D: 5
+  best_grade: B
+  row_ids:
+  - TC-057
+  - TC-058
+  - TC-059
+  - TC-060
+  - TC-061
+  - TC-062
+  - TC-063
+  - TC-064
+  - TC-068
+  - TC-069
+  - TC-070
+  - TC-072
+  - TC-073
+  - TC-076
+  - TC-077
+  - TC-078
+  - TC-079
+  - TC-080
+  - TC-081
+  - TC-084
+  - TC-085
+  - TC-086
+  - TC-087
+  - TC-088
+  - TC-089
+  - TC-090
+  - TC-091
+  - TC-092
+  dois:
+  - 10.1021/acs.cgd.0c00029
+  - 10.1021/acs.cgd.4c00602
+  - 10.1021/acs.chemmater.9b00417
+  - 10.1021/acs.jpcc.9b00378
+  - 10.1021/es3014826
+  - 10.1021/es405141j
+  - 10.1038/s42004-018-0056-5
+  - 10.1039/c2fd20124k
+  - 10.1073/pnas.1312369111
+  rank: 2
+  role: sets theta through Young and hence f(theta), which multiplies the whole barrier (f ~ theta^4 at small theta)
+  independent_originals: 6
+  caveat: All numeric rows are effective (net) interfacial energies from CNT fits of heterogeneous nucleation rates
+    or MD, plus one compiled bound theta < 90 deg (TC-088). No separately determined gamma_sub,nuc and no measured
+    contact angle on an organic surface.
+- id: gamma_sub_water_oxide
+  label: hydroxylated alumina or oxyhydroxide-water interfacial energy
+  slugs:
+  - gamma_oxide_water
+  status: covered
+  independent_sources: 3
+  grades:
+    A: 0
+    B: 0
+    C: 1
+    D: 2
+  best_grade: C
+  row_ids:
+  - TB-052
+  - TB-053
+  - TB-056
+  dois:
+  - 10.1021/jp405820g
+  - 10.1186/1467-4866-4-34
+  - 10.1346/ccmn.2000.0480611
+  rank: 3
+  role: gamma_sw in the Young numerator (bare-oxide control)
+  independent_originals: 2
+  caveat: 'Proxies only: calorimetric surface enthalpies of hydrated or anhydrous-water-exposed boehmite and alpha-Al2O3
+    (TB-052, TB-053 same group; TB-056), not interfacial free energies against liquid water. Treated as a gap for
+    prior construction.'
+- id: gamma_sub_water_organic
+  label: catechol- or carboxyl-bearing surface-water interfacial energy
+  slugs:
+  - gamma_organic_water
+  status: gap
+  independent_sources: 0
+  grades:
+    A: 0
+    B: 0
+    C: 0
+    D: 0
+  best_grade: null
+  row_ids: []
+  dois: []
+  rank: 3
+  role: gamma_sw in the Young numerator (templated substrate)
+  independent_originals: null
+  caveat: null
+- id: molar_volume_calcite
+  label: molar volume of calcite
+  slugs:
+  - molar_volume_calcite
+  status: single-source
+  independent_sources: 1
+  grades:
+    A: 0
+    B: 0
+    C: 1
+    D: 0
+  best_grade: C
+  row_ids:
+  - TC-048
+  dois:
+  - 10.6028/nbs.circ.539v2
+  rank: 4
+  role: v in the barrier prefactor (squared)
+  independent_originals: null
+  caveat: null
+- id: molar_volume_acc
+  label: molar volume of ACC
+  slugs:
+  - molar_volume_acc
+  status: gap
+  independent_sources: 0
+  grades:
+    A: 0
+    B: 0
+    C: 0
+    D: 0
+  best_grade: null
+  row_ids: []
+  dois: []
+  rank: 4
+  role: v in the barrier prefactor (squared), ACC framing
+  independent_originals: null
+  caveat: null
+- id: ksp_calcite
+  label: solubility product of calcite
+  slugs:
+  - ksp_calcite
+  status: covered
+  independent_sources: 2
+  grades:
+    A: 0
+    B: 0
+    C: 4
+    D: 0
+  best_grade: C
+  row_ids:
+  - TC-033
+  - TC-034
+  - TC-035
+  - TC-036
+  dois:
+  - 10.1021/acsami.4c00434
+  - 10.1038/s42004-018-0056-5
+  rank: 5
+  role: ln S = ln(a_Ca a_CO3 / Ksp); ln S enters squared in the denominator
+  independent_originals: 1
+  caveat: Both DOIs cite Plummer and Busenberg 1982 (paywalled, not read); compilations only.
+- id: ksp_acc
+  label: solubility product of ACC
+  slugs:
+  - ksp_acc
+  status: covered
+  independent_sources: 4
+  grades:
+    A: 0
+    B: 0
+    C: 5
+    D: 0
+  best_grade: C
+  row_ids:
+  - TC-037
+  - TC-038
+  - TC-039
+  - TC-040
+  - TC-041
+  dois:
+  - 10.1021/acsami.4c00434
+  - 10.1039/c8sc05634j
+  - 10.1073/pnas.1312369111
+  - 10.3390/cryst11111318
+  rank: 5
+  role: ln S for the ACC framing (squared in the denominator)
+  independent_originals: 3
+  caveat: Compilations of Brecevic and Nielsen 1989, Clarkson et al. 1992 and Gebauer-group values, plus one CNT-inferred
+    range for a second ACC form; originals paywalled.
+- id: acc_excess_free_energy
+  label: ACC excess free energy relative to calcite
+  slugs:
+  - acc_excess_free_energy
+  status: covered
+  independent_sources: 2
+  grades:
+    A: 0
+    B: 0
+    C: 2
+    D: 0
+  best_grade: C
+  row_ids:
+  - TC-030
+  - TC-031
+  dois:
+  - 10.1073/pnas.1312369111
+  - 10.3390/cryst11111318
+  rank: 5
+  role: shifts ln S between framings by -Delta_mu/kT (squared in the denominator)
+  independent_originals: 1
+  caveat: Both rows are derived by this session from compiled Ksp values (ACC versus calcite); no calorimetric free
+    energy. Calorimetric enthalpies are separate rows (TC-026 to TC-029).
+- id: dg_ca_catecholate
+  label: Ca2+-catecholate binding free energy or constant
+  slugs:
+  - dg_bind_ca_catecholate
+  - logk_ca_catecholate
+  status: single-source
+  independent_sources: 1
+  grades:
+    A: 2
+    B: 0
+    C: 0
+    D: 0
+  best_grade: A
+  row_ids:
+  - TD-048
+  - TD-049
+  dois:
+  - 10.3390/biom11091312
+  rank: 6
+  role: 'Delta_G_seq: local enrichment adds -Delta_G_seq/RT to ln S (C2)'
+  independent_originals: null
+  caveat: null
+- id: dg_ca_carboxylate
+  label: Ca2+-carboxylate binding free energy or constant
+  slugs:
+  - dg_bind_ca_carboxylate
+  - logk_ca_carboxylate
+  status: single-source
+  independent_sources: 1
+  grades:
+    A: 0
+    B: 0
+    C: 1
+    D: 0
+  best_grade: C
+  row_ids:
+  - TD-051
+  dois:
+  - 10.1021/acs.analchem.2c01166
+  rank: 6
+  role: 'Delta_G_seq of the carboxylate control: enrichment term in ln S (C2)'
+  independent_originals: null
+  caveat: null
+- id: ksp_aragonite
+  label: solubility product of aragonite
+  slugs:
+  - ksp_aragonite
+  status: covered
+  independent_sources: 2
+  grades:
+    A: 0
+    B: 0
+    C: 2
+    D: 0
+  best_grade: C
+  row_ids:
+  - TC-045
+  - TC-046
+  dois:
+  - 10.1021/acsomega.2c03977
+  - 10.1038/s41598-021-91064-y
+  rank: 7
+  role: ln S for a sensitivity polymorph (squared in the denominator)
+  independent_originals: 1
+  caveat: Both rows are secondary or tertiary citations of the same literature value.
+- id: ksp_vaterite
+  label: solubility product of vaterite
+  slugs:
+  - ksp_vaterite
+  status: covered
+  independent_sources: 2
+  grades:
+    A: 0
+    B: 0
+    C: 2
+    D: 0
+  best_grade: C
+  row_ids:
+  - TC-043
+  - TC-044
+  dois:
+  - 10.1021/acsami.4c00434
+  - 10.3390/cryst11111318
+  rank: 7
+  role: ln S for a sensitivity polymorph (squared in the denominator)
+  independent_originals: 1
+  caveat: Both DOIs cite Plummer and Busenberg 1982 via compilations.
+- id: slurry_ph
+  label: slurry pH
+  slugs:
+  - slurry_ph
+  status: covered
+  independent_sources: 12
+  grades:
+    A: 0
+    B: 18
+    C: 0
+    D: 1
+  best_grade: B
+  row_ids:
+  - TA-001
+  - TA-002
+  - TA-003
+  - TA-005
+  - TA-006
+  - TA-007
+  - TA-008
+  - TA-009
+  - TA-010
+  - TA-011
+  - TA-012
+  - TA-013
+  - TA-014
+  - TA-015
+  - TA-016
+  - TA-017
+  - TB-012
+  - TB-015
+  - TB-016
+  dois:
+  - 10.1002/cssc.202200401
+  - 10.1002/cssc.202202161
+  - 10.1016/j.electacta.2019.05.141
+  - 10.1016/j.jcis.2020.07.144
+  - 10.1016/j.jpowsour.2020.228315
+  - 10.1039/d2ma00850e
+  - 10.1039/d4ta03319a
+  - 10.1149/1945-7111/ac682d
+  - 10.3390/batteries10030100
+  - 10.3390/nano11071840
+  - 10.3390/nano12030317
+  - 10.3390/polym8080276
+  rank: 8
+  role: carbonate speciation (a_CO3 in ln S), catechol protonation, oxide hydroxylation, Pourbaix axis
+  independent_originals: null
+  caveat: null
+- id: slurry_dic
+  label: slurry dissolved inorganic carbon
+  slugs:
+  - slurry_dic
+  status: single-source
+  independent_sources: 1
+  grades:
+    A: 0
+    B: 1
+    C: 0
+    D: 0
+  best_grade: B
+  row_ids:
+  - TA-019
+  dois:
+  - 10.1039/d4ta03319a
+  rank: 8
+  role: a_CO3 in ln S (logarithmic)
+  independent_originals: null
+  caveat: null
+- id: slurry_ca
+  label: slurry Ca concentration
+  slugs:
+  - slurry_ca
+  status: gap
+  independent_sources: 0
+  grades:
+    A: 0
+    B: 0
+    C: 0
+    D: 0
+  best_grade: null
+  row_ids: []
+  dois: []
+  rank: 8
+  role: a_Ca in ln S (logarithmic)
+  independent_originals: null
+  caveat: null
+- id: slurry_ionic_strength
+  label: slurry ionic strength
+  slugs:
+  - slurry_ionic_strength
+  status: covered
+  independent_sources: 2
+  grades:
+    A: 0
+    B: 0
+    C: 2
+    D: 0
+  best_grade: C
+  row_ids:
+  - TA-021
+  - TA-022
+  dois:
+  - 10.1038/s41467-025-56831-9
+  - 10.1039/d4ta03319a
+  rank: 9
+  role: activity coefficients in ln S and screening in Delta_G_seq
+  independent_originals: 2
+  caveat: 'Both derived (grade C): a Li-leaching washing solution and a processing-solution molality; no ionic strength
+    measured in a cathode slurry.'
+- id: hydration_free_energy_ca
+  label: Ca2+ hydration free energy
+  slugs:
+  - hydration_free_energy_ca
+  status: covered
+  independent_sources: 3
+  grades:
+    A: 0
+    B: 0
+    C: 5
+    D: 0
+  best_grade: C
+  row_ids:
+  - TD-054
+  - TD-055
+  - TD-056
+  - TD-057
+  - TE-064
+  dois:
+  - 10.1021/acs.jpcb.0c11077
+  - 10.1021/ct400146w
+  - 10.1021/ct400751u
+  rank: 9
+  role: reference state of the Delta_G_seq cycle (C2); benchmark for computed binding
+  independent_originals: 1
+  caveat: All experimental rows trace to Marcus 1991 (proton reference -1056 kJ/mol); computed rows were fitted
+    to it. No value on the cluster-pair (Tissandier) scale was read.
+- id: pka_catechol
+  label: catechol pKa
+  slugs:
+  - pka_catechol
+  status: covered
+  independent_sources: 3
+  grades:
+    A: 0
+    B: 3
+    C: 3
+    D: 0
+  best_grade: B
+  row_ids:
+  - TD-042
+  - TD-043
+  - TD-044
+  - TD-045
+  - TD-046
+  - TD-047
+  dois:
+  - 10.1038/s41467-023-36303-8
+  - 10.1073/pnas.0605552103
+  - 10.2116/bunsekikagaku.68.871
+  rank: 9
+  role: protonation correction in Delta_G_seq at the slurry pH (C2) and binding mode in C1
+  independent_originals: 2
+  caveat: Dopamine and L-DOPA values only; no pKa of catechol itself was read.
+- id: site_density_organic
+  label: binding-site density on the organic layer
+  slugs:
+  - site_density_organic
+  status: single-source
+  independent_sources: 1
+  grades:
+    A: 0
+    B: 0
+    C: 1
+    D: 0
+  best_grade: C
+  row_ids:
+  - TC-067
+  dois:
+  - 10.1073/pnas.1312369111
+  rank: 9
+  role: converts site free energy to a local concentration (C2 -> S); template coverage (C4)
+  independent_originals: null
+  caveat: null
+- id: w_adh_catechol_alumina_wet
+  label: work of adhesion of catechol or PDA to alumina in water
+  slugs:
+  - w_adh_wet
+  status: covered
+  independent_sources: 2
+  grades:
+    A: 0
+    B: 4
+    C: 1
+    D: 0
+  best_grade: B
+  row_ids:
+  - TD-025
+  - TD-026
+  - TD-027
+  - TD-028
+  - TD-030
+  dois:
+  - 10.1021/acscentsci.8b00526
+  - 10.1098/rsif.2012.0759
+  rank: 10
+  role: C1 kill criterion; not in the nucleation barrier
+  independent_originals: 2
+  caveat: Surface-forces data for DOPA-containing proteins on mica or SiO2 and a compiled range; no wet work of
+    adhesion on alumina or an oxyhydroxide. Treated as a gap for the alumina substrate.
+- id: incell_potential_range
+  label: in-cell potential range at the collector
+  slugs:
+  - incell_potential
+  status: covered
+  independent_sources: 10
+  grades:
+    A: 0
+    B: 11
+    C: 0
+    D: 2
+  best_grade: B
+  row_ids:
+  - TA-047
+  - TA-048
+  - TA-049
+  - TA-050
+  - TA-051
+  - TA-052
+  - TB-060
+  - TB-061
+  - TB-062
+  - TB-065
+  - TB-067
+  - TB-068
+  - TB-071
+  dois:
+  - 10.1002/batt.201900140
+  - 10.1002/cssc.201903483
+  - 10.1016/j.jpowsour.2010.07.027
+  - 10.1016/j.jpowsour.2020.228315
+  - 10.1021/acs.jpclett.6b02933
+  - 10.1021/acsami.2c11695
+  - 10.1038/s41467-025-56831-9
+  - 10.1149/1.2218269
+  - 10.1149/ma2022-0213785mtgabs
+  - 10.3390/batteries10030100
+  rank: 10
+  role: R-cell window (C5); not in the nucleation barrier
+  independent_originals: 10
+  caveat: Mixes upper cut-off potentials of cells (T-A) with Al onset potentials in LiBOB and LiClO4 (T-B); distinguish
+    by symbol before use.
