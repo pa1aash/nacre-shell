@@ -1,5 +1,25 @@
 {
-  "last_session": null,
-  "status": "READY",
-  "day": 1
+  "last_session": "P0-W4.1",
+  "status": "DONE",
+  "day": 1,
+  "contract_sha": "b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3",
+  "contract_checked_ref": "origin/preprint/p0-w3@98523a933ecd9cad74945bfff274ed253111547c",
+  "artifacts": {
+    "physics_core": "src/nacre/physics/",
+    "contract_registry": "src/nacre/physics/contract.py",
+    "contract_check_script": "src/nacre/physics/devtools/check_contract_equivalence.py",
+    "contract_check_record": "configs/preprint/contract_check.json",
+    "results_schema": "configs/preprint/results_schema.json@cc50fc0b781cc6ea3a723c5f08a16d9f048fdc9b",
+    "mock_priors": "configs/preprint/mock_priors.yaml",
+    "mock_summary": "results/preprint/screen/mock/summary.json",
+    "screen_scaffold": "src/nacre/screen/",
+    "report": "ops/reports/P0-W4.1.md"
+  },
+  "notes": [
+    "All 32 contract functions and the DG_het_template composite match the contract at rtol 1e-12 (max 4.3e-14).",
+    "Contract tests read theory/contract.yaml from the working tree and skip until integration brings it to this branch.",
+    "Double counting via gamma_sn lowers the barrier (overstates the template); via gamma_sl raises it; sign depends on P0-W3.2.",
+    "Screen nucleation link still takes cos_theta directly; W4.2 wires Young and Omega_local, adapts to lit/params.yaml, freezes thresholds.",
+    ".venv is a symlink to ~/.nacre-venvs/p-w4."
+  ]
 }

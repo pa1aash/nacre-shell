@@ -1,0 +1,44 @@
+# MOCK PRIORS. Synthetic numbers chosen only to lie inside each input's physical domain,
+# so the screen code can be exercised end to end. They are not literature values, carry no
+# physical meaning and must never feed a production result: the prior loader refuses this
+# file unless the --mock flag (allow_mock=True) is given, and the smoke run writes only to
+# results/preprint/screen/mock/.
+mock: true
+regimes:
+  R-slurry:
+    parameters:
+      gamma_nuc_liq:
+        symbol: gamma_nuc,liq
+        units: J m^-2
+        distribution: uniform
+        low: 1.0
+        high: 2.0
+        source: synthetic
+      molar_volume:
+        symbol: V_m
+        units: m^3 mol^-1
+        distribution: uniform
+        low: 1.0e-6
+        high: 2.0e-6
+        source: synthetic
+      omega:
+        symbol: Omega
+        units: "1"
+        distribution: loguniform
+        low: 10.0
+        high: 1000.0
+        source: synthetic
+      temperature:
+        symbol: T
+        units: K
+        distribution: uniform
+        low: 280.0
+        high: 320.0
+        source: synthetic
+      cos_theta:
+        symbol: cos(theta)
+        units: "1"
+        distribution: uniform
+        low: -1.0
+        high: 1.0
+        source: synthetic

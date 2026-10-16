@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nacre-shell/preprint/screen/results/v1",
+  "title": "Screen results summary",
+  "description": "Output of the preprint parameter screen: per regime, the Monte Carlo propagation of the priors through each link of the chain (anchor, sequester, nucleate), quantiles of every propagated quantity, Sobol first- and total-order indices with confidence intervals, and the provenance needed to reproduce the run. Threshold evaluation is filled by the per-link evaluator once thresholds are frozen; until then it is null.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "mock", "generated_utc", "provenance", "regimes"],
+  "properties": {
+    "schema_version": {"const": "1"},
+    "mock": {
+      "type": "boolean",
+      "description": "True when the run used mock priors. A mock summary is never an input to the paper."
+    },
+    "generated_utc": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "regimes": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {"enum": ["R-slurry", "R-cell"]},
+      "additionalProperties": {"$ref": "#/$defs/regime"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["git_sha", "git_dirty", "config_hash", "prior_file", "prior_file_hash"],
+      "properties": {
+        "git_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$", "description": "HEAD of the repository when the run started."},
+        "git_dirty": {"type": "boolean", "description": "True when the working tree had uncommitted changes at run time."},
+        "config_hash": {"$ref": "#/$defs/sha256", "description": "sha256 of the canonical JSON of the run configuration (sorted keys, no whitespace)."},
+        "prior_file": {"type": "string", "description": "Repository-relative path of the prior file."},
+        "prior_file_hash": {"$ref": "#/$defs/sha256", "description": "sha256 of the raw bytes of the prior file."},
+        "contract_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$", "description": "Commit of the theory contract the physics was checked against, or null."}
+      }
+    },
+    "regime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["draws", "seed", "sobol_design", "links"],
+      "properties": {
+        "draws": {"type": "integer", "minimum": 1, "description": "Monte Carlo draws used for the quantiles."},
+        "seed": {"type": "integer", "minimum": 0, "description": "Root seed of the regime's random stream."},
+        "sobol_design": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["method", "base_samples", "evaluations", "bootstrap_resamples", "confidence_level"],
+          "properties": {
+            "method": {"type": "string"},
+            "base_samples": {"type": "integer", "minimum": 1},
+            "evaluations": {"type": "integer", "minimum": 1},
+            "bootstrap_resamples": {"type": "integer", "minimum": 0},
+            "confidence_level": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1}
+          }
+        },
+        "parameters": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Names of the sampled inputs, in the order used by the Sobol design."
+        },
+        "links": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {"enum": ["anchor", "sequester", "nucleate"]},
+          "additionalProperties": {"$ref": "#/$defs/link"}
+        }
+      }
+    },
+    "link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quantities", "sobol", "threshold_evaluation"],
+      "properties": {
+        "quantities": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"$ref": "#/$defs/quantity"}
+        },
+        "sobol": {
+          "type": "object",
+          "description": "Keyed by quantity name, then by parameter name.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {"$ref": "#/$defs/sobol_indices"}
+          }
+        },
+        "threshold_evaluation": {
+          "type": ["object", "null"],
+          "description": "Per-link verdict-band evaluation against the frozen thresholds; null until they are frozen."
+        }
+      }
+    },
+    "quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol", "units", "n_valid", "mean", "sd", "quantiles"],
+      "properties": {
+        "symbol": {"type": "string"},
+        "units": {"type": "string"},
+        "n_valid": {"type": "integer", "minimum": 0, "description": "Draws inside the physical domain (finite results)."},
+        "mean": {"type": "number"},
+        "sd": {"type": "number", "minimum": 0},
+        "quantiles": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {"pattern": "^(0(\\.[0-9]+)?|1(\\.0+)?)$"},
+          "additionalProperties": {"type": "number"},
+          "description": "Keyed by probability level written as a decimal string, e.g. \"0.5\"."
+        }
+      }
+    },
+    "estimate_ci": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["estimate", "ci_low", "ci_high"],
+      "properties": {
+        "estimate": {"type": "number"},
+        "ci_low": {"type": "number"},
+        "ci_high": {"type": "number"}
+      }
+    },
+    "sobol_indices": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["first_order", "total_order"],
+      "properties": {
+        "first_order": {"$ref": "#/$defs/estimate_ci"},
+        "total_order": {"$ref": "#/$defs/estimate_ci"}
+      }
+    }
+  }
+}
