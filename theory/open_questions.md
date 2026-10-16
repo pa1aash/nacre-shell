@@ -1,4 +1,4 @@
-# Open questions for the cp2 sign audit (session P0-W3.1)
+# Open questions for the cp2 sign audit (sessions P0-W3.1, P0-W3.2)
 
 Each entry lists a choice made in `theory/equation_sheet.tex`, `theory/derivation_body.tex` or
 `theory/contract.yaml`, the alternative, and what changes if the alternative is taken.
@@ -24,6 +24,33 @@ no-double-counting proof of P0-W3.2.
 | Q14 | B | C4 | Lattice versus random nucleation sites in the closure estimate |
 | Q15 | C | C4 | Conformality judged in water, not after drying |
 | Q16 | C | C3 | Barrier accessibility without a kinetic prefactor |
+
+## Dispositions (P0-W3.2, sign audit B1)
+
+Equation numbers are those of the P0-W3.2 build of `theory/build/derivation.pdf`; the label
+in brackets is stable across rebuilds. "Contract" is `theory/contract.yaml` version 2.
+
+| # | Disposition | Where, or to whom, and the decision requested |
+|---|---|---|
+| Q1 | resolved | Uniform chemical potential is the consistent bookkeeping; Ca2+ binding enters only gamma_sl. Derivation Section 7 (all subsections), Eqs. (29) to (32) [th:eq:grand, th:eq:gibbs, th:eq:young-ads, th:eq:composite]; contract `Delta_gamma_ads`, `cos_theta_template`, SF2, `no_double_counting`. The charter wording that follows from it is cp2 decision 2 in `theory/cp2_brief.md` |
+| Q2 | resolved | A mean potential cancels in the ion product and in Delta_mu; carbonate needs no correction. Derivation 4 (ii), Eq. (13) [th:eq:dmu-uniform] |
+| Q3 | deferred | Main study, Phase 7 item 6 (ionic-strength correction) and the C2 site model. In v2 the closure sets only the size of Delta_gamma_ads: d gamma_sl / d Delta_G_seq = Gamma_s Theta >= 0 for any isotherm with Theta >= 0, so its sign does not depend on the closure. P0 reports Langmuir as a stated closure |
+| Q4 | deferred | P0-W1.2 (standard-state conversion of fetched binding constants with Eq. (6) [th:eq:stdstate] at one V_site, and the pKa row) and the main study (multidentate sites). V_site is fixed once by the parameter table |
+| Q5 | deferred | Main study Phase 2 derivation freeze, as the charter states. P0 judges C1 per area (J m^-2) with one contact-area definition from the parameter table (`theory/thresholds.md`, C1) |
+| Q6 | resolved | Registered: Delta_gamma_w = gamma_sn - gamma_sn0 > 0 is a cost on the substrate side, bare gamma_nl in Young. Derivation 6, Eqs. (25) to (28); contract SF1. Recording it in the charter is part of cp2 decision 2 |
+| Q7 | deferred | Main study Phase 7 item 10 (geometric angle of an ACC nanodroplet in MD). P0 has no MD contact angle: Young decides C3, cos(theta) is clipped and the boundary mass reported (lane note N2, W4) |
+| Q8 | for cp2 | Decision 6: approve the C5 R-slurry rule of `theory/thresholds.md` (dissolved-ion activities at the regime values, as F2 requires; for the ACC framing the hull edge is the fetched ACC offset plus the tolerance). The falsifiability test (item 21) stays with W5 |
+| Q9 | for cp2 | Decision 5: the sink rule of derivation 9, Eq. (40) [th:eq:sink] (anion of the registered salt, minimum over admissible sinks, worst CO2 reference, undetermined never passes), and whether the solid-salt sink is accepted as the registered sink (a conditional upper bound on the onset) or the solvated sink is required |
+| Q10 | deferred | P0-W1.2 (parameter rows for the barrier height, effective mass and prefactor) and the main study (transport model). The bound enters only the C4 supporting condition |
+| Q11 | resolved | F3: S = IAP/K_sp = Omega, Delta_mu = k_B T ln Omega per formula unit, V_m per formula unit. Derivation 4, Eq. (10) [th:eq:omega]; contract `conventions.supersaturation`. The per-ion form in this entry's text is the square root of Omega and carries no letter of its own (sign audit B3) |
+| Q12 | deferred | P0-W1.2: K_sp, V_m and gamma_nl are taken from one framing (the framing key of the parameter table), enforced by the C3 rule of `theory/thresholds.md`; the framing itself is chosen on literature grounds (lane note N5) and fixed at cp3 |
+| Q13 | for cp2 | Decision 7: keep IAP = a_Ca a_CO3 (anhydrous form) in P0, with the hydrated form reported as a stated limitation for the drying states, or add a_w^n and n to the contract (a contract change before cp3) |
+| Q14 | for cp2 | Decision 8: accept the square-lattice closure as the optimistic supporting condition of C4, with the random-site uncovered fraction deferred to the main study |
+| Q15 | deferred | Main study; stated limitation "layer persistence" (charter/scope_guard.md). The P0 screen judges wetting in water only |
+| Q16 | resolved | Absolute-barrier criterion DG_het <= B_acc = k_B T ln(J_0 t_p / N_req), derivation 5, Eqs. (23) and (24) [th:eq:rate, th:eq:access]; contract `B_acc`, `N_nuc`; thresholds C3 |
+
+Counts: resolved 5 (Q1, Q2, Q6, Q11, Q16); deferred 7 (Q3, Q4, Q5, Q7, Q10, Q12, Q15); for
+cp2 4 (Q8, Q9, Q13, Q14).
 
 ## Q1 (A). Enrichment bookkeeping: local-ideal (registered) or grand-canonical
 
