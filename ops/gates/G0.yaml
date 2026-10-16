@@ -2,6 +2,8 @@
 # Refined in session S02: adds the reconciliation, taxonomy and renderer files and the
 # charter test suite as an explicit criterion.
 gate: G0
+# H sign-off (ops/gates/G0.md): Palaash Gang only. The UIUC corresponding-author co-sign moves to G2 of the
+# main study (audit fix F6, 2026-10-16).
 criteria:
   - type: files_exist
     paths:

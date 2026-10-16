@@ -51,7 +51,7 @@ A gate has three layers.
 - **C (chat audit).** The audit chat reads `ops/packets/<G>.md` (written by `--packet`) and the record gets `C-audit: PASS <date>`.
 - **H (human sign-off).** Every `H-signoff` field in the record is filled in.
 
-`nacre gate <G> --tag` creates the signed, annotated tag `g<N>` only when all three layers hold. The tags are `g0` to `g13`, plus `prereg-v1` for the pre-registration. Gates G0, G2, G9 and G12 also need the sign-off of the UIUC corresponding author.
+`nacre gate <G> --tag` creates the signed, annotated tag `g<N>` only when all three layers hold. The tags are `g0` to `g13`, plus `prereg-v1` for the pre-registration. Gates G2, G9 and G12 also need the sign-off of the UIUC corresponding author. The G0 H sign-off is Palaash Gang only; the UIUC co-sign for G0 moves to G2 of the main study (audit fix F6, 2026-10-16).
 
 ## 7. Lanes and worktrees
 
