@@ -1,7 +1,7 @@
 {
-  "last_session": "P0-W4.1",
-  "status": "DONE",
-  "day": 1,
+  "last_session": "P0-W4.2",
+  "status": "RUNNING",
+  "day": 2,
   "contract_sha": "b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3",
   "contract_checked_ref": "origin/preprint/p0-w3@98523a933ecd9cad74945bfff274ed253111547c",
   "artifacts": {
@@ -9,7 +9,7 @@
     "contract_registry": "src/nacre/physics/contract.py",
     "contract_check_script": "src/nacre/physics/devtools/check_contract_equivalence.py",
     "contract_check_record": "configs/preprint/contract_check.json",
-    "results_schema": "configs/preprint/results_schema.json@cc50fc0b781cc6ea3a723c5f08a16d9f048fdc9b",
+    "results_schema": "configs/preprint/results_schema.json@9d9d18cd615a4c4cc83441ebe0c26ef815e8a339",
     "mock_priors": "configs/preprint/mock_priors.yaml",
     "mock_summary": "results/preprint/screen/mock/summary.json",
     "screen_scaffold": "src/nacre/screen/",
@@ -22,5 +22,10 @@
     "Screen nucleation link still takes cos_theta directly; W4.2 wires Young and Omega_local, adapts to lit/params.yaml, freezes thresholds.",
     ".venv is a symlink to ~/.nacre-venvs/p-w4.",
     "fix-up: tolerance"
-  ]
+  ],
+  "schema": {
+    "version": "2",
+    "sha": "9d9d18cd615a4c4cc83441ebe0c26ef815e8a339",
+    "path": "configs/preprint/results_schema.json"
+  }
 }
