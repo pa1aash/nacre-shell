@@ -1,7 +1,7 @@
 {
-  "last_session": "P0-W3.1",
-  "status": "DONE",
-  "day": 1,
+  "last_session": "P0-W3.2",
+  "status": "GATE-C",
+  "day": 2,
   "equation_sheet": {
     "status": "ready",
     "sha": "4d03ab0a3db0e866825ebc99684a7bf7203f0f2a",
@@ -9,29 +9,6 @@
     "check_contract": "PASS",
     "functions": 32
   },
-  "artifacts": [
-    "theory/equation_sheet.tex",
-    "theory/build/equation_sheet.pdf",
-    "theory/macros.tex",
-    "theory/symbols.yaml",
-    "theory/generated/symbol_table.tex",
-    "theory/contract.yaml",
-    "theory/tools/check_contract.py",
-    "theory/tools/gen_symbol_table.py",
-    "theory/derivation.tex",
-    "theory/derivation_body.tex",
-    "theory/build/derivation.pdf",
-    "theory/open_questions.md",
-    "ops/reports/P0-W3.1.md"
-  ],
-  "notes": [
-    "Young: theta measured through the nucleus; cos(theta) = (gamma_sl - gamma_sn)/gamma_nl with gamma_sn = gamma_sn0 + Delta_gamma_w; Delta_gamma_w > 0 is a cost.",
-    "gamma_eff = gamma_nl - Delta_gamma_w is not used in Young or DG_hom; kept as the deck diagnostic only.",
-    "Derivation complete in all 11 sections; section 7 carries the no-double-counting outline, full proof in P0-W3.2.",
-    "16 open questions for cp2; Q1 (enrichment bookkeeping), Q2 (carbonate), Q6, Q8 and Q9 are sign-relevant.",
-    "Contract extended additively after the ready mark (h_cl, Delta_Phi_r, E_window); no existing function changed.",
-    ".venv is a symlink to ~/.nacre-venvs/p-w3, excluded locally via .git/info/exclude."
-  ],
   "contract_v2": {
     "status": "ready",
     "sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
@@ -49,5 +26,32 @@
     "base_commit": "49100a9d92b5dc48f1db1d15529967dfeeece12d",
     "params_keys": 25,
     "check_contract": "PASS"
-  }
+  },
+  "artifacts": [
+    "theory/contract.yaml",
+    "theory/symbols.yaml",
+    "theory/tools/check_contract.py",
+    "theory/tools/gen_symbol_table.py",
+    "theory/generated/symbol_table.tex",
+    "theory/equation_sheet.tex",
+    "theory/build/equation_sheet.pdf",
+    "theory/macros.tex",
+    "theory/derivation.tex",
+    "theory/derivation_body.tex",
+    "theory/build/derivation.pdf",
+    "theory/open_questions.md",
+    "theory/thresholds.md",
+    "theory/cp2_brief.md",
+    "ops/reports/P0-W3.2.md",
+    ".local/packets/p0-2.zip (local only)"
+  ],
+  "notes": [
+    "Q1/Q2 settled: uniform electrochemical potential; Delta_mu = k_B T ln Omega_bulk at the template; enrichment (binding or psi) never changes the driving force.",
+    "Ca2+ binding enters only gamma_sl via Delta_gamma_ads = -R T (Gamma_s ln(1 + x) - delta_s c_bulk); at fixed gamma_sl0 and gamma_sn stronger binding raises the barrier (SF2 reversed vs v1).",
+    "Contract v2: 11 added, 8 changed, Omega_local -> Omega_local_ideal (demonstration); composite inputs gamma_sl -> gamma_sl0.",
+    "3 W4 contract-equivalence tests fail on this branch until W4 implements v2 (expected handshake gap); 773 other tests pass.",
+    "Thresholds: band-mass rule at credible level p; C3 single edge f = 1/2 replaces the deck bands, plus DG_het <= B_acc; C4 S_spread with coalescence supporting; C5 hull tolerance from formation-energy error, R-cell undetermined never passes.",
+    "Charter change requested at cp2: C2 definition and physics (exact text in theory/cp2_brief.md), consequential C3/C5 fields.",
+    "Sign audit: resolved 5 / deferred 7 / for cp2 4."
+  ]
 }
