@@ -1,0 +1,64 @@
+# Orchestrator review of coverage (P0-W1.1). The status in coverage.yaml is mechanical (distinct DOIs);
+# these notes record where distinct DOIs are not independent evidence of the target as defined, or
+# where the rows are proxies. `independent_originals` counts original determinations behind the rows.
+# Merged into coverage.yaml by `python -m nacre.lit merge`.
+gamma_nuc_water_acc:
+  independent_originals: 2
+  caveat: >-
+    One CNT fit to a literature nucleation data set (TC-024, grade C) and one simulation range
+    (TC-025); no direct measurement.
+gamma_sub_nuc_or_contact_angle:
+  independent_originals: 6
+  caveat: >-
+    All numeric rows are effective (net) interfacial energies from CNT fits of heterogeneous
+    nucleation rates or MD, plus one compiled bound theta < 90 deg (TC-088). No separately
+    determined gamma_sub,nuc and no measured contact angle on an organic surface.
+gamma_sub_water_oxide:
+  independent_originals: 2
+  caveat: >-
+    Proxies only: calorimetric surface enthalpies of hydrated or anhydrous-water-exposed boehmite
+    and alpha-Al2O3 (TB-052, TB-053 same group; TB-056), not interfacial free energies against
+    liquid water. Treated as a gap for prior construction.
+ksp_calcite:
+  independent_originals: 1
+  caveat: >-
+    Both DOIs cite Plummer and Busenberg 1982 (paywalled, not read); compilations only.
+ksp_vaterite:
+  independent_originals: 1
+  caveat: Both DOIs cite Plummer and Busenberg 1982 via compilations.
+ksp_aragonite:
+  independent_originals: 1
+  caveat: Both rows are secondary or tertiary citations of the same literature value.
+ksp_acc:
+  independent_originals: 3
+  caveat: >-
+    Compilations of Brecevic and Nielsen 1989, Clarkson et al. 1992 and Gebauer-group values, plus
+    one CNT-inferred range for a second ACC form; originals paywalled.
+acc_excess_free_energy:
+  independent_originals: 1
+  caveat: >-
+    Both rows are derived by this session from compiled Ksp values (ACC versus calcite); no
+    calorimetric free energy. Calorimetric enthalpies are separate rows (TC-026 to TC-029).
+slurry_ionic_strength:
+  independent_originals: 2
+  caveat: >-
+    Both derived (grade C): a Li-leaching washing solution and a processing-solution molality; no
+    ionic strength measured in a cathode slurry.
+hydration_free_energy_ca:
+  independent_originals: 1
+  caveat: >-
+    All experimental rows trace to Marcus 1991 (proton reference -1056 kJ/mol); computed rows were
+    fitted to it. No value on the cluster-pair (Tissandier) scale was read.
+pka_catechol:
+  independent_originals: 2
+  caveat: Dopamine and L-DOPA values only; no pKa of catechol itself was read.
+w_adh_catechol_alumina_wet:
+  independent_originals: 2
+  caveat: >-
+    Surface-forces data for DOPA-containing proteins on mica or SiO2 and a compiled range; no wet
+    work of adhesion on alumina or an oxyhydroxide. Treated as a gap for the alumina substrate.
+incell_potential_range:
+  independent_originals: 10
+  caveat: >-
+    Mixes upper cut-off potentials of cells (T-A) with Al onset potentials in LiBOB and LiClO4
+    (T-B); distinguish by symbol before use.
