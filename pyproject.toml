@@ -7,6 +7,7 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
     "pyyaml",
     "requests>=2.34.2",
+    "sympy>=1.14.0",
 ]
 
 [project.scripts]

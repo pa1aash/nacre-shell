@@ -1,0 +1,133 @@
+% Equation sheet of the nacre-shell screen (session P0-W3.1).
+% Symbolic only: no literature value appears here. Values are fetched inputs that enter
+% the implementation through the parameter table; paper text quotes numbers only through
+% generated macros. The symbol table is generated from theory/symbols.yaml.
+% Build: latexmk -pdf -outdir=theory/build theory/equation_sheet.tex (from the repository root,
+% or `latexmk -pdf -outdir=build equation_sheet.tex` inside theory/).
+\documentclass[9pt]{extarticle}
+\usepackage[a4paper,margin=11mm,top=10mm,bottom=12mm]{geometry}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{multicol}
+\input{macros}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlength{\columnsep}{6mm}
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\setlength{\abovedisplayshortskip}{2pt}\setlength{\belowdisplayshortskip}{2pt}
+\newcommand{\hd}[1]{\par\smallskip{\normalsize\bfseries #1}\par\nopagebreak}
+\newcommand{\phys}[1]{\textit{#1}}
+\pagestyle{empty}
+\begin{document}
+
+{\large\bfseries Equation sheet: governing relations of the CaCO$_3$-barrier screen}\par
+{\small P0-W3.1. Symbolic only; every symbol is in the table overleaf and in \texttt{theory/symbols.yaml}; units in brackets.}
+
+\smallskip
+\begin{tabular}{@{}p{\dimexpr\textwidth*10/97\relax}p{\dimexpr\textwidth*41/97\relax}p{\dimexpr\textwidth*41/97\relax}@{}}
+\hline
+& \Rs: aqueous, alkaline, room temperature; casting and drying on native Al$_2$O$_3$/AlOOH
+& \Rc: non-aqueous, fluorine-free electrolyte, collector at anodic potential vs Li$^+$/Li\\
+\hline
+Links that apply & C1 adhesion (1), C2 sequestration (2), supersaturation (3), C3 nucleation and Young (4, 5), template action (6), C4 morphology (7), C5 aqueous Pourbaix (8a)
+& C5 Li-open stability window (8b), C4 insulating-film bound (9). Not defined here: (1)--(7), since there is no hydrated Ca$^{2+}$ reference and no aqueous $\Om$\\
+\hline
+\end{tabular}
+
+\begin{multicols}{2}
+\hd{1\quad Adhesion in water (C1, \Rs)}
+\phys{The polymer never meets a dry oxide: every contact first displaces interfacial water, so the decisive work separates the contact into two \emph{water-wetted} surfaces.}
+\begin{align}
+\Wwet &= \gow + \gpw - \gop \un{J\,m^{-2}}\\
+&= \Wdry + 2\gw - W_\mathrm{ow} - W_\mathrm{pw} \nonumber\\
+\Wdry &= \go+\gp-\gop \un{J\,m^{-2}}\nonumber\\
+\Wwet &= \Delta F_\mathrm{PMF}/A_\mathrm{c} \un{J\,m^{-2}}
+\end{align}
+Anchored against water iff $\Wwet>0$; $W_\mathrm{ow},W_\mathrm{pw}$ are the dry works of the oxide and polymer with water.
+
+\hd{2\quad Sequestration (C2, \Rs)}
+\phys{The template raises local Ca$^{2+}$ only if it holds Ca$^{2+}$ more strongly than water does; the cycle starts from hydrated Ca$^{2+}$ at the regime activity.}\par
+Cycle: Ca$^{2+}$(aq, bulk, $\aCa$) $\to$ Ca$^{2+}$(binding layer). Solution side: molal standard state at the regime ionic strength; layer side: site-volume standard state, $\DGsite=-\Rg T\ln\!\big[\Vsite^{-1}\!\int_\mathrm{site}\e^{-w(\mathbf r)/\kB T}\dd^3r\big]$, with $w$ the per-ion PMF ($w\to0$ in bulk). With one coordinating group that must be deprotonated:
+\begin{align}
+\DGseq &= \DGsite + \Rg T\ln\!\big(1+10^{\,\mathrm{p}K_\mathrm{a}-\mathrm{pH}}\big) \un{J\,mol^{-1}}\\
+\Eenr \equiv \frac{\cl}{\cb} &= \exp\!\Big(-\frac{\DGseq}{\Rg T}\Big) \un{1}
+\end{align}
+Valid for dilute Ca$^{2+}$ with unsaturated sites ($\Eenr\cb\ll\cmax$) and equal activity coefficients in bulk and layer (so $\Eenr$ is both a concentration and an activity ratio). Saturation (Langmuir closure):
+\begin{gather}
+\cl=\frac{\Eenr\cb}{1+\Eenr\cb/\cmax}\le\min(\Eenr\cb,\ \cmax) \un{mol\,m^{-3}}\\
+\cmax=\Gs/\ds \un{mol\,m^{-3}}\nonumber
+\end{gather}
+
+\hd{3\quad Supersaturation (one definition)}
+\phys{Crystallisation is driven by the excess chemical potential of the dissolved ion pair over the solid of the registered framing (ACC or calcite).}
+\begin{equation}
+\Om=\frac{\mathrm{IAP}}{\Ksp}=\frac{\aCa\,\aCO}{\Ksp},\qquad \Dmu=\kB T\ln\Om \un{J}
+\end{equation}
+per formula unit; nucleation requires $\Om>1$ ($\Dmu>0$). Only Ca$^{2+}$ is enriched; carbonate stays at its bulk activity:
+\begin{gather}
+\Oml=\frac{\cl}{\cb}\,\Omb \;\xrightarrow{\text{dilute}}\; \Eenr\,\Omb \un{1}\\
+\Dmu_\mathrm{local}=\Dmu_\mathrm{bulk}-\DGseq/\NA \un{J}
+\end{gather}
+
+\hd{4\quad Classical nucleation (C3, \Rs)}
+\phys{A cluster pays surface free energy before its volume gains $\Dmu$; the barrier is the top of that trade-off. On a substrate the cluster is a spherical cap with the same curvature.}
+\begin{gather}
+\DGhom=\frac{16\pi\,\gnl^{3}\vm^{2}}{3\,\Dmu^{2}},\quad r^{*}=\frac{2\gnl\vm}{\Dmu},\quad \vm=\frac{\Vm}{\NA} \un{J;\ m}\\
+\DGhet=f(\theta)\,\DGhom,\qquad f(\theta)=\tfrac14(2+\cos\theta)(1-\cos\theta)^{2}
+\end{gather}
+$f(0)=0$, $f(\pi/2)=\tfrac12$, $f(\pi)=1$; $f'(\theta)=\tfrac34\sin^{3}\theta\ge0$, so $0\le\DGhet\le\DGhom$ on $[0,\pi]$. $\DGhom\to\infty$ as $\Om\to1^{+}$, and $\DGhom\to0$ as $\Om\to\infty$.
+
+\hd{5\quad Young, with one sign convention}
+\phys{$\theta$ is measured through the nucleus. Forming the contact removes substrate--liquid interface and creates substrate--nucleus interface over the same disc; $\cos\theta$ is that energy gain per unit nucleus--liquid energy.}
+\begin{equation}
+\cos\theta=\frac{\gsl-\gsn}{\gnl},\qquad \gsn=\gsnz+\dgw \un{1;\ J\,m^{-2}}
+\end{equation}
+$\theta=0$: the nucleus wets the template completely (no barrier); $\theta=\pi$: no wetting (homogeneous barrier).
+$\dgw\equiv\gsn-\gsnz$ is the free energy per unit contact area to displace the template-bound water layer; \textbf{$\dgw>0$ is a cost} and raises $\theta$, $f$ and $\DGhet$ ($\partial\cos\theta/\partial\dgw=-1/\gnl<0$). If $\gsn$ is supplied as a full in-water interfacial free energy, $\dgw\equiv0$ and is not added again.
+$\geff\equiv\gnl-\dgw$ (deck form) is \textbf{not} used: Young and $\DGhom$ take the bare $\gnl$. Reason: $\gnl$ multiplies the cap's free surface, which never touches the template, and $\DGhet=f\,\DGhom$ follows only if the same $\gnl$ sits in Young and in $\DGhom$. With $\geff$ in the denominator, $\partial\cos\theta/\partial\dgw=(\gsl-\gsnz)/\geff^{2}>0$ on the wetting side: a cost would lower the barrier.
+
+\hd{6\quad Where the template acts}
+\phys{The template enters the barrier through two channels only: wetting (interfacial energies, via $\theta$) and Ca$^{2+}$ enrichment (via $\Om$).}
+\begin{equation}
+\DGhet=f\big(\theta[\gsl,\gsnz,\dgw]\big)\;\frac{16\pi\gnl^{3}\vm^{2}}{3\big(\kB T\ln\Oml[\DGseq,\Gs,\ds]\big)^{2}}
+\end{equation}
+\textbf{No-double-counting condition:} each template-dependent input enters exactly one channel ($\partial\theta/\partial\DGseq=0$, $\partial\Om/\partial\gamma_\mathrm{s\cdot}=0$), and $\gsl,\gsn$ are evaluated without the template-bound Ca$^{2+}$ excess already credited to $\Oml$. Bulk inputs ($\gnl,\Vm,T$) may enter both. Proof: P0-W3.2.
+
+\hd{7\quad Conformality (C4, \Rs)}
+\phys{A barrier needs a continuous film; whether the mineral spreads or beads is a wetting balance, not a barrier height.}
+\begin{equation}
+\Ssp=\gsl-\gsn-\gnl=\gnl(\cos\theta-1) \un{J\,m^{-2}}
+\end{equation}
+$\Ssp\ge0$: no finite $\theta$ ($\theta\to0$, $f\to0$), layer-by-layer growth. $\Ssp<0$: $\theta>0$, island growth; a film forms only on coalescence, at cap height $\hc=\tan(\theta/2)/(2\sqrt{\Ns})$ [m]. A low $f$ does not imply coverage: $f(\pi/2)=\tfrac12$ is still island growth.
+
+\hd{8\quad Stability (C5): screens, necessary not sufficient}
+(a) \Rs, aqueous Pourbaix, per non-O, non-H atom [J\,mol$^{-1}$]:
+\begin{multline}
+\Psi_\phi=\tfrac{1}{n_\mathrm{M}}\big[G_\phi-n_\mathrm{O}\mu_{\mathrm{H_2O}}-\Rg T\ln10\,(2n_\mathrm{O}-n_\mathrm{H})\,\mathrm{pH}\\
+-(2n_\mathrm{O}-n_\mathrm{H}+Q)\Fc\ESHE\big]
+\end{multline}
+$\DGpbx=\Psi_\phi-\Psi_\mathrm{hull}\ge0$; zero means stable at (pH, $\ESHE$).
+
+(b) \Rc, Li open, $\ELi$ vs Li$^+$/Li [J\,mol$^{-1}$; V]:
+\begin{equation}
+\muLi=\muLiz-\Fc\ELi,\qquad \Phi_\phi=G_\phi-n_\mathrm{Li}\muLi
+\end{equation}
+Window $[E_\mathrm{red},E_\mathrm{ox}]$: the $\ELi$ over which $\phi$ lies on the Li-open hull.
+
+\hd{9\quad Insulating film (C4 limitation, \Rc)}
+\phys{The mineral is an electronic insulator, so conformality cannot be bought with thickness; the film must still pass the collector current.}
+\begin{gather}
+R_A=\rhoe d\le R_{A,\max}\;\Rightarrow\; d\le R_{A,\max}/\rhoe \un{\Omega\,m^{2};\ m}\\
+j=j_0\e^{-2\kappa d},\ \ \kappa=\frac{\sqrt{2m_\mathrm{e}\phiB}}{\hbar}\;\Rightarrow\; d\le\frac{\ln(j_0/\jreq)}{2\kappa} \un{m}
+\end{gather}
+\end{multicols}
+
+\newpage
+{\large\bfseries Symbols} \hfill {\small generated from \texttt{theory/symbols.yaml}; Reg.: S = \Rs, C = \Rc; -- = dimensionless}
+
+\smallskip
+\input{generated/symbol_table}
+
+\smallskip
+{\small \textbf{Conventions.} Angles in rad; free energies per formula unit (J) or per mole (J\,mol$^{-1}$) as stated; activities on the molal scale; potentials vs SHE in \Rs\ and vs Li$^+$/Li in \Rc. $\Om$ is the only supersaturation variable (the charter's $S$ for C3 is $\Om$). The functions W4 implements, with exact limits, monotonicity and the sign-flip tests, are in \texttt{theory/contract.yaml}.}
+\end{document}

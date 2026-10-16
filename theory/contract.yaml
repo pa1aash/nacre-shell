@@ -1,0 +1,485 @@
+# Function contract between the theory (lane p0-w3) and the implementation (lane p0-w4).
+#
+# Every function W4 implements is listed once. Expressions are sympy-parsable and use only
+# the ids of theory/symbols.yaml (plus `pi`, the elementary functions and exact rationals).
+# theory/tools/check_contract.py parses every expression, checks that every symbol is
+# registered, checks dimensions against `unit`, evaluates the limit cases exactly, checks
+# the identities and bounds, proves the monotonicity statements symbolically where it can,
+# and runs the sign-flip tests. W4's unit tests reproduce the same limit cases numerically.
+#
+# Schema per function
+#   name          implementation name (the output symbol id where one exists)
+#   claim         C1..C5 link it serves; regime: R-slurry | R-cell
+#   unit          SI unit of the result (same grammar as symbols.yaml)
+#   expression    sympy expression in symbol ids
+#   domains       input domains that override the symbol intervals for this function
+#   limits        exact cases: {at: {sym: value}} or {limit: {var, to, dir}}, with `expected`
+#   identities    {equals: expr, subs: {...}} that must simplify to the function exactly
+#   @name         inside any expression, expands to the expression of contract function
+#                 `name` (recursively); a bare id is always the input symbol of that name
+#   bounds        {expr, var, interval, min, max}: exact extrema of a univariate expression
+#   inequalities  {expr, relation, rhs}: rhs - expr (or expr - rhs) has a proven sign
+#   monotonicity  {wrt, direction: increasing | nondecreasing | decreasing | nonincreasing}
+#
+# Auxiliary symbols named aux_* are positive reparametrisation variables used only inside
+# checks (for example Omega = 1 + aux_u to state Omega > 1); they are not physical symbols.
+
+version: 1
+session: P0-W3.1
+conventions:
+  young: >-
+    theta is the contact angle of the spherical-cap nucleus measured through the nucleus;
+    cos(theta) = (gamma_sl - gamma_sn)/gamma_nl with gamma_sn = gamma_sn0 + Delta_gamma_w.
+    theta = 0 is complete wetting of the template by the nucleus (no barrier); theta = pi is
+    no wetting (homogeneous barrier recovered).
+  water_displacement: >-
+    Delta_gamma_w = gamma_sn - gamma_sn0 > 0 is a cost. It belongs to the substrate-nucleus
+    term of Young. It is zero by definition when gamma_sn is supplied as a full in-water
+    interfacial free energy, and must then not be added again.
+  gamma_eff: >-
+    The deck's gamma_eff = gamma_nl - Delta_gamma_w is recorded (gamma_eff_deck) for the
+    audit and the double-counting demonstration only. Young and the homogeneous barrier
+    use the bare gamma_nl, because gamma_nl multiplies the cap area in the free energy whose
+    factorisation gives Delta_G*_het = f(theta) Delta_G*_hom.
+  supersaturation: >-
+    One definition: Omega = IAP / K_sp = a_Ca a_CO3 / K_sp for the registered framing;
+    Delta_mu = k_B T ln Omega per formula unit. The charter's S for C3 is this Omega.
+  enrichment: >-
+    Ca2+ alone is enriched, carbonate is held at its bulk activity:
+    Omega_local = (c_local / c_bulk) Omega_bulk.
+
+functions:
+  # ------------------------------------------------------------------ C1, adhesion in water
+  - name: W_adh_wet
+    claim: C1
+    regime: R-slurry
+    unit: J m^-2
+    expression: gamma_ow + gamma_pw - gamma_op
+    limits:
+      - {at: {gamma_op: gamma_ow + gamma_pw}, expected: '0'}
+    identities:
+      - note: water competition written against the dry work of adhesion
+        equals: '@W_adh_dry_fn + 2*gamma_w - (gamma_o + gamma_w - gamma_ow) - (gamma_p + gamma_w - gamma_pw)'
+    monotonicity:
+      - {wrt: gamma_op, direction: decreasing}
+      - {wrt: gamma_ow, direction: increasing}
+      - {wrt: gamma_pw, direction: increasing}
+
+  - name: W_adh_dry_fn
+    claim: C1
+    regime: R-slurry
+    unit: J m^-2
+    expression: gamma_o + gamma_p - gamma_op
+    note: comparator only (one axis); never the decisive observable
+
+  - name: W_adh_wet_from_pmf
+    claim: C1
+    regime: R-slurry
+    unit: J m^-2
+    expression: Delta_F_pmf/A_c
+    limits:
+      - {at: {Delta_F_pmf: '0'}, expected: '0'}
+    monotonicity:
+      - {wrt: Delta_F_pmf, direction: increasing}
+      - {wrt: A_c, direction: decreasing, domains: {Delta_F_pmf: '(0, oo)'}}
+
+  # ------------------------------------------------------------------ C2, sequestration
+  - name: Delta_G_seq_cycle
+    claim: C2
+    regime: R-slurry
+    unit: J mol^-1
+    expression: Delta_G_site + R_gas*T*log(1 + 10**(pKa - pH))
+    note: >-
+      single coordinating group that must be deprotonated to bind; the correction is the
+      free energy of finding the site deprotonated at the regime pH. Multi-site and
+      ionic-strength forms are open question Q4.
+    limits:
+      - {limit: {var: pH, to: oo}, expected: Delta_G_site}
+      - {at: {pH: pKa}, expected: Delta_G_site + R_gas*T*log(2)}
+    inequalities:
+      - {expr: '@Delta_G_seq_cycle', relation: '>=', rhs: Delta_G_site}
+    monotonicity:
+      - {wrt: pH, direction: decreasing}
+
+  - name: E_enr
+    claim: C2
+    regime: R-slurry
+    unit: '1'
+    expression: exp(-Delta_G_seq/(R_gas*T))
+    limits:
+      - {at: {Delta_G_seq: '0'}, expected: '1'}
+      - {limit: {var: Delta_G_seq, to: -oo}, expected: oo}
+      - {limit: {var: Delta_G_seq, to: oo}, expected: '0'}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: decreasing}
+    validity: dilute Ca2+ and unsaturated binding sites (E_enr c_bulk << c_max)
+
+  - name: c_max
+    claim: C2
+    regime: R-slurry
+    unit: mol m^-3
+    expression: Gamma_s/delta_s
+
+  - name: c_local
+    claim: C2
+    regime: R-slurry
+    unit: mol m^-3
+    expression: E_enr*c_bulk/(1 + E_enr*c_bulk/c_max)
+    note: Langmuir closure of the binding layer; reduces to E_enr c_bulk when dilute
+    limits:
+      - {limit: {var: c_max, to: oo}, expected: E_enr*c_bulk}
+      - {limit: {var: c_bulk, to: oo}, expected: c_max}
+      - {at: {E_enr: '0'}, expected: '0'}
+    inequalities:
+      - {expr: '@c_local', relation: '<=', rhs: c_max}
+      - {expr: '@c_local', relation: '<=', rhs: E_enr*c_bulk}
+    monotonicity:
+      - {wrt: E_enr, direction: increasing}
+      - {wrt: c_bulk, direction: increasing}
+      - {wrt: c_max, direction: increasing}
+
+  # ------------------------------------------------------------------ supersaturation
+  - name: Omega_bulk
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_Ca*a_CO3/K_sp
+    monotonicity:
+      - {wrt: a_Ca, direction: increasing}
+      - {wrt: K_sp, direction: decreasing}
+
+  - name: Omega_local
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: (c_local/c_bulk)*a_Ca*a_CO3/K_sp
+    note: >-
+      only Ca2+ is enriched; the carbonate activity stays at its bulk value and the local
+      Ca2+ activity coefficient is taken equal to the bulk one (open questions Q2, Q3)
+    identities:
+      - note: dilute, unsaturated limit
+        subs: {c_local: E_enr*c_bulk}
+        equals: E_enr*@Omega_bulk
+      - note: dilute limit with the Boltzmann factor written out
+        subs: {c_local: exp(-Delta_G_seq/(R_gas*T))*c_bulk}
+        equals: exp(-Delta_G_seq/(R_gas*T))*@Omega_bulk
+    limits:
+      - {at: {c_local: c_bulk}, expected: '@Omega_bulk'}
+
+  - name: Delta_mu
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: k_B*T*log(Omega)
+    limits:
+      - {at: {Omega: '1'}, expected: '0'}
+    identities:
+      - note: Ca2+ enrichment adds -Delta_G_seq/N_A to the driving force per formula unit (dilute limit)
+        subs: {Omega: exp(-Delta_G_seq/(R_gas*T))*Omega_bulk}
+        equals: k_B*T*log(Omega_bulk) - k_B*T*Delta_G_seq/(R_gas*T)
+    monotonicity:
+      - {wrt: Omega, direction: increasing}
+
+  # ------------------------------------------------------------------ C3, nucleation
+  - name: r_star
+    claim: C3
+    regime: R-slurry
+    unit: m
+    expression: 2*gamma_nl*V_m/(N_A*k_B*T*log(Omega))
+    domains: {Omega: '(1, oo)'}
+    limits:
+      - {limit: {var: Omega, to: '1', dir: '+'}, expected: oo}
+      - {limit: {var: Omega, to: oo}, expected: '0'}
+    monotonicity:
+      - {wrt: Omega, direction: decreasing}
+      - {wrt: gamma_nl, direction: increasing}
+
+  - name: DG_hom
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(Omega))**2)
+    domains: {Omega: '(1, oo)'}
+    limits:
+      - {limit: {var: Omega, to: '1', dir: '+'}, expected: oo}
+      - {limit: {var: Omega, to: oo}, expected: '0'}
+    identities:
+      - note: one third of the surface energy of the critical sphere
+        equals: 4*pi*@r_star**2*gamma_nl/3
+    monotonicity:
+      - {wrt: Omega, direction: decreasing}
+      - {wrt: gamma_nl, direction: increasing}
+      - {wrt: V_m, direction: increasing}
+      - {wrt: T, direction: decreasing}
+
+  - name: f_theta
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: (2 + cos(theta))*(1 - cos(theta))**2/4
+    domains: {theta: '[0, pi]'}
+    limits:
+      - {at: {theta: '0'}, expected: '0'}
+      - {at: {theta: pi}, expected: '1'}
+      - {at: {theta: pi/2}, expected: 1/2}
+    identities:
+      - note: deck form, the same cubic in cos(theta)
+        equals: (2 - 3*cos(theta) + cos(theta)**3)/4
+      - note: spherical-cap volume fraction
+        equals: (pi*(1 - cos(theta))**2*(2 + cos(theta))/3)/(4*pi/3)
+    bounds:
+      - {expr: '@f_theta', var: theta, interval: '[0, pi]', min: '0', max: '1'}
+    monotonicity:
+      - {wrt: theta, direction: nondecreasing}
+    derivative_identities:
+      - {wrt: theta, equals: 3*sin(theta)**3/4}
+
+  - name: DG_het
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: '@f_theta*@DG_hom'
+    domains: {theta: '[0, pi]', Omega: '(1, oo)'}
+    limits:
+      - {at: {theta: '0'}, expected: '0'}
+      - {at: {theta: pi}, expected: '@DG_hom'}
+      - {at: {theta: pi/2}, expected: '@DG_hom/2'}
+      - {at: {theta: pi/3}, limit: {var: Omega, to: '1', dir: '+'}, expected: oo}
+    bounds:
+      - {expr: '@DG_het/@DG_hom', var: theta, interval: '[0, pi]', min: '0', max: '1'}
+    inequalities:
+      - {expr: '@DG_het', relation: '<=', rhs: '@DG_hom', note: 'holds for every theta in [0, pi]'}
+    monotonicity:
+      - {wrt: theta, direction: nondecreasing}
+      - {wrt: Omega, direction: nonincreasing}
+
+  - name: cos_theta_young
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: (gamma_sl - gamma_sn0 - Delta_gamma_w)/gamma_nl
+    note: registered convention; bare gamma_nl in the denominator; displacement cost on the substrate side
+    limits:
+      - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w + gamma_nl}, expected: '1'}
+      - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w - gamma_nl}, expected: '-1'}
+      - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w}, expected: '0'}
+    monotonicity:
+      - {wrt: Delta_gamma_w, direction: decreasing}
+      - {wrt: gamma_sl, direction: increasing}
+      - {wrt: gamma_sn0, direction: decreasing}
+    validity: a finite contact angle exists only for |cos_theta_young| <= 1; above 1 the nucleus phase spreads (S_spread >= 0)
+
+  - name: theta_young
+    claim: C3
+    regime: R-slurry
+    unit: rad
+    expression: acos((gamma_sl - gamma_sn0 - Delta_gamma_w)/gamma_nl)
+    limits:
+      - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w + gamma_nl}, expected: '0'}
+      - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w - gamma_nl}, expected: pi}
+      - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w}, expected: pi/2}
+
+  - name: gamma_eff_deck
+    claim: C3
+    regime: R-slurry
+    unit: J m^-2
+    expression: gamma_nl - Delta_gamma_w
+    note: deck form; audit and double-counting demonstration (C3 item 13) only
+    monotonicity:
+      - {wrt: Delta_gamma_w, direction: decreasing}
+
+  - name: cos_theta_deck
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: (gamma_sl - gamma_sn0)/(gamma_nl - Delta_gamma_w)
+    note: >-
+      the rejected alternative, Young with gamma_eff in the denominator; implemented only
+      to demonstrate the sign reversal and the size of the double-counting error
+    limits:
+      - {at: {Delta_gamma_w: '0'}, expected: '@cos_theta_young_at0'}
+
+  - name: cos_theta_young_at0
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: (gamma_sl - gamma_sn0)/gamma_nl
+    note: helper, the registered cos(theta) with no displacement correction
+
+  # ------------------------------------------------------------------ C4, conformality
+  - name: S_spread
+    claim: C4
+    regime: R-slurry
+    unit: J m^-2
+    expression: gamma_sl - gamma_sn0 - Delta_gamma_w - gamma_nl
+    identities:
+      - note: spreading coefficient through Young (partial-wetting branch)
+        equals: gamma_nl*(@cos_theta_young - 1)
+    limits:
+      - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w + gamma_nl}, expected: '0', note: 'theta -> 0 is the onset of complete wetting'}
+    monotonicity:
+      - {wrt: Delta_gamma_w, direction: decreasing}
+      - {wrt: gamma_nl, direction: decreasing}
+
+  - name: h_c
+    claim: C4
+    regime: R-slurry
+    unit: m
+    expression: tan(theta/2)/(2*sqrt(N_s))
+    domains: {theta: '(0, pi)'}
+    note: >-
+      geometric coalescence thickness: equal caps of contact angle theta on a square lattice
+      of density N_s touch when their base radius is half the spacing; cap height is base
+      radius times tan(theta/2). Island-to-film is possible only as h_c -> 0.
+    limits:
+      - {limit: {var: theta, to: '0', dir: '+'}, expected: '0'}
+      - {limit: {var: theta, to: pi, dir: '-'}, expected: oo}
+      - {at: {theta: pi/2}, expected: 1/(2*sqrt(N_s))}
+    monotonicity:
+      - {wrt: theta, direction: increasing}
+      - {wrt: N_s, direction: decreasing}
+
+  # ------------------------------------------------------------------ C5, stability
+  - name: Psi_pbx
+    claim: C5
+    regime: R-slurry
+    unit: J mol^-1
+    expression: (G_phase - N_O*mu_H2O - R_gas*T*log(10)*(2*N_O - N_H)*pH - (2*N_O - N_H + Q_charge)*F_c*E_SHE)/N_M
+    note: >-
+      Pourbaix potential per non-O non-H atom with O and H exchanged with water, protons and
+      electrons; the hull is the lower envelope over competing species of the same metal
+      composition. The ACC offset enters G_phase from fetched thermochemistry.
+    limits:
+      - {at: {N_O: '0', N_H: '0', Q_charge: '0'}, expected: G_phase/N_M, note: 'a neutral element is pH- and potential-independent'}
+    monotonicity:
+      - {wrt: E_SHE, direction: decreasing, subs: {Q_charge: aux_u - 2*N_O + N_H}, note: 'species with 2 n_O - n_H + Q > 0 (oxidised) are favoured by raising the potential'}
+      - {wrt: pH, direction: decreasing, subs: {N_H: 2*N_O - aux_u}, note: 'species with 2 n_O - n_H > 0 are favoured by raising pH'}
+
+  - name: Delta_G_pbx
+    claim: C5
+    regime: R-slurry
+    unit: J mol^-1
+    expression: Psi_pbx - Psi_hull
+    note: non-negative by construction of the hull; zero means on the hull
+
+  - name: mu_Li
+    claim: C5
+    regime: R-cell
+    unit: J mol^-1
+    expression: mu_Li0 - F_c*E_Li
+    limits:
+      - {at: {E_Li: '0'}, expected: mu_Li0}
+    monotonicity:
+      - {wrt: E_Li, direction: decreasing}
+
+  - name: Phi_Li
+    claim: C5
+    regime: R-cell
+    unit: J mol^-1
+    expression: G_phase - N_Li*(mu_Li0 - F_c*E_Li)
+    note: Li-open grand potential; the window [E_red, E_ox] is where the phase is on the grand-potential hull
+    limits:
+      - {at: {N_Li: '0'}, expected: G_phase, note: 'a Li-free phase has a potential-independent grand potential'}
+    monotonicity:
+      - {wrt: E_Li, direction: nondecreasing, domains: {N_Li: '[0, oo)'}}
+
+  # ------------------------------------------------------------------ insulating-film limitation
+  - name: R_A
+    claim: C4
+    regime: R-cell
+    unit: Ohm m^2
+    expression: rho_e*d_film
+    monotonicity:
+      - {wrt: d_film, direction: increasing}
+
+  - name: d_max_ohm
+    claim: C4
+    regime: R-cell
+    unit: m
+    expression: R_A_max/rho_e
+
+  - name: kappa
+    claim: C4
+    regime: R-cell
+    unit: m^-1
+    expression: sqrt(2*m_e*phi_B)/hbar
+    monotonicity:
+      - {wrt: phi_B, direction: increasing}
+
+  - name: d_max_tun
+    claim: C4
+    regime: R-cell
+    unit: m
+    expression: log(j_0/j_req)/(2*kappa)
+    limits:
+      - {at: {j_req: j_0}, expected: '0'}
+    monotonicity:
+      - {wrt: j_0, direction: increasing}
+      - {wrt: j_req, direction: decreasing}
+
+constant_relations:
+  - {lhs: R_gas, rhs: N_A*k_B}
+  - {lhs: F_c, rhs: N_A*q_e}
+
+sign_flips:
+  - id: SF1
+    parameter: Delta_gamma_w
+    statement: >-
+      Registered convention: d cos(theta)/d Delta_gamma_w = -1/gamma_nl < 0 and
+      d f/d cos(theta) = -3 sin(theta)^2/4 <= 0, so theta, f and Delta_G*_het are
+      nondecreasing in Delta_gamma_w. Delta_gamma_w > 0 (a displacement cost) gives
+      Delta_G*_het >= Delta_G*_het(Delta_gamma_w = 0); Delta_gamma_w < 0 reverses that
+      inequality. Under the deck form (gamma_eff in the denominator) the derivative of
+      cos(theta) has the sign of gamma_sl - gamma_sn0, so on the wetting side
+      (gamma_sl > gamma_sn0) a cost lowers the barrier: the inequality is reversed.
+    df_dcos: {expr: '(2 + c)*(1 - c)**2/4', var: c, interval: '[-1, 1]', expected_sign: nonpositive}
+    registered:
+      cos_function: cos_theta_young
+      expected_sign: negative
+    alternative:
+      cos_function: cos_theta_deck
+      reparam: {gamma_sl: gamma_sn0 + aux_u, gamma_nl: Delta_gamma_w + aux_v}
+      expected_sign: positive
+    witness:
+      values: {gamma_sl: '3', gamma_sn0: '2', gamma_nl: '4'}
+      delta_plus: 1/2
+      delta_minus: -1/2
+      expect:
+        registered: 'f(+) > f(0) > f(-)'
+        alternative: 'f(+) < f(0)'
+  - id: SF2
+    parameter: Delta_G_seq
+    statement: >-
+      Delta_G_seq < 0 gives Omega_local > Omega_bulk and therefore a lower barrier
+      (Delta_G*_hom at Omega_local below its bulk value); Delta_G_seq > 0 reverses both
+      inequalities. Derivative identity: d Delta_G*_hom(Omega_local)/d Delta_G_seq =
+      2 Delta_G*_hom / (R T ln Omega_local), positive whenever Omega_local > 1.
+    barrier: '@DG_hom'
+    omega_subs: exp(-Delta_G_seq/(R_gas*T))*Omega_bulk
+    derivative_equals: 2*aux_B/(R_gas*T*log(exp(-Delta_G_seq/(R_gas*T))*Omega_bulk))
+    note: aux_B stands for the barrier itself
+    witness:
+      values: {Omega_bulk: '2', R_gas: '1', T: '1'}
+      delta_plus: 1/4
+      delta_minus: -1/4
+      expect: 'barrier(+) > barrier(0) > barrier(-)'
+
+no_double_counting:
+  statement: >-
+    The template acts on the barrier only through theta (interfacial energies) and only
+    through Omega (Ca2+ enrichment). Each template-dependent input enters exactly one of the
+    two channels; template-independent bulk inputs (gamma_nl, V_m, T, constants) may enter
+    both. This is the syntactic part of the condition and is checked here; the physical
+    proof that the two channels do not count the same free energy twice (the Gibbs
+    adsorption link between Ca2+ binding and gamma_sl) is session P0-W3.2.
+  composite: DG_het_template
+  composite_expression: >-
+    (2 + c_young)*(1 - c_young)**2/4 * 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(Om_local))**2)
+  channel_theta:
+    c_young: (gamma_sl - gamma_sn0 - Delta_gamma_w)/gamma_nl
+  channel_omega:
+    Om_local: (E_enr/(1 + E_enr*c_bulk/c_max))*a_Ca*a_CO3/K_sp
+    E_enr: exp(-Delta_G_seq/(R_gas*T))
+    c_max: Gamma_s/delta_s
+  template_dependent: [gamma_sl, gamma_sn0, Delta_gamma_w, Delta_G_seq, Gamma_s, delta_s]
+  template_independent: [gamma_nl, V_m, T, k_B, N_A, R_gas, a_Ca, a_CO3, K_sp, c_bulk]
