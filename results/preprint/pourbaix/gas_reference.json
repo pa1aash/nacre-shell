@@ -1,0 +1,864 @@
+{
+ "generated_utc": "2026-10-16T22:19:06Z",
+ "provenance": {
+  "cache_hash": "sha256:a143176fd20e15dd8c7a2b8381cc0e3a8e71b23a1230ad5179571f174282f7ce",
+  "git_dirty": false,
+  "git_sha": "7006305ab241f46e30843359d318c56db96ab253",
+  "library_versions": {
+   "ase": "3.29.0",
+   "emmet-core": "0.87.3",
+   "mp-api": "0.46.5",
+   "numpy": "2.5.4",
+   "pymatgen": "2026.9.24",
+   "pyyaml": "6.0.3",
+   "rdkit": "2026.9.1",
+   "scipy": "1.18.1"
+  },
+  "mp_database_version": "2026.04.13",
+  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "params_snapshot": "results/preprint/pourbaix/inputs/params_680a44b.json"
+ },
+ "question": "error of each CO2/O2 reference scheme against experimental reaction free energies of carbonates releasing CO2 or O2 (298.15 K, 1 bar)",
+ "result": {
+  "benchmarks": [
+   {
+    "entropy_approximation": {
+     "error_J_per_mol": -15990.97924999999,
+     "value_J_per_mol": 115826.02075000001
+    },
+    "experiment": {
+     "dH_J_per_mol": 179569.0,
+     "dH_source": {
+      "key": "drh_caco3_decomposition",
+      "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+      "sources": [
+       "TI-009",
+       "TI-050"
+      ],
+      "status": "sourced"
+     },
+     "range_J_per_mol": {
+      "max": 134400.0,
+      "min": 127600.0
+     },
+     "rows": [
+      {
+       "doi": "10.3133/b2131",
+       "grade": "C",
+       "locator": "pp. 15, 25 (pdf pp. 21, 31)",
+       "row_id": "TI-010",
+       "sign_applied": 1,
+       "value_J_per_mol": 131000.0
+      },
+      {
+       "doi": "10.3133/ofr8379",
+       "grade": "A",
+       "locator": "pdf p. 215, Table 55",
+       "row_id": "TI-051",
+       "sign_applied": -1,
+       "value_J_per_mol": 132634.0
+      }
+     ],
+     "source": {
+      "key": "drg_caco3_decomposition",
+      "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+      "sources": [
+       "TI-010",
+       "TI-051"
+      ],
+      "status": "sourced"
+     },
+     "value_J_per_mol": 131817.0
+    },
+    "id": "B1",
+    "n_e": 0,
+    "reaction": {
+     "CO2": 1,
+     "CaCO3": -1,
+     "CaO": 1
+    },
+    "role": "primary: the CO2 reference in a carbonate decomposition (prompt task A)",
+    "schemes": {
+     "janaf": {
+      "dG_J_per_mol": 201536.9319270669,
+      "dG_eV": 2.088783108187875,
+      "error_J_per_mol": 69719.93192706691,
+      "error_V_per_electron": null,
+      "species": {
+       "CO2": {
+        "G_eV": -4.739217549312127,
+        "S_eV_per_K": 0.0022158290311605714,
+        "basis": "dfH from NIST-JANAF; S(T) from NIST-JANAF",
+        "coefficient": 1,
+        "dfH_eV": -4.078568123671603,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "janaf"
+       },
+       "CaCO3": {
+        "G_eV": -13.440039442500002,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaafwb-GGA",
+        "kind": "solid",
+        "material_id": "mp-3953"
+       },
+       "CaO": {
+        "G_eV": -6.612038784999999,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": 1,
+        "entry_id": "mp-aaaaadwf-GGA",
+        "kind": "solid",
+        "material_id": "mp-2605"
+       }
+      }
+     },
+     "mp": {
+      "dG_J_per_mol": 82867.78063908682,
+      "dG_eV": 0.8588640243594776,
+      "error_J_per_mol": -48949.21936091318,
+      "error_V_per_electron": null,
+      "species": {
+       "CO2": {
+        "G_eV": -5.969136633140525,
+        "S_eV_per_K": 0.0022158290311605714,
+        "basis": "dfH from the MP CO2 molecular solid (sublimation not included); S(T) from NIST-JANAF",
+        "coefficient": 1,
+        "dfH_eV": -5.308487207500001,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp"
+       },
+       "CaCO3": {
+        "G_eV": -13.440039442500002,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaafwb-GGA",
+        "kind": "solid",
+        "material_id": "mp-3953"
+       },
+       "CaO": {
+        "G_eV": -6.612038784999999,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": 1,
+        "entry_id": "mp-aaaaadwf-GGA",
+        "kind": "solid",
+        "material_id": "mp-2605"
+       }
+      }
+     }
+    }
+   },
+   {
+    "entropy_approximation": null,
+    "experiment": {
+     "source": [
+      {
+       "key": "dfg_co2_g",
+       "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+       "sign": 1,
+       "sources": [
+        "TI-008"
+       ],
+       "status": "single-source"
+      },
+      {
+       "key": "dfg_caco3_calcite",
+       "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+       "sign": -1,
+       "sources": [
+        "TI-002",
+        "TI-056"
+       ],
+       "status": "sourced"
+      }
+     ],
+     "value_J_per_mol": 735155.0
+    },
+    "id": "B2",
+    "n_e": 2,
+    "reaction": {
+     "CO2": 1,
+     "Ca": 1,
+     "CaCO3": -1,
+     "O2": 0.5
+    },
+    "role": "the redox core of every CaCO3 oxidation limit: carbonate to CO2 + 1/2 O2, cation as metal",
+    "schemes": {
+     "janaf": {
+      "dG_J_per_mol": 808919.4010849992,
+      "dG_eV": 8.383858803027028,
+      "error_J_per_mol": 73764.4010849992,
+      "error_V_per_electron": 0.3822570719388049,
+      "species": {
+       "CO2": {
+        "G_eV": -4.739217549312127,
+        "S_eV_per_K": 0.0022158290311605714,
+        "basis": "dfH from NIST-JANAF; S(T) from NIST-JANAF",
+        "coefficient": 1,
+        "dfH_eV": -4.078568123671603,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "janaf"
+       },
+       "Ca": {
+        "G_eV": 0.0,
+        "basis": "reference element, formation energy 0",
+        "coefficient": 1,
+        "kind": "element"
+       },
+       "CaCO3": {
+        "G_eV": -13.440039442500002,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaafwb-GGA",
+        "kind": "solid",
+        "material_id": "mp-3953"
+       },
+       "O2": {
+        "G_eV": -0.6339261803216945,
+        "S_eV_per_K": 0.0021261988271732164,
+        "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+        "coefficient": 0.5,
+        "dfH_eV": 0.0,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp_fitted_reference"
+       }
+      }
+     },
+     "mp": {
+      "dG_J_per_mol": 690250.2497970191,
+      "dG_eV": 7.15393971919863,
+      "error_J_per_mol": -44904.75020298094,
+      "error_V_per_electron": -0.23270246997539404,
+      "species": {
+       "CO2": {
+        "G_eV": -5.969136633140525,
+        "S_eV_per_K": 0.0022158290311605714,
+        "basis": "dfH from the MP CO2 molecular solid (sublimation not included); S(T) from NIST-JANAF",
+        "coefficient": 1,
+        "dfH_eV": -5.308487207500001,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp"
+       },
+       "Ca": {
+        "G_eV": 0.0,
+        "basis": "reference element, formation energy 0",
+        "coefficient": 1,
+        "kind": "element"
+       },
+       "CaCO3": {
+        "G_eV": -13.440039442500002,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaafwb-GGA",
+        "kind": "solid",
+        "material_id": "mp-3953"
+       },
+       "O2": {
+        "G_eV": -0.6339261803216945,
+        "S_eV_per_K": 0.0021261988271732164,
+        "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+        "coefficient": 0.5,
+        "dfH_eV": 0.0,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp_fitted_reference"
+       }
+      }
+     }
+    }
+   },
+   {
+    "entropy_approximation": null,
+    "experiment": {
+     "source": [
+      {
+       "key": "dfg_caco3_calcite",
+       "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+       "sign": -1,
+       "sources": [
+        "TI-002",
+        "TI-056"
+       ],
+       "status": "sourced"
+      }
+     ],
+     "value_J_per_mol": 1129555.0
+    },
+    "id": "B3",
+    "n_e": 0,
+    "reaction": {
+     "C": 1,
+     "Ca": 1,
+     "CaCO3": -1,
+     "O2": 1.5
+    },
+    "role": "the O2 reference and carbon in the carbonate (minus the formation energy of calcite)",
+    "schemes": {
+     "janaf": {
+      "dG_J_per_mol": 1205019.802284999,
+      "dG_eV": 12.48915017201746,
+      "error_J_per_mol": 75464.80228499905,
+      "error_V_per_electron": null,
+      "species": {
+       "C": {
+        "G_eV": 0.0,
+        "basis": "reference element, formation energy 0",
+        "coefficient": 1,
+        "kind": "element"
+       },
+       "Ca": {
+        "G_eV": 0.0,
+        "basis": "reference element, formation energy 0",
+        "coefficient": 1,
+        "kind": "element"
+       },
+       "CaCO3": {
+        "G_eV": -13.440039442500002,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaafwb-GGA",
+        "kind": "solid",
+        "material_id": "mp-3953"
+       },
+       "O2": {
+        "G_eV": -0.6339261803216945,
+        "S_eV_per_K": 0.0021261988271732164,
+        "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+        "coefficient": 1.5,
+        "dfH_eV": 0.0,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp_fitted_reference"
+       }
+      }
+     },
+     "mp": {
+      "dG_J_per_mol": 1205019.802284999,
+      "dG_eV": 12.48915017201746,
+      "error_J_per_mol": 75464.80228499905,
+      "error_V_per_electron": null,
+      "species": {
+       "C": {
+        "G_eV": 0.0,
+        "basis": "reference element, formation energy 0",
+        "coefficient": 1,
+        "kind": "element"
+       },
+       "Ca": {
+        "G_eV": 0.0,
+        "basis": "reference element, formation energy 0",
+        "coefficient": 1,
+        "kind": "element"
+       },
+       "CaCO3": {
+        "G_eV": -13.440039442500002,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaafwb-GGA",
+        "kind": "solid",
+        "material_id": "mp-3953"
+       },
+       "O2": {
+        "G_eV": -0.6339261803216945,
+        "S_eV_per_K": 0.0021261988271732164,
+        "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+        "coefficient": 1.5,
+        "dfH_eV": 0.0,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp_fitted_reference"
+       }
+      }
+     }
+    }
+   },
+   {
+    "entropy_approximation": null,
+    "experiment": {
+     "source": [
+      {
+       "key": "dfg_cao",
+       "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+       "sign": -1,
+       "sources": [
+        "TI-006",
+        "TI-057"
+       ],
+       "status": "sourced"
+      }
+     ],
+     "value_J_per_mol": 603290.0
+    },
+    "id": "B4",
+    "n_e": 0,
+    "reaction": {
+     "Ca": 1,
+     "CaO": -1,
+     "O2": 0.5
+    },
+    "role": "the O2 reference in an oxide (minus the formation energy of lime)",
+    "schemes": {
+     "janaf": {
+      "dG_J_per_mol": 607382.4691579322,
+      "dG_eV": 6.295075694839152,
+      "error_J_per_mol": 4092.46915793221,
+      "error_V_per_electron": null,
+      "species": {
+       "Ca": {
+        "G_eV": 0.0,
+        "basis": "reference element, formation energy 0",
+        "coefficient": 1,
+        "kind": "element"
+       },
+       "CaO": {
+        "G_eV": -6.612038784999999,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaadwf-GGA",
+        "kind": "solid",
+        "material_id": "mp-2605"
+       },
+       "O2": {
+        "G_eV": -0.6339261803216945,
+        "S_eV_per_K": 0.0021261988271732164,
+        "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+        "coefficient": 0.5,
+        "dfH_eV": 0.0,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp_fitted_reference"
+       }
+      }
+     },
+     "mp": {
+      "dG_J_per_mol": 607382.4691579322,
+      "dG_eV": 6.295075694839152,
+      "error_J_per_mol": 4092.46915793221,
+      "error_V_per_electron": null,
+      "species": {
+       "Ca": {
+        "G_eV": 0.0,
+        "basis": "reference element, formation energy 0",
+        "coefficient": 1,
+        "kind": "element"
+       },
+       "CaO": {
+        "G_eV": -6.612038784999999,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaadwf-GGA",
+        "kind": "solid",
+        "material_id": "mp-2605"
+       },
+       "O2": {
+        "G_eV": -0.6339261803216945,
+        "S_eV_per_K": 0.0021261988271732164,
+        "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+        "coefficient": 0.5,
+        "dfH_eV": 0.0,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp_fitted_reference"
+       }
+      }
+     }
+    }
+   },
+   {
+    "entropy_approximation": {
+     "error_J_per_mol": -15585.979249999975,
+     "value_J_per_mol": 160043.02075000003
+    },
+    "experiment": {
+     "dH_J_per_mol": 223786.0,
+     "source": {
+      "T_K": 298.15,
+      "citation": "NIST-JANAF Thermochemical Tables (Chase 1998, Monograph 9), doi:10.18434/T42S31",
+      "tables": [
+       {
+        "coefficient": -1,
+        "dfG_kJ_per_mol": -1132.12,
+        "dfH_kJ_per_mol": -1216.038,
+        "species": "Li2CO3",
+        "table": "https://janaf.nist.gov/tables/C-076.txt"
+       },
+       {
+        "coefficient": 1,
+        "dfG_kJ_per_mol": -562.102,
+        "dfH_kJ_per_mol": -598.73,
+        "species": "Li2O",
+        "table": "https://janaf.nist.gov/tables/Li-014.txt"
+       },
+       {
+        "coefficient": 1,
+        "dfG_kJ_per_mol": -394.389,
+        "dfH_kJ_per_mol": -393.522,
+        "species": "CO2",
+        "table": "https://janaf.nist.gov/tables/C-095.txt"
+       }
+      ]
+     },
+     "value_J_per_mol": 175629.0
+    },
+    "id": "B5",
+    "n_e": 0,
+    "reaction": {
+     "CO2": 1,
+     "Li2CO3": -1,
+     "Li2O": 1
+    },
+    "role": "the CO2 reference in a second carbonate decomposition",
+    "schemes": {
+     "janaf": {
+      "dG_J_per_mol": 247467.05202119023,
+      "dG_eV": 2.564815258187875,
+      "error_J_per_mol": 71838.05202119023,
+      "error_V_per_electron": null,
+      "species": {
+       "CO2": {
+        "G_eV": -4.739217549312127,
+        "S_eV_per_K": 0.0022158290311605714,
+        "basis": "dfH from NIST-JANAF; S(T) from NIST-JANAF",
+        "coefficient": 1,
+        "dfH_eV": -4.078568123671603,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "janaf"
+       },
+       "Li2CO3": {
+        "G_eV": -13.488826549166667,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaaenm-GGA",
+        "kind": "solid",
+        "material_id": "mp-3054"
+       },
+       "Li2O": {
+        "G_eV": -6.184793741666665,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": 1,
+        "entry_id": "mp-aaaaacxk-GGA",
+        "kind": "solid",
+        "material_id": "mp-1960"
+       }
+      }
+     },
+     "mp": {
+      "dG_J_per_mol": 128797.90073321016,
+      "dG_eV": 1.3348961743594776,
+      "error_J_per_mol": -46831.09926678984,
+      "error_V_per_electron": null,
+      "species": {
+       "CO2": {
+        "G_eV": -5.969136633140525,
+        "S_eV_per_K": 0.0022158290311605714,
+        "basis": "dfH from the MP CO2 molecular solid (sublimation not included); S(T) from NIST-JANAF",
+        "coefficient": 1,
+        "dfH_eV": -5.308487207500001,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp"
+       },
+       "Li2CO3": {
+        "G_eV": -13.488826549166667,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaaenm-GGA",
+        "kind": "solid",
+        "material_id": "mp-3054"
+       },
+       "Li2O": {
+        "G_eV": -6.184793741666665,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": 1,
+        "entry_id": "mp-aaaaacxk-GGA",
+        "kind": "solid",
+        "material_id": "mp-1960"
+       }
+      }
+     }
+    }
+   },
+   {
+    "comparator": {
+     "experimental_equilibrium_V": 3.823021508891975,
+     "key": "li2co3_oxidation_onset",
+     "note": "measured onset of CO2 evolution (kinetic, includes an overpotential); an upper bound on the thermodynamic potential, not its value",
+     "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+     "range": {
+      "max": 3.9,
+      "min": 3.8
+     },
+     "sources": [
+      "TI-059",
+      "TI-061"
+     ],
+     "status": "sourced",
+     "unit": "V",
+     "value": 3.85
+    },
+    "entropy_approximation": {
+     "error_J_per_mol": -9540.268274999922,
+     "value_J_per_mol": 728190.7317250001
+    },
+    "experiment": {
+     "dH_J_per_mol": 822516.0,
+     "source": {
+      "T_K": 298.15,
+      "citation": "NIST-JANAF Thermochemical Tables (Chase 1998, Monograph 9), doi:10.18434/T42S31",
+      "tables": [
+       {
+        "coefficient": -1,
+        "dfG_kJ_per_mol": -1132.12,
+        "dfH_kJ_per_mol": -1216.038,
+        "species": "Li2CO3",
+        "table": "https://janaf.nist.gov/tables/C-076.txt"
+       },
+       {
+        "coefficient": 1,
+        "dfG_kJ_per_mol": -394.389,
+        "dfH_kJ_per_mol": -393.522,
+        "species": "CO2",
+        "table": "https://janaf.nist.gov/tables/C-095.txt"
+       }
+      ]
+     },
+     "value_J_per_mol": 737731.0
+    },
+    "id": "B6",
+    "n_e": 2,
+    "reaction": {
+     "CO2": 1,
+     "Li": 2,
+     "Li2CO3": -1,
+     "O2": 0.5
+    },
+    "role": "a carbonate oxidation to CO2 + 1/2 O2 referenced to Li metal: the window reaction type",
+    "schemes": {
+     "janaf": {
+      "dG_J_per_mol": 813626.6412750677,
+      "dG_eV": 8.432645909693694,
+      "error_J_per_mol": 75895.6412750677,
+      "error_V_per_electron": 0.3933014459548716,
+      "species": {
+       "CO2": {
+        "G_eV": -4.739217549312127,
+        "S_eV_per_K": 0.0022158290311605714,
+        "basis": "dfH from NIST-JANAF; S(T) from NIST-JANAF",
+        "coefficient": 1,
+        "dfH_eV": -4.078568123671603,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "janaf"
+       },
+       "Li": {
+        "G_eV": 0.0,
+        "basis": "reference element, formation energy 0",
+        "coefficient": 2,
+        "kind": "element"
+       },
+       "Li2CO3": {
+        "G_eV": -13.488826549166667,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaaenm-GGA",
+        "kind": "solid",
+        "material_id": "mp-3054"
+       },
+       "O2": {
+        "G_eV": -0.6339261803216945,
+        "S_eV_per_K": 0.0021261988271732164,
+        "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+        "coefficient": 0.5,
+        "dfH_eV": 0.0,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp_fitted_reference"
+       }
+      }
+     },
+     "mp": {
+      "dG_J_per_mol": 694957.4899870876,
+      "dG_eV": 7.2027268258652954,
+      "error_J_per_mol": -42773.51001291245,
+      "error_V_per_electron": -0.22165809595932737,
+      "species": {
+       "CO2": {
+        "G_eV": -5.969136633140525,
+        "S_eV_per_K": 0.0022158290311605714,
+        "basis": "dfH from the MP CO2 molecular solid (sublimation not included); S(T) from NIST-JANAF",
+        "coefficient": 1,
+        "dfH_eV": -5.308487207500001,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp"
+       },
+       "Li": {
+        "G_eV": 0.0,
+        "basis": "reference element, formation energy 0",
+        "coefficient": 2,
+        "kind": "element"
+       },
+       "Li2CO3": {
+        "G_eV": -13.488826549166667,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaaaaenm-GGA",
+        "kind": "solid",
+        "material_id": "mp-3054"
+       },
+       "O2": {
+        "G_eV": -0.6339261803216945,
+        "S_eV_per_K": 0.0021261988271732164,
+        "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+        "coefficient": 0.5,
+        "dfH_eV": 0.0,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp_fitted_reference"
+       }
+      }
+     }
+    }
+   },
+   {
+    "entropy_approximation": {
+     "error_J_per_mol": -19008.979249999975,
+     "value_J_per_mol": 255521.02075000003
+    },
+    "experiment": {
+     "dH_J_per_mol": 319264.0,
+     "source": {
+      "T_K": 298.15,
+      "citation": "NIST-JANAF Thermochemical Tables (Chase 1998, Monograph 9), doi:10.18434/T42S31",
+      "tables": [
+       {
+        "coefficient": -1,
+        "dfG_kJ_per_mol": -1048.009,
+        "dfH_kJ_per_mol": -1130.768,
+        "species": "Na2CO3",
+        "table": "https://janaf.nist.gov/tables/C-090.txt"
+       },
+       {
+        "coefficient": 1,
+        "dfG_kJ_per_mol": -379.09,
+        "dfH_kJ_per_mol": -417.982,
+        "species": "Na2O",
+        "table": "https://janaf.nist.gov/tables/Na-012.txt"
+       },
+       {
+        "coefficient": 1,
+        "dfG_kJ_per_mol": -394.389,
+        "dfH_kJ_per_mol": -393.522,
+        "species": "CO2",
+        "table": "https://janaf.nist.gov/tables/C-095.txt"
+       }
+      ]
+     },
+     "value_J_per_mol": 274530.0
+    },
+    "id": "B7",
+    "n_e": 0,
+    "reaction": {
+     "CO2": 1,
+     "Na2CO3": -1,
+     "Na2O": 1
+    },
+    "role": "the CO2 reference in a third carbonate decomposition",
+    "schemes": {
+     "janaf": {
+      "dG_J_per_mol": 328192.22182716476,
+      "dG_eV": 3.4014726861045483,
+      "error_J_per_mol": 53662.22182716476,
+      "error_V_per_electron": null,
+      "species": {
+       "CO2": {
+        "G_eV": -4.739217549312127,
+        "S_eV_per_K": 0.0022158290311605714,
+        "basis": "dfH from NIST-JANAF; S(T) from NIST-JANAF",
+        "coefficient": 1,
+        "dfH_eV": -4.078568123671603,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "janaf"
+       },
+       "Na2CO3": {
+        "G_eV": -12.456297263520122,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaacqirj-GGA",
+        "kind": "solid",
+        "material_id": "mp-1201027"
+       },
+       "Na2O": {
+        "G_eV": -4.315607028103447,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": 1,
+        "entry_id": "mp-aaaaadmm-GGA",
+        "kind": "solid",
+        "material_id": "mp-2352"
+       }
+      }
+     },
+     "mp": {
+      "dG_J_per_mol": 209523.0705391847,
+      "dG_eV": 2.171553602276151,
+      "error_J_per_mol": -65006.9294608153,
+      "error_V_per_electron": null,
+      "species": {
+       "CO2": {
+        "G_eV": -5.969136633140525,
+        "S_eV_per_K": 0.0022158290311605714,
+        "basis": "dfH from the MP CO2 molecular solid (sublimation not included); S(T) from NIST-JANAF",
+        "coefficient": 1,
+        "dfH_eV": -5.308487207500001,
+        "kind": "gas",
+        "pressure_bar": 1.0,
+        "scheme": "mp"
+       },
+       "Na2CO3": {
+        "G_eV": -12.456297263520122,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": -1,
+        "entry_id": "mp-aaacqirj-GGA",
+        "kind": "solid",
+        "material_id": "mp-1201027"
+       },
+       "Na2O": {
+        "G_eV": -4.315607028103447,
+        "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+        "coefficient": 1,
+        "entry_id": "mp-aaaaadmm-GGA",
+        "kind": "solid",
+        "material_id": "mp-2352"
+       }
+      }
+     }
+    }
+   }
+  ],
+  "pressure_bar": 1.0,
+  "summary": {
+   "janaf": {
+    "B1_error_J_per_mol": 69719.93192706691,
+    "B2_error_V_per_electron": 0.3822570719388049,
+    "description": "CO2 dfH from NIST-JANAF C-095; O2 dfH = 0 (MP2020-fitted reference); gas S(T) from JANAF; solids at MP formation energies, entropy neglected",
+    "mean_abs_error_CO2_reactions_J_per_mol": 68976.04962709776,
+    "mean_abs_error_J_per_mol": 60633.93136834573
+   },
+   "mp": {
+    "B1_error_J_per_mol": -48949.21936091318,
+    "B2_error_V_per_electron": -0.23270246997539404,
+    "description": "CO2 dfH from the MP CO2 molecular solid (no sublimation); O2 dfH = 0; gas S(T) from JANAF; solids at MP formation energies, entropy neglected",
+    "mean_abs_error_CO2_reactions_J_per_mol": 49693.10166088234,
+    "mean_abs_error_J_per_mol": 46860.39710676328
+   }
+  },
+  "temperature_K": 298.15
+ },
+ "session": "P0-W5.2"
+}
