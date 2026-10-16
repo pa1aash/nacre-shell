@@ -7,7 +7,8 @@
   - renders build/rsc_head.tex from the template (nacre.report.template.render_head);
   - writes build/mode.tex (draft or release), build/paths.tex (repository root and the
     AI-disclosure include) and build/template_dir.txt (read by build.sh);
-  - regenerates numbers.tex and the declarations files in preprint/generated;
+  - regenerates numbers.tex and the declarations files in preprint/generated (git-ignored,
+    build-time artefacts; see generate);
   - in release mode, runs the release guard and refuses on any problem.
 
 The release guard fails when the local-only AI disclosure is missing, when any placeholder,
@@ -84,6 +85,15 @@ def guard(root):
     return problems
 
 
+def generate(root):
+    """Write every build-time file in preprint/generated from the ledger, register and result files.
+
+    These files are git-ignored; this runs on every prepare, so a stale copy is never compiled."""
+    _, nmacros = macros.write(root)
+    declarations.write_all(root)
+    return nmacros
+
+
 def prepare(root, mode, out=print):
     root = Path(root)
     if mode not in paths.MODES:
@@ -98,8 +108,7 @@ def prepare(root, mode, out=print):
         "\\def\\nacreRepoRoot{%s}\n" % _tex_path(root, "repository root"),
         encoding="utf-8", newline="\n")
     (b / "template_dir.txt").write_text(str(tdir) + "\n", encoding="utf-8", newline="\n")
-    _, nmacros = macros.write(root)
-    declarations.write_all(root)
+    nmacros = generate(root)
     out("template: %s (%d files verified)" % (tdir, nfiles))
     out("macros: %d written to %s" % (nmacros, texscan.rel(root, paths.numbers_tex(root))))
     derivation = root / "theory" / "derivation_body.tex"
