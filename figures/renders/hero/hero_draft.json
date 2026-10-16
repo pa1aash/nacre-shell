@@ -1,0 +1,185 @@
+{
+ "blender_version": "5.2.2 LTS",
+ "camera": {
+  "direction": [
+   0.18,
+   1.0,
+   -0.38
+  ],
+  "margin": 1.03,
+  "ortho_scale": 56.5829,
+  "type": "ORTHO",
+  "up": [
+   0.0,
+   0.0,
+   1.0
+  ]
+ },
+ "counts": {
+  "atoms": 2931,
+  "elements": [
+   "Al",
+   "C",
+   "Ca",
+   "H",
+   "N",
+   "O"
+  ],
+  "half_bonds": 7490
+ },
+ "elements_table_sha256": "84a79466dda3a3445b8ac856aaeaea1069b10e54b49ed11f3f21435d6e14706b",
+ "inputs": [
+  {
+   "evidence_row_ids": {
+    "ca_hydration": {
+     "cn": "TE-072",
+     "r_ca_o": "TE-072"
+    }
+   },
+   "file": "structures/preprint/hero_interface.extxyz",
+   "sha256": "fb4de2157a5d41cfc687d65e0b6f5ae3f0f5362760d65c1e35da3c8304ea9ca1"
+  },
+  {
+   "evidence_row_ids": {
+    "ca_hydration": {
+     "cn": "TE-072",
+     "r_ca_o": "TE-072"
+    }
+   },
+   "file": "structures/preprint/hero_interface.extxyz",
+   "sha256": "fb4de2157a5d41cfc687d65e0b6f5ae3f0f5362760d65c1e35da3c8304ea9ca1"
+  },
+  {
+   "evidence_row_ids": {
+    "ca_hydration": {
+     "cn": "TE-072",
+     "r_ca_o": "TE-072"
+    }
+   },
+   "file": "structures/preprint/hero_interface.extxyz",
+   "sha256": "fb4de2157a5d41cfc687d65e0b6f5ae3f0f5362760d65c1e35da3c8304ea9ca1"
+  }
+ ],
+ "output": "figures/renders/hero/hero_draft.png",
+ "output_bytes": 1573302,
+ "output_sha256": "7c4ece46e7dabe22692bc975ba81d99cdb8ac24d6606c63e352ba6aaec61aba4",
+ "palette": {
+  "colour_space": "linear RGB (palette elements.<El>.linear_rgb) as Principled base colour",
+  "colours_used": {
+   "Al": [
+    0.6773,
+    0.5329,
+    0.3975
+   ],
+   "C": [
+    0.2792,
+    0.2792,
+    0.2792
+   ],
+   "Ca": [
+    0.0466,
+    1.0,
+    0.0
+   ],
+   "H": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "N": [
+    0.0295,
+    0.0804,
+    0.9397
+   ],
+   "O": [
+    1.0,
+    0.004,
+    0.004
+   ]
+  },
+  "git_blob": "a64f5e8452abf5d511194e92302fed42e3e9dc0b",
+  "path": "figures/style/palette.yaml",
+  "sha256": "e22fbfa6e0676491c7de9b450792763b92cd7aaa6a0d940b8a62b6cb0e62af19"
+ },
+ "png_chunks_dropped": [
+  "eXIf",
+  "tEXt"
+ ],
+ "python": "3.13.13",
+ "render": {
+  "adaptive_sampling": false,
+  "colour_management": {
+   "exposure": 0.0,
+   "gamma": 1.0,
+   "look": "None",
+   "view_transform": "Standard"
+  },
+  "denoise": true,
+  "denoiser": "OPENIMAGEDENOISE",
+  "device": "CPU",
+  "engine": "CYCLES",
+  "film_transparent": true,
+  "max_bounces": 4,
+  "output": {
+   "color_depth": "8",
+   "color_mode": "RGBA",
+   "compression": 100,
+   "format": "PNG"
+  },
+  "resolution": [
+   1280,
+   960
+  ],
+  "samples": 48,
+  "seed": 0,
+  "threads": 2
+ },
+ "rig": {
+  "ambient_occlusion": {
+   "distance": 2.5,
+   "samples": 16,
+   "strength": 0.55
+  },
+  "distance_factor": 3.0,
+  "fill": {
+   "azimuth": 50.0,
+   "elevation": 10.0,
+   "irradiance": 1.4,
+   "size_frac": 1.0
+  },
+  "key": {
+   "azimuth": -35.0,
+   "elevation": 40.0,
+   "irradiance": 4.0,
+   "size_frac": 0.6
+  },
+  "penumbra_deg": {
+   "fill": 18.92,
+   "key": 11.42,
+   "rim": 9.53
+  },
+  "rim": {
+   "azimuth": 170.0,
+   "elevation": 35.0,
+   "irradiance": 2.5,
+   "size_frac": 0.5
+  },
+  "shadows": {
+   "cast": true,
+   "spread_deg": 180.0
+  },
+  "world": {
+   "colour": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "strength": 0.35
+  }
+ },
+ "scene": "hero",
+ "scene_config": "figures/blender/scenes/hero.yaml",
+ "scene_config_sha256": "7e4604eefcfc4ace54fda26836ad480f9c0017bc8c2e0cd4e0e8b13c82c28a5a",
+ "text_objects": 0,
+ "yaml_source": "pure-python from .venv/lib/python3.12/site-packages"
+}
