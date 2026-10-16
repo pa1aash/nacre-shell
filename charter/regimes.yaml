@@ -25,12 +25,15 @@ regimes:
       pH:
         symbol: pH
         units: dimensionless (-log10 a_H+)
-        range: {min: 7, max: null}
-        range_basis: definitional (the regime is alkaline; upper bound pending S12)
+        range: null
+        range_basis: alkaline slurry; bounds pending S12
         rationale: >-
           Sets the protonation state of catechol and of chitosan amines (C1, C2), the
           carbonate speciation and hence the CO3^2- activity in S (C3), the hydroxylation
           state of the oxide surface, and the pH axis of the Pourbaix screen (C5).
+          Carbonate speciation changes by orders of magnitude across the plausible pH
+          range, so P0 screens use a sourced pH range or a pH grid and never 7 as a bound:
+          7 is neutral, not alkaline, and is not a definitional bound.
         source: pending-S12
         status: provisional
       electrode_potential:
