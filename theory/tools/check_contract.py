@@ -712,6 +712,9 @@ def check_thresholds(ctx, contract, rep):
                 check_edge(link, test["id"], test["quantity"], test["edge"], params)
             for fr, edge in (test.get("edge_by_framing") or {}).items():
                 check_edge(link, "%s[%s]" % (test["id"], fr), test["quantity"], edge, params)
+            fal = test.get("falsify")
+            if isinstance(fal, dict) and "edge" in fal:
+                check_edge(link, test["id"] + " falsify", fal["quantity"], fal["edge"], params)
             eq = test.get("equivalent_single_state")
             if eq:
                 check_edge(link, test["id"] + " single state", eq["quantity"], eq["edge"], params)

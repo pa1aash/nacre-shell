@@ -772,13 +772,16 @@ registered electrolyte (\texttt{charter/regimes.yaml}, \texttt{electrolyte\_comp
 for choosing among candidate salts, once \texttt{lit/params.yaml} lists the fluorine-free salts:
 (1) only the anions of the registered salt or salts are admissible; (2) the oxidation limit is the
 minimum over the admissible sinks and over the products each can form, because a phase is
-unstable if any accessible reaction is downhill; (3) the true product is the lower-free-energy of
+unstable if any accessible reaction is downhill; (3) the true product is the lower in free energy of
 the solid salt and the solvated ions, so a limit computed with the solid salt alone is an upper
-bound on the true onset, and it is reported as conditional on that sink; (4) a sink whose
-thermochemistry is missing makes the limit \emph{undetermined}, which never counts as a pass;
-(5) where the CO$_2$ (or O$_2$) reference is uncertain, the limit is evaluated under each registered
-reference scheme and the lowest is used. The electrolyte's own anodic limit is a separate
-quantity: above it the electrolyte reacts first, and it is not assessed here.
+bound on the true onset: a falsification computed with it stands, and a pass computed with it is
+inconclusive, so that a pass counts only with the solvated sink; (4) a sink whose thermochemistry
+is missing makes the limit \emph{undetermined}, which never counts as a pass; (5) where the
+CO$_2$ (or O$_2$) reference is uncertain, the limit is evaluated under each registered reference
+scheme: a pass must hold under the scheme with the lowest onset, a falsification under every
+scheme, and anything else is inconclusive (cp2 fix F5). \emph{Limitation:} the electrolyte's own
+anodic limit is a separate quantity. Above it the solvent and salt oxidise first, and it is not
+assessed here, so a pass says nothing about the stability of the electrolyte.
 
 \section{The insulating-film limitation}\label{th:sec:film}
 

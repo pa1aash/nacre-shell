@@ -237,19 +237,37 @@ inconclusive otherwise.
 
 - **Margin.** m_E = `thresholds.C5.window_margin`, the expected error of a computed reaction energy
   per transferred electron, derived by W1 from `thresholds.C5.formation_energy_error`.
-- **Reference schemes.** Each limit is the lowest (E_ox) or highest (E_red) over the registered
-  CO2 and O2 reference schemes (`regimes.R-cell.parameters.gas_reference_schemes`).
-- **Undetermined never passes.** A limit with status `undetermined` (a missing sink phase, an
-  unregistered salt, or an unbounded Li-open limit) gives at best inconclusive. The same holds if
-  E_cell_max is not registered.
-- **Solid-salt sink.** With the solid-salt sink alone, E_ox is an upper bound on the true onset.
-  A falsification computed with it stands. A pass is conditional on the sink and counts as
-  feasible only if cp2 accepts the solid-salt sink as registered (decision 5); otherwise it is
-  inconclusive.
-- **Decision.** feasible if both inequalities hold for every gated phase; falsified if either
-  fails beyond its margin (E_ox < E_cell_max - m_E, or E_red > E_cell_min + m_E) for any gated
-  phase; inconclusive otherwise. The limits are deterministic, so the band mass is 0 or 1 for each
-  scheme.
+- **Reference schemes (cp2 fix F5 (a)).** Each limit is computed under every registered CO2 and
+  O2 reference scheme (`regimes.R-cell.parameters.gas_reference_schemes`).
+  - A **pass** must hold under the scheme with the lowest onset: the lowest E_ox and the highest
+    E_red over the schemes.
+  - A **falsification** must hold under every registered scheme.
+  - Otherwise the limit is inconclusive. A verdict that changes with the reference scheme is
+    decided by none of them.
+- **Sink (cp2 fix F5 (b)).** A pass counts only with a solvated sink: Ca2+ or Al3+ leaving as
+  solvated ions paired with the salt anion, with the solvation free energies relative to Li+.
+  - The true product is the lower in free energy of the solid salt and the solvated ions. A limit
+    computed with the solid-salt sink alone (CaA2 or AlA3 as a solid) is therefore an upper bound
+    on the oxidation onset.
+  - A falsification computed with the solid-salt sink stands, because the true onset is at or
+    below it.
+  - A pass computed with the solid-salt sink is inconclusive, because the solvated sink can only
+    lower the onset.
+- **Undetermined never passes.** A limit with status `undetermined` (a missing sink phase, a
+  missing solvation free energy for the solvated sink, an unregistered salt, or an unbounded
+  Li-open limit) gives at best inconclusive. The same holds if E_cell_max is not registered.
+- **Decision.**
+  - feasible if both inequalities hold for every gated phase, under the lowest-onset scheme and
+    with a solvated sink;
+  - falsified if, for any gated phase, a limit fails beyond its margin (E_ox < E_cell_max - m_E,
+    or E_red > E_cell_min + m_E) under every registered scheme, with either sink;
+  - inconclusive otherwise.
+
+  The limits are deterministic, so the band mass is 0 or 1 for each scheme and sink.
+- **Limitation: the electrolyte's own anodic limit (cp2 fix F5 (c)).** Above the electrolyte's
+  anodic limit the solvent and salt oxidise first. C5 does not assess that limit. A pass of the
+  E_ox test says only that the gated phases are stable up to E_cell_max against the registered
+  sinks, not that the electrolyte is.
 - **W5's reported limits (inputs to the decision, not adjudicated here).** `ops/reports/P0-W5.1.md`
   (R-cell section) reports:
   - a CaCO3 oxidation onset under the nitrate sink that differs by the CO2 reference (JANAF
@@ -257,8 +275,10 @@ inconclusive otherwise.
   - an Al2O3 limit that is undetermined under nitrate (sink phase missing) and finite under
     sulfate or chloride.
 
-  Under this file, the CaCO3 limit is the lower of the two schemes, and Al2O3 under a nitrate
-  electrolyte stays undetermined (never a pass) until the sink thermochemistry is fetched.
+  Both are solid-salt limits. Under this file, a CaCO3 falsification must hold under both CO2
+  schemes, and a CaCO3 pass needs the solvated sink and the lower of the two schemes. Al2O3 under
+  a nitrate electrolyte stays undetermined (never a pass) until the sink thermochemistry is
+  fetched.
 
 **C5 verdict.** feasible if both regimes are feasible; falsified if either is falsified;
 inconclusive otherwise.
@@ -451,19 +471,25 @@ links:
         quantity: E_ox
         comparator: '>='
         edge: E_cell_max + m_E
-        reduce: min_over_reference_schemes
+        pass: {reduce: min_over_reference_schemes, sink: solvated}
+        falsify: {quantity: E_ox, comparator: '<', edge: E_cell_max - m_E, reduce: every_reference_scheme, sink: [solvated, solid_salt]}
+        otherwise: inconclusive
         params: {E_cell_max: regimes.R-cell.parameters.E_max, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes,
                  salts: regimes.R-cell.parameters.electrolyte_salts}
         undetermined: never_passes
-        solid_salt_sink: {falsification: stands, pass: conditional_on_cp2_decision_5}
+        solid_salt_sink: {falsification: stands, pass: inconclusive, reason: upper bound on the onset}
+        limitation: electrolyte anodic limit not assessed
       - id: C5c_red
         regime: R-cell
         quantity: E_red
         comparator: '<='
         edge: E_cell_min - m_E
-        reduce: max_over_reference_schemes
-        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_E: thresholds.C5.window_margin}
+        pass: {reduce: max_over_reference_schemes}
+        falsify: {quantity: E_red, comparator: '>', edge: E_cell_min + m_E, reduce: every_reference_scheme}
+        otherwise: inconclusive
+        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_E: thresholds.C5.window_margin,
+                 schemes: regimes.R-cell.parameters.gas_reference_schemes}
         undetermined: never_passes
     gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, regimes.R-cell.parameters.al_phases]}
     combine: 'C5s and C5c_ox and C5c_red'
