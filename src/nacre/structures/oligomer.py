@@ -3,20 +3,18 @@
 The true structure of polydopamine-type material is debated, so the drawing uses a
 generic chain: ``n_units`` 5,6-dihydroxyindole units (catechol form) joined 2-7'.
 The geometry comes from RDKit ETKDG embedding (seeded) and MMFF94 relaxation.
-Semi-empirical refinement is applied only if the local environment
-``~/.nacre-envs/xtb`` already exists; it is never created here.
+No semi-empirical refinement is applied: the output must not depend on which
+software is installed on the machine. If a refinement step is added, it is requested
+explicitly through a parameter and the file records that it was applied and the pinned
+tool version; tool availability is never written to a structure file.
 """
 from __future__ import annotations
-
-from pathlib import Path
 
 import numpy as np
 
 from nacre.structures.meta import stamp
 
 DEFAULTS = {"n_units": 4, "force_field": "MMFF94", "ff_max_iters": 5000}
-
-XTB_ENV = Path.home() / ".nacre-envs" / "xtb"
 
 
 def dhi_chain_smiles(n_units: int) -> str:
@@ -55,7 +53,6 @@ def build(params=None, seed=0):
     symbols = [a.GetSymbol() for a in mol.GetAtoms()]
     atoms = Atoms(symbols=symbols, positions=pos, pbc=False)
     charge = sum(a.GetFormalCharge() for a in mol.GetAtoms())
-    xtb = "not run: ~/.nacre-envs/xtb absent" if not XTB_ENV.exists() else "available, not applied on day 1"
     stamp(
         atoms,
         builder="nacre.structures.oligomer.build",
@@ -69,5 +66,4 @@ def build(params=None, seed=0):
     atoms.info["inchikey"] = Chem.MolToInchiKey(Chem.RemoveHs(mol))
     atoms.info["ff_converged"] = bool(converged)
     atoms.info["ff_energy_kcal_mol"] = round(float(ff.CalcEnergy()), 4)
-    atoms.info["xtb_refinement"] = xtb
     return atoms
