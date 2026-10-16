@@ -297,7 +297,7 @@
    "proxy_reports_instability": true
   }
  },
- "generated_utc": "2026-10-16T22:45:16Z",
+ "generated_utc": "2026-10-16T22:56:49Z",
  "implied_constants": {
   "calcite_solubility_bias_log10": -2.4808427010841285,
   "from_cached_ion_energies": {
@@ -20799,7 +20799,7 @@
    },
    "ACC_dissolution_margin": {
     "range.max": {
-     "max_eV_per_atom": 0.0030177966233630115,
+     "max_eV_per_atom": 0.0030177966233631893,
      "offset_J_per_mol": 13000.0,
      "stable_fraction": 0.8387096774193549
     },
@@ -20828,7 +20828,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5790999494394562,
+    "calcite_max_dec_eV_per_atom": 1.5790999494394566,
     "fraction_above_edge": 0.8473642800944139
    },
    "cross_compounds_stable": [],
@@ -20934,7 +20934,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5554599494394565,
+    "calcite_max_dec_eV_per_atom": 1.555459949439456,
     "fraction_above_edge": 0.8332022029897719
    },
    "cross_compounds_stable": [],
@@ -21040,7 +21040,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.531819949439456,
+    "calcite_max_dec_eV_per_atom": 1.5318199494394567,
     "fraction_above_edge": 0.8182533438237608
    },
    "cross_compounds_stable": [],
@@ -21093,7 +21093,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.519999949439456,
+    "calcite_max_dec_eV_per_atom": 1.5199999494394565,
     "fraction_above_edge": 0.8111723052714398
    },
    "cross_compounds_stable": [],
@@ -21305,7 +21305,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5381648457704737,
+    "calcite_max_dec_eV_per_atom": 1.5381648457704742,
     "fraction_above_edge": 0.8229740361919748
    },
    "cross_compounds_stable": [],
@@ -21411,7 +21411,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5145248457704739,
+    "calcite_max_dec_eV_per_atom": 1.5145248457704743,
     "fraction_above_edge": 0.8088119590873328
    },
    "cross_compounds_stable": [],
@@ -21464,7 +21464,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5708939219373144,
+    "calcite_max_dec_eV_per_atom": 1.5708939219373146,
     "fraction_above_edge": 0.8426435877261998
    },
    "cross_compounds_stable": [],
@@ -21570,7 +21570,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5472539219373147,
+    "calcite_max_dec_eV_per_atom": 1.5472539219373143,
     "fraction_above_edge": 0.8276947285601888
    },
    "cross_compounds_stable": [],
@@ -21623,7 +21623,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5354339219373143,
+    "calcite_max_dec_eV_per_atom": 1.5354339219373148,
     "fraction_above_edge": 0.8206136900078678
    },
    "cross_compounds_stable": [],
@@ -21748,11 +21748,11 @@
  ],
  "provenance": {
   "config_file": "results/preprint/pourbaix/config/final.yaml",
-  "config_file_hash": "sha256:0783f124f0457e2cdfb2bdad8be7df85a186bd1a52820d5b50541ad41f2fbf31",
-  "config_hash": "sha256:0e11f1cb953bcffc9900e17a7f61c00524beee258789756702b9ef0414e10b30",
+  "config_file_hash": "sha256:c8eee88424c65d17975ca5291f424498820edd8d98e3e1eab060ba8db62144c0",
+  "config_hash": "sha256:1203cb064ca5b11305128f4a63d8d301f9f4ba03080661422e23fddc263f152d",
   "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
   "git_dirty": false,
-  "git_sha": "755ceada5e1088c0a4d1accfde0e316d96154289",
+  "git_sha": "130e478c20c05f88c1fb045b5f02aaf15a6262ef",
   "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
   "schema_sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
   "thresholds_file": null,
