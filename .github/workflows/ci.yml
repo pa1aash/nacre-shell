@@ -15,8 +15,14 @@ jobs:
         with:
           fetch-depth: 0
       - uses: astral-sh/setup-uv@v6
-      - name: Sync environment
-        run: uv sync --frozen
+      # Lane branches of the preprint track (preprint/p0-w1 ...) add dependencies of their own, so
+      # their lock may lag until integration. The integrator branch and main keep the lock exact.
+      - name: Sync environment (preprint lane branches)
+        if: startsWith(github.ref_name, 'preprint/p0-')
+        run: uv sync
+      - name: Sync environment (locked)
+        if: ${{ !startsWith(github.ref_name, 'preprint/p0-') }}
+        run: uv sync --locked
       - name: Tests
         run: uv run pytest -q
       - name: Full-history scan

@@ -1,6 +1,7 @@
 name: paper
 
-# LaTeX build of the manuscript and SI (steps from ops/reports/S03.md). The journal
+# LaTeX build of the manuscript and SI (steps from ops/reports/S03.md), of the P0 preprint
+# (preprint/paper) and of the P0 theory documents (theory/). The journal
 # template is local-only: `nacre paper template --ensure` fetches it from the pinned
 # archive URL (live, then the recorded snapshot) and fails on any sha256 mismatch
 # against charter/venue/template.yaml.
@@ -8,12 +9,14 @@ on:
   push:
     paths:
       - "paper/**"
-      - "preprint/paper/**"
+      - "preprint/**"
+      - "theory/**"
       - ".github/workflows/paper.yml"
   pull_request:
     paths:
       - "paper/**"
-      - "preprint/paper/**"
+      - "preprint/**"
+      - "theory/**"
       - ".github/workflows/paper.yml"
 
 jobs:
@@ -28,13 +31,30 @@ jobs:
           sudo apt-get install -y --no-install-recommends \
             texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended \
             texlive-fonts-extra texlive-science cm-super latexmk
+      - name: Check the four packages the RSC template needs beyond a minimal install
+        # sectsty and fnpos (yafoot) are in texlive-latex-extra, droidsans (droid) in
+        # texlive-fonts-extra and the Charter fonts (bchr8t.tfm) in texlive-fonts-recommended.
+        run: |
+          for f in sectsty.sty fnpos.sty droidsans.sty bchr8t.tfm; do
+            kpsewhich "$f" || { echo "missing TeX package file: $f"; exit 1; }
+          done
       - uses: astral-sh/setup-uv@v6
-      - name: Sync environment
-        run: uv sync --frozen
+      - name: Sync environment (preprint lane branches)
+        if: startsWith(github.ref_name, 'preprint/p0-')
+        run: uv sync
+      - name: Sync environment (locked)
+        if: ${{ !startsWith(github.ref_name, 'preprint/p0-') }}
+        run: uv sync --locked
+      # The template is local-only: fetched from the pinned URL and checked against the
+      # pinned sha256 (and the 17 file hashes) in charter/venue/template.yaml.
       - name: Provision the template
         run: uv run nacre paper template --ensure
       - name: Build and check
         run: uv run nacre paper build --si --check
+      - name: Build the preprint (draft)
+        run: |
+          sudo apt-get install -y --no-install-recommends zsh
+          if [ -d preprint/paper ]; then zsh preprint/paper/build.sh draft; fi
       - name: Upload PDFs
         if: always()
         uses: actions/upload-artifact@v7.0.1
@@ -43,4 +63,35 @@ jobs:
           path: |
             paper/build/main.pdf
             paper/build/si/si.pdf
+            preprint/paper/build/draft/main.pdf
+            preprint/paper/build/draft/si/main_si.pdf
+          if-no-files-found: warn
+
+  theory:
+    # The theory documents use standard TeX Live only: no user-mode packages, no template.
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended \
+            texlive-science latexmk
+      - name: Build the theory documents
+        if: hashFiles('theory/equation_sheet.tex') != ''
+        working-directory: theory
+        run: |
+          for doc in equation_sheet derivation; do
+            latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build "$doc.tex"
+          done
+      - name: Upload PDFs
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: theory-pdfs
+          path: |
+            theory/build/equation_sheet.pdf
+            theory/build/derivation.pdf
           if-no-files-found: warn
