@@ -67,7 +67,7 @@ def test_thresholds_null_and_pending_g2(claims):
     for c in claims:
         t = c["threshold"]
         assert t["value"] is None, c["id"]
-        assert t["status"] == "pending-G2", c["id"]
+        assert t["status"].startswith("set in P0 (theory/thresholds.md, cp2)"), c["id"]
         assert "proposed" in t and isinstance(t["objections"], list)
         assert c["kill_criterion"]["numeric_form"] == "pending-G2", c["id"]
 
@@ -75,7 +75,9 @@ def test_thresholds_null_and_pending_g2(claims):
 def test_deck_bands_recorded_as_proposed_with_flag2_objection(claims):
     c3 = claims[2]
     assert set(c3["threshold"]["proposed"]) == {"feasible", "inconclusive", "falsified"}
-    assert "pending G2" in c3["threshold"]["proposed_status"]
+    assert "starting proposal" in c3["threshold"]["proposed_status"]
+    assert any("k_B T" in o and "cp2" in o for o in c3["open_items"])
+    assert any("C4 criterion" in o and "cp2" in o for o in claims[3]["open_items"])
     assert any("Design flag 2" in o for o in c3["threshold"]["objections"])
     assert any("OPEN (design flag 3)" in o for o in c3["open_items"])
 

@@ -2,7 +2,8 @@
 #
 # Numbering is fixed here for deck, paper and code; charter/numbering.md reconciles
 # the deck's slides onto it (design flag 8). Nothing in this file is a result:
-# every threshold value is null with status pending-G2, and every numeric form of a
+# every threshold value is null (the P0 values are set in theory/thresholds.md at cp2;
+# the main study adopts or amends them with a dated note), and every numeric form of a
 # kill criterion is fixed at G2 (pre-registration, Phase 2). Phase 7 item numbers
 # refer to the execution plan (C1: 1-4, C2: 5-8, C3: 9-14, C4: 15-18, C5: 19-21);
 # Phase 8 item 5 ("8.5") is the deletion-control set in charter/deletion_register.yaml.
@@ -15,7 +16,7 @@
 #   computation          {method, phase, items, produced_by}
 #   regime               R-slurry | R-cell | both (defined in charter/regimes.yaml)
 #   regime_rationale     why the claim lives in that regime
-#   threshold            {value: null, status: pending-G2, proposed, proposed_source, objections}
+#   threshold            {value: null, status: set in P0 (cp2), proposed, proposed_source, objections}
 #   kill_criterion       {statement, numeric_form}
 #   depends_on           claim ids whose outputs this claim consumes
 #   controls             deletion and comparator computations
@@ -80,7 +81,7 @@ claims:
       in the non-aqueous cell is not computed by C1 and is not claimed.
     threshold:
       value: null
-      status: pending-G2
+      status: "set in P0 (theory/thresholds.md, cp2); the main study adopts or amends with a dated note"
       proposed: null
       proposed_source: >-
         Deck slide 21 kill row "Anchoring: adhesion does not exceed the water displacement
@@ -166,7 +167,7 @@ claims:
       the cycle's reference state is Ca2+(aq), which is undefined in the non-aqueous cell.
     threshold:
       value: null
-      status: pending-G2
+      status: "set in P0 (theory/thresholds.md, cp2); the main study adopts or amends with a dated note"
       proposed: null
       proposed_source: >-
         Deck slide 21 kill row "Sequestration: Ca2+ binding is unfavourable against the
@@ -264,12 +265,12 @@ claims:
       energies are solid-liquid energies against water and S is an aqueous supersaturation.
     threshold:
       value: null
-      status: pending-G2
+      status: "set in P0 (theory/thresholds.md, cp2); the main study adopts or amends with a dated note"
       proposed:
         feasible: "f(theta) <= 0.5"
         inconclusive: "0.5 < f(theta) < 0.8"
         falsified: "f(theta) >= 0.8"
-      proposed_status: "proposed (deck), status: pending G2"
+      proposed_status: "starting proposal (deck), not a decision; the P0 value is set in theory/thresholds.md at cp2"
       proposed_source: >-
         Deck slide 21 "Pre-registered thresholds and kill criteria" and kill row
         "Nucleation: f(theta) >= 0.8". These bands are NOT registered.
@@ -330,6 +331,9 @@ claims:
         (2 + cos theta)(1 - cos theta)^2/4 are the same polynomial in cos theta; the
         physics-function unit tests (Phase 2 item 2, Phase 3 item 8) must cover both forms
         and the limits theta = 0 and theta = 180 deg.
+      - >-
+        Absolute-barrier criterion in k_B T for the template-lowered barrier (Phase 2 item
+        4): chosen and set in theory/thresholds.md at cp2.
       - >-
         OPEN: the C3 verdict is conditional on classical nucleation theory (spherical cap,
         size-independent interfacial energy, capillary approximation); non-classical
@@ -398,7 +402,7 @@ claims:
       thickness bound of item 18 concerns electron transfer to the collector in R-cell.
     threshold:
       value: null
-      status: pending-G2
+      status: "set in P0 (theory/thresholds.md, cp2); the main study adopts or amends with a dated note"
       proposed: null
       proposed_source: >-
         Deck slide 21 kill row "Conformality: favoured morphology is a porous scale"
@@ -430,6 +434,8 @@ claims:
       - >-
         Choice among small-theta bound, S_spread >= 0, or a coalescence condition (design
         flag 2): registered at G2.
+      - >-
+        One C4 criterion is chosen and set in theory/thresholds.md at cp2.
       - >-
         Numeric thickness bound from item 18 and how it combines with the conformality
         criterion: method registered at G2, value computed in Phase 7.
@@ -491,7 +497,7 @@ claims:
       R-slurry proxy.
     threshold:
       value: null
-      status: pending-G2
+      status: "set in P0 (theory/thresholds.md, cp2); the main study adopts or amends with a dated note"
       proposed: null
       proposed_source: >-
         Deck slide 21 kill row "Stability: the phase sits far above the Pourbaix hull at
