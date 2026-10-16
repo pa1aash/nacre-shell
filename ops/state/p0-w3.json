@@ -1,5 +1,17 @@
 {
   "last_session": null,
   "status": "READY",
-  "day": 1
+  "day": 1,
+  "equation_sheet": {
+    "status": "ready",
+    "sha": "4d03ab0a3db0e866825ebc99684a7bf7203f0f2a",
+    "files": [
+      "theory/equation_sheet.tex",
+      "theory/build/equation_sheet.pdf",
+      "theory/symbols.yaml",
+      "theory/contract.yaml",
+      "theory/tools/check_contract.py"
+    ],
+    "check_contract": "PASS"
+  }
 }
