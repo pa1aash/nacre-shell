@@ -78,7 +78,7 @@ A gate has three layers.
 - **R2 Banned strings.** The banned-string set defined in `tools/githooks/_scan.py` must not appear in any file, path, commit message, tag message, branch name or comment. Code that needs the local-only file names builds them at runtime from character codes; tests that plant banned strings build them the same way. The hooks and the CI history scan enforce this.
 - **R3 Fetched, never typed.** Licence texts and other third-party canonical text are downloaded. If a fetch fails, write a one-line pointer file and log an outstanding action; do not reconstruct the text. Each fetch is recorded in `ops/fetch_log.md`.
 - **R4 Headless retrieval.** Use curl or Python HTTP clients against APIs or raw URLs. No GUI browser.
-- **R5 Figures.** Nothing inside a figure except axes, legends and panel letters placed outside the axes. All other information lives in the caption.
+- **R5 Figures.** Nothing inside a figure except axes and panel letters placed outside the axes. No legends and no text inside the axes. All other information lives in the caption. This replaces the earlier allowance for legends (section 14).
 - **R6 No compression.** Never cut scope to save time. Whatever cannot be done is reported as an outstanding action.
 - **R7 Frozen paths.** Enforced by the pre-commit hook; see section 10.
 - **R8 Commit style.** Neutral engineering history with a conventional prefix; see section 11.
@@ -104,3 +104,22 @@ A line starting `YOU:` is an action only the operator can take, such as confirmi
 ## 13. Data store
 
 Pending (decision D11). The `DATA_STORE_*` variables in `.env.example` are reserved. The store is chosen and wired in session S31; until then nothing writes to a remote store.
+
+## 14. Track p0 operating notes
+
+Added by P0-I1 (2026-10-16). They apply to the preprint track `p0` and to any session that works beside it.
+
+- **Figures.** Figures carry no legends and no text inside the axes. Panel letters sit outside the axes and everything else is in the caption. The figure checker rejects legends. This overrides the legend allowance that R5 used to give.
+- **Environments outside synced folders.** The Python environment never lives in a synced folder. `.venv` is a symlink to `$HOME/.nacre-venvs/<name>`: `p-int` for the integrator and `p-<lane>` (for example `p-w3`) for a lane. `nacre lane new <lane> --track p0` creates the target with `uv venv` when it is absent, links it, and then runs `uv sync`. `.gitignore` lists `.venv` without a trailing slash so that the link is ignored. On a machine that already has a plain `.venv` directory: `uv venv "$HOME/.nacre-venvs/p-int"`, `rm -rf .venv`, `ln -s "$HOME/.nacre-venvs/p-int" .venv`, `uv sync`.
+- **Background processes.** A session stops the background shells and the keep-awake process it started before it ends: `kill $(cat .local/caffeinate.pid) 2>/dev/null; rm -f .local/caffeinate.pid`.
+- **RSC template packages.** The RSC article template needs four TeX packages that BasicTeX lacks: `sectsty`, `yafoot` (provides `fnpos`), `droid` (provides `droidsans`) and `charter`. Install them in user mode, which touches nothing system-wide: `tlmgr init-usertree` once, then `tlmgr --usermode install sectsty yafoot droid charter`. The packages land in `~/Library/texmf`, and deleting that tree reverses the install. The template itself is fetched by `nacre paper template --ensure`, which verifies the pinned sha256, and it stays local-only.
+- **Theory documents.** Everything under `theory/` builds with standard TeX Live packages only. It must not need the user-mode packages above.
+- **Blender scenes.** `figures/blender/scene.py` runs in Blender's own interpreter, which lacks PyYAML; it borrows the pure-Python PyYAML from the repository `.venv`. Run `uv sync` in a checkout before rendering.
+- **xtb environment.** The conformer and semi-empirical tools are pinned in `src/nacre/anchor/xtb_env.yaml` (xtb 6.6.1, CREST 2.12, `libgfortran5` 13.4.0) and created outside synced folders at `~/.nacre-envs/xtb` with the command in that file. Run it single-threaded (`OMP_NUM_THREADS=1`) on the 8 GB laptops. A build with a newer `libgfortran` stops in the optimiser.
+- **Local palette copy.** `.local/w7/palette.yaml` is local-only. On a fresh checkout, recreate it from the tracked palette: `mkdir -p .local/w7 && cp figures/style/palette.yaml .local/w7/palette.yaml`. The scene-config test is skipped until it exists.
+- **Charter changes.** `charter/**` changes only through an audit fix list, one commit per numbered fix, in the integrator lane.
+- **CLI registration.** CLI subcommands register only by auto-discovery (`nacre/cli/commands/<name>.py` or `nacre/<pkg>/cli.py` with `register(subparsers)`). Nobody edits `src/nacre/cli/__init__.py` to add a command.
+- **Test module names.** Test module basenames are unique across `tests/`; lanes prefix them with their topic (`test_structure_builders.py`, not `test_builders.py`). Pytest's default import mode cannot load two modules with one basename, and the collision only appears once the lanes are merged. `nacre verify` fails on a duplicate.
+- **Bibliography.** P0 keeps its references in `preprint/paper/refs.bib`, owned by lane W8. W8 adds every reference with `uv run nacre bib add --bib preprint/paper/refs.bib <doi>`, taking DOIs from the W1 and W2 files. The provenance log is written beside the bib file, in `preprint/paper/bib/provenance.jsonl`. Without `--bib` the command keeps its old target, `paper/refs.bib`. `uv run nacre bib check --bib preprint/paper/refs.bib` checks it.
+- **Preprint linters.** `nacre verify` runs `nacre preprint lint-numbers` and `lint-scope` whenever `preprint/paper/` exists. Mock-marked macros are accepted in draft state; the release build (`nacre preprint guard`) is the hard gate.
+- **Retrieval retries.** `nacre.retrieval.http.Http` caps the wall time of one request's retries (default 120 s, `max_total_retry_seconds`) and logs one line per retry to stderr, so a caller cannot wait silently for tens of minutes.
