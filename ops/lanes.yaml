@@ -146,6 +146,13 @@ tracks:
           - "tests/test_ci_scan.py"
           - "tests/test_track.py"
           - "tests/test_track_lanes.py"
+          - ".gitignore"
+          - "tests/charter/**"
+          - "src/nacre/retrieval/**"
+          - "tests/retrieval/**"
+          - "src/nacre/report/bib.py"
+          - "src/nacre/report/cli.py"
+          - "src/nacre/report/tests/test_bib.py"
         except:
           - "ops/waves.yaml"
       p0-w1:
@@ -158,6 +165,7 @@ tracks:
           - "lit/conflicts.md"
           - "src/nacre/lit/**"
           - "tests/lit/**"
+          - "lit/instrument_gaps.csv"
       p0-w2:
         branch: preprint/p0-w2
         worktree: "~/Desktop/nacre-shell-p-w2"
