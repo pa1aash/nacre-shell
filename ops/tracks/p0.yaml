@@ -478,6 +478,7 @@ decisions:
     suppresses the filter_too_much health check (applied in the merge commit of the P0-W8.1 fix-up).',
   reason: The strategy filters heavily and the health check failed on seeds 41 and 73 (not on seeds 1
     to 10); W4.2 replaces the strategy with a direct generator of the valid region.}
+- {id: D10, date: '2026-10-17', decision: 'The seed-19 failure of test_sf1 (cos_theta outside [-1, 1]) is sent to W4.2 as a behaviour fix. The derandomize pin proposed for the integrator was not applied: the test module is W4-owned and the lane-ownership hook rejects it outside a merge of a lane head.', reason: 'The strategy admits inputs where the deck form leaves its domain, so it is a test-design defect in the owning lane; the flake (about 1 in 70 default-random runs) stays until W4.2 and is recorded in N9.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -537,4 +538,4 @@ lane_notes:
     form applies, then remove the health-check suppression (D9). Review the other hypothesis tests for
     heavy filtering. Seed 19 (--hypothesis-seed=19) still fails with ValueError "cos_theta must lie in
     [-1.0, 1.0]" for excess=0.5, sn0=0.698451471401042, nl=1.0, dw=0.5: the strategy admits inputs where
-    the deck form leaves its domain. This is not a health-check problem and was not changed here.'
+    the deck form leaves its domain. This is not a health-check problem and was not changed here. W4.2 must (a) generate inputs inside the domain or clip cos theta to [-1, 1] and report the boundary mass (N2), (b) handle the seed-19 case (excess=0.5, sn0=0.698, nl=1.0, dw=0.5) explicitly with a regression test, and (c) remove the health-check suppression (D9); if W4.2 adds a derandomize pin as an interim measure it removes that too (D10).'
