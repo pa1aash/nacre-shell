@@ -1,21 +1,21 @@
 # Author register for preprint track p0, in author order.
 #
-# Fields: given_name, family_name, email, affiliation, orcid, corresponding, credit_roles, status.
-# A field marked `<field>_status: to-confirm` is a placeholder. `status: YOU-confirm` means the operator
-# confirms the entry; ORCID candidates are listed for the operator to choose from and none is chosen here.
+# Fields: given_name, family_name, affiliation, orcid, orcid_check, corresponding, credit_roles, status.
+# An email address is kept only for the corresponding author, and only the institutional one. The full
+# contact list for the ChemRxiv form is local-only (.local/p0/authors_contact.yaml) and is never committed.
+# `status: YOU-confirm` means the operator confirms the entry; ORCID candidates are listed for the operator
+# to choose from and none is chosen here.
 #
-# ORCID checks (P0-I0, 2026-10-15, headless via pub.orcid.org v3.0):
-#   - given iDs: ISO 7064 MOD 11-2 checksum and the record name (GET /v3.0/<id>/person) against the listed name;
-#   - authors 3 to 5: public expanded search (GET /v3.0/expanded-search/), queries recorded per author.
+# ORCID checks (P0-I1, 2026-10-16, headless via pub.orcid.org v3.0): ISO 7064 MOD 11-2 checksum, and the record
+# name (GET /v3.0/<id>/person) against the listed name.
 #
-# YOU: confirm the placeholders and pick ORCIDs from the candidates by Day 3; reply to the planning chat.
+# YOU: CRediT roles for all six authors, and Braun's email, department and ORCID, before the Day 3 co-author read.
 authors:
   - given_name: Palash
     family_name: Bharti
-    email: pbharti@jpischool.com
     affiliation: Jayshree Periwal International School
     orcid: 0009-0000-8926-5520
-    orcid_check: {checksum: pass, record_name: Palash Bharti, name_match: pass}
+    orcid_check: {checksum: pass, record_name: Palash Bharti, name_match: pass, date: 2026-10-16}
     corresponding: false
     credit_roles: TBD
     status: given
@@ -24,42 +24,40 @@ authors:
     email: palaash.gang@indusschoolpune.com
     affiliation: Indus International School, Pune
     orcid: 0009-0006-7448-9488
-    orcid_check: {checksum: pass, record_name: Palaash Gang, name_match: pass}
+    orcid_check: {checksum: pass, record_name: Palaash Gang, name_match: pass, date: 2026-10-16}
     corresponding: true
     credit_roles: TBD
     status: given
   - given_name: Ahaana
     family_name: Goswamy
-    family_name_status: to-confirm
-    email: TBD
-    affiliation: University of Illinois Urbana-Champaign
-    affiliation_status: to-confirm
-    orcid: TBD
-    orcid_search:
-      - 'given-names:Ahaana AND family-name:Goswamy AND affiliation-org-name:"University of Illinois" (0 found)'
-      - 'given-names:Ahaana AND family-name:Goswamy (0 found)'
-      - 'free text "Ahaana Goswamy" (30 found, none with both names)'
-    orcid_candidates: []
+    affiliation: Grainger College of Engineering, University of Illinois Urbana-Champaign
+    orcid: 0009-0008-0448-1741
+    orcid_check: {checksum: pass, record_name: Ahaana Goswamy, name_match: pass, date: 2026-10-16}
     corresponding: false
     credit_roles: TBD
-    status: YOU-confirm
+    status: given
   - given_name: Kabir
     family_name: Agarwal
-    family_name_status: to-confirm
-    email: TBD
-    affiliation: TBD
-    orcid: TBD
-    orcid_search:
-      - 'given-names:Kabir AND family-name:Agarwal (0 found)'
-      - 'family-name:Agarwal AND given-names:Kabir* (0 found)'
-      - 'free text "Kabir Agarwal" (10035 found, none with both names in the first 25)'
-    orcid_candidates: []
+    affiliation: Grainger College of Engineering, University of Illinois Urbana-Champaign
+    orcid: 0009-0007-9790-9622
+    orcid_check: {checksum: pass, record_name: Kabir Agarwal, name_match: pass, date: 2026-10-16}
     corresponding: false
     credit_roles: TBD
-    status: YOU-confirm
+    status: given
+  - given_name: Jayveer Sachin
+    family_name: Kochhar
+    affiliation: Stanford University
+    orcid: 0009-0009-3497-1079
+    orcid_check:
+      checksum: pass
+      record_name: Jayveer Kochhar
+      name_match: pass (given name Jayveer and family name Kochhar agree; the record does not list the middle name Sachin)
+      date: 2026-10-16
+    corresponding: false
+    credit_roles: TBD
+    status: given
   - given_name: Paul V.
     family_name: Braun
-    email: TBD
     affiliation: University of Illinois Urbana-Champaign
     department_status: to-confirm
     orcid: TBD
