@@ -86,10 +86,14 @@ def equal(markdown, copy_text):
 
 
 def source_at(root, ref):
-    """theory/thresholds.md at a git ref, and the commit it resolves to."""
-    sha = subprocess.run(["git", "-C", str(root), "rev-parse", ref], capture_output=True, text=True,
-                         check=True).stdout.strip()
-    text = subprocess.run(["git", "-C", str(root), "show", "%s:%s" % (sha, THEORY.as_posix())],
+    """theory/thresholds.md at a git ref, and the commit that last changed it there."""
+    head = subprocess.run(["git", "-C", str(root), "rev-parse", ref + "^{commit}"], capture_output=True, text=True,
+                          check=True).stdout.strip()
+    sha = subprocess.run(["git", "-C", str(root), "log", "-1", "--format=%H", head, "--", THEORY.as_posix()],
+                         capture_output=True, text=True, check=True).stdout.strip()
+    if not sha:
+        raise FileNotFoundError("%s is not present at %s" % (THEORY, ref))
+    text = subprocess.run(["git", "-C", str(root), "show", "%s:%s" % (head, THEORY.as_posix())],
                           capture_output=True, text=True, check=True).stdout
     return text, sha
 
