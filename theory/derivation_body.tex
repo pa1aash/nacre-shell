@@ -509,31 +509,51 @@ a pure site-exclusion correction that vanishes as $y^{2}/2$ in the dilute limit.
 If $\gsl$ is computed directly at the regime activities, the adsorption is already inside it and
 $\dga\equiv0$, the same rule as for $\dgw$ (Section~\ref{th:sec:young}).
 
-\paragraph{Template--nucleus interface.} Under the contact disc the solution is gone. A site there
-is coordinated by an ion of the nucleus lattice, which came from the reservoir at the bulk
-chemical potential and is counted in $n$ like every other formula unit, or it is left to carbonate
-or to the residual hydration layer. In either case the template--nucleus interface holds no
-solution-side adsorption excess: with the dividing surface at the template and a stoichiometric
-nucleus, $\gsn$ is the excess free energy of the template--crystal contact (with $\dgw$ for the
-displaced water) and does not depend on $\mu_\mathrm{Ca}$. \textbf{The adsorbed Ca$^{2+}$ belongs to
-the template--liquid interface only.} The template's affinity for Ca$^{2+}$ can favour nucleation
-only through $\gsn$, if its ligands coordinate lattice Ca$^{2+}$ well; that is a property of the
-template--crystal contact, and it is computed or fetched as such (the C3 inputs), never inferred
-from $\DGseq$.
+\paragraph{Template--nucleus interface.} $\gsn$ is a grand-canonical excess in the same sense as
+$\gsl$: the excess grand potential per area of the template--crystal contact at the regime
+chemical potentials. Under the contact disc the solution is gone, but the contact need not hold
+the stoichiometric crystal on one side and the bare template on the other. Ca$^{2+}$ can sit in
+excess at the contact, for example as an ion bridge between a carboxylate and the crystal surface
+(carboxylate--Ca--calcite). With the dividing surface at the template and the excess counted
+relative to the stoichiometric nucleus, such a Ca$^{2+}$ excess $\GCasn$ is inside $\gsn$, and the
+Gibbs equation applies to it as it does to $\gsl$. With $\GCasl\equiv\GCa$ of
+Eq.~\eqref{th:eq:excess} the template--liquid excess,
+\begin{equation}\label{th:eq:gibbs-sn}
+\frac{\partial\gsn}{\partial\mu_\mathrm{Ca}}=-\GCasn,\qquad
+\frac{\partial(\gsl-\gsn)}{\partial\mu_\mathrm{Ca}}=-\big(\GCasl-\GCasn\big) \un{mol\,m^{-2}}.
+\end{equation}
+Units: J\,m$^{-2}$ per J\,mol$^{-1}$ is mol\,m$^{-2}$, an areal excess. The second relation is the
+result of this subsection. The Young numerator $\gsl-\gsn$, and with it the sign of the template's
+effect on the barrier, responds to the Ca$^{2+}$ activity through the difference of the two
+excesses. Raising $\aCa$ raises $\cos\theta$ only if the contact holds more Ca$^{2+}$ excess than
+the template--liquid interface does. \textbf{Both excesses are interfacial; neither is in $\Om$.}
+
+The screen treats the two excesses differently because its inputs differ. $\GCasl$ is built from
+C2 (Langmuir, Eq.~\eqref{th:eq:excess}) and enters through $\dga$ when $\gsl$ is supplied
+Ca-free. $\GCasn$ has no C2 counterpart: it is a property of the template--crystal contact, which
+$\DGseq$ (transfer from water to a site with water still around it) does not measure. It is
+carried by $\gsn$ as supplied, so $\gsn$ (or $\gsnz$ with $\dgw$) is taken from contact data at
+the regime state, computed or fetched for the template--crystal contact at the regime activities
+(the C3 inputs). The rule is a rule for the supplied inputs: $\DGseq$ and $\dga$ are never added to
+$\gsn$. It does not claim $\GCasn=0$. A contact energy supplied at another Ca$^{2+}$ activity would
+need the shift $-\int\GCasn\,\dd\mu_\mathrm{Ca}$, which requires a model of the contact excess that
+the screen does not have; such an input is flagged as off-state, never corrected with $\DGseq$.
 
 \paragraph{Consequence for the barrier (Q1).} Young's relation becomes
 \begin{equation}\label{th:eq:young-ads}
 \cos\theta=\frac{\gslz+\dga-\gsnz-\dgw}{\gnl},\qquad
 \frac{\partial\cos\theta}{\partial\DGseq}=\frac{\Gs\Theta}{\gnl}>0 \un{1;\ mol\,J^{-1}}.
 \end{equation}
-At fixed $\gslz$ and $\gsn$, stronger binding lowers $\cos\theta$ and raises $\theta$, $f$ and
-$\DGhet$. Ions held at the template--liquid interface must be stripped from the area the nucleus
-covers, which is a cost; the physics is that of an adsorbed inhibitor. A Ca-binding template
-promotes nucleation only if $\gsl-\gsn$ stays positive after the adsorption term, that is, if
-$\gsn$ falls by more than $\gsl$ does. The sign of the template's effect is the sign of the
-difference between the Ca$^{2+}$ excess at the template--liquid interface (here $\GCa$) and at the
-template--nucleus interface (here zero). This is the possibility v1 flagged in Q1, now settled:
-bookkeeping (L) gave $\DGseq<0$ a barrier-lowering effect it does not have (sign-flip test SF2).
+At fixed $\gslz$ and $\gsn$ (the contact energy as supplied at the regime state), stronger binding
+lowers $\cos\theta$ and raises $\theta$, $f$ and $\DGhet$. Ions held at the template--liquid
+interface must be stripped from the area the nucleus covers, which is a cost; the physics is that
+of an adsorbed inhibitor. A Ca-binding template promotes nucleation only if $\gsl-\gsn$ stays
+positive after the adsorption term, that is, if $\gsn$ falls by more than $\gsl$ does. By
+Eq.~\eqref{th:eq:gibbs-sn} the sign of the template's response to Ca$^{2+}$ is the sign of
+$\GCasn-\GCasl$: the Ca$^{2+}$ excess at the contact less that at the template--liquid interface.
+The first enters the screen through $\gsn$ as supplied, the second through $\dga$. This is the
+possibility v1 flagged in Q1, now settled: bookkeeping (L) gave $\DGseq<0$ a barrier-lowering
+effect it does not have (sign-flip test SF2).
 
 \subsection{The no-double-counting proof}
 
@@ -552,7 +572,8 @@ $\partial\Om/\partial(\text{any template input})=0$. All template dependence is 
 hence in $\theta$; $\gnl$, $\Vm$ and $T$ are template-independent and may appear in both factors.
 (3) \emph{Single entry of the binding.} $\DGseq$, $\Gs$ and $\ds$ enter $\gsl$ through
 Eq.~\eqref{th:eq:gibbs} only, and only when $\gsl$ is built from $\gslz$. They do not enter
-$\gsn$ (template--nucleus interface, above) and do not enter $\Om$
+$\gsn$, which is supplied from contact data at the regime state with its own excess $\GCasn$ inside
+it (template--nucleus interface, above), and they do not enter $\Om$
 (Eq.~\eqref{th:eq:dmu-uniform}). The water-displacement correction enters $\gsn$ once, by the
 convention of Section~\ref{th:sec:young}. (4) Hence each template-dependent input appears once,
 in one interfacial energy, and only through $\theta$. This completes the proof.
@@ -585,8 +606,11 @@ CO$_3^{2-}$. Neither $\Eenr$, $\cl$ nor $\Omega_\mathrm{li}$ enters the barrier.
 \item C2's $\DGseq$ maps into the barrier only through $\dga(\DGseq,\cb,\Gs,\ds)$ of
 Eq.~\eqref{th:eq:gibbs}, added once to the Ca-free $\gslz$. If $\gsl$ is supplied at the regime
 activities, nothing is added.
-\item $\gsn$ is the energy of the template--crystal contact with lattice ions at the sites (plus
-$\dgw$ if it comes from a dry reference); it carries no term in $\DGseq$ or $\aCa$.
+\item $\gsn$ is the grand-canonical energy of the template--crystal contact at the regime chemical
+potentials, taken from contact data at the regime state (plus $\dgw$ if it comes from a reference
+without the displaced water). Any Ca$^{2+}$ excess at the contact is inside it,
+$\partial\gsn/\partial\mu_\mathrm{Ca}=-\GCasn$. $\DGseq$ and $\dga$ are never added to $\gsn$. This
+is a rule for the supplied input, not a claim that $\GCasn=0$.
 \item Carbonate needs no correction: a mean potential cancels in $\Om$ and in $\Dmu$.
 \item The same rule governs R-slurry stability: dissolution of CaCO$_3$ is decided by $\Omb$. An
 evaluation at an ``enriched'' state is a non-equilibrium sensitivity, never an equilibrium result.

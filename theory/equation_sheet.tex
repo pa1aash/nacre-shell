@@ -63,7 +63,11 @@ Valid for dilute Ca$^{2+}$ with unsaturated sites ($\Eenr\cb\ll\cmax$). $\Eenr$ 
 \dga=-\Rg T\big(\Gs\ln(1+x)-\ds\cb\big)\nonumber\\
 \partial\dga/\partial\DGseq=\Gs\Theta>0\nonumber
 \end{gather}
-$\dga\equiv0$ if $\gsl$ is computed at the regime activities. The bound Ca$^{2+}$ belongs to the template--liquid interface only; $\gsn$ (template coordinating lattice ions) does not depend on $\aCa$.
+$\dga\equiv0$ if $\gsl$ is computed at the regime activities. $\gsn$ is likewise grand-canonical: a Ca$^{2+}$ excess at the contact (ion-bridged carboxylate--Ca--calcite) is inside it, so
+\begin{equation}
+\partial\gsn/\partial\mu_\mathrm{Ca}=-\GCasn,\qquad \partial(\gsl-\gsn)/\partial\mu_\mathrm{Ca}=-(\GCasl-\GCasn)
+\end{equation}
+with $\GCasl=\GCa$. Rule for supplied inputs: $\gsn$ comes from contact data at the regime state; $\DGseq$ is never added to it (no claim that $\GCasn=0$).
 
 \hd{3\quad Supersaturation (one definition)}
 \phys{Crystallisation is driven by the excess chemical potential of the dissolved ion pair over the solid of the registered framing (ACC or calcite).}
@@ -98,7 +102,7 @@ $\geff\equiv\gnl-\dgw$ (deck form) is \textbf{not} used: Young and $\DGhom$ take
 \begin{equation}
 \DGhet=f\big(\theta[\gslz+\dga,\,\gsnz,\,\dgw]\big)\,\frac{16\pi\gnl^{3}\vm^{2}}{3\big(\kB T\ln\Omb\big)^{2}}
 \end{equation}
-\textbf{Rule:} $\DGseq$ enters once, through $\dga$ in $\gsl$; $\partial\Om/\partial(\text{template inputs})=0$. If $\gsl$ is computed at the regime activities, add nothing. At fixed $\gslz,\gsn$, stronger binding \emph{lowers} $\cos\theta$ and raises $\DGhet$ (SF2): binding helps only if $\gsn$ falls by more than $\gsl$. Lowering $\gnl$ lowers $f$ only if $\gsl>\gsn$ (SF3). Proof: derivation, Section~7.
+\textbf{Rule:} $\DGseq$ enters once, through $\dga$ in $\gsl$; $\partial\Om/\partial(\text{template inputs})=0$. If $\gsl$ is computed at the regime activities, add nothing. At fixed $\gslz,\gsn$, stronger binding \emph{lowers} $\cos\theta$ and raises $\DGhet$ (SF2): binding helps only if $\gsn$ falls by more than $\gsl$, i.e.\ if $\GCasn>\GCasl$. Lowering $\gnl$ lowers $f$ only if $\gsl>\gsn$ (SF3). Proof: derivation, Section~7.
 
 \hd{6a\quad Accessibility of the barrier (C3)}
 \phys{Nuclei must form at the stated areal density within the time the template spends in the slurry and drying.}

@@ -91,9 +91,15 @@ conventions:
     - delta_s c_bulk) from the Gibbs adsorption equation and the Langmuir isotherm, and
     x = E_enr c_bulk / c_max. If gamma_sl is supplied directly at the regime activities
     (grand-canonical), Delta_gamma_ads is already inside it and must not be added again
-    (the same rule as Delta_gamma_w). The bound Ca2+ belongs to the template-liquid
-    interface only: under the nucleus it is lattice Ca2+ at the bulk chemical potential, and
-    gamma_sn is the energy of the template coordinating lattice ions, independent of a_Ca.
+    (the same rule as Delta_gamma_w). gamma_sn is the grand-canonical excess of the
+    template-crystal contact at the regime chemical potentials: any Ca2+ excess at that contact
+    (for example ion-bridged carboxylate-Ca-calcite) is inside it, with d gamma_sn / d mu_Ca =
+    -Gamma_Ca_sn. Hence d(gamma_sl - gamma_sn)/d mu_Ca = -(Gamma_Ca_sl - Gamma_Ca_sn), with
+    Gamma_Ca_sl = Gamma_Ca the template-liquid excess. Rule for supplied inputs: gamma_sn (or
+    gamma_sn0 with Delta_gamma_w) comes from contact data at the regime state; Delta_G_seq and
+    Delta_gamma_ads are never added to it. The rule does not assume Gamma_Ca_sn = 0; a contact
+    energy supplied at another Ca2+ activity is flagged as off-state, never corrected with
+    Delta_G_seq.
 
 functions:
   # ------------------------------------------------------------------ C1, adhesion in water
