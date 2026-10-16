@@ -37,3 +37,15 @@ def closure_thickness(theta, N_s):
     t = open_interval("theta (contact angle)", theta, 0.0, np.pi)
     n = positive("N_s (island density)", N_s)
     return scalar_or_array(np.tan(t / 2.0) / np.sqrt(2.0 * n))
+
+
+def closure_island_density(theta, d_max):
+    """Smallest island density for which equal caps close the film at the admissible thickness, m^-2.
+
+    N_s,closure = tan^2(theta / 2) / (2 d_max^2): the closure thickness h_cl(theta, N_s)
+    stays within d_max exactly when N_s >= N_s,closure (square lattice of equal caps).
+    theta in (0, pi) rad, d_max > 0 in m.
+    """
+    t = open_interval("theta (contact angle)", theta, 0.0, np.pi)
+    d = positive("d_max (admissible film thickness)", d_max)
+    return scalar_or_array(np.tan(t / 2.0) ** 2 / (2.0 * d ** 2))

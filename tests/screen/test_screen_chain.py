@@ -1,4 +1,4 @@
-"""The screen chain reproduces the contract functions draw by draw; clipping only in the screen."""
+"""The screen chain reproduces the contract (v2) draw by draw; clipping only in the screen."""
 from pathlib import Path
 
 import numpy as np
@@ -24,11 +24,15 @@ def test_all_three_links_are_evaluable_from_the_mock_table(draws):
     assert chain.evaluable_links({"T": 1.0}) == []
 
 
+def _young_ratio(draws, seq):
+    sl = draws["gamma_sl0"] + seq["Delta_gamma_ads"]
+    return (sl - draws["gamma_sn0"] - draws["Delta_gamma_w"]) / draws["gamma_nl"]
+
+
 def test_template_barrier_equals_the_contract_composite_on_in_domain_draws(draws):
     out, _ = chain.evaluate(draws)
     nuc, seq = out["nucleate"], out["sequester"]
-    ratio = (draws["gamma_sl"] - draws["gamma_sn0"] - draws["Delta_gamma_w"]) / draws["gamma_nl"]
-    ok = (np.abs(ratio) < 1) & (nuc["Omega_local"] > 1)
+    ok = (np.abs(_young_ratio(draws, seq)) < 1) & (nuc["Omega_bulk"] > 1)
     assert ok.sum() > 1000
     args = {k: draws[k][ok] for k in template.COMPOSITE_ARGS if k != "Delta_G_seq"}
     args["Delta_G_seq"] = seq["Delta_G_seq"][ok]
@@ -37,7 +41,34 @@ def test_template_barrier_equals_the_contract_composite_on_in_domain_draws(draws
     assert np.allclose(nuc["barrier_het_template_kT"][ok], kt, rtol=1e-12, atol=0)
 
 
-def test_bulk_barrier_uses_the_bulk_saturation_and_no_template(draws):
+def test_in_situ_template_energy_adds_nothing_and_both_forms_agree(draws):
+    out, _ = chain.evaluate(draws)
+    insitu = {k: v for k, v in draws.items() if k != "gamma_sl0"}
+    insitu["gamma_sl"] = out["nucleate"]["gamma_sl_insitu"]
+    out2, _ = chain.evaluate(insitu)
+    a, b = out["nucleate"]["barrier_het_template_kT"], out2["nucleate"]["barrier_het_template_kT"]
+    assert np.allclose(a, b, rtol=1e-12, equal_nan=True)
+    assert chain.evaluable_links({k: 1.0 for k in chain.NUC_BASE + ("gamma_sl",)}) == ["nucleate"]
+
+
+def test_supplying_both_template_energies_is_refused(draws):
+    both = dict(draws, gamma_sl=draws["gamma_sl0"])
+    with pytest.raises(chain.AmbiguousTemplateEnergy):
+        chain.evaluate(both)
+
+
+def test_accessibility_outputs_follow_the_contract(draws):
+    out, _ = chain.evaluate(draws)
+    nuc = out["nucleate"]
+    b_acc = np.log(draws["J0_het"] * draws["t_proc"] / draws["N_req"])
+    assert np.allclose(nuc["B_acc_kT"], b_acc, rtol=1e-12)
+    ok = np.isfinite(nuc["barrier_het_template_kT"])
+    assert np.allclose(nuc["accessibility_margin_kT"][ok], (b_acc - nuc["barrier_het_template_kT"])[ok], rtol=1e-12, atol=1e-9)
+    n_nuc = draws["J0_het"] * draws["t_proc"] * np.exp(-nuc["barrier_het_template_kT"])
+    assert np.allclose(nuc["N_nuc"][ok], n_nuc[ok], rtol=1e-9)
+
+
+def test_both_barriers_use_the_bulk_saturation(draws):
     out, _ = chain.evaluate(draws)
     nuc = out["nucleate"]
     om = sat.saturation_ratio_bulk(draws["a_Ca"], draws["a_CO3"], draws["K_sp"])
@@ -45,12 +76,13 @@ def test_bulk_barrier_uses_the_bulk_saturation_and_no_template(draws):
     hom = nucleation.homogeneous_barrier_from_saturation(draws["gamma_nl"][ok], draws["V_m"][ok], om[ok], draws["T"][ok])
     assert np.allclose(nuc["barrier_hom_bulk_kT"][ok], nucleation.barrier_in_kT(hom, draws["T"][ok]), rtol=1e-12)
     assert np.all(np.isnan(nuc["barrier_hom_bulk_kT"][~ok]))        # Omega <= 1: no barrier
+    assert np.all(np.isnan(nuc["barrier_het_template_kT"][~ok]))    # contract v2: never above Omega_bulk
 
 
 def test_young_ratio_outside_the_domain_is_clipped_and_counted(draws):
     out, masses = chain.evaluate(draws)
     nuc = out["nucleate"]
-    ratio = (draws["gamma_sl"] - draws["gamma_sn0"] - draws["Delta_gamma_w"]) / draws["gamma_nl"]
+    ratio = _young_ratio(draws, out["sequester"])
     m = masses["nucleate"]["cos_theta"]
     assert m.n_spread == int((ratio > 1).sum()) > 0
     assert m.n_nonwetting == int((ratio < -1).sum()) > 0

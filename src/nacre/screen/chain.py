@@ -11,21 +11,27 @@ Links
              W_adh,wet = gamma_ow + gamma_pw - gamma_op.
   sequester  C2: Ca2+ transfer free energy bulk -> binding layer Delta_G_seq (from the
              site free energy and the protonation correction, or sampled directly), the
-             enrichment factor E_enr = exp(-Delta_G_seq / RT) and the Langmuir-closed local
-             concentration c_local.
-  nucleate   C3: bulk and local saturation ratios, Young's cos(theta) on the template, the
-             shape factor f, and both barriers in k_B T: the homogeneous barrier in the bulk
-             (no template, Omega_bulk) and the heterogeneous barrier on the template,
-             f(theta) Delta_G*_hom(Omega_local). The template enters only through theta and
-             Omega_local (contract no_double_counting).
+             enrichment factor E_enr and the Langmuir local concentration c_local (C2
+             reporting quantities, which never feed Omega under contract v2), the site
+             occupancy Theta, the Gibbs surface excess Gamma_Ca and the adsorption change of
+             the template-liquid energy Delta_gamma_ads.
+  nucleate   C3, contract v2 (uniform chemical potential): Omega = Omega_bulk; Young's
+             cos(theta) on the template with gamma_sl = gamma_sl0 + Delta_gamma_ads when the
+             table supplies the Ca-free gamma_sl0, or the supplied gamma_sl unchanged when it
+             is already at the regime activities (never both: that is refused as ambiguous);
+             the shape factor f; both barriers in k_B T, the homogeneous barrier in the bulk
+             (no template) and the heterogeneous barrier on the template, f(theta)
+             Delta_G*_hom(Omega_bulk); the critical radius. With J0_het, t_proc and N_req in
+             the table also the largest accessible barrier B_acc, the margin B_acc - DG_het
+             and the expected areal density of nuclei N_nuc.
 """
 from dataclasses import dataclass
 
 import numpy as np
 
-from nacre.physics import adhesion, nucleation, sequestration, wetting
+from nacre.physics import adhesion, nucleation, sequestration, template, wetting
 from nacre.physics import supersaturation as sat
-from nacre.physics.constants import GAS_CONSTANT
+from nacre.physics.constants import BOLTZMANN, GAS_CONSTANT
 from nacre.screen.boundary import EMPTY, clip_cos_theta
 
 
@@ -53,22 +59,42 @@ OUTPUTS = {
         "E_enr": Output("E_enr", "1", "log10"),
         "c_local": Output("c_local", "mol m^-3", "log10"),
         "enrichment_realised": Output("c_local / c_bulk", "1", "log10"),
+        "Theta_occ": Output("Theta_occ", "1"),
+        "Gamma_Ca": Output("Gamma_Ca", "mol m^-2"),
+        "Delta_gamma_ads": Output("Delta_gamma_ads", "J m^-2"),
     },
     "nucleate": {
         "Omega_bulk": Output("Omega_bulk", "1", "log10"),
-        "Omega_local": Output("Omega_local", "1", "log10"),
+        "gamma_sl_insitu": Output("gamma_sl (at the regime activities)", "J m^-2"),
         "cos_theta": Output("cos(theta) (clipped to [-1, 1])", "1"),
         "f_theta": Output("f(theta)", "1"),
         "barrier_hom_bulk_kT": Output("Delta_G*_hom(Omega_bulk) / k_B T", "k_B T", "log10"),
-        "barrier_het_template_kT": Output("f(theta) Delta_G*_hom(Omega_local) / k_B T", "k_B T", "log10"),
-        "r_star_local": Output("r*(Omega_local)", "m", "log10"),
+        "barrier_het_template_kT": Output("f(theta) Delta_G*_hom(Omega_bulk) / k_B T", "k_B T", "log10"),
+        "r_star": Output("r*(Omega_bulk)", "m", "log10"),
+        "B_acc_kT": Output("B_acc / k_B T", "k_B T"),
+        "accessibility_margin_kT": Output("(B_acc - Delta_G*_het) / k_B T", "k_B T"),
+        "N_nuc": Output("N_nuc", "m^-2", "log10"),
     },
 }
 
 ANCHOR_INPUTS = ("gamma_ow", "gamma_pw", "gamma_op")
 SEQ_CYCLE_INPUTS = ("Delta_G_site", "pKa", "pH", "T")
 SEQ_LOCAL_INPUTS = ("T", "c_bulk", "Gamma_s", "delta_s")
-NUC_INPUTS = ("a_Ca", "a_CO3", "K_sp", "gamma_sl", "gamma_sn0", "Delta_gamma_w", "gamma_nl", "V_m", "T")
+NUC_BASE = ("a_Ca", "a_CO3", "K_sp", "gamma_sn0", "Delta_gamma_w", "gamma_nl", "V_m", "T")
+ACCESS_INPUTS = ("J0_het", "t_proc", "N_req")
+
+
+class AmbiguousTemplateEnergy(ValueError):
+    """Both gamma_sl0 (Ca-free) and gamma_sl (at the regime activities) were supplied."""
+
+
+def template_energy_mode(symbols):
+    """'ca_free' (gamma_sl0: add Delta_gamma_ads once), 'in_situ' (gamma_sl: add nothing) or None."""
+    s = set(symbols)
+    if "gamma_sl0" in s and "gamma_sl" in s:
+        raise AmbiguousTemplateEnergy("the table supplies both gamma_sl0 and gamma_sl; contract v2 adds "
+                                      "Delta_gamma_ads to the Ca-free energy only, so exactly one may be given")
+    return "ca_free" if "gamma_sl0" in s else ("in_situ" if "gamma_sl" in s else None)
 
 
 def _shape(x):
@@ -107,8 +133,9 @@ def evaluable_links(symbols):
     seq = (s >= set(SEQ_CYCLE_INPUTS) or "Delta_G_seq" in s) and s >= set(SEQ_LOCAL_INPUTS)
     if seq:
         links.append("sequester")
-        if s >= set(NUC_INPUTS):
-            links.append("nucleate")
+    mode = template_energy_mode(s)
+    if s >= set(NUC_BASE) and (mode == "in_situ" or (mode == "ca_free" and seq)):
+        links.append("nucleate")
     return links
 
 
@@ -131,39 +158,49 @@ def sequester(x):
     c_bulk, gs, ds = (_arr(x, k, n) for k in ("c_bulk", "Gamma_s", "delta_s"))
     ok = _finite(dg, t) & (t > 0)
     e = _apply(sequestration.enrichment_factor, ok, n, dg, t)
-    ok_l = ok & np.isfinite(e) & (c_bulk > 0) & (gs > 0) & (ds > 0)
+    ok_l = ok & (c_bulk > 0) & (gs > 0) & (ds > 0)
     c_max = _apply(sequestration.binding_layer_saturation_concentration, ok_l, n, gs, ds)
-    c_local = _apply(sequestration.local_calcium_concentration, ok_l, n, e, c_bulk, c_max)
+    ok_e = ok_l & np.isfinite(e)
+    c_local = _apply(sequestration.local_calcium_concentration, ok_e, n, e, c_bulk, c_max)
+    occ = _apply(sequestration.site_occupancy, ok_l, n, dg, t, c_bulk, gs, ds)
+    excess = _apply(sequestration.calcium_surface_excess, ok_l, n, dg, t, c_bulk, gs, ds)
+    d_ads = _apply(sequestration.adsorption_interfacial_energy_change, ok_l, n, dg, t, c_bulk, gs, ds)
     return {"Delta_G_seq": dg, "Delta_G_seq_RT": dg / (GAS_CONSTANT * t), "E_enr": e,
-            "c_local": c_local, "enrichment_realised": c_local / c_bulk}
+            "c_local": c_local, "enrichment_realised": c_local / c_bulk, "Theta_occ": occ,
+            "Gamma_Ca": excess, "Delta_gamma_ads": d_ads}
 
 
-def nucleate(x, seq):
-    """Nucleation link; seq is the output of the sequester link (c_local, enrichment)."""
+def nucleate(x, seq=None):
+    """Nucleation link (contract v2); seq is the sequester output when gamma_sl0 is supplied."""
     n = _shape(x)
-    a_ca, a_co3, ksp, sl, sn0, dw, nl, vm, t = (_arr(x, k, n) for k in NUC_INPUTS)
-    c_bulk = _arr(x, "c_bulk", n)
+    a_ca, a_co3, ksp, sn0, dw, nl, vm, t = (_arr(x, k, n) for k in NUC_BASE)
+    if template_energy_mode(x) == "ca_free":
+        sl = _arr(x, "gamma_sl0", n) + np.asarray(seq["Delta_gamma_ads"], dtype=float)   # added once
+    else:
+        sl = np.array(_arr(x, "gamma_sl", n), dtype=float)                                  # nothing added
     ok = _finite(a_ca, a_co3, ksp) & (a_ca > 0) & (a_co3 > 0) & (ksp > 0)
-    om_b = _apply(sat.saturation_ratio_bulk, ok, n, a_ca, a_co3, ksp)
-    c_local = np.asarray(seq["c_local"], dtype=float)
-    ok_l = ok & np.isfinite(c_local) & (c_local > 0) & (c_bulk > 0)
-    om_l = _apply(sat.saturation_ratio_local, ok_l, n, c_local, c_bulk, a_ca, a_co3, ksp)
+    om = _apply(sat.saturation_ratio_bulk, ok, n, a_ca, a_co3, ksp)     # uniform chemical potential
     ok_y = _finite(sl, sn0, dw, nl) & (nl > 0)
     ratio = _apply(wetting.contact_angle_cosine_young, ok_y, n, sl, sn0, dw, nl)
     cos_t, mass = clip_cos_theta(ratio)
     f = _apply(wetting.shape_factor_from_cos, np.isfinite(cos_t), n, cos_t)
-    base = _finite(nl, vm, t) & (nl > 0) & (vm > 0) & (t > 0)
-    ok_hb = base & (om_b > 1)                      # NaN compares False: invalid draws drop out
-    hom_b = _apply(nucleation.homogeneous_barrier_from_saturation, ok_hb, n, nl, vm, om_b, t)
-    ok_hl = base & (om_l > 1)
-    hom_l = _apply(nucleation.homogeneous_barrier_from_saturation, ok_hl, n, nl, vm, om_l, t)
-    r_l = _apply(nucleation.critical_radius_from_saturation, ok_hl, n, nl, vm, om_l, t)
-    het = _apply(nucleation.heterogeneous_barrier, ok_hl & np.isfinite(f), n, f, hom_l)
-    return ({"Omega_bulk": om_b, "Omega_local": om_l, "cos_theta": cos_t, "f_theta": f,
-             "barrier_hom_bulk_kT": _apply(nucleation.barrier_in_kT, ok_hb, n, hom_b, t),
-             "barrier_het_template_kT": _apply(nucleation.barrier_in_kT, np.isfinite(het), n, het, t),
-             "r_star_local": r_l},
-            {"cos_theta": mass})
+    base = _finite(nl, vm, t) & (nl > 0) & (vm > 0) & (t > 0) & (om > 1)   # NaN compares False
+    hom = _apply(nucleation.homogeneous_barrier_from_saturation, base, n, nl, vm, om, t)
+    r = _apply(nucleation.critical_radius_from_saturation, base, n, nl, vm, om, t)
+    het = _apply(nucleation.heterogeneous_barrier, base & np.isfinite(f), n, f, hom)
+    hom_kt = _apply(nucleation.barrier_in_kT, base, n, hom, t)
+    het_kt = _apply(nucleation.barrier_in_kT, np.isfinite(het), n, het, t)
+    out = {"Omega_bulk": om, "gamma_sl_insitu": sl, "cos_theta": cos_t, "f_theta": f,
+           "barrier_hom_bulk_kT": hom_kt, "barrier_het_template_kT": het_kt, "r_star": r,
+           "B_acc_kT": np.full(n, np.nan), "accessibility_margin_kT": np.full(n, np.nan), "N_nuc": np.full(n, np.nan)}
+    if has(x, ACCESS_INPUTS):
+        j0, tp, nr = (_arr(x, k, n) for k in ACCESS_INPUTS)
+        ok_a = _finite(j0, tp, nr, t) & (j0 > 0) & (tp > 0) & (nr > 0) & (t > 0)
+        b_acc = _apply(nucleation.accessible_barrier, ok_a, n, j0, tp, nr, t)
+        out["B_acc_kT"] = b_acc / (BOLTZMANN * t)          # negative when J0 t_proc < N_req
+        out["accessibility_margin_kT"] = out["B_acc_kT"] - het_kt
+        out["N_nuc"] = _apply(nucleation.nucleus_areal_density, ok_a & np.isfinite(het), n, j0, tp, het, t)
+    return out, {"cos_theta": mass}
 
 
 def evaluate(x, links=None):
@@ -176,12 +213,12 @@ def evaluate(x, links=None):
     out, masses = {}, {}
     if "anchor" in links:
         out["anchor"], masses["anchor"] = anchor(x), {}
-    if "sequester" in links or "nucleate" in links:
-        seq = sequester(x)
-        if "sequester" in links:
-            out["sequester"], masses["sequester"] = seq, {}
-        if "nucleate" in links:
-            out["nucleate"], masses["nucleate"] = nucleate(x, seq)
+    need_seq = "sequester" in links or ("nucleate" in links and template_energy_mode(x) == "ca_free")
+    seq = sequester(x) if need_seq else None
+    if "sequester" in links:
+        out["sequester"], masses["sequester"] = seq, {}
+    if "nucleate" in links:
+        out["nucleate"], masses["nucleate"] = nucleate(x, seq)
     return out, masses
 
 

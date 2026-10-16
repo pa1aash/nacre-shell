@@ -63,7 +63,7 @@ def _inside(path, directory):
 
 
 def link_inputs(link, symbols):
-    """Theory symbols a link reads (sequester and nucleate include the upstream cycle)."""
+    """Theory symbols a link reads (nucleate includes the upstream cycle when gamma_sl0 is given)."""
     s = set(symbols)
     seq = list(chain.SEQ_CYCLE_INPUTS) if s >= set(chain.SEQ_CYCLE_INPUTS) else ["Delta_G_seq"]
     seq = [k for k in dict.fromkeys(seq + list(chain.SEQ_LOCAL_INPUTS))]
@@ -72,7 +72,10 @@ def link_inputs(link, symbols):
     if link == "sequester":
         return seq
     if link == "nucleate":
-        return [k for k in dict.fromkeys(seq + list(chain.NUC_INPUTS) + ["c_bulk"])]
+        access = [k for k in chain.ACCESS_INPUTS if k in s]
+        if chain.template_energy_mode(s) == "ca_free":
+            return [k for k in dict.fromkeys(seq + list(chain.NUC_BASE) + ["gamma_sl0"] + access)]
+        return list(chain.NUC_BASE) + ["gamma_sl"] + access
     raise KeyError(link)
 
 

@@ -25,6 +25,8 @@ estimates the half-width, the base size is scaled by (h_pilot / target)^2 to the
 of two, and convergence is verified by doubling the base size: converged when the doubled
 run's largest half-width is within the target and no index moves by more than the target.
 """
+import warnings
+
 import numpy as np
 
 from nacre.screen.sampling import JointPrior
@@ -137,7 +139,8 @@ def _compute(names, ya, yb, yab, outputs, rows, rng, n_bootstrap, confidence):
                 bf.append(f_)
                 bt.append(t_)
             bf, bt = np.vstack(bf), np.vstack(bt)
-            with np.errstate(all="ignore"):
+            with np.errstate(all="ignore"), warnings.catch_warnings():
+                warnings.simplefilter("ignore", RuntimeWarning)     # an index with no finite resample stays NaN
                 lo1, hi1 = np.nanquantile(bf, [alpha, 1 - alpha], axis=0)
                 lot, hit = np.nanquantile(bt, [alpha, 1 - alpha], axis=0)
         else:

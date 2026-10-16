@@ -1,9 +1,11 @@
 """Contract equivalence: the numpy physics against sympy.lambdify of theory/contract.yaml.
 
 The contract arrives on this branch only through integration, so the file-based tests
-skip with an explicit reason when theory/contract.yaml is absent from the working tree.
-Until then, nacre.physics.devtools.check_contract_equivalence runs the same checks
-against the theory lane's branch and records the commit. The detection tests at the end
+skip with an explicit reason when theory/contract.yaml is absent from the working tree or
+is a different contract version from the one the registry implements
+(nacre.physics.contract.CONTRACT_VERSION). Until integration brings that version,
+nacre.physics.devtools.check_contract_equivalence runs the same checks against the theory
+lane's branch and records the commit (configs/preprint/contract_check.json). The detection tests at the end
 run always: they prove the checker rejects a sign-slipped implementation.
 """
 from pathlib import Path
@@ -23,7 +25,12 @@ ABSENT = "theory/contract.yaml is not on this branch yet (it arrives with integr
 def contract():
     if not (CONTRACT.exists() and SYMBOLS.exists()):
         pytest.skip(ABSENT)
-    return eq.Contract(CONTRACT.read_text(encoding="utf-8"), SYMBOLS.read_text(encoding="utf-8"))
+    c = eq.Contract(CONTRACT.read_text(encoding="utf-8"), SYMBOLS.read_text(encoding="utf-8"))
+    if c.doc.get("version") != registry.CONTRACT_VERSION:
+        pytest.skip("theory/contract.yaml on this branch is version %s; the implementation targets version %s, "
+                    "checked against the theory lane's commit in configs/preprint/contract_check.json"
+                    % (c.doc.get("version"), registry.CONTRACT_VERSION))
+    return c
 
 
 @pytest.mark.parametrize("name", sorted(registry.FUNCTIONS))
@@ -46,6 +53,14 @@ def test_template_barrier_matches_contract_composite(contract):
 
 def test_constant_relations_hold():
     assert eq.check_constants()
+
+
+def test_recorded_check_is_a_pass_for_the_implemented_version():
+    import json
+    rec = json.loads((ROOT / "configs" / "preprint" / "contract_check.json").read_text(encoding="utf-8"))
+    assert rec["status"] == "PASS" and rec["rtol"] == 1e-12
+    assert rec.get("contract_version") == registry.CONTRACT_VERSION
+    assert sorted(rec["functions"]) == sorted(set(registry.FUNCTIONS) | {"DG_het_template"})
 
 
 # ------------------------------------------------------------------ the checker catches slips
@@ -84,3 +99,27 @@ def test_checker_rejects_a_wrong_argument_set(monkeypatch):
     monkeypatch.setitem(registry.FUNCTIONS, "cos_theta_young",
                         registry.Entry(lambda a, b, c: a, entry.args[:3]))
     assert not eq.check_function(eq.Contract(MINI_CONTRACT, MINI_SYMBOLS), "cos_theta_young").ok
+
+
+ILL = """
+functions:
+  - name: x_bind
+    unit: '1'
+    expression: log(1 + gamma_nl) - gamma_nl
+"""
+ILL_SYMBOLS = """
+symbols:
+  - {id: gamma_nl, unit: '1', interval: '(0, 1e-6)'}
+"""
+
+
+def test_conditioning_allowance_never_excuses_a_less_accurate_implementation(monkeypatch):
+    # log(1 + x) - x for tiny x cancels badly: an accurate log1p form passes, a single-
+    # precision evaluation (worse than the contract's own double-precision formula) fails.
+    import numpy as np
+    c = eq.Contract(ILL, ILL_SYMBOLS)
+    monkeypatch.setitem(registry.FUNCTIONS, "x_bind", registry.Entry(lambda g: np.log1p(g) - g, ("gamma_nl",)))
+    assert eq.check_function(c, "x_bind").ok
+    sloppy = lambda g: (np.log1p(np.float32(g)) - np.float32(g)).astype(float)
+    monkeypatch.setitem(registry.FUNCTIONS, "x_bind", registry.Entry(sloppy, ("gamma_nl",)))
+    assert not eq.check_function(c, "x_bind").ok

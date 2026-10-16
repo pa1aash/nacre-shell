@@ -42,7 +42,7 @@ params:
     {symbol: gamma_nl, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
      prior: {family: uniform, low: 1.0, high: 2.0}, sources: [], correlation_group: young}
   gamma_template_liquid:
-    {symbol: gamma_sl, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+    {symbol: gamma_sl0, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
      prior: {family: uniform, low: 0.0, high: 2.0}, sources: [], correlation_group: young}
   gamma_template_nucleus:
     {symbol: gamma_sn0, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
@@ -62,6 +62,15 @@ params:
   gamma_oxide_polymer:
     {symbol: gamma_op, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
      prior: {family: uniform, low: 0.5, high: 1.5}, sources: [], correlation_group: anchor}
+  nucleation_prefactor:
+    {symbol: J0_het, transform: none, unit: m^-2 s^-1, regimes: [R-slurry], status: sourced,
+     prior: {family: loguniform, low: 1.0e10, high: 1.0e20}, sources: [], correlation_group: null}
+  processing_time:
+    {symbol: t_proc, transform: none, unit: s, regimes: [R-slurry], status: design-input,
+     prior: {family: loguniform, low: 10.0, high: 1000.0}, sources: [], correlation_group: null}
+  required_nuclei:
+    {symbol: N_req, transform: none, unit: m^-2, regimes: [R-slurry], status: registered,
+     prior: {family: fixed, value: 1.0e14}, sources: [], correlation_group: null}
   pmf_free_energy:
     {symbol: Delta_F_pmf, transform: none, unit: J, regimes: [shared], status: computed,
      range: null, range_reason: computed in the study (mock), prior: {family: none},

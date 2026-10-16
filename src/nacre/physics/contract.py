@@ -1,4 +1,4 @@
-"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3).
+"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v2).
 
 Maps every contract function name to the physics function that implements it and to the
 contract symbol ids of its arguments, in call order. Constants (k_B, N_A, R_gas, F_c, q_e,
@@ -13,9 +13,13 @@ from typing import Callable, Optional
 
 import numpy as np
 
-from nacre.physics import adhesion, conformality, film, nucleation, sequestration, stability
+from nacre.physics import adhesion, conformality, film, nucleation, sequestration, stability, template
 from nacre.physics import supersaturation as sat
 from nacre.physics import wetting
+from nacre.physics.devtools import wrong_variants
+
+#: Contract version this registry implements; the contract tests skip a different version.
+CONTRACT_VERSION = 2
 
 CONSTANT_IDS = {"k_B", "N_A", "R_gas", "F_c", "q_e", "hbar", "m_e"}
 
@@ -31,8 +35,13 @@ def _young_ratio_in_unit_interval(gamma_sl, gamma_sn0, Delta_gamma_w, gamma_nl):
     return np.abs((gamma_sl - gamma_sn0 - Delta_gamma_w) / gamma_nl) <= 1.0
 
 
+def _theta_in_open_interval(theta, d_max):
+    return (theta > 0) & (theta < np.pi)
+
+
 YOUNG = ("gamma_sl", "gamma_sn0", "Delta_gamma_w", "gamma_nl")
 CNT = ("gamma_nl", "V_m", "Omega", "T")
+BIND = ("Delta_G_seq", "T", "c_bulk", "Gamma_s", "delta_s")
 
 FUNCTIONS = {
     # C1 adhesion in water
@@ -44,16 +53,28 @@ FUNCTIONS = {
     "E_enr": Entry(sequestration.enrichment_factor, ("Delta_G_seq", "T")),
     "c_max": Entry(sequestration.binding_layer_saturation_concentration, ("Gamma_s", "delta_s")),
     "c_local": Entry(sequestration.local_calcium_concentration, ("E_enr", "c_bulk", "c_max")),
+    "x_bind": Entry(sequestration.binding_odds, BIND),
+    "Theta_occ": Entry(sequestration.site_occupancy, BIND),
+    "Gamma_Ca": Entry(sequestration.calcium_surface_excess, BIND),
+    "Delta_gamma_ads": Entry(sequestration.adsorption_interfacial_energy_change, BIND),
+    "gamma_sl_insitu": Entry(template.template_liquid_energy_in_situ, ("gamma_sl0",) + BIND),
     # supersaturation
     "Omega_bulk": Entry(sat.saturation_ratio_bulk, ("a_Ca", "a_CO3", "K_sp")),
-    "Omega_local": Entry(sat.saturation_ratio_local, ("c_local", "c_bulk", "a_Ca", "a_CO3", "K_sp")),
+    "Omega_local_ideal": Entry(wrong_variants.saturation_ratio_local_ideal,
+                               ("c_local", "c_bulk", "a_Ca", "a_CO3", "K_sp")),
     "Delta_mu": Entry(sat.driving_force_per_formula_unit, ("Omega", "T")),
+    "Delta_mu_local_ideal": Entry(wrong_variants.driving_force_local_ideal,
+                                  ("c_local", "c_bulk", "a_Ca", "a_CO3", "K_sp", "T")),
     # C3 nucleation
     "r_star": Entry(nucleation.critical_radius_from_saturation, CNT),
     "DG_hom": Entry(nucleation.homogeneous_barrier_from_saturation, CNT),
     "f_theta": Entry(wetting.shape_factor, ("theta",)),
     "DG_het": Entry(nucleation.heterogeneous_barrier_from_saturation, ("theta",) + CNT),
+    "B_acc": Entry(nucleation.accessible_barrier, ("J0_het", "t_proc", "N_req", "T")),
+    "N_nuc": Entry(nucleation.nucleus_areal_density, ("J0_het", "t_proc", "DG_het", "T")),
     "cos_theta_young": Entry(wetting.contact_angle_cosine_young, YOUNG),
+    "cos_theta_template": Entry(template.contact_angle_cosine_template,
+                                ("gamma_sl0", "gamma_sn0", "Delta_gamma_w", "gamma_nl") + BIND),
     "theta_young": Entry(wetting.contact_angle_young, YOUNG, _young_ratio_in_unit_interval),
     "gamma_eff_deck": Entry(wetting.effective_nucleus_liquid_energy_deck, ("gamma_nl", "Delta_gamma_w")),
     "cos_theta_deck": Entry(wetting.contact_angle_cosine_deck,
@@ -65,6 +86,7 @@ FUNCTIONS = {
     "S_spread": Entry(conformality.spreading_coefficient, YOUNG),
     "h_c": Entry(conformality.coalescence_thickness, ("theta", "N_s")),
     "h_cl": Entry(conformality.closure_thickness, ("theta", "N_s")),
+    "N_s_closure": Entry(conformality.closure_island_density, ("theta", "d_max"), _theta_in_open_interval),
     # C5 stability
     "Psi_pbx": Entry(stability.pourbaix_potential,
                      ("G_phase", "mu_H2O", "N_O", "N_H", "N_M", "Q_charge", "T", "pH", "E_SHE")),

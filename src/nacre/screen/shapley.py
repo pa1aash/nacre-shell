@@ -34,6 +34,8 @@ does not count, so the effects describe the variance of the in-domain part of th
 """
 from math import factorial
 
+import warnings
+
 import numpy as np
 from scipy import stats
 
@@ -185,7 +187,8 @@ def shapley_effects(model, joint, outputs, n_var, n_outer, n_inner, rng, key="na
                 cb[:, full] = vb
                 boots.append((cb @ a.T) / vb[:, None])
             boots = np.vstack(boots)
-            with np.errstate(all="ignore"):
+            with np.errstate(all="ignore"), warnings.catch_warnings():
+                warnings.simplefilter("ignore", RuntimeWarning)     # an index with no finite resample stays NaN
                 lo, hi = np.nanquantile(boots, [alpha, 1 - alpha], axis=0)
         result[o] = {n: {"estimate": float(est[i]), "ci_low": float(lo[i]), "ci_high": float(hi[i])}
                      for i, n in enumerate(names)}

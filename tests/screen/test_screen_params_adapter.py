@@ -40,7 +40,7 @@ def test_mock_table_reads_into_a_correlated_joint_prior():
     assert rp.unsampled == {"Delta_F_pmf": "prior family none: computed in the study (mock)"}
     sym = rp.joint.symbols
     rs = rp.joint.spearman
-    assert rs[sym.index("gamma_sl"), sym.index("gamma_sn0")] == 0.6
+    assert rs[sym.index("gamma_sl0"), sym.index("gamma_sn0")] == 0.6
     assert rs[sym.index("gamma_nl"), sym.index("gamma_sn0")] == 0.3
     assert rs[sym.index("gamma_ow"), sym.index("gamma_pw")] == 0.0      # assumed independent
     assert rp.joint.dependence_record()["method"] == "gaussian_copula"
