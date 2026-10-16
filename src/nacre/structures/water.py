@@ -1,0 +1,139 @@
+"""Water geometry and a water layer packed above a substrate by random sequential insertion.
+
+Insertion rule (minimum-distance rule): a trial molecule at a uniformly random position
+and orientation is accepted only if its O is at least ``min_oo`` from every O of
+the substrate and earlier waters, at least ``min_heavy`` from every other non-H atom,
+and every one of its atoms is at least ``min_any`` from every atom outside the molecule.
+Distances use the minimum image in the periodic directions of the substrate.
+"""
+from __future__ import annotations
+
+import numpy as np
+
+from nacre.structures.meta import formal_charge, stamp
+
+# Rigid water geometry (gas-phase experimental values, also used by common rigid models).
+WATER = {"r_oh": 0.9572, "angle_hoh_deg": 104.52}
+
+DEFAULTS = {
+    "gap": 1.6,
+    "thickness": 8.0,
+    "density_g_cm3": 1.0,
+    "n_molecules": None,
+    "min_oo": 2.5,
+    "min_heavy": 2.4,
+    "min_any": 1.5,
+    "max_attempts": 200000,
+    **WATER,
+}
+
+
+def water_frame(r_oh=WATER["r_oh"], angle_hoh_deg=WATER["angle_hoh_deg"]):
+    """O at origin, dipole (O -> H midpoint) along +z, molecule in the xz plane."""
+    half = np.radians(angle_hoh_deg) / 2.0
+    h1 = r_oh * np.array([np.sin(half), 0.0, np.cos(half)])
+    h2 = r_oh * np.array([-np.sin(half), 0.0, np.cos(half)])
+    return np.array([[0.0, 0.0, 0.0], h1, h2])
+
+
+def random_rotation(rng):
+    """Uniform random rotation matrix (from a random unit quaternion)."""
+    q = rng.normal(size=4)
+    q /= np.linalg.norm(q)
+    w, x, y, z = q
+    return np.array([
+        [1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
+        [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
+        [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)],
+    ])
+
+
+def _mic(d, cell, pbc):
+    if not any(pbc):
+        return d
+    inv = np.linalg.inv(cell)
+    f = d @ inv
+    for k in range(3):
+        if pbc[k]:
+            f[..., k] -= np.round(f[..., k])
+    return f @ cell
+
+
+def build(substrate, params=None, seed=0):
+    """Return substrate + water layer, with a per-atom ``component`` array."""
+    from ase import Atoms
+    from ase.data import atomic_masses, atomic_numbers
+
+    p = {**DEFAULTS, **(params or {})}
+    rng = np.random.default_rng(seed)
+    cell = np.asarray(substrate.cell)
+    pbc = tuple(bool(x) for x in substrate.pbc)
+    sub_pos = substrate.get_positions()
+    sub_sym = np.array(substrate.get_chemical_symbols())
+    z0 = sub_pos[:, 2].max() + p["gap"]
+    z1 = z0 + p["thickness"]
+    area = np.linalg.norm(np.cross(cell[0], cell[1]))
+    if p["n_molecules"] is not None:
+        target = int(p["n_molecules"])
+    else:
+        m_w = 2 * atomic_masses[atomic_numbers["H"]] + atomic_masses[atomic_numbers["O"]]
+        n_per_a3 = p["density_g_cm3"] / m_w * 0.602214076  # mol/cm^3 -> molecules/A^3
+        target = int(round(n_per_a3 * area * p["thickness"]))
+
+    frame = water_frame(p["r_oh"], p["angle_hoh_deg"])
+    pos = [sub_pos]
+    sym = [sub_sym]
+    all_pos = sub_pos.copy()
+    all_sym = sub_sym.copy()
+    placed = attempts = 0
+    while placed < target and attempts < p["max_attempts"]:
+        attempts += 1
+        fx, fy = rng.uniform(0, 1, size=2)
+        o = fx * cell[0] + fy * cell[1]
+        o[2] = rng.uniform(z0, z1)
+        mol = o + frame @ random_rotation(rng).T
+        # O-H must also lie inside the slab-normal window so H does not dip into the substrate.
+        if mol[:, 2].min() < z0 - p["gap"] + p["min_any"]:
+            continue
+        d = _mic(mol[:, None, :] - all_pos[None, :, :], cell, pbc)
+        r = np.linalg.norm(d, axis=-1)
+        if r.min() < p["min_any"]:
+            continue
+        heavy = all_sym != "H"
+        if r[0, heavy].min(initial=np.inf) < p["min_heavy"]:
+            continue
+        is_o = all_sym == "O"
+        if r[0, is_o].min(initial=np.inf) < p["min_oo"]:
+            continue
+        all_pos = np.vstack([all_pos, mol])
+        all_sym = np.concatenate([all_sym, ["O", "H", "H"]])
+        placed += 1
+
+    n_sub = len(substrate)
+    atoms = Atoms(symbols=list(all_sym), positions=all_pos, cell=cell, pbc=pbc)
+    comp = np.array(["substrate"] * n_sub + ["water"] * (len(atoms) - n_sub))
+    atoms.new_array("component", comp)
+    sub_info = dict(substrate.info)
+    stamp(
+        atoms,
+        builder="nacre.structures.water.build",
+        params={**p, "substrate_builder": sub_info.get("builder")},
+        seed=seed,
+        source_ids=_parse(sub_info.get("source_ids")),
+        total_charge=formal_charge(atoms.get_chemical_symbols()),
+        notes="water layer by random sequential insertion under a minimum-distance rule; "
+        "not equilibrated",
+    )
+    atoms.info["n_water_target"] = target
+    atoms.info["n_water_placed"] = placed
+    atoms.info["insertion_attempts"] = attempts
+    atoms.info["substrate_params"] = sub_info.get("params") if isinstance(sub_info.get("params"), str) else ""
+    return atoms
+
+
+def _parse(v):
+    import json
+
+    if isinstance(v, str):
+        return json.loads(v)
+    return v or {}
