@@ -20,6 +20,7 @@
     "Contract tests read theory/contract.yaml from the working tree and skip until integration brings it to this branch.",
     "Double counting via gamma_sn lowers the barrier (overstates the template); via gamma_sl raises it; sign depends on P0-W3.2.",
     "Screen nucleation link still takes cos_theta directly; W4.2 wires Young and Omega_local, adapts to lit/params.yaml, freezes thresholds.",
-    ".venv is a symlink to ~/.nacre-venvs/p-w4."
+    ".venv is a symlink to ~/.nacre-venvs/p-w4.",
+    "fix-up: tolerance"
   ]
 }
