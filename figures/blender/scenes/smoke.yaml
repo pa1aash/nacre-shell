@@ -1,0 +1,13 @@
+# Day 1 smoke scene: a small hydroxylated alumina slab, a few waters and one hydrated Ca2+.
+# Low resolution and sample count by design (R10).
+name: smoke
+description: pipeline check, not a figure
+resolution: [640, 480]
+samples: 32
+camera:
+  direction: [0.25, 1.0, -0.30]
+  up: [0.0, 0.0, 1.0]
+  margin: 1.06
+components:
+  - file: structures/preprint/smoke_interface.extxyz
+    style: ball_and_stick

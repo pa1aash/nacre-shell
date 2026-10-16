@@ -1,0 +1,137 @@
+{
+ "blender_version": "5.2.2 LTS",
+ "camera": {
+  "direction": [
+   0.25,
+   1.0,
+   -0.3
+  ],
+  "margin": 1.06,
+  "ortho_scale": 35.8271,
+  "type": "ORTHO",
+  "up": [
+   0.0,
+   0.0,
+   1.0
+  ]
+ },
+ "counts": {
+  "atoms": 295,
+  "elements": [
+   "Al",
+   "Ca",
+   "H",
+   "O"
+  ],
+  "half_bonds": 906
+ },
+ "elements_table_sha256": "84a79466dda3a3445b8ac856aaeaea1069b10e54b49ed11f3f21435d6e14706b",
+ "inputs": [
+  {
+   "file": "structures/preprint/smoke_interface.extxyz",
+   "sha256": "929c64a0bef2c18e97de01c431a960391898c46c97122e8355d847658b112f1b"
+  }
+ ],
+ "output": "figures/renders/smoke/smoke.png",
+ "output_bytes": 236291,
+ "output_sha256": "a428d2a21cf8ffc4e76df8a607d89977ff7842864fcd5baece4e7be05107bc10",
+ "palette": {
+  "colour_space": "linear RGB (palette elements.<El>.linear_rgb) as Principled base colour",
+  "colours_used": {
+   "Al": [
+    0.6773,
+    0.5329,
+    0.3975
+   ],
+   "Ca": [
+    0.0466,
+    1.0,
+    0.0
+   ],
+   "H": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "O": [
+    1.0,
+    0.004,
+    0.004
+   ]
+  },
+  "git_blob": "a64f5e8452abf5d511194e92302fed42e3e9dc0b",
+  "path": ".local/w7/palette.yaml",
+  "sha256": "e22fbfa6e0676491c7de9b450792763b92cd7aaa6a0d940b8a62b6cb0e62af19"
+ },
+ "png_chunks_dropped": [
+  "eXIf",
+  "tEXt"
+ ],
+ "python": "3.13.13",
+ "render": {
+  "adaptive_sampling": false,
+  "colour_management": {
+   "exposure": 0.0,
+   "gamma": 1.0,
+   "look": "None",
+   "view_transform": "Standard"
+  },
+  "denoise": true,
+  "denoiser": "OPENIMAGEDENOISE",
+  "device": "CPU",
+  "engine": "CYCLES",
+  "film_transparent": true,
+  "max_bounces": 4,
+  "output": {
+   "color_depth": "8",
+   "color_mode": "RGBA",
+   "compression": 100,
+   "format": "PNG"
+  },
+  "resolution": [
+   640,
+   480
+  ],
+  "samples": 32,
+  "seed": 0,
+  "threads": 4
+ },
+ "rig": {
+  "distance_factor": 3.0,
+  "fill": {
+   "azimuth": 50.0,
+   "elevation": 10.0,
+   "irradiance": 1.4,
+   "size_frac": 1.0
+  },
+  "key": {
+   "azimuth": -35.0,
+   "elevation": 40.0,
+   "irradiance": 4.0,
+   "size_frac": 0.6
+  },
+  "rim": {
+   "azimuth": 170.0,
+   "elevation": 35.0,
+   "irradiance": 2.5,
+   "size_frac": 0.5
+  },
+  "world": {
+   "colour": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "strength": 0.35
+  }
+ },
+ "scene": "smoke",
+ "scene_config": "figures/blender/scenes/smoke.yaml",
+ "scene_config_sha256": "c1a8885d0b6bce0ce078f3213101867ef1ae29ab7af27e0c5057dcb0edcba038",
+ "text_objects": 0,
+ "timing_s": {
+  "build": 5.36,
+  "render": 26.58
+ },
+ "yaml_source": "pure-python from .venv/lib/python3.12/site-packages"
+}

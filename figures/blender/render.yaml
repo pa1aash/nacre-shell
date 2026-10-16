@@ -1,0 +1,43 @@
+# Render settings shared by every scene (lane p0-w7). Paths are relative to the repository root.
+#
+# palette: the ONE value that selects element colours. It points at a local copy of lane p0-w6's
+#   figures/style/palette.yaml, made with
+#     git show origin/preprint/p0-w6:figures/style/palette.yaml > .local/w7/palette.yaml
+#   Materials use each element's linear_rgb entry (scene-linear), never srgb.
+#   To switch to a revised palette, copy the revised file and change this path only.
+palette: .local/w7/palette.yaml
+elements: figures/blender/elements.yaml
+
+engine:
+  name: CYCLES
+  device: CPU
+  samples: 64          # scenes may lower or raise this with their own `samples`
+  seed: 0
+  threads: 4           # also passed on the command line as --threads 4 (R10)
+  adaptive_sampling: false
+  denoise: true
+  denoiser: OPENIMAGEDENOISE
+  max_bounces: 4
+
+colour_management:
+  view_transform: Standard   # identity tone mapping, so palette colours are not shifted by a filmic curve
+  look: None
+  exposure: 0.0
+  gamma: 1.0
+
+film_transparent: true
+output: {format: PNG, color_mode: RGBA, color_depth: '8', compression: 100}
+
+material:
+  roughness: 0.38
+  specular_ior_level: 0.35
+
+styles:
+  ball_and_stick: {atom_radius: vdw, atom_scale: 0.28, bond_radius: 0.14, bonds: true}
+  space_filling: {atom_radius: vdw, atom_scale: 1.0, bonds: false}
+
+bonds:
+  factor: 1.15      # bonded if distance < factor x (sum of covalent radii)
+  pairs: [[H, O], [C, H], [C, C], [C, N], [C, O], [N, H], [Al, O], [Ca, O]]
+
+mesh: {sphere_segments: 32, sphere_rings: 16, bond_segments: 16}
