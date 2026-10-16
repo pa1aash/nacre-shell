@@ -469,6 +469,15 @@ decisions:
 - {id: D7, date: '2026-10-16', decision: 'Test module basenames are unique across tests/, enforced by
     nacre verify.', reason: A W5 and a W7 test module shared a basename and pytest could not collect both
     once merged; each lane passed alone.}
+- {id: D8, date: '2026-10-16', decision: 'The integrator may make mechanical cross-lane fixes inside merge
+    commits (renames, test tolerances or hypothesis settings, regenerating generated files), each recorded
+    as a decision. Anything that changes behaviour or science goes back to the owning lane.', reason: 'Four
+    day 1 merges each failed on a defect that no single lane could see; a round trip per mechanical defect
+    costs a day, a behavioural change without its owner risks the science.'}
+- {id: D9, date: '2026-10-16', decision: 'tests/physics/test_physics_sign_flip.py::test_sf1_deck_form_lowers_the_barrier_on_the_wetting_side
+    suppresses the filter_too_much health check (applied in the merge commit of the P0-W8.1 fix-up).',
+  reason: The strategy filters heavily and the health check failed on seeds 41 and 73 (not on seeds 1
+    to 10); W4.2 replaces the strategy with a direct generator of the valid region.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -520,3 +529,12 @@ lane_notes:
   day: 2
   lanes: [p0-w8]
   note: Sentences drawn from lit/novelty.md or lit/contrary.md must pass lint-scope.
+- id: N9
+  date: '2026-10-16'
+  day: 2
+  lanes: [p0-w4]
+  note: 'Replace the filtering strategy of test_sf1 with a direct generator of the region where the deck
+    form applies, then remove the health-check suppression (D9). Review the other hypothesis tests for
+    heavy filtering. Seed 19 (--hypothesis-seed=19) still fails with ValueError "cos_theta must lie in
+    [-1.0, 1.0]" for excess=0.5, sn0=0.698451471401042, nl=1.0, dw=0.5: the strategy admits inputs where
+    the deck form leaves its domain. This is not a health-check problem and was not changed here.'
