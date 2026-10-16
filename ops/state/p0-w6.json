@@ -1,5 +1,30 @@
 {
-  "last_session": null,
-  "status": "READY",
-  "day": 1
+  "last_session": "P0-W6.1",
+  "status": "DONE",
+  "day": 1,
+  "palette_sha": "9307edcac3e6a014920e02ed8e8a855c4d56660e",
+  "artifacts": [
+    "figures/style/rsc_spec.yaml",
+    "figures/style/fetch_log.jsonl",
+    "figures/style/build_style.py",
+    "figures/style/rsc.mplstyle",
+    "figures/style/build_palette.py",
+    "figures/style/palette.yaml",
+    "src/nacre/figs/",
+    "figures/src/fig4.py",
+    "figures/src/fig5.py",
+    "figures/src/fig6.py",
+    "figures/src/fig7.py",
+    "figures/src/mock/",
+    "figures/src/schemas/",
+    "figures/out/mock/",
+    "tests/figs/",
+    "ops/reports/P0-W6.1.md"
+  ],
+  "notes": [
+    "rsc spec: 18 values sourced, 7 outstanding",
+    "palette: delta_e_min 20 (CAM02-UCS); only Al adjusted (#BFA6A6 -> #D7C1A9) for Al-C",
+    "templates fig4-fig7 built on mock data; checker pass",
+    "schemas assumed; reconcile Day 2 with p0-w2/w3/w4/w5"
+  ]
 }
