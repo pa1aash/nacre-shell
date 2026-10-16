@@ -10,6 +10,14 @@ kind of decoration cannot slip through.
 Style limits (from figures/style/rsc_spec.yaml, applied section): every visible text at least
 font_size, all text in one font family, every visible stroke at least line_width_min, the
 figure exactly one RSC column width and no taller than the RSC maximum.
+
+The written PDF is checked as well, so that nothing added outside matplotlib's artist tree (or
+by a later tool) escapes:
+  data figures   every text span lies inside the box of a tick label, an axis title, a
+                 colour-bar label or a panel letter (allowed_text_boxes, check_pdf_text);
+  schematics     no text at all: no text spans, no fonts, no text operators (check_pdf_no_text),
+                 every stroke at least the minimum width and the page one RSC column wide
+                 (check_pdf_schematic).
 """
 from matplotlib import font_manager
 from matplotlib.axes import Axes
@@ -198,3 +206,117 @@ def assert_clean(fig, root=None):
     problems = check_rsc(fig, root)
     if problems:
         raise FigureCheckError(problems)
+
+
+# ------------------------------------------------------------------------- PDF-level checks
+
+_PT_PER_IN = 72.0
+_BOX_PAD_PT = 1.0
+
+
+def _fig_box_pt(fig, bbox):
+    """A display-space bbox as (x0, y0, x1, y1) in PDF points, origin at the top left."""
+    w_px, h_px = fig.bbox.width, fig.bbox.height
+    w_pt, h_pt = (x * _PT_PER_IN for x in fig.get_size_inches())
+    x0, x1 = bbox.x0 / w_px * w_pt, bbox.x1 / w_px * w_pt
+    y0, y1 = h_pt - bbox.y1 / h_px * h_pt, h_pt - bbox.y0 / h_px * h_pt
+    return (x0 - _BOX_PAD_PT, y0 - _BOX_PAD_PT, x1 + _BOX_PAD_PT, y1 + _BOX_PAD_PT)
+
+
+def allowed_text_boxes(fig):
+    """[(kind, text, box)] of every text a data figure may contain, in PDF points.
+
+    Allowed: tick labels and the axis offset text (the scale), axis titles, colour-bar tick
+    labels and title (a colour bar is an axes), and panel letters. Call after the figure has
+    been laid out (check() draws it).
+    """
+    fig.canvas.draw()
+    r = fig.canvas.get_renderer()
+    out = []
+    for ax in fig.axes:
+        cb = "colour-bar " if _is_colorbar(ax) else ""
+        for axis in (ax.xaxis, ax.yaxis):
+            texts = [("%stick label" % cb, t) for t in axis.get_ticklabels(which="both")]
+            texts += [("%saxis title" % cb, axis.label), ("%sscale" % cb, axis.get_offset_text())]
+            for kind, t in texts:
+                if t.get_visible() and t.get_text().strip():
+                    out.append((kind, t.get_text(), _fig_box_pt(fig, t.get_window_extent(r))))
+        t = ax._left_title
+        if t.get_visible() and t.get_text().strip() and t.get_gid() == PANEL_GID:
+            out.append(("panel letter", t.get_text(), _fig_box_pt(fig, t.get_window_extent(r))))
+    return out
+
+
+def pdf_text_spans(pdf_path):
+    """[(page, text, (x0, y0, x1, y1))] of every text span in a PDF, in points, top-left origin."""
+    import pymupdf
+    out = []
+    with pymupdf.open(pdf_path) as doc:
+        for pno, page in enumerate(doc):
+            for block in page.get_text("rawdict")["blocks"]:
+                for line in block.get("lines", []):
+                    for span in line["spans"]:
+                        text = "".join(c["c"] for c in span["chars"])
+                        if text.strip():
+                            out.append((pno, text, tuple(span["bbox"])))
+    return out
+
+
+def _inside(box, outer):
+    cx, cy = (box[0] + box[2]) / 2, (box[1] + box[3]) / 2
+    return outer[0] <= cx <= outer[2] and outer[1] <= cy <= outer[3]
+
+
+def check_pdf_text(pdf_path, boxes):
+    """Problems for text spans of a data-figure PDF that lie outside every allowed box."""
+    problems = []
+    for pno, text, bbox in pdf_text_spans(pdf_path):
+        if not any(_inside(bbox, b) for _k, _t, b in boxes):
+            problems.append("PDF text %r at (%.1f, %.1f) pt is not a tick label, axis title, colour-bar "
+                            "label or panel letter" % (text, bbox[0], bbox[1]))
+    return problems
+
+
+def _content_has_text_operators(doc, page):
+    import re
+    data = b"".join(doc.xref_stream(x) or b"" for x in page.get_contents())
+    return re.search(rb"(^|[\s\]])BT([\s]|$)", data) is not None
+
+
+def check_pdf_no_text(pdf_path):
+    """Problems for any text in a schematic PDF (R7: the default schematics carry no text)."""
+    import pymupdf
+    problems = []
+    for pno, text, bbox in pdf_text_spans(pdf_path):
+        problems.append("schematic PDF page %d contains text %r at (%.1f, %.1f) pt" % (pno, text, bbox[0], bbox[1]))
+    with pymupdf.open(pdf_path) as doc:
+        for pno, page in enumerate(doc):
+            fonts = page.get_fonts(full=True)
+            if fonts:
+                problems.append("schematic PDF page %d embeds %d font(s): %s"
+                                % (pno, len(fonts), ", ".join(sorted({f[3] for f in fonts}))))
+            if _content_has_text_operators(doc, page):
+                problems.append("schematic PDF page %d has a text object (BT operator)" % pno)
+    return problems
+
+
+def check_pdf_schematic(pdf_path, min_line_pt, widths_pt, max_height_pt, text_free=True):
+    """No text (when text_free), strokes at least min_line_pt, one page at an RSC column width."""
+    import pymupdf
+    problems = check_pdf_no_text(pdf_path) if text_free else []
+    with pymupdf.open(pdf_path) as doc:
+        if doc.page_count != 1:
+            problems.append("schematic PDF has %d pages" % doc.page_count)
+        for pno, page in enumerate(doc):
+            w, h = page.rect.width, page.rect.height
+            if not any(abs(w - x) < 0.5 for x in widths_pt):
+                problems.append("schematic page width %.2f pt is not an RSC column width" % w)
+            if h > max_height_pt + 0.5:
+                problems.append("schematic page height %.2f pt exceeds the RSC maximum" % h)
+            # PDF user space is in PostScript points (1/72 in), the unit the spec's pt values use.
+            thin = sorted({round(d["width"], 3) for d in page.get_drawings()
+                           if d.get("type") in ("s", "fs") and d.get("width") is not None
+                           and _thin(d["width"], min_line_pt)})
+            if thin:
+                problems.append("schematic strokes below %.1f pt: %s" % (min_line_pt, ", ".join("%g" % t for t in thin)))
+    return problems

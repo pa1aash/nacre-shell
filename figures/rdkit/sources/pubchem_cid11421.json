@@ -1,0 +1,13 @@
+{
+  "PropertyTable": {
+    "Properties": [
+      {
+        "CID": 11421,
+        "SMILES": "C1=CC(=O)C(=O)C=C1",
+        "InChIKey": "WOAHJDHKFWSLKE-UHFFFAOYSA-N",
+        "IUPACName": "cyclohexa-3,5-diene-1,2-dione",
+        "Title": "1,2-Benzoquinone"
+      }
+    ]
+  }
+}

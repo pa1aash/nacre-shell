@@ -3,11 +3,17 @@
 A template is figures/src/figN.py defining:
   FIGURE  dict with id, claim (the one physical claim the figure carries), caption_key (what
           the caption must identify, since the figure holds no legend or labels), width
-          ('single' | 'double'), height_cm, schema, mock_input and input (repo-relative paths);
-  build(data, root) -> matplotlib Figure.
+          ('single' | 'double'), height_cm, schema (an owner contract, "upstream:<key>", or a
+          schema path), mock_input and input (repo-relative paths), and optionally aux:
+          {name: "upstream:<key>" | {"mock": path, "real": path}} for further inputs (the
+          parameter rows behind threshold contours, for example);
+  build(data, root, aux) -> matplotlib Figure.
 
 Mock inputs carry "mock": true and render only into figures/out/mock/. Real inputs must not
-carry it and render into figures/out/.
+carry it and render into figures/out/. An aux file follows the same rule as the main input.
+
+After saving, the PDF itself is checked: every text span in it must lie inside the box of a
+tick label, an axis title, a colour-bar label or a panel letter (checker.check_pdf_text).
 """
 import hashlib
 import importlib.util
@@ -15,7 +21,9 @@ import json
 import re
 from pathlib import Path
 
-from nacre.figs import checker, paths, schema, style
+import yaml
+
+from nacre.figs import checker, paths, schema, style, upstream
 
 _FIG_RE = re.compile(r"^fig(\d+)\.py$")
 _REQUIRED = ("id", "claim", "caption_key", "width", "height_cm", "schema", "mock_input", "input")
@@ -69,20 +77,48 @@ def load_input(root, mod, mock):
         raise FigureError("%s: mock input must carry \"mock\": true" % fig["id"])
     if not mock and data.get("mock") is True:
         raise FigureError("%s: input %s is marked mock" % (fig["id"], path))
-    sch = json.loads((Path(root) / fig["schema"]).read_text())
+    sch, cite = schema.resolve(fig["schema"], root)
     errs = schema.validate(data, sch)
     if errs:
-        raise FigureError("%s: input does not match %s:\n  %s" % (fig["id"], fig["schema"], "\n  ".join(errs)))
+        raise FigureError("%s: input does not match %s:\n  %s" % (fig["id"], cite, "\n  ".join(errs[:20])))
     return data, path
 
 
-def make_figure(root, mod, data):
+def _read(path):
+    text = Path(path).read_text()
+    return json.loads(text) if Path(path).suffix == ".json" else yaml.safe_load(text)
+
+
+def load_aux(root, mod, mock):
+    """{name: (data, citation)} for FIGURE["aux"], or None when a real aux file is absent."""
+    out = {}
+    for name, ref in mod.FIGURE.get("aux", {}).items():
+        if isinstance(ref, str) and ref.startswith(schema.UPSTREAM):
+            key = ref[len(schema.UPSTREAM):]
+            out[name] = (upstream.load(key, root), upstream.cite(key, root))
+            continue
+        path = Path(root) / ref["mock" if mock else "real"]
+        if not path.exists():
+            if mock:
+                raise FigureError("%s: mock aux %s missing" % (mod.FIGURE["id"], path))
+            return None
+        data = _read(path)
+        marked = isinstance(data, dict) and data.get("mock") is True
+        if mock and not marked:
+            raise FigureError("%s: mock aux %s must carry mock: true" % (mod.FIGURE["id"], path))
+        if not mock and marked:
+            raise FigureError("%s: aux %s is marked mock" % (mod.FIGURE["id"], path))
+        out[name] = (data, "%s sha256:%s" % (Path(path).resolve().relative_to(Path(root).resolve()), _sha(path)))
+    return out
+
+
+def make_figure(root, mod, data, aux=None):
     plt = style.use(root)
-    fig = mod.build(data, root)
+    fig = mod.build(data, root, {k: v[0] for k, v in (aux or {}).items()})
     return plt, fig
 
 
-def render(root, mod, data, input_path, out_dir, tiff=False, cvd=True):
+def render(root, mod, data, input_path, out_dir, tiff=False, cvd=True, aux=None):
     root = Path(root)
     p = paths(root)
     fid = mod.FIGURE["id"]
@@ -91,7 +127,7 @@ def render(root, mod, data, input_path, out_dir, tiff=False, cvd=True):
         raise FigureError("%s: mock output goes only to %s" % (fid, p["out_mock"].relative_to(root)))
     if not is_mock and Path(out_dir).resolve() == p["out_mock"].resolve():
         raise FigureError("%s: real output must not go to the mock directory" % fid)
-    plt, fig = make_figure(root, mod, data)
+    plt, fig = make_figure(root, mod, data, aux)
     try:
         expected = style.figsize(mod.FIGURE["width"], mod.FIGURE["height_cm"], root)
         got = tuple(fig.get_size_inches())
@@ -105,8 +141,12 @@ def render(root, mod, data, input_path, out_dir, tiff=False, cvd=True):
         dpi = int(style.applied(root)["raster_dpi"]["value"])
         pdf = out_dir / (fid + ".pdf")
         png = out_dir / (fid + ".png")
+        boxes = checker.allowed_text_boxes(fig)
         fig.savefig(pdf, format="pdf", metadata={"Creator": None, "Producer": None, "CreationDate": None})
         fig.savefig(png, format="png", dpi=dpi, metadata={"Software": None})
+        problems = checker.check_pdf_text(pdf, boxes)
+        if problems:
+            raise checker.FigureCheckError(["%s: %s" % (fid, x) for x in problems])
         outputs = [pdf, png]
         if tiff:
             tif = out_dir / (fid + ".tiff")
@@ -129,8 +169,10 @@ def render(root, mod, data, input_path, out_dir, tiff=False, cvd=True):
         "size_cm": [round(w * style.CM_PER_IN, 2), round(h * style.CM_PER_IN, 2)],
         "input": str(Path(input_path).resolve().relative_to(root.resolve())),
         "input_sha256": _sha(input_path),
+        "schema": schema.resolve(mod.FIGURE["schema"], root)[1],
+        "aux": {k: v[1] for k, v in sorted((aux or {}).items())},
         "outputs": {str(o.resolve().relative_to(root.resolve())): _sha(o) for o in outputs},
-        "checker": "pass",
+        "checker": "pass (artists and PDF text)",
     }
 
 
@@ -140,6 +182,8 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
     p = paths(root)
     out_dir = p["out_mock"] if mock else p["out"]
     records, failures = [], []
+    for key, msg in upstream.drift(root):
+        log("upstream %s: %s" % (key, msg))
     templates = discover(root)
     if only:
         wanted = set(only)
@@ -151,10 +195,11 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
         try:
             mod = load_template(path)
             data, input_path = load_input(root, mod, mock)
-            if data is None:
-                log("%s: skipped, input %s not present yet" % (path.stem, input_path.relative_to(root)))
+            aux = load_aux(root, mod, mock) if data is not None else None
+            if data is None or aux is None:
+                log("%s: skipped, real input not present yet" % path.stem)
                 continue
-            rec = render(root, mod, data, input_path, out_dir, tiff=tiff, cvd=cvd)
+            rec = render(root, mod, data, input_path, out_dir, tiff=tiff, cvd=cvd, aux=aux)
             records.append(rec)
             log("%s: ok -> %s" % (rec["id"], ", ".join(sorted(rec["outputs"]))))
         except checker.FigureCheckError as exc:

@@ -120,6 +120,24 @@ values:
     locator: Prepare your article > Chemical structures, settings list, item 'Bold bond width'
     quote: Bold bond width = 0.056 cm or 1.6 pt
     venue_field: structure.bold_bond_width
+  structure_chain_angle:
+    value: 120
+    unit: deg
+    source: S1
+    locator: Prepare your article > Chemical structures, settings list, item 'Chain bond angle'
+    quote: Chain bond angle = 120°
+  structure_bond_length:
+    value: 12.2
+    unit: pt
+    source: S1
+    locator: Prepare your article > Chemical structures, settings list, item 'Bond length'
+    quote: Bond length = 0.43 cm or 12.2 pt
+  structure_double_bond_space:
+    value: 0.20
+    unit: fraction of bond length
+    source: S1
+    locator: Prepare your article > Chemical structures, settings list, item 'Double bond space'
+    quote: Double bond space = 20% of bond length
   structure_resolution:
     value: 600
     unit: dpi
@@ -293,3 +311,40 @@ applied:
     value: '#000000'
     house: true
     reason: black text and strokes for maximum contrast (values.legibility)
+  structure_bond_length:
+    value: 12.2
+    unit: pt
+    from: values.structure_bond_length
+    rule: the stated bond length, used for every RDKit structure drawing (figures/rdkit)
+  structure_bond_width:
+    value: 0.5
+    unit: pt
+    from: values.structure_bond_width
+    rule: the stated plain bond width, used for every bond stroke of the RDKit drawings
+  structure_double_bond_space:
+    value: 0.20
+    unit: fraction of bond length
+    from: values.structure_double_bond_space
+    rule: the stated spacing, passed to RDKit as the multiple-bond offset
+  structure_label_font_size:
+    value: 7
+    unit: pt
+    from: values.structure_label_font_size
+    rule: the stated atom-label size, the only text in the stand-alone RDKit drawings
+  schematic_stroke:
+    value: 0.5
+    unit: pt
+    from: values.structure_bond_width
+    rule: the plain bond width is the thinnest stroke of the TikZ schematics (Fig. 2, Fig. 3), so the
+      pictogram bonds and the outlines read at the same weight
+  schematic_stroke_bold:
+    value: 1.6
+    unit: pt
+    from: values.structure_bold_bond_width
+    rule: the bold bond width carries the process arrows of the TikZ schematics, which must read above the
+      structure strokes
+  schematic_text:
+    value: none
+    house: true
+    reason: R7, the default versions of the schematic figures contain no text at all; every identification is
+      in the caption, by position

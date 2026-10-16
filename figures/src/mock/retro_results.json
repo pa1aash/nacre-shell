@@ -1,0 +1,326 @@
+{
+ "schema": "retro-results/v1",
+ "mock": true,
+ "cases_sha256": "sha256:da46f551064bb728e2e17e93697e3eda0200736fb236e84ccb59c9506c0294b3",
+ "criterion_sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+ "fixed_before_run_commit": "0000000000000000000000000000000000000000",
+ "provenance": {
+  "git_sha": "0000000000000000000000000000000000000000",
+  "git_dirty": false,
+  "contract_sha": "0000000000000000000000000000000000000000",
+  "params_file_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+ },
+ "draws": 20000,
+ "seed": 0,
+ "cases": [
+  {
+   "id": "RC01",
+   "label": "C16-SH vs C16-COOH",
+   "termination": "thiol",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 106.545,
+    "q05": 96.5449,
+    "q95": 118.082
+   },
+   "barrier_reference": {
+    "median": 77.4353,
+    "q05": 54.2047,
+    "q95": 100.666
+   },
+   "delta": {
+    "median": 29.1096,
+    "q05": 19.1096,
+    "q95": 40.647
+   },
+   "p_test_higher": 0.872154,
+   "boundary_mass": 0.0615658,
+   "verdict": "correct"
+  },
+  {
+   "id": "RC02",
+   "label": "C11-SH vs C16-COOH",
+   "termination": "thiol",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 56.4324,
+    "q05": 47.4324,
+    "q95": 67.5795
+   },
+   "barrier_reference": {
+    "median": 41.8175,
+    "q05": 29.2722,
+    "q95": 54.3627
+   },
+   "delta": {
+    "median": 14.6149,
+    "q05": 5.61495,
+    "q95": 25.762
+   },
+   "p_test_higher": 0.809443,
+   "boundary_mass": 0.0308795,
+   "verdict": "correct"
+  },
+  {
+   "id": "RC03",
+   "label": "C11-PO4 vs C16-COOH",
+   "termination": "phosphate",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 76.5176,
+    "q05": 46.5176,
+    "q95": 111.079
+   },
+   "barrier_reference": {
+    "median": 36.704,
+    "q05": 25.6928,
+    "q95": 47.7152
+   },
+   "delta": {
+    "median": 39.8136,
+    "q05": 9.81364,
+    "q95": 74.3749
+   },
+   "p_test_higher": 0.785142,
+   "boundary_mass": 0.0450866,
+   "verdict": "correct"
+  },
+  {
+   "id": "RC04",
+   "label": "NH2 SAM vs carboxyl SAM",
+   "termination": "amine",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 29.8983,
+    "q05": 20.8983,
+    "q95": 41.1971
+   },
+   "barrier_reference": {
+    "median": 23.6193,
+    "q05": 16.5335,
+    "q95": 30.7051
+   },
+   "delta": {
+    "median": 6.27902,
+    "q05": -2.72098,
+    "q95": 17.5777
+   },
+   "p_test_higher": 0.705478,
+   "boundary_mass": 0.0408095,
+   "verdict": "inconclusive"
+  },
+  {
+   "id": "RC05",
+   "label": "1:1 COOH/NH2 SAM vs carboxyl SAM",
+   "termination": "mixed",
+   "negative": true,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 56.9908,
+    "q05": 49.9908,
+    "q95": 63.7597
+   },
+   "barrier_reference": {
+    "median": 69.7887,
+    "q05": 48.8521,
+    "q95": 90.7253
+   },
+   "delta": {
+    "median": -12.7979,
+    "q05": -19.7979,
+    "q95": -6.02898
+   },
+   "p_test_higher": 0.176786,
+   "boundary_mass": 0.0276642,
+   "verdict": "incorrect"
+  },
+  {
+   "id": "RC06",
+   "label": "MUA (C11, odd parity) vs MHA (C16, even parity)",
+   "termination": "carboxyl",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 134.282,
+    "q05": 114.282,
+    "q95": 154.811
+   },
+   "barrier_reference": {
+    "median": 78.3651,
+    "q05": 54.8555,
+    "q95": 101.875
+   },
+   "delta": {
+    "median": 55.917,
+    "q05": 35.917,
+    "q95": 76.4461
+   },
+   "p_test_higher": 0.868277,
+   "boundary_mass": 0.0151554,
+   "verdict": "correct"
+  },
+  {
+   "id": "RC07",
+   "label": "heparin vs chitosan",
+   "termination": "polysaccharide",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 37.3744,
+    "q05": 35.3744,
+    "q95": 39.8734
+   },
+   "barrier_reference": {
+    "median": 34.4469,
+    "q05": 24.1128,
+    "q95": 44.7809
+   },
+   "delta": {
+    "median": 2.92755,
+    "q05": 0.927554,
+    "q95": 5.42655
+   },
+   "p_test_higher": 0.79706,
+   "boundary_mass": 0.00496035,
+   "verdict": "correct"
+  },
+  {
+   "id": "RC08",
+   "label": "LG alginate vs chitosan",
+   "termination": "polysaccharide",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 60.7279,
+    "q05": 49.7279,
+    "q95": 71.4606
+   },
+   "barrier_reference": {
+    "median": 41.3806,
+    "q05": 28.9664,
+    "q95": 53.7948
+   },
+   "delta": {
+    "median": 19.3472,
+    "q05": 8.34724,
+    "q95": 30.0799
+   },
+   "p_test_higher": 0.818764,
+   "boundary_mass": 0.0568566,
+   "verdict": "correct"
+  },
+  {
+   "id": "RC09",
+   "label": "HG alginate vs chitosan",
+   "termination": "polysaccharide",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 52.0052,
+    "q05": 46.0052,
+    "q95": 58.3368
+   },
+   "barrier_reference": {
+    "median": 54.0298,
+    "q05": 37.8208,
+    "q95": 70.2387
+   },
+   "delta": {
+    "median": -2.02459,
+    "q05": -8.02459,
+    "q95": 4.30698
+   },
+   "p_test_higher": 0.373851,
+   "boundary_mass": 0.0281228,
+   "verdict": "inconclusive"
+  },
+  {
+   "id": "RC10",
+   "label": "hyaluronate vs chitosan",
+   "termination": "polysaccharide",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 95.1112,
+    "q05": 55.1112,
+    "q95": 138.639
+   },
+   "barrier_reference": {
+    "median": 25.2847,
+    "q05": 17.6993,
+    "q95": 32.8701
+   },
+   "delta": {
+    "median": 69.8265,
+    "q05": 29.8265,
+    "q95": 113.355
+   },
+   "p_test_higher": 0.817895,
+   "boundary_mass": 0.0134266,
+   "verdict": "correct"
+  },
+  {
+   "id": "RC11",
+   "label": "CH3 SAM vs COOH SAM",
+   "termination": "methyl",
+   "negative": true,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 85.8371,
+    "q05": 73.8371,
+    "q95": 102.023
+   },
+   "barrier_reference": {
+    "median": 76.8947,
+    "q05": 53.8263,
+    "q95": 99.9631
+   },
+   "delta": {
+    "median": 8.94236,
+    "q05": -3.05764,
+    "q95": 25.128
+   },
+   "p_test_higher": 0.713499,
+   "boundary_mass": 0.0689592,
+   "verdict": "inconclusive"
+  },
+  {
+   "id": "RC12",
+   "label": "PDA coating vs bare carbon steel",
+   "termination": "catechol",
+   "negative": true,
+   "observed_relation": "test_higher_barrier",
+   "barrier_test": {
+    "median": 66.1474,
+    "q05": 52.1474,
+    "q95": 79.5986
+   },
+   "barrier_reference": {
+    "median": 35.6593,
+    "q05": 24.9615,
+    "q95": 46.357
+   },
+   "delta": {
+    "median": 30.4881,
+    "q05": 16.4881,
+    "q95": 43.9393
+   },
+   "p_test_higher": 0.842655,
+   "boundary_mass": 0.0505805,
+   "verdict": "correct"
+  }
+ ],
+ "summary": {
+  "N": 12,
+  "correct": 8,
+  "incorrect": 1,
+  "inconclusive": 3,
+  "k": 10,
+  "chance_probability": 0.0192871,
+  "pass": false
+ }
+}

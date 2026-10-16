@@ -36,7 +36,7 @@ def test_mock_input_is_marked_and_matches_schema(fid):
     data, path = build.load_input(REPO, mod, mock=True)
     assert data["mock"] is True
     assert path.parent == paths(REPO)["mock"]
-    sch = json.loads((REPO / mod.FIGURE["schema"]).read_text())
+    sch, _cite = schema.resolve(mod.FIGURE["schema"], REPO)
     assert schema.validate(data, sch) == []
 
 
@@ -44,7 +44,7 @@ def test_mock_input_is_marked_and_matches_schema(fid):
 def test_checker_accepts_template(fid):
     mod = _mod(fid)
     data, _ = build.load_input(REPO, mod, mock=True)
-    _plt, fig = build.make_figure(REPO, mod, data)
+    _plt, fig = build.make_figure(REPO, mod, data, build.load_aux(REPO, mod, mock=True))
     assert check(fig) == []
 
 
@@ -81,11 +81,18 @@ def test_missing_real_input_is_skipped_not_built():
 
 
 def test_schema_validator_reports_errors():
-    sch = json.loads((REPO / "figures/src/schemas/fig4_retrodiction.schema.json").read_text())
+    sch, _ = schema.resolve("figures/src/schemas/retro_results_v1.schema.json", REPO)
     errs = schema.validate({"mock": True, "schema": "wrong", "cases": []}, sch)
-    assert any("must equal" in e for e in errs)
-    assert any("missing" in e for e in errs)
-    assert any("fewer than" in e for e in errs)
+    assert any("was expected" in e for e in errs)
+    assert any("is a required property" in e for e in errs)
+    assert any("should be non-empty" in e or "too short" in e for e in errs)
+
+
+def test_real_input_with_mock_aux_is_refused(tmp_path, monkeypatch):
+    mod = _mod("fig5")
+    monkeypatch.setitem(mod.FIGURE, "aux", {"params": {"mock": "x", "real": "figures/src/mock/params.yaml"}})
+    with pytest.raises(build.FigureError, match="marked mock"):
+        build.load_aux(REPO, mod, mock=False)
 
 
 def test_cli_is_discovered():
@@ -106,6 +113,6 @@ def test_cvd_simulation_keeps_shape_and_range():
 
 def test_fig7_fills_clear_the_palette_threshold():
     from nacre.figs import colours, style
-    fills, names, _f, d = colours.distinct_fills(4, REPO)
-    assert len(set(names)) == 4
+    fills, names, _f, d = colours.distinct_fills(3, REPO)
+    assert len(set(names)) == 3
     assert colours.min_delta_e(fills) >= float(style.palette(REPO)["delta_e_min"])

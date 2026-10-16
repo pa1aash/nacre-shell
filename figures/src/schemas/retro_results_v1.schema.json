@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "retro-results/v1",
+  "title": "Retrodiction result record (lane p0-w2), machine-readable transcription for Fig. 4",
+  "$comment": "Owner: p0-w2, preprint/retrodiction/SCHEMA.md section 5 (pinned as upstream:retro_schema). The owner defines the record in prose and a JSON example; this file transcribes it field for field, adding only the constraints the prose states (verdict values, relation values, 90 % interval as q05..q95). tests/figs/test_fig_schemas.py checks that its field sets equal the example's. If p0-w2 publishes its own JSON Schema, Fig. 4 switches to it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "mock", "cases_sha256", "criterion_sha256", "fixed_before_run_commit", "provenance",
+               "draws", "seed", "cases", "summary"],
+  "properties": {
+    "schema": {"const": "retro-results/v1"},
+    "mock": {"type": "boolean"},
+    "cases_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "criterion_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "fixed_before_run_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["git_sha", "git_dirty", "contract_sha", "params_file_hash"],
+      "properties": {
+        "git_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "git_dirty": {"type": "boolean"},
+        "contract_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "params_file_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "draws": {"type": "integer", "minimum": 1},
+    "seed": {"type": "integer", "minimum": 0},
+    "cases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/case"}},
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["N", "correct", "incorrect", "inconclusive", "k", "chance_probability", "pass"],
+      "properties": {
+        "N": {"type": "integer", "minimum": 0},
+        "correct": {"type": "integer", "minimum": 0},
+        "incorrect": {"type": "integer", "minimum": 0},
+        "inconclusive": {"type": "integer", "minimum": 0},
+        "k": {"type": "integer", "minimum": 0},
+        "chance_probability": {"type": "number", "minimum": 0, "maximum": 1},
+        "pass": {"type": "boolean"}
+      }
+    }
+  },
+  "$defs": {
+    "interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["median", "q05", "q95"],
+      "description": "Median and 5 % / 95 % quantiles over the Monte Carlo draws, in units of k_B T.",
+      "properties": {
+        "median": {"type": "number"},
+        "q05": {"type": "number"},
+        "q95": {"type": "number"}
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "termination", "negative", "observed_relation", "barrier_test",
+                   "barrier_reference", "delta", "p_test_higher", "boundary_mass", "verdict"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^RC[0-9]{2}$"},
+        "label": {"type": "string", "minLength": 1},
+        "termination": {"enum": ["carboxyl", "hydroxyl", "methyl", "amine", "catechol", "thiol", "phosphate",
+                                 "mixed", "polysaccharide", "peptoid", "metal", "mineral"]},
+        "negative": {"type": "boolean"},
+        "observed_relation": {"enum": ["test_higher_barrier", "test_lower_barrier"]},
+        "barrier_test": {"$ref": "#/$defs/interval"},
+        "barrier_reference": {"$ref": "#/$defs/interval"},
+        "delta": {"$ref": "#/$defs/interval", "description": "barrier_test - barrier_reference per draw."},
+        "p_test_higher": {"type": "number", "minimum": 0, "maximum": 1},
+        "boundary_mass": {"type": "number", "minimum": 0, "maximum": 1},
+        "verdict": {"enum": ["correct", "incorrect", "inconclusive"]}
+      }
+    }
+  }
+}
