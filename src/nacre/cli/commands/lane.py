@@ -66,6 +66,22 @@ def provision(target, run=subprocess.run, platform=sys.platform):
     run(["uv", "run", "nacre", "setup", "--check"], cwd=target)
 
 
+def link_venv(target, short, run=subprocess.run, home=None):
+    """Make <target>/.venv a symlink to ~/.nacre-venvs/p-<short> (created with uv venv if absent).
+
+    The environment lives outside synced folders (RUNBOOK section 7); `uv sync` then fills it.
+    """
+    store = Path(home or Path.home()) / ".nacre-venvs" / ("p-" + short)
+    if not store.exists():
+        store.parent.mkdir(parents=True, exist_ok=True)
+        run(["uv", "venv", str(store)], cwd=target, check=True)
+    link = Path(target) / ".venv"
+    if link.is_symlink() or link.exists():
+        return store
+    link.symlink_to(store)
+    return store
+
+
 def track_lane_id(track, lane):
     return lane if lane.startswith(track + "-") else "%s-%s" % (track, lane)
 
@@ -100,6 +116,7 @@ def new_track_lane(root, track, lane, base=None, provision_fn=provision):
         raise SystemExit("REFUSED: branch %s already exists" % branch)
     _util.git(root, "worktree", "add", "--no-track", "-b", branch, str(target), base, check=True)
     link_local_files(main, target)
+    link_venv(target, short)
     provision_fn(target)
     return target, branch
 

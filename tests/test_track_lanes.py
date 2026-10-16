@@ -1,4 +1,5 @@
 """Track lanes: matcher, hooks and `nacre verify` on preprint/* branches."""
+from pathlib import Path
 import pytest
 
 import _lanes
@@ -265,3 +266,48 @@ def test_provision_runs_sync_and_chflags(tmp_path, platform, chflags):
     lane_cmd.provision(tmp_path, run=lambda cmd, **kw: calls.append(cmd), platform=platform)
     assert calls[0] == ["uv", "sync"]
     assert (["chflags", "-R", "nohidden", ".venv"] in calls) is chflags
+
+
+@pytest.fixture(autouse=True)
+def _no_real_venv(monkeypatch, request):
+    """Worktree creation must not build environments under the real home directory."""
+    if not request.node.name.startswith("test_link_venv"):
+        monkeypatch.setattr(lane_cmd, "link_venv", lambda *a, **k: None)
+
+
+def test_link_venv_creates_store_and_symlink(tmp_path):
+    calls = []
+
+    def run(cmd, **kw):
+        calls.append(cmd)
+        Path(cmd[2]).mkdir(parents=True)
+
+    target = tmp_path / "wt"
+    target.mkdir()
+    store = lane_cmd.link_venv(target, "w1", run=run, home=tmp_path / "home")
+    assert store == tmp_path / "home" / ".nacre-venvs" / "p-w1"
+    assert calls == [["uv", "venv", str(store)]]
+    assert (target / ".venv").is_symlink() and (target / ".venv").resolve() == store.resolve()
+
+
+def test_link_venv_reuses_existing_store_and_keeps_existing_link(tmp_path):
+    store = tmp_path / "home" / ".nacre-venvs" / "p-w2"
+    store.mkdir(parents=True)
+    target = tmp_path / "wt"
+    target.mkdir()
+    calls = []
+    lane_cmd.link_venv(target, "w2", run=lambda cmd, **kw: calls.append(cmd), home=tmp_path / "home")
+    assert calls == [] and (target / ".venv").resolve() == store.resolve()
+    other = tmp_path / "other"
+    other.mkdir()
+    (target / ".venv").unlink()
+    (target / ".venv").symlink_to(other)
+    lane_cmd.link_venv(target, "w2", run=lambda cmd, **kw: calls.append(cmd), home=tmp_path / "home")
+    assert (target / ".venv").resolve() == other.resolve()
+
+
+def test_new_track_lane_links_venv_before_provisioning(track_origin, monkeypatch):
+    order = []
+    monkeypatch.setattr(lane_cmd, "link_venv", lambda target, short, **k: order.append(("link", short)))
+    lane_cmd.new_track_lane(track_origin, "p0", "w4", provision_fn=lambda t: order.append(("provision", t.name)))
+    assert order == [("link", "w4"), ("provision", "nacre-shell-p-w4")]
