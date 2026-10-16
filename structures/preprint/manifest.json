@@ -10,35 +10,42 @@
   "builder": "nacre.structures.slab.build",
   "file": "al2o3_0001_oh.extxyz",
   "n_atoms": 624,
-  "sha256": "b16b98f75eded9a77a7a46cf73bad4e805230c9de40ef09182566f7cc5807016",
+  "sha256": "15debf4b0eaa52351fd0869d1bf4a76496f6928f844b5bcff099128c362c4484",
   "total_charge": 0
  },
  "al2o3_0001_oh_water": {
   "builder": "nacre.structures.water.build",
   "file": "al2o3_0001_oh_water.extxyz",
   "n_atoms": 882,
-  "sha256": "0bab7d9968afb6e4b5c1bf28253b5cfad3e2e19685d52872095a240ae4cc5fc9",
+  "sha256": "cfd7ba4d78a2d89a302d85772a8c90dac713ec4d15484490381b0966c699f72b",
   "total_charge": 0
  },
  "ca_hydrated": {
   "builder": "nacre.structures.ion.build",
   "file": "ca_hydrated.extxyz",
-  "n_atoms": 19,
-  "sha256": "8d6f14fb6d80154a03f63d19f7fbadaae36fe12f126a81480d8bcbbed303910b",
+  "n_atoms": 22,
+  "sha256": "1c41a2a7760e51ba7e6912bc34075a67c9739771e10371716c9c45d3ab9c3a61",
   "total_charge": 2
  },
  "catechol_oligomer": {
   "builder": "nacre.structures.oligomer.build",
   "file": "catechol_oligomer.extxyz",
   "n_atoms": 66,
-  "sha256": "c55a4d5d514a7220d2e3985f0ad87f9c90970aa2604dd96034bfc0ae4cf9c912",
+  "sha256": "283909a6eed72ee651aaf0e9440938c98283a68e64971df1aff8c20ba6cd1433",
+  "total_charge": 0
+ },
+ "hero_interface": {
+  "builder": "nacre.structures.hero.build",
+  "file": "hero_interface.extxyz",
+  "n_atoms": 3873,
+  "sha256": "fb4de2157a5d41cfc687d65e0b6f5ae3f0f5362760d65c1e35da3c8304ea9ca1",
   "total_charge": 0
  },
  "smoke_interface": {
   "builder": "nacre.structures.assemble.build",
   "file": "smoke_interface.extxyz",
-  "n_atoms": 295,
-  "sha256": "929c64a0bef2c18e97de01c431a960391898c46c97122e8355d847658b112f1b",
+  "n_atoms": 298,
+  "sha256": "ee156f570fde1a5ea9bfe7950a1dba69cc7ad55f8fc64a6e9e432ac71734f172",
   "total_charge": 2
  }
 }

@@ -1,0 +1,25 @@
+# Figure 1 hero, day 2 draft: an illustrative construction (structures/preprint/hero_interface.extxyz).
+# The window is cropped inside the periodic cell (bond-aware clip: every kept Al keeps its O, every
+# kept O keeps its H), so no hydroxyl is cut off at a cell edge. Water exists only behind the
+# cut-away plane of the structure. No text, labels or arrows; the colour key goes in the caption.
+name: hero
+description: template-nucleus contact on the catechol layer over hydroxylated alumina (draft)
+resolution: [1280, 960]
+samples: 48
+camera:
+  direction: [0.18, 1.0, -0.38]   # low view: slab, catechol layer and cap read in profile
+  up: [0.0, 0.0, 1.0]
+  margin: 1.03
+components:
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [slab, chain, bound, bridge, carbonate]
+    clip: {box: [[3.0, 40.0], [2.5, 38.5]], seed_elements: [Al, C, N, Ca], attach: [O, H]}
+  - file: structures/preprint/hero_interface.extxyz
+    style: space_filling            # the nucleus reads as one solid cap wetting the layer
+    include: [nucleus]
+    clip: {box: [[3.0, 40.0], [2.5, 38.5]], seed_elements: [Ca, C], attach: [O]}
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [water]
+    clip: {box: [[3.0, 40.0], [2.5, 38.5]], seed_elements: [O], attach: [H]}

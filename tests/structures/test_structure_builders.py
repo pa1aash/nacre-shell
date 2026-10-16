@@ -79,6 +79,24 @@ def test_slab_periodicity(small_slab):
     assert np.all((h_z > o_z.max()) | (h_z < o_z.min()))
 
 
+def test_slab_atom_order_ignores_last_bit_noise(small_slab):
+    # On Linux CI the raw z sort permuted atoms within a layer (5.8 A apparent displacements).
+    rng = np.random.default_rng(0)
+    for scale in (1e-12, 1e-6, 1e-3):
+        noisy = small_slab.positions + rng.normal(scale=scale, size=small_slab.positions.shape)
+        assert np.array_equal(slab.stable_order(small_slab.numbers, noisy), np.arange(len(small_slab)))
+
+
+def test_orthogonal_slab_cell():
+    s = slab.build({"nx": 2, "ny": 1, "n_o_layers": 3, "orthogonal": True}, seed=0)
+    cell = np.asarray(s.cell)
+    assert cell[0][1] == pytest.approx(0.0, abs=1e-9) and cell[1][0] == pytest.approx(0.0, abs=1e-9)
+    hexa = slab.build({"nx": 2, "ny": 2, "n_o_layers": 3}, seed=0)
+    assert len(s) == len(hexa)  # 2 x 1 rectangular cells hold 2 x 2 hexagonal cells
+    assert s.info["total_charge"] == 0
+    assert min_distance(s) >= CLASH_THRESHOLD
+
+
 def test_slab_vacuum(small_slab):
     z = small_slab.positions[:, 2]
     assert z.min() == pytest.approx(8.0)
@@ -87,16 +105,22 @@ def test_slab_vacuum(small_slab):
 
 # ---------------------------------------------------------------- molecules
 def test_hydrated_ca_counts_and_charge():
-    a = ion.build({"cn": 6}, seed=3)
+    a = ion.build({"cn": 6, "r_ca_o": 2.5}, seed=3)
     assert Counter(a.get_chemical_symbols()) == {"Ca": 1, "O": 6, "H": 12}
     assert a.info["total_charge"] == 2 == formal_charge(a.get_chemical_symbols())
     r = np.linalg.norm(a.positions[np.array(a.get_chemical_symbols()) == "O"] - a.positions[0], axis=1)
-    assert np.allclose(r, 2.40)
+    assert np.allclose(r, 2.5)
+
+
+def test_hydrated_ca_has_no_typed_defaults():
+    with pytest.raises(ValueError):
+        ion.build(None, seed=0)
+    assert "cn" not in ion.DEFAULTS and "r_ca_o" not in ion.DEFAULTS
 
 
 @pytest.mark.parametrize("cn", [6, 7, 8])
 def test_hydrated_ca_other_shells(cn):
-    a = ion.build({"cn": cn}, seed=0)
+    a = ion.build({"cn": cn, "r_ca_o": 2.4}, seed=0)
     assert Counter(a.get_chemical_symbols())["O"] == cn
     assert min_distance(a) >= CLASH_THRESHOLD
 
@@ -110,11 +134,46 @@ def test_acc_counts_and_charge():
 
 @pytest.mark.parametrize("n", [1, 2, 4])
 def test_oligomer_counts_and_charge(n):
-    a = oligomer.build({"n_units": n}, seed=7)
+    rec = oligomer.generate({"n_units": n}, seed=7)
     # 5,6-dihydroxyindole is C8H7NO2; each 2-7' link removes two H.
-    assert Counter(a.get_chemical_symbols()) == {"C": 8 * n, "N": n, "O": 2 * n, "H": 5 * n + 2}
-    assert a.info["total_charge"] == 0
-    assert a.info["ff_converged"]
+    assert Counter(rec["symbols"]) == {"C": 8 * n, "N": n, "O": 2 * n, "H": 5 * n + 2}
+    assert rec["formal_charge"] == 0
+    assert rec["ff_converged"]
+    # Two catechol O and their two H per unit, unit 0 at the anchoring end (atom 0).
+    unit = np.array(rec["catechol"])
+    assert unit[0] == 0
+    for k in range(n):
+        assert sorted(np.array(rec["symbols"])[unit == k]) == ["H", "H", "O", "O"], k
+
+
+def test_oligomer_targets_are_built_from_the_conformer_record():
+    rec = oligomer.load_record()
+    for spec in build.load_config()["targets"].values():
+        if spec["builder"] == "oligomer":
+            key = oligomer.conformer_key(spec.get("params"), spec.get("seed", 0))
+            entry = rec[key]
+            a = oligomer.build(spec.get("params"), spec.get("seed", 0))
+            assert np.array_equal(a.positions, np.array(entry["positions"]))
+            assert json.loads(a.info["source_ids"])["conformer"] == key
+            assert entry["smiles"] == oligomer.dhi_chain_smiles(entry["params"]["n_units"])
+            assert set(entry["generated_on"]) == {"system", "machine"}
+
+
+def test_oligomer_without_record_entry_is_refused():
+    with pytest.raises(LookupError):
+        oligomer.build({"n_units": 3}, seed=123, record={})
+
+
+def test_conformer_record_regenerates_on_its_platform():
+    import platform
+
+    for key, entry in oligomer.load_record().items():
+        here = {"system": platform.system(), "machine": platform.machine()}
+        if here != entry["generated_on"]:
+            pytest.skip(f"same-platform check: conformer {key} was generated on {entry['generated_on']}; "
+                        "ETKDG embedding differs between platforms, which is why the record exists")
+        fresh = oligomer.generate(entry["params"], entry["seed"])
+        assert fresh["positions"] == entry["positions"], key
 
 
 def test_oligomer_smiles_is_catechol_indole_chain():
@@ -147,9 +206,9 @@ def test_water_layer(small_slab):
 # ---------------------------------------------------------------- determinism
 @pytest.mark.parametrize("builder", [
     (lambda s: slab.build({"nx": 2, "ny": 2, "n_o_layers": 3}, seed=s)),
-    (lambda s: ion.build(None, seed=s)),
+    (lambda s: ion.build({"cn": 7, "r_ca_o": 2.4}, seed=s)),
     (lambda s: acc.build({"n_fu": 4}, seed=s)),
-    (lambda s: oligomer.build({"n_units": 2}, seed=s)),
+    (lambda s: oligomer.to_atoms(oligomer.generate({"n_units": 2}, seed=s))),
 ])
 def test_deterministic_for_fixed_seed(builder, tmp_path):
     a, b = builder(11), builder(11)
@@ -247,6 +306,8 @@ def test_total_charge_of_committed(committed):
         if name == "catechol_oligomer":
             assert a.info["total_charge"] == 0
             continue
+        if a.info["builder"] == "nacre.structures.hero.build":
+            continue  # organic parts: checked through the charge ledger in test_structure_hero.py
         assert a.info["total_charge"] == formal_charge(a.get_chemical_symbols()), name
 
 

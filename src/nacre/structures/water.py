@@ -5,6 +5,11 @@ and orientation is accepted only if its O is at least ``min_oo`` from every O of
 the substrate and earlier waters, at least ``min_heavy`` from every other non-H atom,
 and every one of its atoms is at least ``min_any`` from every atom outside the molecule.
 Distances use the minimum image in the periodic directions of the substrate.
+
+Optional region: ``xy_box`` ([[fx0, fx1], [fy0, fy1]], fractions of the in-plane cell
+vectors) limits the molecules to part of the cell, which is how a scene keeps water
+behind a cut-away plane; ``z_base_component`` measures the start height ``gap`` above the
+atoms of that component only (for example the slab), not above everything already placed.
 """
 from __future__ import annotations
 
@@ -24,6 +29,8 @@ DEFAULTS = {
     "min_heavy": 2.4,
     "min_any": 1.5,
     "max_attempts": 200000,
+    "xy_box": None,
+    "z_base_component": None,
     **WATER,
 }
 
@@ -70,9 +77,14 @@ def build(substrate, params=None, seed=0):
     pbc = tuple(bool(x) for x in substrate.pbc)
     sub_pos = substrate.get_positions()
     sub_sym = np.array(substrate.get_chemical_symbols())
-    z0 = sub_pos[:, 2].max() + p["gap"]
+    base = sub_pos
+    if p["z_base_component"]:
+        comp = np.asarray(substrate.arrays["component"])
+        base = sub_pos[np.char.startswith(comp.astype(str), p["z_base_component"])]
+    z0 = base[:, 2].max() + p["gap"]
     z1 = z0 + p["thickness"]
-    area = np.linalg.norm(np.cross(cell[0], cell[1]))
+    (fx0, fx1), (fy0, fy1) = p["xy_box"] or ([0.0, 1.0], [0.0, 1.0])
+    area = np.linalg.norm(np.cross(cell[0], cell[1])) * (fx1 - fx0) * (fy1 - fy0)
     if p["n_molecules"] is not None:
         target = int(p["n_molecules"])
     else:
@@ -88,7 +100,7 @@ def build(substrate, params=None, seed=0):
     placed = attempts = 0
     while placed < target and attempts < p["max_attempts"]:
         attempts += 1
-        fx, fy = rng.uniform(0, 1, size=2)
+        fx, fy = rng.uniform(fx0, fx1), rng.uniform(fy0, fy1)
         o = fx * cell[0] + fy * cell[1]
         o[2] = rng.uniform(z0, z1)
         mol = o + frame @ random_rotation(rng).T
@@ -111,7 +123,8 @@ def build(substrate, params=None, seed=0):
 
     n_sub = len(substrate)
     atoms = Atoms(symbols=list(all_sym), positions=all_pos, cell=cell, pbc=pbc)
-    comp = np.array(["substrate"] * n_sub + ["water"] * (len(atoms) - n_sub))
+    sub_comp = substrate.arrays.get("component", np.array(["substrate"] * n_sub))
+    comp = np.array(list(sub_comp) + ["water"] * (len(atoms) - n_sub))
     atoms.new_array("component", comp)
     sub_info = dict(substrate.info)
     stamp(

@@ -18,8 +18,8 @@ targets:
     params: {n_units: 4}
   ca_hydrated:
     builder: hydrated_ion
+    evidence: ca_hydration   # CN and Ca-O from lane p0-w1 rows (sources/ca_hydration_w1.json)
     seed: 3
-    params: {cn: 6, r_ca_o: 2.40}
   acc_cluster:
     builder: acc_cluster
     seed: 5
@@ -43,3 +43,32 @@ targets:
     parts:
       - {name: slab, target: smoke_slab_water}
       - {name: ion, target: ca_hydrated, place: {xy: [0.5, 0.5], gap: 2.6}}
+
+  # Figure 1 hero (day 2 draft): illustrative template-nucleus contact. See nacre.structures.hero.
+  hero_slab:
+    builder: slab
+    seed: 0
+    write: false
+    params: {nx: 9, ny: 5, n_o_layers: 4, vacuum: 10.0, orthogonal: true}
+  hero_interface:
+    builder: hero
+    slab: hero_slab
+    chain: catechol_oligomer
+    evidence: ca_hydration   # Ca2+ shells: CN and Ca-O from lane p0-w1 rows
+    seed: 11
+    params:
+      chains:              # anchor site (fractions of the cell) and azimuth (degrees from +x)
+        - {site: [0.303, 0.096], azimuth: 210}  # its unit-1 catechol sits at the cap's base rim
+        - {site: [0.40, 0.52], azimuth: 0}      # under the nucleus: the layer it wets
+        - {site: [0.62, 0.36], azimuth: 180}    # under the nucleus
+        - {site: [0.13, 0.80], azimuth: 300}
+        - {site: [0.85, 0.74], azimuth: 230}
+        - {site: [0.88, 0.22], azimuth: 120}
+      bound:               # a few Ca2+ at catecholate sites, not a cloud (derivation section 7)
+        - {chain: 3, unit: auto}
+        - {chain: 4, unit: auto}
+        - {chain: 5, unit: auto}
+      bridge: {chain: 0, unit: 1}                # Ca2+ bridging the catecholate and the nucleus
+      nucleus: {centre: [0.5, 0.45], base_radius: 11.0, contact_angle_deg: 50.0, base_height: 6.5}
+      carbonate: [[0.36, 0.67, 9.0], [0.64, 0.70, 12.0]]   # fx, fy, height above the hydroxyl H (A)
+      water: {y_cut: 0.62, thickness: 18.0}
