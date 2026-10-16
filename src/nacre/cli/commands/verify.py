@@ -160,19 +160,27 @@ def check_frozen(root, strict):
 def check_provenance(root, strict):
     count, bad = 0, []
     for ledger in sorted((Path(root) / "jobs" / "ledger").glob("*.jsonl")):
+        records = []
         for no, line in enumerate(ledger.read_text(encoding="utf-8").splitlines(), 1):
             if not line.strip():
                 continue
             count += 1
             try:
-                rec = json.loads(line)
+                records.append((no, json.loads(line)))
             except ValueError:
                 bad.append("%s:%d invalid JSON" % (ledger.name, no))
-                continue
+        # the ledger is append-only: a later record for the same output path supersedes the earlier ones
+        latest = {}
+        for no, rec in records:
+            for out in rec.get("outputs") or []:
+                latest[str(out.get("path", ""))] = no
+        for no, rec in records:
             outs = rec.get("outputs") or []
             if not outs:
                 bad.append("%s:%d no outputs" % (ledger.name, no))
             for out in outs:
+                if latest.get(str(out.get("path", ""))) != no:
+                    continue
                 path = Path(root) / str(out.get("path", ""))
                 if not path.is_file():
                     bad.append("%s:%d missing %s" % (ledger.name, no, out.get("path")))

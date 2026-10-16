@@ -253,3 +253,19 @@ def test_verify_preprint_linters_pass_on_repo_draft():
     root = Path(__file__).resolve().parent.parent
     r = verify.check_preprint_linters(root, False)
     assert r["status"] == "PASS", r["detail"]
+
+
+def test_verify_provenance_latest_record_per_output_governs(tmp_path):
+    import hashlib, json
+    from nacre.cli.commands import verify
+    root = tmp_path
+    (root / "jobs" / "ledger").mkdir(parents=True)
+    (root / "out.json").write_text("new")
+    old = {"outputs": [{"path": "out.json", "sha256": hashlib.sha256(b"old").hexdigest()}]}
+    new = {"outputs": [{"path": "out.json", "sha256": hashlib.sha256(b"new").hexdigest()}]}
+    ledger = root / "jobs" / "ledger" / "x.jsonl"
+    ledger.write_text(json.dumps(old) + "\n" + json.dumps(new) + "\n")
+    assert verify.check_provenance(root, True)["status"] == "PASS"
+    ledger.write_text(json.dumps(new) + "\n" + json.dumps(old) + "\n")
+    res = verify.check_provenance(root, True)
+    assert res["status"] == "FAIL" and "hash mismatch" in res["detail"]
