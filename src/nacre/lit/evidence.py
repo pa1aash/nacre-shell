@@ -188,19 +188,35 @@ def _norm_locator(loc):
     return " ".join(re.sub(r"[^a-z0-9.]+", " ", (loc or "").lower()).split())
 
 
+def _norm_text(s):
+    return " ".join((s or "").lower().split())
+
+
 def merge(thread_rows):
     """thread_rows: iterable of row lists in thread order. Dedupe on doi + locator + quantity.
 
-    Returns (merged_rows, duplicates) where duplicates lists (dropped_row_id, kept_row_id).
+    One table often prints several values of one quantity (pKa1 and pKa2, one constant per
+    species), so a numeric row is a duplicate only when symbol, value and range also agree. A
+    qualitative row is a duplicate when another thread already recorded the same doi + locator +
+    quantity (two threads reading the same observation); within a thread such rows are distinct
+    observations. Returns (merged_rows, duplicates) with duplicates as (dropped_row_id, kept_row_id).
     """
-    kept, index, dups = [], {}, []
+    kept, index, base, dups = [], {}, {}, []
     for rows in thread_rows:
         for r in rows:
-            key = (r["doi"].lower(), _norm_locator(r["locator"]), r["quantity"])
-            if key in index:
-                dups.append((r["row_id"], index[key]))
+            k0 = (r["doi"].lower(), _norm_locator(r["locator"]), r["quantity"])
+            if r["unit"] == QUALITATIVE:
+                hit = next((rid for rid, thread in base.get(k0, []) if thread != r["thread"]), None)
+            else:
+                hit = index.get(k0 + (_norm_text(r["symbol"]), r["value"].strip(), r["range_or_uncertainty"].strip(),
+                                      r["unit"].strip()))
+            if hit:
+                dups.append((r["row_id"], hit))
                 continue
-            index[key] = r["row_id"]
+            if r["unit"] != QUALITATIVE:
+                index[k0 + (_norm_text(r["symbol"]), r["value"].strip(), r["range_or_uncertainty"].strip(),
+                            r["unit"].strip())] = r["row_id"]
+            base.setdefault(k0, []).append((r["row_id"], r["thread"]))
             kept.append(r)
     return kept, dups
 

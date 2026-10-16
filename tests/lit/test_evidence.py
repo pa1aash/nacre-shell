@@ -137,6 +137,23 @@ def test_merge_dedupes_on_doi_locator_quantity():
     assert dups == [("TE-001", "TC-001")]
 
 
+def test_merge_keeps_distinct_values_from_one_table():
+    a = [good_row(row_id="TD-001", symbol="pKa1", value="9.12"),
+         good_row(row_id="TD-002", symbol="pKa2", value="10.85")]
+    rows, dups = E.merge([a])
+    assert len(rows) == 2 and dups == []
+
+
+def test_merge_qualitative_rows():
+    q = dict(unit="qualitative", range_or_uncertainty="", quantity="templated_mineralisation_outcome")
+    a = [good_row(row_id="TC-001", value="vaterite formed", **q),
+         good_row(row_id="TC-002", value="no mineral", **q)]
+    b = [good_row(row_id="TD-001", thread="T-D", value="vaterite microspheres", **q)]
+    rows, dups = E.merge([a, b])
+    assert [r["row_id"] for r in rows] == ["TC-001", "TC-002"]
+    assert dups == [("TD-001", "TC-001")]
+
+
 def test_coverage_statuses():
     rows = [good_row(row_id="TC-001"), good_row(row_id="TC-002", doi="10.1000/other", grade="D",
                                                   extraction_route="abstract"),

@@ -223,7 +223,7 @@ class ThreadSession:
                 return None, "arXiv PDF not retrieved"
             txt = pdf.with_suffix(".txt")
             pages = pdf_to_text(pdf, txt)
-            self.log_source("arxiv:" + arx, "fulltext:arxiv", path=pdf, url="https://arxiv.org/abs/" + arx, pages=pages)
+            self.log_source("10.48550/arxiv." + arx, "fulltext:arxiv", path=pdf, url="https://arxiv.org/abs/" + arx, pages=pages)
             return txt, "arxiv"
         if not doi:
             raise ValueError("not a DOI or arXiv id: %r" % ident)

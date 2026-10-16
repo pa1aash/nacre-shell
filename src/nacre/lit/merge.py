@@ -55,11 +55,18 @@ def write_gaps(root, cov):
     for c in sorted(cov, key=lambda c: (c["rank"], c["id"])):
         lines.append("| %d | %s | %s | %d | %s | %s |" % (c["rank"], c["label"], c["status"],
                                                         c["independent_sources"], c["best_grade"] or "-", c["role"]))
-    open_ = [c for c in sorted(cov, key=lambda c: (c["rank"], c["id"])) if c["status"] != "covered"]
+    ordered = sorted(cov, key=lambda c: (c["rank"], c["id"]))
     lines += ["", "## Open targets (gap or single-source), highest leverage first", ""]
-    for c in open_:
-        lines.append("- **%s** (%s, rank %d): %s" % (c["label"], c["status"], c["rank"],
-                                                     ("rows " + ", ".join(c["row_ids"])) if c["row_ids"] else "no rows"))
+    for c in ordered:
+        if c["status"] != "covered":
+            rows = ("rows " + ", ".join(c["row_ids"])) if c["row_ids"] else "no rows"
+            lines.append("- **%s** (%s, rank %d): %s.%s" % (c["label"], c["status"], c["rank"], rows,
+                                                           (" " + c["caveat"]) if c.get("caveat") else ""))
+    lines += ["", "## Covered by DOI count, with caveats (review before use as priors)", ""]
+    for c in ordered:
+        if c["status"] == "covered" and c.get("caveat"):
+            lines.append("- **%s** (rank %d, %d DOIs, %s independent original(s)): %s" % (
+                c["label"], c["rank"], c["independent_sources"], c.get("independent_originals"), c["caveat"]))
     lines += ["", "## Thread gap notes", ""]
     for t, d in thread_files(root):
         lines += ["### %s" % t, "", _gap_section(d / "gaps.md"), ""]
@@ -79,6 +86,12 @@ def run(root):
     E.write_csv(table, rows)
     final = E.validate_file(table, root)
     cov = E.coverage(rows)
+    notes_path = root / "lit" / "corpus" / "coverage_notes.yaml"
+    notes = yaml.safe_load(notes_path.read_text(encoding="utf-8")) if notes_path.exists() else {}
+    for c in cov:
+        n = (notes or {}).get(c["id"]) or {}
+        c["independent_originals"] = n.get("independent_originals")
+        c["caveat"] = " ".join(str(n.get("caveat") or "").split()) or None
     doc = {
         "generated_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "rule": "covered: >=2 independent sources (distinct DOIs) with numeric rows; single-source: 1; gap: 0",
