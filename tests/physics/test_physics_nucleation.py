@@ -99,10 +99,10 @@ def test_critical_radius_is_the_maximum_of_the_cluster_free_energy(g, vm, dmu):
     assert dg(r) == pytest.approx(homogeneous_barrier(g, vm, dmu), rel=1e-9)
 
 
-@given(omegas, temps, factors)
-def test_molar_and_per_formula_unit_driving_forces_agree(om, t, nu):
-    assert driving_force_molar(om, t, nu) == pytest.approx(
-        AVOGADRO * driving_force_per_formula_unit(om, t, nu), rel=1e-12)
+@given(omegas, temps)
+def test_molar_and_per_formula_unit_driving_forces_agree(om, t):
+    assert driving_force_molar(om, t) == pytest.approx(
+        AVOGADRO * driving_force_per_formula_unit(om, t), rel=1e-12)
 
 
 @given(st.floats(min_value=1e-12, max_value=1e12), temps)

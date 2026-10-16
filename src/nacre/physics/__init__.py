@@ -3,11 +3,22 @@
 Pure, vectorised functions in SI units. Every function validates its inputs against
 the physical domain of the quantity it computes and raises ValueError outside it.
 
+The functions of the theory contract (theory/contract.yaml, lane p0-w3) are registered
+in nacre.physics.contract and checked against it by nacre.physics.devtools.
+
 Modules
-    constants        SI defining constants, taken from sympy's unit system (not typed)
-    wetting          heterogeneous-nucleation shape factor f(theta)
+    constants        physical constants, taken from sympy's unit system (not typed)
+    wetting          shape factor f(theta); Young's relation under the registered convention;
+                     the deck forms (audit only)
     nucleation       classical nucleation theory barriers and critical radius
-    supersaturation  chemical-potential driving force from the saturation state Omega
+    supersaturation  saturation ratio (bulk and with Ca2+ enrichment) and driving force
+    adhesion         Dupre work of adhesion in water (C1)
+    sequestration    Ca2+ transfer free energy, enrichment and its saturation bound (C2)
+    template         the barrier on the template through its two channels (C2 + C3)
+    conformality     spreading coefficient, coalescence and closure thickness (C4)
+    stability        Pourbaix and Li-open grand potentials (C5)
+    film             electronic thickness bounds of an insulating film (C4 item 18)
+    contract         registry: contract function name -> implementation
 """
 from nacre.physics.constants import AVOGADRO, BOLTZMANN, GAS_CONSTANT
 from nacre.physics.nucleation import (
