@@ -35,7 +35,7 @@ schematics:
       nucleus wets it.
     caption: figures/src/captions/fig3.md
     source: theory/derivation_body.tex Section 7 (lane p0-w3); commit in w3_commit
-    w3_commit: 800d5ea3de41a0fb16084519d5c2680eeb14952d
+    w3_commit: db872ae9190c3b729bc2b13898919fbfbe56815b  # last change of derivation_body.tex; contract v3 ready at branch head a42cfed
   fig3_symbols:
     tex: variants/fig3_symbols.tex
     engine: xelatex

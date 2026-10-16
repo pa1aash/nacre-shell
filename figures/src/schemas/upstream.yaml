@@ -36,10 +36,10 @@ entries:
     owner: p0-w3
     branch: preprint/p0-w3
     path: theory/symbols.yaml
-    commit: 3c9568b3cceea3733e412aa09ac70db97365735b
-    branch_head: 800d5ea3de41a0fb16084519d5c2680eeb14952d
+    commit: 717485662dae8d3442202fb0e3e9ef279301064b
+    branch_head: a42cfed053736513c2bc31187d222c396f3fe81c
     snapshot: figures/src/schemas/upstream/symbols.yaml
-    sha256: 47367d92abe3e42785afa190c9a97ac74b49840a514dc603a3dbb1054e8c7e1d
+    sha256: 5de680d58942f200d33f3e277a6c5cd46d111038eea360427387a56ad5bee00b
     used_for: axis titles and parameter labels (theory symbol ids)
   thresholds:
     owner: p0-w4

@@ -128,7 +128,7 @@
    "caption": "figures/src/captions/fig3.md",
    "text_free": true,
    "source": "theory/derivation_body.tex Section 7 (lane p0-w3); commit in w3_commit",
-   "w3_commit": "800d5ea3de41a0fb16084519d5c2680eeb14952d",
+   "w3_commit": "db872ae9190c3b729bc2b13898919fbfbe56815b",
    "checker": "pass (PDF: no text, strokes, page width)",
    "outputs": {
     "figures/out/fig3.pdf": "de24ceb8a43647ef9692ce57cf41efcd344e359d1d36b8f1cd3b4835eeefb0dc",
