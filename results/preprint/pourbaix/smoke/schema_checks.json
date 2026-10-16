@@ -1,0 +1,41 @@
+{
+ "w4_provenance": {
+  "checked": true,
+  "errors": [],
+  "schema": "cc50fc0:configs/preprint/results_schema.json",
+  "subschema": "provenance",
+  "valid": true
+ },
+ "w6_fig7": {
+  "checked": true,
+  "errors": [
+   {
+    "message": "[{'id': 'R-slurry', 'conditions': {'temperature_K': 298.15, 'pH': {'min': 7, 'max': 14.0}, 'potential_V_SHE': {'min': -3.0, 'max': 2.0}, 'concentrations_mol_kg': {'Al': 1e-06, 'Ca': 0.001, 'C': 0.001}, 'composition': {'Al': 1.0, 'Ca': 1.0, 'C': 1.0}, 'carbonate_system': 'closed', 'acc_offset': {'val",
+    "path": "regimes"
+   },
+   {
+    "message": "'mixed' is not one of ['solid', 'aqueous']",
+    "path": "regimes/0/domains/0/phase"
+   },
+   {
+    "message": "'mixed' is not one of ['solid', 'aqueous']",
+    "path": "regimes/0/domains/3/phase"
+   },
+   {
+    "message": "'mixed' is not one of ['solid', 'aqueous']",
+    "path": "regimes/0/domains/4/phase"
+   },
+   {
+    "message": "'mixed' is not one of ['solid', 'aqueous']",
+    "path": "regimes/0/domains/5/phase"
+   },
+   {
+    "message": "'mixed' is not one of ['solid', 'aqueous']",
+    "path": "regimes/0/domains/6/phase"
+   }
+  ],
+  "schema": "origin/preprint/p0-w6:figures/src/schemas/fig7_pourbaix.schema.json",
+  "subschema": null,
+  "valid": false
+ }
+}

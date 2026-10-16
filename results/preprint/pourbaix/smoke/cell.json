@@ -1,0 +1,891 @@
+{
+ "generated_utc": "2026-10-16T13:03:54Z",
+ "inputs": [
+  {
+   "input": "regimes/R-slurry/temperature_K",
+   "note": "charter T is null; the aqueous construction is fixed at 298.15 K",
+   "source": "mock",
+   "value": 298.15
+  },
+  {
+   "charter_key": "pH",
+   "input": "regimes/R-slurry/pH/min",
+   "source": "charter",
+   "value": 7
+  },
+  {
+   "input": "regimes/R-slurry/pH/max",
+   "note": "charter upper bound pending S12",
+   "source": "mock",
+   "value": 14.0
+  },
+  {
+   "input": "regimes/R-slurry/potential_V_SHE/min",
+   "note": "charter E range is null",
+   "source": "mock",
+   "value": -3.0
+  },
+  {
+   "input": "regimes/R-slurry/potential_V_SHE/max",
+   "source": "mock",
+   "value": 2.0
+  },
+  {
+   "input": "regimes/R-slurry/concentrations_mol_kg/Al",
+   "source": "mock",
+   "value": 1e-06
+  },
+  {
+   "input": "regimes/R-slurry/concentrations_mol_kg/Ca",
+   "note": "charter a_Ca2+ is null",
+   "source": "mock",
+   "value": 0.001
+  },
+  {
+   "input": "regimes/R-slurry/concentrations_mol_kg/C",
+   "note": "total dissolved carbonate C_T of the closed system; charter carbonate_speciation is null",
+   "source": "mock",
+   "value": 0.001
+  },
+  {
+   "input": "regimes/R-slurry/composition/Al",
+   "note": "element ratio of the multi-element diagram",
+   "source": "mock",
+   "value": 1.0
+  },
+  {
+   "input": "regimes/R-slurry/composition/Ca",
+   "source": "mock",
+   "value": 1.0
+  },
+  {
+   "input": "regimes/R-slurry/composition/C",
+   "source": "mock",
+   "value": 1.0
+  },
+  {
+   "input": "regimes/R-slurry/carbonate_system",
+   "source": "choice",
+   "value": "closed"
+  },
+  {
+   "input": "regimes/R-slurry/acc_offset",
+   "note": "from lit/params.yaml once P0-W1.2 publishes it; evidence rows TC-030, TC-031 (excess free energy), TC-037 to TC-041 and TC-114 (K_sp of ACC), TC-026 to TC-029 (crystallisation enthalpy)",
+   "source": "mock",
+   "value": {
+    "basis": "free energy of ACC minus calcite, per CaCO3 formula unit",
+    "unit": "kJ/mol",
+    "value": 10.0
+   }
+  },
+  {
+   "input": "regimes/R-slurry/acc_offset_scan_kj_per_mol",
+   "note": "sensitivity scan for the boundary-direction check",
+   "source": "mock",
+   "value": [
+    0.0,
+    5.0,
+    10.0,
+    20.0,
+    40.0
+   ]
+  },
+  {
+   "input": "regimes/R-cell/temperature_K",
+   "note": "charter T is null",
+   "source": "mock",
+   "value": 298.15
+  },
+  {
+   "input": "regimes/R-cell/gas/O2/pressure_bar",
+   "source": "mock",
+   "value": 1.0
+  },
+  {
+   "input": "regimes/R-cell/gas/CO2/pressure_bar",
+   "source": "mock",
+   "value": 1.0
+  },
+  {
+   "input": "regimes/R-cell/active_sink",
+   "note": "the cp2 ruling on Q9 sets this",
+   "source": "mock",
+   "value": "nitrate"
+  }
+ ],
+ "mock": true,
+ "provenance": {
+  "config_hash": "sha256:21abdecf9800099a86f1c12543ceed0dd63a42b941aa7b83300c7a69c6e94734",
+  "contract_sha": "b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3",
+  "git_dirty": false,
+  "git_sha": "16c06a76dd2fbacf26c3d8be25809b10973c463f",
+  "prior_file": "results/preprint/pourbaix/config/smoke.yaml",
+  "prior_file_hash": "sha256:54f943e6de4cfdcde8207637e6ebf9c9c7a59c72aa1be3bc41c4dde290c3e210"
+ },
+ "provenance_pourbaix": {
+  "cache_dir": "results/preprint/pourbaix/cache",
+  "cache_hash": "sha256:a0d055c72668051fd7568d7d0e689742a0b1a6aa8d4f9d772be8c6a210dbebb4",
+  "contract": {
+   "function": "E_window",
+   "path": "theory/contract.yaml",
+   "sha": "b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3"
+  },
+  "library_versions": {
+   "ase": "3.29.0",
+   "emmet-core": "0.87.3",
+   "mp-api": "0.46.5",
+   "numpy": "2.5.4",
+   "pymatgen": "2026.9.24",
+   "pyyaml": "6.0.3",
+   "rdkit": "2026.9.1",
+   "scipy": "1.18.1"
+  },
+  "mp_database_version": "2026.04.13",
+  "mp_thermo_types": [
+   "GGA_GGA+U"
+  ],
+  "w4_schema": {
+   "path": "configs/preprint/results_schema.json",
+   "rev": "cc50fc0"
+  },
+  "w6_schema": {
+   "path": "figures/src/schemas/fig7_pourbaix.schema.json",
+   "rev": "origin/preprint/p0-w6"
+  }
+ },
+ "regimes": {
+  "R-cell": {
+   "chemical_decomposition_check": {
+    "CaCO3": {
+     "delta_g_ev": 2.0887831081878723,
+     "delta_g_ev_alternative_CO2_scheme": 0.858864024359475,
+     "question": "is CaCO3 stable against CO2 loss without electrochemistry at this T and p(CO2)?",
+     "reaction": "CaCO3 -> CaO + CO2"
+    }
+   },
+   "convention": "W3 contract E_window = Delta_G_r/(Delta_n_Li F); Delta_n_Li > 0 releases Li to the reservoir (oxidation), < 0 takes it up (lithiation)",
+   "gas": {
+    "CO2": {
+     "enthalpy_scheme": "janaf",
+     "pressure_bar": 1.0
+    },
+    "O2": {
+     "enthalpy_scheme": "mp_fitted_reference",
+     "pressure_bar": 1.0
+    }
+   },
+   "oxidation_candidates": [
+    {
+     "delta_g_ev": 8.548908339693698,
+     "delta_n_li": 2.000000000000001,
+     "onset_V": 4.274454169846847,
+     "phase": "CaCO3",
+     "product": "Ca(NO3)2",
+     "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink": "nitrate",
+     "species": {
+      "CO2": {
+       "G_eV": -4.739217549312127,
+       "S_eV_per_K": 0.0022158290311605714,
+       "basis": "dfH from NIST-JANAF; S(T) from NIST-JANAF",
+       "coefficient": 0.9999999999999994,
+       "dfH_eV": -4.078568123671603,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "janaf"
+      },
+      "Ca(NO3)2": {
+       "G_eV": -13.706141090000003,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": 0.9999999999999987,
+       "entry_id": "mp-aaaaaeqw-GGA",
+       "kind": "solid",
+       "material_id": "mp-3142"
+      },
+      "CaCO3": {
+       "G_eV": -13.440039442500002,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.0,
+       "entry_id": "mp-aaaaafwb-GGA",
+       "kind": "solid",
+       "material_id": "mp-3953"
+      },
+      "Li": {
+       "G_eV": 0.0,
+       "basis": "Li metal, the Li+/Li reference",
+       "coefficient": 2.000000000000001,
+       "kind": "reference"
+      },
+      "LiNO3": {
+       "G_eV": -6.935595313333334,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.999999999999998,
+       "entry_id": "mp-aaaaamcq-GGA",
+       "kind": "solid",
+       "material_id": "mp-8180"
+      },
+      "O2": {
+       "G_eV": -0.6339261803216945,
+       "S_eV_per_K": 0.0021261988271732164,
+       "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+       "coefficient": 0.5000000000000008,
+       "dfH_eV": 0.0,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp_fitted_reference"
+      }
+     },
+     "status": "finite"
+    },
+    {
+     "delta_g_ev": 8.54912877719369,
+     "delta_n_li": 1.9999999999999978,
+     "onset_V": 4.27456438859685,
+     "phase": "CaCO3",
+     "product": "CaSO4",
+     "reaction": "CaCO3 + Li2SO4 -> CaSO4 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink": "sulfate",
+     "species": {
+      "CO2": {
+       "G_eV": -4.739217549312127,
+       "S_eV_per_K": 0.0022158290311605714,
+       "basis": "dfH from NIST-JANAF; S(T) from NIST-JANAF",
+       "coefficient": 0.9999999999999998,
+       "dfH_eV": -4.078568123671603,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "janaf"
+      },
+      "CaCO3": {
+       "G_eV": -13.440039442500002,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.0,
+       "entry_id": "mp-aaaaafwb-GGA",
+       "kind": "solid",
+       "material_id": "mp-3953"
+      },
+      "CaSO4": {
+       "G_eV": -16.014562248125,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": 0.9999999999999996,
+       "entry_id": "mp-aaaaagnm-GGA",
+       "kind": "solid",
+       "material_id": "mp-4406"
+      },
+      "Li": {
+       "G_eV": 0.0,
+       "basis": "Li metal, the Li+/Li reference",
+       "coefficient": 1.9999999999999978,
+       "kind": "reference"
+      },
+      "Li2SO4": {
+       "G_eV": -16.179832222291665,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -0.9999999999999993,
+       "entry_id": "mp-aaaaagtg-GGA",
+       "kind": "solid",
+       "material_id": "mp-4556"
+      },
+      "O2": {
+       "G_eV": -0.6339261803216945,
+       "S_eV_per_K": 0.0021261988271732164,
+       "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+       "coefficient": 0.49999999999999967,
+       "dfH_eV": 0.0,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp_fitted_reference"
+      }
+     },
+     "status": "finite"
+    },
+    {
+     "delta_g_ev": 8.521062109693691,
+     "delta_n_li": 1.9999999999999973,
+     "onset_V": 4.260531054846851,
+     "phase": "CaCO3",
+     "product": "CaCl2",
+     "reaction": "CaCO3 + 2 LiCl -> CaCl2 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink": "chloride",
+     "species": {
+      "CO2": {
+       "G_eV": -4.739217549312127,
+       "S_eV_per_K": 0.0022158290311605714,
+       "basis": "dfH from NIST-JANAF; S(T) from NIST-JANAF",
+       "coefficient": 0.9999999999999996,
+       "dfH_eV": -4.078568123671603,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "janaf"
+      },
+      "CaCO3": {
+       "G_eV": -13.440039442500002,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.0,
+       "entry_id": "mp-aaaaafwb-GGA",
+       "kind": "solid",
+       "material_id": "mp-3953"
+      },
+      "CaCl2": {
+       "G_eV": -8.41049383,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": 0.9999999999999993,
+       "entry_id": "mp-aaaabhwy-GGA",
+       "kind": "solid",
+       "material_id": "mp-22904"
+      },
+      "Li": {
+       "G_eV": 0.0,
+       "basis": "Li metal, the Li+/Li reference",
+       "coefficient": 1.9999999999999973,
+       "kind": "reference"
+      },
+      "LiCl": {
+       "G_eV": -4.273848568333333,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.9999999999999978,
+       "entry_id": "mp-aaacpllf-GGA",
+       "kind": "solid",
+       "material_id": "mp-1185319"
+      },
+      "O2": {
+       "G_eV": -0.6339261803216945,
+       "S_eV_per_K": 0.0021261988271732164,
+       "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+       "coefficient": 0.5000000000000003,
+       "dfH_eV": 0.0,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp_fitted_reference"
+      }
+     },
+     "status": "finite"
+    },
+    {
+     "delta_g_ev": null,
+     "delta_n_li": null,
+     "onset_V": null,
+     "phase": "CaCO3",
+     "product": "Ca(solv)",
+     "reaction": "",
+     "reason": "Ca2+ (or Al3+) dissolved in the electrolyte and paired with its anion: needs the free energy of the dissolved cation relative to Li+ in the chosen solvent, which is not in the cached data",
+     "sink": "solvated",
+     "species": {},
+     "status": "undetermined"
+    },
+    {
+     "delta_g_ev": null,
+     "delta_n_li": null,
+     "onset_V": null,
+     "phase": "Al2O3",
+     "product": "Al(NO3)3",
+     "reaction": "Al2O3 + 6 LiNO3 -> 2 Al(NO3)3 + 1.5 O2 + 6 Li",
+     "reason": "phase Al(NO3)3 absent from the cached data",
+     "sink": "nitrate",
+     "species": {},
+     "status": "undetermined"
+    },
+    {
+     "delta_g_ev": 25.02424856701743,
+     "delta_n_li": 5.999999999999986,
+     "onset_V": 4.170708094502915,
+     "phase": "Al2O3",
+     "product": "Al2(SO4)3",
+     "reaction": "Al2O3 + 3 Li2SO4 -> Al2(SO4)3 + 1.5 O2 + 6 Li",
+     "reason": "",
+     "sink": "sulfate",
+     "species": {
+      "Al2(SO4)3": {
+       "G_eV": -39.697113869375,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": 0.9999999999999982,
+       "entry_id": "mp-aaaaagnx-GGA",
+       "kind": "solid",
+       "material_id": "mp-4417"
+      },
+      "Al2O3": {
+       "G_eV": -17.132755040000003,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.0,
+       "entry_id": "mp-aaaaabrz-GGA",
+       "kind": "solid",
+       "material_id": "mp-1143"
+      },
+      "Li": {
+       "G_eV": 0.0,
+       "basis": "Li metal, the Li+/Li reference",
+       "coefficient": 5.999999999999986,
+       "kind": "reference"
+      },
+      "Li2SO4": {
+       "G_eV": -16.179832222291665,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -2.9999999999999942,
+       "entry_id": "mp-aaaaagtg-GGA",
+       "kind": "solid",
+       "material_id": "mp-4556"
+      },
+      "O2": {
+       "G_eV": -0.6339261803216945,
+       "S_eV_per_K": 0.0021261988271732164,
+       "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+       "coefficient": 1.499999999999997,
+       "dfH_eV": 0.0,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp_fitted_reference"
+      }
+     },
+     "status": "finite"
+    },
+    {
+     "delta_g_ev": 26.098452829517456,
+     "delta_n_li": 6.0,
+     "onset_V": 4.34974213825291,
+     "phase": "Al2O3",
+     "product": "AlCl3",
+     "reaction": "Al2O3 + 6 LiCl -> 2 AlCl3 + 1.5 O2 + 6 Li",
+     "reason": "",
+     "sink": "chloride",
+     "species": {
+      "Al2O3": {
+       "G_eV": -17.132755040000003,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.0,
+       "entry_id": "mp-aaaaabrz-GGA",
+       "kind": "solid",
+       "material_id": "mp-1143"
+      },
+      "AlCl3": {
+       "G_eV": -7.863252175000001,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": 1.9999999999999984,
+       "entry_id": "mp-aaaablrp-GGA",
+       "kind": "solid",
+       "material_id": "mp-25469"
+      },
+      "Li": {
+       "G_eV": 0.0,
+       "basis": "Li metal, the Li+/Li reference",
+       "coefficient": 6.0,
+       "kind": "reference"
+      },
+      "LiCl": {
+       "G_eV": -4.273848568333333,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -5.9999999999999964,
+       "entry_id": "mp-aaacpllf-GGA",
+       "kind": "solid",
+       "material_id": "mp-1185319"
+      },
+      "O2": {
+       "G_eV": -0.6339261803216945,
+       "S_eV_per_K": 0.0021261988271732164,
+       "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+       "coefficient": 1.4999999999999998,
+       "dfH_eV": 0.0,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp_fitted_reference"
+      }
+     },
+     "status": "finite"
+    },
+    {
+     "delta_g_ev": null,
+     "delta_n_li": null,
+     "onset_V": null,
+     "phase": "Al2O3",
+     "product": "Al(solv)",
+     "reaction": "",
+     "reason": "Ca2+ (or Al3+) dissolved in the electrolyte and paired with its anion: needs the free energy of the dissolved cation relative to Li+ in the chosen solvent, which is not in the cached data",
+     "sink": "solvated",
+     "species": {},
+     "status": "undetermined"
+    }
+   ],
+   "phase_records": {
+    "Al2O3": {
+     "entry_id": "mp-aaaaabrz-GGA",
+     "li_open_hull": {
+      "e_above_hull_eV_per_atom": 0.0
+     },
+     "li_open_oxidation": {
+      "delta_g_ev": null,
+      "delta_n_li": null,
+      "method": "Li-open grand potential",
+      "reaction": "",
+      "reason": "Li-free phase: the Li-open grand potential has no reaction with Delta_n_Li > 0 (open question Q9)",
+      "status": "finite",
+      "value": null
+     },
+     "lithiation_hull": "Li-Al-O",
+     "material_id": "mp-1143",
+     "window": {
+      "notes": [
+       "Li-open oxidation limit unbounded (Li-free phase: the Li-open grand potential has no reaction with Delta_n_Li > 0 (open question Q9)); replaced by explicit oxidation reactions"
+      ],
+      "oxidation": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reactions",
+       "reaction": "",
+       "reason": "no computable oxidation reaction for sink nitrate: phase Al(NO3)3 absent from the cached data",
+       "status": "undetermined",
+       "value": null
+      },
+      "phase": "Al2O3",
+      "reduction": {
+       "delta_g_ev": -0.4579205409375309,
+       "delta_n_li": -0.375,
+       "method": "Li-open grand potential, first lithiation reaction on the hull",
+       "reaction": "Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al",
+       "reason": "",
+       "status": "finite",
+       "value": 1.2211214425000823
+      },
+      "sink": "nitrate"
+     }
+    },
+    "CaCO3": {
+     "entry_id": "mp-aaaaafwb-GGA",
+     "li_open_hull": {
+      "e_above_hull_eV_per_atom": 0.0
+     },
+     "li_open_oxidation": {
+      "delta_g_ev": null,
+      "delta_n_li": null,
+      "method": "Li-open grand potential",
+      "reaction": "",
+      "reason": "Li-free phase: the Li-open grand potential has no reaction with Delta_n_Li > 0 (open question Q9)",
+      "status": "finite",
+      "value": null
+     },
+     "lithiation_hull": "Li-Ca-C-O",
+     "material_id": "mp-3953",
+     "window": {
+      "notes": [
+       "Li-open oxidation limit unbounded (Li-free phase: the Li-open grand potential has no reaction with Delta_n_Li > 0 (open question Q9)); replaced by explicit oxidation reactions"
+      ],
+      "oxidation": {
+       "delta_g_ev": 8.548908339693698,
+       "delta_n_li": 2.000000000000001,
+       "method": "explicit oxidation reactions, lowest onset within sink nitrate",
+       "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "finite",
+       "value": 4.274454169846847
+      },
+      "phase": "CaCO3",
+      "reduction": {
+       "delta_g_ev": -2.1645503742357053,
+       "delta_n_li": -1.3333333333,
+       "method": "Li-open grand potential, first lithiation reaction on the hull",
+       "reaction": "CaCO3 + 1.333 Li -> 0.6667 Li2CO3 + CaO + 0.3333 C",
+       "reason": "",
+       "status": "finite",
+       "value": 1.6234127807173644
+      },
+      "sink": "nitrate"
+     }
+    }
+   },
+   "question": "Between which potentials vs Li+/Li are CaCO3 and Al2O3 at equilibrium against lithiation (Li-open grand potential) and against oxidation to O2 (and CO2) with the cation going to the stated sink?",
+   "reference_electrode": "Li+/Li",
+   "regime": "R-cell",
+   "scope": "Thermodynamic proxies only: stability domains and windows say which state is at equilibrium, not how fast any phase corrodes, dissolves or decomposes. The window is a thermodynamic window, not a kinetic statement.",
+   "sensitivity_CO2_enthalpy_scheme": [
+    {
+     "delta_g_ev": 7.318989255865302,
+     "delta_n_li": 2.000000000000001,
+     "onset_V": 3.659494627932649,
+     "phase": "CaCO3",
+     "product": "Ca(NO3)2",
+     "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink": "nitrate",
+     "species": {
+      "CO2": {
+       "G_eV": -5.969136633140525,
+       "S_eV_per_K": 0.0022158290311605714,
+       "basis": "dfH from the MP CO2 molecular solid (sublimation not included); S(T) from NIST-JANAF",
+       "coefficient": 0.9999999999999994,
+       "dfH_eV": -5.308487207500001,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp"
+      },
+      "Ca(NO3)2": {
+       "G_eV": -13.706141090000003,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": 0.9999999999999987,
+       "entry_id": "mp-aaaaaeqw-GGA",
+       "kind": "solid",
+       "material_id": "mp-3142"
+      },
+      "CaCO3": {
+       "G_eV": -13.440039442500002,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.0,
+       "entry_id": "mp-aaaaafwb-GGA",
+       "kind": "solid",
+       "material_id": "mp-3953"
+      },
+      "Li": {
+       "G_eV": 0.0,
+       "basis": "Li metal, the Li+/Li reference",
+       "coefficient": 2.000000000000001,
+       "kind": "reference"
+      },
+      "LiNO3": {
+       "G_eV": -6.935595313333334,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.999999999999998,
+       "entry_id": "mp-aaaaamcq-GGA",
+       "kind": "solid",
+       "material_id": "mp-8180"
+      },
+      "O2": {
+       "G_eV": -0.6339261803216945,
+       "S_eV_per_K": 0.0021261988271732164,
+       "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+       "coefficient": 0.5000000000000008,
+       "dfH_eV": 0.0,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp_fitted_reference"
+      }
+     },
+     "status": "finite"
+    },
+    {
+     "delta_g_ev": 7.319209693365293,
+     "delta_n_li": 1.9999999999999978,
+     "onset_V": 3.6596048466826505,
+     "phase": "CaCO3",
+     "product": "CaSO4",
+     "reaction": "CaCO3 + Li2SO4 -> CaSO4 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink": "sulfate",
+     "species": {
+      "CO2": {
+       "G_eV": -5.969136633140525,
+       "S_eV_per_K": 0.0022158290311605714,
+       "basis": "dfH from the MP CO2 molecular solid (sublimation not included); S(T) from NIST-JANAF",
+       "coefficient": 0.9999999999999998,
+       "dfH_eV": -5.308487207500001,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp"
+      },
+      "CaCO3": {
+       "G_eV": -13.440039442500002,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.0,
+       "entry_id": "mp-aaaaafwb-GGA",
+       "kind": "solid",
+       "material_id": "mp-3953"
+      },
+      "CaSO4": {
+       "G_eV": -16.014562248125,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": 0.9999999999999996,
+       "entry_id": "mp-aaaaagnm-GGA",
+       "kind": "solid",
+       "material_id": "mp-4406"
+      },
+      "Li": {
+       "G_eV": 0.0,
+       "basis": "Li metal, the Li+/Li reference",
+       "coefficient": 1.9999999999999978,
+       "kind": "reference"
+      },
+      "Li2SO4": {
+       "G_eV": -16.179832222291665,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -0.9999999999999993,
+       "entry_id": "mp-aaaaagtg-GGA",
+       "kind": "solid",
+       "material_id": "mp-4556"
+      },
+      "O2": {
+       "G_eV": -0.6339261803216945,
+       "S_eV_per_K": 0.0021261988271732164,
+       "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+       "coefficient": 0.49999999999999967,
+       "dfH_eV": 0.0,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp_fitted_reference"
+      }
+     },
+     "status": "finite"
+    },
+    {
+     "delta_g_ev": 7.291143025865294,
+     "delta_n_li": 1.9999999999999973,
+     "onset_V": 3.645571512932652,
+     "phase": "CaCO3",
+     "product": "CaCl2",
+     "reaction": "CaCO3 + 2 LiCl -> CaCl2 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink": "chloride",
+     "species": {
+      "CO2": {
+       "G_eV": -5.969136633140525,
+       "S_eV_per_K": 0.0022158290311605714,
+       "basis": "dfH from the MP CO2 molecular solid (sublimation not included); S(T) from NIST-JANAF",
+       "coefficient": 0.9999999999999996,
+       "dfH_eV": -5.308487207500001,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp"
+      },
+      "CaCO3": {
+       "G_eV": -13.440039442500002,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.0,
+       "entry_id": "mp-aaaaafwb-GGA",
+       "kind": "solid",
+       "material_id": "mp-3953"
+      },
+      "CaCl2": {
+       "G_eV": -8.41049383,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": 0.9999999999999993,
+       "entry_id": "mp-aaaabhwy-GGA",
+       "kind": "solid",
+       "material_id": "mp-22904"
+      },
+      "Li": {
+       "G_eV": 0.0,
+       "basis": "Li metal, the Li+/Li reference",
+       "coefficient": 1.9999999999999973,
+       "kind": "reference"
+      },
+      "LiCl": {
+       "G_eV": -4.273848568333333,
+       "basis": "MP formation energy, 0 K, MP2020; entropy neglected",
+       "coefficient": -1.9999999999999978,
+       "entry_id": "mp-aaacpllf-GGA",
+       "kind": "solid",
+       "material_id": "mp-1185319"
+      },
+      "O2": {
+       "G_eV": -0.6339261803216945,
+       "S_eV_per_K": 0.0021261988271732164,
+       "basis": "dfH = 0 (MP2020 oxide correction fitted against the computed O2 reference); S(T) from NIST-JANAF",
+       "coefficient": 0.5000000000000003,
+       "dfH_eV": 0.0,
+       "kind": "gas",
+       "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+       "pressure_bar": 1.0,
+       "scheme": "mp_fitted_reference"
+      }
+     },
+     "status": "finite"
+    },
+    {
+     "delta_g_ev": null,
+     "delta_n_li": null,
+     "onset_V": null,
+     "phase": "CaCO3",
+     "product": "Ca(solv)",
+     "reaction": "",
+     "reason": "Ca2+ (or Al3+) dissolved in the electrolyte and paired with its anion: needs the free energy of the dissolved cation relative to Li+ in the chosen solvent, which is not in the cached data",
+     "sink": "solvated",
+     "species": {},
+     "status": "undetermined"
+    }
+   ],
+   "sink_assumption": {
+    "active": "nitrate",
+    "definition": {
+     "anion": "NO3-",
+     "kind": "salt",
+     "li_source": "LiNO3",
+     "products": {
+      "Al": [
+       "Al(NO3)3"
+      ],
+      "Ca": [
+       "Ca(NO3)2"
+      ]
+     }
+    },
+    "statement": "The cation leaves as the solid salt of the electrolyte anion. The anion comes from the Li salt, whose Li is plated at the Li+/Li reference. Mock choice: nitrate, a fluorine-free Li salt whose Ca salt is in the Materials Project database. The charter has not yet chosen the electrolyte.",
+    "switch": "set regimes/R-cell/active_sink in the run configuration; no code change (cp2 ruling on Q9)"
+   },
+   "temperature_K": 298.15,
+   "windows": {
+    "Al2O3": {
+     "notes": [
+      "Li-open oxidation limit unbounded (Li-free phase: the Li-open grand potential has no reaction with Delta_n_Li > 0 (open question Q9)); replaced by explicit oxidation reactions"
+     ],
+     "oxidation": {
+      "delta_g_ev": null,
+      "delta_n_li": null,
+      "method": "explicit oxidation reactions",
+      "reaction": "",
+      "reason": "no computable oxidation reaction for sink nitrate: phase Al(NO3)3 absent from the cached data",
+      "status": "undetermined",
+      "value": null
+     },
+     "phase": "Al2O3",
+     "reduction": {
+      "delta_g_ev": -0.4579205409375309,
+      "delta_n_li": -0.375,
+      "method": "Li-open grand potential, first lithiation reaction on the hull",
+      "reaction": "Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al",
+      "reason": "",
+      "status": "finite",
+      "value": 1.2211214425000823
+     },
+     "sink": "nitrate"
+    },
+    "CaCO3": {
+     "notes": [
+      "Li-open oxidation limit unbounded (Li-free phase: the Li-open grand potential has no reaction with Delta_n_Li > 0 (open question Q9)); replaced by explicit oxidation reactions"
+     ],
+     "oxidation": {
+      "delta_g_ev": 8.548908339693698,
+      "delta_n_li": 2.000000000000001,
+      "method": "explicit oxidation reactions, lowest onset within sink nitrate",
+      "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+      "reason": "",
+      "status": "finite",
+      "value": 4.274454169846847
+     },
+     "phase": "CaCO3",
+     "reduction": {
+      "delta_g_ev": -2.1645503742357053,
+      "delta_n_li": -1.3333333333,
+      "method": "Li-open grand potential, first lithiation reaction on the hull",
+      "reaction": "CaCO3 + 1.333 Li -> 0.6667 Li2CO3 + CaO + 0.3333 C",
+      "reason": "",
+      "status": "finite",
+      "value": 1.6234127807173644
+     },
+     "sink": "nitrate"
+    }
+   }
+  }
+ },
+ "session": "P0-W5.1"
+}
