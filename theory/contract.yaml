@@ -295,6 +295,26 @@ functions:
       - {wrt: a_Ca, direction: increasing}
       - {wrt: K_sp, direction: decreasing}
 
+  - name: Omega_bulk_hydrated
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_Ca*a_CO3*a_w**n_hyd/K_sp
+    sensitivity: true
+    note: >-
+      LABELLED SENSITIVITY ONLY (cp2 fix F7, Q13): the ion activity product of a hydrated framing
+      CaCO3.nH2O, IAP = a_Ca a_CO3 a_w^n, with K_sp the solubility product of the same framing.
+      The screen keeps IAP = a_Ca a_CO3 (Omega_bulk). For a_w < 1 the anhydrous form overstates
+      Omega by the factor a_w^(-n), so drying states are optimistic in the screen. Evaluated where
+      W1 supplies n; never used for a verdict.
+    limits:
+      - {at: {a_w: '1'}, expected: '@Omega_bulk', note: 'in the slurry (a_w = 1) the two forms agree'}
+      - {at: {n_hyd: '0'}, expected: '@Omega_bulk'}
+    inequalities:
+      - {expr: '@Omega_bulk_hydrated', relation: '<=', rhs: '@Omega_bulk', domains: {a_w: '(0, 1]'}, note: 'the anhydrous IAP overstates Omega when a_w < 1 (bias toward feasibility at drying states)'}
+    monotonicity:
+      - {wrt: a_w, direction: nondecreasing}
+
   - name: Omega_local_ideal
     claim: C3
     regime: R-slurry

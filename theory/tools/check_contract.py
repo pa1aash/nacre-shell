@@ -723,6 +723,7 @@ def check_thresholds(ctx, contract, rep):
             if test.get("cos_function") and test["cos_function"] not in fnames:
                 rep.add(False, "thresholds", "%s %s" % (link, test["id"]), "unknown cos_function")
     keys.add(dec["credible_level"]["params"])
+    keys.update(((dec.get("drying_states") or {}).get("params") or {}).values())
     keys.update((doc["study"]["deletion_test"].get("params") or {}).values())
     study = doc["study"]
     gating = [k for k, s in doc["links"].items() if s.get("gating", True)]

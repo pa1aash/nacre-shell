@@ -50,6 +50,15 @@ which they apply. A link's verdict is therefore the worst over those states, ord
 inconclusive < falsified. The C3 accessibility part is cumulative: nuclei may form at any state
 along the registered R-slurry path, so it uses the path sum of Eq. (24) [th:eq:access].
 
+**Water activity at drying states (cp2 fix F7, Q13).** The ion activity product stays
+IAP = a_Ca a_CO3. For a hydrated ACC framing CaCO3.nH2O the full product carries a_w^n, and
+omitting it overstates Omega by the factor a_w^(-n) whenever a_w < 1. The drying states are
+therefore optimistic in the screen: their Omega, and with it the C3 driving force, is biased
+toward feasibility. Two requirements follow:
+- a_w (`params.a_w_slurry`, per registered drying state) is reported at each drying state;
+- where W1 supplies n (`params.acc_hydration_n`), the labelled sensitivity `Omega_bulk_hydrated`
+  (contract) is reported beside every drying-state verdict. It never decides a verdict.
+
 **Bookkeeping (contract v2).** Every barrier is evaluated with Omega = Omega_bulk at the regime
 activities. The C2 binding enters only through Delta_gamma_ads in gamma_sl, and C2 itself is a
 reported descriptor, not a gate (Section 2) (derivation, Section 7
@@ -352,6 +361,8 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `thresholds.C5.formation_energy_error` | e_form | literature (database benchmark) | C5 |
 | `regimes.R-slurry.parameters.ACC_offset` | Delta_ACC | literature | C5 (ACC framing) |
 | `regimes.R-slurry.parameters.pH_range` | pH | literature | C5, all R-slurry states |
+| `params.a_w_slurry` | a_w | literature (per drying state) | reported at every drying state (F7) |
+| `params.acc_hydration_n` | n_hyd | literature (ACC framing) | hydrated-IAP sensitivity (F7) |
 | `regimes.R-slurry.parameters.E_SHE_range` | E_SHE | literature | C5 |
 | `thresholds.C5.window_margin` | m_E | literature (derived from e_form) | C5 R-cell |
 | `regimes.R-cell.parameters.E_min` | E_cell_min | literature | C5 R-cell |
@@ -387,7 +398,14 @@ decision:
   order: [feasible, inconclusive, falsified]
   clipping: {cos_ge_1: {theta: '0', f_theta: '0'}, cos_le_minus_1: {theta: pi, f_theta: '1'}, report: boundary_mass}
   omega: Omega_bulk
-  forbidden_in_verdicts: [Omega_local_ideal, Delta_mu_local_ideal, DG_het_local_ideal, DG_het_double, E_enr, c_local]
+  forbidden_in_verdicts: [Omega_local_ideal, Delta_mu_local_ideal, DG_het_local_ideal, DG_het_double, E_enr, c_local,
+                          Omega_bulk_hydrated]
+  drying_states:
+    iap: a_Ca*a_CO3
+    bias: the anhydrous IAP overstates Omega by a_w**(-n_hyd) when a_w < 1; drying states are optimistic
+    report: [a_w]
+    sensitivity: Omega_bulk_hydrated
+    params: {a_w: params.a_w_slurry, n_hyd: params.acc_hydration_n}
 links:
   C1:
     regimes: [R-slurry]

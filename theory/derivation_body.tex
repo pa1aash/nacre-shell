@@ -203,6 +203,14 @@ in J. Nucleation requires $\Om>1$. This is the charter's convention (F3): its $S
 The per-ion square root $\Om^{1/2}$ with a factor $2\kB T$ is the same statement and is not used,
 so that no factor of two can be lost between lanes.
 
+\paragraph{Structural water (Q13).} For a hydrated framing CaCO$_3\cdot n$H$_2$O the ion activity
+product is $\aCa\aCO a_\mathrm{w}^{n}$, with $\Ksp$ of the same framing. The screen keeps
+$\mathrm{IAP}=\aCa\aCO$. In the slurry $a_\mathrm{w}=1$ and the two agree. At a drying state
+$a_\mathrm{w}<1$, and the anhydrous form overstates $\Om$ by the factor $a_\mathrm{w}^{-n}>1$: the
+drying states are optimistic, biased toward a larger driving force. The screen therefore reports
+$a_\mathrm{w}$ at every drying state and, where $n$ is supplied, the hydrated ratio as a labelled
+sensitivity (\texttt{Omega\_bulk\_hydrated}); it never decides a verdict (cp2 fix F7).
+
 \paragraph{Equilibrium of the open interfacial region.} Write the electrochemical potential of ion
 $i$ (charge number $z_i$) at position $\mathbf r$ as
 \begin{equation}\label{th:eq:echem}
