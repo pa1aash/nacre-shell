@@ -18,6 +18,12 @@ from nacre.pourbaix.paths import REPO
 W4_SCHEMA = ("cc50fc0", "configs/preprint/results_schema.json")
 W6_SCHEMA = ("origin/preprint/p0-w6", "figures/src/schemas/fig7_pourbaix.schema.json")
 W3_CONTRACT = ("b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3", "theory/contract.yaml")
+# Day 2 (P0-W5.2): schema v2 with the C5 section (D4), contract v2, W3's thresholds and the
+# Fig 7 schema at the commits read in this session.
+W4_SCHEMA_V2 = ("16fe14d4454fd1b4b79ed8454a557b6d68aa7b88", "configs/preprint/results_schema.json")
+W3_CONTRACT_V2 = ("5811a6b2b82565a2d7e991987eee6ab4f167959e", "theory/contract.yaml")
+W3_THRESHOLDS = ("800d5ea", "theory/thresholds.md")
+W6_SCHEMA_PIN = ("6bcb801", "figures/src/schemas/fig7_pourbaix.schema.json")
 LIBS = ["pymatgen", "mp-api", "emmet-core", "numpy", "scipy", "rdkit", "ase", "pyyaml"]
 
 

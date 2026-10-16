@@ -31,6 +31,8 @@ ROLE_SPACEGROUPS = {
     # H-ordered boehmite cell; the ideal Cmcm cell needs H disorder.
     "boehmite": ("AlHO2", "Cmc2_1"),
     "diaspore": ("AlHO2", "Pnma"),
+    # Al(OH)3 ground state in MP: monoclinic, two-layer stacking as in gibbsite (P0-W5.2)
+    "gibbsite": ("Al(HO)3", "P2_1/c"),
 }
 
 
