@@ -14,6 +14,7 @@ Every source was located by search in this session. The searches are logged in `
 
 - **Locators.** "Abstract" means the claim rests on the abstract only, because no open full text could be reached headlessly (`lit/novelty.md`, execution note 8). "Title only" means the record was located but neither the abstract nor the full text could be read. Such a record is listed as a pointer and is credited with nothing beyond its title.
 - **Full text.** Copies are local-only and are not committed.
+- **Day 2 update (P0-W2.2, 2026-10-17).** Entry B13 (lane note N4) was added. B7 and B10 were upgraded to full text, and the full-text retries for B2 and B9 are recorded. The W1 row cross-reference is filled in.
 
 ## Field schema and severity scale
 
@@ -59,6 +60,8 @@ Each entry gives:
 
 - **Sources.**
   - 10.1021/acs.jpcc.3c01727: Zagalskaya, Chaudhary, Alexandrov, *J. Phys. Chem. C* 127, 14587 (2023), abstract.
+    - Full-text retry, 2026-10-17. Unpaywall and OpenAlex list no open publisher copy.
+    - The public-access repository copy (par.nsf.gov, record 10427497) timed out on every request from this network, so the entry still rests on the abstract.
   - 10.1002/maco.202011977: Barthel, Deiss, *Mater. Corros.* 72, 434 (2020), abstract.
   - 10.5006/0010-9312-26.9.397: Lennox, *Corrosion* 26, 397 (1970), title only ("Limitations on the Use of Pourbaix Diagrams to Predict De-Alloying or Other Corrosion Characteristics").
   - 10.1103/PhysRevB.85.235438: Persson, Waldwick, Lazic et al., *Phys. Rev. B* 85, 235438 (2012), abstract. This is the method used to combine computed solids with experimental aqueous reference states.
@@ -171,11 +174,15 @@ Each entry gives:
   - 10.1126/science.1254051: Nielsen, Aloni, De Yoreo, *Science* 345, 1158 (2014), editor's summary.
   - 10.1126/science.aaa6760: De Yoreo, Gilbert, Sommerdijk et al., *Science* 349, aaa6760 (2015). Read in full text: structured abstract (BACKGROUND, ADVANCES) and the free-energy-landscape discussion with Fig. 4.
   - Countervailing:
-    - 10.1039/c2fd20124k: Hu, Nielsen, Freeman et al., *Faraday Discuss.* 159, 509 (2012), abstract.
+    - 10.1039/c2fd20124k: Hu, Nielsen, Freeman et al., *Faraday Discuss.* 159, 509 (2012). Read in full text (2026-10-17): the accepted manuscript in the White Rose repository; page numbers are those of the manuscript PDF.
     - 10.26434/chemrxiv-2024-16j0s: Li, Lin, Tseng et al., ChemRxiv (2024), abstract.
 - **Evidence.**
   - **Against CNT.** Dissolved CaCO3 contains stable prenucleation ion clusters even in undersaturated solution, which challenges the classical picture of metastable clusters (Gebauer 2008). Liquid-cell TEM shows direct nucleation from solution coexisting with transformation of ACC into and between crystalline polymorphs (Nielsen 2014). Particle-based pathways "exceed the scope of classical theories, which assume that a new phase appears via monomer-by-monomer addition to an isolated cluster" (De Yoreo 2015, structured abstract).
-  - **For CNT, on templates.** On carboxyl-terminated self-assembled monolayers, template-directed calcite nucleation is "described well in purely classical terms through a reduction in the thermodynamic barrier due to decreased interfacial free energy". The cluster-aggregation model "does not provide a universal description" (Hu 2012). Carbonate nanodroplets near critical size conform to CNT (Li 2024, non-aqueous ethanol and triethylamine system).
+  - **For CNT, on templates.** On carboxyl-terminated self-assembled monolayers, template-directed calcite nucleation is "described well in purely classical terms through a reduction in the thermodynamic barrier due to decreased interfacial free energy". The cluster-aggregation model "does not provide a universal description" (Hu 2012, abstract, pdf p. 2).
+    - **Hu 2012, full text.** The rate data give α = 72 mJ/m2 (MHA, C16) and 81 mJ/m2 (MUA, C11) against 109 mJ/m2 in bulk solution. The mid-range barriers are 19 kT, 27 kT and 105 kT, and nucleation "proceeds as expected from CNT" (pdf p. 9, Section 3).
+    - **Simulation agrees.** Crystallisation simulations give interfacial energies of 56 and 102 ± 6 mJ/m2 for the even and odd SAMs (pdf p. 11, Section 4).
+    - **What it does not rule out.** The authors cannot rule out nuclei built from pre-critical clusters (pdf p. 14). On the OH-terminated MUO SAM, ACC forms homogeneously and dissolves while calcite nucleates elsewhere (pdf p. 12, Section 5).
+    - **Limits of the support.** The classical support is direct only for ionised carboxyl SAMs, and it is the same evidence that retrodiction cases RC06 (`preprint/retrodiction/cases.yaml`) and RX03 rest on. Carbonate nanodroplets near critical size conform to CNT (Li 2024, non-aqueous ethanol and triethylamine system).
   - **Physical reading.** C3's barrier uses Young energies and capillary geometry, which are macroscopic quantities applied to nuclei of a few nanometres on templates with sub-nanometre features. The classical description is contested for bulk CaCO3, but it has direct experimental support for template-directed nucleation on carboxylate surfaces.
 - **Condition.**
   - Nuclei of order 1 to a few nm, where interfacial energies become size-dependent and the sharp-interface model breaks down.
@@ -206,6 +213,9 @@ Each entry gives:
 - **Sources.**
   - 10.1021/acs.jpcb.9b04473: Yeh, Lenhart, Orlicki et al., *J. Phys. Chem. B* 123, 7024 (2019), abstract.
   - 10.1021/acs.langmuir.5c02791: Shrestha, Kojio, Shiota et al., *Langmuir* 41, 23672 (2025), abstract.
+  - Full-text retry for Yeh 2019 and Shrestha 2025 (2026-10-17).
+    - Neither has an open copy on Unpaywall, OpenAlex, Semantic Scholar or Europe PMC (PMIDs 31313924 and 40853215 are not open access), so both stay at "abstract".
+    - The Shrestha abstract gives the chemisorption energy on the dehydroxylated surface as "−233.5 kJ/mol per surface model", with physisorption by hydrogen bonding on the hydroxylated surface. No number is given for the hydroxylated case.
   - 10.1021/jp512780s: Yeh, Lenhart, Rinderspacher et al., *J. Phys. Chem. C* 119, 7721 (2015), abstract (partly countervailing).
 - **Evidence.**
   - **Weakened in water (Yeh 2019).** Catechol-bearing oligomers adsorb strongly on hydroxylated alumina in anhydrous conditions. In water, "the adsorption interactions were significantly weakened because of the competition with the water molecules", and catechol hydrogen bonding "is not the sole factor".
@@ -220,16 +230,28 @@ Each entry gives:
 ### B10. Polydopamine coatings reduce CaCO3 deposition (C3). Found in this session's search
 
 - **Sources.**
-  - 10.3390/coatings13020306: Yu, Wang, Xu et al., *Coatings* 13, 306 (2023), abstract.
+  - 10.3390/coatings13020306: Yu, Wang, Xu et al., *Coatings* 13, 306 (2023). Read in full text (2026-10-17): 13 pp., MDPI copy through an archived snapshot of the open-access location.
   - 10.1007/s11998-016-9898-x: Li, Peng, Deng et al., *J. Coat. Technol. Res.* 14, 1095 (2017), abstract (partly countervailing).
+    - Full-text retry, 2026-10-17: there is no open copy, and the publisher page refuses headless clients.
 - **Evidence.**
   - **Fewer deposits on PDA (Yu 2023).** An electroplated PDA coating cut CaCO3 deposition compared with bare carbon steel, with scale-inhibition efficiencies of 55.02% at 70 °C and 66.96% at 90 °C after 12 h in supersaturated CaCO3 solution. Their MD attributes initial deposition to dense water adsorption layers on hydrophilic metal surfaces, which are absent on PDA, so CaCO3 is less likely to adsorb there.
+  - **Full text of Yu 2023.**
+    - *Coating.* The coating is electroplated from 1.2 g/L dopamine at 15 V with a nickel anode for 3 min, and EDS shows Ni in it (Section 2.2, p. 3; Fig. 4). It is not pure PDA.
+    - *Scale test.* Ca2+ and CO3 2- were each 360 mg/L, with static immersion for 12 h; pH, background salts and replicates are not stated (Section 4.1.4, p. 7).
+    - *Deposit mass.* After 12 h, bare steel carried 0.667 (70 °C) and 0.672 mg/cm2 (90 °C), and PDA carried 0.300 and 0.222 mg/cm2 (p. 8, Fig. 7).
+    - *Polymorph.* No XRD is reported, so the polymorph is not identified.
+    - *Contact angles.* Water contact angles are 72.01 ± 0.3° on steel and 60.45 ± 0.3° on PDA (Section 4.1.2, p. 5). The PDA surface is the more hydrophilic one.
+    - *MD interaction energies.* CaCO3–plate: Fe −1.53 eV, PDA-coated −0.29 eV. CaCO3–adsorbed water layer: Fe −84.22 eV, PDA −0.35 eV (Section 4.2.3, pp. 10–11).
+    - *Internal inconsistency.* The water–PDA interaction energy is −5.69 eV in the abstract and −7.51 eV in Table 2.
+    - *Mechanism.* The authors attribute scaling to a dense adsorbed water layer on the steel. They do not reconcile this with the lower contact angle of PDA.
+    - *Use in retrodiction.* This study is retrodiction case RC12 (a negative catechol case). Its assumptions, configurational MD energies read as adhesion and deposit mass read as nucleation, are flagged there.
   - **PAA needed on PDA (Li 2017).** A continuous CaCO3 film on PDA was obtained only with poly(acrylic acid) in solution.
   - **Physical reading.** A PDA surface is not automatically a nucleation-promoting template. Under some conditions it is an anti-scaling surface, which is the opposite of what C3 needs.
 - **Condition.**
   - Electroplated PDA on steel.
   - Hot (70 to 90 °C), supersaturated CaCO3 solutions over 12 h.
   - Deposition measured by mass, which mixes nucleation on the surface with adhesion of bulk-formed particles.
+  - A coating containing Ni, with the polymorph not identified, and pH not reported (full text).
 - **Regime.** Partly.
   - **Different conditions.** R-slurry is at room temperature on an Al oxide.
   - **What C3 measures.** C3 evaluates the heterogeneous nucleation barrier on the template, not the adhesion of bulk-precipitated particles.
@@ -267,21 +289,89 @@ Each entry gives:
 - **Placement.** Limits (the electrolyte definition). Outlook (fluorinated-imide electrolytes).
 - **Severity.** Minor, provided S12 fixes a truly fluorine-free salt. Material otherwise.
 
+### B13. Chitosan is not dissolved in a strongly alkaline slurry (C1, C2, C3; template premise). Lane note N4, added 2026-10-17
+
+- **Sources.**
+  - 10.3390/md13031133: Younes, Rinaudo, *Mar. Drugs* 13, 1133–1174 (2015). Read in full text, Section 3.2 (pdf p. 16) and Section 3.3 (pdf p. 17).
+  - 10.3390/polym13193256: Aranaz, Alcántara, Civera et al., *Polymers* 13, 3256 (2021). Read in full text, Section 1 (pdf p. 2), Section 2.1 (pdf pp. 2–3) and pdf p. 7.
+  - 10.1021/acs.cgd.4c00602: Knight, Mondal, Han et al., *Cryst. Growth Des.* 24, 6338–6353 (2024). Read in full text, Section 2.4.1 (pdf p. 5).
+  - 10.1073/pnas.1222162110: Giuffre, Hamm, Han, De Yoreo, Dove, *Proc. Natl. Acad. Sci. USA* 110, 9261–9266 (2013). Read in full text, Materials and Methods (PMC3677451).
+  - 10.1016/s0008-6215(99)00263-3: Kubota, Tatsumoto, Sano, Toya, *Carbohydr. Res.* 324, 268–274 (2000), abstract.
+  - 10.1016/j.carres.2009.03.002: Fan, Hu, *Carbohydr. Res.* 344, 944–947 (2009), abstract.
+  - 10.1016/j.carbpol.2015.07.072: Chang, Lin, Wu, Tsai, *Carbohydr. Polym.* 134, 74–81 (2015), abstract.
+  - 10.1002/celc.202500327: Maffre, Liu, Markowski et al., *ChemElectroChem* (2025). Read in full text; it gives the slurry pH.
+- **Evidence.**
+  - **Acid-soluble only.** Chitosan is "soluble in acetic acid or hydrochloric acid at pH lower than 6 (its intrinsic pK being around 6.5)" (Younes and Rinaudo 2015, Section 3.2). Alkaline media are the standard way to precipitate it: films are "immersed in an alkaline solution (in which they precipitate)" (Section 3.3).
+  - **Higher Mw is insoluble.** Its "pKa value is approximately 6.5" (Aranaz 2021, Section 2.1). "Chitosan samples with higher Mw are only soluble in acidic aqueous media even at high deacetylation degrees" (Section 1), and solubility is "poor … above pH 6.5" (pdf p. 7).
+  - **Routes to wider solubility stop near neutral pH.**
+    - Chitosan oligomers are soluble "from acidic to basic ones (i.e., physiological pH 7.4)" (Aranaz 2021, Section 1).
+    - Half re-acetylation expands solubility "until pH 7.4" (Section 2.1).
+    - The water solubility of half N-acetylated chitosan increases with decreasing molecular weight (Kubota 2000, abstract).
+    - Chitosans above 29.2 kDa showed low solubility at pH 7.0 (Chang 2015, abstract).
+    - No source located in this session reports dissolved chitosan chains at pH 10 to 12.
+  - **Dissolving it in alkali needs harsh conditions.** Chitosan dissolves in aqueous LiOH/urea only through freeze–thawing, with 4.8 wt% LiOH and 8.0 wt% urea as the optimal solvent (Fan and Hu 2009, abstract). That is roughly 2 M LiOH, far more alkaline than a slurry and including a freezing step. The molarity is this lane's arithmetic, not a sourced value.
+  - **The templating studies used solid films.**
+    - In the chitosan–calcite nucleation experiments, "Chitosan is insoluble at the experimental pH of 10 and remains a stable surface in solution without treatment (i.e., does not dissolve)". The more soluble sulfated chitosans had to be cross-linked into "a thin, insoluble film" (Knight 2024, Section 2.4.1).
+    - Giuffre et al. (2013) electrodeposited chitosan films onto gold before nucleating calcite at pH 10.8.
+    - Neither study used chitosan dissolved in the mineralising solution.
+  - **The slurry is strongly alkaline.** Aqueous cathode slurries reach pH 9.7 (LNMO) and 12.5 (NMC622) without additive (Maffre 2025, p. 5, Fig. 3F). The W1 rows TA-005, TA-006, TA-010 and TA-013 report pH 11.4 to above 12.
+  - **Physical reading.**
+    - At pH 10 to 12, the amines of ordinary chitosan (pK about 6.5) are essentially all deprotonated. The chain is near-neutral and precipitates or aggregates instead of dissolving.
+    - Chitosan added to such a slurry would reach the Al oxide as a colloidal or precipitated deposit, not as dissolved chains that adsorb and order.
+    - The literature support for a chitosan template, its low calcite nucleation barrier, belongs to a pre-cast, insoluble chitosan film.
+    - Keeping chitosan dissolved at high pH would need a charged derivative (carboxymethyl, quaternised or sulfated). That changes the near-neutral surface chemistry to which that low barrier is attributed: Knight 2024 finds γ_net rises with sulfation, and Giuffre 2013 finds charge-dense polysaccharides give higher barriers.
+- **Condition.** Chitosan of ordinary molecular weight and degree of acetylation in aqueous media at pH above about 7.4. In particular, the R-slurry pH (alkaline, upper bound pending S12) with no acid added.
+- **Regime.** No, for R-slurry if the template is meant to be dissolved chitosan in the slurry.
+  - **Not affected.** The physics of C1–C3 as computed is unaffected: P0 models a chitosan fragment at an interface, not its dissolution.
+  - **Affected.** The premise of how the template reaches the collector is affected. A chitosan film pre-cast from mildly acidic solution and then exposed to the slurry is consistent with the sources. A chitosan additive dissolved in the slurry is not.
+  - **The chitosan-only control.** This control (`charter/deletion_register.yaml`, `chitosan_only`) is a surface fragment, which matches the film reading.
+  - **The retrodiction cases.** RC07–RC10 (`preprint/retrodiction/cases.yaml`) are films, consistent with this entry.
+- **Placement.**
+  - *Introduction.* The Introduction must not assume dissolved chitosan in the slurry (lane note N4). It describes the chitosan template as a pre-formed film, or states the solubility constraint.
+  - *Limits.* The template's delivery and its state in the alkaline slurry are not modelled.
+  - *Outlook.* Soluble derivatives, and the change in barrier that their charge implies.
+- **Severity.** Material. It changes how the chitosan link and its control are read, and it constrains the Introduction's premise. It is not blocking, because no P0 verdict depends on chitosan being dissolved.
+
 ## Summary by severity
 
 | Severity | Entries |
 |---|---|
 | Blocking | B1, B2 |
-| Material | B3, B4, B5, B6, B7, B8, B9, B10, B11 |
+| Material | B3, B4, B5, B6, B7, B8, B9, B10, B11, B13 |
 | Minor | B12 (material if the R-cell salt is a fluorinated imide) |
 
 ## Cross-reference with p0-w1
 
-`git show origin/preprint/p0-w1:lit/evidence_table.csv` on 2026-10-16 found no such file: origin/preprint/p0-w1 was still at the day-1 base commit (`49bafac`). No rows with contrary = y exist yet to cross-reference by row_id. The cross-check is due on Day 2 (P0-W2.2).
+Updated 2026-10-17 (P0-W2.2), against `lit/evidence_table.csv` as merged into `preprint/p0` by P0-I1 (W1.1 merged; 396 rows, 73 with contrary = y). Each contrary row is assigned to exactly one entry; the assignment was checked by script, with all 73 rows assigned and none twice.
+
+| Entry | W1 rows (contrary = y) | What the rows add |
+|---|---|---|
+| B1 | TB-001, TB-002, TB-003, TB-004, TB-005 | CaCO3 scale on Al alloys is porous and accompanies more corrosion |
+| B2 | TE-043 | equilibrium and hull-distance stability metrics miss metastable phases |
+| B3 | TD-042, TD-044, TD-046, TD-047, TD-050 | catechol pKa near 9 to 10.5; weak Ca2+ binding by dopamine near neutral pH |
+| B4 | TA-038, TA-039, TA-040, TA-042, TA-043, TA-044 | catechol/quinone binders are redox-active or oxidised in the cathode window |
+| B5 | TC-032, TC-114, TC-116 | ACC is size-stabilised, has no single solubility, and calcite-ACC interfaces are costly |
+| B7 | TC-019, TC-112, TC-113, TE-003, TE-004, TE-006, TE-008, TE-011, TE-012, TE-013, TE-014, TE-018, TE-019, TE-020, TE-021, TE-022, TE-023 | non-classical pathways, size-dependent interfacial energy, line tension and Tolman corrections |
+| B9 | TD-018, TD-019, TD-021, TD-029, TD-034, TD-035, TD-037, TD-039, TD-040 | catechol adhesion on oxides weakened by water and by oxidation to quinone; irreproducible forces; binding on alumina |
+| B10 | TC-071, TC-094, TC-098, TC-101, TC-102, TC-103, TC-104, TC-111 | surfaces or polymers that bind Ca2+ yet suppress or bypass direct nucleation |
+| B11 | TA-005, TA-006, TA-010, TA-013, TA-016, TA-023, TA-024, TA-035, TA-036, TA-046, TB-014, TB-019, TB-020, TB-022 | alkaline slurries dissolve the native oxide, release H2 and change pH; carbonate captured in Li-Al species |
+| no entry | TB-057, TB-058, TC-001, TC-016, TE-082 | input uncertainty for the parameter table (lane p0-w1, lit/conflicts.md) or the anchor (p0-w5), not an argument against a link |
+
+Notes on the assignment:
+
+- **TC-111** (10.1021/acs.langmuir.3c01629). An oxygen-rich (carboxyl/hydroxyl) two-dimensional surface binds Ca2+ and inhibits nucleation. It is the sharpest W1 row against the C2 → C3 premise, that sequestering Ca2+ promotes nucleation. It is recorded under B10. The Discussion of B10 should cite it beside Yu 2023.
+- **TC-071, TC-094 and TC-098.** These are also retrodiction candidates: RC05 is usable, while RX08 and RX11 are excluded (`preprint/retrodiction/cases.yaml`). Their use there does not change their contrary reading.
+- **Entries with no W1 row.** B6, B8, B12 and B13 have no flagged W1 row. B13 draws on full texts read in this session.
+- **Rows assigned to no entry.** TB-057, TB-058, TC-016 and TE-082 are uncertainty in input values: oxide–water and calcite surface energies, and a solvation benchmark error. TC-001 is a nacre ACC observation. They belong to the parameter-conflict log (p0-w1) or the anchor (p0-w5), not to this dossier.
 
 ## Outstanding for this dossier
 
-1. **B3.** Numeric catechol pKa values and the Ca–catecholate stability constant, from the two title-only sources (10.1016/0039-9140(77)80049-0 and 10.1016/s0003-2670(01)85307-1), for the parameter table (p0-w1).
+1. **B3.** Numeric catechol pKa values and the Ca–catecholate stability constant, from the two title-only sources (10.1016/0039-9140(77)80049-0 and 10.1016/s0003-2670(01)85307-1), for the parameter table (p0-w1). W1 has since fetched pKa and log K rows (TD-042 to TD-049), which can replace them.
 2. **B6.** A fetched CaCO3 band gap with a locator (10.1016/j.ssc.2025.116092 or another source).
-3. **Full text for the abstract-only entries.** The texts that matter most are those behind B2 (Zagalskaya 2023), B7 (Hu 2012), B9 (Yeh 2019; Shrestha 2025) and B10 (Yu 2023). Publisher-hosted copies refused headless clients, so an operator or library route is needed.
-4. **Day 2.** The row_id cross-check against p0-w1's evidence table.
+3. **Full text still outstanding after the day-2 open-route retry.**
+   - B2: Zagalskaya 2023. The repository copy at par.nsf.gov/servlets/purl/10427497 timed out; retry from another network.
+   - B9: Yeh 2019 and Shrestha 2025. There is no open copy.
+   - B10: Li 2017. There is no open copy.
+   - These need an operator or library route.
+   - B7 (Hu 2012) and B10 (Yu 2023) are now read in full.
+4. **B13.** The pKa-versus-degree-of-acetylation values of Sorlier et al. (2001, 10.1021/bm015531+, abstract only), and the solvent and pH used by chitosan-binder electrode papers, remain unsourced.
