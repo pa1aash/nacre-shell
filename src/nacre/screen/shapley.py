@@ -157,7 +157,9 @@ def shapley_effects(model, joint, outputs, n_var, n_outer, n_inner, rng, key="na
     full = 2 ** k - 1
     needed = [m for m in range(1, full) if np.any(a[:, m] != 0)]
     yv = _evaluate(model, joint.sample(rng, n_var), cols, outputs, chunk)
-    v = {o: np.full((len(needed), n_outer), np.nan) for o in outputs}
+    # inner variances are Monte Carlo estimates: float32 storage (1e-7 relative) halves the
+    # memory of the permutation design; every sum below is taken in float64
+    v = {o: np.full((len(needed), n_outer), np.nan, dtype=np.float32) for o in outputs}
     for r, mask in enumerate(needed):
         iv = _inner_variances(model, joint, cols, players, mask, outputs, n_outer, n_inner, rng, chunk)
         for o in outputs:
@@ -168,7 +170,7 @@ def shapley_effects(model, joint, outputs, n_var, n_outer, n_inner, rng, key="na
     result = {}
     for o in outputs:
         ok = np.isfinite(v[o])
-        vz = np.where(ok, v[o], 0.0)
+        vz = np.where(ok, v[o], 0.0).astype(np.float64)
         var = _weighted_var(np.ones(n_var), yv[o])
         cost = np.zeros(2 ** k)
         with np.errstate(invalid="ignore", divide="ignore"):

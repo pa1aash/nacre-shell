@@ -42,7 +42,8 @@ class Output:
     Positive multiplicative quantities (saturation ratios, enrichment, concentrations,
     barriers, radii) are analysed as log10: their priors span orders of magnitude, and the
     barriers diverge like 1 / ln^2(Omega) as Omega -> 1+, so on the linear scale a few
-    near-saturation draws carry the variance and the indices do not converge.
+    near-saturation draws carry the variance and the indices do not converge. Scale "none"
+    marks a reported quantity that gets quantiles but no sensitivity index.
     """
     symbol: str
     units: str
@@ -73,7 +74,9 @@ OUTPUTS = {
         "r_star": Output("r*(Omega_bulk)", "m", "log10"),
         "S_spread": Output("S_spread", "J m^-2"),
         "B_acc_kT": Output("B_acc / k_B T", "k_B T"),
-        "accessibility_margin_kT": Output("(B_acc - Delta_G*_het) / k_B T", "k_B T"),
+        # report only: B_acc - Delta_G*_het inherits the 1/ln^2(Omega) divergence of the barrier and
+        # takes both signs, so no scale gives it a finite variance; C3b is analysed through N_nuc
+        "accessibility_margin_kT": Output("(B_acc - Delta_G*_het) / k_B T", "k_B T", "none"),
         "N_nuc": Output("N_nuc", "m^-2", "log10"),
     },
 }

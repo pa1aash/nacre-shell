@@ -408,7 +408,7 @@
         },
         "sensitivity_scale": {
           "type": "object",
-          "description": "Per quantity, the scale its Sobol and Shapley indices are computed on: log10 for positive multiplicative quantities (saturation ratios, enrichment, concentrations, barriers, radii), linear otherwise.",
+          "description": "Per quantity, the scale its Sobol and Shapley indices are computed on: log10 for positive multiplicative quantities (saturation ratios, enrichment, concentrations, barriers, radii), linear otherwise. Quantities without an entry are reported (quantiles) without sensitivity indices.",
           "additionalProperties": {
             "enum": [
               "linear",

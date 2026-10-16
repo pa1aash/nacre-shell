@@ -122,7 +122,7 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
             if not np.any(np.isfinite(values)):
                 continue
             quantities[q] = {"symbol": m.symbol, "units": m.units, **propagate.describe(values, levels)}
-        names = [q for q in meta if q in quantities]
+        names = [q for q in meta if q in quantities and meta[q].scale != "none"]
         sub = link_joint(joint, link)
         s_seq, h_seq, d_seq = link_seq.spawn(3)
         idx, design, conv = sobol.size_and_verify(
