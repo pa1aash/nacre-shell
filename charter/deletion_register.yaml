@@ -117,8 +117,12 @@ steps:
         expected_direction: no change in the CaCO3 screen; the bare-oxide baseline shows native-oxide attack
 
 rule: >-
-  The verdict must degrade when the nacre mechanism is removed: with any deletion control
-  in place of the template, the study-level verdict must move toward falsified on at
-  least one of C2, C3 or C4. If it does not (or if only C1 degrades), the paper is a
-  generic adhesion study and the framing changes accordingly. The operational form of
-  "degrade" is registered at G2.
+  The verdict must degrade when the nacre mechanism is removed. The must-degrade test
+  applies only to the controls that remove the mechanism, bare_oxide and PVDF: with either
+  in place of the template, the study-level verdict must move toward falsified on at least
+  one of C2, C3 or C4. If it does not (or if only C1 degrades), the paper is a generic
+  adhesion study and the framing changes accordingly. The operational form of "degrade" is
+  registered at G2. catechol_only and chitosan_only are partial controls: they are computed
+  and reported but do not gate the test. carboxylate_substituted is a competing-chemistry
+  comparator, reported either way: a better carboxylate result means the nacre-like
+  mechanism holds with a different anchor, not that this is a generic adhesion study.
