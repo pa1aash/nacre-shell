@@ -11,6 +11,7 @@ Thread retrieval (every call is logged under lit/corpus/<thread>/):
 Evidence table:
   validate <csv>...                       validate rows.csv or the merged table
   merge                                   merge thread rows, write evidence_table.csv and coverage.yaml
+  trace    <csv>...                       local audit: is each value printed in the cached text of its DOI?
 """
 import argparse
 import json
@@ -19,6 +20,7 @@ import sys
 from nacre import _util
 from nacre.lit import evidence as E
 from nacre.lit import merge as M
+from nacre.lit import trace as T
 from nacre.lit.thread import SEARCH_ROUTES, THREADS, ThreadSession
 
 
@@ -58,6 +60,8 @@ def main(argv=None):
     v = sub.add_parser("validate")
     v.add_argument("paths", nargs="+")
     sub.add_parser("merge")
+    t = sub.add_parser("trace")
+    t.add_argument("paths", nargs="+")
     a = p.parse_args(argv)
 
     if a.cmd == "validate":
@@ -71,6 +75,17 @@ def main(argv=None):
         return rc
     if a.cmd == "merge":
         return M.run(_util.repo_root())
+    if a.cmd == "trace":
+        rc = 0
+        for path in a.paths:
+            counts = {}
+            for rid, status, detail in T.audit(_util.repo_root(), E.read_csv(path)[1]):
+                counts[status] = counts.get(status, 0) + 1
+                if status in ("untraced", "derived"):
+                    print("%s %-9s %s" % (rid, status, detail))
+            print("%s: %s" % (path, counts))
+            rc |= bool(counts.get("untraced"))
+        return rc
 
     ts = ThreadSession(a.thread)
     if a.cmd == "search":
