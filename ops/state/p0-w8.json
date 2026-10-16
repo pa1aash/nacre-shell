@@ -1,5 +1,29 @@
 {
-  "last_session": null,
-  "status": "READY",
-  "day": 1
+  "last_session": "P0-W8.1",
+  "status": "DONE",
+  "day": 1,
+  "artifacts": [
+    "preprint/paper/main.tex",
+    "preprint/paper/nacre-preamble.tex",
+    "preprint/paper/sections/",
+    "preprint/paper/si/main_si.tex",
+    "preprint/paper/build.sh",
+    "preprint/paper/declarations.yaml",
+    "preprint/paper/lint/",
+    "preprint/paper/outline.md",
+    "preprint/paper/briefs/",
+    "preprint/claims.yaml",
+    "preprint/generated/sources.yaml",
+    "preprint/generated/numbers.tex",
+    "src/nacre/preprint/",
+    "tests/preprint/",
+    "ops/reports/P0-W8.1.md"
+  ],
+  "notes": [
+    "template local-only, sha256 match, found in worktree or main checkout",
+    "draft build ok (main 1 page, SI 1 page); release guard refuses (AI include absent, placeholders remain)",
+    "28 claims (23 claims, 5 does-not-claim); 10 briefs",
+    "all 28 macros mock; screen shape from W4 schema blob e81bcb3; other schemas assumed, reconcile Day 2",
+    "integrator: wire lint-numbers and lint-scope into nacre verify"
+  ]
 }
