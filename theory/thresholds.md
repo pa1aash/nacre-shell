@@ -216,6 +216,19 @@ inconclusive otherwise.
   (n_at e_f + Delta_ACC) / n_M, with Delta_ACC = `regimes.R-slurry.parameters.ACC_offset`. ACC is
   never on the hull, and its metastability above calcite is part of the framing, not an
   instability.
+- **What the ACC edge tests (cp2 fix F6).** Adding Delta_ACC to the edge makes the ACC test
+  equal to the calcite-level test. ACC lies above calcite by Delta_ACC per formula unit, so
+  Psi_ACC = Psi_calcite + Delta_ACC / n_M. It is never on the hull, so the hull is the same with or
+  without it. The ACC test, Delta_G_pbx(ACC) <= (n_at e_f + Delta_ACC) / n_M, is therefore
+  identical to Psi_calcite - Psi_hull <= n_at e_f / n_M. In words, C5 R-slurry decides whether
+  CaCO3 is stable as a phase at the regime activities, up to the metastability that defines the
+  framing. It does not decide whether ACC itself survives.
+- **ACC-specific dissolution margin (labelled sensitivity, not gating).** Whether the regime
+  solution is supersaturated with respect to ACC is Omega_bulk evaluated with the ACC solubility
+  product, the quantity that already enters C3 through K_sp under the ACC framing. C5 reports
+  `P(Omega_bulk >= 1)` for the ACC framing at each registered state, labelled as the ACC
+  dissolution sensitivity. A value of Omega_bulk below 1 there means ACC dissolves at that state
+  even where CaCO3 passes C5.
 - **Decision.**
   - feasible if `P(Delta_G_pbx <= edge) >= p` at every point, **and** the falsifiability control
     (item 21, W5) fails where it must;
@@ -466,6 +479,15 @@ links:
                  pH: regimes.R-slurry.parameters.pH_range, E_SHE: regimes.R-slurry.parameters.E_SHE_range}
         state: bulk
         requires: falsifiability_control_fails_where_it_must
+        acc_edge_equivalence: the ACC edge makes the test equal to the calcite-level test (cp2 fix F6)
+    sensitivities:
+      - id: C5s_ACC
+        label: ACC dissolution margin under the ACC framing (reported, not gating)
+        framing: ACC
+        quantity: Omega_bulk
+        comparator: '>='
+        edge: '1'
+        uses: K_sp of the ACC framing (the prior already used by C3)
       - id: C5c_ox
         regime: R-cell
         quantity: E_ox
