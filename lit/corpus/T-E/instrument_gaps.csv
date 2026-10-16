@@ -1,0 +1,80 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-16T09:29:39Z,unpaywall,10.1021/acs.jctc.8b01176,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.jctc.8b01176
+2026-10-16T09:29:40Z,unpaywall,10.1021/acs.jctc.8b01176,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c73f5d9abda2e424f8ba2c/original/gfn2-x-tb-an-accurate-and-broadly-parametrized-self-consistent-tight-binding-quantum-chemical-method-with-multipole-electrostatics-and-density-dependent-dispersion-contributions.pdf
+2026-10-16T09:29:41Z,unpaywall,10.1021/acs.jctc.8b01176,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c73f9e567dfe2444ec3a69/original/gfn2-x-tb-an-accurate-and-broadly-parametrized-self-consistent-tight-binding-quantum-chemical-method-with-multipole-electrostatics-and-density-dependent-dispersion-contributions.pdf
+2026-10-16T09:29:55Z,unpaywall+wayback,10.1021/acs.jctc.8b01176,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/acs.jctc.8b01176
+2026-10-16T09:30:04Z,unpaywall,10.1039/c9cp06869d,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:30:07Z,unpaywall,10.1002/anie.202004239,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/anie.202004239
+2026-10-16T09:30:09Z,europepmc,10.1002/anie.202004239,http_error,HTTP 403 https://europepmc.org/articles/PMC7267649?pdf=render
+2026-10-16T09:30:18Z,unpaywall+wayback,10.1002/anie.202004239,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/anie.202004239
+2026-10-16T09:30:19Z,europepmc+wayback,10.1002/anie.202004239,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC7267649?pdf=render
+2026-10-16T09:30:27Z,unpaywall,10.1021/acs.jctc.1c00471,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c75876842e651efcdb486b/original/a-robust-and-efficient-implicit-solvation-model-for-fast-semiempirical-methods.pdf
+2026-10-16T09:31:09Z,unpaywall,10.1016/j.cpc.2009.09.018,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:31:12Z,fulltext,10.1016/s0010-4655(98)00154-4,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T09:31:16Z,unpaywall,10.1016/s0378-4754(00)00270-6,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:31:19Z,unpaywall,10.1080/00949659708811825,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:31:22Z,fulltext,10.21105/joss.00097,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T09:31:25Z,unpaywall,10.1103/physrevb.85.235438,http_error,HTTP 403 http://link.aps.org/pdf/10.1103/PhysRevB.85.235438
+2026-10-16T09:31:27Z,unpaywall+wayback,10.1103/physrevb.85.235438,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/http://link.aps.org/pdf/10.1103/PhysRevB.85.235438
+2026-10-16T09:31:27Z,fulltext,10.1103/physrevb.85.235438,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-16T09:31:30Z,unpaywall,10.1021/acs.chemmater.7b03980,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:31:38Z,unpaywall,10.1126/sciadv.aaq0148,http_error,HTTP 403 https://advances.sciencemag.org/content/advances/4/4/eaaq0148.full.pdf
+2026-10-16T09:31:39Z,unpaywall,10.1126/sciadv.aaq0148,http_error,HTTP 403 https://escholarship.org/content/qt9rd59995/qt9rd59995.pdf
+2026-10-16T09:38:04Z,unpaywall,10.1126/sciadv.aaq0148,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1460309 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x109890bc0>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1460309)"
+2026-10-16T09:38:04Z,europepmc,10.1126/sciadv.aaq0148,http_error,HTTP 403 https://europepmc.org/articles/PMC5930398?pdf=render
+2026-10-16T09:38:08Z,unpaywall+wayback,10.1126/sciadv.aaq0148,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://advances.sciencemag.org/content/advances/4/4/eaaq0148.full.pdf
+2026-10-16T09:38:14Z,unpaywall,10.1126/sciadv.1600225,http_error,HTTP 403 https://advances.sciencemag.org/content/advances/2/11/e1600225.full.pdf
+2026-10-16T09:38:16Z,europepmc,10.1126/sciadv.1600225,http_error,HTTP 403 https://europepmc.org/articles/PMC5262468?pdf=render
+2026-10-16T09:38:18Z,unpaywall+wayback,10.1126/sciadv.1600225,http_error,HTTP 403 https://web.archive.org/web/2026id_/https://advances.sciencemag.org/content/advances/2/11/e1600225.full.pdf
+2026-10-16T09:38:19Z,europepmc+wayback,10.1126/sciadv.1600225,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC5262468?pdf=render
+2026-10-16T09:38:23Z,unpaywall,10.1021/cm702327g,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:38:27Z,fulltext,10.1021/acsami.5b07517,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T09:38:30Z,fulltext,10.1021/acs.chemmater.5b04082,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T09:45:01Z,unpaywall,10.1039/c5ta08574h,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1433677 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10a92bfe0>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1433677)"
+2026-10-16T09:45:09Z,unpaywall,10.1016/j.joule.2019.02.006,http_error,HTTP 403 http://www.cell.com/article/S2542435119300868/pdf
+2026-10-16T09:45:19Z,fulltext,10.1021/jp810292n,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T09:45:22Z,abstracts,10.1016/j.cpc.2009.09.018,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T09:45:23Z,unpaywall,10.1039/c7cp04913g,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2017/cp/c7cp04913g
+2026-10-16T09:45:24Z,abstracts,10.1016/s0010-4655(98)00154-4,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T09:45:26Z,abstracts,10.1016/s0378-4754(00)00270-6,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T09:45:32Z,unpaywall,10.1021/acs.jctc.7b01183,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:45:37Z,unpaywall,10.1002/wcms.1493,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wcms.1493
+2026-10-16T09:45:43Z,unpaywall+wayback,10.1002/wcms.1493,http_error,HTTP 403 https://web.archive.org/web/2026id_/https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wcms.1493
+2026-10-16T09:45:43Z,fulltext,10.1002/wcms.1493,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-16T09:45:47Z,unpaywall,10.1063/5.0197592,http_error,HTTP 403 https://pubs.aip.org/aip/jcp/article-pdf/doi/10.1063/5.0197592/19837939/114110_1_5.0197592.pdf
+2026-10-16T09:45:57Z,unpaywall,10.1126/science.1164271,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:46:00Z,unpaywall,10.1039/c3cs60451a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2014/cs/c3cs60451a
+2026-10-16T09:46:07Z,unpaywall,10.1073/pnas.1700342114,http_error,HTTP 403 https://www.pnas.org/content/pnas/114/38/E7882.full.pdf
+2026-10-16T09:46:08Z,europepmc,10.1073/pnas.1700342114,http_error,HTTP 403 https://europepmc.org/articles/PMC5617248?pdf=render
+2026-10-16T09:46:31Z,fulltext,10.1103/physrevlett.91.015703,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T09:46:34Z,unpaywall,10.1063/1.1747247,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:46:40Z,unpaywall,10.1063/1.1744540,parse_error,not a PDF: https://aip.scitation.org/doi/pdf/10.1063/1.1744540
+2026-10-16T09:46:43Z,unpaywall+wayback,10.1063/1.1744540,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://aip.scitation.org/doi/pdf/10.1063/1.1744540
+2026-10-16T09:46:43Z,fulltext,10.1063/1.1744540,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-16T09:46:46Z,unpaywall,10.1021/acs.cgd.6b00794,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:46:59Z,unpaywall,10.1103/physrevlett.116.056102,http_error,HTTP 403 http://link.aps.org/pdf/10.1103/PhysRevLett.116.056102
+2026-10-16T09:47:10Z,unpaywall,10.1126/sciadv.aao6283,http_error,HTTP 403 https://advances.sciencemag.org/content/advances/4/1/eaao6283.full.pdf
+2026-10-16T09:47:11Z,europepmc,10.1126/sciadv.aao6283,http_error,HTTP 403 https://europepmc.org/articles/PMC5786440?pdf=render
+2026-10-16T09:47:22Z,unpaywall+wayback,10.1126/sciadv.aao6283,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://advances.sciencemag.org/content/advances/4/1/eaao6283.full.pdf
+2026-10-16T09:47:23Z,europepmc+wayback,10.1126/sciadv.aao6283,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC5786440?pdf=render
+2026-10-16T09:48:14Z,unpaywall,10.1038/ncomms1604,http_error,HTTP 503 (https://www.nature.com/articles/ncomms1604.pdf)
+2026-10-16T09:56:40Z,unpaywall,10.1021/ja001533a,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:56:43Z,unpaywall,10.26434/chemrxiv-2023-vp6ns-v3,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/6541c7cfc573f893f18c703e/original/consistent-density-functional-theory-based-description-of-ion-hydration-through-density-corrected-many-body-representations.pdf
+2026-10-16T09:56:44Z,openalex,10.26434/chemrxiv-2023-vp6ns-v3,http_error,HTTP 403 https://pubs.aip.org/aip/jcp/article-pdf/doi/10.1063/5.0174577/18205349/181101_1_5.0174577.pdf
+2026-10-16T09:56:45Z,openalex,10.26434/chemrxiv-2023-vp6ns-v3,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/64f17b5b3fdae147fa3db791/original/consistent-density-functional-theory-based-description-of-ion-hydration-through-density-corrected-many-body-representations.pdf
+2026-10-16T09:56:46Z,openalex,10.26434/chemrxiv-2023-vp6ns-v3,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/64f856e83fdae147fa9ae7b1/original/consistent-density-functional-theory-based-description-of-ion-hydration-through-density-corrected-many-body-representations.pdf
+2026-10-16T09:56:55Z,unpaywall,10.1021/acs.jpcb.1c06108,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:57:49Z,semanticscholar,density functional benchmark calcium complexes binding energies coupled cluster,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-16T09:58:16Z,semanticscholar,Ca2+ water binding energy benchmark DFT CCSD(T) clusters,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-16T09:58:50Z,europepmc,10.1021/acs.jpcb.0c11077,http_error,HTTP 403 https://europepmc.org/articles/PMC8028316?pdf=render
+2026-10-16T09:58:52Z,europepmc+wayback,10.1021/acs.jpcb.0c11077,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC8028316?pdf=render
+2026-10-16T09:58:56Z,unpaywall,10.1021/jp0363491,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T09:58:57Z,unpaywall,10.1351/pac-rep-10-05-03,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.1351/pac-rep-10-05-03
+2026-10-16T09:58:57Z,openalex,10.1351/pac-rep-10-05-03,not_indexed,HTTP 404 https://api.openalex.org/works/doi:10.1351/pac-rep-10-05-03
+2026-10-16T09:58:59Z,fulltext,10.1351/pac-rep-10-05-03,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T09:59:57Z,unpaywall,10.1021/acsomega.6c01605,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acsomega.6c01605?ref=article_openPDF
+2026-10-16T09:59:59Z,unpaywall,10.1021/acsomega.6c01605,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC13422323/pdf/ao6c01605.pdf
+2026-10-16T09:59:59Z,europepmc,10.1021/acsomega.6c01605,http_error,HTTP 403 https://europepmc.org/articles/PMC13422323?pdf=render
+2026-10-16T10:00:01Z,unpaywall+wayback,10.1021/acsomega.6c01605,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/acsomega.6c01605?ref=article_openPDF
+2026-10-16T10:00:05Z,unpaywall+wayback,10.1021/acsomega.6c01605,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pmc.ncbi.nlm.nih.gov/articles/PMC13422323/pdf/ao6c01605.pdf
+2026-10-16T10:00:06Z,europepmc+wayback,10.1021/acsomega.6c01605,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC13422323?pdf=render
