@@ -14,14 +14,17 @@ session, and nothing here is a result of the study.
 | `lit/corpus/<thread>/rows.csv` | the thread's evidence rows (schema below) | yes |
 | `lit/corpus/<thread>/gaps.md` | what the thread searched for and did not find, and why | yes |
 | `lit/corpus/<thread>/instrument_gaps.csv` | retrieval failures, in the `nacre.retrieval` gap format | yes |
-| `lit/evidence_table.csv` | all thread rows merged, deduplicated on DOI + locator + quantity | yes |
+| `lit/evidence_table.csv` | all thread rows merged; numeric rows deduplicated on DOI + locator + quantity + symbol + value (D1), qualitative rows on DOI + locator + quantity across threads | yes |
 | `lit/corpus/coverage.yaml` | status of every target quantity | yes |
 | `lit/corpus/gaps.md` | all gaps, ordered by physical leverage on the barrier | yes |
 | `.local/lit/<thread>/` | full texts, extracted text, abstracts, search metadata, raw cache | **never** |
 
 Threads: T-A binders and fluorine-free processing; T-B aluminium, its oxide and the alkaline slurry;
 T-C biomineralisation and nucleation; T-D catechol and polydopamine chemistry; T-E methods and
-benchmarks.
+benchmarks. Day 2 (P0-W1.2): T-F second sources and the three gap targets; T-G direct ACC solubility
+and density; T-H Ca2+ binding at templates against the interfacial energy of nucleating CaCO3; T-I
+thermochemistry of the stability screens, the R-cell electrolyte and solvation; T-J regime ranges,
+nucleation prefactors and process times.
 
 ## Tools
 
@@ -46,7 +49,7 @@ location, then Europe PMC full-text XML. Paywalled works without an open copy ar
 | Column | Content and format |
 |---|---|
 | `row_id` | `<thread letter pair>-<three digits>`, unique: `TA-001`, `TB-014`. The prefix matches the thread. |
-| `thread` | `T-A` to `T-E`. |
+| `thread` | `T-A` to `T-J`. |
 | `doi` | Bare DOI, lower case, `10.<registrant>/<suffix>`; no `https://doi.org/` prefix. |
 | `locator` | Where in the work the value is: `p. 155`, `Table 2`, `Fig. 3b`, `Eq. (12)`, `Section 3.2`, `SI Table S4`, `abstract`. Combine as needed (`p. 4, Table 2`). Use the printed page number when the text shows one, else `pdf p. N`. |
 | `quantity` | A lower-case slug. Target quantities use the vocabulary below; other quantities may use any descriptive slug. |

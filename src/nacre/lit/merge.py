@@ -6,6 +6,7 @@ from pathlib import Path
 import yaml
 
 from nacre.lit import evidence as E
+from nacre.lit import ledger as L
 
 GAPS_HEAD = """# Evidence gaps across threads
 
@@ -31,6 +32,9 @@ def load_threads(root):
     patterns = E.scope_patterns(root)
     for t, d in thread_files(root):
         f = d / "rows.csv"
+        if not d.exists():
+            out.append([])  # a thread that has not started yet contributes no rows
+            continue
         if not f.exists():
             errs.append("%s: rows.csv missing" % t)
             out.append([])
@@ -69,11 +73,13 @@ def write_gaps(root, cov):
                 c["label"], c["rank"], c["independent_sources"], c.get("independent_originals"), c["caveat"]))
     lines += ["", "## Thread gap notes", ""]
     for t, d in thread_files(root):
-        lines += ["### %s" % t, "", _gap_section(d / "gaps.md"), ""]
+        if d.exists():
+            lines += ["### %s" % t, "", _gap_section(d / "gaps.md"), ""]
     (Path(root) / "lit" / "corpus" / "gaps.md").write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
 
 
-def run(root):
+def run(root, session=None):
+    """Merge and write the outputs; with `session`, append a provenance record to the lane ledger."""
     root = Path(root)
     per_thread, errs = load_threads(root)
     if errs:
@@ -108,4 +114,10 @@ def run(root):
     for e in final:
         print("  " + e)
     print("coverage: %s" % counts)
+    if session and not final:
+        ins = [Path("lit/corpus") / t / "rows.csv" for t, d in thread_files(root) if (d / "rows.csv").exists()]
+        L.record(root, "lit-merge", session, "uv run python -m nacre.lit merge --ledger %s" % session,
+                 ins + [Path("lit/corpus/coverage_notes.yaml")],
+                 [Path("lit/evidence_table.csv"), Path("lit/corpus/coverage.yaml"), Path("lit/corpus/gaps.md")])
+        print("ledger: record appended to %s" % L.LEDGER)
     return 1 if final else 0

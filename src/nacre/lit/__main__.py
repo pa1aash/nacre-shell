@@ -10,7 +10,7 @@ Thread retrieval (every call is logged under lit/corpus/<thread>/):
   grep     <thread> <regex> [--doi D]     search extracted texts; prints file, pdf page/label, line
 Evidence table:
   validate <csv>...                       validate rows.csv or the merged table
-  merge                                   merge thread rows, write evidence_table.csv and coverage.yaml
+  merge [--ledger SESSION]                merge thread rows, write evidence_table.csv and coverage.yaml
   trace    <csv>...                       local audit: is each value printed in the cached text of its DOI?
 """
 import argparse
@@ -59,7 +59,8 @@ def main(argv=None):
     g.add_argument("--context", type=int, default=1)
     v = sub.add_parser("validate")
     v.add_argument("paths", nargs="+")
-    sub.add_parser("merge")
+    mg = sub.add_parser("merge")
+    mg.add_argument("--ledger", metavar="SESSION", help="append a provenance record for SESSION")
     t = sub.add_parser("trace")
     t.add_argument("paths", nargs="+")
     a = p.parse_args(argv)
@@ -74,7 +75,7 @@ def main(argv=None):
             rc |= bool(errs)
         return rc
     if a.cmd == "merge":
-        return M.run(_util.repo_root())
+        return M.run(_util.repo_root(), a.ledger)
     if a.cmd == "trace":
         rc = 0
         for path in a.paths:

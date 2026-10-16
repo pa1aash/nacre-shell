@@ -12,13 +12,13 @@ from nacre.retrieval import record as R
 COLUMNS = ["row_id", "thread", "doi", "locator", "quantity", "symbol", "value", "unit",
            "range_or_uncertainty", "conditions", "method", "grade", "extraction_route", "retrieved_at",
            "contrary", "retro_candidate", "notes"]
-THREADS = ("T-A", "T-B", "T-C", "T-D", "T-E")
+THREADS = ("T-A", "T-B", "T-C", "T-D", "T-E", "T-F", "T-G", "T-H", "T-I", "T-J")
 GRADES = ("A", "B", "C", "D")
 ROUTES = ("full text", "SI", "abstract")
 METHODS = ("experiment", "computation", "compilation")
 QUALITATIVE = "qualitative"
 
-_ROW_ID = re.compile(r"^T[A-E]-\d{3}$")
+_ROW_ID = re.compile(r"^T[A-J]-\d{3}$")
 _DOI = re.compile(r"^10\.\d{4,9}/\S+$")
 _SLUG = re.compile(r"^[a-z][a-z0-9_]*$")
 _NUM = r"[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?"
@@ -196,7 +196,8 @@ def merge(thread_rows):
     """thread_rows: iterable of row lists in thread order. Dedupe on doi + locator + quantity.
 
     One table often prints several values of one quantity (pKa1 and pKa2, one constant per
-    species), so a numeric row is a duplicate only when symbol, value and range also agree. A
+    species), so a numeric row is a duplicate only when symbol and value also agree (decision D1:
+    doi + locator + quantity + symbol + value). A
     qualitative row is a duplicate when another thread already recorded the same doi + locator +
     quantity (two threads reading the same observation); within a thread such rows are distinct
     observations. Returns (merged_rows, duplicates) with duplicates as (dropped_row_id, kept_row_id).
@@ -208,14 +209,12 @@ def merge(thread_rows):
             if r["unit"] == QUALITATIVE:
                 hit = next((rid for rid, thread in base.get(k0, []) if thread != r["thread"]), None)
             else:
-                hit = index.get(k0 + (_norm_text(r["symbol"]), r["value"].strip(), r["range_or_uncertainty"].strip(),
-                                      r["unit"].strip()))
+                hit = index.get(k0 + (_norm_text(r["symbol"]), r["value"].strip()))
             if hit:
                 dups.append((r["row_id"], hit))
                 continue
             if r["unit"] != QUALITATIVE:
-                index[k0 + (_norm_text(r["symbol"]), r["value"].strip(), r["range_or_uncertainty"].strip(),
-                            r["unit"].strip())] = r["row_id"]
+                index[k0 + (_norm_text(r["symbol"]), r["value"].strip())] = r["row_id"]
             base.setdefault(k0, []).append((r["row_id"], r["thread"]))
             kept.append(r)
     return kept, dups
