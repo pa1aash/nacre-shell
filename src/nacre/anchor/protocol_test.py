@@ -94,7 +94,9 @@ def _write_xyz(path, atoms, comment=""):
 
 
 def _xtb_env():
-    return dict(os.environ, OMP_NUM_THREADS="1", MKL_NUM_THREADS="1", OMP_STACKSIZE="1G")
+    # CREST calls xtb through the shell, so the environment's bin must be on PATH
+    return dict(os.environ, OMP_NUM_THREADS="1", MKL_NUM_THREADS="1", OMP_STACKSIZE="1G",
+                PATH=os.pathsep.join([str(XTB_ENV / "bin"), os.environ.get("PATH", "")]))
 
 
 def crest(name, workdir):
@@ -118,25 +120,45 @@ def crest(name, workdir):
             "best": str(workdir / "crest_best.xyz") if ok else None}
 
 
-def xtb_ohess(name, xyz, workdir):
-    """GFN2-xTB/ALPB(water) optimisation and frequencies: geometry and G(RRHO) at 298.15 K."""
-    meta = species_meta(name)
+def _ohess_once(meta, xyz, workdir, level):
     shutil.copy(xyz, workdir / "in.xyz")
-    cmd = [str(XTB_ENV / "bin" / "xtb"), "in.xyz", "--ohess", "normal", "--gfn", "2", "--chrg", str(meta["charge"]),
+    cmd = [str(XTB_ENV / "bin" / "xtb"), "in.xyz", "--ohess", level, "--gfn", "2", "--chrg", str(meta["charge"]),
            "--uhf", "0", "--alpb", "water", "-P", "1"]
     t0 = time.time()
     p = subprocess.run(cmd, cwd=workdir, capture_output=True, text=True, env=_xtb_env())
-    wall = time.time() - t0
     text = p.stdout + p.stderr
     g = re.findall(r"G\(RRHO\) contrib\.\s+(-?[0-9.]+)\s+Eh", text)
     e = re.findall(r"TOTAL ENERGY\s+(-?[0-9.]+)\s+Eh", text)
-    imag = re.search(r"imaginary freq\.\s+:?\s*(\d+)|# imaginary freq\.\s+(\d+)", text)
-    n_imag = int(next(x for x in imag.groups() if x)) if imag else None
-    ok = p.returncode == 0 and bool(g) and (workdir / "xtbopt.xyz").is_file()
-    return {"status": "ok" if ok else "failed", "returncode": p.returncode, "wall_s": round(wall, 1),
-            "command": " ".join(["xtb"] + cmd[1:]), "G_RRHO_Eh": float(g[-1]) if g else None,
-            "E_xtb_Eh": float(e[-1]) if e else None, "n_imaginary": n_imag,
-            "geometry": _read_xyz(workdir / "xtbopt.xyz") if ok else None}
+    imag = re.findall(r"# imaginary freq\.\s+(\d+)", text)
+    return {"returncode": p.returncode, "wall_s": round(time.time() - t0, 1), "command": " ".join(["xtb"] + cmd[1:]),
+            "G_RRHO_Eh": float(g[-1]) if g else None, "E_xtb_Eh": float(e[-1]) if e else None,
+            "n_imaginary": int(imag[-1]) if imag else None}
+
+
+def xtb_ohess(name, xyz, workdir, max_restarts=3):
+    """GFN2-xTB/ALPB(water) optimisation and frequencies: geometry and G(RRHO) at 298.15 K.
+
+    A stationary point with an imaginary mode is restarted from xtb's distorted geometry
+    (xtbhess.xyz) with tight settings, up to max_restarts times."""
+    meta = species_meta(name)
+    attempts = []
+    src = Path(xyz)
+    for k in range(max_restarts + 1):
+        level = "normal" if k == 0 else "tight"
+        r = _ohess_once(meta, src, workdir, level)
+        attempts.append(r)
+        if r["returncode"] != 0 or r["n_imaginary"] == 0 or not (workdir / "xtbhess.xyz").is_file():
+            break
+        restart = workdir / ("restart_%d.xyz" % k)
+        shutil.copy(workdir / "xtbhess.xyz", restart)
+        src = restart
+    last = attempts[-1]
+    ok = last["returncode"] == 0 and last["G_RRHO_Eh"] is not None and last["n_imaginary"] == 0 \
+        and (workdir / "xtbopt.xyz").is_file()
+    return {"status": "ok" if ok else "failed", "attempts": attempts, "restarts": len(attempts) - 1,
+            "wall_s": round(sum(a["wall_s"] for a in attempts), 1), "command": last["command"],
+            "G_RRHO_Eh": last["G_RRHO_Eh"], "E_xtb_Eh": last["E_xtb_Eh"], "n_imaginary": last["n_imaginary"],
+            "geometry": _read_xyz(workdir / "xtbopt.xyz") if (workdir / "xtbopt.xyz").is_file() else None}
 
 
 def d3bj(atoms, charge):
@@ -213,7 +235,8 @@ def run(out=OUT, params_sha=protocol.PARAMS_SHA):
     params = inputs.Params(inputs.load_snapshot(params_sha, check_git=False))
     out = Path(out)
     (out / "geometries").mkdir(parents=True, exist_ok=True)
-    mem_log, record = [], {"species": {}, "level": protocol.LEVEL}
+    mem_log, record = [], {"species": {}, "level": protocol.LEVEL,
+                           "git_sha": provenance.git_sha(), "git_dirty": provenance.git_dirty()}
     T = 298.15
     work = Path(tempfile.mkdtemp(prefix="w52-"))
     try:
@@ -359,7 +382,7 @@ def scaling_estimate(record, vcpu=32, ram_gb=128, efficiency=0.6, conformers=5, 
     for s in idx:
         n_struct = conformers if s["kind"] == "complex" else 1
         t = sum(out[k]["prefactor_s"] * nao[s["name"]] ** out[k]["exponent"] for k in ("sp_gas", "sp_solv")) * n_struct
-        per[s["name"]] = {"nao": nao[s["name"]], "structures": n_struct, "laptop_2_threads_s": t}
+        per[s["name"]] = {"nao": nao[s["name"]], "structures": n_struct, "laptop_s": t}
         total_laptop += t
     pod_wall = total_laptop / thread_gain / jobs_in_parallel
     peak = max((rec.get(k, {}).get("peak_rss_MB") or 0) for rec in record["species"].values() for k in ("sp_gas", "sp_solv"))
@@ -391,7 +414,6 @@ def main(argv=None):
     rec.update({"session": "P0-W5.2", "generated_utc": provenance.utc_now(),
                 "question": "binding free energy of acetate to hydrated Ca2+ by the protocol of PROTOCOL.md, "
                             "timings, determinism and a production estimate (pipeline test, not a parameter)",
-                "git_sha": provenance.git_sha(), "git_dirty": provenance.git_dirty(),
                 "params_sha": protocol.PARAMS_SHA})
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / "summary.json"

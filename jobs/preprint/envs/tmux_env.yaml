@@ -1,0 +1,9 @@
+# tmux for the local dry run of the P0 dispatch (session P0-W5.2). The laptop has no system tmux;
+# this user-level environment provides one without touching the system:
+#   MAMBA_ROOT_PREFIX=~/.nacre-envs/mamba-root micromamba create -y -p ~/.nacre-envs/tmux -f jobs/preprint/envs/tmux_env.yaml
+# Deleting ~/.nacre-envs/tmux reverses it. The pod is expected to have tmux (checked at launch).
+name: nacre-tmux
+channels:
+  - conda-forge
+dependencies:
+  - tmux=3.7b

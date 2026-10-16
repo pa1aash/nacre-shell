@@ -36,7 +36,12 @@ the diagram, exactly as in the client.
   and the documentation export does not state the licence. The licence text and the canonical
   citation request are therefore an outstanding action (see `ops/reports/P0-W5.1.md`); no
   licence text is reconstructed here. Work using these data must cite the Materials Project as
-  the project requests.
+  the project requests. Retried on 2026-10-17 (P0-W5.2): the terms and cite pages
+  (`materialsproject.org/about/terms`, `/about/cite`, and the `next-gen` host) return HTTP 403 to
+  a headless client; the Wayback Machine availability API returned HTTP 429 and its CDX search was
+  "Temporarily Offline"; archive.ph timed out; the public documentation repository
+  (`github.com/materialsproject/public-docs`: README, FAQ, database versions, documentation
+  credit) states no licence and links the cite page. The licence text stays outstanding.
 - **Aqueous ion reference data.** The MPContribs project `ion_ref_data` reports its licence as
   `CCA4` and its authors as "Various Authors, MP Team." (both as returned by the API and stored in
   `mp_ion_reference_data.json` under `project`). The project's references are Persson et al.
