@@ -31,7 +31,7 @@
   "builder": "nacre.structures.oligomer.build",
   "file": "catechol_oligomer.extxyz",
   "n_atoms": 66,
-  "sha256": "c17ef835bfb30d8843cc3c603409ab72d89e207367a9f10fd78fa31b4904fa86",
+  "sha256": "c55a4d5d514a7220d2e3985f0ad87f9c90970aa2604dd96034bfc0ae4cf9c912",
   "total_charge": 0
  },
  "smoke_interface": {

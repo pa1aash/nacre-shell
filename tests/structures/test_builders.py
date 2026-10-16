@@ -213,3 +213,31 @@ def test_total_charge_of_committed(committed):
 def test_no_clashes_in_committed(committed):
     for name, a in committed.items():
         assert min_distance(a) >= CLASH_THRESHOLD, name
+
+
+# ---------------------------------------------------------------- machine independence
+@pytest.mark.parametrize("with_xtb_env", [False, True])
+def test_bytes_do_not_depend_on_xtb_environment(tmp_path, monkeypatch, with_xtb_env):
+    home = tmp_path / "home"
+    (home / ".nacre-envs" / ("xtb" if with_xtb_env else "other")).mkdir(parents=True)
+    monkeypatch.setenv("HOME", str(home))
+    out = tmp_path / "out"
+    _, manifest = build.build_all(out_dir=out)
+    committed = json.loads((STRUCT_DIR / "manifest.json").read_text())
+    for name, entry in manifest.items():
+        assert entry["sha256"] == committed[name]["sha256"], name
+
+
+def test_no_machine_dependent_text_in_committed_files():
+    import getpass
+    import platform
+    import re
+
+    forbidden = [str(STRUCT_DIR.parents[1]), str(__import__("pathlib").Path.home()), ".nacre-envs",
+                 platform.node(), getpass.getuser(), "xtb"]
+    stamp_like = re.compile(r"\b20\d\d-\d\d-\d\d[T ]\d\d:\d\d")
+    for name, path in committed_structures().items():
+        text = path.read_text()
+        for bad in filter(None, forbidden):
+            assert bad not in text, (name, bad)
+        assert not stamp_like.search(text), name

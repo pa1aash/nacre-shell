@@ -26,8 +26,9 @@
   "notes": [
     "bulk corundum mp-1143, Materials Project database 2026.04.13",
     "materials use palette linear_rgb; Al as pushed by W6 (#D7C1A9), operator confirmation pending",
-    "xtb outstanding: ~/.nacre-envs/xtb absent, oligomer is MMFF94 only",
     "palette copy at .local/w7/palette.yaml is local-only; recreate with git show before rendering",
-    "smoke render byte-reproducible; 42% memory free at start; peak renderer RSS 417 MB"
+    "smoke render byte-reproducible; 42% memory free at start; peak renderer RSS 417 MB",
+    "xtb outstanding: oligomer is MMFF94 only; availability is not recorded in structure files",
+    "fix-up: machine-independent metadata"
   ]
 }
