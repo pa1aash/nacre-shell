@@ -1,0 +1,82 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "fig6 Sobol ranking and required precision input (ASSUMED; reconcile with configs/preprint/results_schema.json from lane p0-w4)",
+ "type": "object",
+ "required": [
+  "mock",
+  "schema",
+  "output",
+  "parameters"
+ ],
+ "additionalProperties": false,
+ "properties": {
+  "mock": {
+   "type": "boolean"
+  },
+  "schema": {
+   "const": "fig6-sobol/assumed-v0"
+  },
+  "note": {
+   "type": "string"
+  },
+  "provenance": {
+   "type": "object"
+  },
+  "output": {
+   "enum": [
+    "barrier_het"
+   ]
+  },
+  "parameters": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "symbol",
+     "S1",
+     "S1_ci",
+     "ST",
+     "ST_ci",
+     "required_precision"
+    ],
+    "properties": {
+     "symbol": {
+      "type": "string"
+     },
+     "S1": {
+      "type": "number",
+      "minimum": -0.1,
+      "maximum": 1.1
+     },
+     "ST": {
+      "type": "number",
+      "minimum": -0.1,
+      "maximum": 1.1
+     },
+     "S1_ci": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+       "type": "number"
+      }
+     },
+     "ST_ci": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+       "type": "number"
+      }
+     },
+     "required_precision": {
+      "type": "number",
+      "minimum": 0
+     }
+    }
+   }
+  }
+ }
+}
