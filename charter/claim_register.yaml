@@ -20,6 +20,8 @@
 #   depends_on           claim ids whose outputs this claim consumes
 #   controls             deletion and comparator computations
 #   open_items           conventions and choices not resolved in Phase 0
+#   stated_limits        (optional) limits on what the claim's verdict can mean, stated in advance
+#   conventions          (optional) conventions fixed in the charter, so that no later factor can change them
 #   verdict_bands        {feasible, inconclusive, falsified}, definitions only
 
 register_version: 1
@@ -328,6 +330,24 @@ claims:
         (2 + cos theta)(1 - cos theta)^2/4 are the same polynomial in cos theta; the
         physics-function unit tests (Phase 2 item 2, Phase 3 item 8) must cover both forms
         and the limits theta = 0 and theta = 180 deg.
+      - >-
+        OPEN: the C3 verdict is conditional on classical nucleation theory (spherical cap,
+        size-independent interfacial energy, capillary approximation); non-classical
+        pathways through pre-nucleation clusters or a dense liquid precursor may not follow
+        it. This is carried as a stated limit (stated_limits) and is not resolvable by
+        computation in this study.
+    stated_limits:
+      - >-
+        The C3 verdict is conditional on classical nucleation theory: a spherical-cap
+        nucleus, a size-independent interfacial energy and the capillary approximation.
+        Non-classical CaCO3 pathways, through pre-nucleation clusters or a dense liquid
+        precursor, may not follow it, and a verdict here does not speak to them.
+    conventions:
+      - >-
+        S = IAP / K_sp, the ion activity product over the solubility product of the
+        registered polymorph. The driving force is k_B T ln S per CaCO3 formula unit, and
+        the molar volume is per CaCO3 formula unit, so a square-root (per-ion) convention
+        cannot enter as a factor of 2.
     verdict_bands:
       feasible: >-
         The registered statistic of the propagated f(theta) distribution lies in the
