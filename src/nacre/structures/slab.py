@@ -13,7 +13,9 @@ Construction (illustrative):
    (the gibbsite-like termination). The O-H bond is set along the surface normal,
    tilted by ``oh_tilt_deg`` in a seeded random azimuth.
 4. The 1x1 slab is repeated ``nx`` x ``ny`` laterally and given ``vacuum`` above and
-   below; the cell is periodic in-plane only.
+   below; the cell is periodic in-plane only. With ``orthogonal`` the lateral cell is the
+   rectangular supercell spanned by ``nx`` a1 and ``ny`` (a1 + 2 a2), that is nx x 2ny
+   hexagonal cells, so a rectangular window of a scene lies inside one cell.
 """
 from __future__ import annotations
 
@@ -30,7 +32,11 @@ DEFAULTS = {
     "oh_bond": 0.97,
     "oh_tilt_deg": 15.0,
     "layer_tol": 0.3,
+    "orthogonal": False,
 }
+
+# Coordinates closer than this (angstrom) count as equal when ordering atoms.
+ORDER_TOL = 0.05
 
 
 def bulk_hexagonal():
@@ -106,7 +112,15 @@ def build(params=None, seed=0):
             positions.append(pos[i] + p["oh_bond"] * np.array([0.0, 0.0, sign]))
 
     slab1 = Atoms(symbols=symbols, positions=np.array(positions), cell=cell.copy(), pbc=(True, True, False))
-    slab = slab1.repeat((int(p["nx"]), int(p["ny"]), 1))
+    if p["orthogonal"]:
+        # Rectangular in-plane cell (a1, a1 + 2 a2), so a rectangular drawing window fits inside it.
+        from ase.build import make_supercell
+
+        nx, ny = int(p["nx"]), int(p["ny"])
+        slab = make_supercell(slab1, [[nx, 0, 0], [ny, 2 * ny, 0], [0, 0, 1]], wrap=True)
+        slab.pbc = (True, True, False)
+    else:
+        slab = slab1.repeat((int(p["nx"]), int(p["ny"]), 1))
     # Tilt every O-H in a seeded azimuth after the lateral repeat, so the pattern is not a strict tile.
     _tilt_oh(slab, rng, p)
     zmin = slab.positions[:, 2].min()
@@ -115,8 +129,7 @@ def build(params=None, seed=0):
     new_cell = np.asarray(slab.cell).copy()
     new_cell[2] = [0.0, 0.0, height]
     slab.set_cell(new_cell)
-    order = np.lexsort((slab.positions[:, 2], slab.numbers))
-    slab = slab[order]
+    slab = slab[stable_order(slab.numbers, slab.positions)]
 
     charge = formal_charge(slab.get_chemical_symbols())
     stamp(
@@ -134,8 +147,34 @@ def build(params=None, seed=0):
         notes="alpha-Al2O3(0001), both faces fully hydroxylated (surface Al layer removed, "
         "three OH per 1x1 cell per face); in-plane periodic; bulk interlayer spacings unrelaxed",
     )
-    slab.info["c_hex"] = float(c)
+    slab.info["c_hex"] = round(float(c), 6)
     return slab
+
+
+def _cluster_rank(values, tol):
+    """Rank of each value's cluster, clusters being runs of sorted values with gaps <= tol.
+
+    Values that differ by less than ``tol`` share a rank, so last-bit differences between
+    platforms cannot reorder them.
+    """
+    order = np.argsort(values, kind="stable")
+    gaps = np.diff(values[order]) > tol
+    rank = np.empty(len(values), dtype=int)
+    rank[order] = np.concatenate([[0], np.cumsum(gaps)])
+    return rank
+
+
+def stable_order(numbers, positions, tol=ORDER_TOL):
+    """Atom order by element, then z, y and x clusters, then input order.
+
+    Sorting on raw coordinates puts atoms of one layer (equal z up to rounding) in an
+    order that depends on the last bits of the floating-point results, which differ
+    between platforms. Clustering each coordinate at ``tol`` removes that dependence.
+    """
+    pos = np.asarray(positions)
+    keys = (np.arange(len(pos)), _cluster_rank(pos[:, 0], tol), _cluster_rank(pos[:, 1], tol),
+            _cluster_rank(pos[:, 2], tol), np.asarray(numbers))
+    return np.lexsort(keys)
 
 
 def _tilt_oh(slab, rng, p):
