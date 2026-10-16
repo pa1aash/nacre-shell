@@ -137,4 +137,5 @@ def test_vectorised_inputs_broadcast():
     b = homogeneous_barrier_from_saturation(g, 1e-5, np.array([2.0, 4.0, 8.0]), 300.0)
     assert b.shape == (3,)
     for i in range(3):
-        assert b[i] == homogeneous_barrier_from_saturation(g[i], 1e-5, [2.0, 4.0, 8.0][i], 300.0)
+        # vectorised and scalar paths may differ at the last bit
+        assert b[i] == pytest.approx(homogeneous_barrier_from_saturation(g[i], 1e-5, [2.0, 4.0, 8.0][i], 300.0), rel=1e-12, abs=0)
