@@ -1,0 +1,284 @@
+{
+  "checked_utc": "2026-10-16T09:50:15Z",
+  "contract_sha": "b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3",
+  "coverage": [],
+  "functions": {
+    "DG_het": {
+      "limit_cases": 4,
+      "max_rel_err": 2.3700921775872715e-15,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "DG_het_template": {
+      "limit_cases": 0,
+      "max_rel_err": 1.392425397110492e-14,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 129,
+      "status": "PASS"
+    },
+    "DG_hom": {
+      "limit_cases": 2,
+      "max_rel_err": 1.30108618884365e-15,
+      "monotonicity_samples": 256,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Delta_G_pbx": {
+      "limit_cases": 0,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 131,
+      "status": "PASS"
+    },
+    "Delta_G_seq_cycle": {
+      "limit_cases": 2,
+      "max_rel_err": 3.817881857621092e-14,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Delta_Phi_r": {
+      "limit_cases": 2,
+      "max_rel_err": 4.4113867555521273e-16,
+      "monotonicity_samples": 0,
+      "notes": [
+        "skipped E_Li (reparametrised statement; proven by the theory checker)",
+        "skipped E_Li (reparametrised statement; proven by the theory checker)"
+      ],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Delta_mu": {
+      "limit_cases": 1,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_enr": {
+      "limit_cases": 3,
+      "max_rel_err": 4.2731916784438665e-14,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_window": {
+      "limit_cases": 1,
+      "max_rel_err": 2.7199273921552683e-15,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Omega_bulk": {
+      "limit_cases": 0,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Omega_local": {
+      "limit_cases": 1,
+      "max_rel_err": 3.6783594783641064e-16,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Phi_Li": {
+      "limit_cases": 1,
+      "max_rel_err": 4.1162763152526145e-16,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Psi_pbx": {
+      "limit_cases": 1,
+      "max_rel_err": 5.227471769951083e-16,
+      "monotonicity_samples": 0,
+      "notes": [
+        "skipped E_SHE (reparametrised statement; proven by the theory checker)",
+        "skipped pH (reparametrised statement; proven by the theory checker)"
+      ],
+      "points": 256,
+      "status": "PASS"
+    },
+    "R_A": {
+      "limit_cases": 0,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "S_spread": {
+      "limit_cases": 1,
+      "max_rel_err": 4.403029079398554e-15,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "W_adh_dry_fn": {
+      "limit_cases": 0,
+      "max_rel_err": 8.242316951343482e-16,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "W_adh_wet": {
+      "limit_cases": 1,
+      "max_rel_err": 2.0099362589538195e-14,
+      "monotonicity_samples": 192,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "W_adh_wet_from_pmf": {
+      "limit_cases": 1,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "c_local": {
+      "limit_cases": 3,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 192,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "c_max": {
+      "limit_cases": 0,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "cos_theta_deck": {
+      "limit_cases": 1,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 167,
+      "status": "PASS"
+    },
+    "cos_theta_young": {
+      "limit_cases": 3,
+      "max_rel_err": 2.0349649909071998e-14,
+      "monotonicity_samples": 192,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "cos_theta_young_at0": {
+      "limit_cases": 0,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "d_max_ohm": {
+      "limit_cases": 0,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "d_max_tun": {
+      "limit_cases": 1,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "f_theta": {
+      "limit_cases": 3,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "gamma_eff_deck": {
+      "limit_cases": 0,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "h_c": {
+      "limit_cases": 3,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "h_cl": {
+      "limit_cases": 2,
+      "max_rel_err": 3.13327956932449e-16,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "kappa": {
+      "limit_cases": 0,
+      "max_rel_err": 8.544004440304905e-16,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "mu_Li": {
+      "limit_cases": 1,
+      "max_rel_err": 2.9033791124128775e-16,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "r_star": {
+      "limit_cases": 2,
+      "max_rel_err": 8.191758012984399e-16,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "theta_young": {
+      "limit_cases": 3,
+      "max_rel_err": 1.855195651058385e-14,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 68,
+      "status": "PASS"
+    }
+  },
+  "implementation_sha": "f4eddbf4a04d7d88eee2ef04944a304ef2f5cfb8",
+  "points": 256,
+  "ref": "origin/preprint/p0-w3",
+  "ref_sha": "98523a933ecd9cad74945bfff274ed253111547c",
+  "rtol": 1e-12,
+  "seed": 0,
+  "status": "PASS"
+}
