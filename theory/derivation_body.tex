@@ -210,6 +210,53 @@ drying states are optimistic, biased toward a larger driving force. The screen t
 $a_\mathrm{w}$ at every drying state and, where $n$ is supplied, the hydrated ratio as a labelled
 sensitivity (\texttt{Omega\_bulk\_hydrated}); it never decides a verdict (cp2 fix F7).
 
+\paragraph{Activities from speciation.} $\Om$ needs the activities of the \emph{free} ions, and in
+an alkaline, carbonate-bearing slurry part of the calcium and carbon is bound in ion pairs. The
+registered state fixes pH, the dissolved inorganic carbon $C_\mathrm{T}$, the total dissolved
+calcium $\mathrm{Ca}_\mathrm{T}$ and the ionic strength $I$; the solution is closed (no CO$_2$
+exchange) and not yet precipitated. With $a_\mathrm{H}=10^{-\mathrm{pH}}$, the species are tied to
+$y\equiv\aCO$ and $\aCa$ by the thermodynamic constants (all at $I=0$): $a_{\mathrm{HCO_3}}=10^{\mathrm{p}K_2-\mathrm{pH}}y$,
+$a_{\mathrm{CO_2}}=10^{\mathrm{p}K_1+\mathrm{p}K_2-2\mathrm{pH}}y$, $a_{\mathrm{CaCO_3^0}}=K_{\mathrm{CaCO_3^0}}\aCa y$,
+$a_{\mathrm{CaHCO_3^+}}=K_{\mathrm{CaHCO_3^+}}\aCa a_{\mathrm{HCO_3}}$ and
+$a_{\mathrm{CaOH^+}}={}^{*}K_{\mathrm{CaOH^+}}\aCa a_\mathrm{w}/a_\mathrm{H}$. Dividing each activity by its
+activity coefficient ($\gamma_{\pm1}$, $\gamma_{\pm2}$ by charge, one for neutral species) and
+summing gives the two mass balances, in units of the standard molality $m^{\circ}$:
+\begin{equation}\label{th:eq:balance}
+m_{C_\mathrm{T}}=A_\mathrm{c}\,y+P_\mathrm{c}\,\aCa y,\qquad
+m_{\mathrm{Ca}_\mathrm{T}}=D_\mathrm{c}\,\aCa+P_\mathrm{c}\,\aCa y \un{1},
+\end{equation}
+with $A_\mathrm{c}=10^{\mathrm{p}K_1+\mathrm{p}K_2-2\mathrm{pH}}+10^{\mathrm{p}K_2-\mathrm{pH}}/\gamma_{\pm1}+1/\gamma_{\pm2}$
+(free carbon per unit carbonate activity), $P_\mathrm{c}=K_{\mathrm{CaCO_3^0}}+K_{\mathrm{CaHCO_3^+}}10^{\mathrm{p}K_2-\mathrm{pH}}/\gamma_{\pm1}$
+(ion pairs per unit $\aCa y$), $D_\mathrm{c}=1/\gamma_{\pm2}+{}^{*}K_{\mathrm{CaOH^+}}a_\mathrm{w}10^{\mathrm{pH}}/\gamma_{\pm1}$
+(free calcium per unit $\aCa$), and $m_{C_\mathrm{T}}=C_\mathrm{T}/(\rho_\mathrm{w}m^{\circ})$,
+$m_{\mathrm{Ca}_\mathrm{T}}=\mathrm{Ca}_\mathrm{T}/(\rho_\mathrm{w}m^{\circ})$ (dilute solution). Eliminating
+$\aCa=m_{\mathrm{Ca}_\mathrm{T}}/(D_\mathrm{c}+P_\mathrm{c}y)$ leaves
+$A_\mathrm{c}P_\mathrm{c}y^{2}+\big[A_\mathrm{c}D_\mathrm{c}+P_\mathrm{c}(m_{\mathrm{Ca}_\mathrm{T}}-m_{C_\mathrm{T}})\big]y-m_{C_\mathrm{T}}D_\mathrm{c}=0$.
+The product of its roots is $-m_{C_\mathrm{T}}D_\mathrm{c}/(A_\mathrm{c}P_\mathrm{c})<0$, so exactly one
+root is positive:
+\begin{equation}\label{th:eq:aco3}
+\aCO=\frac{2m_{C_\mathrm{T}}D_\mathrm{c}}{B+\sqrt{B^{2}+4A_\mathrm{c}P_\mathrm{c}m_{C_\mathrm{T}}D_\mathrm{c}}},\qquad
+B=A_\mathrm{c}D_\mathrm{c}+P_\mathrm{c}(m_{\mathrm{Ca}_\mathrm{T}}-m_{C_\mathrm{T}}) \un{1},
+\end{equation}
+written in the form that stays exact as $P_\mathrm{c}\to0$. The limit cases are checked in the
+contract (\texttt{a\_CO3\_speciation}): with no ion pairs, or with no calcium
+($m_{\mathrm{Ca}_\mathrm{T}}=0$, where the root becomes $\sqrt{(A_\mathrm{c}D_\mathrm{c}+P_\mathrm{c}m_{C_\mathrm{T}})^{2}}$),
+$\aCO=m_{C_\mathrm{T}}/A_\mathrm{c}$, the carbonate system alone; pairs can only lower it. The free
+Ca$^{2+}$ concentration $\cb=\aCa\rho_\mathrm{w}m^{\circ}/\gamma_{\pm2}$ is the $\cb$ of the Langmuir and Gibbs
+relations of Section~\ref{th:sec:sequestration}: the free ion, not the total.
+
+\emph{Activity model.} The Davies equation,
+$\log_{10}\gamma_{\pm z}=-A_\mathrm{DH}z^{2}\big[s/(1+s)-b_\mathrm{D}s^{2}\big]$ with $s=\sqrt{I/m^{\circ}}$,
+so $\gamma_{\pm2}=\gamma_{\pm1}^{4}$. As $I\to0$ every coefficient tends to one and the activities are
+ideal (checked). $A_\mathrm{DH}$ (at the regime temperature) and $b_\mathrm{D}$ are fetched, as is the
+registered validity bound $I\le I_\mathrm{val}$. Independently of that bound,
+$\dd\log_{10}\gamma/\dd s=-A_\mathrm{DH}z^{2}\big[(1+s)^{-2}-2b_\mathrm{D}s\big]$ changes sign at the one positive
+root $s_*$ of $2b_\mathrm{D}s(1+s)^{2}=1$; beyond $I_*=m^{\circ}s_*^{2}$ the ionic-strength dependence is
+carried by the empirical linear term alone, so $I_\mathrm{val}\le I_*$ is required. A draw with
+$I>I_\mathrm{val}$ is refused and counted, never extrapolated. Neutral species are taken with
+activity coefficient one (no salting term), and $I$ is the registered input rather than
+recomputed from the speciation; both are stated limitations.
+
 \paragraph{Equilibrium of the open interfacial region.} Write the electrochemical potential of ion
 $i$ (charge number $z_i$) at position $\mathbf r$ as
 \begin{equation}\label{th:eq:echem}

@@ -324,7 +324,9 @@ class Report:
 
 def zero(expr):
     for f in (sp.simplify, lambda x: sp.simplify(sp.expand_log(x, force=True)),
-              lambda x: sp.simplify(sp.trigsimp(sp.expand_trig(x))), lambda x: sp.nsimplify(sp.simplify(x))):
+              lambda x: sp.simplify(sp.trigsimp(sp.expand_trig(x))), lambda x: sp.nsimplify(sp.simplify(x)),
+              lambda x: sp.simplify(x.replace(lambda e: e.is_Pow and e.exp == sp.Rational(1, 2),
+                                              lambda e: sp.sqrt(sp.factor(e.base))))):
         try:
             if f(expr) == 0:
                 return True
@@ -413,7 +415,8 @@ def check_function(ctx, f, rep):
     for idt in f.get("identities", []):
         try:
             e = expr.subs(ctx.subs_map(idt.get("subs")))
-            ok = zero(e - ctx.parse(idt["equals"]))
+            d = e - ctx.parse(idt["equals"])
+            ok = numeric_zero(d) if idt.get("numeric") else zero(d)
             rep.add(ok, "identity", name, idt.get("note", idt["equals"]))
         except Exception as exc:
             rep.add(False, "identity", name, str(exc))
@@ -686,7 +689,11 @@ def check_thresholds(ctx, contract, rep):
 
     def check_edge(link, tid, quantity, edge, params):
         e = ctx.parse(str(edge))
-        dq, de = qdim(quantity), dimension(e, ctx.dims)
+        try:
+            dq, de = qdim(quantity), dimension(e, ctx.dims)
+        except DimError as exc:
+            rep.add(False, "thresholds", "%s %s" % (link, tid), "%s %s: %s" % (quantity, edge, exc))
+            return
         thr = [s.name for s in e.free_symbols if ctx.entries[s.name].get("kind") == "threshold"]
         missing = [n for n in thr if n not in (params or {})]
         ok = dq == de and not missing
@@ -780,7 +787,11 @@ def check_ignorance(ctx, rep):
 
     def same_unit(name, exprs, what):
         want = ctx.dims[name]
-        got = [dimension(ctx.parse(str(e)), ctx.dims) for e in exprs if str(e).strip() != "0"]
+        try:
+            got = [dimension(ctx.parse(str(e)), ctx.dims) for e in exprs if str(e).strip() != "0"]
+        except DimError as exc:
+            rep.add(False, "ignorance", "%s %s" % (name, what), str(exc))
+            return
         ok = all(g == want for g in got)
         rep.add(ok, "ignorance", "%s %s" % (name, what), "unit %s%s" % (fmt_dim(want), "" if ok else "; got %s" % [fmt_dim(g) for g in got]))
 

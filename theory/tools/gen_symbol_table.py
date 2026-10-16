@@ -20,6 +20,7 @@ DOMAIN_TITLES = {
     "state": "State variables",
     "adhesion": "Adhesion in water (C1)",
     "sequestration": "Sequestration (C2)",
+    "speciation": "Carbonate speciation (activities)",
     "supersaturation": "Supersaturation",
     "nucleation": "Nucleation and Young (C3)",
     "accessibility": "Accessibility of the barrier (C3)",
@@ -78,7 +79,7 @@ def main():
     while rows[cut].startswith(r"\multicolumn") is False and cut > 0 and rows[cut - 1].startswith(r"\multicolumn"):
         cut -= 1
     head = (r"\begin{minipage}[t]{\dimexpr(\textwidth-2mm)/2\relax}\footnotesize\setlength{\tabcolsep}{2pt}"
-            r"\begin{tabular}[t]{@{}l p{\dimexpr\linewidth*3/5\relax} l l@{}}\hline"
+            r"\begin{tabular}[t]{@{}l p{\dimexpr\linewidth*29/50\relax} l l@{}}\hline"
             "\nSymbol & Meaning & SI unit & Reg.\\\\\\hline\n")
     tail = "\\hline\\end{tabular}\\end{minipage}"
     body = head + "\n".join(rows[:cut]) + "\n" + tail + "\\hfill\n" + head + "\n".join(rows[cut:]) + "\n" + tail + "\n"

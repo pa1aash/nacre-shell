@@ -105,6 +105,13 @@ conventions:
     Delta_gamma_ads are never added to it. The rule does not assume Gamma_Ca_sn = 0; a contact
     energy supplied at another Ca2+ activity is flagged as off-state, never corrected with
     Delta_G_seq.
+  speciation: >-
+    Contract v3. a_Ca and a_CO3 in Omega_bulk are the free-ion activities from the carbonate
+    speciation functions (a_CO3_speciation, a_Ca_speciation) at the registered pH, C_T, Ca_T and
+    I, with the ion pairs CaCO3(aq), CaHCO3+ and CaOH+. Activity model: Davies for charged
+    species, valid for I_ionic <= I_val (fetched), never beyond its turning point; neutral
+    species take activity coefficient one; a draw with I_ionic > I_val is refused and counted.
+    c_bulk of the C2 relations is the free Ca2+ concentration c_Ca_free, not Ca_T.
 
 functions:
   # ------------------------------------------------------------------ C1, adhesion in water
@@ -284,6 +291,135 @@ functions:
     monotonicity:
       - {wrt: gamma_sl0, direction: increasing}
       - {wrt: Delta_G_seq, direction: increasing}
+
+  # ------------------------------------------------------------------ carbonate speciation (v3)
+  # Activities of free Ca2+ and CO3^2- from pH, dissolved inorganic carbon C_T, total Ca_T and
+  # ionic strength I, with the ion pairs CaCO3(aq), CaHCO3+ and CaOH+ (derivation, Section 4,
+  # "Activities from speciation"). Activity model: Davies, valid for I <= I_val. Neutral species
+  # take activity coefficient one. The constants are thermodynamic (I = 0) values from
+  # lit/params.yaml. Mass balance gives a quadratic in a_CO3 with exactly one positive root,
+  # written below in the cancellation-free form.
+  - name: gamma_act_1
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 10**(-A_DH*(sqrt(I_ionic/m_std)/(1 + sqrt(I_ionic/m_std)) - b_D*I_ionic/m_std))
+    note: Davies activity coefficient of a singly charged ion (output g_1)
+    validity: 'I_ionic <= I_val (registered bound of the activity model, below the Davies turning point)'
+    limits:
+      - {at: {I_ionic: '0'}, expected: '1', note: 'I -> 0 gives ideal activities'}
+      - {at: {A_DH: '0'}, expected: '1'}
+
+  - name: gamma_act_2
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 10**(-4*A_DH*(sqrt(I_ionic/m_std)/(1 + sqrt(I_ionic/m_std)) - b_D*I_ionic/m_std))
+    note: Davies activity coefficient of a doubly charged ion (output g_2); z^2 = 4
+    identities:
+      - note: the charge-two coefficient is the fourth power of the charge-one coefficient
+        equals: '@gamma_act_1**4'
+    limits:
+      - {at: {I_ionic: '0'}, expected: '1'}
+
+  - name: m_CT_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: C_T/(rho_water*m_std)
+    note: dissolved inorganic carbon in standard molalities (output m_CT); dilute solution, molality = concentration / water density
+
+  - name: m_CaT_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: Ca_T/(rho_water*m_std)
+    note: total dissolved calcium in standard molalities (output m_CaT)
+
+  - name: A_carb_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 10**(pK1_carbonic + pK2_carbonic - 2*pH) + 10**(pK2_carbonic - pH)/g_1 + 1/g_2
+    note: >-
+      free carbon species per unit carbonate activity (output A_carb): CO2(aq) (activity
+      coefficient one), HCO3- and CO3^2-, from a_HCO3 = a_H a_CO3 / K_2 and
+      a_CO2 = a_H^2 a_CO3 / (K_1 K_2) with a_H = 10^-pH
+    limits:
+      - {at: {g_1: '1', g_2: '1'}, expected: 10**(pK1_carbonic + pK2_carbonic - 2*pH) + 10**(pK2_carbonic - pH) + 1, note: 'ideal activities'}
+    monotonicity:
+      - {wrt: pH, direction: decreasing, note: 'acidification shifts carbon from carbonate to bicarbonate and CO2'}
+
+  - name: P_pair_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: K_CaCO3_aq + K_CaHCO3*10**(pK2_carbonic - pH)/g_1
+    note: Ca-carbonate ion pairs per unit product a_Ca a_CO3 (output P_pair); CaCO3(aq) neutral, CaHCO3+ singly charged
+    limits:
+      - {at: {K_CaCO3_aq: '0', K_CaHCO3: '0'}, expected: '0', note: 'no ion pairs'}
+
+  - name: D_Ca_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 1/g_2 + K_CaOH*a_w*10**pH/g_1
+    note: Ca2+ and CaOH+ per unit Ca2+ activity (output D_Ca), with a_CaOH = K_CaOH a_Ca a_w / a_H
+    limits:
+      - {at: {K_CaOH: '0', g_2: '1'}, expected: '1'}
+    monotonicity:
+      - {wrt: pH, direction: nondecreasing, note: 'hydrolysis to CaOH+ grows with pH (strictly where K_CaOH a_w > 0)'}
+
+  - name: a_CO3_speciation
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: >-
+      2*m_CT*D_Ca/(A_carb*D_Ca + P_pair*(m_CaT - m_CT)
+      + sqrt((A_carb*D_Ca + P_pair*(m_CaT - m_CT))**2 + 4*A_carb*P_pair*m_CT*D_Ca))
+    note: >-
+      free carbonate activity (output a_CO3): the positive root of
+      A P y^2 + (A D + P (m_CaT - m_CT)) y - m_CT D = 0, which follows from the carbon balance
+      m_CT = A y + P y a_Ca and the calcium balance m_CaT = a_Ca (D + P y). The product of the
+      roots is -m_CT D / (A P) < 0, so exactly one root is positive.
+    validity: 'Davies range I_ionic <= I_val; closed system at fixed C_T (no CO2 exchange); solution not yet precipitated'
+    limits:
+      - {at: {P_pair: '0'}, expected: m_CT/A_carb, note: 'no ion pairs: the carbonate system alone'}
+      - {at: {m_CaT: '0'}, expected: m_CT/A_carb, note: 'no Ca: the carbonate system alone'}
+      - {at: {m_CT: '0'}, expected: '0'}
+    identities:
+      - note: 'carbon balance: m_CT = y (A + P a_Ca) with a_Ca = m_CaT/(D + P y)'
+        equals: m_CT/(A_carb + P_pair*m_CaT/(D_Ca + P_pair*@a_CO3_speciation))
+        numeric: true
+    inequalities:
+      - {expr: '@a_CO3_speciation', relation: '<=', rhs: m_CT/A_carb, note: 'ion pairs can only lower the free carbonate'}
+    monotonicity:
+      - {wrt: m_CT, direction: increasing}
+      - {wrt: m_CaT, direction: decreasing}
+
+  - name: a_Ca_speciation
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: m_CaT/(D_Ca + P_pair*a_CO3)
+    note: free Ca2+ activity (output a_Ca) from the calcium balance, at the a_CO3 of a_CO3_speciation
+    limits:
+      - {at: {m_CaT: '0'}, expected: '0', note: 'no Ca'}
+      - {at: {P_pair: '0', D_Ca: '1'}, expected: m_CaT, note: 'no pairs, no hydrolysis, ideal: all calcium is free'}
+    monotonicity:
+      - {wrt: m_CaT, direction: increasing}
+      - {wrt: a_CO3, direction: decreasing}
+
+  - name: c_Ca_free
+    claim: C2
+    regime: R-slurry
+    unit: mol m^-3
+    expression: a_Ca*rho_water*m_std/g_2
+    note: >-
+      free Ca2+ concentration of the regime state; it is the c_bulk of the Langmuir and Gibbs
+      relations (C2), so c_bulk is the free ion, not the total Ca_T
+    limits:
+      - {at: {g_2: '1'}, expected: a_Ca*rho_water*m_std}
 
   # ------------------------------------------------------------------ supersaturation
   - name: Omega_bulk
