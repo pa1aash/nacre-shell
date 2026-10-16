@@ -548,3 +548,8 @@ lane_notes:
     (N2), (b) handle the seed-19 case (excess=0.5, sn0=0.698, nl=1.0, dw=0.5) explicitly with a regression
     test, and (c) remove the health-check suppression (D9); if W4.2 adds a derandomize pin as an interim
     measure it removes that too (D10).'
+- id: N10
+  date: '2026-10-17'
+  day: 2
+  lanes: [p0-w7]
+  note: 'CI on preprint/p0 (Linux) fails 4 structure tests that pass on the macOS laptop: test_committed_structures_match_a_fresh_build (Ca_catecholate_monoanion_bidentate_w4), test_committed_files_regenerate_bit_for_bit (al2o3_0001_oh) and test_bytes_do_not_depend_on_xtb_environment[False/True] (al2o3_0001_oh). The committed geometry bytes depend on the platform (force-field coordinates differ at the 1e-3 level). W7.2 must make the tests compare to a stated tolerance, or the committed files must be platform-independent, and confirm on Linux CI. This is a behaviour and test-design change for the owning lane, not an integrator fix.'
