@@ -45,11 +45,11 @@ in brackets is stable across rebuilds. "Contract" is `theory/contract.yaml` vers
 | Q11 | resolved | F3: S = IAP/K_sp = Omega, Delta_mu = k_B T ln Omega per formula unit, V_m per formula unit. Derivation 4, Eq. (10) [th:eq:omega]; contract `conventions.supersaturation`. The per-ion form in this entry's text is the square root of Omega and carries no letter of its own (sign audit B3) |
 | Q12 | deferred | P0-W1.2: K_sp, V_m and gamma_nl are taken from one framing (the framing key of the parameter table), enforced by the C3 rule of `theory/thresholds.md`; the framing itself is chosen on literature grounds (lane note N5) and fixed at cp3 |
 | Q13 | ruled at cp2 (fix F7) | IAP = a_Ca a_CO3 is kept. Bias direction stated: for a hydrated ACC framing, omitting a_w^n overstates Omega when a_w < 1, so drying states are optimistic. a_w is reported at each drying state, and where W1 has n the labelled sensitivity `Omega_bulk_hydrated` (contract) is reported. Derivation 4, Structural water; `theory/thresholds.md`, Section 1 |
-| Q14 | for cp2 | Decision 8: accept the square-lattice closure as the optimistic supporting condition of C4, with the random-site uncovered fraction deferred to the main study |
+| Q14 | ruled at cp2 (approved as proposed) | The square-lattice closure is the optimistic supporting condition of C4; the random-site uncovered fraction is deferred to the main study. `theory/thresholds.md`, Section 1, Registered conventions |
 | Q15 | deferred | Main study; stated limitation "layer persistence" (charter/scope_guard.md). The P0 screen judges wetting in water only |
 | Q16 | resolved | Absolute-barrier criterion DG_het <= B_acc = k_B T ln(J_0 t_p / N_req), derivation 5, Eqs. (23) and (24) [th:eq:rate, th:eq:access]; contract `B_acc`, `N_nuc`; thresholds C3 |
 
-Counts: resolved 5 (Q1, Q2, Q6, Q11, Q16); deferred 7 (Q3, Q4, Q5, Q7, Q10, Q12, Q15); for
+Counts after the cp2 ruling: resolved 5 (Q1, Q2, Q6, Q11, Q16); ruled at cp2 4 (Q8, Q9, Q13, Q14); deferred 7 (Q3, Q4, Q5, Q7, Q10, Q12, Q15). Before it: for
 cp2 4 (Q8, Q9, Q13, Q14).
 
 ## Q1 (A). Enrichment bookkeeping: local-ideal (registered) or grand-canonical

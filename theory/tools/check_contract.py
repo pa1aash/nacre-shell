@@ -725,6 +725,25 @@ def check_thresholds(ctx, contract, rep):
     keys.add(dec["credible_level"]["params"])
     keys.update(((dec.get("drying_states") or {}).get("params") or {}).values())
     keys.update((doc["study"]["deletion_test"].get("params") or {}).values())
+    conv = dec.get("conventions")
+    if conv:
+        pc, pd, mc = conv["p_cred"], conv["p_deg"], conv["m_cos"]
+        q = lambda x: sp.nsimplify(str(x))
+        ok = (sp.Rational(1, 2) < q(pc["primary"]) < 1 and all(sp.Rational(1, 2) < q(x) < 1 for x in pc["sweep"])
+              and q(pc["primary"]) in [q(x) for x in pc["sweep"]]
+              and q(pd["primary"]) == 1 - q(pc["primary"]) and pd["rule"] == "1 - p_cred"
+              and 0 <= q(mc["primary"]) < 1 and all(0 <= q(x) < 1 for x in mc["sweep"])
+              and all(conv[k].get("set_by") == "W1" for k in ("m_W", "m_S", "m_E")))
+        rep.add(ok, "thresholds", "conventions", "p_cred %s (sweep %s), p_deg = 1 - p_cred = %s, m_cos %s (sweeps %s)" % (
+            pc["primary"], pc["sweep"], pd["primary"], mc["primary"], mc["sweep"]))
+        keys.update(conv[k]["params"] for k in ("p_cred", "p_deg", "m_cos", "m_W", "m_S", "m_E"))
+    sz = doc["decision"].get("sizing")
+    if sz:
+        ok = all(k in sz for k in ("band_mass_half_width_max", "sobol_total_order_half_width_max", "draw_cap",
+                                   "wall_clock_cap", "chunk", "on_cap"))
+        rep.add(ok, "thresholds", "sizing rule", "band half-width <= %s, Sobol half-width <= %s, caps: %s; %s" % (
+            sz.get("band_mass_half_width_max"), sz.get("sobol_total_order_half_width_max"), sz.get("draw_cap"),
+            sz.get("wall_clock_cap")))
     study = doc["study"]
     gating = [k for k, s in doc["links"].items() if s.get("gating", True)]
     descr = [k for k, s in doc["links"].items() if not s.get("gating", True)]
@@ -761,6 +780,11 @@ def check_changes(contract, rep):
 
 
 LIT_ALLOW = {"P0-W3.1", "P0-W3.2", "P0-W3.3"}
+# Method conventions set by the cp2 audit (credible level and its sweep, degradation mass with the
+# swept values of 1 - p_cred, m_cos sweeps, sizing half-widths). They may appear only in these
+# files, and only as these tokens; any other decimal there is still refused.
+CONVENTION_FILES = {"thresholds.md", "cp2_fixes.md", "cp2_brief.md", "ignorance_priors.md", "check_contract.py"}
+CONVENTION_TOKENS = {"0.9", "0.6", "0.99", "0.1", "0.2", "0.4", "0.01", "0.02"}
 LIT_RX = [
     ("decimal", re.compile(r"(?<![\w.])\d+\.\d+(?![\w.])")),
     ("exponent", re.compile(r"(?<![\w.])\d+(\.\d+)?[eE][+-]?\d+\b")),
@@ -778,6 +802,8 @@ def check_literature_numbers(rep):
             text = re.sub(r"\b(?:Phase|item|items|slide|flag|section)s?\s+[\d, ]+", "", text)
             for kind, rx in LIT_RX:
                 for m in rx.finditer(text):
+                    if p.name in CONVENTION_FILES and m.group(0) in CONVENTION_TOKENS:
+                        continue
                     hits.append("%s:%d %s %r" % (p.relative_to(ROOT), no, kind, m.group(0)))
     rep.add(not hits, "no-lit-num", "theory/** sources", "; ".join(hits[:8]) if hits else "no decimal, exponent or 3+ digit literal")
 

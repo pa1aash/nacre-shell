@@ -4,15 +4,18 @@
 of commit `49100a9d92b5dc48f1db1d15529967dfeeece12d` (lane p0-w3, contract v2 at
 `5811a6b2b82565a2d7e991987eee6ab4f167959e`). No screen output was run or read in that session
 (rule R7). The commit that adds this file is recorded in `ops/state/p0-w3.json` under
-`thresholds.sha`.
+`thresholds.sha`. The cp2 fix-up (P0-W3.2, 2026-10-17) applied the audit fixes F3 to F9 and set
+the conventions below, again before any screen output existed; `theory/cp2_fixes.md` lists each
+change with its commit.
 
 This file is the threshold authority of track p0 (rule R-thr). `configs/preprint/thresholds.yaml`
 (W4) is a copy of the fenced `thresholds` block at the end, and W4 checks the two equal. After tag
 `p0-cp3` this file changes only through a dated entry in `ops/tracks/p0_deviations.md`.
 
-No number is typed here (rule R2). Every number a threshold needs is named by the
-`lit/params.yaml` key that will supply it, and "Params keys" at the end lists them. Rationals
-such as 1/2 are exact values of the theory, not literature values. Equation numbers refer to the
+No literature number is typed here (rule R2). Every physical quantity a threshold needs is named
+by the `lit/params.yaml` key that will supply it, and "Params keys" at the end lists them.
+Rationals such as 1/2 are exact values of the theory, not literature values. The only typed
+numbers are the method conventions set by the cp2 audit (Section 1, "Registered conventions"). Equation numbers refer to the
 P0-W3.2 build of `theory/build/derivation.pdf`, with the stable label in brackets.
 
 What a verdict means: a link that is "feasible" under these rules meets a necessary condition
@@ -64,6 +67,51 @@ activities. The C2 binding enters only through Delta_gamma_ads in gamma_sl, and 
 reported descriptor, not a gate (Section 2) (derivation, Section 7
 (rule), Eqs. (30) to (32)). `Omega_local_ideal` and the demonstration composites never enter a
 verdict.
+
+### Registered conventions (cp2 ruling, 2026-10-17)
+
+These are method conventions, not literature values. They are set here before any screen output
+exists, and W1 records each under its key with the cp2 ruling as the source.
+
+| Convention | Value | Key |
+|---|---|---|
+| credible level p_cred | 0.9 primary; published sweep 0.6, 0.9, 0.99 | `thresholds.decision.credible_level` |
+| degradation mass p_deg | p_deg = 1 - p_cred, so 0.1 at the primary level | `thresholds.decision.degrade_mass_min` |
+| C3 margin m_cos | 0 primary (the priors carry the method error); published sweeps 0.1 and 0.2 | `thresholds.C3.margin_cos_theta` |
+| C1 margin m_W | set by W1 from fetched method-error evidence, or zero where the prior carries it | `thresholds.C1.margin_W_adh_wet` |
+| C4 margin m_S | set by W1 as for m_W | `thresholds.C4.margin_S_spread` |
+| C5 window margin m_E | set by W1 as for m_W | `thresholds.C5.window_margin` |
+
+- **p_deg in the sweep.** p_deg is registered as the rule 1 - p_cred, so it moves with the
+  credible level in the p_cred sweep (0.4, 0.1, 0.01). A rise of the falsified-side mass by
+  1 - p_cred is the smallest shift that can carry a link across one band of the decision rule.
+- **The W1 margins.** For each of m_W, m_S and m_E, W1 states in the key's `notes` which case
+  applies: a value from fetched method-error evidence (with its sources), or zero because the
+  prior already carries the method error (with the reason).
+- **Sweeps.** A sweep is reported beside the primary result and never replaces it. A verdict that
+  changes within a registered sweep is reported as sensitive to that convention.
+
+**Approved as proposed at cp2.**
+- C3: the single edge f = 1/2 (cos(theta) = m_cos) replaces the deck bands, and the absolute
+  criterion DG_het <= B_acc is part (b) (Section 2, C3).
+- State aggregation: the worst state per link, and a path sum for C3 (b).
+- C4: the square-lattice closure is the optimistic supporting condition (Q14). C4 is
+  S_spread >= m_S, and a falsified verdict needs the coalescence condition to fail as well.
+- The enrichment factor E_enr is reported only as a labelled, non-gating sensitivity. It never
+  enters a verdict.
+
+**Sizing rule for the Monte Carlo (W4.3).** The draws are raised until both of these hold:
+- the half-width of every verdict-band mass is at most 0.01;
+- the half-widths of the top Sobol total-order indices are at most 0.02.
+
+A half-width is twice the Monte Carlo standard error: binomial for a band mass, bootstrap for a
+Sobol index. Two caps stop the run first if they are reached:
+- **draw cap:** 2^20 base draws per regime state;
+- **wall-clock cap:** 6 hours per W4.3 run.
+
+A run stopped by a cap is reported as capped, with the half-widths it reached. Draws stream in
+chunks of 2^14, so memory does not grow with the draw count. Every chunk updates the band masses
+and the running half-widths, and no full draw table is held in memory.
 
 ## 2. Links
 
@@ -134,8 +182,9 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
     band encoded uncertainty as a fixed interval. Here the credible-mass rule supplies the
     inconclusive verdict, and part (b) carries the magnitude.
 - **Margin.** The edge moves to cos(theta) = m_cos, that is f_e = (2 + m_cos)(1 - m_cos)^2/4, with
-  m_cos = `thresholds.C3.margin_cos_theta` in [0, 1). The proposal for cp2 is m_cos = 0: the
-  method error of each interfacial energy is carried in its prior.
+  m_cos = `thresholds.C3.margin_cos_theta` in [0, 1). Registered at cp2: m_cos = 0 primary (the
+  method error of each interfacial energy is carried in its prior), with published sweeps at
+  0.1 and 0.2 (Section 1, "Registered conventions").
 - **Decision.** feasible if `P(f <= f_e) >= p`; falsified if `P(f > f_e) >= p`; inconclusive
   otherwise. The mass at the clipped boundaries (N2) is reported.
 - **Framing consistency (Q12).** K_sp, V_m and gamma_nl come from one framing (ACC or calcite),
@@ -400,6 +449,26 @@ decision:
     inconclusive: otherwise
   order: [feasible, inconclusive, falsified]
   clipping: {cos_ge_1: {theta: '0', f_theta: '0'}, cos_le_minus_1: {theta: pi, f_theta: '1'}, report: boundary_mass}
+  conventions:
+    set_at: cp2 ruling 2026-10-17
+    p_cred: {primary: 0.9, sweep: [0.6, 0.9, 0.99], params: thresholds.decision.credible_level}
+    p_deg: {rule: 1 - p_cred, primary: 0.1, params: thresholds.decision.degrade_mass_min}
+    m_cos: {primary: 0, sweep: [0.1, 0.2], params: thresholds.C3.margin_cos_theta}
+    m_W: {set_by: W1, from: fetched method-error evidence, or zero where the prior carries it, params: thresholds.C1.margin_W_adh_wet}
+    m_S: {set_by: W1, from: fetched method-error evidence, or zero where the prior carries it, params: thresholds.C4.margin_S_spread}
+    m_E: {set_by: W1, from: fetched method-error evidence, or zero where the prior carries it, params: thresholds.C5.window_margin}
+    approved: [single_edge_f_half_plus_absolute_criterion, worst_state_per_link, path_sum_C3b,
+               square_lattice_closure_optimistic_supporting, C4_S_spread_falsified_only_if_coalescence_fails]
+    E_enr: labelled non-gating sensitivity
+  sizing:
+    applies_to: W4.3
+    band_mass_half_width_max: 0.01
+    sobol_total_order_half_width_max: 0.02
+    half_width: 2 x Monte Carlo standard error (binomial for band masses, bootstrap for Sobol indices)
+    draw_cap: 2**20 base draws per regime state
+    wall_clock_cap: 6 h per run
+    chunk: 2**14 draws, streamed
+    on_cap: report as capped with the half-widths reached
   omega: Omega_bulk
   forbidden_in_verdicts: [Omega_local_ideal, Delta_mu_local_ideal, DG_het_local_ideal, DG_het_double, E_enr, c_local,
                           Omega_bulk_hydrated]
