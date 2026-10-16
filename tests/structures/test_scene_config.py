@@ -33,15 +33,22 @@ def _scene(**over):
 def test_render_config_is_reproducible_and_transparent():
     cfg = config.load_render_config()
     assert cfg["engine"]["name"] == "CYCLES" and cfg["engine"]["device"] == "CPU"
-    assert cfg["engine"]["threads"] == 4
+    assert cfg["engine"]["threads"] == 2  # R10: two threads on the shared 8 GB machines
     assert cfg["film_transparent"] is True
     assert cfg["colour_management"]["view_transform"] == "Standard"
 
 
-def test_palette_is_a_single_path_value():
+def test_palette_is_the_tracked_style_palette():
     cfg = config.load_render_config()
-    assert isinstance(cfg["palette"], str)
-    assert cfg["palette"].endswith("palette.yaml")
+    assert cfg["palette"] == "figures/style/palette.yaml"
+    assert config.repo_path(cfg["palette"]).is_file()
+    assert ".local" not in config.RENDER_CONFIG.read_text().split("palette:")[-1].splitlines()[0]
+
+
+def test_render_wrapper_follows_the_memory_rule():
+    sh = (BLENDER_DIR / "render.sh").read_text()
+    assert "--threads 2" in sh and "--threads 4" not in sh
+    assert "pct < 25" in sh and "waited >= 60" in sh
 
 
 def test_render_config_rejects_gpu(tmp_path):
@@ -75,8 +82,6 @@ def test_palette_loader_refuses_missing_linear(tmp_path):
 
 def test_configured_palette_linear_matches_srgb():
     path = config.repo_path(config.load_render_config()["palette"])
-    if not path.exists():
-        pytest.skip("local palette copy absent (it lives under .local/)")
     cols, doc = config.load_palette(path)
     for el, entry in doc["elements"].items():
         expect = [_srgb_to_linear(c) for c in entry["srgb"]]
@@ -160,7 +165,8 @@ def test_bonds_hydrated_ca():
     st = config.read_extxyz(committed_structures()["ca_hydrated"])
     bonds = config.find_bonds(st["symbols"], st["positions"], radii, cfg["bonds"]["factor"], cfg["bonds"]["pairs"])
     kinds = sorted("-".join(sorted((st["symbols"][i], st["symbols"][j]))) for i, j in bonds)
-    assert kinds.count("H-O") == 12 and kinds.count("Ca-O") == 6 and len(kinds) == 18
+    cn = st["symbols"].count("O")  # the evidence coordination number (rows in the file's source ids)
+    assert kinds.count("H-O") == 2 * cn and kinds.count("Ca-O") == cn and len(kinds) == 3 * cn
 
 
 def test_bonds_respect_pair_whitelist():
@@ -210,6 +216,31 @@ def test_rig_is_defined_once_and_in_camera_frame():
     assert np.allclose(p, [0.0, -10.0, 0.0])  # azimuth 0 sits behind the camera
     scene_py = (BLENDER_DIR / "scene.py").read_text()
     assert "lights.new" not in scene_py and "rig.build(" in scene_py
+    # Lights, world and occlusion shading are created in rig.py only.
+    for made_in_rig in ("worlds.new", "AmbientOcclusion", "use_shadow"):
+        assert made_in_rig not in scene_py
+    assert "rig.shade(" in scene_py
+
+
+def test_rig_has_soft_shadows_and_ambient_occlusion():
+    assert rig.RIG["shadows"]["cast"] is True
+    for name in rig.LIGHTS:
+        assert rig.RIG[name]["size_frac"] > 0
+        assert 5.0 < rig.penumbra_deg(name) < 25.0, name  # soft, but the shadow still reads
+    ao = rig.RIG["ambient_occlusion"]
+    assert 0.0 < ao["strength"] < 1.0 and ao["samples"] >= 8
+    assert 1.0 <= ao["distance"] <= 4.0  # angstrom: local contacts, not whole regions
+    assert rig.ao_factor(1.0) == 1.0  # unoccluded surfaces keep the palette colour exactly
+    assert rig.ao_factor(0.0) == pytest.approx(1.0 - ao["strength"])
+    d = rig.describe()
+    assert set(d["penumbra_deg"]) == set(rig.LIGHTS)
+    assert rig.RIG["key"]["irradiance"] > rig.RIG["rim"]["irradiance"] > rig.RIG["fill"]["irradiance"]
+
+
+def test_rig_is_documented():
+    doc = rig.__doc__
+    for word in ("key", "fill", "rim", "Soft shadows", "Ambient occlusion", "World"):
+        assert word in doc, word
 
 
 def test_scene_runner_creates_no_text():
@@ -246,3 +277,17 @@ def test_smoke_render_and_log():
     assert log["output_sha256"] == config.sha256(png)
     for item in log["inputs"]:
         assert config.sha256(REPO / item["file"]) == item["sha256"], item["file"]
+
+
+def test_render_logs_hold_no_machine_dependent_values():
+    import getpass
+    import platform
+
+    for log_path in sorted(RENDER_DIR.glob("*/*.json")):
+        text = log_path.read_text()
+        log = json.loads(text)
+        assert "timing_s" not in log, log_path
+        for bad in (str(REPO), str(__import__("pathlib").Path.home()), platform.node(), getpass.getuser()):
+            assert bad not in text, (log_path, bad)
+        for item in log["inputs"]:
+            assert "evidence_row_ids" in item, log_path

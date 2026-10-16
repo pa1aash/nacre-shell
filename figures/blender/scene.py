@@ -1,6 +1,6 @@
 """Render one scene headlessly.
 
-    blender -b --threads 4 -P figures/blender/scene.py -- --scene <name> --out <path.png>
+    blender -b --threads 2 -P figures/blender/scene.py -- --scene <name> --out <path.png>
 
 Loads the extxyz files named in figures/blender/scenes/<name>.yaml, draws them
 ball-and-stick or space-filling, lights them with the rig in rig.py, frames them with an
@@ -74,7 +74,7 @@ def make_material(name, rgb_linear, mcfg):
     bsdf.inputs["Base Color"].default_value = (*rgb_linear, 1.0)
     bsdf.inputs["Roughness"].default_value = mcfg["roughness"]
     bsdf.inputs["Specular IOR Level"].default_value = mcfg["specular_ior_level"]
-    return mat
+    return rig.shade(mat)
 
 
 def add_mesh(scene, name, verts, faces, mat):
@@ -93,11 +93,15 @@ def collect(scene_cfg, rcfg, radii):
     atoms, bonds, inputs = [], [], []
     for comp in scene_cfg["components"]:
         path = config.repo_path(comp["file"])
-        inputs.append({"file": comp["file"], "sha256": config.sha256(path)})
         st = config.read_extxyz(path)
+        inputs.append({"file": comp["file"], "sha256": config.sha256(path),
+                       "evidence_row_ids": config.evidence_row_ids(st)})
         if st["info"].get("illustrative") != "T":
             raise SystemExit(f"{comp['file']}: not marked illustrative")
         idx = config.select_atoms(st, comp["include"], comp["exclude_elements"])
+        if comp["clip"]:
+            idx = config.clip_selection(st["symbols"], st["positions"], idx, comp["clip"], radii,
+                                        rcfg["bonds"]["factor"], rcfg["bonds"]["pairs"])
         sym = [st["symbols"][i] for i in idx]
         pos = st["positions"][idx] + np.array(comp["translate"])
         style = rcfg["styles"][comp["style"]]
@@ -278,11 +282,11 @@ def main():
                    "margin": cam_cfg["margin"], "ortho_scale": round(cam_data.ortho_scale, 4)},
         "rig": rig.describe(),
         "counts": {"atoms": len(atoms), "half_bonds": len(bonds), "elements": elements},
-        "timing_s": {"build": round(t_build, 2), "render": round(t_render, 2)},
         "text_objects": 0,
     }
     out_path.with_suffix(".json").write_text(json.dumps(log, indent=1, sort_keys=True) + "\n")
-    print(f"RENDERED {out_path} in {t_render:.1f} s")
+    # Timings depend on the machine and its load: they go to the run record, not the settings log.
+    print(f"RENDERED {out_path.name} scene build {t_build:.1f} s, render {t_render:.1f} s")
 
 
 if __name__ == "__main__":
