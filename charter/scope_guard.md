@@ -22,6 +22,18 @@ thickness. A coarse bound on film thickness versus electronic resistance is comp
 C4, Phase 7 item 18, and is reported as a limitation, not as a performance figure
 (design flag 8).
 
+## Stated limitation: layer persistence
+
+C1 to C3 are evaluated in R-slurry. Survival of the anchor and of the morphology through
+drying, and in contact with the in-cell electrolyte, is neither computed nor claimed.
+
+## Stated limitation: classical nucleation theory
+
+The C3 verdict is conditional on classical nucleation theory: a spherical-cap nucleus, a
+size-independent interfacial energy and the capillary approximation (claim register,
+C3 stated limits). Non-classical CaCO3 pathways through pre-nucleation clusters or a dense
+liquid precursor may not follow it.
+
 ## Forbidden-claim patterns
 
 One pattern per line: an id, whitespace, then a Python regular expression applied
@@ -50,4 +62,7 @@ SG12  \bexperimentally (validated|verified|confirmed|demonstrated)\b
 # novelty, pending the Phase 1 audit
 SG13  \bintersection (is|remains) unoccupied\b
 SG14  \b(the )?first (ever )?(report|demonstration|study) of\b
+# P0 verdict language
+SG15  \b(barrier|layer|film|coating|interface) (is|are) (thermodynamically )?(feasible|viable|effective)\b
+SG16  \b(demonstrate|show|establish|prove)s? (the )?feasibility\b
 ```
