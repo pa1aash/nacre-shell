@@ -1,0 +1,10 @@
+# Declarations inputs for the P0 preprint, rendered by `nacre preprint declarations` into
+# preprint/generated/declarations.tex. A TBD value renders as a visible placeholder in a draft
+# build and stops a release build. Owners: Palaash supplies competing interests, funding and
+# compute at P0-W8.5; the repository URL, Zenodo DOI and SI DOI are filled at C3 (post-posting).
+repository_url: TBD
+zenodo_doi: TBD
+si_doi: TBD
+competing_interests: TBD
+funding: TBD
+compute: TBD

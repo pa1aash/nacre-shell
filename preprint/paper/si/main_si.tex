@@ -1,0 +1,48 @@
+% Supplementary Information for the P0 preprint, built from the same template head.
+% Build with ../build.sh (it builds the manuscript and this file). No typed numbers.
+\input{nacre-preamble}
+\input{../generated/front}
+\input{../generated/authors}
+\input{../generated/declarations}
+\let\nacrePaperTitle\nacreTitle
+\renewcommand{\nacreTitle}{Supplementary Information: \nacrePaperTitle}
+\newcommand{\nacreAbstract}{\nacrePlaceholder{SI summary, written with the main text}}
+\newcommand{\nacreTitleMark}{}
+\newcommand{\nacreFootnotes}{\nacreAffiliations}
+
+\input{build/rsc_head}
+\input{../generated/numbers}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\theequation}{S\arabic{equation}}
+
+\section{Full derivation}\label{si:derivation}
+% Delivered by lane W3 as theory/derivation_body.tex (path relative to preprint/paper).
+\IfFileExists{../../theory/derivation_body.tex}{\input{../../theory/derivation_body.tex}}%
+  {\nacreMissing{derivation body}}
+
+\section{No double counting of interfacial terms}\label{si:no-double-counting}
+% Supplied by: W3 derivation.
+\nacrePlaceholder{proof that each interfacial free energy enters the chain once}
+
+\section{Parameter sources and conflicts}\label{si:parameters}
+% Supplied by: W1 parameter set.
+\nacrePlaceholder{parameter provenance and conflict table}
+
+\section{Sensitivity detail}\label{si:sensitivity}
+% Supplied by: W4 screen.
+\nacrePlaceholder{Sobol indices with confidence intervals for every link}
+
+\section{Retrodiction cases}\label{si:retrodiction}
+% Supplied by: W2 retrodiction package.
+\nacrePlaceholder{case-by-case retrodiction record}
+
+\section{Anchor details}\label{si:anchor}
+% Supplied by: W5 anchor results.
+\nacrePlaceholder{anchor calculation set-up and convergence}
+
+\balance
+\bibliography{refs}
+\bibliographystyle{rsc}
+\end{document}

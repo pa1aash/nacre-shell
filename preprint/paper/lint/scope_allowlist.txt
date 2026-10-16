@@ -1,0 +1,8 @@
+# The only sentences exempt from `nacre preprint lint-scope`: explicit "does not claim"
+# sentences, verbatim, one per line. A line without the words "does not claim" is refused.
+# The same sentences appear in preprint/claims.yaml as the does-not-claim entries.
+This paper does not claim that the barrier works.
+This paper does not claim any corrosion rate, capacity or device performance.
+This paper does not claim any result from the full first-principles or machine-learned-potential calculations.
+This paper does not claim that any interface, template or film thickness is optimal.
+This paper does not claim experimental validation.

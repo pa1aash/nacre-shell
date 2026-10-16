@@ -1,0 +1,11 @@
+{
+  "mock": true,
+  "note": "assumed schema; W2 owns the real file",
+  "schema_version": "assumed-1",
+  "summary": {
+    "n_cases": 6,
+    "n_consistent": 4,
+    "n_inconsistent": 1,
+    "n_undecided": 1
+  }
+}

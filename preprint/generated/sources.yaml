@@ -1,0 +1,274 @@
+# Number sources for the P0 preprint (rule R5: every number in the paper is a generated macro).
+# `nacre preprint macros` reads this file and writes numbers.tex beside it.
+#
+# Schema
+#   schemas.<id>        where each source family's shape comes from, and its status.
+#   macros.<Name>       Name is letters only and starts with Num plus a capital letter.
+#     source            result JSON file, repository-relative.
+#     key               '/'-separated key path into the JSON; list items by integer index.
+#     format            a Python format spec (e.g. .2f, .3g, d) or sci:N (N decimals times a power of ten).
+#     unit              LaTeX math appended after a thin space; empty or absent for dimensionless.
+#     mock              true while `source` is a stand-in under mock/; renders only in draft mode.
+#     real_source       the file that replaces the mock, with its owning lane.
+#     figure / claim    where the number is used (planning aid; checked against claims.yaml by tests).
+#
+# Regime: every macro below is for R-slurry. R-cell macros are added when the screen covers it.
+schemas:
+  screen:
+    shape: configs/preprint/results_schema.json, schema v1
+    status: pushed by p0-w4 at cc50fc0 (blob e81bcb3661ce0fefe7a0965dd05ef66e330c6428), read with git show
+    assumed: the result path results/preprint/screen/summary.json and the quantity and parameter names
+  precision:
+    shape: assumed (schema_version assumed-1)
+    status: not pushed; reconcile with p0-w4 on Day 2
+  pourbaix:
+    shape: assumed (schema_version assumed-1)
+    status: not pushed; reconcile with p0-w5 on Day 2
+  anchor:
+    shape: assumed (schema_version assumed-1)
+    status: not pushed; reconcile with p0-w5 on Day 2
+  retrodiction:
+    shape: assumed (schema_version assumed-1)
+    status: not pushed; reconcile with p0-w2 on Day 2
+  params:
+    shape: assumed (schema_version assumed-1)
+    status: not pushed; reconcile with p0-w1 on Day 2
+
+macros:
+  # --- screen: draws and design (Methods) ---
+  NumScreenDraws:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/draws
+    format: d
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    claim: CL-G01
+  NumSobolBaseSamples:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/sobol_design/base_samples
+    format: d
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    claim: CL-G01
+  # --- anchor link: adhesion in water (Fig 2a, Fig 3) ---
+  NumWadhWetMedian:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/anchor/quantities/W_adh_wet/quantiles/0.5
+    format: .2f
+    unit: '\mathrm{J\,m^{-2}}'
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    figure: Fig 2a
+    claim: CL-R01
+  NumWadhWetLow:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/anchor/quantities/W_adh_wet/quantiles/0.05
+    format: .2f
+    unit: '\mathrm{J\,m^{-2}}'
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    claim: CL-R01
+  NumWadhWetHigh:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/anchor/quantities/W_adh_wet/quantiles/0.95
+    format: .2f
+    unit: '\mathrm{J\,m^{-2}}'
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    claim: CL-R01
+  # --- sequester link: Ca2+ sequestration (Fig 2b) ---
+  NumDGseqMedian:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/sequester/quantities/dG_seq/quantiles/0.5
+    format: .1f
+    unit: '\mathrm{kJ\,mol^{-1}}'
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    figure: Fig 2b
+    claim: CL-R02
+  NumSlocalMedian:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/sequester/quantities/S_local/quantiles/0.5
+    format: .1f
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    figure: Fig 2b
+    claim: CL-R02
+  # --- nucleate link (Fig 2c, Fig 5) ---
+  NumThetaMedian:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/nucleate/quantities/theta/quantiles/0.5
+    format: .0f
+    unit: '^{\circ}'
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    figure: Fig 2c
+    claim: CL-R03
+  NumFthetaMedian:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/nucleate/quantities/f_theta/quantiles/0.5
+    format: .2f
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    figure: Fig 5
+    claim: CL-R03
+  NumDGhetMedian:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/nucleate/quantities/dG_het/quantiles/0.5
+    format: .0f
+    unit: '\,k_\mathrm{B}T'
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    figure: Fig 5
+    claim: CL-R03
+  # --- Sobol (Fig 6) ---
+  NumSobolTotalGammaNucLiq:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/nucleate/sobol/dG_het/gamma_nuc_liq/total_order/estimate
+    format: .2f
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    figure: Fig 6
+    claim: CL-G01
+  NumSobolTotalGammaNucLiqLow:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/nucleate/sobol/dG_het/gamma_nuc_liq/total_order/ci_low
+    format: .2f
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    claim: CL-G01
+  NumSobolTotalGammaNucLiqHigh:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/nucleate/sobol/dG_het/gamma_nuc_liq/total_order/ci_high
+    format: .2f
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    claim: CL-G01
+  NumSobolTotalGammaSubNuc:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/nucleate/sobol/dG_het/gamma_sub_nuc/total_order/estimate
+    format: .2f
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    figure: Fig 6
+    claim: CL-G01
+  NumSobolTotalDGbind:
+    source: preprint/generated/mock/screen_summary.mock.json
+    key: regimes/R-slurry/links/sequester/sobol/dG_seq/dG_bind/total_order/estimate
+    format: .2f
+    mock: true
+    real_source: results/preprint/screen/summary.json (p0-w4)
+    figure: Fig 6
+    claim: CL-G01
+  # --- required precision (Fig 6, Table 2, Outlook) ---
+  NumPrecGammaNucLiq:
+    source: preprint/generated/mock/screen_precision.mock.json
+    key: required_precision/gamma_nuc_liq/value
+    format: .2f
+    unit: '\mathrm{J\,m^{-2}}'
+    mock: true
+    real_source: results/preprint/screen/precision.json (p0-w4), assumed
+    figure: Fig 6
+    claim: CL-P01
+  NumPrecGammaSubNuc:
+    source: preprint/generated/mock/screen_precision.mock.json
+    key: required_precision/gamma_sub_nuc/value
+    format: .2f
+    unit: '\mathrm{J\,m^{-2}}'
+    mock: true
+    real_source: results/preprint/screen/precision.json (p0-w4), assumed
+    figure: Fig 6
+    claim: CL-P01
+  NumPrecDGbind:
+    source: preprint/generated/mock/screen_precision.mock.json
+    key: required_precision/dG_bind/value
+    format: .1f
+    unit: '\mathrm{kJ\,mol^{-1}}'
+    mock: true
+    real_source: results/preprint/screen/precision.json (p0-w4), assumed
+    figure: Fig 6
+    claim: CL-P01
+  # --- Pourbaix proxy (Fig 7) ---
+  NumPbxCalciteHullMax:
+    source: preprint/generated/mock/pourbaix_summary.mock.json
+    key: phases/calcite/e_above_hull_ev_per_atom/max_over_window
+    format: .2f
+    unit: '\mathrm{eV\,atom^{-1}}'
+    mock: true
+    real_source: results/preprint/pourbaix/summary.json (p0-w5), assumed
+    figure: Fig 7
+    claim: CL-X01
+  NumPbxPhLow:
+    source: preprint/generated/mock/pourbaix_summary.mock.json
+    key: stable_window/pH_low
+    format: .1f
+    mock: true
+    real_source: results/preprint/pourbaix/summary.json (p0-w5), assumed
+    figure: Fig 7
+    claim: CL-X01
+  NumPbxPhHigh:
+    source: preprint/generated/mock/pourbaix_summary.mock.json
+    key: stable_window/pH_high
+    format: .1f
+    mock: true
+    real_source: results/preprint/pourbaix/summary.json (p0-w5), assumed
+    figure: Fig 7
+    claim: CL-X01
+  # --- anchor calculation (Fig 8) ---
+  NumAnchorValue:
+    source: preprint/generated/mock/anchor_summary.mock.json
+    key: anchor/value
+    format: .2f
+    unit: '\mathrm{J\,m^{-2}}'
+    mock: true
+    real_source: results/preprint/anchor/summary.json (p0-w5), assumed
+    figure: Fig 8
+    claim: CL-X02
+  NumAnchorPriorQuantile:
+    source: preprint/generated/mock/anchor_summary.mock.json
+    key: anchor/prior_quantile
+    format: .2f
+    mock: true
+    real_source: results/preprint/anchor/summary.json (p0-w5), assumed
+    figure: Fig 8
+    claim: CL-X02
+  # --- retrodiction (Fig 4, Table 3) ---
+  NumRetroCases:
+    source: preprint/generated/mock/retrodiction_summary.mock.json
+    key: summary/n_cases
+    format: d
+    mock: true
+    real_source: preprint/retrodiction/summary.json (p0-w2), assumed
+    figure: Fig 4
+    claim: CL-T01
+  NumRetroConsistent:
+    source: preprint/generated/mock/retrodiction_summary.mock.json
+    key: summary/n_consistent
+    format: d
+    mock: true
+    real_source: preprint/retrodiction/summary.json (p0-w2), assumed
+    figure: Fig 4
+    claim: CL-T01
+  NumRetroInconsistent:
+    source: preprint/generated/mock/retrodiction_summary.mock.json
+    key: summary/n_inconsistent
+    format: d
+    mock: true
+    real_source: preprint/retrodiction/summary.json (p0-w2), assumed
+    figure: Fig 4
+    claim: CL-T01
+  # --- parameter table (Table 1) ---
+  NumParamCount:
+    source: preprint/generated/mock/params_summary.mock.json
+    key: summary/n_parameters
+    format: d
+    mock: true
+    real_source: lit/params.yaml (p0-w1), assumed summary
+    claim: CL-B01
+  NumParamConflicts:
+    source: preprint/generated/mock/params_summary.mock.json
+    key: summary/n_conflicts
+    format: d
+    mock: true
+    real_source: lit/params.yaml and lit/conflicts.md (p0-w1), assumed summary
+    claim: CL-B02

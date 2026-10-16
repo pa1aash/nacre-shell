@@ -1,0 +1,17 @@
+# Preprint scope patterns for `nacre preprint lint-scope` (rule R6), in addition to the
+# charter's SG01..SG14 block in charter/scope_guard.md.
+# One pattern per line: an id (PS..), whitespace, then a Python regular expression applied
+# case-insensitively to each sentence of text, captions, comments, briefs and claim statements.
+#
+# claims that the barrier works, protects or prevents
+PS01  \b(barrier|shell|film|layer|coating|interphase)s?\b[^.;:]{0,60}\b(works|protects?|prevents?|inhibits?|passivates?|shields?)\b
+PS02  \b(protects?|prevents?|inhibits?|suppress(es)?|mitigates?|stops?)\b[^.;:]{0,40}\b(corrosion|pitting|dissolution of the (collector|foil|oxide)|the (collector|foil))\b
+PS03  \bprotective\b|\bcorrosion[- ](protection|inhibition|resistance)\b
+# corrosion rates and kinetics of attack
+PS04  \bcorrosion[- ]rates?\b|\brates? of corrosion\b
+# capacity and cycling
+PS05  \bcapacit(y|ies)\b
+PS06  \bcycle[- ]life\b|\bcycling (stability|life)\b|\bcoulombic efficiency\b
+# devices and performance
+PS07  \bdevices?\b
+PS08  \bperformance\b|\bperforms?\b|\boutperforms?\b

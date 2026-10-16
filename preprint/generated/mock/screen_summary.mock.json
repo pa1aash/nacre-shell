@@ -1,0 +1,199 @@
+{
+  "generated_utc": "2026-10-16T00:00:00Z",
+  "mock": true,
+  "provenance": {
+    "config_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "contract_sha": null,
+    "git_dirty": true,
+    "git_sha": "0000000000000000000000000000000000000000",
+    "prior_file": "preprint/generated/mock/README.md",
+    "prior_file_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "regimes": {
+    "R-slurry": {
+      "draws": 4096,
+      "links": {
+        "anchor": {
+          "quantities": {
+            "W_adh_wet": {
+              "mean": 0.11,
+              "n_valid": 4096,
+              "quantiles": {
+                "0.05": 0.05,
+                "0.5": 0.1,
+                "0.95": 0.18
+              },
+              "sd": 0.04,
+              "symbol": "W_{adh,wet}",
+              "units": "J m^-2"
+            }
+          },
+          "sobol": {
+            "W_adh_wet": {
+              "gamma_ox_pol": {
+                "first_order": {
+                  "ci_high": 0.6,
+                  "ci_low": 0.4,
+                  "estimate": 0.5
+                },
+                "total_order": {
+                  "ci_high": 0.7,
+                  "ci_low": 0.5,
+                  "estimate": 0.6
+                }
+              }
+            }
+          },
+          "threshold_evaluation": null
+        },
+        "nucleate": {
+          "quantities": {
+            "dG_het": {
+              "mean": 40.0,
+              "n_valid": 4096,
+              "quantiles": {
+                "0.05": 12.0,
+                "0.5": 36.0,
+                "0.95": 78.0
+              },
+              "sd": 20.0,
+              "symbol": "\\Delta G^*_{het}",
+              "units": "k_B T"
+            },
+            "f_theta": {
+              "mean": 0.2,
+              "n_valid": 4096,
+              "quantiles": {
+                "0.05": 0.06,
+                "0.5": 0.18,
+                "0.95": 0.39
+              },
+              "sd": 0.1,
+              "symbol": "f(\\theta)",
+              "units": "1"
+            },
+            "theta": {
+              "mean": 55.0,
+              "n_valid": 4096,
+              "quantiles": {
+                "0.05": 30.0,
+                "0.5": 54.0,
+                "0.95": 80.0
+              },
+              "sd": 15.0,
+              "symbol": "\\theta",
+              "units": "deg"
+            }
+          },
+          "sobol": {
+            "dG_het": {
+              "S_bulk": {
+                "first_order": {
+                  "ci_high": 0.15,
+                  "ci_low": 0.05,
+                  "estimate": 0.1
+                },
+                "total_order": {
+                  "ci_high": 0.2,
+                  "ci_low": 0.08,
+                  "estimate": 0.14
+                }
+              },
+              "gamma_nuc_liq": {
+                "first_order": {
+                  "ci_high": 0.52,
+                  "ci_low": 0.38,
+                  "estimate": 0.45
+                },
+                "total_order": {
+                  "ci_high": 0.63,
+                  "ci_low": 0.47,
+                  "estimate": 0.55
+                }
+              },
+              "gamma_sub_nuc": {
+                "first_order": {
+                  "ci_high": 0.31,
+                  "ci_low": 0.19,
+                  "estimate": 0.25
+                },
+                "total_order": {
+                  "ci_high": 0.39,
+                  "ci_low": 0.25,
+                  "estimate": 0.32
+                }
+              }
+            }
+          },
+          "threshold_evaluation": null
+        },
+        "sequester": {
+          "quantities": {
+            "S_local": {
+              "mean": 8.0,
+              "n_valid": 4096,
+              "quantiles": {
+                "0.05": 3.5,
+                "0.5": 7.5,
+                "0.95": 13.0
+              },
+              "sd": 3.0,
+              "symbol": "S_{local}",
+              "units": "1"
+            },
+            "dG_seq": {
+              "mean": -12.0,
+              "n_valid": 4096,
+              "quantiles": {
+                "0.05": -19.0,
+                "0.5": -12.0,
+                "0.95": -6.0
+              },
+              "sd": 4.0,
+              "symbol": "\\Delta G_{seq}",
+              "units": "kJ mol^-1"
+            }
+          },
+          "sobol": {
+            "dG_seq": {
+              "dG_bind": {
+                "first_order": {
+                  "ci_high": 0.8,
+                  "ci_low": 0.6,
+                  "estimate": 0.7
+                },
+                "total_order": {
+                  "ci_high": 0.9,
+                  "ci_low": 0.7,
+                  "estimate": 0.8
+                }
+              }
+            }
+          },
+          "threshold_evaluation": null
+        }
+      },
+      "parameters": [
+        "gamma_ox_w",
+        "gamma_pol_w",
+        "gamma_ox_pol",
+        "dG_bind",
+        "pH",
+        "T",
+        "gamma_nuc_liq",
+        "gamma_sub_liq",
+        "gamma_sub_nuc",
+        "S_bulk"
+      ],
+      "seed": 0,
+      "sobol_design": {
+        "base_samples": 1024,
+        "bootstrap_resamples": 100,
+        "confidence_level": 0.95,
+        "evaluations": 12288,
+        "method": "saltelli"
+      }
+    }
+  },
+  "schema_version": "1"
+}

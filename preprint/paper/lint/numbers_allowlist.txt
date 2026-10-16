@@ -1,0 +1,24 @@
+# Explicit allowlist for `nacre preprint lint-numbers`.
+# One form per line: an id (NA..), whitespace, then a Python regular expression (case-insensitive).
+# Forms are applied in file order, and each match is removed from the line before the digit
+# check, so the explicit mathematical forms come first and the generic index rules last.
+# Only forms that are not reported numbers belong here: fixed prefactors of the
+# classical-nucleation expressions, chemical formulae, ion charges, and single-digit indices
+# and exponents. A measured or computed value never goes here; it goes in
+# preprint/generated/sources.yaml as a macro.
+#
+# heterogeneous-nucleation shape factor f(theta) = (2 + cos theta)(1 - cos theta)^2 / 4
+NA05  \(\s*2\s*\+\s*\\cos\s*\\theta\s*\)\s*\(\s*1\s*-\s*\\cos\s*\\theta\s*\)\^\{?2\}?\s*/\s*4
+NA06  \\frac\{\s*\(\s*2\s*\+\s*\\cos\s*\\theta\s*\)\s*\(\s*1\s*-\s*\\cos\s*\\theta\s*\)\^\{?2\}?\s*\}\{\s*4\s*\}
+# classical-nucleation barrier prefactor 16 pi / 3
+NA07  \\frac\{\s*16\s*\\pi\s*\}\{\s*3\s*\}|16\s*\\pi\s*/\s*3
+# spherical-cap volume and area prefactors 4 pi / 3 and 4 pi
+NA08  \\frac\{\s*4\s*\\pi\s*\}\{\s*3\s*\}|\b4\s*\\pi\b
+# chemical formulae and ion charges written with mhchem
+NA01  \\ce\{(?:[^{}]|\{[^{}]*\})*\}
+# ion-charge superscripts in math, e.g. Ca^{2+}, CO_3^{2-}, OH^-
+NA02  \^\{[0-9]?[+-]\}|\^[0-9]?[+-](?![0-9])
+# single-digit exponents in math and units, e.g. m^{-2}, r^2 (a power such as 10^{-3} still fails: the base is a number)
+NA03  \^\{-?[0-9]\}|\^-?[0-9](?![0-9])
+# single-digit subscripts in math, e.g. CO_3, x_1
+NA04  _\{?[0-9]\}?(?![0-9])

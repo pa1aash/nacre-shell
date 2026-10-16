@@ -1,0 +1,32 @@
+% P0 preprint manuscript.
+% The class, packages, page setup and front-matter layout come from the local-only publisher
+% template, rendered into build/rsc_head.tex by `nacre preprint prepare` (run by build.sh).
+% Build with ./build.sh draft or ./build.sh release, from any directory.
+% No number is typed here: numbers are macros from ../generated/numbers.tex, and every claim
+% the text makes has an entry in ../claims.yaml. Section order follows the energetics.
+\input{nacre-preamble}
+\input{../generated/front}
+\input{../generated/authors}
+\input{../generated/credit}
+\input{../generated/declarations}
+\input{sections/abstract}
+\newcommand{\nacreTitleMark}{$^\dag$}
+\newcommand{\nacreFootnotes}{\nacreAffiliations
+  \footnotetext{\dag~Electronic supplementary information (ESI) available. See DOI: \nacreSIDOI}}
+
+\input{build/rsc_head}
+\input{../generated/numbers}
+
+\input{sections/introduction}
+\input{sections/model}
+\input{sections/inputs}
+\input{sections/methods}
+\input{sections/results}
+\input{sections/outlook}
+\input{sections/discussion}
+\input{sections/declarations}
+
+\balance
+\bibliography{refs}
+\bibliographystyle{rsc}
+\end{document}
