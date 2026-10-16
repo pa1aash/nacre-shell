@@ -445,12 +445,23 @@ claims:
       and Al phases are stable at the anodic potential against the Li reservoir. These
       are different chemistries (design flag 7) and need different observables. Both are
       screening quantities: necessary, not sufficient, and blind to morphology.
+      In R-slurry, stability against dissolution is the same question as S > 1: if the bulk
+      S is below 1, CaCO3 is unstable in the bulk and survives only where the C2 enrichment
+      holds the local S above 1. C5 therefore reports both the bulk state and the
+      C2-enriched state.
     computation:
       method: >-
         Aqueous Pourbaix analysis (pymatgen) of Al-Ca-C-O-H with a fetched ACC offset,
-        reported as screening only; Li-referenced grand-potential phase stability for the
-        in-cell regime; resolution of the red-team concern so that the Pourbaix proxy
-        cannot be satisfied by construction, with audit text.
+        reported as screening only. The R-slurry screen is evaluated at the regime's Ca2+
+        and carbonate activities, the same a_Ca2+ and a_CO3 used for S in C3, not at the
+        default dissolved-species concentrations; it is reported for both the bulk state
+        and the C2-enriched state. Li-referenced grand-potential phase stability for the
+        in-cell regime: the R-cell window is bounded below by reduction (reaction with
+        lithium) and above by anodic oxidation, where the oxidation products and the cation
+        sink are tied to the R-cell electrolyte_composition input. A limit that cannot be
+        computed carries the status "undetermined" and never counts as a pass.
+        Resolution of the red-team concern so that the Pourbaix proxy cannot be satisfied
+        by construction, with audit text.
       phase: 7
       items: [19, 20, 21]
       produced_by: Phase 7 (screening; may run on pod CPU or locally)
