@@ -7,10 +7,19 @@
   "artifacts": {
     "cache": "results/preprint/pourbaix/cache/",
     "cache_hash": "sha256:a0d055c72668051fd7568d7d0e689742a0b1a6aa8d4f9d772be8c6a210dbebb4",
-    "configs": ["results/preprint/pourbaix/config/mock.yaml", "results/preprint/pourbaix/config/smoke.yaml"],
-    "runs": ["results/preprint/pourbaix/mock/", "results/preprint/pourbaix/smoke/"],
+    "configs": [
+      "results/preprint/pourbaix/config/mock.yaml",
+      "results/preprint/pourbaix/config/smoke.yaml"
+    ],
+    "runs": [
+      "results/preprint/pourbaix/mock/",
+      "results/preprint/pourbaix/smoke/"
+    ],
     "ledger": "jobs/ledger/p0-w5.jsonl",
-    "code": ["src/nacre/pourbaix/", "src/nacre/anchor/"],
+    "code": [
+      "src/nacre/pourbaix/",
+      "src/nacre/anchor/"
+    ],
     "anchor_structures": "results/preprint/anchor/structures/",
     "xtb_smoke": "results/preprint/anchor/xtb_smoke/summary.json",
     "xtb_env_spec": "src/nacre/anchor/xtb_env.yaml",
@@ -23,6 +32,7 @@
     "CO2 enthalpy reference moves the CaCO3 oxidation onset by 0.61 V; benchmark needed in P0-W5.2.",
     "ACC offset awaits lit/params.yaml from P0-W1.2.",
     "Schema differences with W4 and W6 are listed in the report for Day 2.",
-    "xtb 6.6.1 and CREST 2.12 run on osx-arm64 only with libgfortran5 13.4.0 pinned."
+    "xtb 6.6.1 and CREST 2.12 run on osx-arm64 only with libgfortran5 13.4.0 pinned.",
+    "fix-up: pH axis"
   ]
 }

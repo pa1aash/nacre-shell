@@ -3,13 +3,13 @@
  "note": "Exported by lane p0-w5 from slurry.json. R-cell has no (pH, E) plane and is not exported here; see cell.json and the schema checks.",
  "provenance": {
   "cache_hash": "sha256:a0d055c72668051fd7568d7d0e689742a0b1a6aa8d4f9d772be8c6a210dbebb4",
-  "config_hash": "sha256:8b71f63bc5b0887ce8fdbea0f5cf1f06929f8e89cb52d3c08e8bf371a9c121ef",
+  "config_hash": "sha256:aae322bed90a062f99fb39c8da0bec61db096fb079d375dfbc0c05c87f603f78",
   "contract_sha": "b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3",
-  "git_dirty": false,
-  "git_sha": "16c06a76dd2fbacf26c3d8be25809b10973c463f",
+  "git_dirty": true,
+  "git_sha": "d0fc745198dc0d4840a2b453df2c52ef75d68503",
   "mp_database_version": "2026.04.13",
   "prior_file": "results/preprint/pourbaix/config/mock.yaml",
-  "prior_file_hash": "sha256:95c8ece01d1015fab035e27c51e19136aa0cb9e056015391a2e01207a36d6d74"
+  "prior_file_hash": "sha256:0bf1d3db751a76af6f119834e4821c90ba70af91641e3b0510777c4a2cf02882"
  },
  "regimes": [
   {
@@ -32,7 +32,8 @@
     },
     "pH": {
      "max": 14.0,
-     "min": 7
+     "min": 0.0,
+     "mock": true
     },
     "potential_V_SHE": {
      "max": 2.0,
@@ -141,7 +142,7 @@
      "phase": "mixed",
      "polygon": [
       [
-       7.0,
+       0.0,
        -3.0
       ],
       [
@@ -157,8 +158,12 @@
        -2.004409
       ],
       [
-       7.0,
-       -1.881644
+       4.933611,
+       -1.75952
+      ],
+      [
+       -0.0,
+       -1.75952
       ]
      ],
      "species": "Al(s) + CH4(aq) + CaH2(s)"
@@ -167,8 +172,8 @@
      "phase": "mixed",
      "polygon": [
       [
-       7.0,
-       -1.881644
+       4.933611,
+       -1.75952
       ],
       [
        9.077247,
@@ -179,8 +184,8 @@
        -1.573091
       ],
       [
-       7.0,
-       -1.511708
+       4.933611,
+       -1.450646
       ]
      ],
      "species": "Al2O3(s) + CH4(aq) + CaH2(s)"
@@ -189,8 +194,8 @@
      "phase": "mixed",
      "polygon": [
       [
-       7.0,
-       -1.511708
+       4.933611,
+       -1.450646
       ],
       [
        9.077247,
@@ -201,18 +206,44 @@
        -0.424559
       ],
       [
-       7.0,
-       -0.271102
+       5.882009,
+       -0.188511
+      ],
+      [
+       4.933611,
+       -0.132461
       ]
      ],
      "species": "Al2O3(s) + CH4(aq) + Ca[2+]"
     },
     {
+     "phase": "mixed",
+     "polygon": [
+      [
+       4.933611,
+       -0.132461
+      ],
+      [
+       5.882009,
+       -0.188511
+      ],
+      [
+       5.882009,
+       2.0
+      ],
+      [
+       4.933611,
+       2.0
+      ]
+     ],
+     "species": "Al2O3(s) + CO2(aq) + Ca[2+]"
+    },
+    {
      "phase": "solid",
      "polygon": [
       [
-       7.0,
-       -0.271102
+       5.882009,
+       -0.188511
       ],
       [
        9.077247,
@@ -223,16 +254,82 @@
        2.0
       ],
       [
-       7.0,
+       5.882009,
        2.0
       ]
      ],
      "species": "Al2O3(s) + CaCO3(s)"
+    },
+    {
+     "phase": "mixed",
+     "polygon": [
+      [
+       -0.0,
+       -1.75952
+      ],
+      [
+       4.933611,
+       -1.75952
+      ],
+      [
+       4.933611,
+       -1.450646
+      ],
+      [
+       -0.0,
+       -1.304858
+      ]
+     ],
+     "species": "Al[3+] + CH4(aq) + CaH2(s)"
+    },
+    {
+     "phase": "aqueous",
+     "polygon": [
+      [
+       -0.0,
+       -1.304858
+      ],
+      [
+       4.933611,
+       -1.450646
+      ],
+      [
+       4.933611,
+       -0.132461
+      ],
+      [
+       -0.0,
+       0.159116
+      ]
+     ],
+     "species": "Al[3+] + CH4(aq) + Ca[2+]"
+    },
+    {
+     "phase": "aqueous",
+     "polygon": [
+      [
+       -0.0,
+       0.159116
+      ],
+      [
+       4.933611,
+       -0.132461
+      ],
+      [
+       4.933611,
+       2.0
+      ],
+      [
+       -0.0,
+       2.0
+      ]
+     ],
+     "species": "Al[3+] + CO2(aq) + Ca[2+]"
     }
    ],
    "id": "R-slurry",
    "ph_range": [
-    7.0,
+    0.0,
     14.0
    ],
    "potential_range": [
@@ -244,8 +341,8 @@
      "kind": "upper",
      "points": [
       [
-       7.0,
-       0.81545
+       0.0,
+       1.22915
       ],
       [
        14.0,
@@ -257,8 +354,8 @@
      "kind": "lower",
      "points": [
       [
-       7.0,
-       -0.4137
+       0.0,
+       -0.0
       ],
       [
        14.0,

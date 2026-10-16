@@ -10,6 +10,11 @@ Every physical input in a run configuration is a mapping with a `source`:
   allow_mock=True (the `--mock` flag); the configuration must then also say `mock: true`.
 - `choice`: a method choice made and justified in the configuration (no number involved).
 
+The pH axis of an R-slurry run is never read from the charter: the charter's pH range may be
+null (7 is neutral, not an alkaline bound). The run configuration must carry an explicit grid
+`pH: {min, max}` whose bounds are `lit/params.yaml` (with its key) or `mock` (the grid then
+also says `mock: true`). A `charter` source for the pH axis is refused.
+
 Numerical settings (grid sizes, tolerances) live under `numerics` and carry no source.
 """
 import hashlib
@@ -92,6 +97,26 @@ def _set(tree, path, value):
         cur[last] = value
 
 
+def _check_ph_axis(raw):
+    """The R-slurry pH axis must be an explicit run-config grid, never a charter range."""
+    ph = raw.get("regimes", {}).get("R-slurry", {}).get("pH")
+    if not isinstance(ph, dict) or not all(_is_input(ph.get(b)) for b in ("min", "max")):
+        raise ConfigError("R-slurry needs an explicit pH grid in the run configuration: "
+                          "pH: {min: {...}, max: {...}} with sourced bounds")
+    srcs = {ph[b]["source"] for b in ("min", "max")}
+    if "charter" in srcs:
+        raise ConfigError("the pH axis cannot come from the charter; give a grid sourced from "
+                          "lit/params.yaml (or mock under --mock)")
+    if not srcs <= {"mock", "lit/params.yaml"}:
+        raise ConfigError("pH grid bounds must be sourced from lit/params.yaml or mock, not %s"
+                          % sorted(srcs))
+    for b in ("min", "max"):
+        if ph[b]["source"] == "lit/params.yaml" and not ph[b].get("key"):
+            raise ConfigError("pH.%s: a lit/params.yaml bound must cite its key" % b)
+    if "mock" in srcs and ph.get("mock") is not True:
+        raise ConfigError("a mock pH grid must be marked mock: true")
+
+
 def load(path, allow_mock=False, charter_path=CHARTER_REGIMES, lit_params_path=LIT_PARAMS):
     """Load and resolve a run configuration.
 
@@ -105,6 +130,8 @@ def load(path, allow_mock=False, charter_path=CHARTER_REGIMES, lit_params_path=L
     is_mock = bool(raw.get("mock"))
     if is_mock and not allow_mock:
         raise MockRefused("%s is a mock configuration (mock: true); pass --mock to run it" % path)
+
+    _check_ph_axis(raw)
 
     charter = yaml.safe_load(Path(charter_path).read_text(encoding="utf-8"))
     lit_params = None
