@@ -23,3 +23,32 @@ shapley:                         # dependent inputs under the stated correlation
   bootstrap: 500
   confidence: 0.95
 dependence_check: true          # Task 4e: rerun the Shapley ranking under independence
+# Which parameter-table key supplies each chain input (theory symbol -> lit/params.yaml key).
+# The table holds alternatives under one symbol (framings, registered states, competing
+# sources); the screen reads exactly the bound keys. DRAFT, written against lit/params.yaml at
+# 680a44b (P0-W1.2): the choices marked "cp3" are confirmed or replaced at cp3, before W4.3.
+# The framing itself is registered in the table (regimes.R-slurry.parameters.framing).
+bindings:
+  R-slurry:
+    common:
+      gamma_sl0: gamma_sl0_template
+      gamma_sn0: gamma_sn0_template
+      Delta_gamma_w: delta_gamma_w
+      pH: ph_slurry                   # cp3: ph_slurry against ph_slurry_modified
+      pKa: pka_catechol               # cp3: the anchoring template group (catechol); carboxyl is a comparator
+      Delta_G_site: delta_g_site
+      c_bulk: c_bulk_slurry
+      Gamma_s: gamma_s_site_density
+      delta_s: delta_s
+      a_Ca: a_ca_slurry
+      a_CO3: a_co3_slurry
+      J0_het: j0_het
+      N_req: n_req
+      gamma_ow: gamma_ow_alumina
+      gamma_op: gamma_op
+    by_framing:
+      calcite: {gamma_nl: gamma_nl_calcite, V_m: v_m_calcite, K_sp: log10_ksp_calcite}
+      ACC: {gamma_nl: gamma_nl_acc, V_m: v_m_acc, K_sp: log10_ksp_acc}
+    states:                           # registered R-slurry path (thresholds: worst_state, path_sum)
+      slurry: {T: t_slurry, t_proc: t_proc_slurry}
+      drying: {T: t_drying_primary, t_proc: t_drying_secondary}

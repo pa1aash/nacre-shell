@@ -177,15 +177,15 @@ def _state_samples(outputs):
     return s
 
 
-def evaluate_claims(rule, outputs_by_regime, resolver, stability=None, control_fails_where_it_must=None,
+def evaluate_claims(rule, slurry_states, resolver, stability=None, control_fails_where_it_must=None,
                     solid_salt_registered=False):
-    """C1 to C5 under the frozen rule. C1 to C4 read the R-slurry draws (one registered state per
-    regime run); C5 reads the deterministic stability section when given."""
-    states = {"R-slurry": _state_samples(outputs_by_regime["R-slurry"])} if "R-slurry" in outputs_by_regime else {}
+    """C1 to C5 under the frozen rule. C1 to C4 read the R-slurry draws of every registered state
+    ({state: chain outputs}); C5 reads the deterministic stability section when given."""
+    states = {sid: _state_samples(o) for sid, o in (slurry_states or {}).items()}
     claims = {}
     for claim in ("C1", "C2", "C3", "C4"):
         need = {t["quantity"] for t in rule["links"][claim]["tests"]}
-        if states and all(q in states["R-slurry"] for q in need):
+        if states and all(q in st for st in states.values() for q in need):
             claims[claim] = decision.evaluate_link(rule, claim, states, resolver)
         else:
             claims[claim] = {"verdict": "inconclusive", "tests": {}, "falsified_mass": None}
@@ -208,6 +208,78 @@ def _attach_link_records(regimes_out, claims):
                 ev = reg["links"][src[0]]["threshold_evaluation"] or {}
                 ev["%s.%s" % (claim, tid)] = t
                 reg["links"][src[0]]["threshold_evaluation"] = ev
+
+
+FRAMING_KEY = "regimes.R-slurry.parameters.framing"
+
+
+def load_states(params_path, regime, cfg, allow_mock, framing=None, dry_run=True):
+    """[(state, RegimePriors)] of one regime.
+
+    A mock table is read whole as one state. The parameter table is read through the
+    bindings of configs/preprint/screen.yaml: the common keys, the keys of the registered
+    framing and the keys of each registered state. Regimes without bindings, or whose bound
+    keys are all unsampled, give no state.
+    """
+    doc, _ = params_adapter.read_table(params_path, allow_mock)
+    b = (cfg.get("bindings") or {}).get(regime)
+    try:
+        if doc["mock"]:
+            return [("default", params_adapter.regime_priors(params_path, regime, allow_mock))]
+        if not b:
+            return []
+        registered = decision.Resolver.from_table(doc)
+        fr = registered.value(FRAMING_KEY) if registered.has(FRAMING_KEY) else None
+        if fr is None:
+            if not dry_run or framing is None:
+                raise ProductionRefused("the framing (%s) is not registered in the table%s"
+                                        % (FRAMING_KEY, "" if not dry_run else "; pass framing for a dry run"))
+            fr = framing
+        if fr not in b["by_framing"]:
+            raise params_adapter.PriorFileError("no bindings for framing %r" % fr)
+        out = []
+        for state, sb in (b.get("states") or {"default": {}}).items():
+            bind = {**(b.get("common") or {}), **b["by_framing"][fr], **(sb or {})}
+            out.append((state, params_adapter.regime_priors(params_path, regime, allow_mock, bindings=bind)))
+        return out
+    except params_adapter.PriorFileError as exc:
+        if "no sampled or fixed inputs" in str(exc):
+            return []
+        raise
+
+
+def run_states(states, cfg, seed, dependence_check, thresholds, independence, full=True):
+    """Regime entry and per-state chain outputs.
+
+    The first state with an evaluable link gets the full analysis (quantiles, boundary mass,
+    sized Sobol, Shapley, dependence check); every other state is propagated, summarised
+    under ``states`` and passed to the decision rule. Returns (entry or None, {state: outputs}).
+    """
+    entry, outs = None, {}
+    seqs = np.random.SeedSequence(seed).spawn(max(len(states), 1))
+    pc = cfg["propagation"]
+    levels = _round_quantiles(pc["quantiles"])
+    for (sid, rp), sq in zip(states, seqs):
+        joint = rp.joint.independent() if independence else rp.joint
+        if not chain.evaluable_links(joint.symbols):
+            continue
+        st_seed = int(sq.generate_state(1)[0])
+        if entry is None and full:
+            entry, outs[sid] = run_regime(rp, cfg, st_seed, dependence_check=dependence_check, thresholds=thresholds,
+                                          independence=independence, return_outputs=True)
+            entry["primary_state"] = sid
+            entry["unsampled"] = dict(rp.unsampled)
+            continue
+        o, masses = propagate.propagate_chain(chain.evaluate, joint, pc["draws_per_regime"], st_seed, pc["chunk"])
+        outs[sid] = o
+        if entry is not None:
+            entry.setdefault("states", {})[sid] = {
+                "quantities": {lk: {q: {"symbol": chain.OUTPUTS[lk][q].symbol, "units": chain.OUTPUTS[lk][q].units,
+                                        **propagate.describe(v, levels)}
+                                    for q, v in d.items() if np.any(np.isfinite(v))} for lk, d in o.items()},
+                "boundary_mass": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items()},
+                "unsampled": dict(rp.unsampled)}
+    return entry, outs
 
 
 def load_config(root, path=CONFIG):
@@ -260,8 +332,11 @@ def production_guard(root, rp_list, out_path, thresholds_path=THRESHOLDS):
 
 def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_run=True, allow_mock=False,
         config_path=CONFIG, independence=False, dependence_check=None, overrides=None, stability_path=None,
-        controls=None, control_fails_where_it_must=None, solid_salt_registered=False):
+        controls=None, control_fails_where_it_must=None, solid_salt_registered=False, framing=None):
     """Run the screen and write the results document; returns (path, doc).
+
+    framing: the registered framing comes from the table
+    (regimes.R-slurry.parameters.framing); a dry run may pass one while it is unregistered.
 
     Production only: stability_path is a results document with the C5 stability section
     (lane p0-w5); controls maps each deletion-test control (bare_oxide, PVDF) to the
@@ -276,13 +351,8 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
     params_path = Path(params_path) if params_path else root / params_adapter.PRODUCTION_PARAMS
     if not dry_run:
         _inputs_frozen(root)
-    rp_list = []
-    for regime in regimes:
-        try:
-            rp_list.append(params_adapter.regime_priors(params_path, regime, allow_mock=allow_mock))
-        except params_adapter.PriorFileError as exc:
-            if "no sampled or fixed inputs" not in str(exc):
-                raise
+    loaded = {r: load_states(params_path, r, cfg, allow_mock, framing, dry_run) for r in regimes}
+    rp_list = [rp for states in loaded.values() for _, rp in states]
     if not rp_list:
         raise params_adapter.PriorFileError("no regime has sampled inputs in %s" % params_path)
     if dry_run:
@@ -294,31 +364,31 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
         thresholds = thr.load_thresholds(root / THRESHOLDS)
     seeds = np.random.SeedSequence(cfg["propagation"]["seed"]).spawn(len(params_adapter.REGIMES))
     seed_of = {r: int(s.generate_state(1)[0]) for r, s in zip(params_adapter.REGIMES, seeds)}
-    regimes_out, outputs = {}, {}
-    for rp in rp_list:
-        regimes_out[rp.regime], outputs[rp.regime] = run_regime(
-            rp, cfg, seed_of[rp.regime], dependence_check=dependence_check, thresholds=thresholds,
-            independence=independence, return_outputs=True)
+    regimes_out, outputs, not_evaluable = {}, {}, {}
+    for regime, states in loaded.items():
+        entry, outs = run_states(states, cfg, seed_of[regime], dependence_check, thresholds, independence)
+        if entry is None:
+            not_evaluable[regime] = {sid: dict(rp.unsampled) for sid, rp in states}
+            continue
+        regimes_out[regime], outputs[regime] = entry, outs
+    if not regimes_out:
+        raise params_adapter.PriorFileError(
+            "no link of the chain is evaluable from %s; unsampled inputs: %s" % (params_path, not_evaluable))
     claims = study = None
     if thresholds is not None:
         rule = thresholds["rule"]
         resolver = decision.Resolver.from_table(yaml.safe_load(Path(params_path).read_text(encoding="utf-8")))
         stability = (json.loads(Path(stability_path).read_text(encoding="utf-8")).get("stability")
                      if stability_path else None)
-        claims = evaluate_claims(rule, outputs, resolver, stability, control_fails_where_it_must, solid_salt_registered)
+        claims = evaluate_claims(rule, outputs.get("R-slurry"), resolver, stability, control_fails_where_it_must,
+                                 solid_salt_registered)
         _attach_link_records(regimes_out, claims)
         deletion = None
         if controls:
             control_claims = {}
             for name, table in controls.items():
-                c_out = {}
-                for regime in regimes:
-                    try:
-                        crp = params_adapter.regime_priors(table, regime)
-                    except params_adapter.PriorFileError:
-                        continue
-                    _, c_out[regime] = run_regime(crp, cfg, seed_of[regime], dependence_check=False,
-                                                  return_outputs=True)
+                c_states = load_states(table, "R-slurry", cfg, False, framing, dry_run)
+                _, c_out = run_states(c_states, cfg, seed_of["R-slurry"], False, None, False, full=False)
                 control_claims[name] = evaluate_claims(rule, c_out, resolver, stability,
                                                        control_fails_where_it_must, solid_salt_registered)
             deletion = decision.deletion_test(rule, claims, control_claims, resolver)

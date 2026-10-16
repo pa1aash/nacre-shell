@@ -71,32 +71,68 @@ def verdict_from_mass(p_good, p):
 
 
 class Resolver:
-    """Numbers of the rule by parameter-table key. values: {key: value or (value, unit)}."""
+    """Numbers of the rule by parameter-table key or alias path.
+
+    values: {key: value, (value, unit) or {"value", "unit", "range"}}. A key whose value is
+    null (a registration not yet made) is treated as missing. INTERPRETATION: a margin that
+    carries a prior in the table enters the edge at its central value.
+    """
 
     def __init__(self, values):
-        self._values = dict(values)
+        self._values = {}
+        for k, v in dict(values).items():
+            if isinstance(v, dict) and "value" in v:
+                self._values[k] = (v["value"], v.get("unit", ""), v.get("range"))
+            elif isinstance(v, tuple):
+                self._values[k] = (v[0], v[1] if len(v) > 1 else "", v[2] if len(v) > 2 else None)
+            else:
+                self._values[k] = (v, "", None)
 
     @classmethod
     def from_table(cls, doc):
-        """Keys of lit/params.yaml: each params entry by its key (value and unit)."""
+        """Keys of lit/params.yaml and the alias paths of its views (regimes.*, thresholds.*)."""
         vals = {}
-        for key, entry in (doc.get("params") or {}).items():
-            if isinstance(entry, dict) and "value" in entry:
-                vals[key] = (entry["value"], entry.get("unit", ""))
+        entries = doc.get("params") or {}
+        for key, entry in entries.items():
+            if isinstance(entry, dict):
+                vals[key] = {"value": entry.get("value"), "unit": entry.get("unit", ""), "range": entry.get("range")}
+
+        def walk(node, path):
+            if isinstance(node, dict) and "key" in node and "prior" in node:
+                e = entries.get(node["key"], node)
+                vals[".".join(path)] = {"value": e.get("value"), "unit": e.get("unit", ""), "range": e.get("range")}
+            elif isinstance(node, dict):
+                for k, v in node.items():
+                    walk(v, path + [str(k)])
+        for root in ("regimes", "thresholds"):
+            if root in doc:
+                walk(doc[root], [root])
         return cls(vals)
 
     def has(self, key):
-        return key in self._values
+        return key in self._values and self._values[key][0] is not None
 
     def get(self, key):
-        """(value, unit) of a key; KeyError names the missing key."""
+        """(value, unit) of a key; KeyError names a missing or unset key."""
         if key not in self._values:
             raise KeyError("the thresholds need parameter-table key %r, which is not in the table" % key)
-        v = self._values[key]
-        return v if isinstance(v, tuple) else (v, "")
+        if self._values[key][0] is None:
+            raise KeyError("parameter-table key %r has no value yet (registration pending)" % key)
+        return self._values[key][:2]
 
     def value(self, key):
         return self.get(key)[0]
+
+    def range(self, key):
+        """The sourced span {min, max} of a key (or its value, when that is itself a range)."""
+        if key not in self._values:
+            raise KeyError("the thresholds need parameter-table key %r, which is not in the table" % key)
+        value, _, rng = self._values[key]
+        if isinstance(value, dict) and {"min", "max"} <= set(value):
+            return value
+        if isinstance(rng, dict) and rng.get("min") is not None and rng.get("max") is not None:
+            return rng
+        raise KeyError("parameter-table key %r has no range" % key)
 
 
 def credible_level(rule, resolver):
@@ -309,8 +345,8 @@ def evaluate_c5_slurry(test, pourbaix, resolver, framing, control_fails_where_it
     ph = np.asarray(pourbaix["axes"]["pH"], float)
     e = np.asarray(pourbaix["axes"]["E_V"], float)
     k = test["params"]
-    ph_r = resolver.value(k["pH"])
-    e_r = resolver.value(k["E_SHE"])
+    ph_r = resolver.range(k["pH"])
+    e_r = resolver.range(k["E_SHE"])
     in_ph = (ph >= float(ph_r["min"])) & (ph <= float(ph_r["max"]))
     in_e = (e >= float(e_r["min"])) & (e <= float(e_r["max"]))
     grid = np.array([[np.nan if v is None else v for v in row] for row in entry["grid"]], float)

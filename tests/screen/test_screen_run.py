@@ -88,7 +88,7 @@ def test_claims_and_study_from_screen_outputs_conform_to_the_schema():
     for k, v in TINY.items():
         cfg[k] = {**cfg[k], **v}
     reg, outputs = run.run_regime(rp, cfg, seed=2, dependence_check=False, return_outputs=True)
-    claims = run.evaluate_claims(rule, {"R-slurry": outputs}, _resolver())
+    claims = run.evaluate_claims(rule, {"slurry": outputs}, _resolver())
     assert set(claims) == {"C1", "C2", "C3", "C4", "C5"}
     assert claims["C5"]["verdict"] == "inconclusive"               # no stability section given
     regimes = {"R-slurry": reg}

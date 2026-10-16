@@ -93,14 +93,32 @@ def read_table(path, allow_mock=False):
     return doc, "sha256:" + hashlib.sha256(raw).hexdigest()
 
 
-def regime_priors(path, regime, allow_mock=False):
-    """Joint prior of one regime's inputs from the parameter table at path."""
+def regime_priors(path, regime, allow_mock=False, bindings=None):
+    """Joint prior of one regime's inputs from the parameter table at path.
+
+    Without bindings every key of the regime is read, and a symbol may appear only once.
+    With bindings ({symbol: table key}) exactly the bound keys are read: the real table
+    holds alternatives under one symbol (framings, states, competing sources), and the
+    binding says which one supplies each chain input. A bound key must exist and carry the
+    symbol it is bound to; it need not be marked for the regime (a shared key may serve).
+    """
     if regime not in REGIMES:
         raise PriorFileError("unknown regime %r" % regime)
     doc, sha = read_table(path, allow_mock)
     priors, unsampled, group_of = [], {}, {}
-    for key, entry in doc["params"].items():
-        if not isinstance(entry, dict) or not _in_regime(entry, regime):
+    if bindings is not None:
+        missing = sorted(k for k in bindings.values() if k not in doc["params"])
+        if missing:
+            raise PriorFileError("%s: bound keys not in the table: %s" % (path, missing))
+        wrong = sorted("%s -> %s (%s)" % (sym, k, doc["params"][k].get("symbol")) for sym, k in bindings.items()
+                       if doc["params"][k].get("symbol") != sym)
+        if wrong:
+            raise PriorFileError("%s: binding symbol differs from the table: %s" % (path, wrong))
+        selected = [(k, doc["params"][k]) for k in dict.fromkeys(bindings.values())]
+    else:
+        selected = [(k, e) for k, e in doc["params"].items() if isinstance(e, dict) and _in_regime(e, regime)]
+    for key, entry in selected:
+        if not isinstance(entry, dict):
             continue
         where = "%s:params.%s" % (path, key)
         symbol = entry.get("symbol")

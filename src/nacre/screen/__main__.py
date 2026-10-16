@@ -36,6 +36,7 @@ def main(argv=None):
     dr.add_argument("--out", default=str(run.DRYRUN_DIR / "summary.json"))
     dr.add_argument("--mock", action="store_true", help="allow a parameter table marked mock: true")
     dr.add_argument("--independence", action="store_true", help="sample the inputs independently")
+    dr.add_argument("--framing", help="framing to bind while the table has none registered (dry runs only)")
     pr = sub.add_parser("production", help="production screen (P0-W4.3, after cp3)")
     pr.add_argument("--out", default=str(run.SCREEN_DIR / "summary.json"))
     th = sub.add_parser("thresholds", help="copy or check configs/preprint/thresholds.yaml")
@@ -65,10 +66,10 @@ def main(argv=None):
         try:
             if args.cmd == "dryrun":
                 path, _ = run.run(root, root / args.out, params_path=root / args.params, dry_run=True,
-                                  allow_mock=args.mock, independence=args.independence)
+                                  allow_mock=args.mock, independence=args.independence, framing=args.framing)
             else:
                 path, _ = run.run(root, root / args.out, dry_run=False)
-        except (MockPriorsRefused, run.ProductionRefused) as exc:
+        except (MockPriorsRefused, run.ProductionRefused, run.params_adapter.PriorFileError) as exc:
             print("refused: %s" % exc, file=sys.stderr)
             return 2
         print("wrote %s" % path.relative_to(root))

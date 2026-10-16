@@ -251,14 +251,20 @@ def test_sf2_registered_ordering_at_random_points(inputs):
 
 @given(template_inputs())
 def test_sf2_registered_derivative_identity(inputs):
-    # d cos(theta) / d Delta_G_seq = Gamma_s Theta / gamma_nl; Omega does not depend on Delta_G_seq
+    # d cos(theta) / d Delta_G_seq = Gamma_s Theta / gamma_nl; Omega does not depend on Delta_G_seq.
+    # cos theta moves by exactly Delta(Delta_gamma_ads) / gamma_nl; the derivative is taken on
+    # Delta_gamma_ads itself, free of the O(1) offset gamma_sl0 that would swamp a difference of cos.
     d_in, _ = inputs
-    args = lambda dg: [d_in[a] for a in ("gamma_sl0", "gamma_sn0", "Delta_gamma_w", "gamma_nl")] + \
-        [dg, d_in["T"], d_in["c_bulk"], d_in["Gamma_s"], d_in["delta_s"]]
+    bind = (d_in["T"], d_in["c_bulk"], d_in["Gamma_s"], d_in["delta_s"])
+    args = lambda dg: [d_in[a] for a in ("gamma_sl0", "gamma_sn0", "Delta_gamma_w", "gamma_nl")] + [dg, *bind]
     dg, h = -2000.0, 1.0
-    num = (template.contact_angle_cosine_template(*args(dg + h)) - template.contact_angle_cosine_template(*args(dg - h))) / (2 * h)
-    want = d_in["Gamma_s"] * site_occupancy(dg, d_in["T"], d_in["c_bulk"], d_in["Gamma_s"], d_in["delta_s"]) / d_in["gamma_nl"]
-    assert num == pytest.approx(want, rel=1e-5, abs=1e-15)
+    d_ads = adsorption_interfacial_energy_change(dg + h, *bind) - adsorption_interfacial_energy_change(dg - h, *bind)
+    d_cos = template.contact_angle_cosine_template(*args(dg + h)) - template.contact_angle_cosine_template(*args(dg - h))
+    scale = (abs(d_in["gamma_sl0"]) + abs(d_in["gamma_sn0"]) + abs(d_in["Delta_gamma_w"]) + 1.0) / d_in["gamma_nl"]
+    assert d_cos == pytest.approx(d_ads / d_in["gamma_nl"], abs=1e-14 * scale)
+    want = d_in["Gamma_s"] * site_occupancy(dg, *bind)
+    assert d_ads / (2 * h) == pytest.approx(want, rel=1e-5, abs=1e-18)
+    assert template.omega_channel(d_in["a_Ca"], d_in["a_CO3"], d_in["K_sp"]) == d_in["a_Ca"] * d_in["a_CO3"] / d_in["K_sp"]
 
 
 # ---------------------------------------------------------------- SF3 (lane note N3)

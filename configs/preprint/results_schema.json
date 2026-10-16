@@ -360,6 +360,49 @@
               "description": "True when the size the target needs exceeded the configured maximum and the run used the maximum instead; the shortfall shows in max_ci_half_width."
             }
           }
+        },
+        "primary_state": {
+          "type": "string",
+          "description": "Registered state that received the full sensitivity analysis."
+        },
+        "unsampled": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Inputs of the primary state without a samplable prior, with the table's reason."
+        },
+        "states": {
+          "type": "object",
+          "description": "Other registered states of the regime: propagated quantities, boundary mass and unsampled inputs (they enter the decision rule; worst_state and path_sum).",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "quantities",
+              "boundary_mass"
+            ],
+            "properties": {
+              "quantities": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/quantity"
+                  }
+                }
+              },
+              "boundary_mass": {
+                "type": "object"
+              },
+              "unsampled": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       }
     },
