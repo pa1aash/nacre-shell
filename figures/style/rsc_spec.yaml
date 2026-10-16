@@ -1,0 +1,295 @@
+# RSC artwork specification for the preprint figures (lane p0-w6).
+#
+# Schema
+#   sources      id -> fetched document: url, via (live | wayback), snapshot_utc, fetch row in
+#                figures/style/fetch_log.jsonl, and the venue record it agrees with.
+#   values       spec values transcribed from a source. Each has value, unit (when it has one),
+#                source (a sources id), locator (section heading, list item or file/element inside
+#                the source) and quote (the short phrase the value was read from). venue_field names
+#                the matching field of charter/venue/artwork.yaml when S01 recorded it.
+#   outstanding  values the sources do not give. Each names the sources searched. Never assumed.
+#   applied      the values the style uses. Each is either `from: values.<key>` (a spec value used
+#                as is or through a stated rule) or `house: true` (a lane design decision with its
+#                reason; RSC states nothing on it). figures/style/build_style.py reads only this
+#                section, so every line of rsc.mplstyle traces to an entry here.
+#
+# Raw fetched bytes stay local-only (.local/w6/fetch/); only short factual values are committed.
+
+sources:
+  S1:
+    title: RSC Advances author guidelines (Prepare your article)
+    url: https://www.rsc.org/publishing/publish-with-us/publish-a-journal-article/rsc-advances
+    via: wayback
+    snapshot_utc: '2026-08-06T17:09:35Z'
+    fetch: F1
+    agrees_with: charter/venue/artwork.yaml (S01, same snapshot)
+  S2:
+    title: RSC Word template user guide (using-the-template.pdf)
+    url: https://www.rsc.org/getContentAsset/622d8878-90ae-4a0b-9416-b3b0b38f3289/f4c91d86-ac3e-4675-bdf3-f8325ded9710/using-the-template.pdf
+    via: live
+    fetch: F2
+  S3:
+    title: RSC Word article template (art-template-2-2.docx)
+    url: https://www.rsc.org/getContentAsset/e90c2529-62d4-4ef9-9d39-80bbb91c40a3/f4c91d86-ac3e-4675-bdf3-f8325ded9710/art-template-2-2.docx
+    via: live
+    fetch: F3
+
+values:
+  width_single_column:
+    value: 8.3
+    unit: cm
+    source: S1
+    locator: Prepare your article > Figures, graphics and images, paragraph 3
+    quote: either single column (8.3 cm)
+    venue_field: figure.width_single_column
+  width_double_column:
+    value: 17.1
+    unit: cm
+    source: S1
+    locator: Prepare your article > Figures, graphics and images, paragraph 3
+    quote: or double column (17.1 cm) width
+    venue_field: figure.width_double_column
+  max_height:
+    value: 23.3
+    unit: cm
+    source: S1
+    locator: Prepare your article > Figures, graphics and images, paragraph 3
+    quote: must be no longer than 23.3 cm
+    venue_field: figure.max_height
+  max_size:
+    value: not larger than a single page
+    source: S1
+    locator: Prepare your article > Figures, graphics and images, paragraph 3
+    quote: must not be larger than a single page
+    venue_field: figure.max_size
+  raster_resolution_min:
+    value: 600
+    unit: dpi
+    source: S1
+    locator: Prepare your article > Figures, graphics and images, paragraph 2
+    quote: TIFF files, with a resolution of 600 dpi or greater
+    venue_field: figure.min_resolution
+  format_supplied:
+    value: TIFF
+    source: S1
+    locator: Prepare your article > Figures, graphics and images, paragraph 2
+    quote: Figures, Schemes and Charts should be supplied as TIFF files
+    venue_field: figure.supplied_format
+  formats_accepted:
+    value: [EPS, PDF]
+    source: S1
+    locator: Prepare your article > Figures, graphics and images, paragraph 2
+    quote: You can supply EPS or PDF files instead, but we will need to convert these to TIFF files
+    venue_field: figure.alternative_formats
+  colour:
+    value: colour free online and in print
+    source: S1
+    locator: Prepare your article > Figures, graphics and images, paragraph 1
+    quote: Colour images may be used free of charge both online and in print
+    venue_field: figure.colour_charge
+  legibility:
+    value: text, numerical data and scale bars clearly legible and sized appropriately
+    source: S1
+    locator: Prepare your article > Figures, graphics and images, paragraph 4
+    quote: Any text, numerical data or scale bars should be clearly legible and sized appropriately
+    venue_field: figure.legibility
+  structure_label_font:
+    value: Arial/Helvetica
+    source: S1
+    locator: Prepare your article > Chemical structures, settings list, item 'Captions/atom labels'
+    quote: Captions/atom labels = Arial/Helvetica, 7 pt
+    venue_field: structure.label_font
+  structure_label_font_size:
+    value: 7
+    unit: pt
+    source: S1
+    locator: Prepare your article > Chemical structures, settings list, item 'Captions/atom labels'
+    quote: Captions/atom labels = Arial/Helvetica, 7 pt
+    venue_field: structure.label_font_size
+  structure_bond_width:
+    value: 0.5
+    unit: pt
+    source: S1
+    locator: Prepare your article > Chemical structures, settings list, item 'Bond width'
+    quote: Bond width = 0.016 cm or 0.5 pt
+    venue_field: structure.bond_width
+  structure_bold_bond_width:
+    value: 1.6
+    unit: pt
+    source: S1
+    locator: Prepare your article > Chemical structures, settings list, item 'Bold bond width'
+    quote: Bold bond width = 0.056 cm or 1.6 pt
+    venue_field: structure.bold_bond_width
+  structure_resolution:
+    value: 600
+    unit: dpi
+    source: S1
+    locator: Prepare your article > Chemical structures, paragraph after the settings list
+    quote: change the resolution to 600
+    venue_field: structure.tiff_resolution
+  caption_style_font_size:
+    value: 7
+    unit: pt
+    source: S3
+    locator: word/styles.xml, style 'RSC I04 Caption to Figure/Scheme/Chart', w:sz w:val=14 (half-points)
+    quote: w:sz w:val="14"
+  figure_style_font_size:
+    value: 7
+    unit: pt
+    source: S3
+    locator: word/styles.xml, styles 'RSC I01 Figure/Scheme/Chart with bottom bar' and 'RSC I02 ... with top bar', w:sz w:val=14 (half-points)
+    quote: w:sz w:val="14"
+  toc_max_width:
+    value: 8
+    unit: cm
+    source: S1
+    locator: Prepare your article > Table of contents entry > Table of contents specifications, item 1
+    quote: maximum size of 8 cm wide x 4 cm high
+    venue_field: toc_entry.image_max_width
+  toc_max_height:
+    value: 4
+    unit: cm
+    source: S1
+    locator: Prepare your article > Table of contents entry > Table of contents specifications, item 1
+    quote: maximum size of 8 cm wide x 4 cm high
+    venue_field: toc_entry.image_max_height
+
+outstanding:
+  min_font_size_general:
+    sought: a minimum text size for text inside figures (not structure labels)
+    searched: [S1 Figures, graphics and images; S1 Chemical structures; S2 all 9 pages; S3 styles.xml]
+    result: not stated. S1 gives 7 pt only for structure captions and atom labels; S3's 7 pt styles
+      are paragraph styles for the caption and the figure holder in a Word manuscript, not artwork text.
+    venue_field: figure.min_font_size (null in S01)
+  font_family_general:
+    sought: a typeface for figure text in general
+    searched: [S1, S2, S3]
+    result: not stated; only Arial/Helvetica for structure labels (S1).
+    venue_field: figure.font_recommendation (null in S01)
+  line_weight_general:
+    sought: minimum or recommended line weights for plots and line art
+    searched: [S1, S2, S3]
+    result: not stated; only bond widths for chemical structures (S1).
+    venue_field: figure.line_weight (null in S01)
+  colour_mode:
+    sought: RGB or CMYK requirement
+    searched: [S1, S2, S3]
+    result: not stated.
+    venue_field: figure.colour_mode (null in S01)
+  resolution_by_artwork_type:
+    sought: separate resolutions for line art, halftone and combination artwork
+    searched: [S1, S2]
+    result: one figure of 600 dpi for all artwork.
+    venue_field: figure.min_resolution_line_art / _halftone / _combination (null in S01)
+  panel_label_convention:
+    sought: case, weight and placement of panel letters
+    searched: [S1, S2, S3]
+    result: not stated.
+    venue_field: figure.panel_label_convention (null in S01)
+  min_height:
+    sought: a minimum figure height
+    searched: [S1]
+    result: not stated (only a maximum).
+    venue_field: figure.min_height (null in S01)
+
+applied:
+  width_single_in:
+    value: 3.2677
+    unit: in
+    from: values.width_single_column
+    rule: 8.3 cm / 2.54, rounded to 4 decimals
+  width_double_in:
+    value: 6.7323
+    unit: in
+    from: values.width_double_column
+    rule: 17.1 cm / 2.54, rounded to 4 decimals
+  max_height_in:
+    value: 9.1732
+    unit: in
+    from: values.max_height
+    rule: 23.3 cm / 2.54, rounded to 4 decimals
+  raster_dpi:
+    value: 600
+    unit: dpi
+    from: values.raster_resolution_min
+    rule: the stated minimum, used as the raster resolution of every PNG/TIFF export
+  font_family:
+    value: Arial
+    fallbacks: [Helvetica]
+    from: values.structure_label_font
+    rule: the only typeface the specification names, applied to all figure text and to mathtext
+  font_size:
+    value: 7
+    unit: pt
+    from: values.structure_label_font_size
+    rule: the only stated artwork text size, used for every text element (tick labels, axis titles,
+      colour-bar labels, panel letters); it is also the figure checker's minimum
+    corroborated_by: [values.caption_style_font_size]
+  line_width_min:
+    value: 0.5
+    unit: pt
+    from: values.structure_bond_width
+    rule: the stated plain bond width, used for spines, ticks, error bars, contour lines and patch
+      edges; it is also the figure checker's minimum
+  line_width_data:
+    value: 1.0
+    unit: pt
+    from: values.structure_bond_width
+    rule: 2 x the plain bond width, for data lines; stays below the bold bond width (1.6 pt)
+  marker_size:
+    value: 3.2
+    unit: pt
+    from: values.structure_bold_bond_width
+    rule: 2 x the bold bond width, so a marker is at least as wide as two bold strokes
+  tick_length:
+    value: 3.2
+    unit: pt
+    house: true
+    reason: equal to applied.marker_size so ticks read at the same scale as markers; minor ticks are half
+  errorbar_capsize:
+    value: 0
+    unit: pt
+    house: true
+    reason: caps are strokes that carry no data
+  contour_linestyle:
+    value: solid
+    house: true
+    reason: one line style for every contour level; levels are identified in the caption
+  vector_format:
+    value: pdf
+    from: values.formats_accepted
+    rule: PDF is an accepted vector format; line art is exported as PDF with TrueType (Type 42) fonts embedded
+  raster_format:
+    value: png
+    house: true
+    reason: lossless raster for review and the preprint build; TIFF (values.format_supplied) is written
+      on request with `nacre figs --tiff` for journal supply
+  tick_direction:
+    value: out
+    house: true
+    reason: R7 keeps the plot area for data only; outward ticks keep tick marks off the data
+  spines_top_right:
+    value: false
+    house: true
+    reason: fewer non-data strokes; the remaining two spines carry the scales
+  grid:
+    value: false
+    house: true
+    reason: R7, nothing but data inside the plot area
+  legend:
+    value: false
+    house: true
+    reason: R7, keys go in captions; the checker also rejects any legend
+  layout:
+    value: constrained
+    house: true
+    reason: keeps tick labels, axis titles, colour bars and panel letters inside the fixed column width
+  panel_letter:
+    value: {case: lower, weight: bold, placement: above the axes, left-aligned with the axes edge}
+    house: true
+    reason: the RSC convention is outstanding (panel_label_convention); lower-case bold is a lane
+      choice, to be revisited if a source states otherwise
+  text_colour:
+    value: '#000000'
+    house: true
+    reason: black text and strokes for maximum contrast (values.legibility)

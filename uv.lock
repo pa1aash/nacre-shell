@@ -258,12 +258,38 @@ wheels = [
 ]
 
 [[package]]
+name = "cmcrameri"
+version = "1.10"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "matplotlib" },
+    { name = "numpy" },
+    { name = "packaging" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/94/9e/43d76a835977e9d1b5cb1f9524004055c2d66a12406f91ef7262c83d1631/cmcrameri-1.10.tar.gz", hash = "sha256:38a776359040674cb4028695faf0121d0ccadb40eee0c9834eb4947674962b7e", size = 260605, upload-time = "2026-08-04T09:54:50.477Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/83/17/24e1d6d7a882a15fed5dcf7528891c9782613fd9a2ebe1bb426f4f1ef581/cmcrameri-1.10-py3-none-any.whl", hash = "sha256:0ccc9970fe35d74543bb8aeca5a5a97d8a09de71d2237d1bb714c9968cc2018d", size = 277668, upload-time = "2026-08-04T09:54:49.139Z" },
+]
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44", size = 27697, upload-time = "2022-10-25T02:36:22.414Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6", size = 25335, upload-time = "2022-10-25T02:36:20.889Z" },
+]
+
+[[package]]
+name = "colorspacious"
+version = "1.1.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/75/e4/aa41ae14c5c061205715006c8834496d86ec7500f1edda5981f0f0190cc6/colorspacious-1.1.2.tar.gz", hash = "sha256:5e9072e8cdca889dac445c35c9362a22ccf758e97b00b79ff0d5a7ba3e11b618", size = 688573, upload-time = "2018-04-08T04:27:30.83Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ab/a1/318b9aeca7b9856410ededa4f52d6f82174d1a41e64bdd70d951e532675a/colorspacious-1.1.2-py2.py3-none-any.whl", hash = "sha256:c78befa603cea5dccb332464e7dd29e96469eebf6cd5133029153d1e69e3fd6f", size = 37735, upload-time = "2018-04-08T04:27:22.143Z" },
 ]
 
 [[package]]
@@ -870,7 +896,10 @@ version = "0.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "ase" },
+    { name = "cmcrameri" },
+    { name = "colorspacious" },
     { name = "jsonschema" },
+    { name = "matplotlib" },
     { name = "mp-api", extra = ["contribs"] },
     { name = "numpy" },
     { name = "pint" },
@@ -891,7 +920,10 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "ase", specifier = ">=3.29.0" },
+    { name = "cmcrameri", specifier = "==1.10" },
+    { name = "colorspacious", specifier = ">=1.1.2" },
     { name = "jsonschema", specifier = ">=4.26.0" },
+    { name = "matplotlib", specifier = ">=3.11.2" },
     { name = "mp-api", extras = ["contribs"], specifier = ">=0.46.5" },
     { name = "numpy", specifier = ">=2.5.4" },
     { name = "pint", specifier = ">=0.26.1" },
@@ -1018,7 +1050,7 @@ name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ptyprocess", marker = "sys_platform != 'win32'" },
+    { name = "ptyprocess" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/92/cc564bf6381ff43ce1f4d06852fc19a2f11d180f23dc32d9588bee2f149d/pexpect-4.9.0.tar.gz", hash = "sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f", size = 166450, upload-time = "2023-11-25T09:07:26.339Z" }
 wheels = [

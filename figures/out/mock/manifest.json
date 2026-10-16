@@ -1,0 +1,89 @@
+{
+ "mock": true,
+ "figures": {
+  "fig4": {
+   "id": "fig4",
+   "claim": "Cases in which a continuous carbonate layer was observed have predicted heterogeneous barriers below the critical barrier, and cases without a layer lie above it.",
+   "caption_key": "Filled circles: layer observed; open squares: no layer observed. Horizontal bars: range of the predicted barrier over the parameter uncertainty. Vertical line: critical barrier. Case identifiers on the vertical axis are defined in the caption.",
+   "mock": true,
+   "width": "single",
+   "size_cm": [
+    8.3,
+    7.0
+   ],
+   "input": "figures/src/mock/fig4.json",
+   "input_sha256": "fae2463bf72257dd6d1fa6d943f8902dc321184b2a95db37d75266aebbce4300",
+   "outputs": {
+    "figures/out/mock/fig4.pdf": "8feb9a97f0d7f5e78ac2df1170bf0a7464c493a0fae8c9a589f38ed5b555cd1d",
+    "figures/out/mock/fig4.png": "a4c3f8416dbdb58e1baf32a2b2c20925c7545d436bee277d66e3f876d28b4255",
+    "figures/out/mock/cvd/fig4_deuteranopia.png": "541c68b0b7814366dba622f6c797140fb2d69b8b7f9644b7f7618e86202b3a87",
+    "figures/out/mock/cvd/fig4_protanopia.png": "d7db5be0b88ed6f14b7462236c778d61729905ab805f3f35a29e7a671c3a4bc6",
+    "figures/out/mock/cvd/fig4_tritanopia.png": "1e4335f300a13734bfff614fa27a6f98ffce5f6fe9a15902000bae5a3e514b07"
+   },
+   "checker": "pass"
+  },
+  "fig5": {
+   "id": "fig5",
+   "claim": "The heterogeneous barrier falls below the critical barrier only at small wetting angle and high supersaturation; the threshold contours bound the region where a layer can nucleate.",
+   "caption_key": "Colour: heterogeneous barrier on a logarithmic scale (colour bar). Black contours: the critical-barrier thresholds, whose values the caption gives; the barrier falls towards small wetting angle and high supersaturation.",
+   "mock": true,
+   "width": "single",
+   "size_cm": [
+    8.3,
+    7.0
+   ],
+   "input": "figures/src/mock/fig5.json",
+   "input_sha256": "1debd45b9fb8a2e000d5b9839472b38e81675a09fc8b4f7c9264e152927d521a",
+   "outputs": {
+    "figures/out/mock/fig5.pdf": "522e9839adb6495e7b70f8a17040ebce7f1b834e1891bd2d486b73acc371d08e",
+    "figures/out/mock/fig5.png": "d5f6e50483cae1b8e612abc23e46ed05053ca3ed0247b15fb39d7a5cfa96e13a",
+    "figures/out/mock/cvd/fig5_deuteranopia.png": "0c57df5e213699f688c77d2bb6d2eafd8e213cbae5916cf6e69c359748f9d4f0",
+    "figures/out/mock/cvd/fig5_protanopia.png": "3a3419eb88c671f4821c2c86f352202d9200aa59a5c50f7861f721e85bb9e2ab",
+    "figures/out/mock/cvd/fig5_tritanopia.png": "bbb7bd774dec9dadab2ab92e46663ac5cd8392630c959e3eea64a29e74740b35"
+   },
+   "checker": "pass"
+  },
+  "fig6": {
+   "id": "fig6",
+   "claim": "A few inputs carry most of the variance of the predicted barrier, and those inputs need the tightest precision from first-principles validation.",
+   "caption_key": "(a) Filled circles: first-order index; open diamonds: total-order index; bars: confidence intervals. Inputs are ranked by total-order index. (b) Precision each input must reach, on a logarithmic scale, in the same order.",
+   "mock": true,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    6.5
+   ],
+   "input": "figures/src/mock/fig6.json",
+   "input_sha256": "36444e8e254c1e8dbd707f0febec3ddb637e026bfb9ed8fbf1ed784eb9fe84a3",
+   "outputs": {
+    "figures/out/mock/fig6.pdf": "af049847b29d9df25474bb70a71bf4757a868c63b1a3c4e63690337413cb06e8",
+    "figures/out/mock/fig6.png": "8d5876132ed1ec029af8f96977640a6cf26fbc21b7748f0f9d1b53581f8b8c0d",
+    "figures/out/mock/cvd/fig6_deuteranopia.png": "00532b9c1ca31d459056d83c5d6f2d12b17049ae5825c51b8ad7a1f282e013b7",
+    "figures/out/mock/cvd/fig6_protanopia.png": "849e7a084257e78848a9e05580c25a69aca693aa13343cde7d09e37fe7ae25a6",
+    "figures/out/mock/cvd/fig6_tritanopia.png": "4d78a5ef96e3267f95203c5842d0aebe1f34a84b319b8979a7470ae49c2ce303"
+   },
+   "checker": "pass"
+  },
+  "fig7": {
+   "id": "fig7",
+   "claim": "The window of pH and potential in which the protective solid phase is stable differs between the two regimes.",
+   "caption_key": "(a) First regime, (b) second regime, with their conditions. Fill colour identifies the predominant species; the same species has the same colour in both panels and the caption names each colour. Dashed lines: stability limits of water.",
+   "mock": true,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    7.0
+   ],
+   "input": "figures/src/mock/fig7.json",
+   "input_sha256": "1bf59c4f2cc2ae76dec4f2a19f6c2eedbb24959cc86f8ec1a3ee53fa6fa6630e",
+   "outputs": {
+    "figures/out/mock/fig7.pdf": "96bfbaa4793f2c1f553d188beadd7f71e16f0acbadae9ddde7c4b4a594c206b0",
+    "figures/out/mock/fig7.png": "d907a23d850a89dfb9266ceca3efcd25bfc097250f2d3a6a5534150c919d8bba",
+    "figures/out/mock/cvd/fig7_deuteranopia.png": "704a29d26cb2771a5c3be064c374ab3fa3ec2794fd5a22cb4c4cd318ffe1e05d",
+    "figures/out/mock/cvd/fig7_protanopia.png": "9dd1b1376fe0617526fc9705ddd2050bd343f37eae30d40b19f25b9b34c572b5",
+    "figures/out/mock/cvd/fig7_tritanopia.png": "78362a7daa64e408c2e071d60699723fb375104aa604b4415ea4278648e29e08"
+   },
+   "checker": "pass"
+  }
+ }
+}

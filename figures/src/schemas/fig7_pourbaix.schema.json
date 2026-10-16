@@ -1,0 +1,132 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "fig7 Pourbaix input, two regimes (ASSUMED; reconcile with the Pourbaix schema from lane p0-w5, src/nacre/pourbaix/**)",
+ "type": "object",
+ "required": [
+  "mock",
+  "schema",
+  "regimes"
+ ],
+ "additionalProperties": false,
+ "properties": {
+  "mock": {
+   "type": "boolean"
+  },
+  "schema": {
+   "const": "fig7-pourbaix/assumed-v0"
+  },
+  "note": {
+   "type": "string"
+  },
+  "provenance": {
+   "type": "object"
+  },
+  "regimes": {
+   "type": "array",
+   "minItems": 2,
+   "maxItems": 2,
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "id",
+     "ph_range",
+     "potential_range",
+     "domains",
+     "water_lines"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "conditions": {
+      "type": "object"
+     },
+     "ph_range": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+       "type": "number"
+      }
+     },
+     "potential_range": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+       "type": "number"
+      }
+     },
+     "domains": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "species",
+        "phase",
+        "polygon"
+       ],
+       "properties": {
+        "species": {
+         "type": "string"
+        },
+        "phase": {
+         "enum": [
+          "solid",
+          "aqueous"
+         ]
+        },
+        "polygon": {
+         "type": "array",
+         "minItems": 3,
+         "items": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+           "type": "number"
+          }
+         }
+        }
+       }
+      }
+     },
+     "water_lines": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "kind",
+        "points"
+       ],
+       "properties": {
+        "kind": {
+         "enum": [
+          "upper",
+          "lower"
+         ]
+        },
+        "points": {
+         "type": "array",
+         "minItems": 2,
+         "items": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+           "type": "number"
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}
