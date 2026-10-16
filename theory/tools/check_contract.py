@@ -26,7 +26,10 @@ What is checked
      composites they are built from.
  10. The version changelog names only functions that exist (added, changed) or are gone
      (removed).
- 11. No literature number in theory/** sources (decimals, exponent notation or integers of
+ 11. theory/thresholds.md: its fenced `thresholds` block parses, every edge uses registered ids
+     and has the unit of its quantity, every registration constant has a params key, and every
+     params key appears in the file's key table.
+ 12. No literature number in theory/** sources (decimals, exponent notation or integers of
      three or more digits outside an allowlist).
 
 Exit status 0 when every check passes, 1 otherwise.
@@ -647,6 +650,78 @@ def check_no_double_counting(ctx, contract, rep):
                 "local-ideal credit", "ln Omega_local - ln Omega_bulk = -Delta_G_seq/(R T) in the dilute limit")
 
 
+def check_thresholds(ctx, contract, rep):
+    """The machine-readable block of theory/thresholds.md: ids, units and params keys."""
+    path = THEORY / "thresholds.md"
+    if not path.exists():
+        rep.add(True, "thresholds", "theory/thresholds.md", "absent (not yet written)")
+        return
+    text = path.read_text(encoding="utf-8")
+    m = re.search(r"```thresholds\n(.*?)```", text, re.S)
+    if not m:
+        rep.add(False, "thresholds", "machine block", "no fenced block tagged thresholds")
+        return
+    doc = yaml.safe_load(m.group(1))
+    ok = doc.get("written_before_screen_output") is True and bool(doc.get("base_commit"))
+    rep.add(ok, "thresholds", "header", "written before screen output, base commit %s" % doc.get("base_commit"))
+    rep.add(doc.get("contract_version") == contract.get("version"), "thresholds", "contract version",
+            "block %s, contract %s" % (doc.get("contract_version"), contract.get("version")))
+    dec = doc["decision"]
+    rep.add(dec.get("omega") == "Omega_bulk", "thresholds", "driving force", "verdicts use %s" % dec.get("omega"))
+    fnames = {f["name"]: f for f in contract["functions"]}
+    demo = {d["name"] for d in contract.get("demonstrations", [])}
+    bad = [n for n in dec.get("forbidden_in_verdicts", []) if n not in fnames and n not in demo]
+    rep.add(not bad, "thresholds", "forbidden in verdicts", "unknown names: %s" % bad if bad else
+            "%d demonstration or reporting names" % len(dec.get("forbidden_in_verdicts", [])))
+    keys = set()
+
+    def qdim(name):
+        if name in fnames:
+            return parse_unit(fnames[name]["unit"])
+        return ctx.dims[name]
+
+    def check_edge(link, tid, quantity, edge, params):
+        e = ctx.parse(str(edge))
+        dq, de = qdim(quantity), dimension(e, ctx.dims)
+        thr = [s.name for s in e.free_symbols if ctx.entries[s.name].get("kind") == "threshold"]
+        missing = [n for n in thr if n not in (params or {})]
+        ok = dq == de and not missing
+        rep.add(ok, "thresholds", "%s %s" % (link, tid), "%s %s; unit %s%s" % (
+            quantity, edge, fmt_dim(de), (" vs %s" % fmt_dim(dq)) if dq != de else "") +
+            ("; no params key for %s" % missing if missing else ""))
+
+    for link, spec in doc["links"].items():
+        for test in spec["tests"]:
+            params = test.get("params") or {}
+            keys.update(v for v in params.values())
+            for k in params:
+                if k in ctx.entries or k in ("pH", "E_SHE", "schemes", "salts"):
+                    continue
+                rep.add(False, "thresholds", "%s %s" % (link, test["id"]), "params symbol %s is not registered" % k)
+            if test.get("mixture"):
+                keys.add(test["mixture"]["weights"])
+            if "edge" in test:
+                check_edge(link, test["id"], test["quantity"], test["edge"], params)
+            for fr, edge in (test.get("edge_by_framing") or {}).items():
+                check_edge(link, "%s[%s]" % (test["id"], fr), test["quantity"], edge, params)
+            eq = test.get("equivalent_single_state")
+            if eq:
+                check_edge(link, test["id"] + " single state", eq["quantity"], eq["edge"], params)
+            for q in test.get("report", []) + spec.get("report", []):
+                ctx.parse(str(q))
+            if test.get("cos_function") and test["cos_function"] not in fnames:
+                rep.add(False, "thresholds", "%s %s" % (link, test["id"]), "unknown cos_function")
+    keys.add(dec["credible_level"]["params"])
+    keys.update((doc["study"]["deletion_test"].get("params") or {}).values())
+    table = re.search(r"^## 4\. Params keys$(.*?)^## 5\.", text, re.S | re.M)
+    table = table.group(1) if table else ""
+    rows = {r.split("|")[1].strip().strip("`") for r in table.splitlines() if r.startswith("| `")}
+    unlisted = sorted(k for k in keys if k not in rows)
+    rep.add(not unlisted, "thresholds", "params keys", ("%d keys, all in the table of Section 4" % len(keys))
+            if not unlisted else "%d keys; missing from the table of Section 4: %s" % (len(keys), unlisted))
+    return sorted(keys)
+
+
 def check_changes(contract, rep):
     names = {f["name"] for f in contract["functions"]}
     other = {"no_double_counting"} | {s["id"] for s in contract.get("sign_flips", [])}
@@ -698,6 +773,7 @@ def main():
     check_sign_flips(ctx, contract, rep)
     check_no_double_counting(ctx, contract, rep)
     check_changes(contract, rep)
+    check_thresholds(ctx, contract, rep)
     check_literature_numbers(rep)
     print("\n".join(rep.lines))
     print()

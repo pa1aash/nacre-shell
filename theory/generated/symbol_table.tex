@@ -51,11 +51,8 @@ $\Delta\mu$ & driving force per formula unit & $\mathrm{J}$ & S\\
 $\gamma_\mathrm{nl}$ & nucleus-liquid interfacial free energy & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\gamma_\mathrm{sl}$ & template-liquid energy at the regime activities & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\gamma_\mathrm{sl}^{(0)}$ & template-liquid energy without Ca\textsuperscript{2+} binding & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
-$\Delta\gamma_\mathrm{ads}$ & Ca\textsuperscript{2+} adsorption change of gamma\_sl & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$\Delta\gamma_\mathrm{ads}$ & Ca\textsuperscript{2+} adsorption change of the template-liquid energy & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\gamma_\mathrm{sn}$ & template-nucleus energy in water (= ref + correction) & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
-\hline\end{tabular}\end{minipage}\hfill
-\begin{minipage}[t]{\dimexpr(\textwidth-2mm)/2\relax}\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}[t]{@{}l p{\dimexpr\linewidth*3/5\relax} l l@{}}\hline
-Symbol & Meaning & SI unit & Reg.\\\hline
 $\gamma_\mathrm{sn}^{(0)}$ & template-nucleus energy, reference without water displacement & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\Delta\gamma_\mathrm{w}$ & water-displacement correction (cost $>$ 0) & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\gamma_\mathrm{eff}$ & deck effective nucleus-liquid energy (audit only) & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
@@ -63,6 +60,9 @@ $\theta$ & contact angle, measured through the nucleus & $\mathrm{rad}$ & S\\
 $f(\theta)$ & heterogeneous shape factor & -- & S\\
 $V_\mathrm{m}$ & molar volume of the registered framing & $\mathrm{m}^{3}\,\mathrm{mol}^{-1}$ & S\\
 $r^{*}$ & critical radius & $\mathrm{m}$ & S\\
+\hline\end{tabular}\end{minipage}\hfill
+\begin{minipage}[t]{\dimexpr(\textwidth-2mm)/2\relax}\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}[t]{@{}l p{\dimexpr\linewidth*3/5\relax} l l@{}}\hline
+Symbol & Meaning & SI unit & Reg.\\\hline
 $\Delta G^{*}_\mathrm{hom}$ & homogeneous nucleation barrier per nucleus & $\mathrm{J}$ & S\\
 $\Delta G^{*}_\mathrm{het}$ & heterogeneous barrier on the template & $\mathrm{J}$ & S\\
 \multicolumn{4}{@{}l}{\textit{Accessibility of the barrier (C3)}}\\
@@ -108,4 +108,18 @@ $j_\mathrm{req}$ & required current density (input) & $\mathrm{A}\,\mathrm{m}^{-
 $d_\mathrm{max}^\mathrm{tun}$ & thickness bound, direct tunnelling & $\mathrm{m}$ & C\\
 $d_\mathrm{max}$ & admissible film thickness & $\mathrm{m}$ & C\\
 $d_\mathrm{max}^\mathrm{ohm}$ & thickness bound, ohmic limit & $\mathrm{m}$ & C\\
+\multicolumn{4}{@{}l}{\textit{Registration constants (theory/thresholds.md)}}\\
+$p$ & credible level of the decision rule & -- & S,C\\
+$p_\mathrm{deg}$ & least mass shift that counts as degradation & -- & S,C\\
+$m_W$ & C1 margin on the wet work of adhesion & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$m_\mathrm{seq}$ & C2 margin on the Ca\textsuperscript{2+} transfer free energy & $\mathrm{J}\,\mathrm{mol}^{-1}$ & S\\
+$m_{\cos}$ & C3 margin on cos theta & -- & S\\
+$m_S$ & C4 margin on the spreading coefficient & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$e_\mathrm{f}$ & expected error of a computed formation energy & $\mathrm{J}\,\mathrm{mol}^{-1}$ & S,C\\
+$n_\mathrm{at}$ & atoms per formula unit & -- & S,C\\
+$\Delta_\mathrm{ACC}$ & ACC offset above calcite & $\mathrm{J}\,\mathrm{mol}^{-1}$ & S\\
+$\tau_\mathrm{hull}$ & C5 hull tolerance & $\mathrm{J}\,\mathrm{mol}^{-1}$ & S\\
+$m_E$ & C5 margin on the window limits & $\mathrm{V}$ & C\\
+$E_\mathrm{cell}^{\min}$ & lower end of the R-cell potential range & $\mathrm{V}$ & C\\
+$E_\mathrm{cell}^{\max}$ & upper end of the R-cell potential range & $\mathrm{V}$ & C\\
 \hline\end{tabular}\end{minipage}

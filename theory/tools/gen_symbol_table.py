@@ -26,6 +26,7 @@ DOMAIN_TITLES = {
     "conformality": "Conformality (C4)",
     "stability": "Stability (C5)",
     "film": "Insulating film (C4, R-cell)",
+    "thresholds": "Registration constants (theory/thresholds.md)",
 }
 REGIME = {"R-slurry": "S", "R-cell": "C", "both": "S,C"}
 
