@@ -105,8 +105,42 @@ def test_release_build_fails_while_placeholders_or_the_ai_file_are_missing():
 @pytest.mark.skipif(not (HAVE_LATEX and HAVE_TEMPLATE and shutil.which("zsh")),
                     reason="needs zsh, latexmk and the local-only template")
 def test_draft_build_compiles():
+    gen = paths.generated(REPO)
+    for f in ("numbers", "front", "authors", "credit", "declarations"):
+        (gen / (f + ".tex")).unlink(missing_ok=True)       # the build must regenerate them itself
     p = subprocess.run(["zsh", str(BUILD_SH), "draft"], capture_output=True, text=True)
     assert p.returncode == 0, (p.stdout + p.stderr)[-3000:]
+    assert all((gen / (f + ".tex")).is_file() for f in ("numbers", "front", "authors", "credit", "declarations"))
     assert (paths.build(REPO) / "draft" / "main.pdf").is_file()
     assert (paths.build(REPO) / "draft" / "si" / "main_si.pdf").is_file()
     assert "lint-numbers: PASS" in p.stdout and "lint-scope: PASS" in p.stdout
+
+
+def test_build_script_prepares_before_compiling():
+    text = BUILD_SH.read_text(encoding="utf-8")
+    assert text.index("nacre preprint prepare") < text.index("latexmk -pdf")
+    assert "nacre preprint prepare --mode" in BUILD_SH.read_text(encoding="utf-8")
+
+
+def test_generate_replaces_stale_files(tmp_path):
+    root = copy_tree(tmp_path)
+    gen = paths.generated(root)
+    fresh = {f.name: f.read_text(encoding="utf-8") for f in gen.glob("*.tex")}
+    assert set(fresh) == {"numbers.tex", "front.tex", "authors.tex", "credit.tex", "declarations.tex"}
+    for f in gen.glob("*.tex"):
+        f.write_text("stale\n", encoding="utf-8")
+    (gen / "front.tex").unlink()
+    build.generate(root)
+    assert {f.name: f.read_text(encoding="utf-8") for f in gen.glob("*.tex")} == fresh
+
+
+def test_main_and_si_load_theory_macros_before_any_theory_input():
+    load = "\\IfFileExists{../../theory/macros.tex}{\\input{../../theory/macros.tex}}{}"
+    for rel in ("main.tex", "si/main_si.tex"):
+        text = (paths.paper(REPO) / rel).read_text(encoding="utf-8")
+        assert load in text, rel
+        for later in ("\\input{sections/introduction}", "\\section{Full derivation}"):
+            if later in text:
+                assert text.index(load) < text.index(later), rel
+        if "theory/derivation_body" in text:
+            assert text.index(load) < text.index("theory/derivation_body"), rel

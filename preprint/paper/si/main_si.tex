@@ -12,6 +12,8 @@
 
 \input{build/rsc_head}
 \input{../generated/numbers}
+% Shared notation from the theory package, when it is present (path relative to preprint/paper).
+\IfFileExists{../../theory/macros.tex}{\input{../../theory/macros.tex}}{}
 \renewcommand{\thesection}{S\arabic{section}}
 \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\thetable}{S\arabic{table}}

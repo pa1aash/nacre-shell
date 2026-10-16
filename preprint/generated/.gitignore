@@ -1,0 +1,6 @@
+# Build-time artefacts written by `nacre preprint prepare` and build.sh; never committed.
+front.tex
+authors.tex
+credit.tex
+declarations.tex
+numbers.tex

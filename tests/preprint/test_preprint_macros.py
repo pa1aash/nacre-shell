@@ -16,8 +16,32 @@ def _tree(tmp_path, spec, doc):
     return root
 
 
-def test_committed_numbers_tex_is_up_to_date():
-    assert paths.numbers_tex(REPO).read_text(encoding="utf-8") == macros.render(REPO)
+def test_generated_files_are_git_ignored_not_tracked():
+    tracked = subprocess.run(["git", "-C", str(REPO), "ls-files", "preprint/generated"],
+                             capture_output=True, text=True, check=True).stdout.split()
+    assert not [f for f in tracked if f.endswith(".tex")]
+    assert "preprint/generated/sources.yaml" in tracked
+    for name in ("numbers", "front", "authors", "credit", "declarations"):
+        p = subprocess.run(["git", "-C", str(REPO), "check-ignore", "-q", "preprint/generated/%s.tex" % name])
+        assert p.returncode == 0, name
+
+
+def test_numbers_generation_is_deterministic_and_content_keyed(tmp_path):
+    spec = {"NumA": {"source": "results/x.json", "key": "a", "format": "d"}}
+    root = _tree(tmp_path, spec, {"a": 3, "other": 1})
+    first = macros.render(root)
+    assert macros.render(root) == first
+    write(root / "results" / "x.json", json.dumps({"a": 3, "other": 2, "more": [1]}))
+    assert macros.render(root) == first                      # unconsumed part of a result file
+    spec2 = dict(spec, NumUnused={"source": "results/x.json", "key": "other", "format": "d"})
+    write(root / "preprint" / "generated" / "sources.yaml", yaml.safe_dump({"macros": spec2, "schemas": {"z": 1}}))
+    assert macros.render(root) != first                      # a new consumed macro
+    write(root / "preprint" / "generated" / "sources.yaml", yaml.safe_dump({"macros": spec, "schemas": {"z": 2}}))
+    assert macros.render(root) == first                      # unconsumed block of sources.yaml
+    write(root / "results" / "x.json", json.dumps({"a": 4}))
+    changed = macros.render(root)
+    assert changed != first and "value: 4" in changed        # consumed value
+    assert "blob" not in changed
 
 
 def test_real_and_mock_macros_and_provenance(tmp_path):
@@ -26,13 +50,11 @@ def test_real_and_mock_macros_and_provenance(tmp_path):
         "NumMock": {"source": "results/x.json", "key": "a/list/1", "format": "d", "mock": True},
     }, {"a": {"b": 1.234, "list": [7, 42]}})
     text = macros.render(root)
-    sha = subprocess.run(["git", "hash-object", str(root / "results" / "x.json")],
-                         capture_output=True, text=True, check=True).stdout.strip()
     assert r"\newcommand{\NumReal}{\nacreNum{1.23}{\mathrm{J}}}" in text
     assert r"\newcommand{\NumMock}{\nacreMockNum{NumMock}{42}{}}" in text
-    assert "source: results/x.json  blob %s" % sha in text
+    assert "source: results/x.json  key: a/b" in text
+    assert "value: 1.234" in text and "digest" in text.splitlines()[1]
     assert "% \\NumMock  [mock]" in text
-    assert "key: a/b" in text
 
 
 def test_scientific_format():

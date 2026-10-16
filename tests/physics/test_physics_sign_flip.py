@@ -10,7 +10,7 @@ import math
 
 import numpy as np
 import pytest
-from hypothesis import assume, given
+from hypothesis import HealthCheck, assume, given, settings
 from hypothesis import strategies as st
 
 from nacre.physics.constants import GAS_CONSTANT
@@ -76,6 +76,8 @@ def test_sf1_flipping_the_cost_sign_reverses_the_barrier_inequality(sl, sn0, nl,
     assert barrier(-dw) <= b0 * (1 + 1e-12)
 
 
+# strategy filters heavily; W4.2 replaces it with a direct generator of the valid region (decision D9)
+@settings(suppress_health_check=[HealthCheck.filter_too_much])
 @given(st.floats(min_value=0.05, max_value=1.0), st.floats(min_value=0.0, max_value=1.0),
        positive_energies, costs)
 def test_sf1_deck_form_lowers_the_barrier_on_the_wetting_side(excess, sn0, nl, dw):
