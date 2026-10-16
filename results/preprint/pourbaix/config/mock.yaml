@@ -2,9 +2,10 @@
 #
 # mock: true. Every input with `source: mock` is a placeholder that exercises the pipeline. It
 # is not an input of the study and never reaches the paper. The code refuses this file
-# without --mock. Inputs with `source: charter` are read from charter/regimes.yaml, and
-# `source: choice` marks a method choice with its reason. Final runs (P0-W5.2) replace each
-# mock value with `source: lit/params.yaml` (key from P0-W1.2) or a charter bound.
+# without --mock. The pH axis is an explicit grid in this file and is never read from the
+# charter (its pH range is null). `source: choice` marks a method choice with its reason. Final
+# runs (P0-W5.2) replace each mock value with `source: lit/params.yaml` (key from P0-W1.2); the
+# pH grid bounds then cite a lit/params.yaml key.
 #
 # Run: uv run python -m nacre.pourbaix.run --config results/preprint/pourbaix/config/mock.yaml --mock
 mock: true
@@ -13,8 +14,9 @@ regimes:
   R-slurry:
     temperature_K: {value: 298.15, source: mock, note: "charter T is null; the aqueous construction is fixed at 298.15 K"}
     pH:
-      min: {source: charter, charter_key: pH, bound: min}
-      max: {value: 14.0, source: mock, note: "charter upper bound pending S12"}
+      mock: true
+      min: {value: 0.0, source: mock, note: "mock pH grid spanning the aqueous range; the charter pH range is null and is not read"}
+      max: {value: 14.0, source: mock}
     potential_V_SHE:
       min: {value: -3.0, source: mock, note: "charter E range is null"}
       max: {value: 2.0, source: mock}

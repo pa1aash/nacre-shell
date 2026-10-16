@@ -3,6 +3,7 @@ import socket
 
 import numpy as np
 import pytest
+import yaml
 from pourbaix_helpers import MOCK, SMOKE, mock_config
 
 from nacre.pourbaix import config, slurry
@@ -152,25 +153,74 @@ def test_mock_value_in_non_mock_configuration_is_refused(tmp_path):
 
 def test_lit_params_source_requires_the_file(tmp_path):
     p = tmp_path / "final.yaml"
-    p.write_text("mock: false\nrun: final\nregimes:\n  R-slurry:\n    acc_offset:\n"
+    p.write_text("mock: false\nrun: final\nregimes:\n  R-slurry:\n"
+                 "    pH:\n      min: {source: lit/params.yaml, key: pH_min}\n"
+                 "      max: {source: lit/params.yaml, key: pH_max}\n"
+                 "    acc_offset:\n"
                  "      source: lit/params.yaml\n      key: acc_offset\n      unit: kJ/mol\n",
                  encoding="utf-8")
     with pytest.raises(config.ConfigError):
         config.load(p, lit_params_path=tmp_path / "absent.yaml")
     params = tmp_path / "params.yaml"
-    params.write_text("acc_offset: {value: 7.5}\n", encoding="utf-8")
+    params.write_text("acc_offset: {value: 7.5}\npH_min: {value: 8.0}\npH_max: {value: 12.0}\n",
+                      encoding="utf-8")
     cfg, meta = config.load(p, lit_params_path=params)
     assert cfg["regimes"]["R-slurry"]["acc_offset"] == {"value": 7.5, "unit": "kJ/mol"}
-    assert meta["sources"][0]["source"] == "lit/params.yaml"
+    assert cfg["regimes"]["R-slurry"]["pH"] == {"min": 8.0, "max": 12.0}
+    assert {x["source"] for x in meta["sources"]} == {"lit/params.yaml"}
 
 
-def test_charter_bound_is_read_and_checked(tmp_path):
-    cfg, meta = mock_config()
-    assert cfg["regimes"]["R-slurry"]["pH"]["min"] == 7
-    text = MOCK.read_text(encoding="utf-8").replace(
-        "min: {source: charter, charter_key: pH, bound: min}",
-        "min: {source: charter, charter_key: pH, bound: min, value: 6}")
-    p = tmp_path / "bad.yaml"
-    p.write_text(text, encoding="utf-8")
-    with pytest.raises(config.ConfigError):
-        config.load(p, allow_mock=True)
+def _null_charter(tmp_path):
+    """A charter whose every range is null, as after the G0 audit (no dependence on repo text)."""
+    inputs = {k: {"range": None} for k in ("pH", "electrode_potential", "temperature",
+                                            "ionic_strength", "calcium_activity",
+                                            "carbonate_speciation", "water_activity")}
+    doc = {"regimes": {"R-slurry": {"inputs": inputs},
+                       "R-cell": {"inputs": {"electrode_potential": {"range": None}}}}}
+    p = tmp_path / "regimes.yaml"
+    p.write_text(yaml.safe_dump(doc), encoding="utf-8")
+    return p
+
+
+def test_null_charter_ranges_load_cleanly(tmp_path):
+    for run in (MOCK, SMOKE):
+        cfg, meta = config.load(run, allow_mock=True, charter_path=_null_charter(tmp_path))
+        ph = cfg["regimes"]["R-slurry"]["pH"]
+        assert ph["min"] < ph["max"] and ph["mock"] is True
+        assert not any(s["source"] == "charter" for s in meta["sources"])
+
+
+def test_run_config_without_ph_grid_is_rejected(tmp_path):
+    charter = _null_charter(tmp_path)
+    raw = yaml.safe_load(MOCK.read_text(encoding="utf-8"))
+    del raw["regimes"]["R-slurry"]["pH"]
+    p = tmp_path / "nogrid.yaml"
+    p.write_text(yaml.safe_dump(raw), encoding="utf-8")
+    with pytest.raises(config.ConfigError, match="pH grid"):
+        config.load(p, allow_mock=True, charter_path=charter)
+    raw["regimes"]["R-slurry"]["pH"] = {"min": {"value": 0.0, "source": "mock"}}
+    p.write_text(yaml.safe_dump(raw), encoding="utf-8")
+    with pytest.raises(config.ConfigError, match="pH grid"):
+        config.load(p, allow_mock=True, charter_path=charter)
+
+
+def test_ph_axis_cannot_come_from_the_charter(tmp_path):
+    raw = yaml.safe_load(MOCK.read_text(encoding="utf-8"))
+    raw["regimes"]["R-slurry"]["pH"]["min"] = {"source": "charter", "charter_key": "pH",
+                                              "bound": "min"}
+    p = tmp_path / "charter_ph.yaml"
+    p.write_text(yaml.safe_dump(raw), encoding="utf-8")
+    with pytest.raises(config.ConfigError, match="charter"):
+        config.load(p, allow_mock=True, charter_path=_null_charter(tmp_path))
+
+
+def test_mock_ph_grid_is_refused_outside_mock_flag(tmp_path):
+    charter = _null_charter(tmp_path)
+    with pytest.raises(config.MockRefused):
+        config.load(MOCK, charter_path=charter)
+    raw = yaml.safe_load(MOCK.read_text(encoding="utf-8"))
+    del raw["regimes"]["R-slurry"]["pH"]["mock"]
+    p = tmp_path / "unmarked.yaml"
+    p.write_text(yaml.safe_dump(raw), encoding="utf-8")
+    with pytest.raises(config.ConfigError, match="mock: true"):
+        config.load(p, allow_mock=True, charter_path=charter)

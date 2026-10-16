@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-16T13:04:27Z",
+ "generated_utc": "2026-10-16T16:38:43Z",
  "inputs": [
   {
    "input": "regimes/R-slurry/temperature_K",
@@ -8,14 +8,13 @@
    "value": 298.15
   },
   {
-   "charter_key": "pH",
    "input": "regimes/R-slurry/pH/min",
-   "source": "charter",
-   "value": 7
+   "note": "mock pH grid spanning the aqueous range; the charter pH range is null and is not read",
+   "source": "mock",
+   "value": 0.0
   },
   {
    "input": "regimes/R-slurry/pH/max",
-   "note": "charter upper bound pending S12",
    "source": "mock",
    "value": 14.0
   },
@@ -115,12 +114,12 @@
  ],
  "mock": true,
  "provenance": {
-  "config_hash": "sha256:8b71f63bc5b0887ce8fdbea0f5cf1f06929f8e89cb52d3c08e8bf371a9c121ef",
+  "config_hash": "sha256:aae322bed90a062f99fb39c8da0bec61db096fb079d375dfbc0c05c87f603f78",
   "contract_sha": "b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3",
-  "git_dirty": false,
-  "git_sha": "16c06a76dd2fbacf26c3d8be25809b10973c463f",
+  "git_dirty": true,
+  "git_sha": "d0fc745198dc0d4840a2b453df2c52ef75d68503",
   "prior_file": "results/preprint/pourbaix/config/mock.yaml",
-  "prior_file_hash": "sha256:95c8ece01d1015fab035e27c51e19136aa0cb9e056015391a2e01207a36d6d74"
+  "prior_file_hash": "sha256:0bf1d3db751a76af6f119834e4821c90ba70af91641e3b0510777c4a2cf02882"
  },
  "provenance_pourbaix": {
   "cache_dir": "results/preprint/pourbaix/cache",
