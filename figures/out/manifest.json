@@ -131,11 +131,11 @@
    "w3_commit": "800d5ea3de41a0fb16084519d5c2680eeb14952d",
    "checker": "pass (PDF: no text, strokes, page width)",
    "outputs": {
-    "figures/out/fig3.pdf": "a72a4ad5c037081bf11323eff012e05595adc39e66c339aed01673d4a2d9e932",
-    "figures/out/fig3.png": "6c323c7838acf4094c9691b686fec0e11d47804ccb9cd46c3de348c241ca5ce0",
-    "figures/out/cvd/fig3_deuteranopia.png": "e9bc37bcdc21f65d03f902003703f0a3626b0a5c5c0880f2cc8248c2a62fc1c9",
-    "figures/out/cvd/fig3_protanopia.png": "7e2e2655c32840042c3cdd1cb1e6ee7df7caa1d75917cf397e7b2c01bb231524",
-    "figures/out/cvd/fig3_tritanopia.png": "42dcb3024a1b384b6bac7727a4b9674a61c903c1c4846c97eef01b6c90ee69b0"
+    "figures/out/fig3.pdf": "de24ceb8a43647ef9692ce57cf41efcd344e359d1d36b8f1cd3b4835eeefb0dc",
+    "figures/out/fig3.png": "332cc810a43ff8d8242ac7f2b81abaa221561084becef28d7d079f874957d8b8",
+    "figures/out/cvd/fig3_deuteranopia.png": "f7381ddefcc80bcc6e50710b15544cc8f50f7638a8380905e172e34545ec660e",
+    "figures/out/cvd/fig3_protanopia.png": "63fd0b4dcd242b685c3d8f7eda9729faab721f960505d239c76e42285aa02c99",
+    "figures/out/cvd/fig3_tritanopia.png": "9d41c40cba072c8d711e9a89f2440e6e398d5613e476ff944673a6b88fa2c4bd"
    }
   },
   "fig3_symbols": {
@@ -147,11 +147,11 @@
    "w3_commit": null,
    "checker": "pass (PDF: text allowed, strokes, page width)",
    "outputs": {
-    "figures/out/variants/fig3_symbols.pdf": "d63bc69fac7712c0111e39ee9cd96cf6c475e194bcbd45b104a708a84ea25bfc",
-    "figures/out/variants/fig3_symbols.png": "9aa6208ce83d2b135bcceb6d4a34468787c9b8f5523081ad0932fd50b5de5682",
-    "figures/out/variants/cvd/fig3_symbols_deuteranopia.png": "8116d921c1310d2c141fa019290df9b99e976a958c44edd0f62e8b9367d048a1",
-    "figures/out/variants/cvd/fig3_symbols_protanopia.png": "f8f8312c34bafcf442503c43406cd0d98a33e5098df1793282f27f40d056a53b",
-    "figures/out/variants/cvd/fig3_symbols_tritanopia.png": "75f767d713a7dc1a987f0d76a7419e720d57b64fdd1b74fc122d4862e77846cb"
+    "figures/out/variants/fig3_symbols.pdf": "12b9ea65b991bef148d797ac6bc5072e293201f8d1f5018d067c6b5b753b618b",
+    "figures/out/variants/fig3_symbols.png": "4909327187ffd91e9a090673739e4557025118bc88f2b321f62c292fbe502502",
+    "figures/out/variants/cvd/fig3_symbols_deuteranopia.png": "838af6e67537920cd22bb7069b909e041edc8a27c95828f939aa78dab25913f0",
+    "figures/out/variants/cvd/fig3_symbols_protanopia.png": "95a654cfb2e5f446fc403b5be2cc09af7b8528a386b7a07680473cb60a9879ce",
+    "figures/out/variants/cvd/fig3_symbols_tritanopia.png": "c05bae0606e627b72a7a7a758825f04b8922fef70650e9a9878cccd92c632d3a"
    }
   }
  }

@@ -7,9 +7,11 @@
 %   A  bulk reservoir: hydrated Ca2+ and CO3 2- at the regime activities (bulk chemical potentials)
 %   B  template-liquid interface at the regime Ca2+ activity: Ca2+ adsorbed at catecholate and
 %      carboxylate sites; its free energy is gamma_sl = gamma_sl0 + Delta_gamma_ads (Gibbs-Langmuir)
-%   C  cap on the template (base 12.1..15.1 cm) (grand potential of a cap): template-nucleus contact (gamma_sn) with
-%      lattice Ca2+ at the sites (ion bridging, part of the contact), nucleus-liquid surface
-%      (gamma_nl), template-liquid interface outside the contact (gamma_sl); Young at the contact line
+%   C  cap on the template (grand potential of a cap; base 12.1..15.1 cm): template-nucleus
+%      contact (gamma_sn, a grand-canonical excess) with Ca2+ bridging catecholate and carboxylate
+%      sites to the crystal (the contact excess Gamma_Ca,sn, inside gamma_sn), nucleus-liquid
+%      surface (gamma_nl), template-liquid interface outside the contact (gamma_sl); Young at the
+%      contact line
 %   1  A -> B  Ca2+ from the hydrated bulk to a site, Delta_G_seq; enters only gamma_sl (blue)
 %   2  B -> C  the cap replaces template-liquid interface by template-nucleus contact over its base
 %   3  A -> C  the formula units of the nucleus come from the reservoir at the bulk chemical
@@ -41,7 +43,8 @@
 % ---------------------------------------------------------------- C: cap on the template
 \oxidestrip{11.1}{16.8}{\ybase}
 \fill[template] (11.1,\ybase) rectangle (16.8,\yt);
-\foreach \x in {11.55,12.9,13.6,14.3} {\pic[scale=\b] at (\x,1.35) {catecholatedianion};}
+\foreach \x in {11.55,12.9,14.3} {\pic[scale=\b] at (\x,1.35) {catecholatedianion};}
+\pic[scale=\b] at (13.6,1.56) {acetate};
 \pic[scale=\b] at (16.35,1.56) {acetate};
 % nucleus (amorphous CaCO3 cap): base 12.1..15.1, contact angle 50 deg (radius 1.958, centre y 0.3414)
 \fill[nucleus] (15.1,\yt) arc[start angle=40, end angle=140, radius=1.958] -- cycle;
@@ -55,7 +58,7 @@
 \draw[bold, draw=okblue] (15.1,\yt) -- (16.8,\yt);
 \draw[bold, draw=okvermillion] (12.1,\yt) -- (15.1,\yt);
 \draw[bold, draw=okblack] (15.1,\yt) arc[start angle=40, end angle=140, radius=1.958];
-% ion-bridged Ca2+: lattice Ca2+ of the nucleus at the sites under the contact (part of gamma_sn)
+% ion-bridged Ca2+ at the sites under the contact: the contact excess Gamma_Ca,sn, inside gamma_sn
 \foreach \x in {12.9,13.6,14.3} {\filldraw[ion] (\x,1.72) circle (0.11);}
 % Ca2+ adsorbed at the template-liquid interface outside the contact
 \caion{11.55,1.83}
