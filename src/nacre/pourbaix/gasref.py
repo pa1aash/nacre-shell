@@ -312,6 +312,14 @@ def markdown(result, prov, params):
               "  hold under the lowest-onset scheme and a falsification under every scheme.",
               "- B2 is the redox core of every CaCO3 oxidation limit: its error in V per electron is the shift each",
               "  scheme carries into the CaCO3 onset, before any sink-specific error.",
+              "- B3 and B4 locate the error. Against experiment the MP formation energy of calcite is too negative",
+              "  by the B3 error, whereas that of lime (B4) is close: the carbonate anion carries the error (MP2020",
+              "  fits no carbonate or CO2 correction, row TI-084). The `janaf` scheme pairs that over-bound",
+              "  carbonate with an exact CO2 enthalpy and overestimates; the `mp` scheme pairs it with a DFT CO2",
+              "  that shares part of the error (and lacks sublimation) and underestimates.",
+              "- The window also carries an all-experimental route, `expt`, for every reaction whose species are",
+              "  all tabulated in fetched sources (W1 keys, NIST-JANAF, the NBS tables). Its error on these",
+              "  benchmarks is the spread between the fetched evaluations themselves (B1: the two rows above).",
               "",
               "Machine-readable result: `results/preprint/pourbaix/gas_reference.json`.", ""]
     return "\n".join(lines)
