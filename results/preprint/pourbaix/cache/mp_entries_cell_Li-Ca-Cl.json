@@ -1,0 +1,7277 @@
+{
+ "client_versions": {
+  "emmet-core": "0.87.3",
+  "mp-api": "0.46.5",
+  "mpcontribs-client": null,
+  "pymatgen": "2026.9.24",
+  "requests": "2.34.2"
+ },
+ "kind": "mp_entries",
+ "mp_database_version": "2026.04.13",
+ "n": 37,
+ "request": {
+  "additional_criteria": {
+   "thermo_types": [
+    "GGA_GGA+U"
+   ]
+  },
+  "compatible_only": true,
+  "elements": [
+   "Ca",
+   "Cl",
+   "Li"
+  ],
+  "method": "MPRester.get_entries_in_chemsys",
+  "use_gibbs": null
+ },
+ "response": [
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 4.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:54.212297+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1008498",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaddtav"
+   },
+   "energy": -7.36275945,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacfjwk",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 6.2005937012786125,
+     "alpha": 106.08259900422122,
+     "b": 6.2005937012786125,
+     "beta": 106.08259900422122,
+     "c": 6.2005937012786125,
+     "gamma": 116.48441111406682,
+     "matrix": [
+      [
+       -3.72804,
+       3.72804,
+       3.263556
+      ],
+      [
+       3.72804,
+       -3.72804,
+       3.263556
+      ],
+      [
+       3.72804,
+       3.72804,
+       -3.263556
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 181.4312895970685
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.169766,
+       0.669766,
+       0.839531
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.003
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.993825149239999,
+       1.2657851492400005,
+       3.2635559996663233e-06
+      ]
+     },
+     {
+      "abc": [
+       0.830234,
+       0.330234,
+       0.160469
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.003
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -1.2657851492400003,
+       2.46225485076,
+       3.2635527364440002
+      ]
+     },
+     {
+      "abc": [
+       0.330234,
+       0.169766,
+       0.5
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.26578887728,
+       2.4622511227199997,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.669766,
+       0.830234,
+       0.5
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.4622511227200006,
+       1.265788877279999,
+       3.2635560000000003
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Li": 2.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:39.089518+00:00",
+    "license": "BY-C",
+    "material_id": "mp-10173",
+    "oxidation_states": {
+     "Li": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaafauwq"
+   },
+   "energy": -3.81283481,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaaapbh",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.0775387888522214,
+     "alpha": 90.0,
+     "b": 3.0775387888522214,
+     "beta": 90.0,
+     "c": 4.922947,
+     "gamma": 120.00001695836976,
+     "matrix": [
+      [
+       -1.538769,
+       -2.665227,
+       0.0
+      ],
+      [
+       -1.538769,
+       2.665227,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       -4.922947
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 40.379672154172624
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.333333,
+       0.666667,
+       0.75
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -1.5387690000000003,
+       0.8884107768180001,
+       -3.6922102499999996
+      ]
+     },
+     {
+      "abc": [
+       0.666667,
+       0.333333,
+       0.25
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -1.5387690000000003,
+       -0.8884107768180001,
+       -1.23073675
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Li": 3.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:38.250007+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1018134",
+    "oxidation_states": {
+     "Li": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadxxiz"
+   },
+   "energy": -5.7267686,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacfyda",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 7.629930033251484,
+     "alpha": 23.16431389806098,
+     "b": 7.629930033251484,
+     "beta": 23.16431389806098,
+     "c": 7.629930224091567,
+     "gamma": 23.164316749494347,
+     "matrix": [
+      [
+       7.474568,
+       -1.531883,
+       0.0
+      ],
+      [
+       7.474568,
+       1.531883,
+       0.0
+      ],
+      [
+       7.160615,
+       0.0,
+       2.634659
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 60.33455343202653
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.777946,
+       0.777946,
+       0.777946
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       17.200192351446,
+       0.0,
+       2.0496224304140003
+      ]
+     },
+     {
+      "abc": [
+       0.222054,
+       0.222054,
+       0.222054
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.909558648554,
+       0.0,
+       0.585036569586
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Li": 3.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:38.533757+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1063005",
+    "oxidation_states": {
+     "Li": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaddcvn"
+   },
+   "energy": -5.671036,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacimmv",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 4.905287981918288,
+     "alpha": 90.0,
+     "b": 4.905287981918288,
+     "beta": 90.0,
+     "c": 2.889208,
+     "gamma": 119.99999975612516,
+     "matrix": [
+      [
+       2.452644,
+       -4.248104,
+       0.0
+      ],
+      [
+       2.452644,
+       4.248104,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       2.889208
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 60.2058177952507
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.002
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.666667,
+       0.333333,
+       0.5
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.452644,
+       -1.416037498736,
+       1.444604
+      ]
+     },
+     {
+      "abc": [
+       0.333333,
+       0.666667,
+       0.5
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.452644,
+       1.416037498736,
+       1.444604
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 2.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:53.376933+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1064227",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadxlsf"
+   },
+   "energy": -3.99692089,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaciohv",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.9116238668584944,
+     "alpha": 90.0,
+     "b": 3.9116238668584944,
+     "beta": 90.0,
+     "c": 6.430438,
+     "gamma": 120.33041701276682,
+     "matrix": [
+      [
+       1.946036,
+       -3.393191,
+       0.0
+      ],
+      [
+       1.946036,
+       3.393191,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       6.430438
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 84.92386033979797
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.84098,
+       0.15902,
+       0.25
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.946036,
+       -2.31402053436,
+       1.6076095
+      ]
+     },
+     {
+      "abc": [
+       0.15902,
+       0.84098,
+       0.75
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.946036,
+       2.31402053436,
+       4.8228285
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 4.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:53.422727+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1067285",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaddeyh"
+   },
+   "energy": -6.91507784,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacisvl",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 4.994836295349128,
+     "alpha": 90.0,
+     "b": 4.994836295349128,
+     "beta": 90.0,
+     "c": 6.98924,
+     "gamma": 92.04992910392247,
+     "matrix": [
+      [
+       3.468139,
+       -3.594496,
+       0.0
+      ],
+      [
+       3.468139,
+       3.594496,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       6.98924
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 174.25869180407742
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.160718,
+       0.839282,
+       0.196981
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.468139,
+       2.439095583744,
+       1.3767474844399998
+      ]
+     },
+     {
+      "abc": [
+       0.839282,
+       0.160718,
+       0.803019
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.468139,
+       -2.439095583744,
+       5.61249251556
+      ]
+     },
+     {
+      "abc": [
+       0.339282,
+       0.660718,
+       0.696981
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.468139,
+       1.155400416256,
+       4.8713674844399995
+      ]
+     },
+     {
+      "abc": [
+       0.660718,
+       0.339282,
+       0.303019
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.468139,
+       -1.155400416256,
+       2.11787251556
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 1.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:54.564071+00:00",
+    "license": "BY-C",
+    "material_id": "mp-10683",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaddydg"
+   },
+   "energy": -1.60598638,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaaapux",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.521797,
+     "alpha": 90.0,
+     "b": 3.521797,
+     "beta": 90.0,
+     "c": 3.521797,
+     "gamma": 90.0,
+     "matrix": [
+      [
+       3.521797,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       3.521797,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       3.521797
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 43.68103875264992
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 8.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:53.469983+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1078638",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaddepa"
+   },
+   "energy": -15.89158303,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacjjqc",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 4.561378,
+     "alpha": 90.0,
+     "b": 4.561378,
+     "beta": 90.0,
+     "c": 16.031352,
+     "gamma": 90.0,
+     "matrix": [
+      [
+       4.561378,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       4.561378,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       16.031352
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 333.55102316074857
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.00713,
+       0.483393,
+       0.687587
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.032522625140000004,
+       2.2049381955540004,
+       11.022949227623998
+      ]
+     },
+     {
+      "abc": [
+       0.99287,
+       0.516607,
+       0.187587
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.528855374860001,
+       2.3564398044460004,
+       3.0072732276239997
+      ]
+     },
+     {
+      "abc": [
+       0.983393,
+       0.49287,
+       0.437587
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.485627195554001,
+       2.2481663748600003,
+       7.015111227624
+      ]
+     },
+     {
+      "abc": [
+       0.016607,
+       0.50713,
+       0.937587
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.075750804446,
+       2.31321162514,
+       15.030787227623998
+      ]
+     },
+     {
+      "abc": [
+       0.516607,
+       0.99287,
+       0.812413
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.3564398044460004,
+       4.528855374860001,
+       13.024078772375999
+      ]
+     },
+     {
+      "abc": [
+       0.483393,
+       0.00713,
+       0.312413
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.2049381955540004,
+       0.032522625140000004,
+       5.008402772375999
+      ]
+     },
+     {
+      "abc": [
+       0.49287,
+       0.983393,
+       0.562413
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.2481663748600003,
+       4.485627195554001,
+       9.016240772376
+      ]
+     },
+     {
+      "abc": [
+       0.50713,
+       0.016607,
+       0.062413
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.31321162514,
+       0.075750804446,
+       1.0005647723759998
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Li": 12.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:37.667557+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1103107",
+    "oxidation_states": {
+     "Li": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaefrmo"
+   },
+   "energy": -22.24252073,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacktvf",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 8.51582020573315,
+     "alpha": 90.0,
+     "b": 8.51582020573315,
+     "beta": 90.0,
+     "c": 5.406859,
+     "gamma": 141.78363463263804,
+     "matrix": [
+      [
+       8.046617,
+       2.787678,
+       0.0
+      ],
+      [
+       -8.046617,
+       2.787678,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       5.406859
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 242.5665872337491
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.755953,
+       0.755953,
+       0.597809
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       4.214707094268,
+       3.232268971931
+      ]
+     },
+     {
+      "abc": [
+       0.244047,
+       0.244047,
+       0.402191
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       1.360648905732,
+       2.1745900280690003
+      ]
+     },
+     {
+      "abc": [
+       0.744047,
+       0.744047,
+       0.097809
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       4.1483269057320005,
+       0.528839471931
+      ]
+     },
+     {
+      "abc": [
+       0.255953,
+       0.255953,
+       0.902191
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       1.427029094268,
+       4.878019528068999
+      ]
+     },
+     {
+      "abc": [
+       0.781959,
+       0.454821,
+       0.753871
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.6323541921459994,
+       3.44774439684,
+       4.076074201189
+      ]
+     },
+     {
+      "abc": [
+       0.545179,
+       0.218041,
+       0.246129
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.6323541921459994,
+       2.12761160316,
+       1.330784798811
+      ]
+     },
+     {
+      "abc": [
+       0.045179,
+       0.718041,
+       0.253871
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -5.4142628078540005,
+       2.12761160316,
+       1.372644701189
+      ]
+     },
+     {
+      "abc": [
+       0.281959,
+       0.954821,
+       0.746129
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -5.414262807854,
+       3.4477443968400006,
+       4.034214298811
+      ]
+     },
+     {
+      "abc": [
+       0.218041,
+       0.545179,
+       0.246129
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -2.6323541921459994,
+       2.12761160316,
+       1.330784798811
+      ]
+     },
+     {
+      "abc": [
+       0.454821,
+       0.781959,
+       0.753871
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -2.6323541921459994,
+       3.44774439684,
+       4.076074201189
+      ]
+     },
+     {
+      "abc": [
+       0.954821,
+       0.281959,
+       0.746129
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       5.414262807854,
+       3.4477443968400006,
+       4.034214298811
+      ]
+     },
+     {
+      "abc": [
+       0.718041,
+       0.045179,
+       0.253871
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       5.4142628078540005,
+       2.12761160316,
+       1.372644701189
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 1.0,
+    "Cl": 2.0
+   },
+   "correction": -1.228,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:00:06.936939+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1120739",
+    "oxidation_states": {
+     "Ca": 2.0,
+     "Cl": -1.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaddieu"
+   },
+   "energy": -12.72209939,
+   "energy_adjustments": [
+    {
+     "@class": "CompositionEnergyAdjustment",
+     "@module": "pymatgen.core.entries",
+     "@version": null,
+     "adj_per_atom": -0.614,
+     "cls": {
+      "@class": "MaterialsProject2020Compatibility",
+      "@module": "pymatgen.analysis.compatibility",
+      "@version": null
+     },
+     "description": "Composition-based energy adjustment",
+     "n_atoms": 2.0,
+     "name": "MP2020 anion correction (Cl)",
+     "uncertainty_per_atom": 0.0018
+    }
+   ],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacltxj",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "779b9901046c78fe51c5d80224642aeb",
+      "summary_stats": null,
+      "titel": "PAW_PBE Cl 17Jan2003"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 4.769077443071983,
+     "alpha": 59.99999999999999,
+     "b": 4.769077443071983,
+     "beta": 59.99999999999999,
+     "c": 4.769077443071983,
+     "gamma": 59.99999999999999,
+     "matrix": [
+      [
+       0.0,
+       3.372247,
+       3.372247
+      ],
+      [
+       3.372247,
+       0.0,
+       3.372247
+      ],
+      [
+       3.372247,
+       3.372247,
+       0.0
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 76.69872183945223
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.25,
+       0.25
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.6861235,
+       1.6861235,
+       1.6861235
+      ]
+     },
+     {
+      "abc": [
+       0.75,
+       0.75,
+       0.75
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       5.0583705000000005,
+       5.0583705000000005,
+       5.0583705000000005
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 2.0,
+    "Li": 4.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:43.201653+00:00",
+    "license": "BY-C",
+    "material_id": "mp-11644",
+    "oxidation_states": {},
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaeyova"
+   },
+   "energy": -11.71687086,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaaarfw",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 6.173500404952769,
+     "alpha": 59.99999999999999,
+     "b": 6.173500404952769,
+     "beta": 59.99999999999999,
+     "c": 6.173500404952769,
+     "gamma": 59.99999999999999,
+     "matrix": [
+      [
+       -4.365324,
+       -4.365324,
+       0.0
+      ],
+      [
+       -4.365324,
+       0.0,
+       -4.365324
+      ],
+      [
+       0.0,
+       -4.365324,
+       -4.365324
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 166.37169646878948
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.375,
+       0.875,
+       0.875
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -5.456655,
+       -5.4566550000000005,
+       -7.639317
+      ]
+     },
+     {
+      "abc": [
+       0.875,
+       0.375,
+       0.875
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -5.456655,
+       -7.639317,
+       -5.456655
+      ]
+     },
+     {
+      "abc": [
+       0.875,
+       0.875,
+       0.875
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -7.639317,
+       -7.639317,
+       -7.639317
+      ]
+     },
+     {
+      "abc": [
+       0.875,
+       0.875,
+       0.375
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -7.639317,
+       -5.4566550000000005,
+       -5.456655
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.25,
+       0.25
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -2.182662,
+       -2.182662,
+       -2.182662
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.5,
+       0.5
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -4.365324,
+       -4.365324,
+       -4.365324
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 1.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:53.616125+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1183455",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadxywz"
+   },
+   "energy": -1.9925282,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacpirn",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.8064273355528537,
+     "alpha": 113.57256933108768,
+     "b": 3.8064273355528537,
+     "beta": 113.57256933108768,
+     "c": 3.8064273355528537,
+     "gamma": 101.5474532065758,
+     "matrix": [
+      [
+       -2.085022,
+       2.085022,
+       2.407126
+      ],
+      [
+       2.085022,
+       -2.085022,
+       2.407126
+      ],
+      [
+       2.085022,
+       2.085022,
+       -2.407126
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 41.85815662501715
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 4.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:54.515142+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1183484",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaeaaow"
+   },
+   "energy": -7.99680069,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacpisq",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.8855822420648876,
+     "alpha": 90.0,
+     "b": 3.8855822420648876,
+     "beta": 90.0,
+     "c": 12.820621,
+     "gamma": 120.00000412161752,
+     "matrix": [
+      [
+       1.942791,
+       -3.365013,
+       0.0
+      ],
+      [
+       1.942791,
+       3.365013,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       12.820621
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 167.6300547397744
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.003
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.333333,
+       0.666667,
+       0.25
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.002
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.942791,
+       1.1216732433419998,
+       3.20515525
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.5
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.008
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       6.4103105
+      ]
+     },
+     {
+      "abc": [
+       0.666667,
+       0.333333,
+       0.75
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.003
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.942791,
+       -1.1216732433419998,
+       9.615465749999998
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Cl": 2.0,
+    "Li": 2.0
+   },
+   "correction": -1.228,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:00:33.013805+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1185319",
+    "oxidation_states": {
+     "Cl": -1.0,
+     "Li": 1.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadxmjw"
+   },
+   "energy": -14.83461619,
+   "energy_adjustments": [
+    {
+     "@class": "CompositionEnergyAdjustment",
+     "@module": "pymatgen.core.entries",
+     "@version": null,
+     "adj_per_atom": -0.614,
+     "cls": {
+      "@class": "MaterialsProject2020Compatibility",
+      "@module": "pymatgen.analysis.compatibility",
+      "@version": null
+     },
+     "description": "Composition-based energy adjustment",
+     "n_atoms": 2.0,
+     "name": "MP2020 anion correction (Cl)",
+     "uncertainty_per_atom": 0.0018
+    }
+   ],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacpllf",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "779b9901046c78fe51c5d80224642aeb",
+      "summary_stats": null,
+      "titel": "PAW_PBE Cl 17Jan2003"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.924882416682696,
+     "alpha": 90.0,
+     "b": 3.924882416682696,
+     "beta": 90.0,
+     "c": 6.357161,
+     "gamma": 120.00000702377851,
+     "matrix": [
+      [
+       1.962441,
+       -3.399048,
+       0.0
+      ],
+      [
+       1.962441,
+       3.399048,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       6.357161
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 84.81000959835224
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.666667,
+       0.333333,
+       0.876017
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.962441,
+       -1.1330182660320003,
+       5.568981107737
+      ]
+     },
+     {
+      "abc": [
+       0.333333,
+       0.666667,
+       0.376017
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.962441,
+       1.1330182660320003,
+       2.390400607737
+      ]
+     },
+     {
+      "abc": [
+       0.666667,
+       0.333333,
+       0.498984
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.962441,
+       -1.1330182660320003,
+       3.172121624424
+      ]
+     },
+     {
+      "abc": [
+       0.333333,
+       0.666667,
+       0.998984
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.962441,
+       1.1330182660320003,
+       6.350702124423999
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 6.0,
+    "Li": 2.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:00:11.964913+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1185350",
+    "oxidation_states": {},
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadyupn"
+   },
+   "energy": -15.34071217,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacplmk",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 7.49166730309295,
+     "alpha": 90.0,
+     "b": 7.49166730309295,
+     "beta": 90.0,
+     "c": 6.155068,
+     "gamma": 119.99999384556229,
+     "matrix": [
+      [
+       3.745834,
+       -6.487974,
+       0.0
+      ],
+      [
+       3.745834,
+       6.487974,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       6.155068
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 299.1716792106996
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.333333,
+       0.666667,
+       0.75
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.005
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.745834,
+       2.162662325316,
+       4.616301
+      ]
+     },
+     {
+      "abc": [
+       0.666667,
+       0.333333,
+       0.25
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.006
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.745834,
+       -2.162662325316,
+       1.538767
+      ]
+     },
+     {
+      "abc": [
+       0.169033,
+       0.338066,
+       0.25
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.012
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.899508675566,
+       1.096681709142,
+       1.538767
+      ]
+     },
+     {
+      "abc": [
+       0.661934,
+       0.830967,
+       0.25
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.012
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       5.592159324434,
+       1.0966817091420005,
+       1.538767
+      ]
+     },
+     {
+      "abc": [
+       0.169033,
+       0.830967,
+       0.25
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.012
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.745834,
+       4.294610581716,
+       1.538767
+      ]
+     },
+     {
+      "abc": [
+       0.830967,
+       0.661934,
+       0.75
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.012
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       5.592159324434,
+       -1.0966817091420005,
+       4.616301
+      ]
+     },
+     {
+      "abc": [
+       0.338066,
+       0.169033,
+       0.75
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.012
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.899508675566,
+       -1.096681709142,
+       4.616301
+      ]
+     },
+     {
+      "abc": [
+       0.830967,
+       0.169033,
+       0.75
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.012
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.745834,
+       -4.294610581716,
+       4.616301
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 8.0,
+    "Li": 2.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:00:13.005181+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1211157",
+    "oxidation_states": {},
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadzsfi"
+   },
+   "energy": -16.71277307,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacqxqz",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 8.320055975319397,
+     "alpha": 59.99999999999999,
+     "b": 8.320055975319397,
+     "beta": 59.99999999999999,
+     "c": 8.320055975319397,
+     "gamma": 59.99999999999999,
+     "matrix": [
+      [
+       0.0,
+       5.883168,
+       5.883168
+      ],
+      [
+       5.883168,
+       0.0,
+       5.883168
+      ],
+      [
+       5.883168,
+       5.883168,
+       0.0
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 407.2524883367723
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.001
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.25,
+       0.25
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.001
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.941584,
+       2.941584,
+       2.941584
+      ]
+     },
+     {
+      "abc": [
+       0.389834,
+       0.389834,
+       0.389834
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.002
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.586917828224,
+       4.586917828224,
+       4.586917828224
+      ]
+     },
+     {
+      "abc": [
+       0.389834,
+       0.389834,
+       0.830499
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.002
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       7.1794240549440005,
+       7.1794240549440005,
+       4.586917828224
+      ]
+     },
+     {
+      "abc": [
+       0.389834,
+       0.830499,
+       0.389834
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.002
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       7.1794240549440005,
+       4.586917828224,
+       7.1794240549440005
+      ]
+     },
+     {
+      "abc": [
+       0.860166,
+       0.860166,
+       0.419501
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.002
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       7.528495945056001,
+       7.528495945056,
+       10.121002171776
+      ]
+     },
+     {
+      "abc": [
+       0.860166,
+       0.860166,
+       0.860166
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.002
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       10.121002171776,
+       10.121002171776,
+       10.121002171776
+      ]
+     },
+     {
+      "abc": [
+       0.830499,
+       0.389834,
+       0.389834
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.002
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.586917828224,
+       7.1794240549440005,
+       7.1794240549440005
+      ]
+     },
+     {
+      "abc": [
+       0.860166,
+       0.419501,
+       0.860166
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.002
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       7.528495945056001,
+       10.121002171776,
+       7.528495945056001
+      ]
+     },
+     {
+      "abc": [
+       0.419501,
+       0.860166,
+       0.860166
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.002
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       10.121002171776,
+       7.528495945056001,
+       7.528495945056001
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 1.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:53.479804+00:00",
+    "license": "BY-C",
+    "material_id": "mp-1227541",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadzfwl"
+   },
+   "energy": -1.03268839,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacrvxd",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.62998835333352,
+     "alpha": 90.0,
+     "b": 3.625656,
+     "beta": 90.97518482425946,
+     "c": 22.217815362509363,
+     "gamma": 90.0,
+     "matrix": [
+      [
+       3.629484,
+       0.0,
+       -0.060509
+      ],
+      [
+       0.0,
+       3.625656,
+       0.0
+      ],
+      [
+       -0.007781,
+       0.0,
+       22.217814
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 292.3682938336179
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.5,
+       0.25
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -0.00194525,
+       1.812828,
+       5.5544535
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 2.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:54.477458+00:00",
+    "license": "BY-C",
+    "material_id": "mp-132",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaafaxth"
+   },
+   "energy": -3.99937997,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaaaafc",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.8966120167218343,
+     "alpha": 90.0,
+     "b": 3.8966120167218343,
+     "beta": 90.0,
+     "c": 6.451322,
+     "gamma": 120.00000028391528,
+     "matrix": [
+      [
+       -1.948306,
+       -3.374565,
+       0.0
+      ],
+      [
+       -1.948306,
+       3.374565,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       -6.451322
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 84.83082302364735
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.333333,
+       0.666667,
+       0.75
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -1.948306,
+       1.1248572497100002,
+       -4.8384915
+      ]
+     },
+     {
+      "abc": [
+       0.666667,
+       0.333333,
+       0.25
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -1.948306,
+       -1.1248572497100002,
+       -1.6128305
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Li": 1.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:39.994729+00:00",
+    "license": "BY-C",
+    "material_id": "mp-135",
+    "oxidation_states": {
+     "Li": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaddzll"
+   },
+   "energy": -1.90379596,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaaaaff",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 2.9677114421457826,
+     "alpha": 109.47122063449069,
+     "b": 2.9677114421457826,
+     "beta": 109.47122063449069,
+     "c": 2.9677114421457826,
+     "gamma": 109.47122063449069,
+     "matrix": [
+      [
+       -1.713409,
+       1.713409,
+       1.713409
+      ],
+      [
+       1.713409,
+       -1.713409,
+       1.713409
+      ],
+      [
+       1.713409,
+       1.713409,
+       -1.713409
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 20.120701709953906
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 1.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:53.757930+00:00",
+    "license": "BY-C",
+    "material_id": "mp-166",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadxzcc"
+   },
+   "energy": -1.98438209,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaaaagk",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.805225911927437,
+     "alpha": 107.68834407650859,
+     "b": 3.805225911927437,
+     "beta": 107.68834407650859,
+     "c": 3.805225911927437,
+     "gamma": 113.09902716027699,
+     "matrix": [
+      [
+       -2.24502,
+       2.24502,
+       2.097502
+      ],
+      [
+       2.24502,
+       -2.24502,
+       2.097502
+      ],
+      [
+       2.24502,
+       2.24502,
+       -2.097502
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 42.286603496274395
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 1.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:55.436802+00:00",
+    "license": "BY-C",
+    "material_id": "mp-21",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaebxzc"
+   },
+   "energy": -1.98205783,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaaaaav",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.797956140347463,
+     "alpha": 109.47122063449069,
+     "b": 3.797956140347463,
+     "beta": 109.47122063449069,
+     "c": 3.797956140347463,
+     "gamma": 109.47122063449069,
+     "matrix": [
+      [
+       -2.192751,
+       2.192751,
+       2.192751
+      ],
+      [
+       2.192751,
+       -2.192751,
+       2.192751
+      ],
+      [
+       2.192751,
+       2.192751,
+       -2.192751
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 42.17236382354456
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Cl": 4.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:58:12.933052+00:00",
+    "license": "BY-C",
+    "material_id": "mp-22848",
+    "oxidation_states": {
+     "Cl": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaecvjg"
+   },
+   "energy": -7.39414664,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaabhuu",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "779b9901046c78fe51c5d80224642aeb",
+      "summary_stats": null,
+      "titel": "PAW_PBE Cl 17Jan2003"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 4.3892277066268734,
+     "alpha": 90.0,
+     "b": 4.3892277066268734,
+     "beta": 90.0,
+     "c": 8.601525,
+     "gamma": 121.8843230268944,
+     "matrix": [
+      [
+       2.131814,
+       -3.836755,
+       0.0
+      ],
+      [
+       2.131814,
+       3.836755,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       8.601525
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 140.7080127118759
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.597156,
+       0.597156,
+       0.106492
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.546051041968,
+       0.0,
+       0.9159936003000001
+      ]
+     },
+     {
+      "abc": [
+       0.402844,
+       0.402844,
+       0.893508
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.7175769580319997,
+       0.0,
+       7.6855313997
+      ]
+     },
+     {
+      "abc": [
+       0.902844,
+       0.902844,
+       0.606492
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.8493909580319996,
+       0.0,
+       5.2167561003000005
+      ]
+     },
+     {
+      "abc": [
+       0.097156,
+       0.097156,
+       0.393508
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.414237041968,
+       0.0,
+       3.3847688997000005
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 2.0,
+    "Cl": 4.0
+   },
+   "correction": -2.456,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:00:06.867749+00:00",
+    "license": "BY-C",
+    "material_id": "mp-22904",
+    "oxidation_states": {
+     "Ca": 2.0,
+     "Cl": -1.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadhpnn"
+   },
+   "energy": -25.77033406,
+   "energy_adjustments": [
+    {
+     "@class": "CompositionEnergyAdjustment",
+     "@module": "pymatgen.core.entries",
+     "@version": null,
+     "adj_per_atom": -0.614,
+     "cls": {
+      "@class": "MaterialsProject2020Compatibility",
+      "@module": "pymatgen.analysis.compatibility",
+      "@version": null
+     },
+     "description": "Composition-based energy adjustment",
+     "n_atoms": 4.0,
+     "name": "MP2020 anion correction (Cl)",
+     "uncertainty_per_atom": 0.0018
+    }
+   ],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaabhwy",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "779b9901046c78fe51c5d80224642aeb",
+      "summary_stats": null,
+      "titel": "PAW_PBE Cl 17Jan2003"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 6.439033,
+     "alpha": 90.0,
+     "b": 6.439033,
+     "beta": 90.0,
+     "c": 4.223217,
+     "gamma": 90.0,
+     "matrix": [
+      [
+       6.439033,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       6.439033,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       4.223217
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 175.09941652147745
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.5,
+       0.5,
+       0.5
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.2195165,
+       3.2195165,
+       2.1116085
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.695667,
+       0.695667,
+       0.0
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.479422770011,
+       4.479422770011,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.195667,
+       0.804333,
+       0.5
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.2599062700110002,
+       5.179126729989,
+       2.1116085
+      ]
+     },
+     {
+      "abc": [
+       0.304333,
+       0.304333,
+       0.0
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.9596102299890001,
+       1.9596102299890001,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.804333,
+       0.195667,
+       0.5
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       5.179126729989,
+       1.2599062700110002,
+       2.1116085
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Cl": 1.0,
+    "Li": 1.0
+   },
+   "correction": -0.614,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:00:33.291146+00:00",
+    "license": "BY-C",
+    "material_id": "mp-22905",
+    "oxidation_states": {
+     "Cl": -1.0,
+     "Li": 1.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaafaoms"
+   },
+   "energy": -7.37638433,
+   "energy_adjustments": [
+    {
+     "@class": "CompositionEnergyAdjustment",
+     "@module": "pymatgen.core.entries",
+     "@version": null,
+     "adj_per_atom": -0.614,
+     "cls": {
+      "@class": "MaterialsProject2020Compatibility",
+      "@module": "pymatgen.analysis.compatibility",
+      "@version": null
+     },
+     "description": "Composition-based energy adjustment",
+     "n_atoms": 1.0,
+     "name": "MP2020 anion correction (Cl)",
+     "uncertainty_per_atom": 0.0018
+    }
+   ],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaabhwz",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "779b9901046c78fe51c5d80224642aeb",
+      "summary_stats": null,
+      "titel": "PAW_PBE Cl 17Jan2003"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.64354305254542,
+     "alpha": 59.99999999999999,
+     "b": 3.64354305254542,
+     "beta": 59.99999999999999,
+     "c": 3.64354305254542,
+     "gamma": 59.99999999999999,
+     "matrix": [
+      [
+       -2.576374,
+       -2.576374,
+       0.0
+      ],
+      [
+       -2.576374,
+       0.0,
+       -2.576374
+      ],
+      [
+       0.0,
+       -2.576374,
+       -2.576374
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 34.20241079537208
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.5,
+       0.5
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -2.576374,
+       -2.576374,
+       -2.576374
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 2.0,
+    "Cl": 4.0
+   },
+   "correction": -2.456,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:00:06.530705+00:00",
+    "license": "BY-C",
+    "material_id": "mp-23214",
+    "oxidation_states": {
+     "Ca": 2.0,
+     "Cl": -1.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadxwkn"
+   },
+   "energy": -25.76962479,
+   "energy_adjustments": [
+    {
+     "@class": "CompositionEnergyAdjustment",
+     "@module": "pymatgen.core.entries",
+     "@version": null,
+     "adj_per_atom": -0.614,
+     "cls": {
+      "@class": "MaterialsProject2020Compatibility",
+      "@module": "pymatgen.analysis.compatibility",
+      "@version": null
+     },
+     "description": "Composition-based energy adjustment",
+     "n_atoms": 4.0,
+     "name": "MP2020 anion correction (Cl)",
+     "uncertainty_per_atom": 0.0018
+    }
+   ],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaabiiw",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "779b9901046c78fe51c5d80224642aeb",
+      "summary_stats": null,
+      "titel": "PAW_PBE Cl 17Jan2003"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 4.208036,
+     "alpha": 90.0,
+     "b": 6.349271,
+     "beta": 90.0,
+     "c": 6.505507,
+     "gamma": 90.0,
+     "matrix": [
+      [
+       4.208036,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       6.349271,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       6.505507
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 173.81388193232021
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.5,
+       0.5,
+       0.5
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.104018,
+       3.1746355,
+       3.2527535
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.78209,
+       0.175124
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.104018,
+       4.965701356389999,
+       1.139270407868
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.21791,
+       0.824876
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.104018,
+       1.38356964361,
+       5.366236592132
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.71791,
+       0.675124
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       4.55820514361,
+       4.3920239078679995
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.28209,
+       0.324876
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       1.79106585639,
+       2.113483092132
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 1.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:57:54.975010+00:00",
+    "license": "BY-C",
+    "material_id": "mp-45",
+    "oxidation_states": {
+     "Ca": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadxynd"
+   },
+   "energy": -2.00559988,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaaaabt",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.8942986735033562,
+     "alpha": 59.99999999999999,
+     "b": 3.8942986735033562,
+     "beta": 59.99999999999999,
+     "c": 3.8942986735033562,
+     "gamma": 59.99999999999999,
+     "matrix": [
+      [
+       0.0,
+       2.753685,
+       2.753685
+      ],
+      [
+       2.753685,
+       0.0,
+       2.753685
+      ],
+      [
+       2.753685,
+       2.753685,
+       0.0
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 41.76118103229138
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Li": 1.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:39.674811+00:00",
+    "license": "BY-C",
+    "material_id": "mp-51",
+    "oxidation_states": {
+     "Li": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadebfp"
+   },
+   "energy": -1.90603016,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaaaaabz",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.054623512979955,
+     "alpha": 59.99999999999999,
+     "b": 3.054623512979955,
+     "beta": 59.99999999999999,
+     "c": 3.054623512979955,
+     "gamma": 59.99999999999999,
+     "matrix": [
+      [
+       0.0,
+       2.159945,
+       2.159945
+      ],
+      [
+       2.159945,
+       0.0,
+       2.159945
+      ],
+      [
+       2.159945,
+       2.159945,
+       0.0
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 20.153852391203667
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Li": 8.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:39.431076+00:00",
+    "license": "BY-C",
+    "material_id": "mp-567337",
+    "oxidation_states": {
+     "Li": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadxqje"
+   },
+   "energy": -15.18440902,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaabghgr",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 5.9417136928246554,
+     "alpha": 109.47122063449069,
+     "b": 5.9417136928246554,
+     "beta": 109.47122063449069,
+     "c": 5.9417136928246554,
+     "gamma": 109.47122063449069,
+     "matrix": [
+      [
+       -3.43045,
+       3.43045,
+       3.43045
+      ],
+      [
+       3.43045,
+       -3.43045,
+       3.43045
+      ],
+      [
+       3.43045,
+       3.43045,
+       -3.43045
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 161.4779667952645
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.011942,
+       0.5,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.6742585661,
+       -1.6742585661,
+       1.7561914339
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.011942,
+       0.5
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.7561914339,
+       1.6742585661,
+       -1.6742585661
+      ]
+     },
+     {
+      "abc": [
+       0.988058,
+       0.988058,
+       0.988058
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.3894835661,
+       3.3894835661,
+       3.3894835661
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.511942,
+       0.5
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.4714164339,
+       -0.04096643389999999,
+       0.04096643389999999
+      ]
+     },
+     {
+      "abc": [
+       0.511942,
+       0.5,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -0.04096643389999999,
+       0.04096643389999999,
+       3.4714164339
+      ]
+     },
+     {
+      "abc": [
+       0.488058,
+       0.488058,
+       0.488058
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.6742585661,
+       1.6742585661,
+       1.6742585661
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.0,
+       0.011942
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -1.6742585661,
+       1.7561914339,
+       1.6742585661
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.0,
+       0.511942
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.04096643390000003,
+       3.4714164339,
+       -0.04096643390000003
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 4.0,
+    "Li": 8.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:42.782526+00:00",
+    "license": "BY-C",
+    "material_id": "mp-570466",
+    "oxidation_states": {},
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaezpgx"
+   },
+   "energy": -23.38665635,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaabglxa",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 6.152764928820619,
+     "alpha": 90.0,
+     "b": 6.152764928820619,
+     "beta": 90.0,
+     "c": 10.09208,
+     "gamma": 120.00000998742465,
+     "matrix": [
+      [
+       -3.076382,
+       -5.328451,
+       0.0
+      ],
+      [
+       -3.076382,
+       5.328451,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       -10.09208
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 330.865830198707
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.666007,
+       0.833003,
+       0.25
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -4.61152738182,
+       0.8898300031960007,
+       -2.52302
+      ]
+     },
+     {
+      "abc": [
+       0.166997,
+       0.833003,
+       0.25
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.001
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -3.0763820000000006,
+       3.5487803367060007,
+       -2.52302
+      ]
+     },
+     {
+      "abc": [
+       0.833003,
+       0.666007,
+       0.75
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -4.61152738182,
+       -0.8898300031960007,
+       -7.5690599999999995
+      ]
+     },
+     {
+      "abc": [
+       0.333993,
+       0.166997,
+       0.75
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -1.5412366181800001,
+       -0.8898300031959999,
+       -7.5690599999999995
+      ]
+     },
+     {
+      "abc": [
+       0.166997,
+       0.333993,
+       0.25
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -1.5412366181800001,
+       0.8898300031959999,
+       -2.52302
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.833003,
+       0.166997,
+       0.75
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.001
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -3.0763820000000006,
+       -3.5487803367060007,
+       -7.5690599999999995
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.5
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       -5.04604
+      ]
+     },
+     {
+      "abc": [
+       0.333333,
+       0.666667,
+       0.562842
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -3.076382,
+       1.776153885634,
+       -5.680246491359999
+      ]
+     },
+     {
+      "abc": [
+       0.666667,
+       0.333333,
+       0.437158
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -3.076382,
+       -1.776153885634,
+       -4.41183350864
+      ]
+     },
+     {
+      "abc": [
+       0.666667,
+       0.333333,
+       0.062842
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -3.076382,
+       -1.776153885634,
+       -0.63420649136
+      ]
+     },
+     {
+      "abc": [
+       0.333333,
+       0.666667,
+       0.937158
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -3.076382,
+       1.776153885634,
+       -9.45787350864
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Cl": 16.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:58:13.221413+00:00",
+    "license": "BY-C",
+    "material_id": "mp-570778",
+    "oxidation_states": {
+     "Cl": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadegtz"
+   },
+   "energy": -29.01693064,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaabgmja",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "779b9901046c78fe51c5d80224642aeb",
+      "summary_stats": null,
+      "titel": "PAW_PBE Cl 17Jan2003"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 11.765809,
+     "alpha": 90.0,
+     "b": 11.765809,
+     "beta": 90.0,
+     "c": 8.203525,
+     "gamma": 90.0,
+     "matrix": [
+      [
+       11.765809,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       11.765809,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       8.203525
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 1135.6489244522656
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.344483,
+       0.606098,
+       0.639232
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.0531211817470005,
+       7.131233303282001,
+       5.243955692800001
+      ]
+     },
+     {
+      "abc": [
+       0.844483,
+       0.893902,
+       0.360768
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       9.936025681747001,
+       10.517480196718001,
+       2.9595693072
+      ]
+     },
+     {
+      "abc": [
+       0.106098,
+       0.844483,
+       0.639232
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.2483288032820001,
+       9.936025681747001,
+       5.243955692800001
+      ]
+     },
+     {
+      "abc": [
+       0.893902,
+       0.155517,
+       0.639232
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       10.517480196718001,
+       1.829783318253,
+       5.243955692800001
+      ]
+     },
+     {
+      "abc": [
+       0.844483,
+       0.106098,
+       0.860768
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       9.936025681747001,
+       1.2483288032820001,
+       7.0613318072
+      ]
+     },
+     {
+      "abc": [
+       0.344483,
+       0.393902,
+       0.139232
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.0531211817470005,
+       4.634575696718,
+       1.1421931928
+      ]
+     },
+     {
+      "abc": [
+       0.155517,
+       0.893902,
+       0.860768
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.829783318253,
+       10.517480196718001,
+       7.0613318072
+      ]
+     },
+     {
+      "abc": [
+       0.655517,
+       0.606098,
+       0.139232
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       7.712687818253,
+       7.131233303282001,
+       1.1421931928
+      ]
+     },
+     {
+      "abc": [
+       0.893902,
+       0.844483,
+       0.139232
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       10.517480196718001,
+       9.936025681747001,
+       1.1421931928
+      ]
+     },
+     {
+      "abc": [
+       0.655517,
+       0.393902,
+       0.639232
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       7.712687818253,
+       4.634575696718,
+       5.243955692800001
+      ]
+     },
+     {
+      "abc": [
+       0.393902,
+       0.655517,
+       0.860768
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.634575696718,
+       7.712687818253,
+       7.0613318072
+      ]
+     },
+     {
+      "abc": [
+       0.393902,
+       0.344483,
+       0.360768
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.634575696718,
+       4.0531211817470005,
+       2.9595693072
+      ]
+     },
+     {
+      "abc": [
+       0.606098,
+       0.655517,
+       0.360768
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       7.131233303282001,
+       7.712687818253,
+       2.9595693072
+      ]
+     },
+     {
+      "abc": [
+       0.606098,
+       0.344483,
+       0.860768
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       7.131233303282001,
+       4.0531211817470005,
+       7.0613318072
+      ]
+     },
+     {
+      "abc": [
+       0.155517,
+       0.106098,
+       0.360768
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.829783318253,
+       1.2483288032820001,
+       2.9595693072
+      ]
+     },
+     {
+      "abc": [
+       0.106098,
+       0.155517,
+       0.139232
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.2483288032820001,
+       1.829783318253,
+       1.1421931928
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 4.0,
+    "Cl": 8.0
+   },
+   "correction": -4.912,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:00:06.674284+00:00",
+    "license": "BY-C",
+    "material_id": "mp-571627",
+    "oxidation_states": {
+     "Ca": 2.0,
+     "Cl": -1.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadzqti"
+   },
+   "energy": -50.30875505,
+   "energy_adjustments": [
+    {
+     "@class": "CompositionEnergyAdjustment",
+     "@module": "pymatgen.core.entries",
+     "@version": null,
+     "adj_per_atom": -0.614,
+     "cls": {
+      "@class": "MaterialsProject2020Compatibility",
+      "@module": "pymatgen.analysis.compatibility",
+      "@version": null
+     },
+     "description": "Composition-based energy adjustment",
+     "n_atoms": 8.0,
+     "name": "MP2020 anion correction (Cl)",
+     "uncertainty_per_atom": 0.0018
+    }
+   ],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaabgnpr",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "779b9901046c78fe51c5d80224642aeb",
+      "summary_stats": null,
+      "titel": "PAW_PBE Cl 17Jan2003"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 5.141432,
+     "alpha": 90.0,
+     "b": 7.624542,
+     "beta": 90.0,
+     "c": 11.577878,
+     "gamma": 90.0,
+     "matrix": [
+      [
+       5.141432,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       7.624542,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       11.577878
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 453.86513905730385
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.25,
+       0.359956,
+       0.6186
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.285358,
+       2.744499640152,
+       7.1620753308000005
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.859956,
+       0.8814
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.285358,
+       6.556770640152,
+       10.204741669199999
+      ]
+     },
+     {
+      "abc": [
+       0.75,
+       0.640044,
+       0.3814
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.856074,
+       4.880042359848,
+       4.4158026692000005
+      ]
+     },
+     {
+      "abc": [
+       0.75,
+       0.140044,
+       0.1186
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.856074,
+       1.067771359848,
+       1.3731363308
+      ]
+     },
+     {
+      "abc": [
+       0.75,
+       0.47258,
+       0.184525
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.856074,
+       3.60320605836,
+       2.13640793795
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.02742,
+       0.684525
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.285358,
+       0.20906494164,
+       7.925346937950001
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.52742,
+       0.815475
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.285358,
+       4.02133594164,
+       9.44147006205
+      ]
+     },
+     {
+      "abc": [
+       0.75,
+       0.97258,
+       0.315475
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.856074,
+       7.41547705836,
+       3.65253106205
+      ]
+     },
+     {
+      "abc": [
+       0.75,
+       0.358634,
+       0.536878
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.856074,
+       2.734419995628,
+       6.215907984884
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.641366,
+       0.463122
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.285358,
+       4.8901220043719995,
+       5.3619700151159995
+      ]
+     },
+     {
+      "abc": [
+       0.75,
+       0.858634,
+       0.963122
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.856074,
+       6.546690995628,
+       11.150909015116001
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.141366,
+       0.036878
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.285358,
+       1.077851004372,
+       0.42696898488400004
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 4.0,
+    "Cl": 8.0
+   },
+   "correction": -4.912,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:00:06.607599+00:00",
+    "license": "BY-C",
+    "material_id": "mp-571642",
+    "oxidation_states": {
+     "Ca": 2.0,
+     "Cl": -1.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaeatra"
+   },
+   "energy": -51.52747818,
+   "energy_adjustments": [
+    {
+     "@class": "CompositionEnergyAdjustment",
+     "@module": "pymatgen.core.entries",
+     "@version": null,
+     "adj_per_atom": -0.614,
+     "cls": {
+      "@class": "MaterialsProject2020Compatibility",
+      "@module": "pymatgen.analysis.compatibility",
+      "@version": null
+     },
+     "description": "Composition-based energy adjustment",
+     "n_atoms": 8.0,
+     "name": "MP2020 anion correction (Cl)",
+     "uncertainty_per_atom": 0.0018
+    }
+   ],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaabgnqg",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "779b9901046c78fe51c5d80224642aeb",
+      "summary_stats": null,
+      "titel": "PAW_PBE Cl 17Jan2003"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 6.340157,
+     "alpha": 90.0,
+     "b": 6.977989,
+     "beta": 90.0,
+     "c": 7.714033,
+     "gamma": 90.0,
+     "matrix": [
+      [
+       6.340157,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       6.977989,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       7.714033
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 341.2807443051734
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.25,
+       0.846898
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       1.74449725,
+       6.532999119634
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.25,
+       0.346898
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.1700785,
+       1.74449725,
+       2.675982619634
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.75,
+       0.153102
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       5.23349175,
+       1.1810338803659999
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.75,
+       0.653102
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.1700785,
+       5.23349175,
+       5.038050380365999
+      ]
+     },
+     {
+      "abc": [
+       0.236597,
+       0.421891,
+       0.108576
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.5000621257289999,
+       2.943950757199,
+       0.837558847008
+      ]
+     },
+     {
+      "abc": [
+       0.736597,
+       0.578109,
+       0.391424
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.670140625728999,
+       4.0340382428009995,
+       3.0194576529919996
+      ]
+     },
+     {
+      "abc": [
+       0.763403,
+       0.578109,
+       0.891424
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.840094874271,
+       4.0340382428009995,
+       6.8764741529919995
+      ]
+     },
+     {
+      "abc": [
+       0.236597,
+       0.921891,
+       0.891424
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.5000621257289999,
+       6.432945257199,
+       6.8764741529919995
+      ]
+     },
+     {
+      "abc": [
+       0.736597,
+       0.078109,
+       0.608576
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.670140625728999,
+       0.545043742801,
+       4.694575347008
+      ]
+     },
+     {
+      "abc": [
+       0.263403,
+       0.421891,
+       0.608576
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.670016374271,
+       2.943950757199,
+       4.694575347008
+      ]
+     },
+     {
+      "abc": [
+       0.263403,
+       0.921891,
+       0.391424
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.670016374271,
+       6.432945257199,
+       3.0194576529919996
+      ]
+     },
+     {
+      "abc": [
+       0.763403,
+       0.078109,
+       0.108576
+      ],
+      "label": "Cl",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Cl",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       4.840094874271,
+       0.545043742801,
+       0.837558847008
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Li": 4.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:39.244532+00:00",
+    "license": "BY-C",
+    "material_id": "mp-604313",
+    "oxidation_states": {
+     "Li": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadcsre"
+   },
+   "energy": -6.58849649,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaabijyv",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 4.457586,
+     "alpha": 90.0,
+     "b": 4.457586,
+     "beta": 90.0,
+     "c": 4.457586,
+     "gamma": 90.0,
+     "matrix": [
+      [
+       4.457586,
+       0.0,
+       0.0
+      ],
+      [
+       0.0,
+       4.457586,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       4.457586
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 88.57255898929115
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.875,
+       0.125,
+       0.625
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.90038775,
+       0.55719825,
+       2.78599125
+      ]
+     },
+     {
+      "abc": [
+       0.375,
+       0.375,
+       0.375
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.6715947500000001,
+       1.6715947500000001,
+       1.6715947500000001
+      ]
+     },
+     {
+      "abc": [
+       0.125,
+       0.625,
+       0.875
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.55719825,
+       2.78599125,
+       3.90038775
+      ]
+     },
+     {
+      "abc": [
+       0.625,
+       0.875,
+       0.125
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.78599125,
+       3.90038775,
+       0.55719825
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 1.0,
+    "Li": 3.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:01:51.786630+00:00",
+    "license": "BY-C",
+    "material_id": "mp-975929",
+    "oxidation_states": {},
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaddfjz"
+   },
+   "energy": -7.53757652,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacdnrt",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 5.295193172546021,
+     "alpha": 59.99999999999999,
+     "b": 5.295193172546021,
+     "beta": 59.99999999999999,
+     "c": 5.295193172546021,
+     "gamma": 59.99999999999999,
+     "matrix": [
+      [
+       0.0,
+       3.744267,
+       3.744267
+      ],
+      [
+       3.744267,
+       0.0,
+       3.744267
+      ],
+      [
+       3.744267,
+       3.744267,
+       0.0
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 104.98576726214615
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.75,
+       0.75,
+       0.75
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       5.616400499999999,
+       5.616400499999999,
+       5.616400499999999
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.25,
+       0.25
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.8721335,
+       1.8721335,
+       1.8721335
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.5,
+       0.5
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       3.744267,
+       3.744267,
+       3.744267
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 1.0,
+    "Li": 3.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:01:51.634541+00:00",
+    "license": "BY-C",
+    "material_id": "mp-976075",
+    "oxidation_states": {},
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadygxo"
+   },
+   "energy": -7.54979513,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacdnxj",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 5.911638553480076,
+     "alpha": 134.26791981591415,
+     "b": 5.911638553480076,
+     "beta": 134.26791981591415,
+     "c": 5.911638553480076,
+     "gamma": 66.66983985140185,
+     "matrix": [
+      [
+       -2.297132,
+       2.297132,
+       4.939012
+      ],
+      [
+       2.297132,
+       -2.297132,
+       4.939012
+      ],
+      [
+       2.297132,
+       2.297132,
+       -4.939012
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 104.24901883181695
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.75,
+       0.25,
+       0.5
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -1.1102230246251565e-16,
+       2.297132,
+       2.469506
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.75,
+       0.5
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.297132,
+       0.0,
+       2.469506
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.5,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.002
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       4.939012
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.004
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Ca": 3.0,
+    "Li": 1.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 05:00:11.939397+00:00",
+    "license": "BY-C",
+    "material_id": "mp-976272",
+    "oxidation_states": {},
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaaeflei"
+   },
+   "energy": -7.63360882,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacdoey",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     },
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "eb006721e214c04b3c13146e81b3a27d",
+      "summary_stats": null,
+      "titel": "PAW_PBE Ca_sv 06Sep2000"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 6.665268321200055,
+     "alpha": 134.0934030952199,
+     "b": 6.665268321200055,
+     "beta": 134.0934030952199,
+     "c": 6.665268321200055,
+     "gamma": 66.94215752932769,
+     "matrix": [
+      [
+       -2.599326,
+       2.599326,
+       5.559929
+      ],
+      [
+       2.599326,
+       -2.599326,
+       5.559929
+      ],
+      [
+       2.599326,
+       2.599326,
+       -5.559929
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 150.26254450633243
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.75,
+       0.25,
+       0.5
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       -1.1102230246251565e-16,
+       2.599326,
+       2.7799645
+      ]
+     },
+     {
+      "abc": [
+       0.25,
+       0.75,
+       0.5
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       2.599326,
+       0.0,
+       2.7799645
+      ]
+     },
+     {
+      "abc": [
+       0.5,
+       0.5,
+       0.0
+      ],
+      "label": "Ca",
+      "properties": {
+       "magmom": 0.001
+      },
+      "species": [
+       {
+        "element": "Ca",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       5.559929
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "@class": "ComputedStructureEntry",
+   "@module": "pymatgen.core.entries",
+   "composition": {
+    "Li": 4.0
+   },
+   "correction": 0.0,
+   "data": {
+    "aspherical": true,
+    "last_updated": "2026-05-29 04:59:38.952188+00:00",
+    "license": "BY-C",
+    "material_id": "mp-976411",
+    "oxidation_states": {
+     "Li": 0.0
+    },
+    "oxide_type": "None",
+    "run_type": "GGA",
+    "task_id": "aaadbobq"
+   },
+   "energy": -7.62450131,
+   "energy_adjustments": [],
+   "entry_id": {
+    "@class": "EntryID",
+    "@module": "emmet.core.types.pymatgen_types.computed_entries_adapter",
+    "@version": null,
+    "identifier": "mp-aaacdokh",
+    "separator": "-",
+    "suffix": "GGA"
+   },
+   "parameters": {
+    "potcar_spec": [
+     {
+      "@class": "PotcarSpec",
+      "@module": "emmet.core.vasp.calculation",
+      "@version": null,
+      "hash": "4799bab014a83a07c654d7196c8ecfa9",
+      "summary_stats": null,
+      "titel": "PAW_PBE Li_sv 23Jan2001"
+     }
+    ],
+    "run_type": "GGA"
+   },
+   "structure": {
+    "@class": "Structure",
+    "@module": "pymatgen.core.structure",
+    "charge": 0.0,
+    "lattice": {
+     "a": 3.071070314540193,
+     "alpha": 90.0,
+     "b": 3.071070314540193,
+     "beta": 90.0,
+     "c": 9.825363,
+     "gamma": 120.00000677607777,
+     "matrix": [
+      [
+       1.535535,
+       -2.659625,
+       0.0
+      ],
+      [
+       1.535535,
+       2.659625,
+       0.0
+      ],
+      [
+       0.0,
+       0.0,
+       9.825363
+      ]
+     ],
+     "pbc": [
+      true,
+      true,
+      true
+     ],
+     "volume": 80.25252888718995
+    },
+    "properties": {},
+    "sites": [
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.0
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       0.0
+      ]
+     },
+     {
+      "abc": [
+       0.333333,
+       0.666667,
+       0.25
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.5355350000000003,
+       0.88654343975,
+       2.45634075
+      ]
+     },
+     {
+      "abc": [
+       0.0,
+       0.0,
+       0.5
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": 0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       0.0,
+       0.0,
+       4.9126815
+      ]
+     },
+     {
+      "abc": [
+       0.666667,
+       0.333333,
+       0.75
+      ],
+      "label": "Li",
+      "properties": {
+       "magmom": -0.0
+      },
+      "species": [
+       {
+        "element": "Li",
+        "occu": 1.0
+       }
+      ],
+      "xyz": [
+       1.5355350000000003,
+       -0.88654343975,
+       7.3690222499999996
+      ]
+     }
+    ]
+   }
+  }
+ ],
+ "retrieved_utc": "2026-10-16T12:39:40Z"
+}
