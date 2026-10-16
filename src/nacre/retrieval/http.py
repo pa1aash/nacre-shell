@@ -3,6 +3,7 @@ import email.utils
 import hashlib
 import json
 import random
+import sys
 import time
 from pathlib import Path
 
@@ -51,12 +52,16 @@ def parse_retry_after(value, now=None):
 
 class Http:
     def __init__(self, config, session=None, sleep=time.sleep, clock=time.monotonic,
-                 rng=random.random, max_retries=5, base_delay=1.0, max_delay=60.0):
+                 rng=random.random, max_retries=5, base_delay=1.0, max_delay=60.0,
+                 max_total_retry_seconds=120.0, log=None):
         self.config = config
         self.session = session or requests.Session()
         self.session.headers["User-Agent"] = config.user_agent
         self.sleep, self.clock, self.rng = sleep, clock, rng
         self.max_retries, self.base_delay, self.max_delay = max_retries, base_delay, max_delay
+        # Wall-clock budget for one request's retries (attempts and waits); None disables the cap.
+        self.max_total_retry_seconds = max_total_retry_seconds
+        self.log = log or (lambda line: print(line, file=sys.stderr, flush=True))
         self._last = {}
 
     def _throttle(self, source):
@@ -76,6 +81,20 @@ class Http:
             return min(retry_after, self.max_delay * 5)
         return min(self.max_delay, self.base_delay * 2 ** attempt) * (0.5 + self.rng() / 2)
 
+    def _wait_before_retry(self, started, attempt, retry_after, url, detail):
+        """Log one progress line and sleep; False when the retry time budget would be exceeded."""
+        delay = self._delay(attempt, retry_after)
+        elapsed = self.clock() - started
+        cap = self.max_total_retry_seconds
+        if cap is not None and elapsed + delay > cap:
+            self.log("retry: giving up %s after %.0f s (cap %.0f s; next wait %.1f s): %s"
+                     % (url, elapsed, cap, delay, detail))
+            return False
+        self.log("retry %d/%d in %.1f s (%.0f s elapsed): %s %s"
+                 % (attempt + 1, self.max_retries, delay, elapsed, detail, url))
+        self.sleep(delay)
+        return True
+
     def request(self, source, method, url, params=None, headers=None, json_body=None, use_cache=True):
         body = json.dumps(json_body, sort_keys=True) if json_body is not None else None
         key = cache_key(method, url, params, body)
@@ -88,7 +107,9 @@ class Http:
                 pass
         timeout = float(self.config.source(source).get("timeout", 30))
         last_detail, last_status = "", None
+        started, attempts, capped = self.clock(), 0, False
         for attempt in range(self.max_retries + 1):
+            attempts = attempt + 1
             self._throttle(source)
             try:
                 r = self.session.request(method, url, params=params, headers=headers,
@@ -110,10 +131,12 @@ class Http:
                     path.parent.mkdir(parents=True, exist_ok=True)
                     path.write_text(json.dumps({"url": url, "status": r.status_code, "text": r.text}))
                     return Response(r.status_code, r.text, key)
-            if attempt < self.max_retries:
-                self.sleep(self._delay(attempt, retry_after))
+            if attempt < self.max_retries and not self._wait_before_retry(started, attempt, retry_after, url, last_detail):
+                capped = True
+                break
         kind = "rate_limited" if last_status == 429 else "http_error"
-        raise HttpError(kind, "%s after %d attempts (%s)" % (last_detail, self.max_retries + 1, url), last_status)
+        note = ", retry time cap %.0f s" % self.max_total_retry_seconds if capped else ""
+        raise HttpError(kind, "%s after %d attempts%s (%s)" % (last_detail, attempts, note, url), last_status)
 
     def get(self, source, url, **kw):
         return self.request(source, "GET", url, **kw)
@@ -126,6 +149,7 @@ class Http:
         timeout = float(self.config.source(source).get("timeout", 30))
         dest = Path(dest)
         dest.parent.mkdir(parents=True, exist_ok=True)
+        started = self.clock()
         for attempt in range(self.max_retries + 1):
             self._throttle(source)
             try:
@@ -148,6 +172,6 @@ class Http:
                             fh.write(chunk)
                             n += len(chunk)
                     return n
-            if attempt < self.max_retries:
-                self.sleep(self._delay(attempt, retry_after))
+            if attempt < self.max_retries and not self._wait_before_retry(started, attempt, retry_after, url, last):
+                break
         raise HttpError("rate_limited" if status == 429 else "http_error", "%s (%s)" % (last, url), status)

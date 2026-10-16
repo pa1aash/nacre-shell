@@ -100,3 +100,73 @@ def test_tls_failure_is_not_retried(cfg):
         http.get("other", URL)
     assert ei.value.kind == "http_error" and "not retried" in ei.value.detail
     assert sleeps == [] and len(http.session.calls) == 1
+
+
+class _Clock:
+    """Mocked time: sleeping advances the clock, so the retry budget is measured in mocked seconds."""
+
+    def __init__(self):
+        self.now = 1000.0
+        self.sleeps = []
+
+    def __call__(self):
+        return self.now
+
+    def sleep(self, seconds):
+        self.sleeps.append(seconds)
+        self.now += seconds
+
+
+def _capped_http(cfg, script, clock, lines, **kw):
+    from nacre.retrieval.http import Http
+    from retrieval_helpers import FakeSession
+    return Http(cfg, session=FakeSession(script), sleep=clock.sleep, clock=clock, rng=lambda: 1.0,
+                log=lines.append, **kw)
+
+
+def test_retry_wall_time_is_capped(cfg):
+    clock, lines = _Clock(), []
+    http = _capped_http(cfg, [FakeResp(503)] * 20, clock, lines, max_retries=20, base_delay=10.0, max_delay=40.0,
+                        max_total_retry_seconds=120.0)
+    with pytest.raises(HttpError) as ei:
+        http.get("other", URL)
+    assert ei.value.kind == "http_error" and "retry time cap 120 s" in ei.value.detail
+    assert clock.now - 1000.0 <= 120.0
+    assert len(http.session.calls) < 21
+    assert lines[-1].startswith("retry: giving up")
+
+
+def test_each_retry_logs_one_progress_line(cfg):
+    clock, lines = _Clock(), []
+    http = _capped_http(cfg, [FakeResp(503), FakeResp(502), ok({"a": 1})], clock, lines)
+    assert http.get("other", URL).json() == {"a": 1}
+    assert len(lines) == 2 == len(clock.sleeps)
+    assert lines[0].startswith("retry 1/5 in") and "HTTP 503" in lines[0] and URL in lines[0]
+    assert lines[1].startswith("retry 2/5 in") and "HTTP 502" in lines[1]
+
+
+def test_retry_after_longer_than_budget_gives_up_without_sleeping(cfg):
+    clock, lines = _Clock(), []
+    http = _capped_http(cfg, [FakeResp(429, "", {"Retry-After": "300"})] * 3, clock, lines,
+                        max_total_retry_seconds=120.0)
+    with pytest.raises(HttpError) as ei:
+        http.get("other", URL)
+    assert ei.value.kind == "rate_limited" and clock.sleeps == []
+    assert len(http.session.calls) == 1 and len(lines) == 1
+
+
+def test_success_path_is_silent_and_default_cap_is_120(cfg):
+    clock, lines = _Clock(), []
+    http = _capped_http(cfg, [ok({"n": 1})], clock, lines)
+    assert http.max_total_retry_seconds == 120.0
+    assert http.get("other", URL).json() == {"n": 1}
+    assert lines == [] and clock.sleeps == []
+
+
+def test_cap_none_restores_unbounded_retries(cfg):
+    clock, lines = _Clock(), []
+    http = _capped_http(cfg, [FakeResp(503)] * 4, clock, lines, max_retries=3, base_delay=100.0, max_delay=100.0,
+                        max_total_retry_seconds=None)
+    with pytest.raises(HttpError) as ei:
+        http.get("other", URL)
+    assert "retry time cap" not in ei.value.detail and len(http.session.calls) == 4
