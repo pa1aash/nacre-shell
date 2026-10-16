@@ -1,0 +1,112 @@
+{
+ "bonds": [
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   2
+  ],
+  [
+   1,
+   3
+  ],
+  [
+   0,
+   4
+  ],
+  [
+   0,
+   5
+  ],
+  [
+   0,
+   6
+  ],
+  [
+   8,
+   9
+  ],
+  [
+   8,
+   10
+  ],
+  [
+   11,
+   12
+  ],
+  [
+   11,
+   13
+  ],
+  [
+   14,
+   15
+  ],
+  [
+   14,
+   16
+  ],
+  [
+   17,
+   18
+  ],
+  [
+   17,
+   19
+  ],
+  [
+   20,
+   21
+  ],
+  [
+   20,
+   22
+  ]
+ ],
+ "builder_version": "0.1.0",
+ "ca_o_initial_A": 2.42,
+ "charge": 1,
+ "coordination_mode": "monodentate",
+ "coordination_number_initial": 6,
+ "denticity": 1,
+ "formula": "C2H13CaO7",
+ "fragments": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  2,
+  2,
+  2,
+  3,
+  3,
+  3,
+  4,
+  4,
+  4,
+  5,
+  5,
+  5,
+  6,
+  6,
+  6
+ ],
+ "geometry": "starting geometry, not optimised",
+ "kind": "complex",
+ "ligand": "acetate",
+ "ligand_charge": -1,
+ "ligand_smiles": "CC(=O)[O-]",
+ "min_distance_A": 0.969,
+ "min_interfragment_distance_A": 2.42,
+ "multiplicity": 1,
+ "n_atoms": 23,
+ "n_water": 5,
+ "name": "Ca_acetate_monodentate_w5",
+ "seed": 7
+}

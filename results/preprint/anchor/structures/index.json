@@ -1,0 +1,126 @@
+{
+ "builder_version": "0.1.0",
+ "seed": 7,
+ "species": [
+  {
+   "builder_version": "0.1.0",
+   "charge": 1,
+   "coordination_mode": "bidentate",
+   "formula": "C6H13CaO6",
+   "kind": "complex",
+   "multiplicity": 1,
+   "n_atoms": 26,
+   "n_water": 4,
+   "name": "Ca_catecholate_monoanion_bidentate_w4",
+   "seed": 7
+  },
+  {
+   "builder_version": "0.1.0",
+   "charge": 0,
+   "coordination_mode": "bidentate",
+   "formula": "C6H12CaO6",
+   "kind": "complex",
+   "multiplicity": 1,
+   "n_atoms": 25,
+   "n_water": 4,
+   "name": "Ca_catecholate_dianion_bidentate_w4",
+   "seed": 7
+  },
+  {
+   "builder_version": "0.1.0",
+   "charge": 1,
+   "coordination_mode": "monodentate",
+   "formula": "C2H13CaO7",
+   "kind": "complex",
+   "multiplicity": 1,
+   "n_atoms": 23,
+   "n_water": 5,
+   "name": "Ca_acetate_monodentate_w5",
+   "seed": 7
+  },
+  {
+   "builder_version": "0.1.0",
+   "charge": 1,
+   "coordination_mode": "bidentate",
+   "formula": "C2H11CaO6",
+   "kind": "complex",
+   "multiplicity": 1,
+   "n_atoms": 20,
+   "n_water": 4,
+   "name": "Ca_acetate_bidentate_w4",
+   "seed": 7
+  },
+  {
+   "builder_version": "0.1.0",
+   "charge": 2,
+   "coordination_mode": "aqua",
+   "formula": "H12CaO6",
+   "kind": "reference",
+   "multiplicity": 1,
+   "n_atoms": 19,
+   "n_water": 6,
+   "name": "Ca_aqua_w6",
+   "seed": 7
+  },
+  {
+   "builder_version": "0.1.0",
+   "charge": -1,
+   "coordination_mode": "none",
+   "formula": "C6H5O2",
+   "kind": "reference",
+   "multiplicity": 1,
+   "n_atoms": 13,
+   "n_water": 0,
+   "name": "ligand_catecholate_monoanion",
+   "seed": 7
+  },
+  {
+   "builder_version": "0.1.0",
+   "charge": -2,
+   "coordination_mode": "none",
+   "formula": "C6H4O2",
+   "kind": "reference",
+   "multiplicity": 1,
+   "n_atoms": 12,
+   "n_water": 0,
+   "name": "ligand_catecholate_dianion",
+   "seed": 7
+  },
+  {
+   "builder_version": "0.1.0",
+   "charge": -1,
+   "coordination_mode": "none",
+   "formula": "C2H3O2",
+   "kind": "reference",
+   "multiplicity": 1,
+   "n_atoms": 7,
+   "n_water": 0,
+   "name": "ligand_acetate",
+   "seed": 7
+  },
+  {
+   "builder_version": "0.1.0",
+   "charge": 0,
+   "coordination_mode": "none",
+   "formula": "H2O",
+   "kind": "reference",
+   "multiplicity": 1,
+   "n_atoms": 3,
+   "n_water": 1,
+   "name": "water_w1",
+   "seed": 7
+  },
+  {
+   "builder_version": "0.1.0",
+   "charge": 0,
+   "coordination_mode": "none",
+   "formula": "H4O2",
+   "kind": "reference",
+   "multiplicity": 1,
+   "n_atoms": 6,
+   "n_water": 2,
+   "name": "water_w2",
+   "seed": 7
+  }
+ ]
+}

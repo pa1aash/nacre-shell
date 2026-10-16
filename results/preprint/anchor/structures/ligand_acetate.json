@@ -1,0 +1,53 @@
+{
+ "bonds": [
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   2
+  ],
+  [
+   1,
+   3
+  ],
+  [
+   0,
+   4
+  ],
+  [
+   0,
+   5
+  ],
+  [
+   0,
+   6
+  ]
+ ],
+ "builder_version": "0.1.0",
+ "charge": -1,
+ "coordination_mode": "none",
+ "formula": "C2H3O2",
+ "fragments": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "geometry": "RDKit ETKDG + MMFF94",
+ "kind": "reference",
+ "ligand": "acetate",
+ "ligand_smiles": "CC(=O)[O-]",
+ "min_distance_A": 1.0941,
+ "min_interfragment_distance_A": Infinity,
+ "multiplicity": 1,
+ "n_atoms": 7,
+ "n_water": 0,
+ "name": "ligand_acetate",
+ "role": "free ligand",
+ "seed": 7
+}

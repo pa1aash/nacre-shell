@@ -1,0 +1,16 @@
+# Conformer and semi-empirical tooling for the anchor pipeline check (session P0-W5.1).
+# Created outside iCloud with:
+#   MAMBA_ROOT_PREFIX=~/.nacre-envs/mamba-root micromamba create -y -p ~/.nacre-envs/xtb -f src/nacre/anchor/xtb_env.yaml
+# Builds pinned to what passed the smoke optimisation on osx-arm64 on 2026-10-16. The
+# libgfortran5 pin matters: with the libgfortran 16 runtime, xtb 6.5.1, 6.6.0 and 6.6.1 all
+# stop in the optimiser with "Fortran runtime error: Missing comma between descriptors";
+# runtime 12 aborts; runtime 13.4.0 runs. Run single-threaded (OMP_NUM_THREADS=1) on this
+# machine.
+name: nacre-xtb
+channels:
+  - conda-forge
+dependencies:
+  - xtb=6.6.1=h8d15b00_0
+  - crest=2.12=hd8c59f4_0
+  - libgfortran5=13.4.0
+  - libgfortran=13.4.0

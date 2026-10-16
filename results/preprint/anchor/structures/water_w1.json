@@ -1,0 +1,31 @@
+{
+ "bonds": [
+  [
+   0,
+   1
+  ],
+  [
+   0,
+   2
+  ]
+ ],
+ "builder_version": "0.1.0",
+ "charge": 0,
+ "coordination_mode": "none",
+ "formula": "H2O",
+ "fragments": [
+  0,
+  0,
+  0
+ ],
+ "geometry": "starting geometry, not optimised",
+ "kind": "reference",
+ "min_distance_A": 0.969,
+ "min_interfragment_distance_A": Infinity,
+ "multiplicity": 1,
+ "n_atoms": 3,
+ "n_water": 1,
+ "name": "water_w1",
+ "role": "water cluster",
+ "seed": 7
+}

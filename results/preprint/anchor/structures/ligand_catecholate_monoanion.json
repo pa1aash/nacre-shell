@@ -1,0 +1,87 @@
+{
+ "bonds": [
+  [
+   0,
+   1
+  ],
+  [
+   1,
+   2
+  ],
+  [
+   2,
+   3
+  ],
+  [
+   3,
+   4
+  ],
+  [
+   4,
+   5
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   6,
+   1
+  ],
+  [
+   2,
+   8
+  ],
+  [
+   3,
+   9
+  ],
+  [
+   4,
+   10
+  ],
+  [
+   5,
+   11
+  ],
+  [
+   7,
+   12
+  ]
+ ],
+ "builder_version": "0.1.0",
+ "charge": -1,
+ "coordination_mode": "none",
+ "formula": "C6H5O2",
+ "fragments": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "geometry": "RDKit ETKDG + MMFF94",
+ "kind": "reference",
+ "ligand": "catecholate_monoanion",
+ "ligand_smiles": "[O-]c1ccccc1O",
+ "min_distance_A": 0.962,
+ "min_interfragment_distance_A": Infinity,
+ "multiplicity": 1,
+ "n_atoms": 13,
+ "n_water": 0,
+ "name": "ligand_catecholate_monoanion",
+ "role": "free ligand",
+ "seed": 7
+}
