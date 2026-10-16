@@ -12,7 +12,7 @@ Say how the priors become the reported quantities: propagation, variance decompo
 
 1. **Propagation.** Monte Carlo draws from the priors through each link, per regime. The draw count comes from a macro. Claim: CL-G01.
 2. **Variance decomposition.** First- and total-order Sobol indices with bootstrap confidence intervals, and why the total order is the ranking quantity. Claim: CL-G01.
-3. **Decision criteria (Table 2).** The thresholds per link are fixed before the screen is read. Their status relative to the charter's G2 is stated honestly. Claim: CL-P02.
+3. **Decision criteria (Table 2).** The thresholds per link are set at cp2 (theory/thresholds.md is the authority, rule R-thr) and frozen at cp3, changing afterwards only through a dated deviation entry. Do not claim they were set before the calculation (lane note N5). Their status relative to the charter's G2 is stated honestly. The N5 sentence goes here or in the Discussion: an earlier rough estimate under the calcite framing was available when the project was designed, and the primary framing here is chosen on literature grounds. Claim: CL-P02.
 4. **Required precision.** The accuracy a governing quantity needs is the change in that quantity that moves the outcome across a decision criterion on the barrier map, at the other inputs' spread. Claim: CL-P01.
 5. **Retrodiction protocol.**
    - Literature cases with known outcomes.
