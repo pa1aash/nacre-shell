@@ -1,0 +1,450 @@
+# Claim ledger of the P0 preprint. Every claim the paper makes has an entry here before its
+# sentence is written; a sentence without an entry does not go in. Seeded in P0-W8.1 from the
+# one claim of the paper:
+#
+#   The chain from adhesion in water through Ca2+ sequestration and nucleation to film
+#   stability can be written consistently; with literature-bounded inputs a small set of
+#   quantities governs the outcome; the accuracy each needs is stated; the retrodiction is
+#   reported as it comes out; the Pourbaix results are a thermodynamic proxy.
+#
+# Schema (each entry of `claims`)
+#   id           stable id, CL-<letter><two digits>; the letter follows the type
+#                (R relation, B bound, G governing, P precision, X proxy, T retrodiction,
+#                O outlook, L limitation, N does-not-claim).
+#   statement    draft wording, no numbers (numbers are macros named in `evidence`).
+#   section      the manuscript section that carries it (file stem in preprint/paper/sections).
+#   type         physical relation | parameter bound | governing parameter | required precision |
+#                proxy result | retrodiction outcome | outlook | limitation.
+#   polarity     claims | does-not-claim.
+#   evidence     list of {kind, ref}; kind is macro (preprint/generated/sources.yaml), figure
+#                (Fig 1..8), table (Table 1..3), derivation (an SI section label), reference
+#                (a refs.bib key or a pending pointer) or claim (another id).
+#   checkpoint   the track checkpoint the claim depends on: cp1..cp5, or none.
+#   supplier     the lane that supplies the evidence.
+#   scope_check  clean (lint-scope finds nothing) or allowlisted (an explicit does-not-claim
+#                sentence in preprint/paper/lint/scope_allowlist.txt). Checked by tests.
+#   status       planned | drafted | verified | withdrawn.
+#   notes        optional.
+claims:
+  # --- physical relations: the chain, in energetic order ---
+  - id: CL-R01
+    statement: >-
+      Adhesion of the template to the hydroxylated aluminium oxide is set by the wet work of
+      adhesion, the Dupre balance of the oxide-water, template-water and oxide-template
+      interfacial free energies, because in the slurry the template never meets a dry oxide.
+    section: model
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:derivation}
+      - {kind: figure, ref: Fig 2a}
+      - {kind: macro, ref: NumWadhWetMedian}
+    checkpoint: cp2
+    supplier: p0-w3
+    scope_check: clean
+    status: planned
+  - id: CL-R02
+    statement: >-
+      Sequestration of Ca2+ by the bound template is a binding free energy built as a
+      thermodynamic cycle from the hydrated ion to the binding site; it fixes the local
+      enrichment of Ca2+ and hence the local supersaturation at the interface.
+    section: model
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:derivation}
+      - {kind: figure, ref: Fig 2b}
+      - {kind: figure, ref: Fig 3}
+      - {kind: macro, ref: NumDGseqMedian}
+      - {kind: macro, ref: NumSlocalMedian}
+    checkpoint: cp2
+    supplier: p0-w3
+    scope_check: clean
+    status: planned
+  - id: CL-R03
+    statement: >-
+      Heterogeneous nucleation on the templated surface follows classical nucleation theory
+      with a spherical-cap shape factor of the Young contact angle, and the local
+      supersaturation from sequestration enters the homogeneous barrier it scales.
+    section: model
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:derivation}
+      - {kind: figure, ref: Fig 2c}
+      - {kind: macro, ref: NumThetaMedian}
+      - {kind: macro, ref: NumFthetaMedian}
+      - {kind: macro, ref: NumDGhetMedian}
+    checkpoint: cp2
+    supplier: p0-w3
+    scope_check: clean
+    status: planned
+  - id: CL-R04
+    statement: >-
+      Film stability is a thermodynamic condition on the calcium carbonate phase and the
+      aluminium oxide in each regime: the decomposition free energy above the aqueous
+      stability hull in the slurry, and the lithium-referenced stability window in the cell.
+    section: model
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:derivation}
+      - {kind: figure, ref: Fig 2d}
+    checkpoint: cp2
+    supplier: p0-w3
+    scope_check: clean
+    status: planned
+  - id: CL-R05
+    statement: >-
+      The four links can be written as one consistent chain in which each interfacial free
+      energy enters exactly once, so no term is counted twice between adhesion, sequestration
+      and nucleation.
+    section: model
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:no-double-counting}
+      - {kind: figure, ref: Fig 1}
+    checkpoint: cp2
+    supplier: p0-w3
+    scope_check: clean
+    status: planned
+  # --- parameter bounds ---
+  - id: CL-B01
+    statement: >-
+      Every input of the chain has a prior range bounded by fetched literature values, with
+      each bound traceable to its source.
+    section: inputs
+    type: parameter bound
+    polarity: claims
+    evidence:
+      - {kind: table, ref: Table 1}
+      - {kind: derivation, ref: si:parameters}
+      - {kind: macro, ref: NumParamCount}
+    checkpoint: cp3
+    supplier: p0-w1
+    scope_check: clean
+    status: planned
+  - id: CL-B02
+    statement: >-
+      Where sources disagree on an input, the disagreement is recorded and the prior is
+      widened to bracket it rather than resolved by choice.
+    section: inputs
+    type: parameter bound
+    polarity: claims
+    evidence:
+      - {kind: table, ref: Table 1}
+      - {kind: derivation, ref: si:parameters}
+      - {kind: macro, ref: NumParamConflicts}
+    checkpoint: cp3
+    supplier: p0-w1
+    scope_check: clean
+    status: planned
+  - id: CL-B03
+    statement: >-
+      Regime inputs that the literature leaves unbounded are carried as open ranges and stated
+      as such, not filled with assumed values.
+    section: inputs
+    type: parameter bound
+    polarity: claims
+    evidence:
+      - {kind: table, ref: Table 1}
+    checkpoint: cp3
+    supplier: p0-w1
+    scope_check: clean
+    status: planned
+  # --- governing parameters ---
+  - id: CL-G01
+    statement: >-
+      Propagating the literature-bounded priors through the chain, a small set of inputs
+      carries most of the variance of each link's output, measured by total-order Sobol
+      indices with bootstrap confidence intervals.
+    section: results
+    type: governing parameter
+    polarity: claims
+    evidence:
+      - {kind: figure, ref: Fig 6}
+      - {kind: macro, ref: NumSobolTotalGammaNucLiq}
+      - {kind: macro, ref: NumSobolTotalGammaSubNuc}
+      - {kind: macro, ref: NumSobolTotalDGbind}
+      - {kind: macro, ref: NumScreenDraws}
+      - {kind: macro, ref: NumSobolBaseSamples}
+    checkpoint: cp4
+    supplier: p0-w4
+    scope_check: clean
+    status: planned
+  - id: CL-G02
+    statement: >-
+      Over the plane of the two governing interfacial free energies, the heterogeneous
+      nucleation barrier map shows where the decision criteria are met and where they are not.
+    section: results
+    type: governing parameter
+    polarity: claims
+    evidence:
+      - {kind: figure, ref: Fig 5}
+      - {kind: table, ref: Table 2}
+      - {kind: claim, ref: CL-G01}
+    checkpoint: cp4
+    supplier: p0-w4
+    scope_check: clean
+    status: planned
+  # --- required precision ---
+  - id: CL-P01
+    statement: >-
+      For each governing quantity the paper states the accuracy a first-principles value must
+      reach to move the outcome across a decision criterion, derived from the Sobol result and
+      the barrier map.
+    section: results
+    type: required precision
+    polarity: claims
+    evidence:
+      - {kind: figure, ref: Fig 6}
+      - {kind: table, ref: Table 2}
+      - {kind: macro, ref: NumPrecGammaNucLiq}
+      - {kind: macro, ref: NumPrecGammaSubNuc}
+      - {kind: macro, ref: NumPrecDGbind}
+    checkpoint: cp4
+    supplier: p0-w4
+    scope_check: clean
+    status: planned
+  - id: CL-P02
+    statement: >-
+      The thresholds and decision criteria against which each link is judged are fixed in a
+      table before the screen is read, so the required precision is stated against criteria
+      that did not move with the result.
+    section: methods
+    type: required precision
+    polarity: claims
+    evidence:
+      - {kind: table, ref: Table 2}
+    checkpoint: cp3
+    supplier: p0-w4
+    scope_check: clean
+    status: planned
+  # --- retrodiction ---
+  - id: CL-T01
+    statement: >-
+      The chain is run on literature cases with known outcomes and the retrodiction is reported
+      as it comes out, case by case, including the cases it gets wrong or cannot decide.
+    section: results
+    type: retrodiction outcome
+    polarity: claims
+    evidence:
+      - {kind: figure, ref: Fig 4}
+      - {kind: table, ref: Table 3}
+      - {kind: derivation, ref: si:retrodiction}
+      - {kind: macro, ref: NumRetroCases}
+      - {kind: macro, ref: NumRetroConsistent}
+      - {kind: macro, ref: NumRetroInconsistent}
+    checkpoint: cp4
+    supplier: p0-w2
+    scope_check: clean
+    status: planned
+  # --- proxy results ---
+  - id: CL-X01
+    statement: >-
+      The Pourbaix analysis gives the pH and potential window in which calcium carbonate and
+      the aluminium oxide are thermodynamically stable in the slurry; it is a thermodynamic
+      proxy for film stability and carries no kinetic information.
+    section: results
+    type: proxy result
+    polarity: claims
+    evidence:
+      - {kind: figure, ref: Fig 7}
+      - {kind: macro, ref: NumPbxCalciteHullMax}
+      - {kind: macro, ref: NumPbxPhLow}
+      - {kind: macro, ref: NumPbxPhHigh}
+    checkpoint: cp4
+    supplier: p0-w5
+    scope_check: clean
+    status: planned
+  - id: CL-X02
+    statement: >-
+      A single anchor calculation places one governing input relative to its literature prior;
+      it is a consistency check on the prior, not a validation of the chain.
+    section: results
+    type: proxy result
+    polarity: claims
+    evidence:
+      - {kind: figure, ref: Fig 8}
+      - {kind: derivation, ref: si:anchor}
+      - {kind: macro, ref: NumAnchorValue}
+      - {kind: macro, ref: NumAnchorPriorQuantile}
+    checkpoint: cp4
+    supplier: p0-w5
+    scope_check: clean
+    status: planned
+  # --- outlook: the calculations that would decide the question ---
+  - id: CL-O01
+    statement: >-
+      Density-functional calculations of the template-oxide and nucleus-substrate interfacial
+      energies are planned, each with the accuracy the Sobol result says it needs.
+    section: outlook
+    type: outlook
+    polarity: claims
+    evidence:
+      - {kind: claim, ref: CL-P01}
+      - {kind: macro, ref: NumPrecGammaSubNuc}
+    checkpoint: cp4
+    supplier: p0-w4
+    scope_check: clean
+    status: planned
+  - id: CL-O02
+    statement: >-
+      Molecular dynamics with a machine-learned potential, fine-tuned on targeted
+      first-principles data, is planned for the hydrated interface, to give the wet work of
+      adhesion and the contact angle at the accuracy the screen requires.
+    section: outlook
+    type: outlook
+    polarity: claims
+    evidence:
+      - {kind: claim, ref: CL-P01}
+      - {kind: macro, ref: NumPrecGammaNucLiq}
+    checkpoint: cp4
+    supplier: p0-w4
+    scope_check: clean
+    status: planned
+  - id: CL-O03
+    statement: >-
+      Free-energy calculations, a potential of mean force for Ca2+ at each binding site with
+      protonation and ionic-strength corrections, are planned to give the sequestration free
+      energy at the accuracy the screen requires.
+    section: outlook
+    type: outlook
+    polarity: claims
+    evidence:
+      - {kind: claim, ref: CL-P01}
+      - {kind: macro, ref: NumPrecDGbind}
+    checkpoint: cp4
+    supplier: p0-w4
+    scope_check: clean
+    status: planned
+  # --- limitations ---
+  - id: CL-L01
+    statement: >-
+      The Pourbaix result is a thermodynamic proxy: it says which phases are stable, not how
+      fast any of them forms or dissolves.
+    section: discussion
+    type: limitation
+    polarity: claims
+    evidence:
+      - {kind: claim, ref: CL-X01}
+      - {kind: figure, ref: Fig 7}
+    checkpoint: cp4
+    supplier: p0-w5
+    scope_check: clean
+    status: planned
+  - id: CL-L02
+    statement: >-
+      The priors are broad because the literature is; every statement about the governing
+      quantities is conditional on those priors, and narrower priors could change the ranking.
+    section: discussion
+    type: limitation
+    polarity: claims
+    evidence:
+      - {kind: table, ref: Table 1}
+      - {kind: claim, ref: CL-B01}
+    checkpoint: cp3
+    supplier: p0-w1
+    scope_check: clean
+    status: planned
+  - id: CL-L03
+    statement: >-
+      Classical nucleation theory with a spherical-cap nucleus of one registered polymorph is
+      an approximation; amorphous precursors and non-classical pathways are outside the model.
+    section: discussion
+    type: limitation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:derivation}
+    checkpoint: cp2
+    supplier: p0-w3
+    scope_check: clean
+    status: planned
+  - id: CL-L04
+    statement: >-
+      Calcium carbonate is an electronic insulator, so film thickness is bounded from above by
+      electronic resistance; the paper reports this bound only as a limitation.
+    section: discussion
+    type: limitation
+    polarity: claims
+    evidence:
+      - {kind: reference, ref: charter/scope_guard.md (insulating film thickness)}
+    checkpoint: none
+    supplier: p0-w8
+    scope_check: clean
+    status: planned
+  - id: CL-L05
+    statement: >-
+      Contrary evidence in the literature, including Osorio-Celestino and co-workers (2020),
+      is reported and weighed against the chain rather than omitted.
+    section: discussion
+    type: limitation
+    polarity: claims
+    evidence:
+      - {kind: reference, ref: "pending: entry via nacre bib add from lit/contrary.md (p0-w2)"}
+    checkpoint: cp4
+    supplier: p0-w2
+    scope_check: clean
+    status: planned
+    notes: >-
+      The citation enters refs.bib only through nacre bib add with the DOI recorded in
+      lit/contrary.md; its content is summarised from that record, not from memory.
+  # --- does not claim ---
+  - id: CL-N01
+    statement: This paper does not claim that the barrier works.
+    section: discussion
+    type: limitation
+    polarity: does-not-claim
+    evidence:
+      - {kind: reference, ref: charter/scope_guard.md}
+    checkpoint: none
+    supplier: p0-w8
+    scope_check: allowlisted
+    status: planned
+  - id: CL-N02
+    statement: This paper does not claim any corrosion rate, capacity or device performance.
+    section: discussion
+    type: limitation
+    polarity: does-not-claim
+    evidence:
+      - {kind: reference, ref: charter/scope_guard.md}
+    checkpoint: none
+    supplier: p0-w8
+    scope_check: allowlisted
+    status: planned
+  - id: CL-N03
+    statement: This paper does not claim any result from the full first-principles or machine-learned-potential calculations.
+    section: outlook
+    type: limitation
+    polarity: does-not-claim
+    evidence:
+      - {kind: claim, ref: CL-O01}
+      - {kind: claim, ref: CL-O02}
+      - {kind: claim, ref: CL-O03}
+    checkpoint: none
+    supplier: p0-w8
+    scope_check: allowlisted
+    status: planned
+  - id: CL-N04
+    statement: This paper does not claim that any interface, template or film thickness is optimal.
+    section: discussion
+    type: limitation
+    polarity: does-not-claim
+    evidence:
+      - {kind: reference, ref: charter/scope_guard.md}
+    checkpoint: none
+    supplier: p0-w8
+    scope_check: allowlisted
+    status: planned
+  - id: CL-N05
+    statement: This paper does not claim experimental validation.
+    section: discussion
+    type: limitation
+    polarity: does-not-claim
+    evidence:
+      - {kind: reference, ref: charter/scope_guard.md}
+    checkpoint: none
+    supplier: p0-w8
+    scope_check: allowlisted
+    status: planned

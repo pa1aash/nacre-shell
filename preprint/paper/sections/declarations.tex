@@ -1,0 +1,21 @@
+% End matter in the publisher's order: author contributions, conflicts of interest, data
+% availability, acknowledgements. Brief: briefs/declarations.md. Every value is a macro from
+% ../generated/declarations.tex or ../generated/credit.tex; TBD values render as placeholders
+% in draft mode and stop a release build.
+\section*{Author contributions}
+\nacreCredit
+
+\section*{Conflicts of interest}
+\nacreCompetingInterests
+
+\section*{Data and code availability}
+Repository: \nacreRepoURL. Archive: \nacreZenodoDOI.
+
+\section*{Acknowledgements}
+\nacreFunding
+
+\nacreCompute
+
+% AI-use disclosure: a local-only include written with Palaash at P0-W8.5 (tool name and
+% method of use, as the preprint policy requires). A release build stops if it is absent.
+\InputIfFileExists{\nacreRepoRoot/.local/p0/ai_ack.tex}{}{\nacreMissing{AI-use disclosure, local-only include}}

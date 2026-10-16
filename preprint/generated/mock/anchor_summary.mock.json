@@ -1,0 +1,11 @@
+{
+  "anchor": {
+    "prior_quantile": 0.4,
+    "quantity": "gamma_sub_nuc",
+    "units": "J m^-2",
+    "value": 0.25
+  },
+  "mock": true,
+  "note": "assumed schema; W5 owns the real file",
+  "schema_version": "assumed-1"
+}

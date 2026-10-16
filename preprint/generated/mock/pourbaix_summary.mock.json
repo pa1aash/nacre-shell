@@ -1,0 +1,18 @@
+{
+  "mock": true,
+  "note": "assumed schema; W5 owns the real file",
+  "phases": {
+    "calcite": {
+      "e_above_hull_ev_per_atom": {
+        "at_regime_reference": 0.0,
+        "max_over_window": 0.05
+      }
+    }
+  },
+  "regime": "R-slurry",
+  "schema_version": "assumed-1",
+  "stable_window": {
+    "pH_high": 12.5,
+    "pH_low": 7.5
+  }
+}

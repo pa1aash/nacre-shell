@@ -1,0 +1,25 @@
+% Preprint macros shared by main.tex and si/main_si.tex. Loaded before the template head,
+% that is before \documentclass, so it uses kernel commands only; colour and font commands
+% resolve when a macro is used. Build files come from `nacre preprint prepare` (build.sh).
+%
+% Release-mode stops: a placeholder, a pending author-register field, a missing optional
+% input or a mock number stops a release build where it is used. In draft mode each renders
+% with a visible marker instead.
+\newif\ifnacrerelease
+\nacrereleasefalse
+\InputIfFileExists{build/mode.tex}{}{}
+\InputIfFileExists{build/paths.tex}{}{\def\nacreRepoRoot{.}}
+\newcommand{\nacreReleaseStop}[1]{\ifnacrerelease\errmessage{NACRE release guard: \detokenize{#1}}\fi}
+% text that an author still has to supply
+\newcommand{\nacrePlaceholder}[1]{\nacreReleaseStop{placeholder: #1}%
+  \textcolor{red}{\textsf{[placeholder: #1]}}}
+% an author-register value marked to-confirm
+\newcommand{\nacrePending}[1]{\nacreReleaseStop{pending: #1}%
+  \textcolor{red}{#1\textsuperscript{\textsf{[to confirm]}}}}
+% an optional input another lane or the operator has not delivered yet
+\newcommand{\nacreMissing}[1]{\nacreReleaseStop{missing input: #1}%
+  \textcolor{red}{\textsf{[pending input: #1]}}}
+% numbers from ../generated/numbers.tex
+\newcommand{\nacreNum}[2]{\ensuremath{#1\if\relax\detokenize{#2}\relax\else\,#2\fi}}
+\newcommand{\nacreMockNum}[3]{\ifnacrerelease\errmessage{NACRE release guard: mock macro #1 used}\fi
+  \textcolor{magenta}{\nacreNum{#2}{#3}\textsuperscript{\textsf{mock}}}}

@@ -1,0 +1,20 @@
+{
+  "mock": true,
+  "note": "assumed schema; W4 owns the real file",
+  "regime": "R-slurry",
+  "required_precision": {
+    "dG_bind": {
+      "units": "kJ mol^-1",
+      "value": 2.0
+    },
+    "gamma_nuc_liq": {
+      "units": "J m^-2",
+      "value": 0.01
+    },
+    "gamma_sub_nuc": {
+      "units": "J m^-2",
+      "value": 0.02
+    }
+  },
+  "schema_version": "assumed-1"
+}

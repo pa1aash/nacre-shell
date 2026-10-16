@@ -1,0 +1,10 @@
+{
+  "mock": true,
+  "note": "assumed schema; W1 owns the real file",
+  "schema_version": "assumed-1",
+  "summary": {
+    "n_conflicts": 3,
+    "n_parameters": 10,
+    "n_sources": 24
+  }
+}
