@@ -825,6 +825,7 @@ def check_ignorance(ctx, rep):
 def check_changes(contract, rep):
     names = {f["name"] for f in contract["functions"]}
     other = {"no_double_counting"} | {s["id"] for s in contract.get("sign_flips", [])}
+    other |= {"conventions." + k for k in contract.get("conventions", {})}
     cur = [c for c in contract.get("changes", []) if c.get("version") == contract.get("version")]
     if not cur:
         rep.add(False, "changes", "version %s" % contract.get("version"), "no changelog entry for the current version")

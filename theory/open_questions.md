@@ -27,27 +27,27 @@ no-double-counting proof of P0-W3.2.
 
 ## Dispositions (P0-W3.2, sign audit B1)
 
-Equation numbers are those of the P0-W3.2 build of `theory/build/derivation.pdf`; the label
+Equation numbers are those of the P0-W3.2 cp2 fix-up build of `theory/build/derivation.pdf`; the label
 in brackets is stable across rebuilds. "Contract" is `theory/contract.yaml` version 2.
 
 | # | Disposition | Where, or to whom, and the decision requested |
 |---|---|---|
-| Q1 | resolved | Uniform chemical potential is the consistent bookkeeping; Ca2+ binding enters only gamma_sl. Derivation Section 7 (all subsections), Eqs. (29) to (32) [th:eq:grand, th:eq:gibbs, th:eq:young-ads, th:eq:composite]; contract `Delta_gamma_ads`, `cos_theta_template`, SF2, `no_double_counting`. The charter wording that follows from it is cp2 decision 2 in `theory/cp2_brief.md` |
-| Q2 | resolved | A mean potential cancels in the ion product and in Delta_mu; carbonate needs no correction. Derivation 4 (ii), Eq. (13) [th:eq:dmu-uniform] |
+| Q1 | resolved | Uniform chemical potential is the consistent bookkeeping; Ca2+ binding enters only gamma_sl. Derivation Section 7 (all subsections), Eqs. (31) to (35) [th:eq:grand, th:eq:gibbs, th:eq:gibbs-sn, th:eq:young-ads, th:eq:composite]; contract `Delta_gamma_ads`, `cos_theta_template`, SF2, `no_double_counting`. The charter wording that follows from it is cp2 decision 2 in `theory/cp2_brief.md` |
+| Q2 | resolved | A mean potential cancels in the ion product and in Delta_mu; carbonate needs no correction. Derivation 4 (ii), Eq. (15) [th:eq:dmu-uniform] |
 | Q3 | deferred | Main study, Phase 7 item 6 (ionic-strength correction) and the C2 site model. In v2 the closure sets only the size of Delta_gamma_ads: d gamma_sl / d Delta_G_seq = Gamma_s Theta >= 0 for any isotherm with Theta >= 0, so its sign does not depend on the closure. P0 reports Langmuir as a stated closure |
 | Q4 | deferred | P0-W1.2 (standard-state conversion of fetched binding constants with Eq. (6) [th:eq:stdstate] at one V_site, and the pKa row) and the main study (multidentate sites). V_site is fixed once by the parameter table |
 | Q5 | deferred | Main study Phase 2 derivation freeze, as the charter states. P0 judges C1 per area (J m^-2) with one contact-area definition from the parameter table (`theory/thresholds.md`, C1) |
-| Q6 | resolved | Registered: Delta_gamma_w = gamma_sn - gamma_sn0 > 0 is a cost on the substrate side, bare gamma_nl in Young. Derivation 6, Eqs. (25) to (28); contract SF1. Recording it in the charter is part of cp2 decision 2 |
+| Q6 | resolved | Registered: Delta_gamma_w = gamma_sn - gamma_sn0 > 0 is a cost on the substrate side, bare gamma_nl in Young. Derivation 6, Eqs. (27) to (30) [th:eq:young to th:eq:deck-sign]; contract SF1. Recording it in the charter is part of cp2 decision 2 |
 | Q7 | deferred | Main study Phase 7 item 10 (geometric angle of an ACC nanodroplet in MD). P0 has no MD contact angle: Young decides C3, cos(theta) is clipped and the boundary mass reported (lane note N2, W4) |
 | Q8 | ruled at cp2 (fix F6) | C5 R-slurry rule approved: regime activities at the bulk state, worst (pH, E_SHE) point, tolerance n_at e_f / n_M, ACC edge (n_at e_f + Delta_ACC)/n_M. Adding Delta_ACC makes the ACC test equal to the calcite-level test (stability of CaCO3 as a phase at the regime activities, up to the framing's metastability); the ACC-specific dissolution margin, Omega_bulk with the ACC K_sp, is a labelled sensitivity. The falsifiability test (item 21) stays with W5 |
-| Q9 | ruled at cp2 (fix F5) | Sink rule of derivation 9, Eq. (40) [th:eq:sink] approved: anion of the registered salt, minimum over admissible sinks, undetermined never passes. A pass must hold under the lowest-onset CO2 reference scheme and a falsification under every registered scheme, otherwise inconclusive. A pass counts only with a solvated sink; a solid-salt limit is an upper bound on the onset, so its falsification stands and its pass is inconclusive. The electrolyte's own anodic limit is a stated limitation. `theory/thresholds.md`, C5 R-cell |
+| Q9 | ruled at cp2 (fix F5) | Sink rule of derivation 9, Eq. (43) [th:eq:sink] approved: anion of the registered salt, minimum over admissible sinks, undetermined never passes. A pass must hold under the lowest-onset CO2 reference scheme and a falsification under every registered scheme, otherwise inconclusive. A pass counts only with a solvated sink; a solid-salt limit is an upper bound on the onset, so its falsification stands and its pass is inconclusive. The electrolyte's own anodic limit is a stated limitation. `theory/thresholds.md`, C5 R-cell |
 | Q10 | deferred | P0-W1.2 (parameter rows for the barrier height, effective mass and prefactor) and the main study (transport model). The bound enters only the C4 supporting condition |
 | Q11 | resolved | F3: S = IAP/K_sp = Omega, Delta_mu = k_B T ln Omega per formula unit, V_m per formula unit. Derivation 4, Eq. (10) [th:eq:omega]; contract `conventions.supersaturation`. The per-ion form in this entry's text is the square root of Omega and carries no letter of its own (sign audit B3) |
 | Q12 | deferred | P0-W1.2: K_sp, V_m and gamma_nl are taken from one framing (the framing key of the parameter table), enforced by the C3 rule of `theory/thresholds.md`; the framing itself is chosen on literature grounds (lane note N5) and fixed at cp3 |
 | Q13 | ruled at cp2 (fix F7) | IAP = a_Ca a_CO3 is kept. Bias direction stated: for a hydrated ACC framing, omitting a_w^n overstates Omega when a_w < 1, so drying states are optimistic. a_w is reported at each drying state, and where W1 has n the labelled sensitivity `Omega_bulk_hydrated` (contract) is reported. Derivation 4, Structural water; `theory/thresholds.md`, Section 1 |
 | Q14 | ruled at cp2 (approved as proposed) | The square-lattice closure is the optimistic supporting condition of C4; the random-site uncovered fraction is deferred to the main study. `theory/thresholds.md`, Section 1, Registered conventions |
 | Q15 | deferred | Main study; stated limitation "layer persistence" (charter/scope_guard.md). The P0 screen judges wetting in water only |
-| Q16 | resolved | Absolute-barrier criterion DG_het <= B_acc = k_B T ln(J_0 t_p / N_req), derivation 5, Eqs. (23) and (24) [th:eq:rate, th:eq:access]; contract `B_acc`, `N_nuc`; thresholds C3 |
+| Q16 | resolved | Absolute-barrier criterion DG_het <= B_acc = k_B T ln(J_0 t_p / N_req), derivation 5, Eqs. (25) and (26) [th:eq:rate, th:eq:access]; contract `B_acc`, `N_nuc`; thresholds C3 |
 
 Counts after the cp2 ruling: resolved 5 (Q1, Q2, Q6, Q11, Q16); ruled at cp2 4 (Q8, Q9, Q13, Q14); deferred 7 (Q3, Q4, Q5, Q7, Q10, Q12, Q15). Before it: for
 cp2 4 (Q8, Q9, Q13, Q14).
@@ -185,7 +185,7 @@ cp2 4 (Q8, Q9, Q13, Q14).
   energy, or an anisotropic, facet-averaged `gamma_nl` for calcite.
 - **Consequence.** Mixing framings produces a barrier that belongs to no phase. For calcite, an
   isotropic `gamma_nl` misstates both the cap shape and the barrier. This is a limitation of
-  Eq. (17) of the derivation for faceted nuclei.
+  Eq. (21) [th:eq:dg-cap] of the derivation for faceted nuclei.
 
 ## Q13 (B). Structural water in the ion activity product of ACC
 

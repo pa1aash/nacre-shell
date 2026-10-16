@@ -32,9 +32,26 @@
 #   demonstrations      named composites that are wrong on purpose, implemented only to show
 #                       the size of an error (C3 item 13); never used for a verdict
 
-version: 2
-session: P0-W3.2
+version: 3
+session: P0-W3.2 (cp2 fix-up)
 changes:
+  - version: 3
+    session: P0-W3.2 (cp2 fix-up)
+    reason: >-
+      cp2 audit fixes and the cp3 gap policy (theory/cp2_fixes.md). The adsorption convention
+      states gamma_sn as a grand-canonical contact excess and the Gibbs-Langmuir term as a
+      neutral-solute approximation (F1, F2); a labelled hydrated-IAP sensitivity (F7); the
+      kinetic coalescence thickness of the charter renamed h_coal (F9); and a carbonate
+      speciation function for the free-ion activities (gap policy item (v)). No v2 expression
+      changed.
+    added: [Omega_bulk_hydrated, gamma_act_1, gamma_act_2, m_CT_fn, m_CaT_fn, A_carb_fn, P_pair_fn,
+            D_Ca_fn, a_CO3_speciation, a_Ca_speciation, c_Ca_free]
+    changed:
+      - {name: conventions.adsorption, what: 'text only (F1, F2): gamma_sn is the grand-canonical excess of the template-crystal contact at the regime chemical potentials, d gamma_sn / d mu_Ca = -Gamma_Ca_sn and d(gamma_sl - gamma_sn)/d mu_Ca = -(Gamma_Ca_sl - Gamma_Ca_sn); gamma_sn comes from contact data at the regime state and never receives Delta_G_seq (a rule for inputs, not Gamma_Ca_sn = 0); the Gibbs-Langmuir term is a neutral-solute approximation, the double-layer term a stated limitation'}
+      - {name: conventions.speciation, what: 'new convention: a_Ca and a_CO3 are free-ion activities from the speciation functions; c_bulk is the free Ca2+ concentration'}
+      - {name: Delta_gamma_ads, what: 'note only (F2): neutral-solute approximation; expression unchanged'}
+      - {name: h_c, what: 'note only (F9): h_c is geometric; the charter kinetic critical coalescence thickness is the symbol h_coal, not a contract function in P0; expression unchanged'}
+    removed: []
   - version: 2
     session: P0-W3.2
     reason: >-

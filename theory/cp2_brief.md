@@ -13,25 +13,25 @@ symbolically, plus the thresholds block. Equation numbers refer to `theory/build
    - Delta_gamma_w = gamma_sn - gamma_sn0 > 0 is a cost on the substrate side.
    - S = IAP/K_sp = Omega, with Delta_mu = k_B T ln Omega per CaCO3 formula unit and V_m per
      formula unit (F3).
-   - Pointers: derivation Section 6, Eqs. (25) to (28); contract SF1; equation sheet Sections 3
+   - Pointers: derivation Section 6, Eqs. (27) to (30) [th:eq:young to th:eq:deck-sign]; contract SF1; equation sheet Sections 3
      and 5. One deviation was fixed: the old derivation let the letter S denote the per-ion root.
 2. **Q1 and Q2 result: the bookkeeping rule.**
-   - At equilibrium the electrochemical potentials of Ca2+ and CO3^2- are uniform (Eq. (12)
-     [th:eq:uniform]), so the driving force at the template is k_B T ln Omega_bulk (Eq. (13)
+   - At equilibrium the electrochemical potentials of Ca2+ and CO3^2- are uniform (Eq. (14)
+     [th:eq:uniform]), so the driving force at the template is k_B T ln Omega_bulk (Eq. (15)
      [th:eq:dmu-uniform]).
    - Specific binding raises the local concentration exactly as much as it lowers the local
-     standard potential (Eq. (14) [th:eq:no-gain]).
+     standard potential (Eq. (16) [th:eq:no-gain]).
    - A mean potential cancels in the neutral solid and in the ion product, which settles Q2.
    - Uniform chemical potential is the consistent bookkeeping. Local-ideal hides the assumption
      that the layer is a reservoir held above the bulk.
    - The bound Ca2+ belongs to the template-liquid interface only, through the Gibbs-Langmuir term
-     Delta_gamma_ads = -R T (Gamma_s ln(1 + x) - delta_s c_bulk) (Eq. (30) [th:eq:gibbs]).
+     Delta_gamma_ads = -R T (Gamma_s ln(1 + x) - delta_s c_bulk) (Eq. (32) [th:eq:gibbs]).
    - At fixed gamma_sl0 and gamma_sn, stronger binding raises the barrier: SF2 reversed against
-     v1 (Eq. (31) [th:eq:young-ads]). Binding helps only if gamma_sn falls by more than gamma_sl
+     v1 (Eq. (34) [th:eq:young-ads]). Binding helps only if gamma_sn falls by more than gamma_sl
      does.
 3. **No-double-counting proof.**
-   - Pointers: derivation Section 7, the grand potential of a cap (Eq. (29) [th:eq:grand]) and
-     the screen composite (Eq. (32) [th:eq:composite]).
+   - Pointers: derivation Section 7, the grand potential of a cap (Eq. (31) [th:eq:grand]) and
+     the screen composite (Eq. (35) [th:eq:composite]).
    - The screen rule is in Section 7 (rule): Omega_bulk only; Delta_G_seq enters once, through
      Delta_gamma_ads; nothing is added when gamma_sl is computed in situ.
    - Checked mechanically: channel partition, the Omega channel free of template inputs, single
@@ -46,10 +46,10 @@ symbolically, plus the thresholds block. Equation numbers refer to `theory/build
      "undetermined" never passes.
    - The study rule includes the F1 deletion test.
 5. **C3 absolute-barrier derivation.** J = J_0 exp(-DG_het/k_B T) gives
-   N_nuc = J t_p >= N_req, equivalently DG_het <= B_acc = k_B T ln(J_0 t_p / N_req) (Eqs. (23)
-   and (24) [th:eq:rate, th:eq:access]). The keys are `regimes.R-slurry.parameters.J0_het`,
+   N_nuc = J t_p >= N_req, equivalently DG_het <= B_acc = k_B T ln(J_0 t_p / N_req) (Eqs. (25)
+   and (26) [th:eq:rate, th:eq:access]). The keys are `regimes.R-slurry.parameters.J0_het`,
    `regimes.R-slurry.parameters.t_proc` and `thresholds.C3.N_req`.
-6. **Q9, the R-cell oxidation sink** (derivation Section 9, Eq. (40) [th:eq:sink]).
+6. **Q9, the R-cell oxidation sink** (derivation Section 9, Eq. (43) [th:eq:sink]).
    - The sink is fixed by the electrolyte. Electroneutrality pairs the released Ca2+ or Al3+ with
      the salt anion, and the electrons plate Li from LiA.
    - Rule: only the registered salt's anions are admissible; take the minimum over sinks and over

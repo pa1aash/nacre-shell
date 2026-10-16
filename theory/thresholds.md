@@ -16,7 +16,7 @@ No literature number is typed here (rule R2). Every physical quantity a threshol
 by the `lit/params.yaml` key that will supply it, and "Params keys" at the end lists them.
 Rationals such as 1/2 are exact values of the theory, not literature values. The only typed
 numbers are the method conventions set by the cp2 audit (Section 1, "Registered conventions"). Equation numbers refer to the
-P0-W3.2 build of `theory/build/derivation.pdf`, with the stable label in brackets.
+P0-W3.2 cp2 fix-up build of `theory/build/derivation.pdf`, with the stable label in brackets.
 
 What a verdict means: a link that is "feasible" under these rules meets a necessary condition
 under the stated framing and inputs. It does not show that a barrier works, and no rate, capacity
@@ -51,7 +51,7 @@ that uses theta.
 **States.** C1, the C3 wetting part, C4 and C5 are necessary at every registered state at
 which they apply. A link's verdict is therefore the worst over those states, ordered feasible <
 inconclusive < falsified. The C3 accessibility part is cumulative: nuclei may form at any state
-along the registered R-slurry path, so it uses the path sum of Eq. (24) [th:eq:access].
+along the registered R-slurry path, so it uses the path sum of Eq. (26) [th:eq:access].
 
 **Water activity at drying states (cp2 fix F7, Q13).** The ion activity product stays
 IAP = a_Ca a_CO3. For a hydrated ACC framing CaCO3.nH2O the full product carries a_w^n, and
@@ -62,10 +62,10 @@ toward feasibility. Two requirements follow:
 - where W1 supplies n (`params.acc_hydration_n`), the labelled sensitivity `Omega_bulk_hydrated`
   (contract) is reported beside every drying-state verdict. It never decides a verdict.
 
-**Bookkeeping (contract v2).** Every barrier is evaluated with Omega = Omega_bulk at the regime
+**Bookkeeping (contract v2, unchanged in v3).** Every barrier is evaluated with Omega = Omega_bulk at the regime
 activities. The C2 binding enters only through Delta_gamma_ads in gamma_sl, and C2 itself is a
 reported descriptor, not a gate (Section 2) (derivation, Section 7
-(rule), Eqs. (30) to (32)). `Omega_local_ideal` and the demonstration composites never enter a
+(rule), Eqs. (32) to (35) [th:eq:gibbs to th:eq:composite]). `Omega_local_ideal` and the demonstration composites never enter a
 verdict.
 
 ### Registered conventions (cp2 ruling, 2026-10-17)
@@ -140,10 +140,10 @@ kill criterion (cp2 ruling, fix F3).
 
 - **Why it does not gate.** At equilibrium the Ca2+ chemical potential is uniform, so binding does
   not raise the driving force (derivation, Section 4). Its only route to nucleation is the
-  template-liquid energy, through Delta_gamma_ads, Eq. (30) [th:eq:gibbs], and that route is
+  template-liquid energy, through Delta_gamma_ads, Eq. (32) [th:eq:gibbs], and that route is
   already judged inside C3. A separate C2 verdict would judge the same binding a second time, as a
   pass or kill of its own, which is the double count the bookkeeping removes. At fixed gamma_sl0
-  and gamma_sn, the C2 term raises the C3 barrier: SF2, Eq. (31) [th:eq:young-ads].
+  and gamma_sn, the C2 term raises the C3 barrier: SF2, Eq. (34) [th:eq:young-ads].
 - **Reported (every registered R-slurry state).** The distributions of `Delta_G_seq` (J mol^-1,
   the transfer free energy of Ca2+ from hydrated bulk to the site, Eq. (4) [th:eq:cycle]),
   `Theta_occ`, `Gamma_Ca` and `Delta_gamma_ads` at the regime activity. P0 uses one effective
@@ -169,7 +169,7 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
 **(a) Wetting part: bands for f(theta).**
 
 - **Threshold and physics.** X = f(theta), with cos(theta) from `cos_theta_template` (or from
-  `cos_theta_young` with an in-situ gamma_sl), Eq. (31) [th:eq:young-ads]. The deck's starting
+  `cos_theta_young` with an in-situ gamma_sl), Eq. (34) [th:eq:young-ads]. The deck's starting
   bands (charter C3 `threshold.proposed`) are **replaced** by one edge at f = 1/2, which is theta = pi/2 and cos(theta) = 0.
   - f = 1/2 is the only value in (0, 1) where the physics changes. There gamma_sl = gamma_sn: the
     sign of the Young numerator flips.
@@ -192,7 +192,7 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
 
 **(b) Accessibility part: absolute barrier in k_B T.**
 
-- **Threshold and physics.** Eqs. (23) and (24) [th:eq:rate, th:eq:access]. Nuclei form on the
+- **Threshold and physics.** Eqs. (25) and (26) [th:eq:rate, th:eq:access]. Nuclei form on the
   template at J = J_0 exp(-DG_het / k_B T) per area and time. At least the areal density N_req
   must form within the time t_p that the template spends at the registered R-slurry states:
   N_nuc = sum over states k of J_0 Delta t_k exp(-DG_het,k / k_B T) >= N_req. At a single state
@@ -230,8 +230,8 @@ inconclusive otherwise.
 
 ### C4, conformality (R-slurry for wetting, R-cell for the thickness bound)
 
-- **Chosen criterion (lane note N1).** X = `S_spread` (J m^-2), Eq. (33) [th:eq:spread].
-  - Derivation Eq. (35) [th:eq:n1] shows that a small-angle bound theta <= theta_max and
+- **Chosen criterion (lane note N1).** X = `S_spread` (J m^-2), Eq. (36) [th:eq:spread].
+  - Derivation Eq. (38) [th:eq:n1] shows that a small-angle bound theta <= theta_max and
     S_spread >= -s are one criterion at different strictness, both tests of the Young numerator
     relative to gamma_nl.
   - S_spread >= 0 is chosen. It is the strict end (complete wetting) and the only member of the
@@ -243,7 +243,7 @@ inconclusive otherwise.
 - **Margin.** e = +m_S, where m_S = `thresholds.C4.margin_S_spread` is the systematic error not
   carried in the interfacial-energy priors.
 - **Supporting condition (independent): coalescence below the thickness bound.**
-  - The condition is N_s >= N_s_closure = tan^2(theta/2) / (2 d_max^2), Eq. (36)
+  - The condition is N_s >= N_s_closure = tan^2(theta/2) / (2 d_max^2), Eq. (39)
     [th:eq:nclosure], with d_max = max(d_max_ohm, d_max_tun), Eqs. (41) to (43).
   - The island density is N_s = N_nuc from C3(b), an upper estimate. A failure of closure with
     N_nuc is therefore conservative, and a success is only optimistic.
@@ -263,7 +263,7 @@ inconclusive otherwise.
 
 **R-slurry, aqueous Pourbaix.**
 
-- **Threshold and physics.** X = `Delta_G_pbx` (J mol^-1 per non-O, non-H atom), Eq. (37)
+- **Threshold and physics.** X = `Delta_G_pbx` (J mol^-1 per non-O, non-H atom), Eq. (40)
   [th:eq:pbx], for the registered CaCO3 framing phase.
   - It is evaluated at the regime activities of Ca2+ and carbonate (F2), at the bulk state: the
     driving force is Omega_bulk (derivation, Section 7, rule 5).
@@ -301,7 +301,7 @@ inconclusive otherwise.
 
 **R-cell, Li-referenced window.**
 
-- **Threshold and physics.** Eq. (39) [th:eq:window] with the electrolyte-fixed sink of Eq. (40)
+- **Threshold and physics.** Eq. (42) [th:eq:window] with the electrolyte-fixed sink of Eq. (43)
   [th:eq:sink] for CaCO3 and the protecting Al phases (`regimes.R-cell.parameters.al_phases`).
   The registered regime potential range [E_cell_min, E_cell_max] (V vs Li+/Li,
   `regimes.R-cell.parameters.E_min` and `regimes.R-cell.parameters.E_max`) must lie inside every
@@ -439,7 +439,8 @@ version: 1
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
-contract_version: 2
+revised: {session: P0-W3.2 cp2 fix-up, base_commit: 800d5ea3de41a0fb16084519d5c2680eeb14952d, fixes: theory/cp2_fixes.md}
+contract_version: 3
 decision:
   statistic: band_mass
   credible_level: {symbol: p_cred, params: thresholds.decision.credible_level}
