@@ -10,7 +10,8 @@ decision rule registered at G2; this file fixes only what each branch publishes.
   recorded in `charter/venue/` (owned by the b-paper lane); the deck names RSC Advances
   (slide 29). A falsified result is not moved to a lesser venue, and a feasible one is
   not moved up.
-- **Same preprint.** A ChemRxiv preprint is posted under every branch, linking the
+- **Same preprint.** P0 is a separate companion preprint that the main study cites. The
+  main-study results preprint is still posted on ChemRxiv under every branch, linking the
   registration, code and data.
 - **Same scope guard.** `charter/scope_guard.md` applies to every branch.
 - **Same methods contribution.** The targeted-DFT-plus-MLIP screening workflow, the
