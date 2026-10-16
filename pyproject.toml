@@ -5,15 +5,21 @@ description = "Nacre Shell: a pre-registered computational feasibility study."
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "jsonschema>=4.26.0",
+    "numpy>=2.5.4",
     "pyyaml",
     "requests>=2.34.2",
+    "sympy>=1.14.0",
 ]
 
 [project.scripts]
 nacre = "nacre.cli:main"
 
 [dependency-groups]
-dev = ["pytest"]
+dev = [
+    "hypothesis>=6.170.0",
+    "pytest",
+]
 
 [build-system]
 requires = ["hatchling"]
