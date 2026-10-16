@@ -8,7 +8,7 @@ from collections import Counter
 import numpy as np
 import pytest
 
-from nacre.structures import acc, build, ion, mp_source, oligomer, slab, water
+from nacre.structures import acc, build, compare, ion, mp_source, oligomer, slab, water
 from nacre.structures.meta import CLASH_THRESHOLD, formal_charge, min_distance, read_structure, write_structure
 
 from structures_helpers import STRUCT_DIR, committed_structures
@@ -164,12 +164,52 @@ def test_seed_changes_random_constructions(small_slab):
     assert not np.array_equal(w1.positions, w2.positions)
 
 
-def test_committed_files_regenerate_bit_for_bit(tmp_path):
-    _, manifest = build.build_all(out_dir=tmp_path)
+@pytest.fixture(scope="module")
+def fresh_build(tmp_path_factory):
+    out = tmp_path_factory.mktemp("fresh")
+    _, manifest = build.build_all(out_dir=out)
+    return out, manifest
+
+
+def _tolerance_report(out_dir, manifest):
+    """Differences of every freshly built file from the committed one (all files, not the first)."""
+    problems = {}
+    for name, entry in manifest.items():
+        diffs = compare.compare(read_structure(STRUCT_DIR / entry["file"]), read_structure(out_dir / entry["file"]))
+        if diffs:
+            problems[name] = diffs
+    return problems
+
+
+def test_committed_files_regenerate_within_tolerance(fresh_build):
+    # Coordinates within compare.POSITION_TOL; species, order, counts and metadata exact.
+    out, manifest = fresh_build
+    committed = json.loads((STRUCT_DIR / "manifest.json").read_text())
+    assert set(manifest) == set(committed)
+    for name, entry in manifest.items():
+        assert entry["n_atoms"] == committed[name]["n_atoms"], name
+        assert entry["total_charge"] == committed[name]["total_charge"], name
+        assert entry["builder"] == committed[name]["builder"], name
+    assert _tolerance_report(out, manifest) == {}
+
+
+def test_committed_files_regenerate_bit_for_bit(fresh_build):
+    ref = json.loads((STRUCT_DIR / build.REFERENCE_PLATFORM).read_text())
+    here = build.current_platform()
+    if here != ref:
+        pytest.skip(f"same-platform check: committed bytes were built on {ref['system']} {ref['machine']}, "
+                    f"this is {here['system']} {here['machine']}; regeneration is checked to "
+                    f"{compare.POSITION_TOL} A by test_committed_files_regenerate_within_tolerance")
+    out, manifest = fresh_build
     committed = json.loads((STRUCT_DIR / "manifest.json").read_text())
     for name, entry in manifest.items():
         assert entry["sha256"] == committed[name]["sha256"], name
         assert hashlib.sha256((STRUCT_DIR / entry["file"]).read_bytes()).hexdigest() == entry["sha256"]
+
+
+def test_reference_platform_record_names_no_machine():
+    ref = json.loads((STRUCT_DIR / build.REFERENCE_PLATFORM).read_text())
+    assert set(ref) == {"system", "machine"}
 
 
 # ---------------------------------------------------------------- committed outputs
@@ -216,16 +256,19 @@ def test_no_clashes_in_committed(committed):
 
 
 # ---------------------------------------------------------------- machine independence
-@pytest.mark.parametrize("with_xtb_env", [False, True])
-def test_bytes_do_not_depend_on_xtb_environment(tmp_path, monkeypatch, with_xtb_env):
-    home = tmp_path / "home"
-    (home / ".nacre-envs" / ("xtb" if with_xtb_env else "other")).mkdir(parents=True)
-    monkeypatch.setenv("HOME", str(home))
-    out = tmp_path / "out"
-    _, manifest = build.build_all(out_dir=out)
-    committed = json.loads((STRUCT_DIR / "manifest.json").read_text())
-    for name, entry in manifest.items():
-        assert entry["sha256"] == committed[name]["sha256"], name
+def test_bytes_do_not_depend_on_xtb_environment(tmp_path, monkeypatch):
+    # Two builds on this machine, with and without ~/.nacre-envs/xtb, must give identical bytes;
+    # both agree with the committed files to the stated tolerance on any platform.
+    shas = []
+    for with_xtb_env in (False, True):
+        home = tmp_path / f"home{int(with_xtb_env)}"
+        (home / ".nacre-envs" / ("xtb" if with_xtb_env else "other")).mkdir(parents=True)
+        monkeypatch.setenv("HOME", str(home))
+        out = tmp_path / f"out{int(with_xtb_env)}"
+        _, manifest = build.build_all(out_dir=out)
+        shas.append({n: e["sha256"] for n, e in manifest.items()})
+        assert _tolerance_report(out, manifest) == {}
+    assert shas[0] == shas[1]
 
 
 def test_no_machine_dependent_text_in_committed_files():

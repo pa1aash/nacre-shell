@@ -2,12 +2,15 @@
 
 Usage: ``python -m nacre.structures.build [--target NAME ...] [--out DIR]``.
 A manifest (``structures/preprint/manifest.json``) records the sha256, atom count and
-total charge of each output.
+total charge of each output. ``reference_platform.json`` records the operating system and
+processor architecture the committed files were built on: their bytes are reproducible on
+that platform only, and elsewhere they agree to the tolerance of ``nacre.structures.compare``.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import platform
 from pathlib import Path
 
 import yaml
@@ -16,6 +19,7 @@ from nacre.structures import acc, assemble, ion, oligomer, slab, water
 from nacre.structures.meta import OUT_DIR, write_structure
 
 CONFIG = OUT_DIR / "build.yaml"
+REFERENCE_PLATFORM = "reference_platform.json"
 
 BUILDERS = {
     "slab": lambda spec, built: slab.build(spec.get("params"), spec.get("seed", 0)),
@@ -28,6 +32,11 @@ BUILDERS = {
         [(part["name"], built[part["target"]], part.get("place")) for part in spec["parts"]],
         spec.get("params"), spec.get("seed", 0)),
 }
+
+
+def current_platform():
+    """Operating system and processor architecture (no host name, user or path)."""
+    return {"system": platform.system(), "machine": platform.machine()}
 
 
 def load_config(path=CONFIG):
@@ -85,6 +94,8 @@ def main(argv=None):
     old = json.loads(mpath.read_text()) if mpath.exists() else {}
     old.update(manifest)
     mpath.write_text(json.dumps(old, indent=1, sort_keys=True) + "\n")
+    (Path(args.out) / REFERENCE_PLATFORM).write_text(
+        json.dumps(current_platform(), indent=1, sort_keys=True) + "\n")
     for n, m in manifest.items():
         print(f"{n}: {m['n_atoms']} atoms, charge {m['total_charge']:+d}, {m['sha256'][:12]}")
 
