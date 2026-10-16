@@ -27,8 +27,9 @@ What is checked
  10. The version changelog names only functions that exist (added, changed) or are gone
      (removed).
  11. theory/thresholds.md: its fenced `thresholds` block parses, every edge uses registered ids
-     and has the unit of its quantity, every registration constant has a params key, and every
-     params key appears in the file's key table.
+     and has the unit of its quantity, every registration constant has a params key, every
+     params key appears in the file's key table, a non-gating link is a descriptor with no
+     verdict test, and the study rule and deletion test name only gating links.
  12. No literature number in theory/** sources (decimals, exponent notation or integers of
      three or more digits outside an allowlist).
 
@@ -691,7 +692,14 @@ def check_thresholds(ctx, contract, rep):
             ("; no params key for %s" % missing if missing else ""))
 
     for link, spec in doc["links"].items():
-        for test in spec["tests"]:
+        if spec.get("gating") is False:
+            ok = not spec.get("tests") and spec.get("role") == "descriptor"
+            rep.add(ok, "thresholds", "%s descriptor" % link,
+                    "reported, no verdict test" if ok else "a non-gating link must be a descriptor without tests")
+            fnd = spec.get("finding")
+            if fnd:
+                ctx.parse(fnd["quantity"])
+        for test in (spec.get("tests") or []) + (spec.get("sensitivities") or []):
             params = test.get("params") or {}
             keys.update(v for v in params.values())
             for k in params:
@@ -713,6 +721,15 @@ def check_thresholds(ctx, contract, rep):
                 rep.add(False, "thresholds", "%s %s" % (link, test["id"]), "unknown cos_function")
     keys.add(dec["credible_level"]["params"])
     keys.update((doc["study"]["deletion_test"].get("params") or {}).values())
+    study = doc["study"]
+    gating = [k for k, s in doc["links"].items() if s.get("gating", True)]
+    descr = [k for k, s in doc["links"].items() if not s.get("gating", True)]
+    named = lambda rule: re.findall(r"C\d", rule)
+    ok = (study.get("gating_links") == gating and study.get("descriptor_links", []) == descr
+          and named(study["falsified"]) == gating and named(study["feasible"]) == gating
+          and set(study["deletion_test"]["links"]) <= set(gating))
+    rep.add(ok, "thresholds", "study rule", "gating %s, descriptors %s, deletion links %s" % (
+        gating, descr, study["deletion_test"]["links"]))
     table = re.search(r"^## 4\. Params keys$(.*?)^## 5\.", text, re.S | re.M)
     table = table.group(1) if table else ""
     rows = {r.split("|")[1].strip().strip("`") for r in table.splitlines() if r.startswith("| `")}
@@ -753,7 +770,7 @@ def check_literature_numbers(rep):
         if not p.is_file() or "build" in p.parts or p.suffix not in (".tex", ".yaml", ".md", ".py"):
             continue
         for no, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
-            text = re.sub(r"P0-W\d+\.\d+|P0-I\d+", "", line)
+            text = re.sub(r"P0-W\d+\.\d+|P0-I\d+|\b\d{4}-\d{2}-\d{2}\b", "", line)
             text = re.sub(r"\b(?:Phase|item|items|slide|flag|section)s?\s+[\d, ]+", "", text)
             for kind, rx in LIT_RX:
                 for m in rx.finditer(text):

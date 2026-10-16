@@ -133,3 +133,68 @@ Consequential fields, with the same physics, proposed for the same fix:
 11. Resolve the h_c name collision carried from P0-W3.1. The theory's `h_c` is the geometric cap
     height at first contact; the charter's C4 (c) h_c is a kinetic critical coalescence
     thickness. Proposed: the charter's quantity takes another name.
+
+## cp2 ruling and the charter texts for the integrator (P0-W3.2 fix-up)
+
+The planning chat ruled on checkpoint cp2 on 2026-10-17: PASS once fixes F1 to F9 are applied
+as written. The fixes, their commits and a one-line summary of each are in `theory/cp2_fixes.md`.
+Accepted without change: uniform chemical potential as the bookkeeping rule; Delta_G_seq acts
+only through Delta_gamma_ads; contract v2. The integrator applies every charter text below
+through the audit fix list, one commit per fix. This lane does not edit `charter/**`.
+
+### A. C2 wording (fix F3; approved charter text)
+
+- **C2 `physical_observable.definition`:** the text drafted above under "Charter wording change
+  requested (A5)", unchanged.
+- **C2 `physics`:** the text drafted above, followed by this sentence: "C2 is a binding
+  descriptor. It enters C3 only through Delta_gamma_ads and is not an independent kill
+  criterion."
+- **Consequential C3 and C5 fields:** the seven items drafted above under "Consequential
+  fields", unchanged.
+
+### B. `charter/deletion_register.yaml`, step `sequester` (claim C2): replacement rows (fix F3)
+
+No row may show enrichment raising S. Replacement text, field by field:
+
+- **`survives_without_mechanism`:** "Whatever Ca2+ affinity the hydroxylated oxide has on its
+  own. Binding raises the local Ca2+ concentration, not the supersaturation: at equilibrium the
+  template sees the bulk S. The binding reaches nucleation only through the template-liquid
+  energy (Delta_gamma_ads in C3), so this step is reported as a binding descriptor and is not a
+  deletion link."
+- **`controls`:**
+  - `bare_oxide`: computation "Delta_G_seq, Theta_occ, Gamma_Ca and Delta_gamma_ads for Ca2+ at
+    bare oxide sites"; expected_direction "weaker binding (less negative Delta_G_seq) than the
+    template; reported, and its consequence judged in C3".
+  - `catechol_only`: computation "Delta_G_seq at catechol/catecholate sites at the regime pH";
+    expected_direction "weak binding if catechol is largely protonated (design flag 4)".
+  - `chitosan_only`: computation "Delta_G_seq at chitosan sites"; expected_direction "weaker
+    binding than the combined PDA/chitosan template".
+  - `carboxylate_substituted`: computation "Delta_G_seq at carboxylate sites"; expected_direction
+    "possibly more negative than PDA; if so the transplant table changes (design flag 4)".
+  - `PVDF`: computation "Delta_G_seq near PVDF fragments"; expected_direction "no net binding
+    (Delta_G_seq not negative)".
+
+Two consequential texts follow directly from the ruled `deletion_test.links = [C3, C4]`:
+
+- **`rule`**, first sentence after "The verdict must degrade when the nacre mechanism is
+  removed.": "...the study-level verdict must move toward falsified on at least one of C3 or C4.
+  If it does not (or if only C1 degrades), the paper is a generic adhesion study..." (C2 is
+  dropped from the list; the rest of the paragraph is unchanged).
+- **Step `nucleate`, control `catechol_only`, `expected_direction`:** "higher barrier than the
+  full template if the template-crystal contact needs chitosan" (replaces "if enrichment needs
+  chitosan").
+
+### C. Consistency of the C2 register entry: needs a ruling, not approved text
+
+With C2 no longer gating, three fields of `charter/claim_register.yaml` C2 still describe a gate:
+`kill_criterion`, `verdict_bands` and `threshold.status`. The texts below are a **proposal for
+the planning chat**, not approved charter text. The integrator should not apply them until they
+are ruled on.
+
+- `kill_criterion.statement`: "None. C2 is a binding descriptor. It enters C3 only through
+  Delta_gamma_ads and is not an independent kill criterion. If Delta_G_seq is not negative under
+  the registered decision rule, the report states the finding that the sequestration premise
+  fails."
+- `verdict_bands`: replaced by `finding_bands`: holds "Delta_G_seq < 0 with at least the credible
+  mass"; fails "Delta_G_seq >= 0 with at least the credible mass"; undecided otherwise.
+- `threshold.status`: "descriptor in P0 (theory/thresholds.md, cp2 fix F3); no threshold".

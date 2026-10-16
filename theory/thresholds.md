@@ -45,13 +45,14 @@ With p > 1/2, feasible and falsified cannot both hold.
 with cos(theta) <= -1 count as theta = pi (f = 1). The boundary mass is reported for every link
 that uses theta.
 
-**States.** C1, C2, the C3 wetting part, C4 and C5 are necessary at every registered state at
+**States.** C1, the C3 wetting part, C4 and C5 are necessary at every registered state at
 which they apply. A link's verdict is therefore the worst over those states, ordered feasible <
 inconclusive < falsified. The C3 accessibility part is cumulative: nuclei may form at any state
 along the registered R-slurry path, so it uses the path sum of Eq. (24) [th:eq:access].
 
 **Bookkeeping (contract v2).** Every barrier is evaluated with Omega = Omega_bulk at the regime
-activities. The C2 binding enters only through Delta_gamma_ads in gamma_sl (derivation, Section 7
+activities. The C2 binding enters only through Delta_gamma_ads in gamma_sl, and C2 itself is a
+reported descriptor, not a gate (Section 2) (derivation, Section 7
 (rule), Eqs. (30) to (32)). `Omega_local_ideal` and the demonstration composites never enter a
 verdict.
 
@@ -75,24 +76,33 @@ verdict.
 - **Regime.** R-slurry only. Retention in the cell is not judged (layer persistence is a stated
   limitation).
 
-### C2, sequestration (R-slurry)
+### C2, sequestration (R-slurry): a binding descriptor, not a gate
 
-- **Threshold and physics.** X = `Delta_G_seq` (J mol^-1), the transfer free energy of Ca2+ from
-  hydrated bulk to the site, Eq. (4) [th:eq:cycle]. Its sign is the mechanistic statement: the
-  template holds Ca2+ more strongly than water does.
-- **How C2 is judged after Task A.** Task A moved C2's action on nucleation out of the driving
-  force and into the interfacial energies. C2 is therefore judged as the link it names, binding
-  against the solvated reference, and nothing more. A feasible C2 no longer implies any help to
-  C3. Its consequence for nucleation is judged inside C3, through Delta_gamma_ads, Eq. (30)
-  [th:eq:gibbs]. At fixed gamma_sl0 and gamma_sn, that term raises the barrier: SF2, Eq. (31)
-  [th:eq:young-ads].
-- **Margin.** e = -m_seq, where m_seq = `thresholds.C2.margin_DG_seq` is the systematic error of
-  a Ca2+ transfer free energy (hydration benchmark) that the prior does not carry.
-- **Decision.** feasible if `P(Delta_G_seq < -m_seq) >= p`; falsified if
-  `P(Delta_G_seq >= -m_seq) >= p`; inconclusive otherwise.
-- **Reported, not gating.** `Theta_occ` and `Gamma_Ca` at the regime activity, and the
-  distribution of `Delta_gamma_ads`. P0 uses one effective site type per template (Gamma_s,
-  Delta_G_seq); multi-site populations are deferred (Q4).
+C2 is a binding descriptor. It enters C3 only through Delta_gamma_ads and is not an independent
+kill criterion (cp2 ruling, fix F3).
+
+- **Why it does not gate.** At equilibrium the Ca2+ chemical potential is uniform, so binding does
+  not raise the driving force (derivation, Section 4). Its only route to nucleation is the
+  template-liquid energy, through Delta_gamma_ads, Eq. (30) [th:eq:gibbs], and that route is
+  already judged inside C3. A separate C2 verdict would judge the same binding a second time, as a
+  pass or kill of its own, which is the double count the bookkeeping removes. At fixed gamma_sl0
+  and gamma_sn, the C2 term raises the C3 barrier: SF2, Eq. (31) [th:eq:young-ads].
+- **Reported (every registered R-slurry state).** The distributions of `Delta_G_seq` (J mol^-1,
+  the transfer free energy of Ca2+ from hydrated bulk to the site, Eq. (4) [th:eq:cycle]),
+  `Theta_occ`, `Gamma_Ca` and `Delta_gamma_ads` at the regime activity. P0 uses one effective
+  site type per template (Gamma_s, Delta_G_seq); multi-site populations are deferred (Q4).
+- **Finding on the premise.** The mechanism's premise is that the template holds Ca2+ more
+  strongly than water does, Delta_G_seq < 0. With the shared band-mass rule at level p:
+  - if `P(Delta_G_seq >= 0) >= p`, the report states the finding **"the sequestration premise
+    fails"**;
+  - if `P(Delta_G_seq < 0) >= p`, it states "the sequestration premise holds";
+  - otherwise it states "the sequestration premise is undecided".
+
+  The finding is a statement about the mechanism. It does not enter the study verdict, which is
+  carried by C3 through Delta_gamma_ads.
+- **Labelled sensitivity.** `P(Delta_G_seq < -m_seq)`, with m_seq =
+  `thresholds.C2.margin_DG_seq` the method error of a Ca2+ transfer free energy that the prior
+  does not carry, is reported beside the finding.
 - **Regime.** R-slurry, at the regime pH and ionic strength.
 
 ### C3, nucleation (R-slurry)
@@ -245,27 +255,31 @@ inconclusive otherwise.
 
 ## 3. Study-level verdict
 
-- **Combination.** The study is
-  - falsified if any of C1 to C5 is falsified. C1 to C4 are sequential links, any one of which
-    can end the mechanism; C5 is a necessary screen;
-  - feasible only if all of C1 to C5 are feasible and the deletion test below holds;
+- **Combination.** The gating links are C1, C3, C4 and C5. C2 is a reported descriptor (Section
+  2). The study is
+  - falsified if any of C1, C3, C4 or C5 is falsified. C1, C3 and C4 are sequential links, any
+    one of which can end the mechanism; C5 is a necessary screen;
+  - feasible only if all four are feasible and the deletion test below holds;
   - inconclusive otherwise.
+- **Sequestration premise.** The C2 finding of Section 2 is reported with the study verdict. If
+  the premise fails, the report says so as a finding, whatever the verdict.
 - **Deletion test (`charter/deletion_register.yaml`, F1).** Only the controls that remove the
   mechanism gate it: `bare_oxide` and `PVDF`.
   - For each of the two, the screen is rerun with the control in place of the template, at the
     same states and with the same rules.
-  - The test holds if, for each control, at least one of C2, C3 or C4 degrades. A link degrades
+  - The test holds if, for each control, at least one of C3 or C4 degrades. A link degrades
     when its verdict is strictly worse (feasible < inconclusive < falsified), or when its
     falsified-side mass rises by at least p_deg (`thresholds.decision.degrade_mass_min`).
-  - A degradation of C1 alone does not count.
+  - A degradation of C1 alone does not count. C2 is not a deletion link: the control's binding
+    descriptors are reported beside the template's, and the binding reaches the test through C3.
   - If the test fails for either control, the study is reported as a generic adhesion study, and
     the framing changes whatever the feasibility verdict. A feasible verdict also requires the
     test to hold.
   - `catechol_only` and `chitosan_only` are computed and reported but do not gate.
     `carboxylate_substituted` is a competing-chemistry comparator, reported either way.
 - **Reading under contract v2.** Because Ca2+ binding at fixed gamma_sn raises the C3 barrier, a
-  template can pass C2 and fail C3 on the same binding. That outcome is a finding about the
-  mechanism, not a defect of the rules.
+  template can satisfy the sequestration premise and fail C3 on the same binding. That outcome is
+  a finding about the mechanism, not a defect of the rules.
 
 ## 4. Params keys
 
@@ -279,7 +293,7 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `thresholds.C1.margin_W_adh_wet` | m_W | literature (method error) | C1 |
 | `thresholds.C1.contact_area_definition` | A_c rule | registration (cp2) | C1 |
 | `regimes.R-slurry.parameters.termination_weights` | weights | literature | C1 |
-| `thresholds.C2.margin_DG_seq` | m_seq | literature (method error) | C2 |
+| `thresholds.C2.margin_DG_seq` | m_seq | literature (method error) | C2 labelled sensitivity (not gating) |
 | `thresholds.C3.margin_cos_theta` | m_cos | registration (cp2; proposed zero) | C3 (a) |
 | `regimes.R-slurry.parameters.framing` | framing | registration (cp3, N5) | C3, C5 |
 | `regimes.R-slurry.parameters.J0_het` | J0_het | literature | C3 (b), C4 |
@@ -344,16 +358,25 @@ links:
         mixture: {over: termination, weights: regimes.R-slurry.parameters.termination_weights}
     combine: C1
   C2:
+    role: descriptor
+    gating: false
     regimes: [R-slurry]
-    aggregation: worst_state
-    tests:
-      - id: C2
+    statement: C2 is a binding descriptor. It enters C3 only through Delta_gamma_ads and is not an independent kill criterion.
+    enters: {link: C3, via: Delta_gamma_ads}
+    report: [Delta_G_seq, Theta_occ, Gamma_Ca, Delta_gamma_ads]
+    finding:
+      quantity: Delta_G_seq
+      premise_fails: 'P(Delta_G_seq >= 0) >= p_cred'
+      premise_holds: 'P(Delta_G_seq < 0) >= p_cred'
+      otherwise: premise_undecided
+      text_on_fail: the sequestration premise fails
+    sensitivities:
+      - id: C2m
+        label: mass beyond the method-error margin (reported, not gating)
         quantity: Delta_G_seq
         comparator: '<'
         edge: -m_seq
         params: {m_seq: thresholds.C2.margin_DG_seq}
-    report: [Theta_occ, Gamma_Ca, Delta_gamma_ads]
-    combine: C2
   C3:
     regimes: [R-slurry]
     tests:
@@ -434,12 +457,15 @@ links:
     gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, regimes.R-cell.parameters.al_phases]}
     combine: 'C5s and C5c_ox and C5c_red'
 study:
-  falsified: 'any of C1, C2, C3, C4, C5 falsified'
-  feasible: 'all of C1, C2, C3, C4, C5 feasible and deletion_test holds'
+  gating_links: [C1, C3, C4, C5]
+  descriptor_links: [C2]
+  falsified: 'any of C1, C3, C4, C5 falsified'
+  feasible: 'all of C1, C3, C4, C5 feasible and deletion_test holds'
   inconclusive: otherwise
+  report_with_verdict: [C2.finding]
   deletion_test:
     gating_controls: [bare_oxide, PVDF]
-    links: [C2, C3, C4]
+    links: [C3, C4]
     degrade: 'verdict strictly worse, or falsified-side mass up by at least p_deg'
     params: {p_deg: thresholds.decision.degrade_mass_min}
     c1_alone_counts: false
