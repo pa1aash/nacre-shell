@@ -30,7 +30,10 @@ What is checked
      and has the unit of its quantity, every registration constant has a params key, every
      params key appears in the file's key table, a non-gating link is a descriptor with no
      verdict test, and the study rule and deletion test name only gating links.
- 12. No literature number in theory/** sources (decimals, exponent notation or integers of
+ 12. theory/ignorance_priors.md: its fenced `ignorance` block parses, every bound has the unit of
+     its quantity, and the branch masses of the gamma_sn prior are the exact integrals of the
+     uniform density over the three Young branches and sum to one.
+ 13. No literature number in theory/** sources (decimals, exponent notation or integers of
      three or more digits outside an allowlist).
 
 Exit status 0 when every check passes, 1 otherwise.
@@ -762,6 +765,52 @@ def check_thresholds(ctx, contract, rep):
     return sorted(keys)
 
 
+def check_ignorance(ctx, rep):
+    """The machine block of theory/ignorance_priors.md: bound units, branch masses, geometry."""
+    path = THEORY / "ignorance_priors.md"
+    if not path.exists():
+        rep.add(True, "ignorance", "theory/ignorance_priors.md", "absent (not yet written)")
+        return
+    m = re.search(r"```ignorance\n(.*?)```", path.read_text(encoding="utf-8"), re.S)
+    if not m:
+        rep.add(False, "ignorance", "machine block", "no fenced block tagged ignorance")
+        return
+    doc = yaml.safe_load(m.group(1))
+    rep.add(doc.get("written_before_screen_output") is True, "ignorance", "header", "written before screen output")
+
+    def same_unit(name, exprs, what):
+        want = ctx.dims[name]
+        got = [dimension(ctx.parse(str(e)), ctx.dims) for e in exprs if str(e).strip() != "0"]
+        ok = all(g == want for g in got)
+        rep.add(ok, "ignorance", "%s %s" % (name, what), "unit %s%s" % (fmt_dim(want), "" if ok else "; got %s" % [fmt_dim(g) for g in got]))
+
+    for name, q in doc["quantities"].items():
+        bounds = [q[k] for k in ("low", "high") if k in q]
+        same_unit(name, bounds, "bounds")
+    for name, q in doc["geometry"].items():
+        exprs = [q[k] for k in ("low", "high", "equals") if k in q] + q.get("high_min_of", []) + q.get("low_max_of", [])
+        same_unit(name, exprs, "geometric bounds")
+    br = doc["branches"]
+    G = ctx.parse(br["span"])
+    a, b = ctx.parse(br["cuts"]["complete"]), ctx.parse(br["cuts"]["non"])
+    u = sp.Symbol("u_sn", real=True)
+    exact = {"complete": sp.integrate(1 / G, (u, 0, a)), "partial": sp.integrate(1 / G, (u, a, b)),
+             "non": sp.integrate(1 / G, (u, b, G))}
+    masses = {k: ctx.parse(v) for k, v in br["masses_interior"].items()}
+    dims_ok = all(dimension(v, ctx.dims) == DIMLESS for v in masses.values())
+    ok = dims_ok and all(zero(masses[k] - exact[k]) for k in exact) and zero(sum(masses.values()) - 1)
+    rep.add(ok, "ignorance", "branch masses", "uniform gamma_sn on [0, %s]: complete + partial + non = 1, each the "
+            "integral of the density over its Young branch" % br["span"])
+    ok = zero(ctx.parse(br["cuts"]["non"]) - ctx.parse(br["cuts"]["complete"]) - 2 * ctx.syms["gamma_nl"])
+    rep.add(ok, "ignorance", "partial-wetting width", "b - a = 2 gamma_nl > 0")
+    ss = doc["single_source_binding"]["widen_half_width_to_at_least"]
+    ok = (dimension(ctx.parse(ss["free_energy"]), ctx.dims) == parse_unit("J mol^-1")
+          and dimension(ctx.parse(ss["log10_constant"]), ctx.dims) == DIMLESS)
+    rep.add(ok, "ignorance", "single-source widening", "free energy in J mol^-1, log10 constant dimensionless")
+    rep.add(doc["reporting"]["probability_under_ignorance_is_finding"] is False, "ignorance", "reporting rule",
+            "P(feasible) under an ignorance prior is never a finding")
+
+
 def check_changes(contract, rep):
     names = {f["name"] for f in contract["functions"]}
     other = {"no_double_counting"} | {s["id"] for s in contract.get("sign_flips", [])}
@@ -821,6 +870,7 @@ def main():
     check_no_double_counting(ctx, contract, rep)
     check_changes(contract, rep)
     check_thresholds(ctx, contract, rep)
+    check_ignorance(ctx, rep)
     check_literature_numbers(rep)
     print("\n".join(rep.lines))
     print()
