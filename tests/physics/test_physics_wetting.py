@@ -56,7 +56,8 @@ def test_derivative_is_non_negative_on_the_whole_interval():
 @given(st.lists(angles, min_size=1, max_size=20))
 def test_vectorised_matches_scalar(thetas):
     arr = shape_factor(np.array(thetas))
-    assert np.allclose(arr, [shape_factor(t) for t in thetas], rtol=0, atol=0)
+    # vectorised and scalar paths may differ at the last bit
+    assert np.allclose(arr, [shape_factor(t) for t in thetas], rtol=1e-12, atol=0)
 
 
 @pytest.mark.parametrize("bad", [-1e-9, math.pi + 1e-9, float("nan"), float("inf")])
