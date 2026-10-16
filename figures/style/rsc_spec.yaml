@@ -241,6 +241,20 @@ applied:
     unit: pt
     from: values.structure_bold_bond_width
     rule: 2 x the bold bond width, so a marker is at least as wide as two bold strokes
+  tick_length:
+    value: 3.2
+    unit: pt
+    house: true
+    reason: equal to applied.marker_size so ticks read at the same scale as markers; minor ticks are half
+  errorbar_capsize:
+    value: 0
+    unit: pt
+    house: true
+    reason: caps are strokes that carry no data
+  contour_linestyle:
+    value: solid
+    house: true
+    reason: one line style for every contour level; levels are identified in the caption
   vector_format:
     value: pdf
     from: values.formats_accepted
