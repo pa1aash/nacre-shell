@@ -106,6 +106,13 @@ class JointPrior:
     def is_independent(self):
         return bool(np.allclose(self.spearman, np.eye(self.k), atol=_TOL, rtol=0))
 
+    def marginal(self, names):
+        """Joint prior of a subset of the inputs (the copula's marginal is the submatrix)."""
+        idx = [self.names.index(n) for n in names]
+        pairs = tuple(p for p in self.pairs
+                      if p["a"] in {self.priors[i].symbol for i in idx} and p["b"] in {self.priors[i].symbol for i in idx})
+        return JointPrior(tuple(self.priors[i] for i in idx), self.spearman[np.ix_(idx, idx)], pairs)
+
     def independent(self):
         """The same marginals with the correlations removed (robustness check, Task 4e)."""
         return JointPrior.independent_of(self.priors)

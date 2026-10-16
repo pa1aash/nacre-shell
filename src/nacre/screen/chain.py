@@ -31,8 +31,16 @@ from nacre.screen.boundary import EMPTY, clip_cos_theta
 
 @dataclass(frozen=True)
 class Output:
+    """A link quantity; ``scale`` is the scale its sensitivity indices are computed on.
+
+    Positive multiplicative quantities (saturation ratios, enrichment, concentrations,
+    barriers, radii) are analysed as log10: their priors span orders of magnitude, and the
+    barriers diverge like 1 / ln^2(Omega) as Omega -> 1+, so on the linear scale a few
+    near-saturation draws carry the variance and the indices do not converge.
+    """
     symbol: str
     units: str
+    scale: str = "linear"
 
 
 OUTPUTS = {
@@ -42,18 +50,18 @@ OUTPUTS = {
     "sequester": {
         "Delta_G_seq": Output("Delta_G_seq", "J mol^-1"),
         "Delta_G_seq_RT": Output("Delta_G_seq / R T", "1"),
-        "E_enr": Output("E_enr", "1"),
-        "c_local": Output("c_local", "mol m^-3"),
-        "enrichment_realised": Output("c_local / c_bulk", "1"),
+        "E_enr": Output("E_enr", "1", "log10"),
+        "c_local": Output("c_local", "mol m^-3", "log10"),
+        "enrichment_realised": Output("c_local / c_bulk", "1", "log10"),
     },
     "nucleate": {
-        "Omega_bulk": Output("Omega_bulk", "1"),
-        "Omega_local": Output("Omega_local", "1"),
+        "Omega_bulk": Output("Omega_bulk", "1", "log10"),
+        "Omega_local": Output("Omega_local", "1", "log10"),
         "cos_theta": Output("cos(theta) (clipped to [-1, 1])", "1"),
         "f_theta": Output("f(theta)", "1"),
-        "barrier_hom_bulk_kT": Output("Delta_G*_hom(Omega_bulk) / k_B T", "k_B T"),
-        "barrier_het_template_kT": Output("f(theta) Delta_G*_hom(Omega_local) / k_B T", "k_B T"),
-        "r_star_local": Output("r*(Omega_local)", "m"),
+        "barrier_hom_bulk_kT": Output("Delta_G*_hom(Omega_bulk) / k_B T", "k_B T", "log10"),
+        "barrier_het_template_kT": Output("f(theta) Delta_G*_hom(Omega_local) / k_B T", "k_B T", "log10"),
+        "r_star_local": Output("r*(Omega_local)", "m", "log10"),
     },
 }
 
@@ -175,6 +183,22 @@ def evaluate(x, links=None):
         if "nucleate" in links:
             out["nucleate"], masses["nucleate"] = nucleate(x, seq)
     return out, masses
+
+
+def sensitivity_model(link):
+    """The link as a model {symbol: array} -> {quantity: array on its sensitivity scale}."""
+    scales = {q: o.scale for q, o in OUTPUTS[link].items()}
+
+    def model(x):
+        out = evaluate(x, [link])[0][link]
+        res = {}
+        for q, v in out.items():
+            if scales[q] == "log10":
+                with np.errstate(divide="ignore", invalid="ignore"):
+                    v = np.where(v > 0, np.log10(np.where(v > 0, v, 1.0)), np.nan)
+            res[q] = v
+        return res
+    return model
 
 
 def flat_model(links=None):

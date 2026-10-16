@@ -192,7 +192,7 @@ def _next_pow2(x):
 
 
 def size_and_verify(model, priors, outputs, target_half_width, seed, pilot=1024, n_bootstrap=200,
-                    confidence=0.95, key="name", chunk=None, max_base=2 ** 20):
+                    confidence=0.95, key="name", chunk=None, max_base=2 ** 20, on_cap="raise"):
     """Size the Saltelli base sample for a target CI half-width and verify it by doubling.
 
     The target is an input stated before sizing. A pilot of `pilot` rows gives the largest
@@ -201,7 +201,9 @@ def size_and_verify(model, priors, outputs, target_half_width, seed, pilot=1024,
     (doubling adds rows), so the shift of every index from n to 2n rows measures the
     remaining sampling error. Converged when the 2n run's largest half-width and the
     largest shift are both within the target. Returns (indices, design, convergence) of
-    the 2n run; raises ValueError when 2n would exceed max_base.
+    the 2n run. When 2n would exceed max_base: on_cap="raise" raises ValueError;
+    on_cap="cap" runs at 2n = max_base and records capped = true (then converged is
+    whatever the capped run achieves, and the shortfall is reported, never hidden).
     """
     if not target_half_width > 0:
         raise ValueError("target half-width must be positive")
@@ -210,10 +212,13 @@ def size_and_verify(model, priors, outputs, target_half_width, seed, pilot=1024,
     idx0, _ = sobol_indices(model, joint, outputs, pilot, np.random.default_rng(pilot_seq),
                             n_bootstrap, confidence, key, chunk)
     h0 = max_half_width(idx0)
-    n = max(pilot, _next_pow2(pilot * (h0 / target_half_width) ** 2))
-    if 2 * n > max_base:
-        raise ValueError("target half-width %.3g needs %d base rows (doubled), above %d"
-                         % (target_half_width, 2 * n, max_base))
+    n = max(pilot, _next_pow2(pilot * (h0 / target_half_width) ** 2)) if np.isfinite(h0) else max_base
+    capped = 2 * n > max_base
+    if capped:
+        if on_cap != "cap":
+            raise ValueError("target half-width %.3g needs %d base rows (doubled), above %d"
+                             % (target_half_width, 2 * n, max_base))
+        n = max_base // 2
     names, ya, yb, yab = _design_and_evaluate(model, joint, 2 * n, np.random.default_rng(run_seq), key, chunk)
     b1, b2 = np.random.default_rng(boot_seq).spawn(2)
     idx1, _ = _compute(names, ya, yb, yab, outputs, n, b1, n_bootstrap, confidence)
@@ -222,5 +227,6 @@ def size_and_verify(model, priors, outputs, target_half_width, seed, pilot=1024,
     conv = {"target_ci_half_width": float(target_half_width), "base_samples": int(n),
             "base_samples_doubled": int(2 * n), "max_ci_half_width": float(h2),
             "max_estimate_shift": float(shift),
-            "converged": bool(h2 <= target_half_width and shift <= target_half_width)}
+            "converged": bool(h2 <= target_half_width and shift <= target_half_width),
+            "capped": bool(capped)}
     return idx2, design2, conv

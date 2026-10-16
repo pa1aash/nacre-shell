@@ -335,6 +335,10 @@
             },
             "converged": {
               "type": "boolean"
+            },
+            "capped": {
+              "type": "boolean",
+              "description": "True when the size the target needs exceeded the configured maximum and the run used the maximum instead; the shortfall shows in max_ci_half_width."
             }
           }
         }
@@ -382,6 +386,27 @@
               "$ref": "#/$defs/estimate_ci"
             }
           }
+        },
+        "sensitivity_scale": {
+          "type": "object",
+          "description": "Per quantity, the scale its Sobol and Shapley indices are computed on: log10 for positive multiplicative quantities (saturation ratios, enrichment, concentrations, barriers, radii), linear otherwise.",
+          "additionalProperties": {
+            "enum": [
+              "linear",
+              "log10"
+            ]
+          }
+        },
+        "sobol_design": {
+          "$ref": "#/$defs/regime/properties/sobol_design"
+        },
+        "convergence": {
+          "$ref": "#/$defs/regime/properties/convergence"
+        },
+        "shapley_design": {
+          "type": "object",
+          "description": "Sample sizes of the Shapley estimation (n_var, n_outer, n_inner, costs estimated, evaluations, bootstrap).",
+          "additionalProperties": true
         }
       }
     },

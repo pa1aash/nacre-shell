@@ -1,0 +1,3 @@
+# Dry runs on mock or draft priors (rule R-dry): never committed, never reported.
+*
+!.gitignore

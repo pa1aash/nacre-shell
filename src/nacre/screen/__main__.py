@@ -1,10 +1,16 @@
-"""Command line of the screen: ``python -m nacre.screen smoke --mock``."""
+"""Command line of the screen.
+
+    python -m nacre.screen smoke --mock                       Day 1 smoke path (v1 links)
+    python -m nacre.screen dryrun --mock [--params P] [--out O] [--independence]
+                                                              dry run, output under results/preprint/screen/dryrun/
+    python -m nacre.screen production --out O                 P0-W4.3 only: refused before cp3
+"""
 import argparse
 import sys
 from pathlib import Path
 
 from nacre._util import repo_root
-from nacre.screen import smoke
+from nacre.screen import run, smoke
 from nacre.screen.priors import MockPriorsRefused
 
 DEFAULT_PRIORS = Path("configs") / "preprint" / "mock_priors.yaml"
@@ -22,8 +28,27 @@ def main(argv=None):
     sm.add_argument("--sobol-base", type=int, default=512)
     sm.add_argument("--bootstrap", type=int, default=200)
     sm.add_argument("--seed", type=int, default=0)
+    dr = sub.add_parser("dryrun", help="dry run on mock or draft priors (never reported)")
+    dr.add_argument("--params", default=str(Path("configs") / "preprint" / "mock_params.yaml"))
+    dr.add_argument("--out", default=str(run.DRYRUN_DIR / "summary.json"))
+    dr.add_argument("--mock", action="store_true", help="allow a parameter table marked mock: true")
+    dr.add_argument("--independence", action="store_true", help="sample the inputs independently")
+    pr = sub.add_parser("production", help="production screen (P0-W4.3, after cp3)")
+    pr.add_argument("--out", default=str(run.SCREEN_DIR / "summary.json"))
     args = ap.parse_args(argv)
     root = repo_root()
+    if args.cmd in ("dryrun", "production"):
+        try:
+            if args.cmd == "dryrun":
+                path, _ = run.run(root, root / args.out, params_path=root / args.params, dry_run=True,
+                                  allow_mock=args.mock, independence=args.independence)
+            else:
+                path, _ = run.run(root, root / args.out, dry_run=False)
+        except (MockPriorsRefused, run.ProductionRefused) as exc:
+            print("refused: %s" % exc, file=sys.stderr)
+            return 2
+        print("wrote %s" % path.relative_to(root))
+        return 0
     try:
         path, _ = smoke.run(root, root / args.priors, root / args.out, draws=args.draws,
                             sobol_base=args.sobol_base, bootstrap=args.bootstrap, seed=args.seed,
