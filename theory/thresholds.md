@@ -172,12 +172,41 @@ and the running half-widths, and no full draw table is held in memory.
   report gives a C1 verdict per termination.
   - The mixture verdict uses an ignorance mixture over the weights
     (`regimes.R-slurry.parameters.termination_weights`): the weights are drawn uniformly on the
-    simplex (a flat Dirichlet), or uniformly on the sub-region W1's evidence bounds, and the band
-    masses are those of the mixture with the weights drawn alongside every other input.
+    simplex (a flat Dirichlet), and the band masses are those of the mixture with the weights drawn
+    alongside every other input (registered at cp3b A2, below).
   - A point weight is never used: no fetched distribution of terminations exists, and a point
     weight would put an unsourced number into the verdict.
   - The C1 link verdict is the mixture verdict; the per-termination verdicts are printed beside
     it, and a termination that alone is falsified is named.
+- **Termination ignorance mixture (cp3b A2).** Let the K registered terminations be those for
+  which the C1 route is evaluated, with Dupre works W_1, ..., W_K on a draw.
+  - **Mixture quantity.** The template meets the oxide wherever it lands, so a contact of unit area
+    covers a fraction w_k of termination k. Reversible works of adhesion add over disjoint areas,
+    so the work to separate that contact is the area-weighted sum W_mix = sum_k w_k W_k. The
+    mixture test applies the C1 edge to W_mix.
+  - **Weights.** w = (w_1, ..., w_K) ~ Dirichlet(1, ..., 1), the flat Dirichlet, which is uniform on
+    the simplex: every composition of the surface is equally weighted, and no termination is
+    preferred. The weights are drawn once per Monte Carlo draw, independently of every other input,
+    so the band masses of W_mix are joint masses over the weights and the inputs. The earlier
+    alternative of a sub-region bounded by W1's evidence is not registered: W1 admitted no bound
+    (`termination_weights` is a gap), and narrowing the simplex later is a change to a frozen input
+    (a dated entry in `ops/tracks/p0_deviations.md`).
+  - **No point weight**, as above. With K = 1, the mixture is that termination's verdict.
+  - **Per-termination verdicts always beside the mixture.** For every termination the report prints
+    P_good,k = P(W_k > m_W) and its verdict, and it names every termination that is falsified on its
+    own.
+  - **What the weights can and cannot change.** On every draw W_mix lies between min_k W_k and
+    max_k W_k, whatever the weights. The mixture's good mass is therefore bounded independently of
+    the weight prior:
+    P(min_k W_k > m_W) <= P_good(mix) <= P(max_k W_k > m_W).
+    The report prints these two weight-free masses beside the mixture.
+    - If the lower one is at least p, C1 is feasible for every weighting.
+    - If the upper one is at most 1 - p, C1 is falsified for every weighting.
+    - In either case the verdict does not rest on the ignorance prior over the weights.
+    - Otherwise the mixture verdict depends on that prior, and it is labelled "conditional on the
+      termination ignorance mixture" wherever it is quoted, the study verdict included. By the
+      reporting rule of `theory/ignorance_priors.md` (Section 3), a mass under an ignorance prior
+      is never a finding.
 - **Regime.** R-slurry only. Retention in the cell is not judged (layer persistence is a stated
   limitation).
 
@@ -670,7 +699,7 @@ revised: {session: P0-W3.2 cp2 fix-up, base_commit: 800d5ea3de41a0fb16084519d5c2
 revised_cp3: {session: P0-W3.3, ruling: planning chat 2026-10-17 (cp3), base_commit: ac5cdfb, items: [R1, R2, R3, R5, R6, R7, R8],
               log: theory/cp2_fixes.md (cp3 section), disclosures: [R1, R2, R6]}
 revised_cp3b: {session: P0-W3.4, rule: cp3-mandated registrations for production (lane note N22), base_commit: 227d997,
-               items: [A1], log: theory/cp2_fixes.md (cp3 section, cp3b registrations), screen_output_consulted: false}
+               items: [A1, A2], log: theory/cp2_fixes.md (cp3 section, cp3b registrations), screen_output_consulted: false}
 contract_version: 3
 decision:
   statistic: band_mass
@@ -736,8 +765,16 @@ links:
         edge: m_W
         params: {m_W: thresholds.C1.margin_W_adh_wet}
         mixture: {over: termination, weights: regimes.R-slurry.parameters.termination_weights,
-                  weight_prior: 'ignorance: uniform on the simplex (flat Dirichlet), or on the sub-region W1 bounds',
-                  point_weight: never, per_termination_verdicts: reported (cp3 R8)}
+                  weight_prior: 'Dirichlet(1, ..., 1) over the K registered terminations (flat; uniform on the simplex) (cp3b A2)',
+                  sub_region: not registered (W1 admitted no bound; narrowing needs a dated deviation entry),
+                  draw: once per Monte Carlo draw, independent of every other input,
+                  quantity: 'W_mix = sum_k w_k W_k (area-weighted Dupre work of a contact shared among terminations)',
+                  point_weight: never, per_termination_verdicts: always reported beside the mixture (P_good_k and verdict),
+                  falsified_alone: named,
+                  weight_free_bounds: {report: ['P(min_k W_k > m_W)', 'P(max_k W_k > m_W)'],
+                                       feasible_for_every_weighting: 'P(min_k W_k > m_W) >= p_cred',
+                                       falsified_for_every_weighting: 'P(max_k W_k > m_W) <= 1 - p_cred',
+                                       otherwise: label conditional on the termination ignorance mixture (not a finding)}}
     combine: C1
   C2:
     role: descriptor
