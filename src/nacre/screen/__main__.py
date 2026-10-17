@@ -39,6 +39,16 @@ def main(argv=None):
     dr.add_argument("--framing", help="framing to bind while the table has none registered (dry runs only)")
     pr = sub.add_parser("production", help="production screen (P0-W4.3, after cp3)")
     pr.add_argument("--out", default=str(run.SCREEN_DIR / "summary.json"))
+    for p in (dr, pr):
+        p.add_argument("--prior-set", default="table", choices=("table", "ignorance", "analog"),
+                       help="prior set of the unmeasured interfacial energies (labelled in the output)")
+        p.add_argument("--untruncated", action="store_true", help="run gamma_sl0 untruncated (labelled sensitivity)")
+        p.add_argument("--truncation-sensitivity", action="store_true",
+                       help="also rerun the decisions untruncated and list the verdicts that change")
+        p.add_argument("--stability", help="W5 document with the R-slurry Pourbaix section")
+        p.add_argument("--cell", action="append", default=[], help="W5 R-cell document (one per sink; repeatable)")
+        p.add_argument("--decision-draws", type=int, help="draws per state of the decision layer")
+        p.add_argument("--draws", type=int, help="draws per state of the sensitivity propagation")
     th = sub.add_parser("thresholds", help="copy or check configs/preprint/thresholds.yaml")
     th.add_argument("action", choices=("copy", "check"))
     th.add_argument("--ref", default="origin/preprint/p0-w3", help="git ref holding theory/thresholds.md")
@@ -64,11 +74,16 @@ def main(argv=None):
         return 0
     if args.cmd in ("dryrun", "production"):
         try:
+            kw = dict(prior_set=args.prior_set, truncation=not args.untruncated,
+                      truncation_sensitivity=args.truncation_sensitivity,
+                      stability_path=(root / args.stability) if args.stability else None,
+                      cell_paths=[root / c for c in args.cell], decision_draws=args.decision_draws,
+                      overrides={"propagation": {"draws_per_regime": args.draws}} if args.draws else None)
             if args.cmd == "dryrun":
                 path, _ = run.run(root, root / args.out, params_path=root / args.params, dry_run=True,
-                                  allow_mock=args.mock, independence=args.independence, framing=args.framing)
+                                  allow_mock=args.mock, independence=args.independence, framing=args.framing, **kw)
             else:
-                path, _ = run.run(root, root / args.out, dry_run=False)
+                path, _ = run.run(root, root / args.out, dry_run=False, **kw)
         except (MockPriorsRefused, run.ProductionRefused, run.params_adapter.PriorFileError) as exc:
             print("refused: %s" % exc, file=sys.stderr)
             return 2

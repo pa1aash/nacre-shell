@@ -196,7 +196,44 @@ def state_samples(outputs):
 # ------------------------------------------------------------------ claims at one (point, framing)
 
 
-def claims_at(rule, resolver, outs, registered, d_max=None, rng=None):
+#: The chain inputs each link needs (before derive: the speciation and ignorance steps supply some).
+LINK_NEEDS = {"C1": chain.PMF_INPUTS,
+              "C2": ("Delta_G_site", "pKa", "pH", "T", "c_bulk", "Gamma_s", "delta_s"),
+              "C3": chain.NUC_BASE + ("gamma_sl0", "J0_het", "t_proc", "Delta_G_site", "pKa", "c_bulk", "Gamma_s",
+                                      "delta_s"),
+              "C4": chain.NUC_BASE + ("gamma_sl0", "J0_het", "t_proc", "Delta_G_site", "pKa", "c_bulk", "Gamma_s",
+                                      "delta_s")}
+
+
+def _reason(sym, rp, have):
+    """Why a needed input is absent: its table reason, or the gaps of the step that derives it."""
+    if sym in rp.unsampled:
+        return rp.unsampled[sym]
+    upstream = None
+    if sym in ("a_Ca", "a_CO3", "c_bulk"):
+        upstream = [s for s in chain.SPECIATION_INPUTS if s not in have]
+        step = "speciation (contract v3)"
+    elif sym in ("gamma_sn0", "Delta_gamma_w"):
+        u, pair = chain.IGNORANCE["gamma_sn0"]
+        upstream = [s for s in (u,) + pair if s not in have]
+        step = "the gamma_sn ignorance prior"
+    if upstream:
+        return "derived by %s, which lacks %s" % (step, {s: rp.unsampled.get(s, "not bound") for s in upstream})
+    return "not bound"
+
+
+def link_gaps(states, claim):
+    """{state: {symbol: reason}} of the inputs a link needs that a state does not supply."""
+    out = {}
+    for sid, rp in states:
+        have = chain.derived_symbols(rp.joint.symbols)
+        miss = {s: _reason(s, rp, set(rp.joint.symbols)) for s in LINK_NEEDS[claim] if s not in have}
+        if miss:
+            out[sid] = miss
+    return out
+
+
+def claims_at(rule, resolver, outs, registered, d_max=None, rng=None, states=None):
     """C1 to C4 at one design point and framing ({state: (outputs, masses, rp)})."""
     states = {sid: state_samples(o) for sid, (o, _, _) in outs.items()}
     claims = {}
@@ -206,14 +243,15 @@ def claims_at(rule, resolver, outs, registered, d_max=None, rng=None):
         if not have:
             missing = sorted(q - set().union(*[set(s) for s in states.values()])) if states else sorted(q)
             claims[claim] = {"verdict": "inconclusive", "tests": {}, "falsified_mass": None, "role": "gating",
-                             "gap": "not evaluable: no registered state supplies %s" % missing}
+                             "gap": "not evaluable: no registered state supplies %s; missing inputs %s"
+                                    % (missing, link_gaps(states or [], claim))}
             continue
         claims[claim] = decision.evaluate_link(rule, claim, have, resolver, registered_states=registered,
                                                d_max=d_max if claim == "C4" else None, rng=rng)
     seq = {sid: s for sid, s in states.items() if "Delta_G_seq" in s}
     claims["C2"] = decision.evaluate_c2(rule, seq, resolver) if seq else \
         {"verdict": "descriptor", "role": "descriptor", "tests": {}, "falsified_mass": None,
-         "gap": "not evaluable: Delta_G_seq is not supplied"}
+         "gap": "not evaluable: Delta_G_seq is not supplied; missing inputs %s" % link_gaps(states or [], "C2")}
     return claims
 
 
@@ -277,9 +315,10 @@ def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="tabl
     def run_point(table, fr, design, sd, mock_ok):
         states = load_point(table, cfg, fr, design, mock_ok, prior_set, truncation)
         outs, notes = propagate_states(states, n, sd, chunk)
-        cl = claims_at(rule, resolver, outs, [sid for sid, _ in states], d_max, rng) if outs else \
+        cl = claims_at(rule, resolver, outs, [sid for sid, _ in states], d_max, rng, states) if outs else \
             {c: {"verdict": "inconclusive" if c != "C2" else "descriptor", "tests": {}, "falsified_mass": None,
-                 "gap": "no link evaluable: %s" % _unsampled(states)} for c in ("C1", "C2", "C3", "C4")}
+                 "role": "gating" if c != "C2" else "descriptor",
+                 "gap": "not evaluable; missing inputs %s" % link_gaps(states, c)} for c in ("C1", "C2", "C3", "C4")}
         return states, outs, notes, cl
 
     for pid, design, labels in points:

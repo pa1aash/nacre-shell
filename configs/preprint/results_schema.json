@@ -1899,6 +1899,11 @@
           "required": [
             "stability"
           ]
+        },
+        {
+          "required": [
+            "claims"
+          ]
         }
       ]
     },
