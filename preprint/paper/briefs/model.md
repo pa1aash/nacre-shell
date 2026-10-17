@@ -1,59 +1,29 @@
-# Brief: The chain from adhesion in water to film stability (Model)
+# Brief: Physical model (Model)
 
-- **File:** `sections/model.tex`.
-- **Written:** after checkpoint cp2 (equation sheet and derivation signs).
-- **Length target:** 1000 to 1300 words, six paragraphs, with four to six numbered equations.
+- **File:** `sections/model.tex` (section title "Physical model", label `sec:model`).
+- **Written:** P0-W8.3, after checkpoints cp2 and cp3, to the derivation as audited there (`theory/derivation_body.tex`, `theory/cp2_brief.md`, `theory/thresholds.md`).
+- **Length:** about 2100 words of prose, seven steps, seven numbered equations, Fig 2 and Fig 3. The Day 1 target (1000 to 1300 words, six paragraphs) predates the cp2 and cp3 rulings and the seven-step order of P0-W8.3; the overrun is recorded in `ops/reports/P0-W8.3.md` for the planning chat.
 
 ## Purpose
 
-Write the four links as one consistent chain, in energetic order, with each observable defined once and each interfacial free energy entering once.
+Argue each link physically, then give the relation, in physical order. Each template-dependent input enters once. No procedure, no number and no result.
 
 ## Physical argument, in order
 
-1. **Overview.** The links are anchor, sequester, nucleate and stability. They are conditions in series, so a failure at any link ends the chain. Fig 2 is cited. Claim: CL-R05.
-2. **Adhesion in water (Fig 2a).**
-   - The wet Dupre work of adhesion is W_adh,wet = gamma_ox,w + gamma_pol,w - gamma_ox,pol: the reversible work to replace the oxide-template contact with two water interfaces.
-   - Why the dry adhesion energy is the wrong quantity: the slurry never presents a dry oxide.
-   - Claim: CL-R01.
-3. **Sequestration (Fig 2b and Fig 3).**
-   - The free energy of moving Ca2+ from the hydrated bulk at the regime activity to a binding site.
-   - It is built as a thermodynamic cycle (Fig 3) with protonation-state and ionic-strength legs at the regime pH.
-   - Pending cp2 (W3 questions Q1 and Q2): whether sequestration enters nucleation through a local enrichment and supersaturation, c_local/c_bulk = exp(-Delta_G_seq/RT), or through the interfacial energies. The Introduction (P0-W8.2) states the template's role neutrally, as lowering the barrier through the interfacial energies and the ion activities at the interface; write this paragraph to the cp2 ruling and do not assert enrichment before it.
-   - Claim: CL-R02.
-4. **Nucleation (Fig 2c).**
-   - The heterogeneous barrier is the shape factor f(theta) times the homogeneous barrier, with the Young relation for theta.
-   - If cp2 keeps the enrichment route, the local S from step 3 enters the homogeneous barrier through k_B T ln S; otherwise the sequestration term enters through the interfacial energies.
-   - The f(theta) expression and the 16 pi / 3 prefactor are allowlisted forms. Every other number is a macro.
-   - Claim: CL-R03.
-5. **Stability (Fig 2d).**
-   - R-slurry: the Pourbaix decomposition free energy above the aqueous hull, for the CaCO3 phase and the Al oxide or oxyhydroxide.
-   - R-cell: the lithium-referenced stability window.
-   - Claim: CL-R04.
-6. **Consistency.**
-   - Each interfacial free energy appears in exactly one link. The shared gamma terms between adhesion and nucleation are identified, not duplicated.
-   - The proof is in the SI (no-double-counting section).
-   - Claim: CL-R05.
+1. **The two regimes and which links apply in each** (Fig 2). Adhesion, Ca2+ binding and nucleation are defined only in R-slurry; coverage uses R-slurry wetting energies against an R-cell thickness bound; stability is separate in each regime. The links are necessary conditions in series. Claims: CL-R09, CL-R05.
+2. **Adhesion in water** (Fig 2a). The Dupre work in water with the water-competition form; the dry work is only a comparator; the bare oxide fixes the zero. Claim: CL-R01.
+3. **Ca2+ binding as a descriptor** (Fig 2b, Fig 3). Equilibrium fixes the Ca2+ electrochemical potential, so binding does not raise the driving force (Delta_mu = k_B T ln Omega_bulk). It enters only through the template-liquid energy, by the Gibbs-Langmuir term (a neutral-solute approximation; the double-layer term is a stated limitation). Ca2+ at the template-crystal contact belongs to gamma_sn. Consequence, stated plainly: binding alone raises the barrier; the template helps only if gamma_sn falls by more. Claims: CL-R02, CL-R10.
+4. **Heterogeneous nucleation** (Fig 2c). The capillarity barrier with f(theta); Young's relation with the fixed sign convention and the bare gamma_nl; the water-displacement cost enters gamma_sn once; the single-entry rule (proof in the SI); the absolute-barrier criterion with the Poisson-occupancy N_req. Claims: CL-R03, CL-R05, CL-R11.
+5. **Film coverage** (Fig 2d). The spreading coefficient and its bound S_spread <= gamma_sl - gamma_nl from gamma_sn >= 0; complete wetting is excluded when gamma_sl <= gamma_nl, with "hydrophilic" meant relative to the mineral (a water contact angle in air does not decide it); a continuous film must come from nucleation density closing it; d_max is a cell-regime limitation. Claim: CL-R12.
+6. **Stability.** R-slurry: dissolution decided by Omega_bulk >= 1, the quantity of nucleation, with the measured calcite K_sp; the Pourbaix construction at fixed carbonate carbon answers competing solids and gives the oxide baseline. R-cell: the anodic oxidation of the carbonate referenced to Li+/Li; the sink is fixed by the electrolyte (solid-salt limit an upper bound on the onset); the all-experimental route governs, computed schemes are benchmarked comparators; the Li2CO3 comparison supports the reading; the electrolyte's own limit is not assessed. Claims: CL-R04, CL-R13.
+7. **What the model leaves out**, briefly: classical nucleation theory's validity, the double layer, kinetics, layer persistence (the full list is in the Discussion). Claim: CL-L06.
 
-## Figures and tables
+## Figures
 
-- Fig 2, panels a to d: the mechanism chain, one panel per link.
-- Fig 3: the thermodynamic cycle for sequestration.
-
-## Macros needed
-
-None for the relations themselves; the model section is symbolic. Results macros are cited from Results, not here.
-
-## Claims carried
-
-CL-R01, CL-R02, CL-R03, CL-R04 and CL-R05.
-
-## Supplying lanes
-
-- p0-w3 supplies the derivation and the equation sheet (`theory/**`; the SI includes `theory/derivation_body.tex`).
-- p0-w6 supplies Fig 2 and Fig 3.
-- p0-w8 writes the text.
+- Fig 2 (`fig:chain`, from p0-w6): panels a to d, letters set by the layout outside the artwork (`layout/panel_letters.tex`).
+- Fig 3 (`fig:cycle`, from p0-w6): where the binding enters the barrier.
 
 ## Cautions
 
-- Use symbols exactly as the W3 equation sheet defines them; reconcile at cp2.
-- No digits in prose outside macros and the allowlisted forms (`lint/numbers_allowlist.txt`). Chemical formulae go through `\ce{}`.
+- Symbols are those of `theory/macros.tex`. Digits only in the allowlisted exact forms (`lint/numbers_allowlist.txt`); chemical formulae through `\ce{}`.
+- No sentence lets binding or enrichment raise the supersaturation; no C2 gate.

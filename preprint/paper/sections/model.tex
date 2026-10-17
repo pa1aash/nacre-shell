@@ -1,4 +1,128 @@
-% The chain from adhesion in water to film stability. Brief: briefs/model.md. Claims carried: the entries of ../claims.yaml with section model.
-% Prose: P0-W8.3.
-\section{The chain from adhesion in water to film stability}\label{sec:model}
-\nacrePlaceholder{model prose}
+% Physical model. Brief: briefs/model.md. Claims carried: the entries of ../claims.yaml with section model.
+% Prose: P0-W8.3, written to the derivation as audited at cp2 and cp3 (theory/derivation_body.tex;
+% theory/cp2_brief.md; theory/thresholds.md). One sentence per line; each ends with a comment
+% naming its ledger id. Each link is argued physically before its relation. No number appears here,
+% and no result: the decision rules and conventions are in Methods, the values in Results.
+\section{Physical model}\label{sec:model}
+
+% (1) The two regimes, and which links apply in each.
+The mechanism is assembled in one environment and must survive in another. % CL-R09
+The template is anchored, binds \ce{Ca^2+} and templates the mineral while the electrode is a water-processed, alkaline slurry at room temperature (\Rs); the finished interface then sits in a non-aqueous, fluorine-free electrolyte with the collector held at the anodic potential of the cathode (\Rc). % CL-R09
+The two regimes differ in solvent, reference state and mode of attack on the collector, so each relation below is used only in the regime whose reference states it assumes. % CL-R09
+Adhesion, \ce{Ca^2+} binding and nucleation are defined only in \Rs, because water-wetted surfaces, the hydrated ion and an aqueous ion activity product do not exist in the cell; coverage is judged with the \Rs\ wetting energies against a thickness bound set by electron transport in \Rc; stability is a separate question in each regime (Fig.~\ref{fig:chain}). % CL-R09
+The links are necessary conditions in series: one that fails for every plausible input ends the chain, and one that passes shows only that its step is thermodynamically possible under the stated framing. % CL-R09, CL-R05
+
+\begin{figure*}[t]
+  \IfFileExists{\nacreRepoRoot/figures/out/fig2.pdf}{%
+    \nacreFigTwoPanelLetters
+    \includegraphics[width=\textwidth]{\nacreRepoRoot/figures/out/fig2.pdf}}%
+    {\nacreMissing{chain artwork from the figure lane}}
+  \caption{The links of the chain the screen tests, as an illustrative construction, not a simulated structure. In every panel the brown strip is the hydroxylated aluminium oxide, with its surface oxygens as red discs. (a) Adhesion in water: interfacial water covers the bare oxide on the left; on the right, catechol-bearing units of a generic oligomer (nitrogen blue) bind the oxide through their catechol oxygens, and the water they displace leaves the contact (short arrows). (b) \ce{Ca^2+} binding: the catechol-bearing layer (beige band) carries catecholate and carboxylate sites, a few of which hold a \ce{Ca^2+} ion (green); the solution above holds the same sparse \ce{Ca^2+} and carbonate ions at every height, because binding concentrates \ce{Ca^2+} at the sites without raising the supersaturation, which stays that of the bulk. (c) A calcium carbonate nucleus (pale blue cap) at a small contact angle on the template; the template--nucleus contact (vermillion) is where the template acts on the barrier, and \ce{Ca^2+} ions bridging sites to the nucleus belong to that contact. (d) Neighbouring nuclei coalesced into a continuous film over the template, covering the whole template--film contact (vermillion). Structures are drawn from their SMILES as pictograms: bonds as lines, oxygen red, nitrogen blue, \ce{Ca^2+} green, hydrogen white, carbon at line vertices, charges not drawn. The dashed boxes with diagonals at the upper right of each panel hold the places of detail renders still to come.}
+  \label{fig:chain}
+\end{figure*}
+
+% (2) Adhesion in water: the Dupre work with water competition.
+In the slurry the template never meets a dry oxide. % CL-R01
+The hydroxylated \ce{Al2O3}/\ce{AlOOH} surface carries hydrogen-bonded water and the polymer is hydrated, so a catechol--oxide contact can form only by displacing that water (Fig.~\ref{fig:chain}a). % CL-R01
+The comparison that decides adhesion is therefore between the two states that compete in the slurry: oxide and template in contact, and oxide and template each wetted by water. % CL-R01
+The reversible work per area that separates them is the Dupr\'e work in water, % CL-R01
+\begin{equation}\label{eq:dupre}
+\Wwet=\gow+\gpw-\gop=\Wdry+2\gw-W_\mathrm{ow}-W_\mathrm{pw},
+\end{equation}
+where the second form writes each in-water energy through the work $W_\mathrm{ow}$ or $W_\mathrm{pw}$ with which water binds that surface, and $\Wdry=\go+\gp-\gop$ is the adhesion against vacuum. % CL-R01
+It states the water competition in one line: a large dry adhesion is offset by the binding of water to each surface, and a hydroxylated oxide and a hydrophilic polymer both bind water strongly, so $\Wwet$ can be small or negative where $\Wdry$ is large. % CL-R01
+The dry work describes a state the slurry never presents and is kept only as a comparator. % CL-R01
+The bare oxide has $\Wwet=0$ by construction and fixes the zero, and the template stays at the oxide against water if $\Wwet>0$. % CL-R01
+$\Wwet$ is obtained as the potential of mean force of a template fragment pulled from the oxide in explicit water, divided by a contact area defined once for all fragments, which already contains the displacement penalty and the entropy of the released water. % CL-R01
+
+% (3) Ca2+ binding as a descriptor.
+The template can hold \ce{Ca^2+} only if its coordinating groups compete successfully with the hydration shell of the ion. % CL-R02
+The transfer free energy $\DGseq$ of one \ce{Ca^2+} from the hydrated bulk at the regime activity to a site, built as a thermodynamic cycle that includes the deprotonation of the site at the regime pH and the activity corrections at the regime ionic strength, measures that competition, and $\DGseq<0$ means net binding (Fig.~\ref{fig:chain}b). % CL-R02
+Binding raises the local \ce{Ca^2+} concentration, but it cannot raise the driving force for nucleation. % CL-R02
+The interfacial region exchanges ions with the slurry, so at equilibrium every ion carries the same electrochemical potential at a site as in the bulk: binding lowers the local standard potential of the ion by exactly as much as it raises the concentration term, and a mean electrostatic potential cancels in the neutral solid. % CL-R02
+The driving force per formula unit at the template is therefore the bulk one, % CL-R02
+\begin{equation}\label{eq:dmu}
+\Dmu=\kB T\ln\Omb,\qquad \Omb=\frac{\aCa\,\aCO}{\Ksp},
+\end{equation}
+with the free-ion activities of the carbonate speciation at the regime state and $\Ksp$ the solubility product of the framing. % CL-R02
+Binding reaches the barrier only through the interfacial free energies. % CL-R02
+Bound \ce{Ca^2+} is a surface excess $\GCa=\Gs\Theta-\ds\cb$ of the template--liquid interface, with $\Theta$ the Langmuir occupancy of sites of areal density $\Gs$ in a binding layer of thickness $\ds$ and $\cb$ the free-ion concentration, and the Gibbs adsorption equation turns that excess into a change of the template--liquid energy, % CL-R02
+\begin{equation}\label{eq:gibbs}
+\dga=\gsl-\gslz=-\Rg T\big[\Gs\ln(1+x)-\ds\cb\big],\qquad x=\frac{\ds\cb}{\Gs}\,\e^{-\DGseq/\Rg T},
+\end{equation}
+which is negative for a binding template; $\gslz$ is the energy of the \ce{Ca}-free template. % CL-R02
+Treating the adsorbing component as \ce{Ca^2+} with its compensating charge, a neutral solute, is an approximation: it leaves out the change of the diffuse-layer free energy when binding changes the surface charge, a correction that ionic strength screens and to which the model assigns no sign. % CL-R02
+\ce{Ca^2+} held at the template--crystal contact, for example bridging a carboxylate to the crystal, is not part of $\dga$: it belongs to the template--nucleus energy $\gsn$, which is taken from contact data at the regime state (Fig.~\ref{fig:cycle}). % CL-R02
+$\DGseq$ is therefore a binding descriptor, reported with the occupancy, the excess and $\dga$, and not a criterion of its own. % CL-R02
+The consequence is plain: at a fixed template--nucleus energy, binding alone raises the nucleation barrier, because the bound ions must be stripped from the area a nucleus covers, as for an adsorbed inhibitor. % CL-R10
+The template helps nucleation only if the template--nucleus energy falls by more than the adsorption lowers the template--liquid energy. % CL-R10
+
+\begin{figure*}[t]
+  \IfFileExists{\nacreRepoRoot/figures/out/fig3.pdf}{%
+    \includegraphics[width=\textwidth]{\nacreRepoRoot/figures/out/fig3.pdf}}%
+    {\nacreMissing{binding-pathway artwork from the figure lane}}
+  \caption{Where the \ce{Ca^2+} binding of the template enters the nucleation barrier, as an illustrative construction, not a simulated structure. Top left (grey box): the bulk solution at the regime activities, with a hydrated \ce{Ca^2+} ion (green disc with six water molecules, oxygen towards the ion) and a carbonate ion; every ion here carries its bulk electrochemical potential. Lower middle: the template--liquid interface at the regime \ce{Ca^2+} activity; the catechol-bearing layer (beige band) on the hydroxylated oxide (brown strip, red discs the surface oxygens) carries catecholate and carboxylate sites, two of which hold a \ce{Ca^2+} ion. Blue curved arrow, top left to lower middle: the transfer of \ce{Ca^2+} from the hydrated bulk to a site, whose free energy changes only the template--liquid energy, through the Gibbs--Langmuir term (blue line). Black arrow, lower middle to lower right: a nucleus forms on the template. Lower right: the calcium carbonate nucleus as a spherical cap (pale blue) at a small contact angle, where three interfaces meet: the template--nucleus contact under the cap (vermillion), whose \ce{Ca^2+} ions bridging sites to the crystal are its own \ce{Ca^2+} excess, counted inside its energy; the nucleus--liquid surface of the cap (bold black outline); and the template--liquid interface outside the cap (blue), still carrying its adsorbed \ce{Ca^2+}. Three short arrows at the right edge of the cap: the three interfacial energies as line tensions in Young's relation, blue outward along the template, vermillion inward along the template and black along the cap surface. Black curved arrow, top left to the cap: the formula units of the nucleus come from the bulk solution at the bulk chemical potentials, so the driving force is that of the bulk and none of it comes from the bound layer. Structures are drawn from their SMILES as pictograms, with the colours of Fig.~\ref{fig:chain}.}
+  \label{fig:cycle}
+\end{figure*}
+
+% (4) Heterogeneous nucleation: Young with the fixed sign convention, single entry, absolute barrier.
+A cluster of the mineral gains $\Dmu$ for every formula unit it holds and pays an interfacial free energy for every area it creates; volume grows faster than surface, so the barrier sits at a critical size. % CL-R03
+On the template a nucleus replaces template--liquid interface by template--nucleus interface over its base, which lowers the barrier without changing the driving force (Fig.~\ref{fig:chain}c). % CL-R03
+In the capillarity approximation for a spherical cap, % CL-R03
+\begin{equation}\label{eq:het}
+\begin{gathered}
+\DGhet=f(\theta)\,\frac{16\pi}{3}\frac{\gnl^{3}\vm^{2}}{\Dmu^{2}},\qquad f(\theta)=\frac{(2+\cos\theta)(1-\cos\theta)^{2}}{4},\\
+\cos\theta=\frac{\gslz+\dga-\gsn}{\gnl},
+\end{gathered}
+\end{equation}
+with $\vm$ the volume per formula unit and $\Dmu$ the bulk driving force of Eq.~\eqref{eq:dmu}. % CL-R03
+The sign convention is fixed: $\theta$ is measured through the nucleus, and $\cos\theta$ is the free energy gained per area by replacing template--liquid interface with template--nucleus interface, in units of the nucleus--liquid energy, so $\theta=0$ is complete wetting with no barrier and $\theta=\pi$ is no wetting and the homogeneous barrier. % CL-R03
+Young's relation carries the bare $\gnl$, the same energy that sets the homogeneous barrier: water displaced from under the contact sits on the contact disc and never touches the free surface of the cap, and only one $\gnl$ lets the barrier factorise as written. % CL-R03
+A displacement cost therefore enters $\gsn$ once, as a positive correction that raises $\theta$ and the barrier, and not at all when $\gsn$ is already a full in-water contact energy. % CL-R03, CL-R05
+Every template-dependent input enters once, in one interfacial energy, and only through $\theta$: $\Omb$ depends on bulk activities alone, while $\DGseq$, $\Gs$ and $\ds$ enter only through $\dga$, added once to the \ce{Ca}-free $\gslz$, and not at all when $\gsl$ is computed at the regime activities. % CL-R05
+Crediting the bound ions to the driving force as well would count the binding free energy twice and give it the opposite effect on the barrier; the proof that the composite of Eq.~\eqref{eq:het} counts each template input once is in the Supplementary Information. % CL-R05
+A barrier is low enough only relative to the number of attempts the system makes in the time available. % CL-R11
+Nuclei form on the template at a rate per area $J=J_0\e^{-\DGhet/\kB T}$, so over the time $t_\mathrm{p}$ the template spends at the registered \Rs\ states the areal density of nuclei must reach a required density, % CL-R11
+\begin{equation}\label{eq:access}
+\DGhet\le B_\mathrm{acc}=\kB T\ln\frac{J_0t_\mathrm{p}}{N_\mathrm{req}},\qquad N_\mathrm{req}=\frac{\ln(1/q_0)}{A_\mathrm{patch}}.
+\end{equation}
+The required density follows from the contact patch $A_\mathrm{patch}$ through which a cathode particle meets the collector: if nuclei land independently, the number under one patch is Poisson distributed, and allowing at most a fraction $q_0$ of the patches to stay empty gives the second relation. % CL-R11
+Only $\ln J_0$ enters, so an order-of-magnitude prefactor moves $B_\mathrm{acc}$ by a few $\kB T$; the count ignores exclusion zones around growing islands, so it is an upper estimate and the criterion is necessary, not sufficient. % CL-R11
+
+% (5) Film coverage: spreading, and why complete wetting is excluded when gamma_sl <= gamma_nl.
+A low barrier says where nuclei form easily, not whether they make a continuous film, and a single gap leaves a path from the electrolyte to the collector. % CL-R12
+Whether the mineral spreads over the template or beads up on it is a wetting balance, the spreading coefficient % CL-R12
+\begin{equation}\label{eq:spread}
+\Ssp=\gsl-\gsn-\gnl\le\gsl-\gnl,
+\end{equation}
+where $\Ssp\ge0$ means complete wetting and growth layer by layer and $\Ssp<0$ means growth by islands. % CL-R12
+The bound holds because $\gsn\ge0$: a negative interfacial free energy between two immiscible solids would make them create contact without limit, so no sharp contact would exist. % CL-R12
+It has a physical consequence: complete wetting needs $\gsl\ge\gnl$, a template--water interface that costs at least as much per area as the mineral--water interface. % CL-R12
+A template that water wets at least as favourably as it wets the mineral, $\gsl\le\gnl$, therefore cannot be wetted completely by the mineral, whatever its contact with the nucleus, and \ce{Ca^2+} binding pushes the same way by lowering $\gsl$. % CL-R12
+Hydrophilic is meant here in that relative sense: a small water contact angle in air constrains the energy of the template against water relative to its dry surface energy and does not by itself place $\gsl$ below $\gnl$, so whether a template meets the condition is a question for the inputs, and the screen reports the prior mass with $\gsl>\gnl$. % CL-R12
+On such a template a continuous film can form only when islands meet before they grow too thick (Fig.~\ref{fig:chain}d): for equal caps on a square lattice, closure below an admissible thickness $d_\mathrm{max}$ needs an island density that rises steeply with $\theta$ and with the inverse square of $d_\mathrm{max}$, so it is the nucleation density that must close the film. % CL-R12
+$d_\mathrm{max}$ is set by electron transport through the insulating carbonate, a bound of the cell regime that enters only as a limitation. % CL-R12
+
+% (6) Stability: R-slurry by Omega_bulk with Pourbaix as the competing-phase baseline; R-cell by carbonate oxidation.
+A layer that is unstable in its own environment dissolves or reacts, and the two regimes pose different questions. % CL-R04
+In the slurry, carbon stays in the carbonate system, and dissolving the layer is the reaction \ce{CaCO3(s) -> Ca^2+ + CO3^2-} at the regime activities, with free energy % CL-R04
+\begin{equation}\label{eq:stability}
+\begin{gathered}
+\Delta G_\mathrm{diss}=-\Rg T\ln\Omb\quad\text{in \Rs},\\
+E^{*}=\frac{\Delta G_\mathrm{r}}{\Delta n\,\Fc}\quad\text{in \Rc},
+\end{gathered}
+\end{equation}
+per mole of \ce{CaCO3}, so the layer dissolves when $\Omb<1$ and is stable against dissolution when $\Omb\ge1$. % CL-R04
+This is the quantity that drives nucleation: a slurry state that cannot nucleate the mineral is one in which a layer of it dissolves, and binding at the template changes neither. % CL-R04
+Dissolution is therefore decided from $\Omb$ with the measured calcite solubility product, not from a computed distance to the aqueous stability hull, whose tolerance for the error of computed formation energies would hide several decades of undersaturation. % CL-R04
+The aqueous Pourbaix construction at fixed carbonate carbon answers the remaining question, whether another solid lies below \ce{CaCO3} at the regime pH and potential, and gives the state of the native oxide as the baseline of the bare collector. % CL-R04
+In the cell the solvent is not water and the reference is \ce{Li+}/Li: holding the collector at a potential fixes the chemical potential of lithium, and a reaction that releases $\Delta n$ lithium to that reservoir sets the limit $E^{*}$ of Eq.~\eqref{eq:stability}, above which the phase oxidises. % CL-R04
+A carbonate exchanges no lithium by itself, so its anodic limit is the oxidation of the carbonate to \ce{CO2} and \ce{O2}; the released \ce{Ca^2+} must leave with what the electrolyte offers, which pairs it with two salt anions, while the electrons reach the reference as lithium plated from the salt, \ce{CaCO3 + 2LiA -> CaA2 + CO2 + 1/2O2 + 2Li}. % CL-R04
+The sink is therefore fixed by the registered salt, and because the true product is the lower in free energy of the solid salt and the solvated ions, a limit computed with the solid salt alone is an upper bound on the onset: a falsification computed with it stands, and a pass needs the solvated sink. % CL-R04
+The reaction free energy decides the limit, and its source matters: database solids combined with a gas reference carry the error of the carbonate formation energy and of the \ce{CO2} reference, and the registered reference schemes bracket the measured reaction energies from opposite sides. % CL-R04
+Where every reactant and product is tabulated, the all-experimental route carries no such error and governs, and the computed schemes are benchmarked comparators. % CL-R04
+The reading is physical: \ce{Li2CO3} in non-aqueous cells oxidises close to the experimental equilibrium limit of the same reaction\cite{mahne2018electrochemical,cao2022oxidative}, so the limit of \ce{CaCO3} marks the onset of an observable reaction rather than a bound that kinetics could postpone indefinitely. % CL-R13
+The anodic limit of the electrolyte itself is a separate quantity and is not assessed. % CL-R04
+
+% (7) What the model leaves out (stated briefly; the full list is in the Discussion).
+The model leaves out four things, each taken up in the Discussion: the validity of classical nucleation theory at the size of a nucleus, with its capillarity approximation, isotropic $\gnl$ and lack of non-classical pathways such as prenucleation clusters or liquid precursors; the double-layer term of the adsorption energy; kinetics beyond the accessibility bound, including any local excess of driving force during drying, which needs transport with a time scale; and the persistence of the layer, since anchoring, binding and nucleation are not computed in the cell. % CL-L06
