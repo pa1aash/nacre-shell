@@ -49,24 +49,27 @@ steps:
   - step: sequester
     claim: C2
     survives_without_mechanism: >-
-      Whatever Ca2+ affinity the hydroxylated oxide has on its own; no template-driven
-      enrichment above the aqueous reference.
+      Whatever Ca2+ affinity the hydroxylated oxide has on its own. Binding raises the local
+      Ca2+ concentration, not the supersaturation: at equilibrium the template sees the bulk
+      S. The binding reaches nucleation only through the template-liquid energy
+      (Delta_gamma_ads in C3), so this step is reported as a binding descriptor and is not a
+      deletion link.
     controls:
       - control: bare_oxide
-        computation: Delta_G_seq for Ca2+ at bare oxide sites
-        expected_direction: less negative Delta_G_seq (smaller enrichment) than the template
+        computation: Delta_G_seq, Theta_occ, Gamma_Ca and Delta_gamma_ads for Ca2+ at bare oxide sites
+        expected_direction: weaker binding (less negative Delta_G_seq) than the template; reported, and its consequence judged in C3
       - control: catechol_only
         computation: Delta_G_seq at catechol/catecholate sites at the regime pH
         expected_direction: weak binding if catechol is largely protonated (design flag 4)
       - control: chitosan_only
         computation: Delta_G_seq at chitosan sites
-        expected_direction: weaker than the combined PDA/chitosan template
+        expected_direction: weaker binding than the combined PDA/chitosan template
       - control: carboxylate_substituted
         computation: Delta_G_seq at carboxylate sites
         expected_direction: possibly more negative than PDA; if so the transplant table changes (design flag 4)
       - control: PVDF
         computation: Delta_G_seq near PVDF fragments
-        expected_direction: no enrichment (Delta_G_seq not negative)
+        expected_direction: no net binding (Delta_G_seq not negative)
 
   - step: nucleate
     claim: C3
@@ -79,7 +82,7 @@ steps:
         expected_direction: larger f(theta) and higher barrier than on the template
       - control: catechol_only
         computation: f(theta) and barrier on catechol fragments
-        expected_direction: higher barrier than the full template if enrichment needs chitosan
+        expected_direction: higher barrier than the full template if the template-crystal contact needs chitosan
       - control: chitosan_only
         computation: f(theta) and barrier on chitosan
         expected_direction: higher barrier than the full template
@@ -120,7 +123,7 @@ rule: >-
   The verdict must degrade when the nacre mechanism is removed. The must-degrade test
   applies only to the controls that remove the mechanism, bare_oxide and PVDF: with either
   in place of the template, the study-level verdict must move toward falsified on at least
-  one of C2, C3 or C4. If it does not (or if only C1 degrades), the paper is a generic
+  one of C3 or C4. If it does not (or if only C1 degrades), the paper is a generic
   adhesion study and the framing changes accordingly. The operational form of "degrade" is
   registered at G2. catechol_only and chitosan_only are partial controls: they are computed
   and reported but do not gate the test. carboxylate_substituted is a competing-chemistry
