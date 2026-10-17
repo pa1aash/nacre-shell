@@ -181,7 +181,7 @@ claims:
       the cycle's reference state is Ca2+(aq), which is undefined in the non-aqueous cell.
     threshold:
       value: null
-      status: "set in P0 (theory/thresholds.md, cp2); the main study adopts or amends with a dated note"
+      status: "set in P0 (theory/thresholds.md); C2 is reported, not gated (cp2 F3)"
       proposed: null
       proposed_source: >-
         Deck slide 21 kill row "Sequestration: Ca2+ binding is unfavourable against the
@@ -200,11 +200,11 @@ claims:
           AIMD and experiment before it is trusted.
     kill_criterion:
       statement: >-
-        Killed if Ca2+ binding at the template is unfavourable against the solvated
-        reference: Delta_G_seq not negative beyond its registered uncertainty at the
-        regime pH and ionic strength, so the template depletes rather than enriches
-        Ca2+ at the interface.
-      numeric_form: pending-G2
+        None. C2 is a binding descriptor. It enters C3 only through Delta_gamma_ads and is
+        not an independent kill criterion. If Delta_G_seq is not negative under the
+        registered decision rule, the report states the finding that the sequestration
+        premise fails.
+      numeric_form: "not applicable"
     depends_on: [C1]
     depends_on_rationale: >-
       Surface-bound template sites are taken from the anchored configurations of C1.
@@ -223,14 +223,14 @@ claims:
       - "If ΔG_seq is not negative under the registered decision rule, the result is reported as 'the sequestration premise fails'."
     verdict_bands:
       feasible: >-
-        Delta_G_seq is negative beyond the registered margin under the registered decision
-        rule, giving local enrichment above the aqueous reference.
+        Binding favourable: ΔG_seq is negative beyond the registered margin at the
+        registered credible level. Reported as a descriptor; it does not make the study
+        feasible.
       inconclusive: >-
-        The propagated Delta_G_seq straddles the registered margin, or the MLIP fallback
-        declares the free-energy route inconclusive.
+        Undetermined: the propagated ΔG_seq distribution straddles the registered margin.
       falsified: >-
-        Delta_G_seq is at or above the registered margin: no enrichment against solvated
-        Ca2+.
+        Binding unfavourable: ΔG_seq is not negative beyond the margin; reported as 'the
+        sequestration premise fails'. It does not falsify the study.
 
   - id: C3
     name: Nucleation (crux)
