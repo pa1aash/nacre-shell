@@ -171,6 +171,18 @@ days:
   closed_utc: null
   carried: [P0-W2.2, P0-I2]
   sessions:
+  - id: P0-W4.3a
+    lane: p0-w4
+    day: 3
+    model: Opus
+    master_trace: S21
+    requires: [cp1, cp2]
+  - id: P0-I2.5
+    lane: p0-int
+    day: 3
+    model: Sonnet
+    master_trace: none
+    requires: []
   - id: P0-W1.3
     lane: p0-w1
     day: 3
@@ -665,3 +677,15 @@ lane_notes:
   note: Resolve the gamma_sl0 range extending below zero (gamma >= 0); add the keys listed in W3's cp2
     fix-up report; state whether m_seq includes the implicit-solvation error; source the ACC density and
     the C-O length for W7.
+- id: N20
+  date: '2026-10-17'
+  day: 3
+  lanes: [p0-w2, p0-w3, p0-w6, p0-w7, p0-w8, p0-w4]
+  note: 'Day 3 has two extra sessions. P0-W4.3a (W4, Opus, requires cp1 and cp2, no production screen) implements
+    contract v3 and removes the D11 xfails; regenerates configs/preprint/thresholds.yaml from W3''s cp2 thresholds,
+    repairs the W4 decision tests and removes the D13 xfail; adds schema fields for the Fig 5 barrier prefactor
+    (reference gamma_nl, V_m, T) and the Fig 7 water-stability lines; aligns evaluate_c5_cell with F5; and makes
+    the retrodiction entry point available for W2.3. P0-I2.5 (integrator) then merges the wave-1 lanes and
+    fast-forwards all lanes. The wave-2 sessions P0-W2.3, P0-W3.4, P0-W6.3, P0-W7.3 and P0-W8.3 start after
+    P0-I2.5 has merged W4.3a, and keep their checkpoint requirements. For W4, the first three items of N13 move
+    to W4.3a; the sizing rule stays in W4.3, which is unchanged (requires cp1, cp2 and cp3).'
