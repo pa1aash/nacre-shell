@@ -103,7 +103,8 @@ def test_independence_option_samples_without_correlations():
 
 MOCK_CP3 = ROOT / "configs" / "preprint" / "mock_params_cp3.yaml"
 SMALL = dict(TINY, propagation={"draws_per_regime": 2048, "chunk": 1024},
-             design_axes={"Ca_T": {"unit": "mol dm^-3", "values": [1.0e-6, 1.0e-2]}, "C_T": {"params": "dic_slurry", "at": ["value"]}})
+             design_axes={"Ca_T": {"unit": "mol dm^-3", "values": [1.0e-6, 1.0e-2]}, "C_T": {"params": "dic_slurry", "at": ["value"]},
+                          "a_w": None})
 
 
 def test_bound_dry_run_evaluates_every_link_or_names_its_gap():

@@ -9,11 +9,14 @@ propagation:
   seed: 20261017                # root seed; each regime and each chunk draws from its own child
   quantiles: [0.005, 0.025, 0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.975, 0.995]
 sobol:                           # independent marginals (Task 4b)
-  target_ci_half_width: 0.01    # stated before sizing: the largest 95% CI half-width allowed
+  target_ci_half_width: 0.02    # thresholds sizing rule: top total-order half-widths <= 0.02 (P0-W4.3)
+  target_scope: top_total       # the half-width target applies to the total-order indices of the top_k inputs per quantity
+  top_k: 3
   confidence: 0.95
   pilot_base: 1024
   bootstrap: 500
-  max_base: 131072              # the doubled run may not exceed this many base rows
+  max_base: 131072              # memory bound (R10, peak under 2 GB): the doubled run may not exceed this many base rows;
+                                # where it binds the run is reported as capped
 shapley:                         # dependent inputs under the stated correlations (Task 4c)
   max_players_for_subsets: 14   # all-subset design up to this many inputs, else permutations
   n_var: 100000
@@ -49,10 +52,10 @@ bindings:
       pK2_carbonic: pk2_carbonic
       K_CaCO3_aq: log10_k_caco3_aq
       K_CaHCO3: log10_k_cahco3
-      K_CaOH: log10_k_caoh            # pending W1
-      A_DH: davies_a                  # pending W1
-      b_D: davies_b                   # pending W1
-      I_val: davies_i_val             # pending W1
+      K_CaOH: log10_k_caoh
+      A_DH: debye_huckel_a            # W1 key (params.debye_huckel_A); gap_resolution.yaml binding_corrections
+      b_D: davies_b
+      I_val: davies_i_val
     by_framing:
       calcite: {gamma_nl: gamma_nl_calcite, V_m: v_m_calcite, K_sp: log10_ksp_calcite}
       ACC: {gamma_nl: gamma_nl_acc, V_m: v_m_acc, K_sp: log10_ksp_acc}
@@ -77,6 +80,11 @@ registrations:
     gated_phases: [CaCO3, corundum, boehmite]
     never_pass_sinks: [LiBOB, LiPCP]  # sink thermochemistry undetermined: never a pass
     schemes: {governing: expt, comparators: [janaf, mp]}
+    phase_windows: {corundum: Al2O3}  # W5's window name for mp-1143 (gap_resolution.yaml AM2); boehmite has none
+    benchmark_errors: results/preprint/pourbaix/c5/cell_scheme_table.json   # comparator rows only (AM2)
+    margin_by_route:                  # cp3b A1 (gap_resolution.yaml c5.margin_mapping): one margin per reaction and sink
+      expt: {key: thresholds.C5.window_margin_expt, applies_to: [{phase: CaCO3, sink: LiClO4, side: oxidation}]}
+      dft_where_expt_missing: {key: thresholds.C5.window_margin, applies_to: [{phase: CaCO3, sink: LiClO4, side: oxidation}]}
 
 # Design axes (gap policy (ii), cp3 R8: W5's grids). Values are design registrations, not
 # literature values; axes given by a table key take its sourced points.
@@ -84,10 +92,36 @@ design_axes:
   Ca_T: {unit: mol dm^-3, values: [1.0e-6, 1.0e-5, 1.0e-4, 1.0e-3, 1.0e-2, 1.0e-1],
          source: 'P0-W5.2 provisional a_Ca grid, one point per decade, read as the total dissolved Ca dose'}
   C_T: {params: dic_slurry, at: [min, value, max]}
-  Al_T: {unit: mol dm^-3, values: [1.0e-8, 1.0e-6, 1.0e-4], use: 'Pourbaix Al-phase baseline (W5) only'}
-  E_cell_max: {params: e_cell_max, at: [min, value, max], keyed_to: 'cathode class (charge cut-off), from LFP to LNMO'}
+  Al_T: {unit: mol dm^-3, values: [1.0e-8, 1.0e-6, 1.0e-4], use: 'C5s_phase per W5 document and the Al-phase baseline; not in the speciation'}
+  a_w: {state: drying, points: [{label: wet_film, value: 1.0, source: 'slurry state value (charter definition)'},
+                                {label: dry_room_min, params: a_w_drying_secondary, at: min}],
+        source: 'gap_resolution.yaml a_w_slurry: the primary drying film between the wet slurry and the dry-room activity'}
+  E_cell_max: {classes: {LFP: e_cell_max_lfp, layered_NMC_NCA: e_cell_max_layered, LCO: e_cell_max_lco,
+                         LMO: e_cell_max_lmo, LNMO: e_cell_max_lnmo},
+               at: [min, value, max], keyed_to: 'cathode class (W1 rule G1)'}
   R_A_max: {params: r_a_max, at: [value]}     # cp3 R7(2): design axis; registration pending
   j_req: {params: j_req, at: [value]}         # cp3 R7(2): design axis; registration pending
+
+# Sizing rule (theory/thresholds.md, cp2; gap_resolution.yaml sizing): the decision layer starts at
+# 2^14 draws per state and doubles until every band-mass half-width is at most 0.01, capped at the
+# registered 2^20 draws per state and 6 h per run.
+sizing:
+  start: 16384
+  band_mass_half_width_max: 0.01
+  draw_cap: 1048576
+  wall_clock_s: 21600
+
+# Deletion-test controls (gap_resolution.yaml controls): the template inputs each drops, the
+# surface it binds and the aux uniforms of its ignorance priors; a control without inputs is a gap.
+controls:
+  bare_oxide:
+    drop: [gamma_sl0, gamma_p, K_Ca_catecholate, Delta_G_site, Gamma_s, delta_s, rho_L, r_Ca, d_layer, pKa,
+           W_adh_wet, gamma_ow, gamma_op]
+    bind: {gamma_o: gamma_o_alumina, gamma_w: gamma_w,
+           gamma_nv: {calcite: gamma_nv_calcite, ACC: gamma_nv_acc_calcite_analog}}
+    aux: [u_gamma_sl]
+  PVDF:
+    gap: 'no PVDF dry surface energy key in lit/params.yaml: no ignorance bound can be formed (gap_resolution.yaml)'
 
 # Thresholds block v2, C5s.control: the Omega test must report dissolution at W5's registered
 # undersaturated control state and stability at its supersaturated one (P0-W5.2, Task B).
@@ -107,8 +141,15 @@ omega_control:
 prior_sets:
   table: {}
   ignorance:                          # theory/ignorance_priors.md: uniform on [0, sum of the dry energies]
-    gamma_sn0: {bounds: {gamma_p: gamma_p_pda, gamma_nv: {calcite: gamma_nv_calcite, ACC: gamma_nv_acc}}}
+    # the ACC gamma_nv is W1's flagged calcite analog (gap_resolution.yaml gamma_nv_acc)
+    gamma_sn0: {bounds: {gamma_p: gamma_p_pda, gamma_nv: {calcite: gamma_nv_calcite, ACC: gamma_nv_acc_calcite_analog}}}
     gamma_ow: {bounds: {gamma_o: gamma_o_alumina, gamma_w: gamma_w}}
     gamma_op: {bounds: {gamma_o: gamma_o_alumina, gamma_p: gamma_p_pda}}
+    delta_s: {bounds: {d_layer: template_layer_thickness}}   # geometric, 4 and 4a.4 (2 r_Ca dropped while r_Ca is a gap)
+    analogs:                          # flagged analogs (gap_resolution.yaml), each labelled in the output
+      K_Ca_catecholate: log10_k_ca_catecholate        # Delta_G_site (standard-state conversion in the chain)
+      rho_L: template_group_density_site_analog       # the analog Gamma_s cap rho_L d_layer: flagged, never refused
+      W_adh_wet: w_adh_wet_catechol_oxide_analog      # C1 side by side
+    drop: [Delta_G_site]              # computed by the PMF study (absent); the analog supplies it
   analog:                             # flagged analog priors, run side by side; none registered yet
     bindings: {}

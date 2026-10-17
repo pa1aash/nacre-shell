@@ -173,6 +173,53 @@
           ],
           "pattern": "^[0-9a-f]{40}$",
           "description": "Commit of this schema the document was written against."
+        },
+        "gap_table_file": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Gap-resolution table read by the run (P0-W4.3)."
+        },
+        "gap_table_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Commit that last changed the gap-resolution table (registered before any production output)."
+        },
+        "gap_table_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "params_tag": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Checkpoint tag of the frozen parameter table."
+        },
+        "params_sha_at_tag": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Commit that last changed lit/params.yaml at the tag."
+        },
+        "overrides": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Sweep overrides of registered conventions or bindings (labelled; never the primary result)."
+        },
+        "run_label": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "description": "Run provenance. A screen document also requires prior_file and prior_file_hash."
@@ -360,6 +407,10 @@
             "capped": {
               "type": "boolean",
               "description": "True when the size the target needs exceeded the configured maximum and the run used the maximum instead; the shortfall shows in max_ci_half_width."
+            },
+            "target_scope": {
+              "type": "string",
+              "description": "Indices the half-width target applies to (all, or top_total:k: the total-order indices of the top k inputs per quantity)."
             }
           }
         },
@@ -401,6 +452,19 @@
                 "type": "object",
                 "additionalProperties": {
                   "type": "string"
+                }
+              },
+              "refused": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "description": "Refused draws of the state, as the regime field (schema v3, P0-W4.3).",
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/refused_mass"
+                  }
                 }
               }
             }
@@ -1433,6 +1497,20 @@
         },
         "gated_phases": {
           "type": "object"
+        },
+        "side_by_side": {
+          "type": "object",
+          "description": "Results run beside the link's decisive route under the gap table (C1: the flagged analog and the Dupre estimate under ignorance priors); labelled, never the verdict.",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "terminations": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Termination registration of C1 (cp3 R8) and whether the inputs resolve it."
         }
       },
       "additionalProperties": false
@@ -1536,6 +1614,33 @@
             "null"
           ],
           "description": "Truncated priors (cp3 R8: gamma_sl0 >= 0): the removed mass, and with the untruncated sensitivity the verdicts that change."
+        },
+        "sizing": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Monte Carlo sizing rule (thresholds, cp2): draws per state, band-mass half-widths reached, capped."
+        },
+        "overrides": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "controls_registered": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Deletion-test controls as the gap table registers them (evaluable or gap)."
+        },
+        "by_design_c5": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "C5 and the study verdict per (design point, total Al) where the competing-phase test depends on total Al."
         }
       }
     },

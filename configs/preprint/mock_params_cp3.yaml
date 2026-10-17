@@ -404,6 +404,110 @@ params:
     range:
       min: -13.0
       max: -12.5
+  debye_huckel_a:
+    symbol: A_DH
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: fixed
+      value: 0.5
+    sources: []
+    correlation_group: null
+    value: 0.5
+  ca_o_distance_aqueous_analog:
+    symbol: r_Ca
+    transform: none
+    unit: m
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 2.0e-10
+      high: 3.0e-10
+    sources: []
+    correlation_group: null
+  template_layer_thickness:
+    symbol: d_layer
+    transform: none
+    unit: m
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: loguniform
+      low: 2.0e-09
+      high: 5.0e-08
+    sources: []
+    correlation_group: null
+  log10_k_ca_catecholate:
+    symbol: K_Ca_catecholate
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 3.0
+      high: 5.0
+    sources: []
+    correlation_group: null
+  template_group_density_site_analog:
+    symbol: rho_L
+    transform: none
+    unit: mol m^-3
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: fixed
+      value: 2000.0
+    sources: []
+    correlation_group: null
+    value: 2000.0
+  w_adh_wet_catechol_oxide_analog:
+    symbol: W_adh_wet
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: loguniform
+      low: 1.0e-04
+      high: 1.0e-02
+    sources: []
+    correlation_group: null
+  gamma_nv_acc_calcite_analog:
+    symbol: gamma_nv
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 0.3
+      high: 0.5
+    sources: []
+    correlation_group: null
+  a_w_drying_secondary:
+    symbol: a_w
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: loguniform
+      low: 1.0e-06
+      high: 1.0e-03
+    sources: []
+    correlation_group: null
   davies_a:
     symbol: A_DH
     transform: none

@@ -31,7 +31,7 @@ def synthetic_resolver(**over):
         "regimes.R-cell.parameters.E_min": (2.0, "V"),
         "regimes.R-cell.parameters.E_max": (4.0, "V"),
         "regimes.R-cell.parameters.al_phases": ["Al2O3"],
-        "thresholds.C5.expt_margin": (0.1, "V"),
+        "thresholds.C5.window_margin_expt": (0.1, "V"),
     }
     vals.update(over)
     return dc.Resolver(vals)

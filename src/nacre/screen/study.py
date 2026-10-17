@@ -18,7 +18,9 @@ the unmeasured interfacial energies) or ``analog`` (flagged analog priors, side 
 verdict that depends on an ignorance prior is never a finding (finding_eligible: false).
 Arrays are released after each (point, framing): only the public records are kept.
 """
+import dataclasses
 import itertools
+import time
 
 import numpy as np
 import yaml
@@ -34,8 +36,33 @@ IGNORANCE_DEPENDENT = {"C3", "C4"}
 # ------------------------------------------------------------------ design axes
 
 
+def _key_points(key, ats, resolver, si_unit, label=None):
+    out = []
+    for at in ats:
+        if at == "value":
+            v, u = resolver.get(key)
+        else:
+            v, u = resolver.range(key)[at], resolver.get(key)[1]
+        out.append(("%s@%s" % (label or key, at), units.convert(float(v), u or "1", si_unit)))
+    return out
+
+
 def _axis_values(spec, resolver, si_unit):
-    """Values of one design axis in SI: listed values with a unit, or points of a table key."""
+    """Values of one design axis in SI: listed values with a unit, points of a table key, a list of
+    labelled points (a registered value or a table point), or table keys per class (cathode class)."""
+    if "classes" in spec:
+        out = []
+        for label, key in spec["classes"].items():
+            out += _key_points(key, spec.get("at", ["value"]), resolver, si_unit, label)
+        return out
+    if "points" in spec:
+        out = []
+        for pt in spec["points"]:
+            if "value" in pt:
+                out.append((pt["label"], units.convert(float(pt["value"]), pt.get("unit", si_unit), si_unit)))
+            else:
+                out += [(pt["label"], v) for _, v in _key_points(pt["params"], [pt["at"]], resolver, si_unit)]
+        return out
     if "values" in spec:
         if spec["values"] is None:
             raise decision.Gap("design axis has no registered values (%s)" % spec.get("source", "pending"))
@@ -55,21 +82,31 @@ def _label(v, spec):
     return "%g %s" % (float(v), spec.get("unit", ""))
 
 
-AXIS_UNITS = {"Ca_T": "mol m^-3", "C_T": "mol m^-3", "E_cell_max": "V", "R_A_max": "Ohm m^2", "j_req": "A m^-2"}
+AXIS_UNITS = {"Ca_T": "mol m^-3", "C_T": "mol m^-3", "E_cell_max": "V", "R_A_max": "Ohm m^2", "j_req": "A m^-2",
+              "a_w": "1", "Al_T": "mol m^-3"}
+#: The axes of the R-slurry chain grid, in order; an axis absent from screen.yaml is skipped, except
+#: the first two (the gap policy's dose axes), without which there is no grid.
+CHAIN_AXES = ("Ca_T", "C_T", "a_w")
 
 
-def design_points(cfg, resolver, axes=("Ca_T", "C_T")):
-    """[(point id, {symbol: SI value}, {axis: label})] of the R-slurry design grid."""
+def design_points(cfg, resolver, axes=None):
+    """[(point id, {symbol: SI value}, {axis: label})] of the R-slurry design grid.
+
+    An axis with ``state: <id>`` applies to that registered state only; its symbol is keyed
+    ``<symbol>@<state>`` in the point (gap_resolution.yaml: a_w at the drying state).
+    """
     spec = (cfg.get("design_axes") or {})
+    axes = list(axes) if axes is not None else [a for i, a in enumerate(CHAIN_AXES) if i < 2 or spec.get(a)]
     lists = []
     for a in axes:
         if a not in spec:
             return []
-        lists.append([(a, lab, v) for lab, v in _axis_values(spec[a], resolver, AXIS_UNITS[a])])
+        sym = a + ("@" + spec[a]["state"] if spec[a].get("state") else "")
+        lists.append([(a, sym, lab, v) for lab, v in _axis_values(spec[a], resolver, AXIS_UNITS[a])])
     pts = []
     for combo in itertools.product(*lists):
-        pid = "; ".join("%s=%s" % (a, lab) for a, lab, _ in combo)
-        pts.append((pid, {a: v for a, _, v in combo}, {a: lab for a, lab, _ in combo}))
+        pid = "; ".join("%s=%s" % (a, lab) for a, _, lab, _ in combo)
+        pts.append((pid, {sym: v for _, sym, _, v in combo}, {a: lab for a, _, lab, _ in combo}))
     return pts
 
 
@@ -103,8 +140,18 @@ def _aux(symbol):
 # ------------------------------------------------------------------ states
 
 
-def bindings_for(cfg, regime, framing, state, prior_set):
-    """The bindings of one (framing, state) under a prior set, and the injected aux inputs."""
+def _by_framing(key, framing):
+    return key[framing] if isinstance(key, dict) else key
+
+
+def bindings_for(cfg, regime, framing, state, prior_set, control=None):
+    """The bindings of one (framing, state) under a prior set, and the injected aux inputs.
+
+    prior_set ``ignorance`` applies the gap table's ignorance, geometry and analog treatments
+    (configs/preprint/gap_resolution.yaml, as bound in screen.yaml). control: a deletion-test
+    control of screen.yaml ``controls`` (the template inputs it drops, the surface it binds and
+    the aux uniforms of its ignorance priors).
+    """
     b = (cfg.get("bindings") or {})[regime]
     bind = {**(b.get("common") or {}), **b["by_framing"][framing], **((b.get("states") or {}).get(state) or {})}
     aux = []
@@ -115,15 +162,31 @@ def bindings_for(cfg, regime, framing, state, prior_set):
             if not spec:
                 continue
             for sym, key in spec["bounds"].items():
-                bind[sym] = key[framing] if isinstance(key, dict) else key
+                bind[sym] = _by_framing(key, framing)
             bind.pop(target, None)
             if target == "gamma_sn0":
                 bind.pop("Delta_gamma_w", None)
             aux.append(_aux(u))
+        geo = ps.get("delta_s")
+        if geo:
+            for sym, key in geo["bounds"].items():
+                bind[sym] = _by_framing(key, framing)
+            bind.pop("delta_s", None)
+            aux.append(_aux(chain.GEOMETRY[0]))
+        for sym, key in (ps.get("analogs") or {}).items():
+            bind[sym] = _by_framing(key, framing)
+        for sym in ps.get("drop") or ():
+            bind.pop(sym, None)
     elif prior_set == "analog":
         if not ps.get("bindings"):
             raise params_adapter.PriorFileError("prior set 'analog': no analog priors are registered in screen.yaml")
         bind.update(ps["bindings"])
+    if control is not None:
+        for sym in control.get("drop") or ():
+            bind.pop(sym, None)
+        for sym, key in (control.get("bind") or {}).items():
+            bind[sym] = _by_framing(key, framing)
+        aux += [_aux(u) for u in control.get("aux") or ()]
     return bind, aux
 
 
@@ -136,8 +199,12 @@ def bound_table(doc, b):
 
 
 def load_point(params_path, cfg, framing, design, allow_mock, prior_set="table", truncation=True,
-               regime="R-slurry", fixed_inputs=None):
-    """[(state, RegimePriors)] of the registered states at one design point and framing."""
+               regime="R-slurry", fixed_inputs=None, control=None, independence=False):
+    """[(state, RegimePriors)] of the registered states at one design point and framing.
+
+    A design symbol keyed ``<symbol>@<state>`` applies to that state only. independence: the
+    stated correlations are dropped (the dependence sweep).
+    """
     doc, _ = params_adapter.read_table(params_path, allow_mock)
     b = (cfg.get("bindings") or {}).get(regime)
     trunc = {k: (v.get("low"), v.get("high")) for k, v in ((cfg.get("registrations") or {}).get("truncate") or {}).items()} \
@@ -146,16 +213,20 @@ def load_point(params_path, cfg, framing, design, allow_mock, prior_set="table",
         return [("default", params_adapter.regime_priors(params_path, regime, allow_mock))]
     out = []
     for state, sb in (b.get("states") or {"default": {}}).items():
-        bind, aux = bindings_for(cfg, regime, framing, state, prior_set)
+        bind, aux = bindings_for(cfg, regime, framing, state, prior_set, control)
         extra = list(aux)
-        fixed = {**((sb or {}).get("_fixed") or {}), **(fixed_inputs or {})}
-        bind = {k: v for k, v in bind.items() if not str(k).startswith("_") and k not in design and k not in fixed}
-        for sym, v in design.items():
+        here = {k.split("@")[0]: v for k, v in design.items() if "@" not in k or k.split("@")[1] == state}
+        fixed = {k: v for k, v in {**((sb or {}).get("_fixed") or {}), **(fixed_inputs or {})}.items() if k not in here}
+        bind = {k: v for k, v in bind.items() if not str(k).startswith("_") and k not in here and k not in fixed}
+        for sym, v in here.items():
             extra.append(_fixed(sym, v, AXIS_UNITS.get(sym, "1"), "design axis"))
         for sym, v in fixed.items():
             extra.append(_fixed(sym, v, params_adapter.symbol_units().get(sym, "1"), "registered state value"))
-        out.append((state, params_adapter.regime_priors(params_path, regime, allow_mock, bindings=bind, absent="gap",
-                                                        truncate=trunc, extra=extra)))
+        rp = params_adapter.regime_priors(params_path, regime, allow_mock, bindings=bind, absent="gap",
+                                          truncate=trunc, extra=extra)
+        if independence:
+            rp = dataclasses.replace(rp, joint=rp.joint.independent())
+        out.append((state, rp))
     return out
 
 
@@ -184,7 +255,7 @@ def propagate_states(states, n, seed, chunk):
 def state_samples(outputs):
     """Decision-rule samples of one state: the chain outputs keyed by quantity."""
     s = {}
-    for q, (link, name) in decision.QUANTITY_SOURCE.items():
+    for q, (link, name) in {**decision.QUANTITY_SOURCE, **{v: ("anchor", v) for v in C1_SIDE_BY_SIDE.values()}}.items():
         if link in outputs and name in outputs[link] and np.any(np.isfinite(outputs[link][name])):
             s[q] = outputs[link][name]
     if "nucleate" in outputs:
@@ -233,6 +304,34 @@ def link_gaps(states, claim):
     return out
 
 
+#: C1 results run beside the PMF route (gap_resolution.yaml c1.side_by_side): id -> decisive quantity.
+C1_SIDE_BY_SIDE = {"C1_analog": "W_adh_wet_analog", "C1_dupre": "W_adh_wet_comparator"}
+
+
+def _rule_with_quantity(rule, claim, quantity):
+    """A copy of the rule whose single-test link reads another quantity (same edge and comparator)."""
+    link = dict(rule["links"][claim])
+    link["tests"] = [dict(link["tests"][0], quantity=quantity)]
+    return dict(rule, links=dict(rule["links"], **{claim: link}))
+
+
+def c1_side_by_side(rule, resolver, states, registered, rng):
+    """C1 under the flagged analog and the Dupre estimate (ignorance priors), each by the C1 rule."""
+    out = {}
+    for sid, q in C1_SIDE_BY_SIDE.items():
+        have = {s: dict(v, W_adh_wet=v[q]) for s, v in states.items() if q in v}
+        if not have:
+            continue
+        rec = decision.evaluate_link(_rule_with_quantity(rule, "C1", "W_adh_wet"), "C1", have, resolver,
+                                     registered_states=registered, rng=rng)
+        rec["quantity"] = q
+        rec["label"] = ("conditional on the flagged analog w_adh_wet_catechol_oxide_analog" if sid == "C1_analog"
+                        else "Dupre estimate gamma_ow + gamma_pw - gamma_op under ignorance priors: never a finding")
+        rec["finding_eligible"] = False
+        out[sid] = rec
+    return out
+
+
 def claims_at(rule, resolver, outs, registered, d_max=None, rng=None, loaded=None):
     """C1 to C4 at one design point and framing ({state: (outputs, masses, rp)})."""
     states = {sid: state_samples(o) for sid, (o, _, _) in outs.items()}
@@ -248,6 +347,13 @@ def claims_at(rule, resolver, outs, registered, d_max=None, rng=None, loaded=Non
             continue
         claims[claim] = decision.evaluate_link(rule, claim, have, resolver, registered_states=registered,
                                                d_max=d_max if claim == "C4" else None, rng=rng)
+    side = c1_side_by_side(rule, resolver, states, registered, rng)
+    if side:
+        claims["C1"]["side_by_side"] = side
+    claims["C1"]["terminations"] = {"registered": [], "resolved_by_inputs": False,
+                                    "note": "no P0 input is resolved by termination and none is registered: the "
+                                            "per-termination verdicts and the flat-Dirichlet mixture equal the pooled "
+                                            "verdict (gap_resolution.yaml, termination_weights)"}
     seq = {sid: s for sid, s in states.items() if "Delta_G_seq" in s}
     claims["C2"] = decision.evaluate_c2(rule, seq, resolver) if seq else \
         {"verdict": "descriptor", "role": "descriptor", "tests": {}, "falsified_mass": None,
@@ -284,12 +390,15 @@ def _median(v):
 
 def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="table", truncation=True,
              draws=None, seed=0, chunk=None, framings=None, stability=None, cells=None, controls=None,
-             d_max_rng_seed=1):
+             d_max_rng_seed=1, independence=False):
     """Claims and the study verdict over the design points and framings; returns (claims, study, extra).
 
-    controls: {control: parameter table} of the deletion test (bare_oxide, PVDF), rerun at the
-    same design points, framings and states; the deletion test is formed per framing at every
-    point (block v2, study.framings). extra carries the dose window and the gaps.
+    controls: names of the deletion-test controls of screen.yaml ``controls`` (bare_oxide, PVDF),
+    rerun at the same design points, framings and states; the deletion test is formed per framing
+    at every point (block v2, study.framings). A control registered as a gap is reported as not
+    evaluable. stability: {(Ca label, C_T tag): {Al label: R-slurry section}} of W5's documents, or
+    one section for every point. extra carries the dose window, the gaps and the largest band-mass
+    half-width over every record (the sizing rule).
     """
     pc = cfg["propagation"]
     n = int(draws or pc["draws_per_regime"])
@@ -311,14 +420,18 @@ def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="tabl
         d_max, d_flags = decision.d_max_draws(c4s, resolver, n, np.random.default_rng(d_max_rng_seed))
     except decision.Gap as exc:
         d_max, d_flags = None, ["d_max not evaluable: %s" % exc]
+    ctl_specs = {c: (cfg.get("controls") or {}).get(c) for c in (controls or ())}
+    widths = []
 
-    def run_point(table, fr, design, sd, mock_ok):
-        states = load_point(table, cfg, fr, design, mock_ok, prior_set, truncation)
+    def run_point(fr, design, sd, control=None):
+        states = load_point(params_path, cfg, fr, design, allow_mock, prior_set, truncation, control=control,
+                            independence=independence)
         outs, notes = propagate_states(states, n, sd, chunk)
         cl = claims_at(rule, resolver, outs, [sid for sid, _ in states], d_max, rng, states) if outs else \
             {c: {"verdict": "inconclusive" if c != "C2" else "descriptor", "tests": {}, "falsified_mass": None,
                  "role": "gating" if c != "C2" else "descriptor",
                  "gap": "not evaluable; missing inputs %s" % link_gaps(states, c)} for c in ("C1", "C2", "C3", "C4")}
+        widths.append(max_half_width(cl))
         return states, outs, notes, cl
 
     for pid, design, labels in points:
@@ -326,19 +439,28 @@ def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="tabl
         for fr in framings:
             sd = int(seeds[k].generate_state(1)[0])
             k += 1
-            states, outs, notes, cl = run_point(params_path, fr, design, sd, allow_mock)
+            states, outs, notes, cl = run_point(fr, design, sd)
             om = omega_point(outs, p)
             if fr == "calcite" and om is not None:
                 omega_pts[pid] = {"axes": labels, **om}
             elif om is not None:
                 omega_sens.setdefault("C5s_ACC: Omega_bulk under the %s framing (labelled, not gating)" % fr, {})[pid] = \
                     {"axes": labels, **om}
+            for r in (om,):
+                if r is not None and r.get("half_width") is not None:
+                    widths.append(r["half_width"])
             ctl_claims = {}
-            for name, table in (controls or {}).items():
-                ctl_claims[name] = run_point(table, fr, design, sd, False)[3]
+            for name, spec in ctl_specs.items():
+                if not spec or spec.get("gap"):
+                    msg = (spec or {}).get("gap") or "control not registered in screen.yaml"
+                    ctl_claims[name] = {c: {"verdict": "inconclusive", "tests": {}, "falsified_mass": None,
+                                            "gap": "control not evaluable: %s" % msg} for c in ("C1", "C2", "C3", "C4")}
+                    ctl_claims[name]["_gap"] = msg
+                    continue
+                ctl_claims[name] = run_point(fr, design, sd, spec)[3]
             per_f[fr] = {"claims": cl, "controls": ctl_claims, "notes": notes, "unsampled": _unsampled(states)}
             del outs
-        by_point[pid] = {"axes": labels, "framings": per_f}
+        by_point[pid] = {"axes": labels, "design": design, "framings": per_f}
     ctl = {}
     for name, cp in _safe_controls(cfg, resolver).items():
         if isinstance(cp, str):
@@ -346,8 +468,90 @@ def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="tabl
             continue
         ctl[name] = _control(params_path, cfg, allow_mock, prior_set, truncation, n, chunk,
                              int(seeds[-1].generate_state(1)[0]), p, *cp)
+        if ctl[name].get("half_width") is not None:
+            widths.append(ctl[name]["half_width"])
     omega = decision.omega_window(omega_pts, p, decision.control_outcomes(ctl), omega_sens) if omega_pts else None
-    return assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_set, cfg, gap, d_flags)
+    claims, study, extra = assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_set, cfg, gap,
+                                    d_flags)
+    if claims["C1"].get("side_by_side"):
+        claims["C1"]["side_by_side"]["gamma_pw_consistency"] = gamma_pw_consistency(cfg, resolver)
+    ws = [w for w in widths if w is not None and np.isfinite(w)]
+    extra["max_band_half_width"] = max(ws) if ws else None
+    extra["draws"] = n
+    return claims, study, extra
+
+
+def gamma_pw_consistency(cfg, resolver):
+    """ignorance_priors.md 1d: gamma_pw (= gamma_sl0) <= gamma_p + gamma_w over the whole sourced spans."""
+    b = (cfg.get("bindings") or {}).get("R-slurry") or {}
+    ign = ((cfg.get("prior_sets") or {}).get("ignorance") or {})
+    keys = {"gamma_pw": (b.get("common") or {}).get("gamma_sl0"),
+            "gamma_p": ((ign.get("gamma_sn0") or {}).get("bounds") or {}).get("gamma_p"),
+            "gamma_w": ((ign.get("gamma_ow") or {}).get("bounds") or {}).get("gamma_w")}
+    try:
+        top = resolver.range(keys["gamma_pw"])["max"]
+        low = resolver.range(keys["gamma_p"])["min"] + resolver.range(keys["gamma_w"])["min"]
+    except (decision.Gap, TypeError):
+        return {"checked": False, "keys": keys}
+    return {"checked": True, "holds_over_the_spans": bool(top <= low), "gamma_pw_max": float(top),
+            "gamma_p_plus_gamma_w_min": float(low), "keys": keys, "rule": "ignorance_priors.md 1d (consistency check)"}
+
+
+def max_half_width(record):
+    """Largest band-mass half-width anywhere in a record (None when there is none)."""
+    best = None
+    if isinstance(record, dict):
+        for k, v in record.items():
+            if k == "half_width" and isinstance(v, (int, float)) and np.isfinite(v):
+                best = v if best is None else max(best, v)
+            elif isinstance(v, (dict, list)):
+                m = max_half_width(v)
+                if m is not None:
+                    best = m if best is None else max(best, m)
+    elif isinstance(record, list):
+        for v in record:
+            m = max_half_width(v)
+            if m is not None:
+                best = m if best is None else max(best, m)
+    return best
+
+
+def evaluate_sized(rule, resolver, params_path, cfg, allow_mock=False, prior_set="table", truncation=True, **kw):
+    """The decision layer under the sizing rule (thresholds, cp2; gap_resolution.yaml sizing).
+
+    The draws per state start at ``sizing.start`` and are doubled until the largest band-mass
+    half-width (twice the binomial standard error) over every record is at most the registered
+    target, or until a cap binds: the draw cap (``sizing.draw_cap`` per state) or the wall-clock
+    cap (``sizing.wall_clock_s``; the next doubling is not started when it would exceed it,
+    taking it as twice the last run). A capped run is reported as capped with the half-width reached.
+    """
+    sz = cfg.get("sizing") or {}
+    target = float(sz.get("band_mass_half_width_max", 0.01))
+    cap = min(int(sz.get("draw_cap", cfg["propagation"]["draws_per_regime"])), int(cfg["propagation"]["draws_per_regime"]))
+    wall = float(sz.get("wall_clock_s", 6 * 3600))
+    n = min(int(kw.pop("draws", None) or sz.get("start", cap)), cap)
+    t0 = time.time()
+    history, capped = [], None
+    while True:
+        t1 = time.time()
+        claims, study, extra = evaluate(rule, resolver, params_path, cfg, allow_mock, prior_set, truncation,
+                                        draws=n, **kw)
+        hw = extra["max_band_half_width"]
+        history.append({"draws_per_state": n, "max_band_half_width": hw, "seconds": round(time.time() - t1, 1)})
+        if hw is None or hw <= target:
+            break
+        if 2 * n > cap:
+            capped = "draw cap %d per state" % cap
+            break
+        if (time.time() - t0) + 2 * (time.time() - t1) > wall:
+            capped = "wall-clock cap %g s" % wall
+            break
+        n *= 2
+    study["sizing"] = {"rule": "band-mass half-width (2 x binomial SE) <= %g; draws doubled from %d" % (target, history[0]["draws_per_state"]),
+                       "draws_per_state": n, "max_band_half_width": history[-1]["max_band_half_width"],
+                       "target": target, "met": capped is None, "capped": capped is not None, "cap": capped,
+                       "history": history, "seconds": round(time.time() - t0, 1)}
+    return claims, study, extra
 
 
 def _unsampled(states):
@@ -392,33 +596,44 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
         cutoffs = None
     point_ids = list(by_point)
     study_by_point, link_by_point = {}, {c: {} for c in ("C1", "C2", "C3", "C4", "C5")}
+    by_design_c5 = {}
     for pid in point_ids:
-        studies = {}
+        pbs = pourbaix_for(stability, by_point[pid].get("axes") or {})
+        studies = {al: {} for al in pbs}
+        c5s = {al: {} for al in pbs}
         for fr, fd in by_point[pid]["framings"].items():
             om_pt = (omega or {}).get("dose_window", {}).get("points", {}).get(pid) if omega else None
             om_rec = decision.omega_window({pid: om_pt}, p, (omega or {}).get("controls")) if om_pt else None
-            pb = (stability or {}).get("R-slurry") if isinstance(stability, dict) else None
-
-            def c5_of(_):
-                return decision.evaluate_c5(rule, resolver, omega=om_rec, pourbaix=pb, cells=cells, framing=fr,
-                                            cutoffs=cutoffs, never_pass_sinks=tuple(cell_reg.get("never_pass_sinks") or ()))
-            fd["claims"]["C5"] = c5_of(None)
-            deletion = None
-            if fd["controls"]:
-                for cc in fd["controls"].values():
-                    cc["C5"] = fd["claims"]["C5"]
-                deletion = decision.deletion_test(rule, fd["claims"], fd["controls"], resolver)
-            studies[fr] = decision.study_verdict(rule, fd["claims"], deletion)
+            for al, pb in pbs.items():
+                c5 = decision.evaluate_c5(rule, resolver, omega=om_rec, pourbaix=pb, cells=cells, framing=fr,
+                                          cutoffs=cutoffs, never_pass_sinks=tuple(cell_reg.get("never_pass_sinks") or ()),
+                                          margin_routes=cell_reg.get("margin_by_route"))
+                claims_al = dict(fd["claims"], C5=c5)
+                deletion = None
+                if fd["controls"]:
+                    ctl = {k: (dict(cc, C5=c5) if "_gap" not in cc else cc) for k, cc in fd["controls"].items()}
+                    deletion = decision.deletion_test(rule, claims_al, ctl, resolver)
+                studies[al][fr] = decision.study_verdict(rule, claims_al, deletion)
+                c5s[al][fr] = c5
+            fd["claims"]["C5"] = c5s[next(iter(pbs))][fr]
+            fd["c5_by_al"] = {al: decision.public(c5s[al][fr]) for al in pbs} if len(pbs) > 1 else None
             fd["claims"] = {c: decision.public(r) for c, r in fd["claims"].items()}
-            fd["controls"] = {k: {c: {"verdict": r["verdict"], "falsified_mass": r.get("falsified_mass")}
-                                  for c, r in cc.items()} for k, cc in fd["controls"].items()}
-        for c in link_by_point:
+            fd["controls"] = {k: {c: {"verdict": r["verdict"], "falsified_mass": r.get("falsified_mass"),
+                                      **({"gap": r["gap"]} if r.get("gap") else {})}
+                                  for c, r in cc.items() if isinstance(r, dict)} for k, cc in fd["controls"].items()}
+        for c in ("C1", "C2", "C3", "C4"):
             link_by_point[c][pid] = decision.combine_framings(
                 {fr: by_point[pid]["framings"][fr]["claims"][c] for fr in by_point[pid]["framings"]}) if c != "C2" else \
                 {fr: (by_point[pid]["framings"][fr]["claims"]["C2"].get("finding") or {}).get("statement")
                  for fr in by_point[pid]["framings"]}
-        study_by_point[pid] = decision.combine_framings(studies)
-        study_by_point[pid]["deletion_by_framing"] = {fr: s.get("deletion_test") for fr, s in studies.items()}
+        for al in pbs:
+            key = pid if al is None else "%s; Al_T=%s" % (pid, al)
+            link_by_point["C5"][key] = decision.combine_framings(c5s[al])
+            study_by_point[key] = decision.combine_framings(studies[al])
+            study_by_point[key]["deletion_by_framing"] = {fr: s.get("deletion_test") for fr, s in studies[al].items()}
+            if al is not None:
+                by_design_c5.setdefault(pid, {})[al] = {"C5": link_by_point["C5"][key]["verdict"],
+                                                        "study": study_by_point[key]["verdict"]}
     primary = _primary(point_ids, by_point)
     claims = {}
     eligible = prior_set != "ignorance"
@@ -439,6 +654,7 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
     gating = rule["study"].get("gating_links") or ["C1", "C3", "C4", "C5"]
     deletions = [d for r in study_by_point.values() for d in r["deletion_by_framing"].values()]
     study = {"verdict": head["verdict"], "links": {c: claims[c]["verdict"] for c in gating},
+             "by_design_c5": by_design_c5 or None,
              "deletion_test": deletions[0] if len(deletions) == 1 else ({"by_point": {pid: r["deletion_by_framing"]
                                                                                        for pid, r in study_by_point.items()}}
                                                                         if any(deletions) else None),
@@ -454,20 +670,76 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
     return claims, study, extra
 
 
+def _ca_tag(label):
+    try:
+        return "%.0e" % float(str(label).split()[0])
+    except ValueError:
+        return str(label)
+
+
+def pourbaix_for(stability, axes):
+    """{Al label or None: R-slurry Pourbaix section} for one design point.
+
+    stability: None; one stability mapping ({"R-slurry": ...}) for every point; or
+    {"by_point": {(Ca tag, C_T tag): {Al label: section}}} from W5's per-point documents
+    (aCa<Ca>_CT<min|value|max>_Al<Al>.json).
+    """
+    if not stability:
+        return {None: None}
+    if "by_point" not in stability:
+        return {None: stability.get("R-slurry")}
+    key = (_ca_tag(axes.get("Ca_T")), str(axes.get("C_T", "")).split("@")[-1])
+    found = stability["by_point"].get(key)
+    return dict(sorted(found.items())) if found else {None: None}
+
+
+def load_slurry_stability(directory):
+    """{"by_point": {(Ca tag, C_T tag): {Al label: section}}} from W5's R-slurry C5 documents."""
+    import json
+    import re
+    from pathlib import Path
+    out = {}
+    for path in sorted(Path(directory).glob("aCa*_CT*_Al*.json")):
+        m = re.fullmatch(r"aCa([^_]+)_CT([^_]+)_Al([^_]+)", path.stem)
+        if not m:
+            continue
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        sec = (doc.get("stability") or {}).get("R-slurry")
+        if sec:
+            out.setdefault((m.group(1), m.group(2)), {})["%s mol dm^-3" % m.group(3)] = sec
+    return {"by_point": out} if out else None
+
+
 def _primary(point_ids, by_point):
     """The central design point (middle of the list), whose detailed records are kept."""
     return point_ids[len(point_ids) // 2]
 
 
-def load_cells(paths):
-    """{sink: R-cell section} from W5's per-sink stability documents (schema v2 or v3)."""
+def load_cells(paths, phase_windows=None, benchmark_file=None):
+    """{sink: R-cell section} from W5's per-sink stability documents (schema v2 or v3).
+
+    phase_windows: {gated phase: W5 window name} (gap_resolution.yaml AM2: corundum is W5's
+    Al2O3); benchmark_file: W5's scheme table, whose per-electron benchmark errors fill the
+    comparator rows of every sink (never deciding).
+    """
     import json
     from pathlib import Path
     cells = {}
+    bench = None
+    if benchmark_file and Path(benchmark_file).exists():
+        rows = json.loads(Path(benchmark_file).read_text(encoding="utf-8")).get("table") or []
+        errs = next((r.get("benchmark_error_V_per_electron") for r in rows if r.get("benchmark_error_V_per_electron")), None)
+        bench = {s: {"benchmark_error_V": float(v), "source": Path(benchmark_file).as_posix()} for s, v in (errs or {}).items()}
     for path in paths or ():
         doc = json.loads(Path(path).read_text(encoding="utf-8"))
         cell = (doc.get("stability") or {}).get("R-cell")
         if cell:
+            cell = dict(cell, windows=dict(cell.get("windows") or {}))
+            for phase, name in (phase_windows or {}).items():
+                if name in cell["windows"] and phase not in cell["windows"]:
+                    cell["windows"][phase] = cell["windows"][name]
+            if bench and not cell.get("schemes"):
+                cell["schemes"] = bench
             sink = cell.get("sink_assumption", {}).get("active") or Path(path).stem
             cells[sink] = cell
     return cells
