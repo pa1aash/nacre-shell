@@ -128,11 +128,23 @@ regimes:
         symbol: E
         units: V vs Li+/Li
         reference_electrode: Li+/Li (the cell's lithium reference)
-        range: {min: 4, max: null}
+        range: {min: 3.0, max: 4.3}
         range_basis: >-
-          deck slide 9 ("anodic dissolution and pitting above roughly 4 V"; unsourced in the
-          deck, and the slide does not name the reference electrode, Li+/Li is assumed);
-          confirmed or replaced in S12
+          lit/params.yaml, sourced keys e_cell_min (E_min, the discharge cut-off, 3.0 V; sourced
+          span 2.8 to 3.0 V, NMC cathodes) and e_cell_max (E_max, the charge cut-off, 4.3 V;
+          sourced span 3.6 to 5.0 V, cathodes LFP to LNMO), both vs Li+/Li. Replaces the deck's
+          unsourced "above roughly 4 V" (slide 9), which was the aluminium oxidation onset and
+          not a bound of the potential range (gap-policy ruling D, cp2, 2026-10-17).
+        al_oxidation_onset:
+          key: al_onset_ffree
+          symbol: E_Li
+          units: V vs Li+/Li
+          value: 4.2
+          sourced_span: {min: 3.5, max: 4.25}
+          role: >-
+            A separate quantity, not a bound of the range. The anodic onset or film breakdown of
+            Al in fluorine-free electrolytes (LiClO4 in PC; LiBOB in EC:DMC; LiBOB in a sulfone),
+            compared with the potential range by the C5 R-cell window and the screen.
         rationale: >-
           The anodic potential the collector sees at the cathode during charge sets the Li
           chemical potential of the grand-potential stability window (C5) and the driving
