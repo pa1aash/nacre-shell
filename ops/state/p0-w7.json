@@ -1,35 +1,36 @@
 {
-  "last_session": "P0-W7.1",
+  "last_session": "P0-W7.2",
   "status": "DONE",
-  "day": 1,
+  "day": 2,
   "blender_version": "5.2.2 LTS",
   "palette_sha": "9307edc (blob a64f5e8452abf5d511194e92302fed42e3e9dc0b, unchanged at 2be89de)",
   "artifacts": [
+    "src/nacre/structures/compare.py",
+    "src/nacre/structures/evidence.py",
+    "src/nacre/structures/hero.py",
     "src/nacre/structures/",
     "structures/preprint/build.yaml",
     "structures/preprint/manifest.json",
-    "structures/preprint/sources/al2o3_corundum.json",
-    "structures/preprint/al2o3_0001_oh.extxyz",
-    "structures/preprint/al2o3_0001_oh_water.extxyz",
-    "structures/preprint/catechol_oligomer.extxyz",
-    "structures/preprint/ca_hydrated.extxyz",
-    "structures/preprint/acc_cluster.extxyz",
-    "structures/preprint/smoke_interface.extxyz",
-    "figures/blender/scene.py",
+    "structures/preprint/reference_platform.json",
+    "structures/preprint/sources/oligomer_conformers.json",
+    "structures/preprint/sources/ca_hydration_w1.json",
+    "structures/preprint/hero_interface.extxyz",
     "figures/blender/rig.py",
     "figures/blender/render.yaml",
-    "figures/blender/scenes/smoke.yaml",
+    "figures/blender/render.sh",
+    "figures/blender/scenes/hero.yaml",
+    "figures/renders/hero/hero_draft.png",
     "figures/renders/smoke/smoke.png",
     "tests/structures/",
-    "ops/reports/P0-W7.1.md"
+    "ops/reports/P0-W7.2.md"
   ],
   "notes": [
-    "bulk corundum mp-1143, Materials Project database 2026.04.13",
-    "materials use palette linear_rgb; Al as pushed by W6 (#D7C1A9), operator confirmation pending",
-    "palette copy at .local/w7/palette.yaml is local-only; recreate with git show before rendering",
-    "smoke render byte-reproducible; 42% memory free at start; peak renderer RSS 417 MB",
-    "xtb outstanding: oligomer is MMFF94 only; availability is not recorded in structure files",
-    "fix-up: machine-independent metadata",
-    "fix-up 2: unique test module name"
-  ]
+    "N10: structure tests pass on Linux CI at 85db67d; W5 anchor test (tests/anchor) still fails, not this lane",
+    "regeneration compared to 1e-2 A; byte check same-platform only (Darwin arm64)",
+    "oligomer conformer read from sources/oligomer_conformers.json (ETKDG differs across platforms)",
+    "Ca2+ shell from W1 row TE-072 (CN 7, Ca-O 2.37 A) at 77806d8; context TE-073, TE-074",
+    "hero draft 1280x960, 48 samples, 252 s wall, 68% free at start, peak 2.19 GB; awaiting operator feedback",
+    "ACC density and C-O still day-1 drawing parameters; ACC anhydrous"
+  ],
+  "palette": "figures/style/palette.yaml (tracked; .local copy dropped)"
 }
