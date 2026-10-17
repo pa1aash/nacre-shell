@@ -29,7 +29,8 @@ What is checked
  11. theory/thresholds.md: its fenced `thresholds` block parses, every edge uses registered ids
      and has the unit of its quantity, every registration constant has a params key, every
      params key appears in the file's key table, a non-gating link is a descriptor with no
-     verdict test, and the study rule and deletion test name only gating links.
+     verdict test, and the study rule and deletion test name only gating links; each C5 R-cell
+     margin route names the params path its test uses, and a route formula has its margin's unit.
  12. theory/ignorance_priors.md: its fenced `ignorance` block parses, every bound has the unit of
      its quantity, and the branch masses of the gamma_sn prior are the exact integrals of the
      uniform density over the three Young branches and sum to one.
@@ -730,6 +731,25 @@ def check_thresholds(ctx, contract, rep):
                 for k in ("edge_pass", "edge_falsify"):
                     if k in miss:
                         check_edge(link, "%s %s (no expt route)" % (test["id"], k), test["quantity"], miss[k], params)
+            mbr = test.get("margin_by_route")
+            if isinstance(mbr, dict):
+                # cp3b A1: each deciding route names its margin symbol and the params path the test uses
+                # for it; a route formula has the unit of its margin
+                for route, rs in mbr.items():
+                    if not isinstance(rs, dict) or "symbol" not in rs:
+                        continue
+                    sym = rs["symbol"]
+                    ok = params.get(sym) == rs.get("params")
+                    rep.add(ok, "thresholds", "%s %s margin %s" % (link, test["id"], route),
+                            "%s from %s%s" % (sym, rs.get("params"), "" if ok else "; test params give %s" % params.get(sym)))
+                    if rs.get("formula"):
+                        try:
+                            d = dimension(ctx.parse(str(rs["formula"])), ctx.dims)
+                            rep.add(d == ctx.dims[sym], "thresholds", "%s %s margin formula" % (link, test["id"]),
+                                    "%s = %s; unit %s" % (sym, rs["formula"], fmt_dim(d)))
+                        except DimError as exc:
+                            rep.add(False, "thresholds", "%s %s margin formula" % (link, test["id"]), str(exc))
+                        keys.update((rs.get("formula_params") or {}).values())
             eq = test.get("equivalent_single_state")
             if eq:
                 check_edge(link, test["id"] + " single state", eq["quantity"], eq["edge"], params)

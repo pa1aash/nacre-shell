@@ -9,7 +9,10 @@ the conventions below, again before any screen output existed; `theory/cp2_fixes
 change with its commit. The cp3 amendments (P0-W3.3, planning ruling of 2026-10-17, items R1 to R8,
 one commit each) were applied before any screen output existed as well; they are logged with their
 commits in the cp3 section of `theory/cp2_fixes.md`. R1 and R2 were set after W5's C5 results
-were seen, and R6 after an early calcite estimate; each carries its disclosure.
+were seen, and R6 after an early calcite estimate; each carries its disclosure. The cp3b
+registrations for production (P0-W3.4, items A1 to A4 of lane note N22, one commit each) were
+written without consulting any screen output: no file under `results/preprint/screen/` was read.
+They are logged in the cp3 section of `theory/cp2_fixes.md`.
 
 This file is the threshold authority of track p0 (rule R-thr). `configs/preprint/thresholds.yaml`
 (W4) is a copy of the fenced `thresholds` block at the end, and W4 checks the two equal. After tag
@@ -115,8 +118,8 @@ exists, and W1 records each under its key with the cp2 ruling as the source.
 | C3 margin m_cos | 0 primary (the priors carry the method error); published sweeps 0.1 and 0.2 | `thresholds.C3.margin_cos_theta` |
 | C1 margin m_W | set by W1 from fetched method-error evidence, or zero where the prior carries it | `thresholds.C1.margin_W_adh_wet` |
 | C4 margin m_S | set by W1 as for m_W | `thresholds.C4.margin_S_spread` |
-| C5 window margin m_E | set by W1 as for m_W | `thresholds.C5.window_margin` |
-| C5 experimental margin m_expt (cp3 R2) | set by W1: the experimental uncertainty budget of the governing route (tabulated uncertainties plus the bound on the neglected Ca(ClO4)2 solid entropy from analog entropies) | `thresholds.C5.expt_margin` |
+| C5 window margin m_E | set by W1 as for m_W; applies to a DFT scheme only where no experimental route exists (cp3b A1) | `thresholds.C5.window_margin` (W1 key `window_margin`) |
+| C5 experimental margin m_expt (cp3 R2) | set by W1: the experimental uncertainty budget of the governing route (tabulated uncertainties plus the bound on the neglected Ca(ClO4)2 solid entropy from analog entropies); applies to the all-experimental route (cp3b A1) | `thresholds.C5.window_margin_expt` (W1 key `window_margin_expt`) |
 
 - **p_deg in the sweep.** p_deg is registered as the rule 1 - p_cred, so it moves with the
   credible level in the p_cred sweep (0.4, 0.1, 0.01). A rise of the falsified-side mass by
@@ -450,13 +453,43 @@ independent of those values, and the report says so.
     lowest-onset scheme, a falsification under every scheme, margin m_E), and the report marks the
     limit as DFT-decided.
 - **Margin m_expt.** The experimental uncertainty budget of the route
-  (`thresholds.C5.expt_margin`, per transferred electron), not the DFT formation-energy margin:
-  - the tabulated uncertainties of every reactant and product, combined per transferred electron;
+  (`thresholds.C5.window_margin_expt`, W1 key `window_margin_expt`, per transferred electron), not
+  the DFT formation-energy margin:
+  - the tabulated uncertainties of every reactant and product, combined per transferred electron
+    (W1 keys `params.u_tab_dfh_ca_clo4_2`, `params.u_tab_dfh_liclo4`, `params.u_tab_dfg_co2`,
+    `params.u_tab_dfg_caco3`);
   - plus a bound on the neglected solid entropy of Ca(ClO4)2, whose free energy enters through its
-    tabulated enthalpy (W5's exchange route), taken from the entropies of analog solid salts
-    (W1 keys `params.s_ca_clo4_2_analog_bound`, from `params.s_solid_salt_analogs`).
+    tabulated enthalpy (W5's exchange route), taken from the entropies of analog solid salts. W1
+    carries it as the bound on the neglected exchange entropy (`params.exchange_entropy_bound`),
+    built from the analog entropy span (`params.s_ca_clo4_2_analog_low`,
+    `params.s_ca_clo4_2_analog_high`).
 
   W1 derives the value and lists its parts in the key's notes.
+- **Margin-to-scheme mapping (cp3b A1).** Each margin belongs to one route, and a limit is
+  judged with the margin of the route that decides it:
+
+  | Route deciding the limit | Margin | Key (params path; W1 key) |
+  |---|---|---|
+  | all-experimental route (`expt`), wherever its inputs exist | m_expt | `thresholds.C5.window_margin_expt`; `window_margin_expt` |
+  | DFT schemes, **only where no experimental route exists** (the cp2 F5 rule: pass under the lowest-onset scheme, falsification under every scheme) | m_E | `thresholds.C5.window_margin`; `window_margin` |
+  | DFT schemes and benchmark-corrected schemes where the experimental route exists | none: comparators, printed with their measured benchmark errors, never deciding | (none) |
+
+  - **Why the margins differ.** m_expt bounds the error of tabulated thermochemistry, so it is the
+    whole error of the `expt` route. m_E bounds the error of computed formation energies, so it
+    belongs only to a limit that rests on them. Applying m_E to the `expt` route would charge a
+    tabulated value with a DFT error it does not carry. Applying m_expt to a DFT scheme would
+    understate that scheme's error.
+  - **One margin per reaction and sink.** A margin is the budget of one reaction with one sink.
+    `window_margin_expt` is the budget of the registered reaction
+    CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 1/2 O2 + 2 Li with the solid-salt sink. `window_margin`
+    is m_E for the same reaction. For a DFT-decided limit of any other reaction, m_E follows the
+    rule W1 used: m_E = n_unc e_f / (Delta_n F). Here n_unc is the number of atoms whose computed
+    formation energy does not cancel between the two sides, and Delta_n is the number of electrons
+    transferred per formula unit. For the registered reaction, n_unc counts the five atoms of
+    CaCO3 and Delta_n = 2. An `expt` limit of any other reaction, including the same reaction with
+    the solvated sink (whose solvation terms add their own uncertainty), needs its own budget key.
+  - **A limit whose margin key is absent is `undetermined`.** It never gives a pass and never
+    falsifies (Section 2, C5, "Undetermined never passes").
 - **Oxidation rule (the governing route).**
   - **falsified** if E_ox(expt) + m_expt < E_cell_max, with either sink. The solid-salt sink stands
     here: the true product is the lower in free energy of the solid salt and the solvated ions, so
@@ -599,10 +632,15 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `params.a_w_slurry` | a_w | literature (per drying state) | reported at every drying state (F7) |
 | `params.acc_hydration_n` | n_hyd | literature (ACC framing) | hydrated-IAP sensitivity (F7) |
 | `regimes.R-slurry.parameters.E_SHE_range` | E_SHE | literature | C5 |
-| `thresholds.C5.window_margin` | m_E | literature (derived from e_form) | C5 R-cell, only where the experimental route is missing (cp3 R2) |
-| `thresholds.C5.expt_margin` | m_expt | literature (experimental uncertainty budget) | C5 R-cell governing route (cp3 R2) |
-| `params.s_ca_clo4_2_analog_bound` | S bound | literature (analog entropies) | m_expt (cp3 R2) |
-| `params.s_solid_salt_analogs` | S analogs | literature | m_expt (cp3 R2) |
+| `thresholds.C5.window_margin` | m_E | literature (derived from e_form; W1 key `window_margin`) | C5 R-cell, a DFT scheme only where the experimental route is missing (cp3 R2, cp3b A1) |
+| `thresholds.C5.window_margin_expt` | m_expt | literature (experimental uncertainty budget; W1 key `window_margin_expt`; formerly named `thresholds.C5.expt_margin` here) | C5 R-cell governing route (cp3 R2, cp3b A1) |
+| `params.u_tab_dfh_ca_clo4_2` | u_tab | literature (tabulated uncertainty) | m_expt (cp3b A1) |
+| `params.u_tab_dfh_liclo4` | u_tab | literature (tabulated uncertainty) | m_expt (cp3b A1) |
+| `params.u_tab_dfg_co2` | u_tab | literature (tabulated uncertainty) | m_expt (cp3b A1) |
+| `params.u_tab_dfg_caco3` | u_tab | literature (tabulated uncertainty) | m_expt (cp3b A1) |
+| `params.exchange_entropy_bound` | Delta_S_ex bound | literature (analog entropies) | m_expt (cp3 R2; the solid-entropy part as W1 derived it) |
+| `params.s_ca_clo4_2_analog_low` | S analog (low) | literature (analog entropies) | m_expt (cp3 R2) |
+| `params.s_ca_clo4_2_analog_high` | S analog (high) | literature (analog entropies) | m_expt (cp3 R2) |
 | `regimes.R-cell.parameters.cathode_class` | cathode class | design axis | E_cell_max per class (cp3 R2) |
 | `params.li2co3_oxidation_onset` | E (Li2CO3 onset) | literature | physics justification of the carbonate-oxidation reading (cp3 R2) |
 | `regimes.R-cell.parameters.E_min` | E_cell_min | literature | C5 R-cell |
@@ -624,13 +662,15 @@ checks that every expression parses, that only registered ids appear, and that e
 unit of its quantity.
 
 ```thresholds
-version: 2
+version: 3
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
 revised: {session: P0-W3.2 cp2 fix-up, base_commit: 800d5ea3de41a0fb16084519d5c2680eeb14952d, fixes: theory/cp2_fixes.md}
 revised_cp3: {session: P0-W3.3, ruling: planning chat 2026-10-17 (cp3), base_commit: ac5cdfb, items: [R1, R2, R3, R5, R6, R7, R8],
               log: theory/cp2_fixes.md (cp3 section), disclosures: [R1, R2, R6]}
+revised_cp3b: {session: P0-W3.4, rule: cp3-mandated registrations for production (lane note N22), base_commit: 227d997,
+               items: [A1], log: theory/cp2_fixes.md (cp3 section, cp3b registrations), screen_output_consulted: false}
 contract_version: 3
 decision:
   statistic: band_mass
@@ -649,6 +689,7 @@ decision:
     m_W: {set_by: W1, from: fetched method-error evidence, or zero where the prior carries it, params: thresholds.C1.margin_W_adh_wet}
     m_S: {set_by: W1, from: fetched method-error evidence, or zero where the prior carries it, params: thresholds.C4.margin_S_spread}
     m_E: {set_by: W1, from: fetched method-error evidence, or zero where the prior carries it, params: thresholds.C5.window_margin}
+    m_expt: {set_by: W1, from: experimental uncertainty budget of the expt route (cp3 R2), params: thresholds.C5.window_margin_expt}
     approved: [single_edge_f_half_plus_absolute_criterion, worst_state_per_link, path_sum_C3b,
                square_lattice_closure_optimistic_supporting, C4_S_spread_falsified_only_if_coalescence_fails]
     E_enr: labelled non-gating sensitivity
@@ -834,12 +875,23 @@ links:
                       benchmark_corrected: equals expt by construction; never a second confirmation}
         where_expt_missing: {rule: cp2 fix F5, pass: lowest-onset DFT scheme, falsify: every DFT scheme, margin: m_E,
                              edge_pass: E_cell_max + m_E, edge_falsify: E_cell_max - m_E, label: DFT-decided}
-        params: {E_cell_max: regimes.R-cell.parameters.E_max, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
+        params: {E_cell_max: regimes.R-cell.parameters.E_max, m_expt: thresholds.C5.window_margin_expt, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes,
                  salts: regimes.R-cell.parameters.electrolyte_salts}
+        margin_by_route:
+          expt: {symbol: m_expt, params: thresholds.C5.window_margin_expt, key: window_margin_expt, applies: wherever the expt inputs exist,
+                 reaction: CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 1/2 O2 + 2 Li (solid-salt sink)}
+          dft_where_expt_missing: {symbol: m_E, params: thresholds.C5.window_margin, key: window_margin, rule: cp2 fix F5,
+                                   formula: N_unc*e_form/(Delta_n_Li*F_c), formula_params: {e_form: thresholds.C5.formation_energy_error},
+                                   registered_reaction: {N_unc: 5 atoms of CaCO3, Delta_n_Li: 2}}
+          dft_where_expt_exists: {margin: none, role: comparator, printed_with: measured benchmark error}
+          benchmark_corrected: {margin: none, role: comparator, never: a second confirmation}
+          per_reaction: one margin per reaction and sink; an expt limit of any other reaction or sink needs its own budget key
+          margin_key_absent: undetermined (never passes, never falsifies)
         m_expt_parts: [tabulated uncertainties of reactants and products per transferred electron,
                        bound on the neglected solid entropy of Ca(ClO4)2 from analog solid-salt entropies]
-        m_expt_params: [params.s_ca_clo4_2_analog_bound, params.s_solid_salt_analogs]
+        m_expt_params: [params.u_tab_dfh_ca_clo4_2, params.u_tab_dfh_liclo4, params.u_tab_dfg_co2, params.u_tab_dfg_caco3,
+                        params.exchange_entropy_bound, params.s_ca_clo4_2_analog_low, params.s_ca_clo4_2_analog_high]
         design_axis: {E_cell_max: by cathode class, params: regimes.R-cell.parameters.cathode_class,
                       report: [crossover E_ox - m_expt (feasible at or below, solvated sink), crossover E_ox + m_expt (falsified above)]}
         undetermined: never_passes
@@ -858,8 +910,9 @@ links:
         otherwise: inconclusive
         where_expt_missing: {rule: cp2 fix F5, margin: m_E, edge_pass: E_cell_min - m_E, edge_falsify: E_cell_min + m_E,
                              label: DFT-decided}
-        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
+        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_expt: thresholds.C5.window_margin_expt, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes}
+        margin_by_route: same as C5c_ox (expt route m_expt; m_E only where the expt route is missing; a reduction limit needs its own budget key)
         undetermined: never_passes
     gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, corundum, boehmite]}
     al_phases: {registered: [corundum, boehmite], params: regimes.R-cell.parameters.al_phases, others: reported, not gated}
