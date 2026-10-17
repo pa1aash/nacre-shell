@@ -15,6 +15,7 @@ Every source was located by search in this session. The searches are logged in `
 - **Locators.** "Abstract" means the claim rests on the abstract only, because no open full text could be reached headlessly (`lit/novelty.md`, execution note 8). "Title only" means the record was located but neither the abstract nor the full text could be read. Such a record is listed as a pointer and is credited with nothing beyond its title.
 - **Full text.** Copies are local-only and are not committed.
 - **Day 2 update (P0-W2.2, 2026-10-17).** Entry B13 (lane note N4) was added. B7 and B10 were upgraded to full text, and the full-text retries for B2 and B9 are recorded. The W1 row cross-reference is filled in.
+- **Day 3 update (P0-W2.3, 2026-10-17).** Entries B14 and B15 were added from the diagnosis of the retrodiction run (`preprint/retrodiction/results/results.json`, fixed-before-run commit `4ded6c7`). Their sources are the case studies already read in full for P0-W2.2; nothing was fetched or cited from memory. The arithmetic in them is this lane's, from the frozen inputs.
 
 ## Field schema and severity scale
 
@@ -332,12 +333,61 @@ Each entry gives:
   - *Outlook.* Soluble derivatives, and the change in barrier that their charge implies.
 - **Severity.** Material. It changes how the chitosan link and its control are read, and it constrains the Introduction's premise. It is not blocking, because no P0 verdict depends on chitosan being dissolved.
 
+### B14. Contact-angle surface energies measured in air do not order calcite nucleation barriers on polysaccharide films (C3; input route of gamma_sl0). Retrodiction diagnosis, added 2026-10-17
+
+- **Sources.**
+  - 10.1073/pnas.1222162110: Giuffre, Hamm, Han, De Yoreo, Dove, *Proc. Natl. Acad. Sci. USA* 110, 9261–9266 (2013). Read in full text (PMC3677451) and SI (archived PNAS supplement): SI p. 3, Table S2 (OWRK components), SI Table S1 (charge per monosaccharide), Figure 2 caption (slopes B).
+  - 10.3390/foods6040031: Senturk Parreidt, Schmid, Hauser, *Foods* 6, 31 (2017), p. 5, Table 1 (water OWRK components).
+  - Retrodiction run P0-W2.3: cases RC07–RC10 in `preprint/retrodiction/results/results.json`.
+- **Evidence.**
+  - **The run.** With the frozen mapping (OWRK components from contact angles in air → γ_sl against water → Young, with γ_sn common), the pipeline orders 3 of the 4 film pairs the wrong way, and each verdict is conclusive.
+    - RC07 heparin, RC08 LG alginate and RC09 HG alginate against chitosan are incorrect: the 90 % interval of Δ lies wholly below zero.
+    - RC10 hyaluronate is correct.
+    - The swap check holds, so the misses come from the inputs and the mapping, not from label handling.
+  - **Why (this lane's arithmetic from Table S2).** OWRK gives γ_sl = (√γ_s^p − √γ_w^p)² + (√γ_s^d − √γ_w^d)². That is smallest for a film whose components match water's (51.0 and 21.8 mJ/m²) and rises again for a film more polar than water.
+
+    | Film | Polar, dispersive (mJ/m²) | γ_s in air | γ_sl, OWRK | Charge per sugar | B |
+    |---|---|---|---|---|---|
+    | heparin | 81.4, 2.76 | 84.2 | 12.6 | −1.36 | 376 |
+    | LG alginate | 72.2, 4.88 | 77.1 | 7.9 | −1.02 | 390 |
+    | HG alginate | 72.3, 4.77 | 77.1 | 8.0 | −1.02 | 294 |
+    | hyaluronate | 52.4, 11.1 | 63.5 | 1.8 | −0.52 | 253 |
+    | chitosan | 28.1, 11.0 | 39.1 | 5.2 | +0.28 | 121 |
+
+    The most polar, most charged films therefore get a *higher* γ_sl than chitosan, so Young gives them the lower barrier. The measured slopes B instead rise with the total γ_s in air and with the negative charge, which is the correlation the authors report.
+  - **The authors' caveat.** Giuffre et al. call γ_S-air a rough proxy for γ_SL and treat γ_SC (the substrate–crystal energy) as a secondary control. The run shows that the proxy does not survive the conversion to an in-water γ_sl.
+- **Condition.** Hydrophilic, charged organic films whose OWRK polar component exceeds water's. Interfacial energies are taken from contact angles of probe liquids in air and used as in-water, Ca-free γ_sl through a combining rule.
+- **Regime.** Partly. P0's template–water energy `gamma_sl0_template` (`lit/params.yaml`) comes from the same route: contact angles of probe liquids on polydopamine with Owens–Wendt and van Oss analyses. Its notes already record that the two analyses disagree in sign. B14 is direct evidence, on a calcite nucleation data set, that this route can give the wrong ordering, so a C3 verdict that rests on `gamma_sl0_template` inherits it. C3 as framed through γ_sn (ignorance prior) is not affected.
+- **Placement.**
+  - *Discussion.* With the retrodiction result (Fig. 4): the misses are in the contact-angle route, not in the Dupré route.
+  - *Limits.* γ_sl0 from contact angles in air is a proxy for the in-water interface; the combining rule decides its sign for strongly polar films.
+- **Severity.** Material. It changes how far a C3 result can lean on contact-angle-derived template energies. It is not blocking, because the C3 verdict is reported under the γ_sn ignorance prior, with γ_sl0 as one sourced input among several.
+
+### B15. Ca2+ binding at the template–liquid interface does not reproduce the methyl/carboxyl nucleation contrast under contract v3 (C2 → C3; single-entry bookkeeping). Retrodiction diagnosis, added 2026-10-17
+
+- **Sources.**
+  - 10.1093/rb/rbv010: Deng, Wang, Wang et al., *Regen. Biomater.* 2, 187–195 (2015). Read in full text (Europe PMC XML, PMC4669016): Figure 2 (near-surface Ca²⁺ by ion-selective electrode), Abstract and Results (no CaCO3 on CH3 over 12 h; calcite on COOH).
+  - 10.1073/pnas.1312369111: Hamm, Giuffre, Han et al., *Proc. Natl. Acad. Sci. USA* 111, 1304–1309 (2014). Read in full text: p. 1307, Table 2 (DFS calcite–SAM binding free energies, C16-COOH −7.4 kcal/mol, the strongest of the series).
+  - Retrodiction run P0-W2.3: case RC11, and RC01–RC03 for the γ_sn route.
+- **Evidence.**
+  - **The run.** RC11 (CH3 against COOH SAM) is mapped as the cp2 ruling requires: Ca²⁺-binding data enter γ_sl through the Gibbs–Langmuir term, Ω is the bulk value, and the Ca-free contact is common. The COOH surface holds more Ca²⁺ (about 4.9 against 2.05 mM near the surface), so its Δγ_ads is more negative and its γ_sl lower. Under contract v3 that raises its barrier (sign-flip SF2), and the pipeline predicts the CH3 surface to have the *lower* barrier. Observed: no CaCO3 on CH3 and calcite on COOH. The verdict is incorrect, with Δ median −0.15 k_BT and 90 % interval [−4.3, −0.004] k_BT. The sign does not depend on Γ_s or δ_s (A-RC11-5).
+  - **Size of the channel.** In the dilute limit Δγ_ads ≈ −R T δ_s (c_local − c_bulk). For δ_s from 0.5 to 50 nm, the measured enrichment changes γ_sl by about 10⁻⁶ to 5 × 10⁻⁴ J/m² (this lane's arithmetic). That is under 1 % of γ_nl, and a few k_BT at most on barriers near 900 k_BT. A measured near-surface enrichment of a few-fold cannot by itself turn nucleation on or off through this channel.
+  - **Where the contrast must sit.** The CH3/COOH difference must then be in the template–nucleus contact γ_sn. That contact is not supplied for either surface (RX12), and the single-entry bookkeeping gives it no binding term (A-RC11-6). The cases whose inputs reach γ_sn directly, the Dupré route of RC01–RC03 with COOH binding calcite most strongly, are correct.
+  - **Physical reading.** Ca²⁺ bound by carboxylates can bridge carboxylate and calcite. That lowers γ_sn by the template–nucleus excess Γ_Ca,sn (d γ_sn/d μ_Ca = −Γ_Ca,sn, contract v3 conventions). Where Γ_Ca,sn exceeds the template–liquid excess, d(γ_sl − γ_sn)/d μ_Ca = −(Γ_Ca,sl − Γ_Ca,sn) changes sign, and binding lowers the barrier. A model that books bound Ca²⁺ only on γ_sl cannot show this.
+- **Condition.** Any case or screen link in which a Ca²⁺-binding measurement (enrichment, occupancy, Δ_G_seq) is the only template-specific input. In particular, C2 → C3 when no contact (γ_sn) data exist for the template at the regime state.
+- **Regime.** No, for R-slurry wherever C3 would rely on C2 binding. Decision D14 already removes C2 as a gate and lets it reach C3 only through Δγ_ads. B15 is empirical support for that decision: through Δγ_ads the effect is small and of the opposite sign to the contrast it would be used to explain. The premise that sequestering Ca²⁺ at the template promotes nucleation is not supported by this case. B10 and W1 row TC-111 point the same way from other surfaces.
+- **Placement.**
+  - *Discussion.* With the retrodiction result and C2.
+  - *Limits.* Single-entry bookkeeping of bound Ca²⁺. The γ_sn of the template at the regime state is the quantity that decides, and it rests on an ignorance prior.
+  - *Outlook.* Contact (γ_sn) data at controlled Ca²⁺ activity for the P0 template, for example force spectroscopy of calcite on the template in Ca-containing solution.
+- **Severity.** Material. It bears on how C2 and C3 are linked in the text and on what the chain can claim for a binding template. It is not blocking, because C2 does not gate (D14) and C3 is reported under the γ_sn prior.
+
 ## Summary by severity
 
 | Severity | Entries |
 |---|---|
 | Blocking | B1, B2 |
-| Material | B3, B4, B5, B6, B7, B8, B9, B10, B11, B13 |
+| Material | B3, B4, B5, B6, B7, B8, B9, B10, B11, B13, B14, B15 |
 | Minor | B12 (material if the R-cell salt is a fluorinated imide) |
 
 ## Cross-reference with p0-w1
@@ -361,7 +411,7 @@ Notes on the assignment:
 
 - **TC-111** (10.1021/acs.langmuir.3c01629). An oxygen-rich (carboxyl/hydroxyl) two-dimensional surface binds Ca2+ and inhibits nucleation. It is the sharpest W1 row against the C2 → C3 premise, that sequestering Ca2+ promotes nucleation. It is recorded under B10. The Discussion of B10 should cite it beside Yu 2023.
 - **TC-071, TC-094 and TC-098.** These are also retrodiction candidates: RC05 is usable, while RX08 and RX11 are excluded (`preprint/retrodiction/cases.yaml`). Their use there does not change their contrary reading.
-- **Entries with no W1 row.** B6, B8, B12 and B13 have no flagged W1 row. B13 draws on full texts read in this session.
+- **Entries with no W1 row.** B6, B8, B12 and B13 have no flagged W1 row. B13 draws on full texts read in this session. B14 and B15 (day 3) come from the retrodiction run; their source studies sit under W1 rows TC-083 (Giuffre 2013) and TC-061 to TC-066 (Hamm 2014), none flagged contrary; Deng 2015 has no W1 row.
 - **Rows assigned to no entry.** TB-057, TB-058, TC-016 and TE-082 are uncertainty in input values: oxide–water and calcite surface energies, and a solvation benchmark error. TC-001 is a nacre ACC observation. They belong to the parameter-conflict log (p0-w1) or the anchor (p0-w5), not to this dossier.
 
 ## Outstanding for this dossier
@@ -375,3 +425,4 @@ Notes on the assignment:
    - These need an operator or library route.
    - B7 (Hu 2012) and B10 (Yu 2023) are now read in full.
 4. **B13.** The pKa-versus-degree-of-acetylation values of Sorlier et al. (2001, 10.1021/bm015531+, abstract only), and the solvent and pH used by chitosan-binder electrode papers, remain unsourced.
+5. **B14, B15.** No independent source on the OWRK combining rule for highly polar films, and no contact (γ_sn) data at controlled Ca²⁺ activity for the P0 template, were searched for in this session; both are wanted for the Discussion.
