@@ -1,4 +1,4 @@
-# Thresholds and decision rules of the P0 screen (G0 fix F9; checkpoint cp2)
+# Thresholds and decision rules of the P0 screen (G0 fix F9; checkpoints cp2 and cp3)
 
 **Written before any screen output existed.** This file was written in session P0-W3.2 on top
 of commit `49100a9d92b5dc48f1db1d15529967dfeeece12d` (lane p0-w3, contract v2 at
@@ -6,7 +6,10 @@ of commit `49100a9d92b5dc48f1db1d15529967dfeeece12d` (lane p0-w3, contract v2 at
 (rule R7). The commit that adds this file is recorded in `ops/state/p0-w3.json` under
 `thresholds.sha`. The cp2 fix-up (P0-W3.2, 2026-10-17) applied the audit fixes F3 to F9 and set
 the conventions below, again before any screen output existed; `theory/cp2_fixes.md` lists each
-change with its commit.
+change with its commit. The cp3 amendments (P0-W3.3, planning ruling of 2026-10-17, items R1 to R8,
+one commit each) were applied before any screen output existed as well; they are logged with their
+commits in the cp3 section of `theory/cp2_fixes.md`. R1 and R2 were set after W5's C5 results
+were seen, and R6 after an early calcite estimate; each carries its disclosure.
 
 This file is the threshold authority of track p0 (rule R-thr). `configs/preprint/thresholds.yaml`
 (W4) is a copy of the fenced `thresholds` block at the end, and W4 checks the two equal. After tag
@@ -16,7 +19,7 @@ No literature number is typed here (rule R2). Every physical quantity a threshol
 by the `lit/params.yaml` key that will supply it, and "Params keys" at the end lists them.
 Rationals such as 1/2 are exact values of the theory, not literature values. The only typed
 numbers are the method conventions set by the cp2 audit (Section 1, "Registered conventions"). Equation numbers refer to the
-P0-W3.2 cp2 fix-up build of `theory/build/derivation.pdf`, with the stable label in brackets.
+P0-W3.3 cp3 build of `theory/build/derivation.pdf`, with the stable label in brackets.
 
 What a verdict means: a link that is "feasible" under these rules meets a necessary condition
 under the stated framing and inputs. It does not show that a barrier works, and no rate, capacity
@@ -97,7 +100,7 @@ changes without it.
 **Bookkeeping (contract v2, unchanged in v3).** Every barrier is evaluated with Omega = Omega_bulk at the regime
 activities. The C2 binding enters only through Delta_gamma_ads in gamma_sl, and C2 itself is a
 reported descriptor, not a gate (Section 2) (derivation, Section 7
-(rule), Eqs. (32) to (35) [th:eq:gibbs to th:eq:composite]). `Omega_local_ideal` and the demonstration composites never enter a
+(rule), Eqs. (33) to (36) [th:eq:gibbs to th:eq:composite]). `Omega_local_ideal` and the demonstration composites never enter a
 verdict.
 
 ### Registered conventions (cp2 ruling, 2026-10-17)
@@ -182,10 +185,10 @@ kill criterion (cp2 ruling, fix F3).
 
 - **Why it does not gate.** At equilibrium the Ca2+ chemical potential is uniform, so binding does
   not raise the driving force (derivation, Section 4). Its only route to nucleation is the
-  template-liquid energy, through Delta_gamma_ads, Eq. (32) [th:eq:gibbs], and that route is
+  template-liquid energy, through Delta_gamma_ads, Eq. (33) [th:eq:gibbs], and that route is
   already judged inside C3. A separate C2 verdict would judge the same binding a second time, as a
   pass or kill of its own, which is the double count the bookkeeping removes. At fixed gamma_sl0
-  and gamma_sn, the C2 term raises the C3 barrier: SF2, Eq. (34) [th:eq:young-ads].
+  and gamma_sn, the C2 term raises the C3 barrier: SF2, Eq. (35) [th:eq:young-ads].
 - **Reported (every registered R-slurry state).** The distributions of `Delta_G_seq` (J mol^-1,
   the transfer free energy of Ca2+ from hydrated bulk to the site, Eq. (4) [th:eq:cycle]),
   `Theta_occ`, `Gamma_Ca` and `Delta_gamma_ads` at the regime activity. P0 uses one effective
@@ -211,7 +214,7 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
 **(a) Wetting part: bands for f(theta).**
 
 - **Threshold and physics.** X = f(theta), with cos(theta) from `cos_theta_template` (or from
-  `cos_theta_young` with an in-situ gamma_sl), Eq. (34) [th:eq:young-ads]. The deck's starting
+  `cos_theta_young` with an in-situ gamma_sl), Eq. (35) [th:eq:young-ads]. The deck's starting
   bands (charter C3 `threshold.proposed`) are **replaced** by one edge at f = 1/2, which is theta = pi/2 and cos(theta) = 0.
   - f = 1/2 is the only value in (0, 1) where the physics changes. There gamma_sl = gamma_sn: the
     sign of the Young numerator flips.
@@ -282,8 +285,8 @@ otherwise. Either part falsified on its own is sufficient for a falsified C3.
 
 ### C4, conformality (R-slurry for wetting, R-cell for the thickness bound)
 
-- **Chosen criterion (lane note N1).** X = `S_spread` (J m^-2), Eq. (36) [th:eq:spread].
-  - Derivation Eq. (38) [th:eq:n1] shows that a small-angle bound theta <= theta_max and
+- **Chosen criterion (lane note N1).** X = `S_spread` (J m^-2), Eq. (37) [th:eq:spread].
+  - Derivation Eq. (39) [th:eq:n1] shows that a small-angle bound theta <= theta_max and
     S_spread >= -s are one criterion at different strictness, both tests of the Young numerator
     relative to gamma_nl.
   - S_spread >= 0 is chosen. It is the strict end (complete wetting) and the only member of the
@@ -295,8 +298,8 @@ otherwise. Either part falsified on its own is sufficient for a falsified C3.
 - **Margin.** e = +m_S, where m_S = `thresholds.C4.margin_S_spread` is the systematic error not
   carried in the interfacial-energy priors.
 - **Second route (independent; cp3 R3, formerly the supporting condition): coalescence below the thickness bound.**
-  - The condition is N_s >= N_s_closure = tan^2(theta/2) / (2 d_max^2), Eq. (39)
-    [th:eq:nclosure], with d_max = max(d_max_ohm, d_max_tun), Eqs. (41) to (43).
+  - The condition is N_s >= N_s_closure = tan^2(theta/2) / (2 d_max^2), Eq. (40)
+    [th:eq:nclosure], with d_max = max(d_max_ohm, d_max_tun), Eqs. (47) to (49) [th:eq:ohm to th:eq:combined].
   - The island density is N_s = N_nuc from C3(b), an upper estimate. A failure of closure with
     N_nuc is therefore conservative, and a success is only optimistic.
   - The condition is geometric: it uses the geometric thicknesses h_c and h_cl. The charter's
@@ -340,13 +343,13 @@ otherwise. Either part falsified on its own is sufficient for a falsified C3.
   - A CaCO3 layer in contact with the slurry dissolves when Omega_bulk < 1 and is stable against
     dissolution when Omega_bulk >= 1. The edge is 1, with no margin: the K_sp prior and the
     speciation inputs carry their own uncertainty.
-  - This is the quantity C3 uses (derivation, Section 9, Eq. (45) [th:eq:pbx-omega]). A state that
+  - This is the quantity C3 uses (derivation, Section 9, Eq. (43) [th:eq:pbx-omega]). A state that
     cannot nucleate CaCO3 (Omega_bulk <= 1, no nuclei in C3 (b)) is a state in which the layer
     dissolves. At equilibrium enrichment does not raise Omega (derivation, Section 7, rule 5),
     so the bulk state decides; an "enriched" evaluation is a labelled non-equilibrium
     sensitivity, never a verdict.
 - **Why a hull distance cannot decide dissolution.** At fixed C(IV) the hull distance of CaCO3
-  against its dissolved ions is (R T / n_M) ln(1/Omega_bulk) per non-O, non-H atom, Eq. (45)
+  against its dissolved ions is (R T / n_M) ln(1/Omega_bulk) per non-O, non-H atom, Eq. (43)
   [th:eq:pbx-omega].
   - The tolerance n_at e_f / n_M therefore reports dissolution only below
     ln Omega_bulk = -n_at e_f / (R T): the edge alone spans several decades of Omega.
@@ -383,7 +386,7 @@ otherwise. Either part falsified on its own is sufficient for a falsified C3.
 
 **R-slurry, competing phases and the Al baseline: aqueous Pourbaix at fixed C(IV).**
 
-- **Competing-phase test.** X = `Delta_G_pbx` (J mol^-1 per non-O, non-H atom), Eq. (40)
+- **Competing-phase test.** X = `Delta_G_pbx` (J mol^-1 per non-O, non-H atom), Eq. (42)
   [th:eq:pbx], for the registered CaCO3 framing phase, with C(IV) fixed at the regime C_T.
   - The competitors are the solid phases of the system. The dissolved Ca-bearing species are
     removed from the hull: dissolution is decided by the Omega test above, so the hull answers
@@ -429,7 +432,7 @@ independent of those values, and the report says so.
 
 **R-cell, Li-referenced window (cp3 R2).**
 
-- **Threshold and physics.** Eq. (42) [th:eq:window] with the electrolyte-fixed sink of Eq. (43)
+- **Threshold and physics.** Eq. (45) [th:eq:window] with the electrolyte-fixed sink of Eq. (46)
   [th:eq:sink] for the gated phases (Section 2, C5, "Gated phases"). The collector potential range
   [E_cell_min, E_cell_max] (V vs Li+/Li) must lie inside each phase's window: E_red below
   E_cell_min and E_ox above E_cell_max, each beyond its margin.
@@ -621,11 +624,13 @@ checks that every expression parses, that only registered ids appear, and that e
 unit of its quantity.
 
 ```thresholds
-version: 1
+version: 2
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
 revised: {session: P0-W3.2 cp2 fix-up, base_commit: 800d5ea3de41a0fb16084519d5c2680eeb14952d, fixes: theory/cp2_fixes.md}
+revised_cp3: {session: P0-W3.3, ruling: planning chat 2026-10-17 (cp3), base_commit: ac5cdfb, items: [R1, R2, R3, R5, R6, R7, R8],
+              log: theory/cp2_fixes.md (cp3 section), disclosures: [R1, R2, R6]}
 contract_version: 3
 decision:
   statistic: band_mass
