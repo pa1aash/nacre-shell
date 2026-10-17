@@ -38,6 +38,12 @@ amendments:                              # every change after the first commit, 
       A3: 'delta_s lower bound Gamma_s V_m (the 2 r_Ca term dropped while r_Ca is a gap); the analog radius form is a labelled sensitivity; analog bounds flag draws and never refuse them (gaps.delta_s, ca_ionic_radius, template_group_density, site_footprint_area); A_patch bound keys absent, so A_patch stays unresolved (gaps.patch_area, asperity_contact_area, cathode_particle_diameter)'
       A4: 'C1 in P0: registered verdict gap; the analog and the Dupre-ignorance estimate side by side, as this table registered (c1); the analog support is positive only'
 
+  - id: AM2
+    reason: 'W5''s R-cell documents name the gated phases differently from the block and carry the benchmark errors in a separate file; recorded before any production output'
+    items:
+      corundum: 'the block''s gated phase corundum is W5''s window Al2O3 (mp-1143, alpha-Al2O3): a name binding, no value'
+      boehmite: 'no W5 R-cell window: undetermined, never a pass (unresolved)'
+      benchmark_errors: 'the comparator rows read the per-electron benchmark errors of results/preprint/pourbaix/c5/cell_scheme_table.json (benchmark_error_V_per_electron); comparators never decide'
 reporting:
   ignorance_is_finding: false            # ignorance_priors.md section 3.1
   analog_label: 'conditional on the flagged analog <key>'
@@ -342,6 +348,8 @@ sizing:
 # ---------------------------------------------------------------- not gaps, recorded for completeness
 binding_corrections:                     # a binding of configs/preprint/screen.yaml named a key W1 spells otherwise
   A_DH: {was: davies_a, now: debye_huckel_a, reason: 'W1 key (params.debye_huckel_A); sourced, so no treatment is needed'}
+  corundum: {w5_window: Al2O3, reason: 'AM2: W5''s window name for mp-1143'}
+  boehmite: {w5_window: none, treatment: unresolved, effect: 'undetermined, never a pass (AM2)'}
 not_screen_inputs:                       # gap or computed keys of the table that no screen link reads
   nucleation_density: 'N_s = N_nuc by the C4 rule (thresholds C4s); the key is not read'
   a_h_cell: 'the R-cell limits are W5''s deterministic windows; the activity is W5''s input'
