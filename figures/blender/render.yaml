@@ -1,11 +1,9 @@
 # Render settings shared by every scene (lane p0-w7). Paths are relative to the repository root.
 #
-# palette: the ONE value that selects element colours. It points at a local copy of lane p0-w6's
-#   figures/style/palette.yaml, made with
-#     git show origin/preprint/p0-w6:figures/style/palette.yaml > .local/w7/palette.yaml
-#   Materials use each element's linear_rgb entry (scene-linear), never srgb.
-#   To switch to a revised palette, copy the revised file and change this path only.
-palette: .local/w7/palette.yaml
+# palette: the ONE value that selects element colours: lane p0-w6's figures/style/palette.yaml,
+#   tracked on this branch. Materials use each element's linear_rgb entry (scene-linear), never srgb.
+#   To switch to a revised palette, change this path only.
+palette: figures/style/palette.yaml
 elements: figures/blender/elements.yaml
 
 engine:
@@ -13,7 +11,7 @@ engine:
   device: CPU
   samples: 64          # scenes may lower or raise this with their own `samples`
   seed: 0
-  threads: 4           # also passed on the command line as --threads 4 (R10)
+  threads: 2           # also passed on the command line as --threads 2 (memory rule R10)
   adaptive_sampling: false
   denoise: true
   denoiser: OPENIMAGEDENOISE

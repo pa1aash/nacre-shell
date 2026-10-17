@@ -1,21 +1,24 @@
-19
-Properties=species:S:1:pos:R:3:component:S:1 builder=nacre.structures.ion.build params="{\"angle_hoh_deg\": 104.52, \"cn\": 6, \"r_ca_o\": 2.4, \"r_oh\": 0.9572, \"sphere_iterations\": 2000}" seed=3 library_versions="{\"ase\": \"3.29.0\", \"mp-api\": \"0.46.5\", \"numpy\": \"2.5.4\", \"pymatgen\": \"2026.9.24\", \"rdkit\": \"2026.9.1\"}" source_ids="{}" total_charge=2 illustrative=T label="illustrative construction for a schematic figure; not a simulated structure" notes="Ca2+ with a first hydration shell; coordination number and Ca-O distance are drawing parameters, not results" pbc="F F F"
+22
+Properties=species:S:1:pos:R:3:component:S:1 builder=nacre.structures.ion.build params="{\"angle_hoh_deg\": 104.52, \"cn\": 7, \"r_ca_o\": 2.37, \"r_oh\": 0.9572, \"sphere_iterations\": 2000}" seed=3 library_versions="{\"ase\": \"3.29.0\", \"mp-api\": \"0.46.5\", \"numpy\": \"2.5.4\", \"pymatgen\": \"2026.9.24\", \"rdkit\": \"2026.9.1\"}" source_ids="{\"context_row_ids\": [\"TE-073\", \"TE-074\"], \"evidence\": \"ca_hydration_w1.json\", \"evidence_commit\": \"77806d8080e9b7bc6c58b9e1266811b3d01b4109\", \"row_ids\": {\"cn\": \"TE-072\", \"r_ca_o\": \"TE-072\"}, \"rule\": \"best-grade full-text ca_hydration_number row; CN rounded to an integer; Ca-O is the Ca-Ow distance printed in the same row\"}" total_charge=2 illustrative=T label="illustrative construction for a schematic figure; not a simulated structure" notes="Ca2+ with a first hydration shell; coordination number and Ca-O distance are drawing parameters taken from the cited evidence rows, not results" pbc="F F F"
 Ca       0.00000000       0.00000000       0.00000000 ion
-O        1.68251200      -1.07582800       1.33107000 hydration
-H        1.77726400      -2.01101900       1.51182100 hydration
-H        2.40922200      -0.66589300       1.80019400 hydration
-O       -1.66805200      -1.44858500       0.93765900 hydration
-H       -2.42642900      -1.20299900       1.46754900 hydration
-H       -1.72407600      -2.40142000       0.86556800 hydration
-O       -1.68251200       1.07582800      -1.33107000 hydration
-H       -2.16655200       1.87640400      -1.12855000 hydration
-H       -2.01993400       0.80050800      -2.18346500 hydration
-O        1.66805200       1.44858500      -0.93765900 hydration
-H        2.31642500       1.23777100      -1.60952400 hydration
-H        1.83408100       2.36664900      -0.72359300 hydration
-O        0.38308700      -1.58246600      -1.76324900 hydration
-H        0.55820000      -2.51993700      -1.68130800 hydration
-H        0.39500900      -1.41760900      -2.70607100 hydration
-O       -0.38308700       1.58246600       1.76324900 hydration
-H       -0.72618000       2.47281400       1.68710400 hydration
-H       -0.22703000       1.46473200       2.70027500 hydration
+O        1.45235400      -1.87056600       0.09247500 hydration
+H        2.22956100      -2.03582000      -0.44125900 hydration
+H        1.39321200      -2.63014900       0.67193000 hydration
+O       -1.60420900      -1.27214500       1.19375900 hydration
+H       -2.33288900      -0.94802900       1.72310300 hydration
+H       -1.66867400      -2.22523000       1.25462800 hydration
+O       -1.80311800       0.95723300      -1.20389800 hydration
+H       -1.76155900       1.47452700      -2.00820700 hydration
+H       -2.73616600       0.91321000      -0.99481500 hydration
+O        1.60917800       1.27325600      -1.18586000 hydration
+H        2.40012900       0.95732900      -1.62268700 hydration
+H        1.61382900       2.21870100      -1.33534100 hydration
+O       -0.31002600      -1.26385000      -1.98077400 hydration
+H       -0.80601400      -1.01732600      -2.76144900 hydration
+H        0.03268000      -2.13524100      -2.17942400 hydration
+O       -0.65242500       1.98509400       1.11832200 hydration
+H       -1.49879200       2.43019200       1.07610600 hydration
+H       -0.12862700       2.52145700       1.71345400 hydration
+O        1.30867700       0.19107500       1.96666100 hydration
+H        1.74234200      -0.51058300       2.45229700 hydration
+H        1.52204100       0.98720300       2.45337200 hydration

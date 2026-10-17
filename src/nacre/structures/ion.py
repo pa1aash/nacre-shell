@@ -4,6 +4,10 @@ Shell O positions are the minimum-energy arrangement of ``cn`` points on a spher
 radius ``r_ca_o`` under a 1/r repulsion (seeded start, fixed iteration count), which
 gives the octahedron for six and the square antiprism for eight. Each water points its
 dipole away from the ion and is rotated about the Ca-O axis by a seeded angle.
+
+``cn`` and ``r_ca_o`` have no defaults: build.yaml takes them from lane p0-w1's evidence
+rows (``evidence: ca_hydration``, see nacre.structures.evidence) and the row_ids are
+written into the file's source ids.
 """
 from __future__ import annotations
 
@@ -12,7 +16,8 @@ import numpy as np
 from nacre.structures.meta import formal_charge, stamp
 from nacre.structures.water import WATER, water_frame
 
-DEFAULTS = {"cn": 6, "r_ca_o": 2.40, "sphere_iterations": 2000, **WATER}
+DEFAULTS = {"sphere_iterations": 2000, **WATER}
+REQUIRED = ("cn", "r_ca_o")
 
 
 def sphere_points(n, rng, iterations=2000):
@@ -41,10 +46,13 @@ def _align(z_to):
     return np.eye(3) + vx + vx @ vx * (1.0 / (1.0 + c))
 
 
-def build(params=None, seed=0):
+def build(params=None, seed=0, source_ids=None):
     from ase import Atoms
 
     p = {**DEFAULTS, **(params or {})}
+    missing = [k for k in REQUIRED if k not in p]
+    if missing:
+        raise ValueError(f"hydrated_ion needs {missing} (from evidence rows, never typed defaults)")
     rng = np.random.default_rng(seed)
     dirs = sphere_points(int(p["cn"]), rng, int(p["sphere_iterations"]))
     frame = water_frame(p["r_oh"], p["angle_hoh_deg"])
@@ -64,8 +72,9 @@ def build(params=None, seed=0):
         builder="nacre.structures.ion.build",
         params=p,
         seed=seed,
+        source_ids=source_ids,
         total_charge=formal_charge(atoms.get_chemical_symbols()),
         notes="Ca2+ with a first hydration shell; coordination number and Ca-O distance "
-        "are drawing parameters, not results",
+        "are drawing parameters taken from the cited evidence rows, not results",
     )
     return atoms

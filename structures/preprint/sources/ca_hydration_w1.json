@@ -1,0 +1,68 @@
+{
+ "blob": "a9abe45b7c459b787efe476e8836efb7e21e7665",
+ "commit": "77806d8080e9b7bc6c58b9e1266811b3d01b4109",
+ "quantities": [
+  "ca_hydration_number"
+ ],
+ "ref": "origin/preprint/p0-w1",
+ "rows": [
+  {
+   "conditions": "T=330 K; pH=n.a.; I=dilute; solvent=water (explicit); phase=Ca2+ aq; surface=n.a.",
+   "contrary": "n",
+   "doi": "10.1073/pnas.2415663122",
+   "extraction_route": "full text",
+   "grade": "B",
+   "locator": "Table 1",
+   "method": "computation: SCAN-ML machine-learned potential MD trained on SCAN DFT",
+   "notes": "Ca-Ow 2.37 A; polarizable FF 7.2; experiments quoted 6-10. Run at 330 K to offset SCAN shift. ML energy RMSD 0.4 meV/atom vs SCAN.",
+   "quantity": "ca_hydration_number",
+   "range_or_uncertainty": "\u00b10.05",
+   "retrieved_at": "2026-10-16T09:59:54Z",
+   "retro_candidate": "n",
+   "row_id": "TE-072",
+   "symbol": "N_Ow(Ca)",
+   "thread": "T-E",
+   "unit": "1",
+   "value": "6.85"
+  },
+  {
+   "conditions": "T=n.s.; pH=n.s.; I=n.s.; solvent=water; phase=Ca2+ aq; surface=n.a.",
+   "contrary": "n",
+   "doi": "10.1073/pnas.2415663122",
+   "extraction_route": "full text",
+   "grade": "C",
+   "locator": "Table 1",
+   "method": "compilation: experimental range quoted (ref. 40) in SCAN-ML study",
+   "notes": "Secondary citation; original not checked. Spread reflects method dependence of experimental CN.",
+   "quantity": "ca_hydration_number",
+   "range_or_uncertainty": "6..10",
+   "retrieved_at": "2026-10-16T09:59:54Z",
+   "retro_candidate": "n",
+   "row_id": "TE-073",
+   "symbol": "N_Ow(Ca) experiment",
+   "thread": "T-E",
+   "unit": "1",
+   "value": ""
+  },
+  {
+   "conditions": "T=300 K; pH=n.s.; I=1.5-2 mol dm^-3 calcium halides; solvent=water; phase=Ca2+ aq; surface=n.a.",
+   "contrary": "n",
+   "doi": "10.1021/ja001533a",
+   "extraction_route": "abstract",
+   "grade": "D",
+   "locator": "abstract",
+   "method": "experiment: EXAFS, LAXS with MD (Jalilehvand et al. 2001)",
+   "notes": "Mean Ca-O 2.46 A; CN 8 inferred from distance-CN correlations; GROMOS Ca-water potential reproduced CN 8.",
+   "quantity": "ca_hydration_number",
+   "range_or_uncertainty": "",
+   "retrieved_at": "2026-10-16T09:57:02Z",
+   "retro_candidate": "n",
+   "row_id": "TE-074",
+   "symbol": "CN",
+   "thread": "T-E",
+   "unit": "1",
+   "value": "8"
+  }
+ ],
+ "source": "lane p0-w1 lit/evidence_table.csv"
+}

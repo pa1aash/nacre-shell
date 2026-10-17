@@ -7,7 +7,7 @@
    -0.3
   ],
   "margin": 1.06,
-  "ortho_scale": 35.8271,
+  "ortho_scale": 35.6881,
   "type": "ORTHO",
   "up": [
    0.0,
@@ -16,25 +16,31 @@
   ]
  },
  "counts": {
-  "atoms": 295,
+  "atoms": 298,
   "elements": [
    "Al",
    "Ca",
    "H",
    "O"
   ],
-  "half_bonds": 906
+  "half_bonds": 912
  },
  "elements_table_sha256": "84a79466dda3a3445b8ac856aaeaea1069b10e54b49ed11f3f21435d6e14706b",
  "inputs": [
   {
+   "evidence_row_ids": {
+    "ion": {
+     "cn": "TE-072",
+     "r_ca_o": "TE-072"
+    }
+   },
    "file": "structures/preprint/smoke_interface.extxyz",
-   "sha256": "929c64a0bef2c18e97de01c431a960391898c46c97122e8355d847658b112f1b"
+   "sha256": "97972947e2e2d464f731410c0b2bdde1a7dac0b67730780bbc161b6bac8ffcaf"
   }
  ],
  "output": "figures/renders/smoke/smoke.png",
- "output_bytes": 236291,
- "output_sha256": "a428d2a21cf8ffc4e76df8a607d89977ff7842864fcd5baece4e7be05107bc10",
+ "output_bytes": 236684,
+ "output_sha256": "f06edf0509d1d2094fb74d86d3874431c0078171a0416a216096c5e5af7a0406",
  "palette": {
   "colour_space": "linear RGB (palette elements.<El>.linear_rgb) as Principled base colour",
   "colours_used": {
@@ -60,7 +66,7 @@
    ]
   },
   "git_blob": "a64f5e8452abf5d511194e92302fed42e3e9dc0b",
-  "path": ".local/w7/palette.yaml",
+  "path": "figures/style/palette.yaml",
   "sha256": "e22fbfa6e0676491c7de9b450792763b92cd7aaa6a0d940b8a62b6cb0e62af19"
  },
  "png_chunks_dropped": [
@@ -94,9 +100,14 @@
   ],
   "samples": 32,
   "seed": 0,
-  "threads": 4
+  "threads": 2
  },
  "rig": {
+  "ambient_occlusion": {
+   "distance": 2.5,
+   "samples": 16,
+   "strength": 0.55
+  },
   "distance_factor": 3.0,
   "fill": {
    "azimuth": 50.0,
@@ -110,11 +121,20 @@
    "irradiance": 4.0,
    "size_frac": 0.6
   },
+  "penumbra_deg": {
+   "fill": 18.92,
+   "key": 11.42,
+   "rim": 9.53
+  },
   "rim": {
    "azimuth": 170.0,
    "elevation": 35.0,
    "irradiance": 2.5,
    "size_frac": 0.5
+  },
+  "shadows": {
+   "cast": true,
+   "spread_deg": 180.0
   },
   "world": {
    "colour": [
@@ -129,9 +149,5 @@
  "scene_config": "figures/blender/scenes/smoke.yaml",
  "scene_config_sha256": "c1a8885d0b6bce0ce078f3213101867ef1ae29ab7af27e0c5057dcb0edcba038",
  "text_objects": 0,
- "timing_s": {
-  "build": 5.36,
-  "render": 26.58
- },
  "yaml_source": "pure-python from .venv/lib/python3.12/site-packages"
 }

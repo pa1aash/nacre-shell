@@ -24,7 +24,8 @@ SCENES_DIR = HERE / "scenes"
 STYLES = ("ball_and_stick", "space_filling")
 SCENE_KEYS = {"name", "description", "resolution", "samples", "camera", "components"}
 CAMERA_KEYS = {"direction", "up", "margin"}
-COMPONENT_KEYS = {"file", "style", "include", "exclude_elements", "translate"}
+COMPONENT_KEYS = {"file", "style", "include", "exclude_elements", "translate", "clip"}
+CLIP_KEYS = {"box", "seed_elements", "attach"}
 # R7: none of these may appear anywhere in a scene config.
 FORBIDDEN_KEYS = re.compile(r"text|label|arrow|annotat|caption|legend|font", re.IGNORECASE)
 # Day 1 renders stay small.
@@ -149,7 +150,18 @@ def parse_scene(path_or_name):
             raise ConfigError(f"{path}: component {i} style must be one of {STYLES}")
         if "file" not in c:
             raise ConfigError(f"{path}: component {i} has no file")
+        clip = c.get("clip")
+        if clip is not None:
+            if set(clip) != CLIP_KEYS:
+                raise ConfigError(f"{path}: component {i} clip needs exactly {sorted(CLIP_KEYS)}")
+            box = clip["box"]
+            if not (isinstance(box, list) and len(box) == 2
+                    and all(isinstance(b, list) and len(b) == 2 and b[0] < b[1] for b in box)):
+                raise ConfigError(f"{path}: component {i} clip.box must be [[x0, x1], [y0, y1]] with x0 < x1")
+            clip = {"box": [[float(v) for v in b] for b in box],
+                    "seed_elements": list(clip["seed_elements"]), "attach": list(clip["attach"])}
         out.append({
+            "clip": clip,
             "file": c["file"],
             "style": c["style"],
             "include": list(c.get("include", [])),
@@ -202,6 +214,29 @@ def read_extxyz(path):
     }
 
 
+def evidence_row_ids(struct):
+    """Evidence row_ids named anywhere in a structure's source ids ({} when there are none)."""
+    import json
+
+    raw = struct["info"].get("source_ids")
+    try:
+        src = json.loads(raw) if isinstance(raw, str) else (raw or {})
+    except ValueError:
+        return {}
+    found = {}
+
+    def walk(obj, path):
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if k == "row_ids" and isinstance(v, dict):
+                    found[path or "structure"] = dict(v)
+                else:
+                    walk(v, f"{path}.{k}" if path else k)
+
+    walk(src, "")
+    return found
+
+
 def select_atoms(struct, include, exclude_elements):
     """Indices kept by a component filter: component prefixes and excluded elements."""
     keep = []
@@ -214,6 +249,34 @@ def select_atoms(struct, include, exclude_elements):
                 continue
         keep.append(i)
     return keep
+
+
+def clip_selection(symbols, positions, idx, clip, radii, factor, pairs):
+    """Bond-aware crop of a selection to an in-plane box (angstrom, structure coordinates).
+
+    Atoms of ``seed_elements`` whose x, y lie in the box are kept; then, for each element
+    of ``attach`` in order, every selected atom of that element bonded to a kept atom is
+    added. With seeds Al, C, N, Ca and attach O, H, a periodic slab is cut inside its cell
+    with every kept Al fully coordinated and every hydroxyl attached to its Al, so the
+    crop shows no detached OH groups (the cell-edge problem of a periodic slab).
+    """
+    (x0, x1), (y0, y1) = clip["box"]
+    pos = np.asarray(positions)
+    kept = [i for i in idx if symbols[i] in clip["seed_elements"]
+            and x0 <= pos[i, 0] <= x1 and y0 <= pos[i, 1] <= y1]
+    allowed = {frozenset(p) for p in pairs}
+    rc = {s: radii[s]["covalent"] for s in set(symbols[i] for i in idx)}
+    for el in clip["attach"]:
+        cand = [i for i in idx if symbols[i] == el and i not in set(kept)]
+        if not cand or not kept:
+            continue
+        k = np.array(kept)
+        d = np.linalg.norm(pos[cand][:, None, :] - pos[k][None, :, :], axis=-1)
+        cut = factor * (np.array([rc[el]] * len(cand))[:, None] + np.array([rc[symbols[j]] for j in k])[None, :])
+        ok_pair = np.array([[frozenset((el, symbols[j])) in allowed for j in k]] * len(cand))
+        hit = ((d < cut) & ok_pair).any(axis=1)
+        kept += [c for c, h in zip(cand, hit) if h]
+    return sorted(kept)
 
 
 def find_bonds(symbols, positions, radii, factor, pairs):
