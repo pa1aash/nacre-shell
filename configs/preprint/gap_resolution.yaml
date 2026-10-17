@@ -1,0 +1,338 @@
+# Gap-resolution table of the P0 production screen (P0-W4.3, lane note N21).
+#
+# Written and committed before any production output exists (rule R7). For every input the
+# screen needs that has no sourced prior in lit/params.yaml at tag p0-cp3, exactly one registered
+# treatment:
+#
+#   ignorance    a bounded ignorance prior whose bounds are the expressions of
+#                theory/ignorance_priors.md (or the same bound rule applied to a control surface,
+#                stated where so); a probability computed under it is never a finding
+#                (ignorance_priors.md section 3);
+#   analog       a flagged analog prior: a W1 key with role analog (lit/params.yaml), run beside the
+#                result without it; every verdict that rests on it is labelled conditional on the
+#                analog;
+#   design_axis  a design axis over a registered grid (values are table points or registered
+#                states, never literature numbers typed here); the verdict is reported per point;
+#   unresolved   no admissible treatment exists in P0: the test that needs the key reports "gap" and
+#                counts as inconclusive (thresholds Section 1: a missing key makes its test a gap).
+#
+# No number is typed in this file (rule R2): every value is a table key, a table point (min, value,
+# max) or an expression of theory/ignorance_priors.md. "beside" names the result each treatment is
+# run beside. The prior sets of configs/preprint/screen.yaml select the treatments:
+#   table      sourced priors only; every key below is then a gap (the side-by-side baseline);
+#   ignorance  the ignorance, analog and design-axis treatments below.
+version: 1
+session: P0-W4.3
+written_before_production_output: true
+inputs:
+  params: {file: lit/params.yaml, tag: p0-cp3, last_change: fbe252b23a5a80e9fff25db72d1d3b85e8454ce8}
+  thresholds: {file: configs/preprint/thresholds.yaml, source: theory/thresholds.md,
+               source_sha: 74ac69c2586c017e2bc08efecbfbc918b94f48ee,
+               pending: 'W3 thresholds_cp3b (margin-to-scheme mapping, termination mixture, geometric bounds); an amendment commit applies it before any output'}
+  bounds_authority: {file: theory/ignorance_priors.md, sha: d782db2f19fafb5a40367f604502c36f75d0cc16}
+reporting:
+  ignorance_is_finding: false            # ignorance_priors.md section 3.1
+  analog_label: 'conditional on the flagged analog <key>'
+  unresolved_counts_as: inconclusive
+  flip_values: P0-W4.4                   # where each unresolved or ignorance-bounded input flips a verdict
+
+# ---------------------------------------------------------------- R-slurry template inputs
+gaps:
+  gamma_sn0_template:
+    symbol: gamma_sn0
+    links: [C3, C4]
+    treatment: ignorance
+    prior: uniform
+    low: '0'
+    high: gamma_p + gamma_nv
+    bound_from: theory/ignorance_priors.md 1a (dry work of adhesion >= 0; interface stability)
+    inputs: {gamma_p: gamma_p_pda, gamma_nv: {calcite: gamma_nv_calcite, ACC: gamma_nv_acc}}
+    per_draw: true                       # the bound moves with the gamma_p and gamma_nv draws
+    analog: none                         # W1 (P0-W1.3): no measured analog of gamma_sn exists
+    beside: table set (C3 and C4 not evaluable)
+  delta_gamma_w:
+    symbol: Delta_gamma_w
+    links: [C3, C4]
+    treatment: ignorance
+    value_rule: '0: the prior is placed on the total contact energy (theory/ignorance_priors.md 1b)'
+    beside: table set
+  gamma_nv_acc:
+    symbol: gamma_nv
+    links: [C3, C4]
+    framing: ACC
+    treatment: analog
+    analog: gamma_nv_acc_calcite_analog
+    use: the upper bound gamma_p + gamma_nv of the ACC-framing gamma_sn ignorance prior
+    reason: no ignorance bound on gamma_nv is registered; W1's flagged analog (calcite dry surface energy)
+    beside: table set (ACC-framing C3 and C4 not evaluable)
+  delta_g_site:
+    symbol: Delta_G_site
+    links: [C2, C3, C4]
+    treatment: analog
+    analog: log10_k_ca_catecholate
+    conversion: 'Delta_G_site = -R_gas*T*(log(K_Ca_catecholate) + log(c_max/c_std)), c_max = Gamma_s/delta_s'
+    conversion_reason: >-
+      The analog is a solution complexation constant (standard concentration c_std, exact by
+      definition) of Ca2+ with the deprotonated catecholate; Delta_G_site uses the site-volume
+      standard state (theory/symbols.yaml). With this conversion the Langmuir odds of the contract,
+      x = E_enr c_bulk / c_max, reduce to x = K c_bulk / c_std divided by the deprotonation factor,
+      the conditional binding constant of the analog.
+    flags: [single_source, widened]      # carried from the key (W1 rule W1)
+    limitation: >-
+      The contract corrects for one coordinating group (pKa bound to pka_catechol); the second
+      catechol proton (pka2_catechol) is not in the contract and is reported as a limitation.
+    reason: Delta_G_site is computed by the study's PMF, which P0 does not run (D15 (iii) - literature binding energies, flagged)
+    beside: table set (C2, C3 and C4 not evaluable)
+  delta_s:
+    symbol: delta_s
+    links: [C2, C3, C4]
+    treatment: ignorance
+    prior: loguniform                    # W1 rule L1: the bound spans more than a decade
+    low_max_of: [2*r_Ca, Gamma_s*V_m]
+    high: d_layer
+    bound_from: theory/ignorance_priors.md 4
+    inputs: {r_Ca: ca_ionic_radius, d_layer: template_layer_thickness, Gamma_s: gamma_s_site_density,
+             V_m: {calcite: v_m_calcite, ACC: v_m_acc}}
+    per_draw: true
+    empty_interval: refused and counted (a draw with low >= high), never clipped
+    beside: table set
+  ca_ionic_radius:
+    symbol: r_Ca
+    links: [C2, C3, C4]
+    treatment: analog
+    analog: ca_o_distance_aqueous_analog
+    use: the lower bound 2 r_Ca of delta_s
+    direction: the Ca-O distance exceeds the ionic radius, so the analog raises the lower bound of delta_s
+    beside: table set
+  template_group_density:
+    symbol: rho_L
+    links: [C2, C3, C4]
+    treatment: analog
+    analog: template_group_density_site_analog
+    use: 'the geometric bound Gamma_s <= rho_L*d_layer (theory/ignorance_priors.md 4); draws of the sourced Gamma_s above it are refused and their mass reported (W1, P0-W1.3 outstanding 1)'
+    beside: table set
+  site_footprint_area:
+    symbol: a_site
+    links: [C2, C3, C4]
+    treatment: unresolved
+    effect: the 1/(N_A a_site) term of the Gamma_s bound is not applied; reported
+  v_site:
+    symbol: V_site
+    links: [C2]
+    treatment: ignorance
+    value_rule: 'derived, V_site = delta_s/(N_A*Gamma_s) (theory/ignorance_priors.md 4); not a chain input'
+  termination_weights:
+    symbol: termination_weights
+    links: [C1]
+    treatment: ignorance
+    prior: flat Dirichlet on the simplex of the registered terminations (thresholds C1, cp3 R8)
+    registered_terminations: none
+    degenerate: >-
+      No P0 input is resolved by termination (no PMF; the C1 analog and the Dupre energies carry no
+      termination index) and the table registers no termination list. Every termination therefore
+      carries the same C1 prior: the per-termination verdicts equal the pooled verdict and the
+      mixture equals it. Recorded, not compressed; the per-termination run needs the PMF study.
+
+# ---------------------------------------------------------------- C1 (no PMF in P0)
+  delta_f_pmf:
+    symbol: Delta_F_pmf
+    links: [C1]
+    treatment: unresolved
+    effect: 'C1 (decisive route W_adh_wet = Delta_F_pmf/A_c) reports gap and counts as inconclusive'
+    beside: [C1_analog, C1_dupre]
+  a_c:
+    symbol: A_c
+    links: [C1]
+    treatment: unresolved
+    effect: as delta_f_pmf
+  gamma_ow_alumina:
+    symbol: gamma_ow
+    links: [C1_dupre, deletion bare_oxide]
+    treatment: ignorance
+    prior: uniform
+    low: '0'
+    high: gamma_o + gamma_w
+    bound_from: theory/ignorance_priors.md 1c
+    inputs: {gamma_o: gamma_o_alumina, gamma_w: gamma_w}
+    per_draw: true
+  gamma_op:
+    symbol: gamma_op
+    links: [C1_dupre]
+    treatment: ignorance
+    prior: uniform
+    low: '0'
+    high: gamma_o + gamma_p
+    bound_from: theory/ignorance_priors.md 1c
+    inputs: {gamma_o: gamma_o_alumina, gamma_p: gamma_p_pda}
+    per_draw: true
+
+  ca_total_slurry:
+    symbol: Ca_T
+    links: [C2, C3, C4, C5s]
+    treatment: design_axis
+    grid: 'configs/preprint/screen.yaml design_axes.Ca_T (W5''s grid, one point per decade, read as the total dissolved Ca dose; gap policy (ii))'
+    speciated: a_ca_slurry and c_bulk_slurry are computed per draw and printed beside each point
+  dic_slurry_axis:
+    symbol: C_T
+    links: [C2, C3, C4, C5s]
+    treatment: design_axis
+    grid: {params: dic_slurry, at: [min, value, max]}
+    note: 'dic_slurry is sourced; it is a design axis by the gap policy (ii), not a gap'
+  n_req:
+    symbol: N_req
+    links: [C3]
+    treatment: unresolved
+    effect: 'derived from patch_area (gaps.patch_area) and p_cred; undetermined while patch_area is a gap'
+# ---------------------------------------------------------------- C3, C4, states
+  patch_area:
+    symbol: A_patch
+    links: [C3]
+    treatment: unresolved
+    effect: 'C3b (N_req = ln(1/(1 - p_cred))/A_patch) reports gap; C3 is decided by C3a only where C3a falsifies (a pass needs C3b); N_nuc is reported for the P0-W4.4 flip value'
+  a_w_slurry:
+    symbol: a_w
+    links: [C3, C4, C5]
+    state: drying
+    treatment: design_axis
+    grid:
+      - {label: wet_film, value_from: 'the slurry state value a_w = 1 (charter definition, configs/preprint/screen.yaml)'}
+      - {label: dry_room_min, params: a_w_drying_secondary, at: min}
+    reason: >-
+      The primary drying film starts at the wet-slurry activity and dries toward the dry-room gas
+      activity (the secondary drying key). a_w enters only the CaOH+ term of the speciation, which is
+      monotone in a_w, so the two ends bracket the state. The F7 bias (drying states optimistic) and
+      the Omega_bulk_hydrated sensitivity are reported at both points.
+    beside: the drying state missing (cp3 R7(4)), reported with the table set
+  rho_e_caco3: {symbol: rho_e, links: [C4s], treatment: unresolved, effect: d_max not evaluable}
+  phi_b_caco3: {symbol: phi_B, links: [C4s], treatment: unresolved, effect: d_max not evaluable}
+  m_eff_tunnel: {symbol: m_eff, links: [C4s], treatment: unresolved, effect: d_max not evaluable}
+  j_0_tunnel: {symbol: j_0, links: [C4s], treatment: unresolved, effect: d_max not evaluable}
+  r_a_max: {symbol: R_A_max, links: [C4s], treatment: unresolved, effect: 'registration input set at G2; d_max not evaluable'}
+  j_req: {symbol: j_req, links: [C4s], treatment: unresolved, effect: 'registration input set at G2; d_max not evaluable'}
+
+# ---------------------------------------------------------------- C5
+  e_cell_max:
+    symbol: E_cell_max
+    links: [C5c_ox]
+    treatment: design_axis
+    grid_by_class:                       # W1 rule G1: the cut-off is a property of the cathode class
+      LFP: {params: e_cell_max_lfp, at: [min, value, max]}
+      layered_NMC_NCA: {params: e_cell_max_layered, at: [min, value, max]}
+      LCO: {params: e_cell_max_lco, at: [min, value, max]}
+      LMO: {params: e_cell_max_lmo, at: [min, value, max]}
+      LNMO: {params: e_cell_max_lnmo, at: [min, value, max]}
+  solvation_ca_vs_li: {symbol: solvation, links: [C5c_ox], treatment: unresolved,
+                       effect: 'solvated sink undetermined: no R-cell pass can count (F5); the water analogs need gas-phase ion formation free energies to give an onset (P0-W5.3), so no analog onset exists'}
+  solvation_al_vs_li: {symbol: solvation, links: [C5c_ox, C5c_red], treatment: unresolved, effect: as solvation_ca_vs_li}
+  dfg_ca_clo4_2: {symbol: dfg, links: [C5c_ox], treatment: unresolved, effect: 'expt route uses W5''s exchange route through the tabulated enthalpy; its entropy bound is in window_margin_expt'}
+  s_ca_clo4_2: {symbol: S, links: [C5c_ox], treatment: unresolved, effect: bounded by the analog entropies inside window_margin_expt (W1)}
+  dfg_al_clo4_3: {symbol: dfg, links: [C5c_ox], treatment: unresolved, effect: Al phases with LiClO4 undetermined (never a pass)}
+  dfg_al_no3_3: {symbol: dfg, links: [C5c_ox], treatment: unresolved, effect: not a registered sink}
+  dfg_alcl3: {symbol: dfg, links: [C5c_ox], treatment: unresolved, effect: not a registered sink}
+  dfg_gibbsite: {symbol: dfg, links: [C5c_ox], treatment: unresolved, effect: gibbsite is reported, not gated (cp3 R8)}
+
+# ---------------------------------------------------------------- link-level treatments
+c1:
+  decisive: {route: PMF, quantity: W_adh_wet, status: gap (delta_f_pmf, a_c unresolved)}
+  side_by_side:                          # each evaluated with the C1 rule (edge m_W) and labelled; neither replaces the PMF route
+    C1_analog:
+      quantity: W_adh_wet
+      treatment: analog
+      analog: w_adh_wet_catechol_oxide_analog
+      label: conditional on the flagged analog w_adh_wet_catechol_oxide_analog (catecholic films on mica, silica and copper oxide)
+    C1_dupre:
+      quantity: W_adh_wet_comparator
+      expression: gamma_ow + gamma_pw - gamma_op (theory/ignorance_priors.md 1c)
+      treatment: ignorance
+      inputs: {gamma_ow: gamma_ow ignorance, gamma_op: gamma_op ignorance, gamma_pw: gamma_sl0_template}
+      gamma_pw: 'the same quantity as gamma_sl0 (ignorance_priors.md 1d), with its cp3 R8 truncation; the consistency bound gamma_pw <= gamma_p + gamma_w is reported'
+      flip: 'gamma_op* = gamma_ow + gamma_pw - m_W (ignorance_priors.md 1c), for P0-W4.4'
+      label: ignorance (never a finding)
+c4:
+  closure_route: 'C4s reports gap (d_max); C4 cannot be falsified (a falsification needs both routes) and passes only through S_spread'
+  report: [P(gamma_sl > gamma_nl) per state, N_nuc]
+c5:
+  slurry_dissolution: {decided_by: Omega_bulk, inputs: sourced, design_axes: [Ca_T, C_T], al_axis: none (no Al in the speciation)}
+  slurry_phase: {source: 'W5 results/preprint/pourbaix/c5/slurry/<aCa>_<CT>_<Al>.json', design_axes: [Ca_T, C_T, Al_T]}
+  cell: {source: 'W5 results/preprint/pourbaix/c5/cell/<sink>.json', sinks: [LiClO4, LiBOB, LiPCP, solvated]}
+  margin_mapping: 'm_expt (window_margin_expt) for the expt route, m_E (window_margin) for the DFT schemes; pending W3 thresholds_cp3b'
+
+# ---------------------------------------------------------------- deletion-test controls
+controls:
+  bare_oxide:
+    replaces: the template (thresholds Section 3, deletion test; charter/deletion_register.yaml)
+    links: [C3, C4]
+    gamma_sl:
+      symbol: gamma_sl
+      mode: in_situ                      # the energy at the regime activities; no Delta_gamma_ads is added
+      treatment: ignorance
+      prior: uniform
+      low: '0'
+      high: gamma_o + gamma_w
+      bound_from: theory/ignorance_priors.md 1c (gamma_ow)
+      inputs: {gamma_o: gamma_o_alumina, gamma_w: gamma_w}
+    gamma_sn:
+      symbol: gamma_sn0
+      treatment: ignorance
+      prior: uniform
+      low: '0'
+      high: gamma_o + gamma_nv
+      bound_from: 'the bound rule of theory/ignorance_priors.md 1a (dry work of adhesion >= 0, interface stability) applied to the oxide-nucleus contact'
+      inputs: {gamma_o: gamma_o_alumina, gamma_nv: {calcite: gamma_nv_calcite, ACC: gamma_nv_acc_calcite_analog}}
+    Delta_gamma_w: '0 (prior on the total, ignorance_priors.md 1b)'
+    c2_descriptors: {treatment: unresolved, effect: 'no Ca2+-oxide binding input; reported as gap (C2 is not a deletion link)'}
+    c1: 'W_adh_wet = 0 by construction (deletion register); C1 alone does not count'
+    shared: [J0_het, t_proc, framing inputs, speciation inputs, design axes, states]
+  PVDF:
+    replaces: the template
+    links: [C3, C4]
+    gamma_c_dry: {treatment: unresolved, effect: 'no PVDF dry surface energy key: no ignorance bound can be formed'}
+    effect: 'the PVDF control is not evaluable: the deletion test cannot hold, so the study cannot be feasible (thresholds Section 3)'
+  catechol_only: {gating: false, treatment: unresolved, effect: no inputs; not run}
+  chitosan_only: {gating: false, treatment: unresolved, effect: no inputs; not run}
+  carboxylate_substituted: {gating: false, treatment: unresolved, effect: no inputs; not run}
+  under_ignorance: 'a deletion test whose template and control rest on ignorance priors compares prior widths; it is reported, never a finding'
+
+# ---------------------------------------------------------------- sweeps and sensitivities (theory/thresholds.md conventions)
+sweeps:
+  p_cred: [0.6, 0.9, 0.99]               # p_deg = 1 - p_cred moves with it
+  m_cos: [0, 0.1, 0.2]
+  gamma_sl0: [truncated, untruncated]    # cp3 R8; the removed mass is reported
+  dependence: [stated correlations, independent]
+  acc_omega_margin: C5s_ACC per design point (Omega_bulk with the ACC K_sp, labelled, never gating)
+sizing:
+  band_mass_half_width_max: 0.01
+  sobol_total_order_half_width_max: 0.02
+  draws: doubled from 2**14 per state until the band-mass rule holds, capped at 2**20 per state
+  wall_clock_cap: 6 h per run
+  on_cap: capped, with the half-widths reached
+
+# ---------------------------------------------------------------- not gaps, recorded for completeness
+binding_corrections:                     # a binding of configs/preprint/screen.yaml named a key W1 spells otherwise
+  A_DH: {was: davies_a, now: debye_huckel_a, reason: 'W1 key (params.debye_huckel_A); sourced, so no treatment is needed'}
+not_screen_inputs:                       # gap or computed keys of the table that no screen link reads
+  nucleation_density: 'N_s = N_nuc by the C4 rule (thresholds C4s); the key is not read'
+  a_h_cell: 'the R-cell limits are W5''s deterministic windows; the activity is W5''s input'
+  a_co3_cell: as a_h_cell
+  gamma_sn_ignorance_calcite: 'the W1 record of the gamma_sn ignorance prior (gaps.gamma_sn0_template draws it per draw)'
+  gamma_sn_ignorance_acc: as gamma_sn_ignorance_calcite (its gamma_nv is the analog, gaps.gamma_nv_acc)
+  gamma_sn_ignorance_acc_analog: as gamma_sn_ignorance_acc
+  gamma_ow_ignorance: 'the W1 record of the gamma_ow ignorance prior (gaps.gamma_ow_alumina)'
+  gamma_op_ignorance: 'the W1 record of the gamma_op ignorance prior (gaps.gamma_op)'
+  gamma_s_geometric_bound_analog: 'the W1 record of rho_L d_layer with the analog density (gaps.template_group_density)'
+  contact_area_definition: 'pending for cp4 (D20); used only by the PMF route of C1, which is unresolved'
+computed_or_registered:                  # keys of the table with no prior because the screen or W5 computes them, or a ruling registers them
+  a_co3_slurry: computed per draw by the contract v3 speciation
+  a_ca_slurry: computed per draw by the speciation (printed beside the Ca_T grid)
+  c_bulk_slurry: computed per draw by the speciation (free Ca2+)
+  a_ca_cell: W5 R-cell input
+  d_film: not read by the screen (the thickness enters C4s only through d_max)
+  g_phase_database: W5 Pourbaix input
+  mu_li0: W5 R-cell input
+  delta_g_r: W5 R-cell input
+  mu_h2o: W5 Pourbaix input
+  framing: 'registered both (cp3 R6): calcite and ACC, each run as a whole chain'
+  gas_reference_schemes: 'registered (cp2; cp3 R2): expt governs, janaf and mp comparators'
+  al_phases: 'registered (cp3 R8): corundum and boehmite gated'
+  electrolyte_salts: 'categorical registration (fluorine-free salts): the R-cell sinks of W5''s documents'
+  electrolyte_solvents: 'categorical registration: W5 R-cell input'
