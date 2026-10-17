@@ -81,8 +81,7 @@ def lane_extension(params, meta):
                                     "library_versions": provenance.lib_versions(),
                                     "params_snapshot": rel(inputs.snapshot_path(params.sha)),
                                     "params_blob": params.snap["params"]["blob"],
-                                    "thresholds": {"rev": provenance.W3_THRESHOLDS[0], "path": provenance.W3_THRESHOLDS[1]},
-                                    "w6_schema": {"rev": provenance.W6_SCHEMA_PIN[0], "path": provenance.W6_SCHEMA_PIN[1]}},
+                                    "thresholds": {"rev": provenance.W3_THRESHOLDS[0], "path": provenance.W3_THRESHOLDS[1]}},
             "config": meta["path"]}
 
 
@@ -133,6 +132,16 @@ def schema_state(conditions, phases, idx, dec, roles, named):
                                  if ent is not None else None)}
     return {"conditions": conditions, "phases": phases, "domains": {"index_grid": idx.astype(int).tolist()},
             "decomposition_energy": decomp}
+
+
+def water_lines_record(ph):
+    """Water-stability lines on the pH axis (V vs SHE), until schema v2 has a field for them (N13)."""
+    from nacre.pourbaix import slurry
+
+    w = slurry.water_lines(ph)
+    return {"pH": _r(ph), "lower_V_SHE": _r(w["lower"]), "upper_V_SHE": _r(w["upper"]),
+            "note": "H2/H2O (lower) and H2O/O2 (upper) at 1 bar and 298.15 K; held here until W4 adds the "
+                    "schema v2 field for the Fig 7 water-stability lines (lane notes N12, N13)"}
 
 
 def run_slurry(raw, meta, params):
@@ -201,7 +210,8 @@ def run_slurry(raw, meta, params):
                                               "axes": {"pH": _r(ph), "E_V": _r(E)},
                                               "states": {"bulk": bulk, "enriched": enriched}}},
                    "extensions": {"p0-w5": {**ext, "question": cfg["question"], "design_point": pid,
-                                            "design_axes": {"a_Ca": a_ca, "C_T": ct}}}}
+                                            "design_axes": {"a_Ca": a_ca, "C_T": ct},
+                                            "water_lines": water_lines_record(ph)}}}
             docs.append(_dump(OUT / "slurry" / ("%s.json" % pid), doc))
             worst_cal = float(cal.max())
             points.append({
@@ -389,8 +399,6 @@ def main(argv=None):
     prov = w4_provenance(meta, params.sha)
     if args.regime in ("R-slurry", "both"):
         summary, outs = run_slurry(raw, meta, params)
-        from nacre.pourbaix import fig7
-        outs += fig7.export_slurry(summary, OUT)
         checks = validate(outs)
         bad = [k for k, v in checks.items() if not v.get("valid")]
         cpath = _dump(OUT / "slurry_schema_checks.json", checks)

@@ -1,4 +1,4 @@
-"""Run provenance, ledger records and checks against the other lanes' schemas.
+"""Run provenance, ledger records and checks against W4's results schema.
 
 The `provenance` block follows W4's results schema (configs/preprint/results_schema.json at
 cc50fc0, $defs/provenance) field by field. W4's `prior_file` is the run configuration here,
@@ -16,14 +16,13 @@ from nacre.pourbaix import cache
 from nacre.pourbaix.paths import REPO
 
 W4_SCHEMA = ("cc50fc0", "configs/preprint/results_schema.json")
-W6_SCHEMA = ("origin/preprint/p0-w6", "figures/src/schemas/fig7_pourbaix.schema.json")
 W3_CONTRACT = ("b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3", "theory/contract.yaml")
-# Day 2 (P0-W5.2): schema v2 with the C5 section (D4), contract v2, W3's thresholds and the
-# Fig 7 schema at the commits read in this session.
+# Day 2 (P0-W5.2): schema v2 with the C5 section (D4), contract v2 and W3's thresholds at the
+# commits read in that session. W6's Fig 7 schema was deleted on W6; since P0-W5.3 (lane note N12)
+# the stability outputs are checked against schema v2 only.
 W4_SCHEMA_V2 = ("16fe14d4454fd1b4b79ed8454a557b6d68aa7b88", "configs/preprint/results_schema.json")
 W3_CONTRACT_V2 = ("5811a6b2b82565a2d7e991987eee6ab4f167959e", "theory/contract.yaml")
 W3_THRESHOLDS = ("800d5ea", "theory/thresholds.md")
-W6_SCHEMA_PIN = ("6bcb801", "figures/src/schemas/fig7_pourbaix.schema.json")
 LIBS = ["pymatgen", "mp-api", "emmet-core", "numpy", "scipy", "rdkit", "ase", "pyyaml"]
 
 
@@ -71,8 +70,7 @@ def block(config_meta):
              "cache_hash": cache.cache_hash(), "mp_database_version": m["mp_database_version"],
              "mp_thermo_types": m["thermo_types"], "library_versions": lib_versions(),
              "contract": {"sha": W3_CONTRACT[0], "path": W3_CONTRACT[1], "function": "E_window"},
-             "w4_schema": {"rev": W4_SCHEMA[0], "path": W4_SCHEMA[1]},
-             "w6_schema": {"rev": W6_SCHEMA[0], "path": W6_SCHEMA[1]}}
+             "w4_schema": {"rev": W4_SCHEMA[0], "path": W4_SCHEMA[1]}}
     return w4, extra
 
 

@@ -2,8 +2,7 @@
 
     uv run python -m nacre.pourbaix.run --config results/preprint/pourbaix/config/mock.yaml --mock
 
-Writes results/preprint/pourbaix/<run>/ (slurry.json, cell.json, fig7_pourbaix_input.json,
-schema_checks.json) and appends one record to jobs/ledger/p0-w5.jsonl. Mock configurations are
+Writes results/preprint/pourbaix/<run>/ (slurry.json, cell.json, schema_checks.json) and appends one record to jobs/ledger/p0-w5.jsonl. Mock configurations are
 refused without --mock.
 """
 import argparse
@@ -127,32 +126,6 @@ def cell_payload(cfg, res):
     }
 
 
-def fig7_export(slurry_out, prov_extra, w4_prov):
-    """The R-slurry part in the shape of W6's assumed Fig 7 schema (assumed-v0)."""
-    ph = slurry_out["axes"]["pH"]
-    E = slurry_out["axes"]["E_V_SHE"]
-    return {
-        "mock": None,  # filled by the caller
-        "schema": "fig7-pourbaix/assumed-v0",
-        "note": "Exported by lane p0-w5 from slurry.json. R-cell has no (pH, E) plane and is "
-                "not exported here; see cell.json and the schema checks.",
-        "provenance": {**w4_prov, "cache_hash": prov_extra["cache_hash"],
-                       "mp_database_version": prov_extra["mp_database_version"]},
-        "regimes": [{
-            "id": "R-slurry",
-            "conditions": slurry_out["conditions"],
-            "ph_range": [ph[0], ph[-1]],
-            "potential_range": [E[0], E[-1]],
-            "domains": [{"species": d["label"], "phase": d["kind"], "polygon": d["polygon"]}
-                        for d in slurry_out["domains"]["polygons"]],
-            # the water lines are straight, so their end points define them
-            "water_lines": [{"kind": k, "points": [[ph[0], slurry_out["water_lines"][k][0]],
-                                                   [ph[-1], slurry_out["water_lines"][k][-1]]]}
-                            for k in ("upper", "lower")],
-        }],
-    }
-
-
 def run(config_path, allow_mock=False, run_name=None, scan=True):
     cfg, meta = config.load(config_path, allow_mock=allow_mock)
     bad = cache.verify()
@@ -193,13 +166,6 @@ def run(config_path, allow_mock=False, run_name=None, scan=True):
 
     checks = {"w4_provenance": provenance.validate_against(provenance.W4_SCHEMA, w4_prov,
                                                            subschema="provenance")}
-    if slurry_out is not None:
-        fig7 = fig7_export(slurry_out, extra, w4_prov)
-        fig7["mock"] = meta["mock"]
-        path = out_dir / "fig7_pourbaix_input.json"
-        path.write_text(json.dumps(_clean(fig7), indent=1, sort_keys=True) + "\n", encoding="utf-8")
-        outputs.append(path)
-        checks["w6_fig7"] = provenance.validate_against(provenance.W6_SCHEMA, _clean(fig7))
     path = out_dir / "schema_checks.json"
     path.write_text(json.dumps(checks, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     outputs.append(path)
