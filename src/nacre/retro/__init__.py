@@ -1,1 +1,1 @@
-"""Retrodiction cases (lane p0-w2): schema validation for preprint/retrodiction/."""
+"""Retrodiction (lane p0-w2): case validation and the run for preprint/retrodiction/."""
