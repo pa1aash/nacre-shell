@@ -1,0 +1,19 @@
+% Panel letters set by the manuscript layout, outside the artwork (RUNBOOK R5 and section 14:
+% figures carry no text; panel letters sit outside the axes or the drawing).
+% Layout geometry only, not prose: this file is not read by lint-numbers.
+%
+% \nacrePanelLetter{<offset>}{<letter>} sets a bold lower-case letter at <offset> from the left
+% edge of the line, without taking width, so that several letters share one line.
+\newcommand{\nacrePanelLetter}[2]{\makebox[0pt][l]{\hspace*{#1}\textbf{\textsf{#2}}}}
+%
+% Fig 2 (figures/tikz/fig2.tex): the artwork is 17.1 cm wide and its four panels start at
+% x = 0.05, 4.3, 8.55 and 12.8 cm. Each letter sits over the left edge of its panel, at the
+% same fraction of the printed width; tests/preprint/test_preprint_model.py checks these
+% numbers against the TikZ source.
+\newcommand{\nacreFigTwoPanelLetters}{%
+  \par\noindent
+  \nacrePanelLetter{\dimexpr\linewidth*5/1710\relax}{a}%
+  \nacrePanelLetter{\dimexpr\linewidth*430/1710\relax}{b}%
+  \nacrePanelLetter{\dimexpr\linewidth*855/1710\relax}{c}%
+  \nacrePanelLetter{\dimexpr\linewidth*1280/1710\relax}{d}%
+  \par\nointerlineskip\vspace{1pt}\noindent}

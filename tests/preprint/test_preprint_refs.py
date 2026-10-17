@@ -14,6 +14,8 @@ ENTRY_PAGES = ("@article{roe2020other, title={Other}, volume={5}, DOI={10.1000/x
 def _tree(tmp_path, bib, intro):
     root = copy_tree(tmp_path)
     write(refs.source(root), bib)
+    for section in (paths.paper(root) / "sections").glob("*.tex"):   # only the given text cites
+        write(section, "\\section{%s}\n" % section.stem)
     write(paths.paper(root) / "sections" / "introduction.tex", intro)
     return root
 
@@ -51,6 +53,8 @@ def test_tex_safe_composes_accents_and_maps_known_characters():
     entry = "@article{k, author={Go\u0301mez\u2010Mart\u00edn, A}, title={\u03b3-alumina \u2013 water} }\n"
     out = refs.tex_safe(entry)
     assert "G\u00f3mez-Mart\u00edn" in out and "$\\gamma$-alumina \u2013 water" in out
+    out = refs.tex_safe("@article{k, author={Stevanovi\u0107, V}, title={GFN2-xTB\u2500An Accurate} }\n")
+    assert "Stevanovi\\'{c}" in out and "GFN2-xTB---An Accurate" in out
 
 
 def test_tex_safe_names_a_character_it_cannot_place():
@@ -80,3 +84,10 @@ def test_main_and_si_read_the_build_copy():
         text = f.read_text(encoding="utf-8")
         assert "\\bibliography{refs_build}" in text and "\\bibliography{refs}" not in text
     assert 'BIBINPUTS="$here/build/bib:"' in (paths.paper(REPO) / "build.sh").read_text(encoding="utf-8")
+
+
+def test_only_articles_need_pages():
+    book = "@book{rossini1971selected, title={Selected values}, institution={National Bureau of Standards}, year={1971} }\n"
+    article = "@article{doe2024thing, title={T}, journal={J}, volume={1}, year={2024} }\n"
+    assert not refs.needs_pages(book)
+    assert refs.needs_pages(article)

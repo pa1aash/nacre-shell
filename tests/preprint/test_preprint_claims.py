@@ -12,7 +12,7 @@ from preprint_helpers import REPO
 TYPES = {"physical relation": "R", "parameter bound": "B", "governing parameter": "G",
          "required precision": "P", "proxy result": "X", "retrodiction outcome": "T",
          "outlook": "O", "limitation": "LN", "background": "K", "novelty": "V",
-         "contrary evidence": "E"}
+         "contrary evidence": "E", "method": "M"}
 LIT_RECORDS = ("lit/novelty.md", "lit/contrary.md")
 FIGURES = {"Fig %d" % n for n in range(1, 9)} | {"Fig 2%s" % p for p in "abcd"}
 TABLES = {"Table %d" % n for n in range(1, 4)}
@@ -35,7 +35,7 @@ def test_fields_and_vocabulary(claims):
         for key in ("id", "statement", "section", "type", "polarity", "evidence", "checkpoint",
                     "supplier", "scope_check", "status"):
             assert c.get(key), (c.get("id"), key)
-        assert re.fullmatch(r"CL-[RBGPXTOLNKVE]\d{2}", c["id"]), c["id"]
+        assert re.fullmatch(r"CL-[RBGPXTOLNKVEM]\d{2}", c["id"]), c["id"]
         assert c["type"] in TYPES, c["id"]
         assert c["id"][3] in TYPES[c["type"]], c["id"]
         assert c["section"] in sections, c["id"]
@@ -96,8 +96,24 @@ def test_evidence_resolves(claims):
                 f, _, anchor = ref.partition("#")
                 assert f.startswith("lit/") and anchor, (c["id"], ref)
                 assert anchor in (REPO / f).read_text(encoding="utf-8"), (c["id"], ref)
+            elif kind == "record":
+                f, _, anchor = ref.partition("#")
+                assert anchor and (REPO / f).is_file(), (c["id"], ref)
+                assert _tracked(f), (c["id"], "not tracked", f)
+                assert anchor in _flat((REPO / f).read_text(encoding="utf-8")), (c["id"], ref)
             else:
                 assert kind == "reference", (c["id"], kind)
+
+
+def _tracked(rel):
+    import subprocess
+    return subprocess.run(["git", "-C", str(REPO), "ls-files", "--error-unmatch", rel],
+                          capture_output=True).returncode == 0
+
+
+def _flat(text):
+    """Text with line breaks and indentation folded to single spaces, so an anchor may span a wrap."""
+    return " ".join(text.split()) + "\n" + text
 
 
 def test_sources_point_back_at_claims(claims):

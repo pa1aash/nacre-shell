@@ -1,7 +1,11 @@
-"""Number macros: every number in the paper comes from a result file through sources.yaml.
+"""Number macros: every number in the paper comes from a source file through sources.yaml.
 
-preprint/generated/sources.yaml maps a macro name to a result JSON file, a key path
-inside it, a format and a unit. `nacre preprint macros` writes preprint/generated/numbers.tex
+preprint/generated/sources.yaml maps a macro name to a source file, a key path or a pattern
+inside it, a format and a unit. A source is a JSON or YAML document (read with `key`, a
+'/'-separated path) or a text file such as a Markdown record (read with `pattern`, a regular
+expression with one group, optionally limited to the `section` under one heading). `pattern`
+may also follow `key` to read a number out of a string value, and `reduce` (first, min, max,
+count) picks one value when a pattern matches several times. `nacre preprint macros` writes preprint/generated/numbers.tex
 with one \\newcommand per macro and a provenance comment (source path, key, raw value).
 The header carries a digest of only the consumed content (each macro spec and the value it
 reads), so editing anything else in sources.yaml or a result file leaves the output unchanged.
@@ -22,7 +26,13 @@ import yaml
 from nacre.preprint import paths
 
 NAME_RE = re.compile(r"^Num[A-Z][A-Za-z]*$")
-REQUIRED = ("source", "key", "format")
+REQUIRED = ("source", "format")
+STRUCTURED = (".json", ".yaml", ".yml")
+REDUCERS = ("first", "min", "max", "count")
+TEXT_FORMATS = ("text", "date:")
+_NUMBER = re.compile(r"^-?[0-9][0-9 ]*(\.[0-9]+)?([eE][-+]?[0-9]+)?$")
+_HEADING = re.compile(r"^(#+)\s+(.*?)\s*$")
+_TEX_SPECIAL = {"&": r"\&", "%": r"\%", "$": r"\$", "#": r"\#", "_": r"\_", "{": r"\{", "}": r"\}"}
 
 
 class MacroError(Exception):
@@ -48,6 +58,13 @@ def load_sources(root, path=None):
         for key in REQUIRED:
             if not spec.get(key):
                 problems.append("%s: missing %s" % (name, key))
+        structured = str(spec.get("source", "")).endswith(STRUCTURED)
+        if structured and not spec.get("key"):
+            problems.append("%s: a JSON or YAML source needs key" % name)
+        if not structured and not spec.get("pattern"):
+            problems.append("%s: a text source needs pattern" % name)
+        if spec.get("reduce", "first") not in REDUCERS:
+            problems.append("%s: reduce must be one of %s" % (name, ", ".join(REDUCERS)))
     if problems:
         raise MacroError("sources.yaml:\n  " + "\n  ".join(problems))
     return data
@@ -82,8 +99,105 @@ def lookup(doc, key):
     return cur
 
 
+def is_text_format(fmt):
+    return fmt == "text" or fmt.startswith("date:")
+
+
+def section_text(text, heading):
+    """The lines under the Markdown heading `heading` (its text, without the hashes), up to the
+    next heading of the same or a higher level."""
+    lines, level, out = text.splitlines(), None, []
+    for line in lines:
+        m = _HEADING.match(line)
+        if level is None:
+            if m and m.group(2) == heading:
+                level = len(m.group(1))
+            continue
+        if m and len(m.group(1)) <= level:
+            break
+        out.append(line)
+    if level is None:
+        raise MacroError("no heading %r" % heading)
+    return "\n".join(out)
+
+
+def _scalar(text):
+    """A captured string as a number where it is one ("20 000" reads as 20000), else the string."""
+    s = text.strip()
+    if _NUMBER.match(s):
+        s = s.replace(" ", "")
+        return int(s) if re.fullmatch(r"-?[0-9]+", s) else float(s)
+    return s
+
+
+def extract(text, pattern, reduce="first"):
+    """Apply `pattern` (one group, multiline) to `text` and reduce the matches to one value."""
+    rx = re.compile(pattern, re.M)
+    if rx.groups != 1:
+        raise MacroError("pattern %r must have exactly one group" % pattern)
+    found = [_scalar(m.group(1)) for m in rx.finditer(text)]
+    if not found:
+        raise MacroError("pattern %r matches nothing" % pattern)
+    if reduce == "count":
+        return len(found)
+    if reduce == "first":
+        return found[0]
+    if len({type(v) is str for v in found}) > 1:
+        raise MacroError("pattern %r matches both numbers and text" % pattern)
+    return max(found) if reduce == "max" else min(found)
+
+
+def read_value(root, spec, cache):
+    """The raw value a spec names: a key path into a JSON or YAML document, a pattern over a
+    text file (or over the string a key path gives), reduced as the spec says."""
+    src = Path(root) / spec["source"]
+    if src not in cache:
+        if not src.is_file():
+            raise MacroError("source file %s not found" % spec["source"])
+        text = src.read_text(encoding="utf-8")
+        if src.suffix == ".json":
+            cache[src] = json.loads(text)
+        elif src.suffix in (".yaml", ".yml"):
+            cache[src] = yaml.safe_load(text)
+        else:
+            cache[src] = text
+    doc = cache[src]
+    if spec.get("key"):
+        try:
+            doc = lookup(doc, spec["key"])
+        except KeyError as exc:
+            raise MacroError("key %s: no element %s" % (spec["key"], exc))
+    if spec.get("pattern"):
+        if not isinstance(doc, str):
+            raise MacroError("pattern needs text, the source gives %s" % type(doc).__name__)
+        if spec.get("section"):
+            doc = section_text(doc, spec["section"])
+        return extract(doc, spec["pattern"], spec.get("reduce", "first"))
+    return doc
+
+
+def format_text(value, fmt):
+    """Text macros: `text` escapes a string for LaTeX; `date:<strftime>` renders an ISO date."""
+    if fmt.startswith("date:"):
+        import datetime
+        try:
+            day = datetime.date.fromisoformat(str(value))
+        except ValueError:
+            raise MacroError("value %r is not an ISO date" % (value,))
+        return day.strftime(fmt[5:])
+    if isinstance(value, (dict, list)) or value is None:
+        raise MacroError("value %r is not text" % (value,))
+    return "".join(_TEX_SPECIAL.get(ch, ch) for ch in str(value))
+
+
 def format_value(value, fmt):
-    """Format a number as LaTeX math. `sci:N` gives N decimals times a power of ten."""
+    """Format a number as LaTeX math. `sci:N` gives N decimals times a power of ten; `power`
+    writes a registered power such as '2**20' as 2^{20}."""
+    if fmt == "power":
+        m = re.fullmatch(r"\s*([0-9]+)\s*\*\*\s*([0-9]+)\s*", str(value))
+        if not m:
+            raise MacroError("value %r is not a power written a**b" % (value,))
+        return "%s^{%s}" % (m.group(1), m.group(2))
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise MacroError("value %r is not a number" % (value,))
     if isinstance(value, float) and not math.isfinite(value):
@@ -113,32 +227,28 @@ def render(root, sources_path=None):
     problems, cache, consumed = [], {}, {}
     for name in sorted(data["macros"]):
         spec = data["macros"][name]
-        src = root / spec["source"]
+        fmt = str(spec["format"])
         try:
-            if src not in cache:
-                if not src.is_file():
-                    raise MacroError("source file %s not found" % spec["source"])
-                cache[src] = json.loads(src.read_text(encoding="utf-8"))
-            doc = cache[src]
-            try:
-                value = lookup(doc, spec["key"])
-            except KeyError as exc:
-                raise MacroError("key %s: no element %s" % (spec["key"], exc))
-            text = format_value(value, str(spec["format"]))
-        except (MacroError, ValueError) as exc:
+            value = read_value(root, spec, cache)
+            text = format_text(value, fmt) if is_text_format(fmt) else format_value(value, fmt)
+        except (MacroError, ValueError, yaml.YAMLError) as exc:
             problems.append("%s: %s" % (name, exc))
             continue
         unit = spec.get("unit") or ""
         mock = bool(spec.get("mock"))
-        consumed[name] = {"source": spec["source"], "key": spec["key"], "format": str(spec["format"]),
+        where = "  ".join("%s: %s" % (k, spec[k]) for k in ("key", "section", "pattern", "reduce") if spec.get(k))
+        consumed[name] = {"source": spec["source"], "where": where, "format": fmt,
                           "unit": unit, "mock": mock, "value": value}
         lines.append("%% \\%s%s" % (name, "  [mock]" if mock else ""))
-        lines.append("%%   source: %s  key: %s" % (spec["source"], spec["key"]))
-        lines.append("%%   value: %s  format: %s  unit: %s" % (json.dumps(value), spec["format"], unit or "none"))
-        if mock:
-            lines.append("\\newcommand{\\%s}{\\nacreMockNum{%s}{%s}{%s}}" % (name, name, text, unit))
+        lines.append("%%   source: %s  %s" % (spec["source"], where))
+        lines.append("%%   value: %s  format: %s  unit: %s" % (json.dumps(value, default=str), fmt, unit or "none"))
+        if is_text_format(fmt):
+            command = "nacreMockText{%s}{%s}" % (name, text) if mock else "nacreText{%s}" % text
+        elif mock:
+            command = "nacreMockNum{%s}{%s}{%s}" % (name, text, unit)
         else:
-            lines.append("\\newcommand{\\%s}{\\nacreNum{%s}{%s}}" % (name, text, unit))
+            command = "nacreNum{%s}{%s}" % (text, unit)
+        lines.append("\\newcommand{\\%s}{\\%s}" % (name, command))
         lines.append("")
     if problems:
         raise MacroError("macro generation failed:\n  " + "\n  ".join(problems))

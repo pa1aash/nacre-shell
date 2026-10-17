@@ -4,15 +4,23 @@
 # Schema
 #   schemas.<id>        where each source family's shape comes from, and its status.
 #   macros.<Name>       Name is letters only and starts with Num plus a capital letter.
-#     source            result JSON file, repository-relative.
-#     key               '/'-separated key path into the JSON; list items by integer index.
-#     format            a Python format spec (e.g. .2f, .3g, d) or sci:N (N decimals times a power of ten).
+#     source            source file, repository-relative: a result JSON, a YAML configuration or
+#                       authority copy, or a text record (Markdown).
+#     key               '/'-separated key path into a JSON or YAML source; list items by integer index.
+#     pattern           for a text source (or a string reached by key): a regular expression with one
+#                       group; `section` limits it to the lines under one Markdown heading, and
+#                       `reduce` (first, min, max, count) picks one value when it matches several times.
+#     format            a Python format spec (e.g. .2f, .3g, g, d), sci:N (N decimals times a power of
+#                       ten), power (a registered 'a**b' written a^{b}), text (a string, escaped) or
+#                       date:<strftime> (an ISO date). text and date render as text, not math.
 #     unit              LaTeX math appended after a thin space; empty or absent for dimensionless.
 #     mock              true while `source` is a stand-in under mock/; renders only in draft mode.
 #     real_source       the file that replaces the mock, with its owning lane.
 #     figure / claim    where the number is used (planning aid; checked against claims.yaml by tests).
 #
-# Regime: every macro below is for R-slurry. R-cell macros are added when the screen covers it.
+# Regime: the result macros below are for R-slurry; R-cell macros are added when the screen covers
+# it. The method conventions (P0-W8.3) are read from the registered authority copies and records,
+# not from results: they are numbers the Methods states, fixed before any production output.
 schemas:
   screen:
     shape: configs/preprint/results_schema.json, schema v1
@@ -35,6 +43,180 @@ schemas:
     status: not pushed; reconcile with p0-w1 on Day 2
 
 macros:
+  # --- novelty search (Introduction; lit/novelty.md query log, lane note N14) ---
+  NumNoveltySearchMonth:
+    source: lit/novelty.md
+    section: Query log
+    pattern: '^\|[^|]*\|[^|]*\|[^|]*\|[^|]*\|\s*([0-9]{4}-[0-9]{2}-[0-9]{2})\s*\|'
+    reduce: max
+    format: 'date:%B %Y'
+    claim: CL-V01
+  # --- decision conventions (Methods; theory/thresholds.md through its copy, rule R-thr) ---
+  NumPcred:
+    source: configs/preprint/thresholds.yaml
+    key: decision/conventions/p_cred/primary
+    format: g
+    claim: CL-P02
+  NumPcredSweepLow:
+    source: configs/preprint/thresholds.yaml
+    key: decision/conventions/p_cred/sweep/0
+    format: g
+    claim: CL-P02
+  NumPcredSweepHigh:
+    source: configs/preprint/thresholds.yaml
+    key: decision/conventions/p_cred/sweep/2
+    format: g
+    claim: CL-P02
+  NumPdeg:
+    source: configs/preprint/thresholds.yaml
+    key: decision/conventions/p_deg/primary
+    format: g
+    claim: CL-P02
+  NumMcos:
+    source: configs/preprint/thresholds.yaml
+    key: decision/conventions/m_cos/primary
+    format: g
+    claim: CL-P02
+  NumMcosSweepLow:
+    source: configs/preprint/thresholds.yaml
+    key: decision/conventions/m_cos/sweep/0
+    format: g
+    claim: CL-P02
+  NumMcosSweepHigh:
+    source: configs/preprint/thresholds.yaml
+    key: decision/conventions/m_cos/sweep/1
+    format: g
+    claim: CL-P02
+  # --- Monte Carlo sizing rule (Methods; thresholds, decision.sizing) ---
+  NumSizingBandHalfWidth:
+    source: configs/preprint/thresholds.yaml
+    key: decision/sizing/band_mass_half_width_max
+    format: g
+    claim: CL-G01
+  NumSizingSobolHalfWidth:
+    source: configs/preprint/thresholds.yaml
+    key: decision/sizing/sobol_total_order_half_width_max
+    format: g
+    claim: CL-G01
+  NumSizingDrawCap:
+    source: configs/preprint/thresholds.yaml
+    key: decision/sizing/draw_cap
+    pattern: '^([0-9]+\*\*[0-9]+)'
+    format: power
+    claim: CL-G01
+  NumSizingWallClockCap:
+    source: configs/preprint/thresholds.yaml
+    key: decision/sizing/wall_clock_cap
+    pattern: '^([0-9]+) h\b'
+    format: d
+    unit: '\mathrm{h}'
+    claim: CL-G01
+  NumSizingChunk:
+    source: configs/preprint/thresholds.yaml
+    key: decision/sizing/chunk
+    pattern: '^([0-9]+\*\*[0-9]+)'
+    format: power
+    claim: CL-G01
+  # --- retrodiction rule (Methods; preprint/retrodiction/criterion.md, fixed before the run) ---
+  NumRetroUsableCases:
+    source: preprint/retrodiction/criterion.md
+    section: 3. Overall pass rule
+    pattern: '^N = ([0-9]+)$'
+    format: d
+    claim: CL-T02
+  NumRetroPassCount:
+    source: preprint/retrodiction/criterion.md
+    section: 3. Overall pass rule
+    pattern: '^k = ([0-9]+)$'
+    format: d
+    claim: CL-T02
+  NumRetroChanceBound:
+    source: preprint/retrodiction/criterion.md
+    section: 3. Overall pass rule
+    pattern: 'smallest integer with P\(X ≥ k \| N, 1/2\) ≤ ([0-9.]+)'
+    format: g
+    claim: CL-T02
+  NumRetroIntervalLevel:
+    source: preprint/retrodiction/criterion.md
+    section: 2. Verdict for one case
+    pattern: 'central ([0-9]+) % interval'
+    format: d
+    unit: '\%'
+    claim: CL-T02
+  NumRetroLinkReported:
+    source: preprint/retrodiction/criterion.md
+    section: 5. Known limits of the test
+    pattern: 'In ([0-9]+) of the [0-9]+ cases the source itself reports'
+    format: d
+    claim: CL-T02
+  NumRetroDraws:
+    source: preprint/retrodiction/criterion.md
+    section: 1. What is predicted
+    pattern: 'There are ([0-9][0-9 ]*[0-9]) joint Monte Carlo draws'
+    format: ','
+    claim: CL-T02
+  # --- Materials Project data (Methods; W5 cache manifest and attribution record) ---
+  NumMpDatabaseVersion:
+    source: results/preprint/pourbaix/cache/manifest.json
+    key: mp_database_version
+    format: text
+    claim: CL-X01
+  NumMpCorrectionScheme:
+    source: results/preprint/pourbaix/cache/attribution_for_paper.md
+    pattern: 'the (MP[0-9]{4}) compatibility corrections'
+    format: text
+    claim: CL-X01
+  NumMpLicenceVersion:
+    source: results/preprint/pourbaix/cache/attribution_for_paper.md
+    pattern: 'Creative Commons Attribution ([0-9.]+) International'
+    format: text
+    claim: CL-X01
+  # --- anchor protocol (Methods; src/nacre/anchor/PROTOCOL.md, "Level used") ---
+  NumAnchorFunctional:
+    source: src/nacre/anchor/PROTOCOL.md
+    section: Level used
+    pattern: '^- `functional`: (\S+)$'
+    format: text
+    claim: CL-X02
+  NumAnchorBasis:
+    source: src/nacre/anchor/PROTOCOL.md
+    section: Level used
+    pattern: '^- `basis`: (\S+)$'
+    format: text
+    claim: CL-X02
+  NumAnchorDispersion:
+    source: src/nacre/anchor/PROTOCOL.md
+    section: Level used
+    pattern: '^- `dispersion`: (\S+)$'
+    format: text
+    claim: CL-X02
+  NumAnchorGeometryMethod:
+    source: src/nacre/anchor/PROTOCOL.md
+    section: Level used
+    pattern: '^- `geometries`: ([^/ ]+)/'
+    format: text
+    claim: CL-X02
+  NumAnchorTemperature:
+    source: src/nacre/anchor/PROTOCOL.md
+    section: Level used
+    pattern: 'free energy at ([0-9.]+) K$'
+    format: g
+    unit: '\mathrm{K}'
+    claim: CL-X02
+  NumAnchorGasStandardState:
+    source: src/nacre/anchor/PROTOCOL.md
+    section: Level used
+    pattern: '^- `standard_state`: ([0-9]+) atm'
+    format: d
+    unit: '\mathrm{atm}'
+    claim: CL-X02
+  NumAnchorSolutionStandardState:
+    source: src/nacre/anchor/PROTOCOL.md
+    section: Level used
+    pattern: '^- `standard_state`: [0-9]+ atm -> ([0-9]+) M'
+    format: d
+    unit: '\mathrm{M}'
+    claim: CL-X02
   # --- screen: draws and design (Methods) ---
   NumScreenDraws:
     source: preprint/generated/mock/screen_summary.mock.json
@@ -82,14 +264,6 @@ macros:
     key: regimes/R-slurry/links/sequester/quantities/dG_seq/quantiles/0.5
     format: .1f
     unit: '\mathrm{kJ\,mol^{-1}}'
-    mock: true
-    real_source: results/preprint/screen/summary.json (p0-w4)
-    figure: Fig 2b
-    claim: CL-R02
-  NumSlocalMedian:
-    source: preprint/generated/mock/screen_summary.mock.json
-    key: regimes/R-slurry/links/sequester/quantities/S_local/quantiles/0.5
-    format: .1f
     mock: true
     real_source: results/preprint/screen/summary.json (p0-w4)
     figure: Fig 2b

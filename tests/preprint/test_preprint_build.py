@@ -142,5 +142,6 @@ def test_main_and_si_load_theory_macros_before_any_theory_input():
         for later in ("\\input{sections/introduction}", "\\section{Full derivation}"):
             if later in text:
                 assert text.index(load) < text.index(later), rel
-        if "theory/derivation_body" in text:
-            assert text.index(load) < text.index("theory/derivation_body"), rel
+        for theory_input in ("theory/derivation_body", "theory/si_derivation"):
+            if theory_input in text:
+                assert text.index(load) < text.index(theory_input), rel

@@ -17,7 +17,7 @@ Report what the screen, the retrodiction, the Pourbaix proxy and the anchor gave
    - Claim: CL-T01.
 2. **Per-link distributions.**
    - Adhesion in water: the median and interval of the wet work of adhesion.
-   - Sequestration: the free energy and the local supersaturation.
+   - Ca2+ binding (descriptor): the transfer free energy, occupancy, surface excess and adsorption term; no local supersaturation (cp2 ruling).
    - Nucleation: the contact angle, the shape factor and the barrier.
    - All values come from macros. Claims: CL-R01 to CL-R03, as computed quantities.
 3. **Barrier map (Fig 5).**

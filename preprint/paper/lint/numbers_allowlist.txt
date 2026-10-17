@@ -14,6 +14,17 @@ NA06  \\frac\{\s*\(\s*2\s*\+\s*\\cos\s*\\theta\s*\)\s*\(\s*1\s*-\s*\\cos\s*\\the
 NA07  \\frac\{\s*16\s*\\pi\s*\}\{\s*3\s*\}|16\s*\\pi\s*/\s*3
 # spherical-cap volume and area prefactors 4 pi / 3 and 4 pi
 NA08  \\frac\{\s*4\s*\\pi\s*\}\{\s*3\s*\}|\b4\s*\\pi\b
+# exact edges of the theory in math: a sign (comparison with 0) and the supersaturation edge
+# (comparison with 1), on either side of the relation, e.g. W > 0, \Omega \ge 1, 0 \le x
+NA09  (?:[<>=]|\\[lg]eq?|\\neq)\s*[01](?![0-9.,])|(?<![0-9.,])[01]\s*(?:[<>]|\\[lg]eq?)
+# the water-competition form of the wet Dupre work, W_dry + 2 gamma_w - W_ow - W_pw
+NA10  \+\s*2\s*\\gw\b
+# the Poisson occupancy rule N_req = ln(1/q_0)/A_patch and q_0 = 1 - p_cred
+NA11  \\ln\s*\(\s*1\s*/\s*q_\{?0\}?|(?<![0-9.])1\s*-\s*p_
+# the Gibbs-Langmuir adsorption term ln(1 + x)
+NA12  \\ln\s*\(\s*1\s*\+\s*x\s*\)
+# the half angle and the right angle of the spherical cap, theta/2 and pi/2
+NA13  \\theta\s*/\s*2|\\pi\s*/\s*2
 # chemical formulae and ion charges written with mhchem
 NA01  \\ce\{(?:[^{}]|\{[^{}]*\})*\}
 # ion-charge superscripts in math, e.g. Ca^{2+}, CO_3^{2-}, OH^-
