@@ -26,10 +26,18 @@ session: P0-W4.3
 written_before_production_output: true
 inputs:
   params: {file: lit/params.yaml, tag: p0-cp3, last_change: fbe252b23a5a80e9fff25db72d1d3b85e8454ce8}
-  thresholds: {file: configs/preprint/thresholds.yaml, source: theory/thresholds.md,
-               source_sha: 74ac69c2586c017e2bc08efecbfbc918b94f48ee,
-               pending: 'W3 thresholds_cp3b (margin-to-scheme mapping, termination mixture, geometric bounds); an amendment commit applies it before any output'}
-  bounds_authority: {file: theory/ignorance_priors.md, sha: d782db2f19fafb5a40367f604502c36f75d0cc16}
+  thresholds: {file: configs/preprint/thresholds.yaml, source: theory/thresholds.md, block_version: 3,
+               source_sha: 22ef46446205f63fab6074ba971ee89e18d99489, cp3b_ready_at: c4bb9d7 (origin/preprint/p0-w3)}
+  bounds_authority: {file: theory/ignorance_priors.md, block_version: 2, sha: 'f338fe96ba09049a9bf835b2178bcb678c9903e7 (origin/preprint/p0-w3, cp3b A3)'}
+amendments:                              # every change after the first commit, each before any production output
+  - id: AM1
+    reason: 'W3 thresholds_cp3b (block v3, ignorance block v2) refines treatments of this table (P0-W4.3 Task B)'
+    items:
+      A1: 'C5 R-cell margin by route: m_expt (thresholds.C5.window_margin_expt) for the expt route of the registered reaction CaCO3 + 2 LiClO4 (solid-salt sink, oxidation); m_E only where expt is missing; any other limit without its own budget key is undetermined (c5.margin_mapping)'
+      A2: 'C1 termination mixture W_mix = sum_k w_k W_k with flat Dirichlet weights and the weight-free bounds; with no registered termination the mixture reduces (gaps.termination_weights)'
+      A3: 'delta_s lower bound Gamma_s V_m (the 2 r_Ca term dropped while r_Ca is a gap); the analog radius form is a labelled sensitivity; analog bounds flag draws and never refuse them (gaps.delta_s, ca_ionic_radius, template_group_density, site_footprint_area); A_patch bound keys absent, so A_patch stays unresolved (gaps.patch_area, asperity_contact_area, cathode_particle_diameter)'
+      A4: 'C1 in P0: registered verdict gap; the analog and the Dupre-ignorance estimate side by side, as this table registered (c1); the analog support is positive only'
+
 reporting:
   ignorance_is_finding: false            # ignorance_priors.md section 3.1
   analog_label: 'conditional on the flagged analog <key>'
@@ -88,34 +96,51 @@ gaps:
     links: [C2, C3, C4]
     treatment: ignorance
     prior: loguniform                    # W1 rule L1: the bound spans more than a decade
-    low_max_of: [2*r_Ca, Gamma_s*V_m]
+    low: Gamma_s*V_m                     # AM1 (cp3b A3): the 2 r_Ca term is dropped while r_Ca is a gap (valid, looser)
     high: d_layer
-    bound_from: theory/ignorance_priors.md 4
-    inputs: {r_Ca: ca_ionic_radius, d_layer: template_layer_thickness, Gamma_s: gamma_s_site_density,
-             V_m: {calcite: v_m_calcite, ACC: v_m_acc}}
+    bound_from: theory/ignorance_priors.md 4 and 4a.4
+    inputs: {d_layer: template_layer_thickness, Gamma_s: gamma_s_site_density, V_m: {calcite: v_m_calcite, ACC: v_m_acc}}
     per_draw: true
-    empty_interval: refused and counted (a draw with low >= high), never clipped
+    empty_interval: refused and counted (a draw with low >= high), never clipped (a bound from primary keys)
+    sensitivity: 'max(2 r_Ca(analog), Gamma_s V_m) with r_Ca = ca_o_distance_aqueous_analog, labelled "tighter than the geometric bound" (4a.4)'
     beside: table set
   ca_ionic_radius:
     symbol: r_Ca
     links: [C2, C3, C4]
-    treatment: analog
-    analog: ca_o_distance_aqueous_analog
-    use: the lower bound 2 r_Ca of delta_s
-    direction: the Ca-O distance exceeds the ionic radius, so the analog raises the lower bound of delta_s
-    beside: table set
+    treatment: unresolved                # AM1 (cp3b A3, 4a.4): the analog overstates r_Ca, so it is no valid bound
+    effect: 'the 2 r_Ca term of the delta_s lower bound is dropped; the a_site bound 2 sqrt(3) r_Ca^2 is not formed'
+    sensitivity: 'ca_o_distance_aqueous_analog in the delta_s lower bound and the a_site cap, labelled, flagged, never refusing'
+    was: 'analog ca_o_distance_aqueous_analog (first commit)' 
   template_group_density:
     symbol: rho_L
     links: [C2, C3, C4]
     treatment: analog
     analog: template_group_density_site_analog
-    use: 'the geometric bound Gamma_s <= rho_L*d_layer (theory/ignorance_priors.md 4); draws of the sourced Gamma_s above it are refused and their mass reported (W1, P0-W1.3 outstanding 1)'
+    use: 'the Gamma_s cap rho_L*d_layer evaluated with the analog: draws above it are flagged and their mass reported, never refused (AM1, cp3b A3: analog bounds never refuse)'
+    primary_bound: 'rho_L <= rho_PDA/M_u (4a.3): template_mass_per_group_min is absent, so the primary cap is a gap'
+    was: 'refusing draws above the analog cap (first commit)'
     beside: table set
   site_footprint_area:
     symbol: a_site
     links: [C2, C3, C4]
     treatment: unresolved
-    effect: the 1/(N_A a_site) term of the Gamma_s bound is not applied; reported
+    effect: 'the 1/(N_A a_site) term of the Gamma_s bound is not applied; with a_site >= 2 sqrt(3) r_Ca^2 (4a.2) it needs r_Ca, a gap; the analog form is reported in the r_Ca sensitivity, flagged, never refusing'
+  template_mass_per_group_min:
+    symbol: M_u
+    links: [C2, C3, C4]
+    treatment: unresolved
+    effect: 'absent key (cp3b A3, 4a.3): the primary cap rho_L <= rho_PDA/M_u is not formed; no geometric cap on the sourced Gamma_s'
+  asperity_contact_area:
+    symbol: a_asp
+    links: [C3]
+    treatment: unresolved
+    effect: 'absent key (cp3b A3, 4a.1): the A_patch lower bound is not formed'
+  cathode_particle_diameter:
+    symbol: d_p
+    links: [C3]
+    treatment: unresolved
+    effect: 'absent key (cp3b A3, 4a.1): the A_patch upper bound pi d_p^2/4 is not formed'
+
   v_site:
     symbol: V_site
     links: [C2]
@@ -126,6 +151,7 @@ gaps:
     links: [C1]
     treatment: ignorance
     prior: flat Dirichlet on the simplex of the registered terminations (thresholds C1, cp3 R8)
+    mixture: 'W_mix = sum_k w_k W_k, w ~ Dirichlet(1, ..., 1), with the weight-free masses P(min_k W_k > m_W) and P(max_k W_k > m_W) beside (AM1, cp3b A2)'
     registered_terminations: none
     degenerate: >-
       No P0 input is resolved by termination (no PMF; the C1 analog and the Dupre energies carry no
@@ -188,7 +214,8 @@ gaps:
     symbol: A_patch
     links: [C3]
     treatment: unresolved
-    effect: 'C3b (N_req = ln(1/(1 - p_cred))/A_patch) reports gap; C3 is decided by C3a only where C3a falsifies (a pass needs C3b); N_nuc is reported for the P0-W4.4 flip value'
+    effect: 'C3b (N_req = ln(1/(1 - p_cred))/A_patch) reports gap; C3 is decided by C3a only where C3a falsifies (a pass needs C3b); N_nuc is reported for the P0-W4.4 flip values A_F, A_X'
+    bound: 'a_asp <= A_patch <= pi d_p^2/4, loguniform (cp3b A3, 4a.1); both keys absent (AM1)'
   a_w_slurry:
     symbol: a_w
     links: [C3, C4, C5]
@@ -240,6 +267,7 @@ c1:
       treatment: analog
       analog: w_adh_wet_catechol_oxide_analog
       label: conditional on the flagged analog w_adh_wet_catechol_oxide_analog (catecholic films on mica, silica and copper oxide)
+      support: 'positive only (a pull-off records only adhering contacts): it cannot represent W <= 0 and leans toward anchoring (cp3b A4)' 
     C1_dupre:
       quantity: W_adh_wet_comparator
       expression: gamma_ow + gamma_pw - gamma_op (theory/ignorance_priors.md 1c)
@@ -255,7 +283,11 @@ c5:
   slurry_dissolution: {decided_by: Omega_bulk, inputs: sourced, design_axes: [Ca_T, C_T], al_axis: none (no Al in the speciation)}
   slurry_phase: {source: 'W5 results/preprint/pourbaix/c5/slurry/<aCa>_<CT>_<Al>.json', design_axes: [Ca_T, C_T, Al_T]}
   cell: {source: 'W5 results/preprint/pourbaix/c5/cell/<sink>.json', sinks: [LiClO4, LiBOB, LiPCP, solvated]}
-  margin_mapping: 'm_expt (window_margin_expt) for the expt route, m_E (window_margin) for the DFT schemes; pending W3 thresholds_cp3b'
+  margin_mapping:                        # AM1 (cp3b A1): one margin per reaction and sink
+    expt: {key: thresholds.C5.window_margin_expt, applies_to: [{phase: CaCO3, sink: LiClO4, side: oxidation}]}
+    dft_where_expt_missing: {key: thresholds.C5.window_margin, applies_to: [{phase: CaCO3, sink: LiClO4, side: oxidation}]}
+    comparators: no margin (printed with their benchmark errors)
+    other_limits: 'undetermined: every other (phase, sink, side), the reduction limits included, has no budget key (never a pass, never a falsification)'
 
 # ---------------------------------------------------------------- deletion-test controls
 controls:
