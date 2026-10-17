@@ -12,6 +12,7 @@ SOURCE_DATE_EPOCH for XeTeX), so a rebuild is byte-identical.
 """
 import hashlib
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -66,6 +67,56 @@ def compile_pdf(root, entry):
         shutil.rmtree(tmp, ignore_errors=True)
 
 
+_DRAW_RE = re.compile(r"\\draw\[(proc|force)\b[^\]]*\]\s*(.*?);", re.S)
+_DEF_RE = re.compile(r"\\def\\([A-Za-z]+)\{([^}]*)\}")
+_COORD_RE = re.compile(r"\(\s*([^,()]+?)\s*,\s*([^,()]+?)\s*\)")
+_TOL_CM = 1e-9
+
+
+def _number(text, macros):
+    text = text.strip()
+    for name, val in macros.items():
+        text = re.sub(r"\\%s(?![A-Za-z])" % name, val, text)
+    return float(text)  # a plain number or a \def macro holding one; anything else raises ValueError
+
+
+def arrow_problems(tex):
+    """Problems with the arrows of the cycle in a schematic body (lane decision P0-W6.3).
+
+    Every `proc` arrow must be absolute coordinates joined by `--`, each step horizontal or
+    vertical (right-angle bends only): no curves (`to`, `arc`, `..`), no relative or implicit
+    corners. `force` arrows (the line tensions at the contact line) are exempt and keep their
+    physical directions. Comments are ignored.
+    """
+    body = "\n".join(line.split("%")[0] for line in tex.splitlines())
+    macros = dict(_DEF_RE.findall(body))
+    problems = []
+    for style_name, path in _DRAW_RE.findall(body):
+        if style_name == "force":
+            continue
+        tokens = [s.strip() for s in path.split("--")]
+        pts = []
+        for tok in tokens:
+            m = _COORD_RE.fullmatch(tok)
+            if not m:
+                problems.append("arrow %r: %r is not an absolute (x,y) joined by --" % (path.strip(), tok))
+                break
+            try:
+                pts.append((_number(m.group(1), macros), _number(m.group(2), macros)))
+            except ValueError:
+                problems.append("arrow %r: %r is not a numeric coordinate" % (path.strip(), tok))
+                break
+        else:
+            if len(pts) < 2:
+                problems.append("arrow %r has no segment" % path.strip())
+            for a, b in zip(pts, pts[1:]):
+                dx, dy = abs(a[0] - b[0]), abs(a[1] - b[1])
+                if (dx > _TOL_CM) == (dy > _TOL_CM):
+                    problems.append("arrow %r: segment %s -> %s is %s" % (
+                        path.strip(), a, b, "empty" if dx <= _TOL_CM else "diagonal"))
+    return problems
+
+
 def check(root, pdf_path, entry):
     pt = 72.0
     return checker.check_pdf_schematic(
@@ -87,6 +138,8 @@ def build(root, only=None, cvd=True, log=print):
     for sid, entry in table(root).items():
         if only and sid not in only and entry.get("variant_of") not in only:
             continue
+        if entry.get("deliverable", True) is False and not (only and sid in only):
+            continue
         try:
             if shutil.which("latexmk") is None:
                 raise SchematicError("latexmk is not installed")
@@ -95,6 +148,8 @@ def build(root, only=None, cvd=True, log=print):
             pdf.parent.mkdir(parents=True, exist_ok=True)
             pdf.write_bytes(data)
             problems = check(root, pdf, entry)
+            if entry.get("orthogonal_arrows"):
+                problems += arrow_problems((tikz_dir(root) / entry["orthogonal_arrows"]).read_text())
             if problems:
                 failures.extend("%s: %s" % (sid, p) for p in problems)
                 log("%s: checker FAIL\n  %s" % (sid, "\n  ".join(problems)))
@@ -112,7 +167,10 @@ def build(root, only=None, cvd=True, log=print):
                 "tex": "figures/tikz/" + entry["tex"], "claim": entry["claim"], "caption": entry["caption"],
                 "text_free": entry["text_free"], "source": entry["source"],
                 "w3_commit": entry.get("w3_commit"),
-                "checker": "pass (PDF: %s, strokes, page width)" % ("no text" if entry["text_free"] else "text allowed"),
+                "checker": "pass (PDF: %s, strokes, page width%s)" % (
+                    "no text" if entry["text_free"] else "text allowed",
+                    "; arrows orthogonal" if entry.get("orthogonal_arrows") else ""),
+                "font": "none (no text)" if entry["text_free"] else "Arial (fontspec, XeLaTeX)",
                 "outputs": {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in outs},
             }
             log("%s: ok -> %s" % (sid, pdf.relative_to(root)))

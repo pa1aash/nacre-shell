@@ -9,6 +9,8 @@
 #   claim      the one physical claim the figure carries (R4)
 #   caption    caption draft (identifies every state and mark by position)
 #   source     where the depicted states and arrows are taken from
+#   orthogonal_arrows  body file whose cycle arrows (style proc) must be horizontal/vertical chains
+#   deliverable false: built only when named in `nacre figs --only` (kept buildable, not a paper figure)
 schematics:
   fig2:
     tex: fig2.tex
@@ -29,6 +31,7 @@ schematics:
     out: fig3.pdf
     width: double
     text_free: true
+    orthogonal_arrows: fig3_body.tex
     claim: >-
       Ca2+ binding enters the nucleation barrier once, through the template-liquid energy; the nucleus is fed
       from the bulk reservoir at the bulk driving force, and the template helps only through how well the
@@ -43,6 +46,7 @@ schematics:
     width: double
     text_free: false
     variant_of: fig3
+    deliverable: false  # P0-W6.3: Palaash chose the text-free default; the variant stays buildable for the SI
     claim: as fig3
     caption: figures/src/captions/fig3.md
     source: as fig3
