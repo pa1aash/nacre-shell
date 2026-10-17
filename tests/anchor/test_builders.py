@@ -97,7 +97,10 @@ def test_different_seed_changes_the_waters():
     assert not np.allclose(np.asarray(a["Ca_aqua_w6"].coords), np.asarray(c["Ca_aqua_w6"].coords))
 
 
-COORD_TOL_A = 1e-3  # force-field coordinates differ by about 4e-4 Angstrom between macOS and Linux (decision D12)
+# Ligand and water coordinates come from the conformer record, so no force field runs at build
+# time and the remaining numpy steps agree across platforms far below this; D12's 1e-3 A is kept
+# (lane note N19 allows up to 1e-2 A).
+COORD_TOL_A = 1e-3
 
 
 def _parse_xyz(text):
@@ -140,3 +143,32 @@ def test_standard_state_correction_formula():
     assert cycle.net_standard_state_correction(T, 6, 4, "monomers") == pytest.approx(expected)
     with pytest.raises(ValueError):
         cycle.stoichiometry(4, 6, "cluster")
+
+
+def test_build_reads_the_conformer_record_and_never_embeds(monkeypatch):
+    """Embedding is platform-dependent (lane note N19); building must not call it."""
+    def refuse(*a, **k):
+        raise AssertionError("embed called at build time")
+
+    monkeypatch.setattr(b, "embed", refuse)
+    monkeypatch.setattr(b, "_WATER", None)
+    assert len(b.all_species(seed=7)) == 10
+
+
+def test_conformer_record_matches_its_smiles_and_canonical_order():
+    from rdkit import Chem
+
+    rec = b.load_record()
+    assert {"%s_seed7" % k for k in b.LIGANDS} | {"water_seed0"} <= set(rec)
+    for key, e in rec.items():
+        mol = Chem.AddHs(Chem.MolFromSmiles(e["smiles"]))
+        assert Chem.MolToInchiKey(mol) == e["inchikey"], key
+        ranks = list(Chem.CanonicalRankAtoms(mol, breakTies=True))
+        canon = [mol.GetAtomWithIdx(i).GetSymbol() for i in sorted(range(mol.GetNumAtoms()), key=lambda i: ranks[i])]
+        assert canon == e["symbols"], key
+        assert len(e["positions"]) == len(e["symbols"])
+
+
+def test_missing_conformer_is_an_error_not_a_fresh_embedding():
+    with pytest.raises(LookupError, match="--generate"):
+        b.conformer("acetate", 12345)

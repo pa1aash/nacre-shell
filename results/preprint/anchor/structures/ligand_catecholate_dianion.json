@@ -2,35 +2,11 @@
  "bonds": [
   [
    0,
-   1
-  ],
-  [
-   1,
-   2
-  ],
-  [
-   2,
-   3
-  ],
-  [
-   3,
-   4
-  ],
-  [
-   4,
-   5
-  ],
-  [
-   5,
    6
   ],
   [
-   6,
+   1,
    7
-  ],
-  [
-   6,
-   1
   ],
   [
    2,
@@ -47,9 +23,33 @@
   [
    5,
    11
+  ],
+  [
+   6,
+   7
+  ],
+  [
+   6,
+   8
+  ],
+  [
+   7,
+   9
+  ],
+  [
+   8,
+   10
+  ],
+  [
+   9,
+   11
+  ],
+  [
+   10,
+   11
   ]
  ],
- "builder_version": "0.1.0",
+ "builder_version": "0.2.0",
  "charge": -2,
  "coordination_mode": "none",
  "formula": "C6H4O2",
@@ -67,7 +67,7 @@
   0,
   0
  ],
- "geometry": "RDKit ETKDG + MMFF94",
+ "geometry": "RDKit ETKDG + MMFF94 (conformer record)",
  "kind": "reference",
  "ligand": "catecholate_dianion",
  "ligand_smiles": "[O-]c1ccccc1[O-]",
