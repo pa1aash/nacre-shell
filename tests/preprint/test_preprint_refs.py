@@ -14,6 +14,8 @@ ENTRY_PAGES = ("@article{roe2020other, title={Other}, volume={5}, DOI={10.1000/x
 def _tree(tmp_path, bib, intro):
     root = copy_tree(tmp_path)
     write(refs.source(root), bib)
+    for section in (paths.paper(root) / "sections").glob("*.tex"):   # only the given text cites
+        write(section, "\\section{%s}\n" % section.stem)
     write(paths.paper(root) / "sections" / "introduction.tex", intro)
     return root
 
