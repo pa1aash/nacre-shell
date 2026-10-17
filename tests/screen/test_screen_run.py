@@ -30,13 +30,35 @@ def test_dry_run_output_must_live_under_dryrun(tmp_path):
                 overrides=TINY)
 
 
-def test_production_is_refused_for_mock_priors_and_before_cp3():
-    rps = [params_adapter.regime_priors(MOCK, "R-slurry", allow_mock=True)]
+def _tag_lookup(monkeypatch, present):
+    """Make the guard's tag lookup answer as if p0-cp3 were present or absent, whatever the repository holds."""
+    monkeypatch.setattr(run, "_git", lambda root, *a: "p0-cp3" if present else "")
+
+
+def _priors():
+    mock = [params_adapter.regime_priors(MOCK, "R-slurry", allow_mock=True)]
+    real = [params_adapter.RegimePriors("R-slurry", mock[0].joint, {}, str(ROOT / "lit" / "params.yaml"), "", False)]
+    return mock, real
+
+
+SCREEN_OUT = ROOT / "results" / "preprint" / "screen" / "s.json"
+
+
+def test_production_is_refused_for_mock_and_real_priors_while_cp3_is_absent(monkeypatch):
+    _tag_lookup(monkeypatch, present=False)
+    mock, real = _priors()
     with pytest.raises(run.ProductionRefused, match="mock"):
-        run.production_guard(ROOT, rps, ROOT / "results" / "preprint" / "screen" / "s.json")
-    real = [params_adapter.RegimePriors("R-slurry", rps[0].joint, {}, str(ROOT / "lit" / "params.yaml"), "", False)]
-    with pytest.raises(run.ProductionRefused, match="thresholds|p0-cp3"):
-        run.production_guard(ROOT, real, ROOT / "results" / "preprint" / "screen" / "s.json")
+        run.production_guard(ROOT, mock, SCREEN_OUT)
+    with pytest.raises(run.ProductionRefused, match="p0-cp3"):
+        run.production_guard(ROOT, real, SCREEN_OUT)
+
+
+def test_production_is_refused_for_mock_priors_and_allowed_for_real_priors_once_cp3_exists(monkeypatch):
+    _tag_lookup(monkeypatch, present=True)
+    mock, real = _priors()
+    with pytest.raises(run.ProductionRefused, match="mock"):
+        run.production_guard(ROOT, mock, SCREEN_OUT)
+    run.production_guard(ROOT, real, SCREEN_OUT)
 
 
 def test_production_refuses_a_dryrun_destination(tmp_path, monkeypatch):
