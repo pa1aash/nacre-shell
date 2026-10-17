@@ -170,7 +170,7 @@ def mutate(fn):
                                                    prior={"family": "loguniform", "low": 0.5, "high": 2.0}),
      "high/low > 10"),
     (lambda d: d["params"]["t_slurry"].update(prior={"family": "fixed", "value": 300.0}), "fixed prior value"),
-    (lambda d: d["params"]["t_slurry"].update(sources=["TC-002", "TC-003"]), "exactly one source"),
+    (lambda d: d["params"]["t_slurry"].update(sources=[], best_grade=None), "P1 needs its source rows"),
     (lambda d: d["params"]["gamma_sl_organic"].update(range={"min": 0.0, "max": 1.0}), "X1"),
     (lambda d: d["params"]["gamma_nl_calcite"].update(status="maybe"), "status"),
     (lambda d: d["params"]["gamma_nl_calcite"].update(regimes=["R-moon"]), "regimes"),
@@ -231,3 +231,11 @@ def test_alias_resolves_and_must_match(root):
     doc = with_alias(base_doc())
     doc["regimes"]["R-slurry"]["parameters"]["gamma_nl"]["key"] = "nope"
     assert any("not in params" in e for e in problems(root, doc))
+
+
+def test_resolve_accepts_the_capitalised_contract_spellings():
+    p = P.load_params()
+    assert P.resolve("params.debye_huckel_A", p) == "debye_huckel_a"
+    assert P.resolve("params.davies_I_val", p) == "davies_i_val"
+    with pytest.raises(KeyError):
+        P.resolve("params.no_such_key", p)

@@ -1,0 +1,55 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-17T10:18:25Z,unpaywall,10.1063/1.555853,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:21:14Z,unpaywall,10.2478/s11532-011-0145-0,parse_error,not a PDF: https://www.degruyter.com/document/doi/10.2478/s11532-011-0145-0/pdf
+2026-10-17T10:21:15Z,openalex,10.2478/s11532-011-0145-0,http_error,HTTP 401 http://publicatio.bibl.u-szeged.hu/2016/1/s11532-011-0145-0.pdf
+2026-10-17T10:21:59Z,unpaywall,10.3390/cryst8060238,http_error,HTTP 403 https://www.mdpi.com/2073-4352/8/6/238/pdf?version=1527652738
+2026-10-17T10:22:00Z,unpaywall,10.3390/cryst8060238,http_error,HTTP 403 http://www.mdpi.com/2073-4352/8/6/238/pdf
+2026-10-17T10:22:39Z,unpaywall,10.1029/2010jb008033,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1029/2010JB008033
+2026-10-17T10:22:41Z,unpaywall+wayback,10.1029/2010jb008033,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://onlinelibrary.wiley.com/doi/pdfdirect/10.1029/2010JB008033
+2026-10-17T10:22:41Z,fulltext,10.1029/2010jb008033,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-17T10:22:45Z,unpaywall,10.15376/frc.1997.2.911,http_error,HTTP 403 https://doi.org/10.15376/frc.1997.2.911
+2026-10-17T10:23:23Z,fulltext,10.1021/cg3015817,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-17T10:24:39Z,semanticscholar,calcite surface energies vacuum water force field derivation calcium carbonate,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-17T10:25:15Z,unpaywall,10.1021/jp910977a,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:25:20Z,unpaywall,10.1021/acs.jpcc.6b01359,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:25:34Z,unpaywall,10.1021/acs.langmuir.6c04191,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:25:36Z,unpaywall,10.1021/jp0441617,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.1021/jp0441617
+2026-10-17T10:25:38Z,openalex,10.1021/jp0441617,not_indexed,HTTP 404 https://api.openalex.org/works/doi:10.1021/jp0441617
+2026-10-17T10:25:39Z,fulltext,10.1021/jp0441617,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-17T10:26:11Z,unpaywall,10.1039/d0ra02471f,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2020/ra/d0ra02471f
+2026-10-17T10:26:12Z,europepmc,10.1039/d0ra02471f,http_error,HTTP 403 https://europepmc.org/articles/PMC9053062?pdf=render
+2026-10-17T10:26:24Z,direct,10.1039/d0ra02471f,not_indexed,HTTP 404 https://www.rsc.org/suppdata/d0/ra/d0ra02471f/d0ra02471f1.pdf
+2026-10-17T10:26:44Z,unpaywall,10.1039/d0ra02471f,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2020/ra/d0ra02471f
+2026-10-17T10:26:45Z,europepmc,10.1039/d0ra02471f,http_error,HTTP 403 https://europepmc.org/articles/PMC9053062?pdf=render
+2026-10-17T10:27:14Z,unpaywall,10.1073/pnas.1003082107,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.1073/pnas.1003082107
+2026-10-17T10:27:15Z,openalex,10.1073/pnas.1003082107,not_indexed,HTTP 404 https://api.openalex.org/works/doi:10.1073/pnas.1003082107
+2026-10-17T10:27:16Z,fulltext,10.1073/pnas.1003082107,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-17T10:27:37Z,crossref,10.1073/pnas.1003082107,not_indexed,HTTP 404 https://api.crossref.org/works/10.1073/pnas.1003082107
+2026-10-17T10:27:37Z,unpaywall,10.1073/pnas.1003082107,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.1073/pnas.1003082107
+2026-10-17T10:27:46Z,europepmc,10.1073/pnas.1009959107,http_error,HTTP 403 https://europepmc.org/articles/PMC2944757?pdf=render
+2026-10-17T10:28:22Z,unpaywall,10.1021/acs.jpcc.7b10459,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:30:10Z,direct,10.1021/cg3015817,http_error,HTTP 403 https://iris.unito.it/retrieve/e27ce429-9ac7-2581-e053-d805fe0acbaa/Bruno_et_al_%202013_OA.pdf
+2026-10-17T10:30:55Z,unpaywall,10.3390/en14051406,http_error,HTTP 403 https://www.mdpi.com/1996-1073/14/5/1406/pdf?version=1614924985
+2026-10-17T10:31:10Z,unpaywall,10.1002/batt.202100088,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/batt.202100088
+2026-10-17T10:33:24Z,unpaywall,10.1080/07373937.2017.1319855,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1394420 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10b92ab70>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1394420)"
+2026-10-17T10:33:34Z,unpaywall,10.1557/adv.2016.6,parse_error,not a PDF: https://link.springer.com/content/pdf/10.1557/adv.2016.6.pdf
+2026-10-17T10:35:35Z,unpaywall,10.1557/adv.2016.6,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1250411 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10aa7a9f0>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1250411)"
+2026-10-17T10:35:37Z,unpaywall+wayback,10.1557/adv.2016.6,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://link.springer.com/content/pdf/10.1557/adv.2016.6.pdf
+2026-10-17T10:36:50Z,unpaywall,10.1515/ntrev-2023-0216,parse_error,not a PDF: https://www.degruyter.com/document/doi/10.1515/ntrev-2023-0216/pdf
+2026-10-17T10:40:46Z,unpaywall,10.2478/s11532-011-0024-8,parse_error,not a PDF: https://www.degruyter.com/document/doi/10.2478/s11532-011-0024-8/pdf
+2026-10-17T10:40:57Z,unpaywall,10.1117/12.2599803,parse_error,not a PDF: https://www.spiedigitallibrary.org/conference-proceedings-of-spie/11852/118524P/Development-of-low-density-coatings-for-soft-x-ray-reflectivity/10.1117/12.2599803.pdf
+2026-10-17T10:41:01Z,unpaywall,10.1117/12.2599803,http_error,HTTP 403 https://re.public.polimi.it/bitstream/11311/1204166/1/SPIE-2021.pdf
+2026-10-17T10:41:12Z,unpaywall,10.1002/marc.202200946,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/marc.202200946
+2026-10-17T10:48:18Z,fulltext,10.1016/j.polymer.2023.126272,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-17T10:48:45Z,unpaywall,10.1107/s0567739476001551,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:48:46Z,unpaywall,10.1021/ja001533a,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:49:06Z,unpaywall,10.3390/liquids2030014,http_error,HTTP 403 https://www.mdpi.com/2673-8015/2/3/14/pdf?version=1662530614
+2026-10-17T10:49:44Z,unpaywall,10.1039/d4dt01449a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2024/dt/d4dt01449a
+2026-10-17T10:49:49Z,unpaywall,10.1039/d4dt01449a,parse_error,not a PDF: https://pub.epsilon.slu.se/35538/1/persson-i-20241029.pdf
+2026-10-17T10:50:58Z,unpaywall,10.1021/acs.langmuir.9b00191,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.langmuir.9b00191
+2026-10-17T10:51:01Z,unpaywall,10.1021/acs.langmuir.9b00191,parse_error,not a PDF: https://bib-pubdb1.desy.de/search?p=id:%22PUBDB-2019-01716%22
+2026-10-17T10:51:01Z,europepmc,10.1021/acs.langmuir.9b00191,http_error,HTTP 403 https://europepmc.org/articles/PMC6727669?pdf=render
+2026-10-17T10:51:16Z,unpaywall+wayback,10.1021/acs.langmuir.9b00191,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/acs.langmuir.9b00191
+2026-10-17T10:51:19Z,unpaywall+wayback,10.1021/acs.langmuir.9b00191,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://bib-pubdb1.desy.de/search?p=id:%22PUBDB-2019-01716%22
+2026-10-17T10:51:20Z,europepmc+wayback,10.1021/acs.langmuir.9b00191,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC6727669?pdf=render
+2026-10-17T10:52:13Z,unpaywall,10.1021/la3038846,paywalled,"no open copy on unpaywall, openalex or europepmc"

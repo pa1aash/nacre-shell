@@ -24,7 +24,11 @@ T-C biomineralisation and nucleation; T-D catechol and polydopamine chemistry; T
 benchmarks. Day 2 (P0-W1.2): T-F second sources and the three gap targets; T-G direct ACC solubility
 and density; T-H Ca2+ binding at templates against the interfacial energy of nucleating CaCO3; T-I
 thermochemistry of the stability screens, the R-cell electrolyte and solvation; T-J regime ranges,
-nucleation prefactors and process times.
+nucleation prefactors and process times. Day 3 (P0-W1.3): T-K R-cell thermochemistry (Ca2+, Al3+
+and Li+ solvation and transfer, analog entropies for the Ca(ClO4)2 bound, uncertainties of the
+experimental route, charge cut-offs by cathode class, Li2CO3 oxidation against equilibrium); T-L the
+W3 contract-v3 keys (dry CaCO3 surface energies, speciation and activity-model constants, geometry,
+water activity, method errors); T-M the cp3 R8 registrations and the N16 drawing parameters.
 
 ## Tools
 
@@ -49,7 +53,7 @@ location, then Europe PMC full-text XML. Paywalled works without an open copy ar
 | Column | Content and format |
 |---|---|
 | `row_id` | `<thread letter pair>-<three digits>`, unique: `TA-001`, `TB-014`. The prefix matches the thread. |
-| `thread` | `T-A` to `T-J`. |
+| `thread` | `T-A` to `T-M`. |
 | `doi` | Bare DOI, lower case, `10.<registrant>/<suffix>`; no `https://doi.org/` prefix. |
 | `locator` | Where in the work the value is: `p. 155`, `Table 2`, `Fig. 3b`, `Eq. (12)`, `Section 3.2`, `SI Table S4`, `abstract`. Combine as needed (`p. 4, Table 2`). Use the printed page number when the text shows one, else `pdf p. N`. |
 | `quantity` | A lower-case slug. Target quantities use the vocabulary below; other quantities may use any descriptive slug. |

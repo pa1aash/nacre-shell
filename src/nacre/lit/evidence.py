@@ -12,13 +12,14 @@ from nacre.retrieval import record as R
 COLUMNS = ["row_id", "thread", "doi", "locator", "quantity", "symbol", "value", "unit",
            "range_or_uncertainty", "conditions", "method", "grade", "extraction_route", "retrieved_at",
            "contrary", "retro_candidate", "notes"]
-THREADS = ("T-A", "T-B", "T-C", "T-D", "T-E", "T-F", "T-G", "T-H", "T-I", "T-J")
+THREADS = ("T-A", "T-B", "T-C", "T-D", "T-E", "T-F", "T-G", "T-H", "T-I", "T-J", "T-K",
+           "T-L", "T-M")
 GRADES = ("A", "B", "C", "D")
 ROUTES = ("full text", "SI", "abstract")
 METHODS = ("experiment", "computation", "compilation")
 QUALITATIVE = "qualitative"
 
-_ROW_ID = re.compile(r"^T[A-J]-\d{3}$")
+_ROW_ID = re.compile(r"^T[A-M]-\d{3}$")
 _DOI = re.compile(r"^10\.\d{4,9}/\S+$")
 _SLUG = re.compile(r"^[a-z][a-z0-9_]*$")
 _NUM = r"[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?"

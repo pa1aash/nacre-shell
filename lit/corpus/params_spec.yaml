@@ -65,6 +65,23 @@ params:
       paper. The van Oss route gives a negative value and Owens-Wendt small positive ones; the sign follows the
       model (lit/conflicts.md). No COOH, chitosan or alginate value was found. Measured in pure water, these are
       Ca-free values: gamma_sl0 of contract v2 (theory/thresholds.md), not gamma_sl at the regime Ca2+ activity.
+      cp3 R8: the prior is truncated at 0 (gamma >= 0; a negative template-water energy is a van Oss artifact,
+      theory/ignorance_priors.md 1d), and the untruncated span is kept as gamma_sl0_template_untruncated, a labelled
+      sensitivity.
+    truncate: {min: 0, ruling: "cp3 ruling R8 (2026-10-17)", sensitivity_key: gamma_sl0_template_untruncated}
+    correlation_group: young_energies
+  gamma_sl0_template_untruncated:
+    same_rows_as: gamma_sl0_template
+    symbol: gamma_sl0
+    unit: J m^-2
+    regimes: [R-slurry]
+    conditions: as gamma_sl0_template
+    status: sourced
+    role: sensitivity
+    of: gamma_sl0_template
+    notes: >-
+      Labelled sensitivity (cp3 R8): the sourced span of gamma_sl0_template without the cut at zero, including the
+      negative van Oss value (TH-049). Never decides a verdict.
     correlation_group: young_energies
   gamma_sn0_template:
     symbol: gamma_sn0
@@ -295,6 +312,195 @@ params:
       computed by speciation at each sampled point from dic_slurry, ph_slurry, pk2_carbonic, pk1_carbonic, the ion-pair
       constants and ionic_strength_slurry with the Debye-Hueckel parameters of TF-045 to TF-047; never fitted
     comparators: [TF-045, TF-046, TF-047]
+  # ================================================================ day 3: W3 contract-v3 keys (cp2 fix-up list)
+  gamma_nv_calcite:
+    distinct: true
+    symbol: gamma_nv
+    unit: J m^-2
+    regimes: [R-slurry]
+    conditions: calcite {10-14} surface free energy against vacuum, relaxed slabs, DFT (0 K and 300 K), force fields and MD
+    admit:
+      - {row: TL-001, original: onawole-2020-dft}
+      - {row: TL-008, original: deleeuw-parker-1998}
+      - {row: TL-009, original: rohl-2003}
+      - {row: TL-016, original: bruno-dft}
+      - {row: TL-017, original: akiyama-dft}
+      - {row: TL-018, original: bruno-2013-300k}
+      - {row: TL-019, original: kvamme-md}
+      - {row: TL-020, original: parker-md}
+    comparators: [TL-021, TL-022, TL-023, TL-024, TL-027, TL-002, TL-003, TL-004, TL-005, TL-006, TL-007, TL-010, TL-011,
+                  TL-012, TL-013, TL-014, TL-015, TL-025, TL-026, TL-028, TL-029, TL-030]
+    notes: >-
+      Dry surface energy of the calcite framing (theory/ignorance_priors.md 1a: gamma_max = gamma_p + gamma_nv). Every
+      admitted value is computed: no experiment gives the free energy against vacuum. TL-027 (water spreads on fresh
+      cleavage, so the total exceeds the water surface tension) is a consistent lower bound; TL-023 (an equation-of-state
+      estimate its authors judge unrealistic) and the dispersive components (TL-025 to TL-030) are not this quantity.
+      Other faces (TL-002 to TL-007, TL-010 to TL-015) are higher; {10-14} is the cleavage and growth face.
+  gamma_nv_acc:
+    symbol: gamma_nv
+    unit: J m^-2
+    regimes: [R-slurry]
+    status: gap
+    reason: >-
+      gap: no measured or computed dry surface free energy of ACC was found; the source that studies ACC energetics
+      states it is unknown (TL-031). Navrotsky-group surface enthalpies are a different quantity
+    notes: The flagged analog gamma_nv_acc_calcite_analog (calcite {10-14}) runs beside the ignorance prior of the ACC framing.
+  gamma_nv_acc_calcite_analog:
+    same_rows_as: gamma_nv_calcite
+    symbol: gamma_nv
+    unit: J m^-2
+    regimes: [R-slurry]
+    role: analog
+    of: gamma_nv_acc
+    conditions: as gamma_nv_calcite
+    notes: >-
+      Flagged analog (A1): the calcite {10-14} dry surface energy standing in for ACC, whose value is unknown (TL-031).
+      Verdicts under the ACC framing that use it are conditional on the analog.
+  gamma_sn_ignorance_calcite:
+    symbol: gamma_sn
+    unit: J m^-2
+    regimes: [R-slurry]
+    ignorance: {low: "0", high: "g_p + g_nv", inputs: {g_p: gamma_p_pda, g_nv: gamma_nv_calcite},
+                authority: "theory/ignorance_priors.md section 1a"}
+    notes: >-
+      Ignorance prior of the template-nucleus contact energy in water, calcite framing (cp2 gap policy, D15): uniform
+      on [0, gamma_p + gamma_nv], drawn per draw of gamma_p_pda and gamma_nv_calcite. No measured analog of gamma_sn
+      exists (lit/conflicts.md); gamma_eff_het_organic is a validation input of the combined barrier, not of gamma_sn.
+  gamma_sn_ignorance_acc:
+    symbol: gamma_sn
+    unit: J m^-2
+    regimes: [R-slurry]
+    ignorance: {low: "0", high: "g_p + g_nv", inputs: {g_p: gamma_p_pda, g_nv: gamma_nv_acc},
+                authority: "theory/ignorance_priors.md section 1a"}
+    notes: ACC framing; its bound needs gamma_nv_acc, a gap, so the analog gamma_sn_ignorance_acc_analog runs beside it.
+  gamma_sn_ignorance_acc_analog:
+    symbol: gamma_sn
+    unit: J m^-2
+    regimes: [R-slurry]
+    role: analog
+    of: gamma_sn_ignorance_acc
+    ignorance: {low: "0", high: "g_p + g_nv", inputs: {g_p: gamma_p_pda, g_nv: gamma_nv_acc_calcite_analog},
+                authority: "theory/ignorance_priors.md section 1a"}
+    notes: The ACC-framing ignorance prior with the calcite dry surface energy as a flagged analog of gamma_nv_acc.
+  gamma_ow_ignorance:
+    symbol: gamma_ow
+    unit: J m^-2
+    regimes: [R-slurry]
+    ignorance: {low: "0", high: "g_o + g_w", inputs: {g_o: gamma_o_alumina, g_w: gamma_w},
+                authority: "theory/ignorance_priors.md section 1c"}
+    notes: >-
+      Oxide-water ignorance prior of the C1 comparator route. The tighter complete-wetting bound is not used: measured
+      water contact angles on alumina run from zero on UV-cleaned sapphire to about ninety degrees (TM-040 to TM-046),
+      so complete wetting is not established for the native oxide.
+  gamma_op_ignorance:
+    symbol: gamma_op
+    unit: J m^-2
+    regimes: [R-slurry]
+    ignorance: {low: "0", high: "g_o + g_p", inputs: {g_o: gamma_o_alumina, g_p: gamma_p_pda},
+                authority: "theory/ignorance_priors.md section 1c"}
+    notes: Oxide-polymer ignorance prior of the C1 comparator route; the measured analog is w_adh_wet_catechol_oxide_analog.
+  log10_k_caoh:
+    transform: log10
+    symbol: K_CaOH
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: Ca2+ + H2O = CaOH+ + H+, 25 C, I = 0
+    admit:
+      - {row: TL-032, original: nordstrom-1990}
+      - {row: TL-033, original: nordstrom-1990}
+    comparators: [TL-034, TL-035]
+    notes: >-
+      Both database manuals trace the value to one original (Nordstrom et al. 1990), so it counts once and the width is
+      not sourced. TL-034 and TL-035 are association constants Ca2+ + OH- = CaOH+ (I = 1 M and I = 0), a different
+      reaction. A speciation constant from a critically evaluated database, not a template binding energy, so the W1
+      widening does not apply.
+  debye_huckel_a:
+    distinct: true
+    symbol: A_DH
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: Debye-Hueckel A for log10 activity coefficients on the molality scale, water, 293.15 to 313.15 K (the slurry temperature span)
+    admit:
+      - {row: TL-037, unit: "1"}
+      - {row: TL-038, unit: "1"}
+      - {row: TL-039, unit: "1"}
+      - {row: TL-040, unit: "1"}
+      - {row: TL-041, unit: "1"}
+      - {row: TL-044, unit: "1"}
+      - {row: TL-046, unit: "1"}
+    status: sourced
+    comparators: [TL-036, TL-042, TL-043, TL-045]
+    notes: >-
+      Printed in kg^0.5 mol^-0.5 and stored as the number multiplying the square root of I/(1 mol/kg) (the contract's A_DH
+      is dimensionless). TL-037 to TL-041 (Archer-Wang, converted by the thread from the osmotic slope, grade C) span the
+      slurry temperatures; TL-044 and TL-046 are values at 25 C. A rises with temperature, so the span is a temperature
+      span; the screen may tie it to t_slurry. TL-036 and TL-042 lie outside the slurry temperatures.
+  davies_b:
+    distinct: true
+    symbol: b_D
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: linear coefficient of the Davies equation, water
+    admit:
+      - {row: TL-047, original: wateq4f}
+      - {row: TL-048, original: phreeqc-v2}
+      - {row: TL-049, original: davies-1938}
+    notes: The geochemical codes use 0.3; Davies' original form uses 0.2 (read through a quoting source). Both are admitted.
+  davies_i_val:
+    distinct: true
+    symbol: I_val
+    unit: mol kg^-1
+    regimes: [R-slurry]
+    conditions: ionic strength up to which the Davies equation is stated to hold
+    admit:
+      - {row: TL-050}
+      - {row: TL-051}
+    comparators: [TL-052]
+    notes: >-
+      Davies' own statement (about 2 percent accuracy) is the lower end; the upper end is a later textbook statement.
+      TL-052 is the validity of a whole speciation model, not of the Davies equation. Draws of I above I_val are
+      refused (contract v3), and the slurry ionic strength (ionic_strength_slurry) reaches into this span.
+  ca_total_slurry:
+    symbol: Ca_T
+    unit: mol m^-3
+    regimes: [R-slurry]
+    status: design-input
+    reason: >-
+      design input (gap policy (ii)): total dissolved calcium Ca_T is set by the design (the Ca source added to the
+      slurry); no aqueous cathode slurry with calcium was found (T-F gaps.md). a_ca_slurry and c_bulk_slurry follow from
+      it through the contract v3 speciation
+  acc_hydration_n:
+    distinct: true
+    symbol: n_hyd
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: structural water n of synthetic Mg-free ACC CaCO3.nH2O, freshly prepared, by thermogravimetry
+    admit:
+      - {row: TL-053}
+      - {row: TL-054}
+      - {row: TL-055}
+      - {row: TL-056}
+      - {row: TL-057}
+      - {row: TL-059}
+      - {row: TL-062}
+    comparators: [TL-058, TL-060, TL-061]
+    notes: >-
+      F7: n of the hydrated framing for the labelled sensitivity Omega_bulk_hydrated. Biogenic ACC (TL-058) and
+      heat-treated ACC (TL-060) hold less water and are comparators; TL-061 is the mass fraction behind TL-062.
+  a_w_drying_secondary:
+    distinct: true
+    symbol: a_w
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: water activity of the gas over electrodes during vacuum post-drying and in the dry room after drying, from the printed dew points
+    admit:
+      - {row: TL-063}
+      - {row: TL-064}
+    comparators: [TL-065, TL-066, TL-067, TL-068, TL-069, TL-070, TL-071]
+    notes: >-
+      F7, per drying state: the gas-phase water activity that a dried film approaches at equilibrium in the secondary
+      (vacuum) drying and dry-room states. It is the activity of the surroundings, not a measured activity of the film.
+      Dew points (TL-065 to TL-067) and residual water contents (TL-068 to TL-071) are comparators.
   a_ca_slurry:
     symbol: a_Ca
     unit: "1"
@@ -331,12 +537,51 @@ params:
     symbol: pKa
     unit: "1"
     regimes: [R-slurry]
-    conditions: first dissociation of catechol itself, about 25 C; ionic strength not stated in TF-021
+    conditions: >-
+      first dissociation of catechol itself (1,2-dihydroxybenzene), 18 to 25 C, ionic strength stated and between 0.06
+      and 0.15 mol dm^-3 (KCl, KNO3 or unnamed salt)
     admit:
-      - {row: TF-021}
-      - {row: TF-025, original: catechol-pka-literature}
-    comparators: [TD-042, TD-043, TD-044, TD-045, TD-046, TD-047, TF-022, TF-023, TF-024]
-    notes: Dopamine and L-DOPA constants (TD-042 to TD-047, TF-024) are comparators; TF-022 is the second constant (13.07).
+      - {row: TM-001, original: antikainen-1973}
+      - {row: TM-003, original: harada-1969-potentiometry}
+      - {row: TM-005, original: harada-1969-spectrophotometry}
+      - {row: TM-007, original: mirzahosseini-2018}
+      - {row: TM-009}
+      - {row: TM-010}
+      - {row: TM-011}
+      - {row: TM-012}
+      - {row: TM-013}
+      - {row: TM-014}
+      - {row: TM-016}
+      - {row: TM-017}
+    flags: [ionic_strength]
+    ionic_strength: >-
+      Admitted rows state I between 0.06 and 0.15 mol dm^-3, inside the slurry span of ionic_strength_slurry; rows that
+      do not state I are comparators (cp3 R8). No admitted source extrapolates to I = 0.
+    comparators: [TF-021, TF-025, TM-015, TM-018, TM-019, TM-020, TM-021, TM-022, TM-023, TM-024, TM-025, TM-026,
+                  TD-042, TD-043, TD-044, TD-045, TD-046, TD-047, TF-024]
+    notes: >-
+      cp3 R8: catechol itself, no proxy, with an ionic-strength flag. Dopamine and L-DOPA constants (TD-042 to TD-047,
+      TF-024) are proxies. TF-021 (8.83, Britton-Robinson buffer, I not stated), TF-025 and TM-018 to TM-026 (Romero 2018
+      compilation, I not stated) and TM-015 (I not printed) are comparators because their ionic strength is not
+      stated. TM-009 to TM-017 are the literature values compiled in Antikainen 1973 Table 6, each a different original.
+  pka2_catechol:
+    distinct: true
+    symbol: pKa
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: second dissociation of catechol itself, 25 C, I = 0.10 to 0.15 mol dm^-3
+    admit:
+      - {row: TM-002, original: antikainen-1973}
+      - {row: TM-004, original: harada-1969-potentiometry}
+      - {row: TM-006, original: harada-1969-spectrophotometry}
+      - {row: TM-008, original: mirzahosseini-2018}
+    flags: [ionic_strength]
+    ionic_strength: Admitted rows state I = 0.10 to 0.15 mol dm^-3; TF-022 (I not stated) is a comparator.
+    comparators: [TF-022]
+    notes: >-
+      Second catechol constant, which sets the catecholate dianion fraction at the upper end of the slurry pH (cp3 R8).
+      Glass-electrode titrations near pH 12 (TM-002, TM-004) read lower than NMR-pH titration (TM-008); see
+      lit/conflicts.md.
   pka_carboxyl:
     distinct: true
     symbol: pKa
@@ -357,6 +602,7 @@ params:
     status: computed
     reason: computed by the study (PMF of Ca2+ at the deprotonated site); literature binding keys below are comparators only (X2)
   log10_k_ca_catecholate:
+    widen: {by: m_seq_method_error, scale: log10_constant}
     symbol: K_Ca_catecholate
     transform: log10
     unit: "1"
@@ -385,6 +631,7 @@ params:
     status: sourced
     notes: Anchor comparison range (W5); spans mono-, di- and polycarboxylates.
   dg_bind_ca_acetate:
+    widen: {by: m_seq_method_error, scale: free_energy}
     symbol: Delta_G_bind_Ca_carboxylate
     unit: J mol^-1
     regimes: [R-slurry]
@@ -406,6 +653,7 @@ params:
       - {row: TH-035, original: 10.1021/labee-pmf}
     notes: Magnitude (binding strength) as printed. The PMF route spans 30-170 kJ/mol by method; comparator for delta_g_site.
   dg_bind_calcite_template:
+    widen: {by: m_seq_method_error, scale: free_energy}
     symbol: Delta_G_bind_calcite_template
     unit: J mol^-1
     regimes: [R-slurry]
@@ -437,6 +685,95 @@ params:
     regimes: [R-slurry]
     status: gap
     reason: gap - no fetched binding-layer thickness; it is a modelling choice of the C2 closure to be set with the PMF (W3/W5)
+  site_footprint_area:
+    symbol: a_site
+    unit: m^2
+    regimes: [R-slurry]
+    status: gap
+    reason: >-
+      gap: no area per Ca2+-binding site with its bound ion, nor a Ca2+ to headgroup ratio on a carboxylate or catechol
+      layer, was found in an open source (T-L gaps.md)
+  pda_density:
+    symbol: rho_PDA
+    unit: kg m^-3
+    regimes: [R-slurry]
+    conditions: polydopamine grains, mass density
+    admit:
+      - {row: TL-072}
+    comparators: [TL-073, TL-074, TL-075]
+    notes: Melanin values (TL-073, TL-074) and a nominal density (TL-075) are comparators.
+  pda_binding_site_content:
+    symbol: c_sites
+    unit: mol kg^-1
+    regimes: [R-slurry]
+    conditions: accessible amine-binding sites of polydopamine per mass, pH 8.5
+    admit:
+      - {row: TL-076}
+    notes: A proxy for the catechol content (accessible binding sites, not all catechol groups).
+  template_group_density:
+    symbol: rho_L
+    unit: mol m^-3
+    regimes: [R-slurry]
+    status: gap
+    reason: gap - no volume density of catechol groups in polydopamine was found; only an accessible-site content (proxy)
+    notes: The flagged analog template_group_density_site_analog runs beside the gap.
+  template_group_density_site_analog:
+    symbol: rho_L
+    unit: mol m^-3
+    regimes: [R-slurry]
+    role: analog
+    of: template_group_density
+    derive: {expr: "rho * c", inputs: {rho: pda_density, c: pda_binding_site_content}}
+    notes: "Flagged analog (A1): PDA density times its accessible binding-site content."
+  template_layer_thickness:
+    distinct: true
+    symbol: d_layer
+    unit: m
+    regimes: [R-slurry]
+    conditions: polydopamine film thickness, 2 g/L dopamine at pH 8.5 in Tris (aerated or not, or with oxidant), on silicon, quartz-crystal sensors or chromium
+    admit:
+      - {row: TL-077}
+      - {row: TL-078}
+      - {row: TL-079}
+      - {row: TL-080}
+      - {row: TL-081}
+      - {row: TL-082}
+    notes: >-
+      Depends on deposition time and oxygen supply. No film on aluminium oxide was measured; the substrates differ.
+  ca_ionic_radius:
+    symbol: r_Ca
+    unit: m
+    regimes: [R-slurry]
+    status: gap
+    reason: gap - the ionic-radius compilation (Shannon 1976) is paywalled and no open primary source was read
+    notes: The flagged analog ca_o_distance_aqueous_analog runs beside the gap.
+  ca_o_distance_aqueous_analog:
+    distinct: true
+    symbol: r_Ca
+    unit: m
+    regimes: [R-slurry]
+    role: analog
+    of: ca_ionic_radius
+    conditions: Ca-O distance of hydrated Ca2+ in aqueous solution (diffraction and EXAFS reviews)
+    admit:
+      - {row: TL-083}
+      - {row: TL-084}
+      - {row: TL-085}
+    notes: >-
+      Flagged analog (A1): the Ca-O distance exceeds r_Ca by the radius of the water oxygen, so using it for r_Ca makes
+      the lower bound 2 r_Ca of delta_s larger than the true bound.
+  gamma_s_geometric_bound_analog:
+    symbol: Gamma_s
+    unit: mol m^-2
+    regimes: [R-slurry]
+    role: analog
+    of: gamma_s_site_density
+    status: computed
+    derive: {expr: "rho_l * d", inputs: {rho_l: template_group_density_site_analog, d: template_layer_thickness}, as: none}
+    notes: >-
+      The geometric upper bound rho_L d_layer on Gamma_s (theory/ignorance_priors.md 4) with the analog group density;
+      1/(N_A a_site) is not available (site_footprint_area is a gap). gamma_s_site_density is checked against it in
+      lit/conflicts.md.
   v_site:
     symbol: V_site
     unit: m^3
@@ -444,6 +781,7 @@ params:
     status: gap
     reason: gap - no fetched site volume; it follows from delta_s and Gamma_s in the C2 closure
   dg_hyd_ca_marcus:
+    widen: {by: m_seq_method_error, scale: free_energy}
     symbol: Delta_G_hyd_Ca
     unit: J mol^-1
     regimes: [R-slurry]
@@ -454,6 +792,7 @@ params:
     comparators: [TD-055, TD-057, TE-064]
     notes: Benchmark for the anchor; fitted force-field values (TD-055, TD-057) are not independent.
   dg_hyd_ca_tissandier:
+    widen: {by: m_seq_method_error, scale: free_energy}
     symbol: Delta_G_hyd_Ca
     unit: J mol^-1
     regimes: [R-slurry]
@@ -510,6 +849,31 @@ params:
     status: computed
     reason: computed by the study (PMF in explicit water); not a literature input (X2)
     comparators: [TD-025, TD-026, TD-027, TD-028, TD-030]
+  w_adh_wet_catechol_oxide_analog:
+    distinct: true
+    symbol: W_adh_wet
+    unit: J m^-2
+    regimes: [R-slurry]
+    role: analog
+    of: delta_f_pmf
+    conditions: measured works of adhesion in water of catechol-bearing films on oxide surfaces (mica, SiO2, CuO), surface forces apparatus, pH 3 to 7.5
+    admit:
+      - {row: TD-025}
+      - {row: TD-026}
+      - {row: TD-027}
+      - {row: TD-028}
+      - {row: TD-030}
+      - {row: TM-034}
+      - {row: TM-035}
+      - {row: TM-036}
+      - {row: TM-038}
+      - {row: TM-039}
+    comparators: [TM-037, TD-032]
+    notes: >-
+      Flagged analog (A1, cp2 gap policy) for the C1 work of adhesion in water, which the study computes from delta_f_pmf
+      and a_c. No source measures a polydopamine film on an aluminium oxide in water; these are DOPA-protein and
+      catecholic-surfactant films on mica, silica and copper oxide. TM-037 (film against film) and TD-032 (dry,
+      upper-bound estimate) are comparators. Run beside the C1 route, never in its place.
   a_c:
     symbol: A_c
     unit: m^2
@@ -659,7 +1023,223 @@ params:
   dfg_li2so4: {symbol: G_phase, unit: J mol^-1, regimes: [R-cell], conditions: "298.15 K, crystalline", admit: [{row: TI-046}]}
   dfg_liclo4_aq: {symbol: G_phase, unit: J mol^-1, regimes: [R-cell], conditions: "298.15 K, aqueous m = 1 (crystal DfG not printed)", admit: [{row: TI-044}]}
   dfg_al_no3_3: {symbol: G_phase, unit: J mol^-1, regimes: [R-cell], status: gap, reason: "gap - Al(NO3)3 not legible in the fetched tables (NBS TN 270-3/270-6 rotated tables); Wagman 1982 not retrieved"}
-  dfg_ca_clo4_2: {symbol: G_phase, unit: J mol^-1, regimes: [R-cell], status: gap, reason: "gap - Ca(ClO4)2 not found in a legible fetched table"}
+  dfg_ca_clo4_2: {symbol: G_phase, unit: J mol^-1, regimes: [R-cell], status: gap, reason: "gap - no DfG of anhydrous Ca(ClO4)2 in any fetched table (NBS TN 270-6 prints DfH only, TK-033); W5 enters it through the exchange enthalpy, and the neglected entropy is bounded by exchange_entropy_bound"}
+  s_li:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, Li metal
+    admit:
+      - {row: TK-007}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_ca:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, Ca metal
+    admit:
+      - {row: TK-008}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_liclo4:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, LiClO4 crystal (JANAF estimate from KClO4)
+    admit:
+      - {row: TK-029}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2). TK-029 is bracketed by JANAF as an estimate (grade C); in the Li-based analogs it cancels.
+  s_cacl2:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, CaCl2 crystal
+    admit:
+      - {row: TK-012}
+      - {row: TK-019}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_ca_no3_2:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, Ca(NO3)2 crystal
+    admit:
+      - {row: TK-015}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_licl:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, LiCl crystal
+    admit:
+      - {row: TK-065}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_nacl:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, NaCl crystal
+    admit:
+      - {row: TK-071}
+      - {row: TK-066}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_kcl:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, KCl crystal
+    admit:
+      - {row: TK-072}
+      - {row: TK-067}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_lino3:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, LiNO3 crystal
+    admit:
+      - {row: TK-068}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_nano3:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, NaNO3 crystal
+    admit:
+      - {row: TK-073}
+      - {row: TK-069}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_kno3:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, KNO3 crystal
+    admit:
+      - {row: TK-074}
+      - {row: TK-070}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_naclo4:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, NaClO4 crystal
+    admit:
+      - {row: TK-027}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_kclo4:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: standard molar entropy at 298.15 K, KClO4 crystal
+    admit:
+      - {row: TK-028}
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+  s_ca_clo4_2:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap (cp3 R10): no table gives S(298.15 K) of anhydrous Ca(ClO4)2 or of any anhydrous alkaline-earth perchlorate;
+      the only solid calcium perchlorate entropy is the tetrahydrate (TK-023)
+    comparators: [TK-023, TK-022, TK-024, TK-025, TK-026]
+    notes: The analog bound is s_ca_clo4_2_analog_low and s_ca_clo4_2_analog_high.
+  s_ca_clo4_2_analog_low:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    role: analog
+    of: s_ca_clo4_2
+    derive: {expr: "min(cacl2 + 2 * (liclo4 - licl), cacl2 + 2 * (naclo4 - nacl), cacl2 + 2 * (kclo4 - kcl), cano3 + 2 * (liclo4 - lino3), cano3 + 2 * (naclo4 - nano3), cano3 + 2 * (kclo4 - kno3))", inputs: {cacl2: s_cacl2, cano3: s_ca_no3_2, liclo4: s_liclo4, naclo4: s_naclo4, kclo4: s_kclo4, licl: s_licl, nacl: s_nacl, kcl: s_kcl, lino3: s_lino3, nano3: s_nano3, kno3: s_kno3}}
+    notes: >-
+      Lower end of the analog bound (cp3 R2): S(CaX2) + 2 [S(MClO4) - S(MX)] for X = Cl, NO3 and M = Li, Na, K, the
+      anion-exchange increment taken from alkali salts of one table set. With M = Li the estimate is the exchange
+      entropy of Ca + 2 LiX -> CaX2 + 2 Li carried over to the perchlorate. Within one anion the tabulated crystal
+      entropies rise Mg < Ca < Sr < Ba (chlorides TK-018 to TK-021, nitrates TK-014 to TK-017), so the Ca salt sits
+      between its neighbours, as the analog assumes.
+  s_ca_clo4_2_analog_high:
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    role: analog
+    of: s_ca_clo4_2
+    derive: {expr: "max(cacl2 + 2 * (liclo4 - licl), cacl2 + 2 * (naclo4 - nacl), cacl2 + 2 * (kclo4 - kcl), cano3 + 2 * (liclo4 - lino3), cano3 + 2 * (naclo4 - nano3), cano3 + 2 * (kclo4 - kno3))", inputs: {cacl2: s_cacl2, cano3: s_ca_no3_2, liclo4: s_liclo4, naclo4: s_naclo4, kclo4: s_kclo4, licl: s_licl, nacl: s_nacl, kcl: s_kcl, lino3: s_lino3, nano3: s_nano3, kno3: s_kno3}}
+    notes: >-
+      Upper end of the analog bound, as s_ca_clo4_2_analog_low. Independent upper check: the tetrahydrate entropy
+      (TK-023) exceeds it, as an anhydrous salt must lie below its hydrate.
+  exchange_entropy_bound:
+    symbol: Delta_S_ex
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    status: computed
+    derive:
+      expr: "max(abs(lo + 2 * li - ca - 2 * liclo4), abs(hi + 2 * li - ca - 2 * liclo4))"
+      inputs: {lo: s_ca_clo4_2_analog_low, hi: s_ca_clo4_2_analog_high, li: s_li, ca: s_ca, liclo4: s_liclo4}
+    notes: >-
+      Bound on |Delta_S| of the exchange Ca + 2 LiClO4 -> Ca(ClO4)2 + 2 Li, the entropy that W5's all-experimental
+      route neglects when it enters Ca(ClO4)2 through the tabulated exchange enthalpy (cp3 R2).
+  dfh_ca_clo4_2:
+    symbol: H_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: anhydrous Ca(ClO4)2 crystal, 298.15 K (NBS TN 270-6)
+    admit:
+      - {row: TK-033}
+    notes: No uncertainty printed; the table's convention is 2 to 20 units of the last figure (TK-030).
+  dfh_liclo4:
+    symbol: H_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    distinct: true
+    conditions: LiClO4 crystal, 298.15 K
+    admit:
+      - {row: TK-039}
+      - {row: TI-042}
+    notes: JANAF (TK-039, with its uncertainty) and NBS TN 270-8 (TI-042) agree within the JANAF uncertainty.
+  u_tab_dfg_caco3:
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: tabulated uncertainty (2 sigma, USGS B2131) of DfG of calcite
+    admit:
+      - {row: TI-002, take: uncertainty}
+  u_tab_dfg_co2:
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: tabulated uncertainty (2 sigma, USGS B2131) of DfG of CO2(g)
+    admit:
+      - {row: TI-008, take: uncertainty}
+  u_tab_dfh_liclo4:
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: tabulated uncertainty of DfH of LiClO4(cr) (JANAF)
+    admit:
+      - {row: TK-039, take: uncertainty}
+  nbs_last_digit_dfh_ca_clo4_2:
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: one unit of the last printed figure of DfH of Ca(ClO4)2 in NBS TN 270-6
+    admit:
+      - {row: TK-033, take: last_digit}
+  nbs_uncertainty_units:
+    symbol: n_units
+    unit: "1"
+    regimes: [R-cell]
+    distinct: true
+    conditions: stated overall uncertainty of the NBS TN 270 values, in units of the last figure
+    admit:
+      - {row: TK-030}
+      - {row: TK-031}
+  u_tab_dfh_ca_clo4_2:
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    status: computed
+    derive: {expr: "n * d", inputs: {n: nbs_uncertainty_units.max, d: nbs_last_digit_dfh_ca_clo4_2}}
+    notes: The upper end of the NBS convention (TK-030) applied to the printed figure of TK-033.
+
   dfg_al_clo4_3: {symbol: G_phase, unit: J mol^-1, regimes: [R-cell], status: gap, reason: "gap - Al(ClO4)3 not found in a legible fetched table"}
   dfg_alcl3: {symbol: G_phase, unit: J mol^-1, regimes: [R-cell], status: gap, reason: "gap - AlCl3 not found in a legible fetched table"}
   formation_energy_mae:
@@ -699,12 +1279,33 @@ params:
     symbol: E_Li
     unit: V
     regimes: [R-cell]
-    conditions: Li2CO3 electro-oxidation onset vs Li+/Li in LiTFSI glyme electrolytes, room temperature
+    distinct: true
+    conditions: Li2CO3 electro-oxidation onset vs Li+/Li by gas evolution, LiTFSI glyme electrolytes, room temperature
     admit:
-      - {row: TI-059}
-      - {row: TI-061}
-    comparators: [TI-060, TI-063]
-    notes: Carbonate-salt benchmark for the R-cell window; TI-063 (about 3.5 V, chemical route via protons) is grade D and contrary.
+      - {row: TK-059, original: mahne-2018}
+      - {row: TI-059, original: mahne-2018}
+      - {row: TK-062, original: wang-2022-conclusions}
+      - {row: TI-061, original: wang-2022-fig1}
+    comparators: [TI-060, TI-063, TK-060, TK-063, TK-064]
+    notes: >-
+      cp3 R2: the carbonate-oxidation reading rests on Li2CO3 oxidation being measured near its equilibrium value. Wang
+      2022 states the onset at two places (Fig. 1a text and conclusions), kept as two readings of one source. Both
+      sources print the equilibrium potential (li2co3_oxidation_equilibrium_potential, TK-058, TK-061) and measure the
+      onset by gas evolution at about that value, and both state that the onset lies close to it (TK-060, TK-063,
+      qualitative). TK-064 (contrary): in LiPF6 EC/EMC, CO2 above 4.3 V comes from a chemical route even with Li2CO3
+      isolated from the electrode. TI-063 (about 3.5 V, chemical route via protons) is grade D and contrary.
+  li2co3_oxidation_equilibrium_potential:
+    distinct: true
+    symbol: E_Li
+    unit: V
+    regimes: [R-cell]
+    conditions: thermodynamic potential of 2 Li2CO3 -> 4 Li+ + 4 e- + 2 CO2 + O2 vs Li+/Li, 298 K, as printed by each source
+    admit:
+      - {row: TK-058}
+      - {row: TK-061}
+    notes: >-
+      The equilibrium potential printed by the two onset sources (cp3 R2). W5's all-experimental route gives the same
+      reaction from JANAF (gas_reference.md, B6); that is W5's computation, not a row.
   transfer_free_energy_li_water_pc:
     symbol: Delta_G_tr_Li
     unit: J mol^-1
@@ -712,19 +1313,82 @@ params:
     conditions: Li+ water -> propylene carbonate, 25 C (IUPAC selected)
     admit:
       - {row: TI-077}
+    notes: >-
+      Marcus 1983 states that a value printed to one decimal is one on which sources agree within 1 to 2 kJ mol^-1
+      (TK-004); the extrathermodynamic assumptions agree within about 6 kJ mol^-1 in general (TK-006, Gritzner 1988).
+      No Li+ value was found for EC, DMC or the sulfone.
   solvation_ca_vs_li:
     symbol: Delta_G_solv_Ca_vs_Li
     unit: J mol^-1
     regimes: [R-cell]
     status: gap
-    reason: gap - no single-ion transfer or solvation free energy of Ca2+ in carbonate or ether solvents; TI-078/TI-079 are Ca-BF4 cluster energies, not single-ion values
+    reason: >-
+      gap (cp3 R10, searched on day 3): no single-ion Gibbs energy of transfer of Ca2+ from water into any registered
+      electrolyte solvent (PC, EC, DMC, EC:DMC, EC:EMC, ethyl isopropyl sulfone) or any other aprotic solvent was found
+      in an open source; the IUPAC selections (Marcus 1983, TI-077 context; Gritzner 1988) give none for Ca2+.
+      TI-078/TI-079 are Ca-BF4 cluster energies, not single-ion values
     comparators: [TI-078, TI-079]
+    notes: >-
+      Solvated-sink input of C5 R-cell: Delta_G_solv(Ca2+) - 2 Delta_G_solv(Li+) in the electrolyte. The aqueous analog
+      solvation_ca_vs_li_water_analog is flagged and runs beside the gap; no R-cell pass can count while this is a gap
+      (cp2 fix F5).
   solvation_al_vs_li:
     symbol: Delta_G_solv_Al_vs_Li
     unit: J mol^-1
     regimes: [R-cell]
     status: gap
-    reason: gap - no Al3+ solvation or transfer free energy in an organic electrolyte was found
+    reason: >-
+      gap (cp3 R10, searched on day 3): no Al3+ transfer or solvation Gibbs energy in any registered electrolyte
+      solvent or other aprotic solvent was found in an open source; Al3+ is absent from the IUPAC transfer selections
+    notes: >-
+      Solvated-sink input of C5 R-cell: Delta_G_solv(Al3+) - 3 Delta_G_solv(Li+) in the electrolyte. The aqueous analog
+      solvation_al_vs_li_water_analog is flagged and runs beside the gap.
+  hydration_free_energy_li:
+    symbol: Delta_G_hyd
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: single-ion hydration Gibbs energy, gas to water, 298.15 K (Marcus 1991 scale, read through an open secondary source)
+    admit:
+      - {row: TK-001}
+    notes: Grade D (the original is paywalled; read through a quoting paper). Input of the aqueous analogs only.
+  hydration_free_energy_ca:
+    symbol: Delta_G_hyd
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: as hydration_free_energy_li
+    admit:
+      - {row: TK-002}
+    comparators: [TD-054]
+    notes: >-
+      Grade D, same original as TD-054 (dg_hyd_ca_marcus, read from another quoting source). Input of the aqueous analogs
+      only; dg_hyd_ca_* remain the anchor's comparison keys.
+  hydration_free_energy_al:
+    symbol: Delta_G_hyd
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: as hydration_free_energy_li
+    admit:
+      - {row: TK-003}
+    notes: Grade D. Input of the aqueous analog only.
+  solvation_ca_vs_li_water_analog:
+    symbol: Delta_G_solv_Ca_vs_Li
+    unit: J mol^-1
+    regimes: [R-cell]
+    role: analog
+    of: solvation_ca_vs_li
+    derive: {expr: "g_ca - 2 * g_li", inputs: {g_ca: hydration_free_energy_ca, g_li: hydration_free_energy_li}}
+    notes: >-
+      Flagged analog (A1): the relative solvation of Ca2+ against two Li+ in water, not in the electrolyte. The transfer
+      into a carbonate solvent is unknown for Ca2+ (gap), so the analog's verdict is conditional on water standing in
+      for the solvent.
+  solvation_al_vs_li_water_analog:
+    symbol: Delta_G_solv_Al_vs_Li
+    unit: J mol^-1
+    regimes: [R-cell]
+    role: analog
+    of: solvation_al_vs_li
+    derive: {expr: "g_al - 3 * g_li", inputs: {g_al: hydration_free_energy_al, g_li: hydration_free_energy_li}}
+    notes: Flagged analog (A1) in water, as solvation_ca_vs_li_water_analog.
   a_h_cell:
     symbol: a_H_cell
     unit: "1"
@@ -744,24 +1408,94 @@ params:
     status: gap
     reason: gap - no inorganic carbonate activity of a fluorine-free electrolyte was found
 
+  # ================================================================ N16: drawing parameters for W7
+  rho_acc:
+    distinct: true
+    symbol: rho_ACC
+    unit: kg m^-3
+    regimes: [R-slurry]
+    conditions: synthetic Mg-free ACC, dried powder, gas pycnometry, CaCO3.nH2O with n = 1.1 and 0.5
+    admit:
+      - {row: TG-013}
+      - {row: TG-014}
+    status: single-source
+    comparators: [TG-017, TM-027, TM-028, TM-029, TC-054, TC-055]
+    notes: >-
+      N16 (W7 drawing parameter). Mass density of the ACC phase including its structural water; the two rows are two
+      hydration states of one paper. Mg-ACC (TM-027), biogenic ACC from a scattering fit (TM-028), a force-field model
+      (TM-029) and SAXS of wet colloids (TC-054, TC-055) are comparators.
+  c_o_bond_length_calcite:
+    symbol: d_CO
+    unit: m
+    regimes: [shared]
+    conditions: calcite single crystal, X-ray refinement at 294 K
+    admit:
+      - {row: TM-030}
+      - {row: TM-031}
+    notes: >-
+      N16 (W7 drawing parameter). TM-030 (refined distance) and TM-031 (the same refinement after a libration correction)
+      are one determination; the grade-A row stands for it (E3).
+  c_o_bond_length_acc:
+    distinct: true
+    symbol: d_CO
+    unit: m
+    regimes: [R-slurry]
+    conditions: amorphous calcium carbonate, structure model fitted to scattering data (Mg-ACC) and first pair-distribution peak
+    admit:
+      - {row: TM-032}
+      - {row: TM-033}
+    notes: N16 (W7 drawing parameter) for the ACC framing; one fitted model (Mg-ACC) and one pair-distribution peak.
+
   # ================================================================ thresholds inputs (theory/thresholds.md section 4)
-  p_cred: {symbol: p_cred, unit: "1", regimes: [shared], status: registered, reason: "registration convention set at cp2 (theory/thresholds.md); not yet ruled when this table was built"}
-  p_deg: {symbol: p_deg, unit: "1", regimes: [shared], status: registered, reason: "registration convention set at cp2; not yet ruled"}
-  m_cos: {symbol: m_cos, unit: "1", regimes: [R-slurry], status: registered, reason: "registration convention set at cp2 (W3 proposes zero: the method error is carried by the interfacial-energy priors); not yet ruled"}
-  contact_area_definition: {symbol: A_c_rule, unit: "1", regimes: [R-slurry], status: registered, reason: "registration convention set at cp2; not yet ruled"}
-  framing: {symbol: framing, unit: "1", regimes: [R-slurry], status: registered, reason: "registration at cp3 (lane note N5): ACC or calcite; keys gamma_nl_*, v_m_*, log10_ksp_* carry both framings"}
-  n_req: {symbol: N_req, unit: m^-2, regimes: [R-slurry], status: registered, reason: "registration at cp2 (decision 4); literature island densities are key nucleation_density as a comparator"}
-  gas_reference_schemes: {symbol: gas_reference_schemes, unit: "1", regimes: [R-cell], status: registered, reason: "registration at cp2; benchmark drg_caco3_decomposition supports the choice"}
-  al_phases: {symbol: al_phases, unit: "1", regimes: [R-cell], status: registered, reason: "registration at cp2"}
+  p_cred:
+    symbol: p_cred
+    unit: "1"
+    regimes: [shared]
+    registered: {file: theory/thresholds.md, block: thresholds, path: decision.conventions.p_cred,
+                 ruling: "cp2 ruling 2026-10-17 (decision D14)"}
+    notes: Credible level of the verdict bands; the registered sweep is reported beside the primary result.
+  p_deg:
+    symbol: p_deg
+    unit: "1"
+    regimes: [shared]
+    registered: {file: theory/thresholds.md, block: thresholds, path: decision.conventions.p_deg,
+                 ruling: "cp2 ruling 2026-10-17 (decision D14)",
+                 sweep_from: {name: p_cred, path: decision.conventions.p_cred}}
+    notes: >-
+      Registered as the rule p_deg = 1 - p_cred, so it moves with the p_cred sweep; the sweep here is that rule
+      applied to the registered p_cred sweep.
+  m_cos:
+    symbol: m_cos
+    unit: "1"
+    regimes: [R-slurry]
+    registered: {file: theory/thresholds.md, block: thresholds, path: decision.conventions.m_cos,
+                 ruling: "cp2 ruling 2026-10-17 (decision D14)"}
+    notes: C3 margin on cos(theta); zero primary because the interfacial-energy priors carry the method error.
+  contact_area_definition: {symbol: A_c_rule, unit: "1", regimes: [R-slurry], status: registered, reason: "registration convention named by theory/thresholds.md (C1, Q5); no ruling text in the cp2 or cp3 record available to this table, so it is not filled"}
+  framing: {symbol: framing, unit: "1", regimes: [R-slurry], status: registered, reason: "registration at cp3 (lane note N5): ACC or calcite; the cp3 ruling text on the framing is not in this table's inputs; keys gamma_nl_*, v_m_*, log10_ksp_* and gamma_nv_* carry both framings"}
+  n_req:
+    symbol: N_req
+    unit: m^-2
+    regimes: [R-slurry]
+    status: registered
+    derive: {expr: "1 / A_patch", inputs: {A_patch: patch_area}, as: none}
+    notes: >-
+      Registered rule N_req = 1/A_patch (cp2 fix F4, decision D14), derived per draw from patch_area. The Poisson
+      refinement ln(1/q_0)/A_patch (theory/cp2_brief.md D) is a cp3 proposal and is not applied here.
+  gas_reference_schemes: {symbol: gas_reference_schemes, unit: "1", regimes: [R-cell], status: registered, reason: "registration (cp3 packet decision 3); the ruling text on the scheme set is not in this table's inputs. cp3 R2 sets the margin of the all-experimental route (window_margin_expt); the benchmark drg_caco3_decomposition and W5's gas_reference.md bear on the choice"}
+  al_phases: {symbol: al_phases, unit: "1", regimes: [R-cell], status: registered, reason: "registration named by theory/thresholds.md (C5 R-cell); no ruling text available to this table"}
   m_s:
     symbol: m_S
     unit: J m^-2
     regimes: [R-slurry]
-    status: registered
-    reason: >-
-      W1 proposes m_S = 0 for the energies that carry priors (gamma_nl_*, gamma_sl0_template), as theory/thresholds.md
-      allows; gamma_sn0_template and delta_gamma_w have no prior, so their method error is not carried and cp2 must
-      register the margin
+    margin_zero:
+      reason: >-
+        S_spread = gamma_sl - gamma_sn - gamma_nl is evaluated only on priors: gamma_nl_* and gamma_sl0_template are
+        uniform over their sourced spans (U1, T1), whose width already holds the scatter between methods (a factor of
+        6.8 for calcite), and gamma_sn has the ignorance prior U[0, gamma_p + gamma_nv] (theory/ignorance_priors.md
+        1a), which covers every admissible value, so no method error lies outside it. Delta_gamma_w = 0 by the
+        registered rule. Nothing in S_spread is a single computed number whose systematic error the priors miss.
+    notes: Threshold margin of C4 (theory/thresholds.md conventions, m_S); the zero case of README 7.3.
   m_seq_method_error:
     symbol: m_seq
     unit: J mol^-1
@@ -774,22 +1508,70 @@ params:
     status: single-source
     comparators: [TE-081, TE-082, TE-067]
     notes: >-
-      Electronic-structure error only; the implicit-solvation error of ion hydration (TE-081, 4.65 kcal/mol for cations
-      with GFN2-xTB/ALPB; TE-067 SMD ions) is larger and is not included. W3 decides whether m_seq adds it.
+      Electronic-structure error only. m_seq does not include the implicit-solvation error (stated at P0-W1.3 for cp3
+      decision 8): that error is the separate key implicit_solvation_error_ion, and m_seq_with_solvation is their sum,
+      a labelled sensitivity. W1 keeps the electronic-structure error as m_seq because the anchor's binding cycle and
+      the single-source widening (W1) are defined against the electronic-structure benchmark of Ca2+-ligand
+      energies; the solvation error belongs to the solvated cycle and is reported beside it.
+  implicit_solvation_error_ion:
+    symbol: m_solv
+    unit: J mol^-1
+    regimes: [R-slurry]
+    distinct: true
+    conditions: mean absolute error of implicit-solvent hydration free energies of ions against experiment, water, 298 K
+    admit:
+      - {row: TE-081}
+      - {row: TE-082}
+    status: single-source
+    comparators: [TE-067]
+    notes: >-
+      Cations (TE-081) and anions (TE-082) of one benchmark paper with the semi-empirical implicit model used for the
+      anchor geometries. TE-067 (SMD ions, abstract only, grade D) is a comparator under E5. Not part of m_seq.
+  m_seq_with_solvation:
+    symbol: m_seq
+    unit: J mol^-1
+    regimes: [R-slurry]
+    role: sensitivity
+    of: m_seq_method_error
+    derive: {expr: "m_el + m_solv", inputs: {m_el: m_seq_method_error, m_solv: implicit_solvation_error_ion}}
+    notes: >-
+      Labelled sensitivity for cp3 decision 8: m_seq plus the implicit-solvation error of ions. Never decides a verdict
+      and is not used for the W1 widening.
+  contact_angle_method_error:
+    symbol: dtheta
+    unit: rad
+    regimes: [R-slurry]
+    conditions: deviation of force-field water contact angles from experiment on silica surfaces
+    admit:
+      - {row: TL-088}
+    comparators: [TL-087, TL-089]
+    notes: The closest benchmarked method error of a computed wetting free energy found (T-L).
   m_w_adh_wet:
     symbol: m_W
     unit: J m^-2
     regimes: [R-slurry]
-    status: gap
-    reason: >-
-      gap: no method-error benchmark of a wet adhesion free energy per area; it follows from the PMF method error divided
-      by N_A A_c once the contact-area rule is registered (m_seq_method_error is the closest energy benchmark)
+    margin_case: evidence
+    derive: {expr: "g_w * dth", inputs: {g_w: gamma_w, dth: contact_angle_method_error}}
+    notes: >-
+      Case evidence (README 7.3): the work of adhesion of water follows Young-Dupre, W = gamma_w (1 + cos theta), so a
+      contact-angle error dtheta moves W by at most gamma_w dtheta (|d cos theta / d theta| <= 1). With the benchmarked
+      force-field contact-angle error (TL-088, silica) this is the systematic error of a computed wet adhesion free
+      energy per area that no prior carries: the C1 work is a computed number (delta_f_pmf), not a sampled prior.
+      TL-087 (immersion enthalpies within 0 to 7 mJ m^-2) is consistent in size and is a comparator (an enthalpy). No
+      catechol-on-alumina benchmark exists.
   termination_weights:
     symbol: termination_weights
     unit: "1"
     regimes: [R-slurry]
     status: gap
-    reason: gap - no fetched distribution of native-oxide surface terminations (hydroxyl types) on Al foil; Day 1 hydroxyl densities (TB rows) do not give weights. Outstanding for P0-W1.3
+    reason: >-
+      gap (cp3 ruling R8): no fetched distribution of the populated native-oxide terminations on Al foil in alkaline
+      water. Reporting rule: C1 is reported per termination, and the mixture over terminations uses an ignorance
+      mixture (weights uniform on the simplex of the registered terminations); no point weight is set.
+    notes: >-
+      cp3 R8: termination weights are a gap. The verdict per termination is reported; the mixture verdict is computed
+      under the ignorance mixture and labelled as such. Hydroxyl-type evidence found on day 3 (TM-047,
+      TM-048: single-crystal faces, qualitative) is listed in lit/conflicts.md and does not give weights.
   m_eff_tunnel:
     symbol: m_eff
     unit: kg
@@ -800,10 +1582,32 @@ params:
     symbol: m_E
     unit: V
     regimes: [R-cell]
-    status: gap
-    reason: >-
-      to be derived from formation_energy_mae (e_form) with the atoms per transferred electron of the registered sink
-      reactions, which W5 fixes after the cp2 sink ruling; outstanding for P0-W1.3
+    margin_case: evidence
+    derive: {expr: "e_form * 5 / (2 * F)", inputs: {e_form: formation_energy_mae}}
+    notes: >-
+      Margin of the DFT-based schemes (janaf, mp) for the registered reaction CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 +
+      1/2 O2 + 2 Li, from fetched method-error evidence (README 7.3, case evidence): e_form per atom times the atoms
+      whose DFT error does not cancel, per transferred electron. In W5's exchange route Ca(ClO4)2 enters as 2 LiClO4
+      plus a tabulated enthalpy, so the LiClO4 energies cancel and only the 5 atoms of CaCO3 carry a DFT error; 2
+      electrons move. Other reactions scale by their own count of uncancelled atoms per electron. W5's provisional value
+      counted every solid atom, which double counts the cancelling salt. The gas references are the schemes' own and
+      are benchmarked separately (gas_reference.md); this margin does not carry them.
+  window_margin_expt:
+    symbol: m_E
+    unit: V
+    regimes: [R-cell]
+    margin_case: evidence
+    derive:
+      expr: "(u_caclo4 + 2 * u_liclo4 + u_co2 + u_caco3 + T0 * ds) / (2 * F)"
+      inputs: {u_caclo4: u_tab_dfh_ca_clo4_2, u_liclo4: u_tab_dfh_liclo4, u_co2: u_tab_dfg_co2,
+               u_caco3: u_tab_dfg_caco3, ds: exchange_entropy_bound}
+    notes: >-
+      cp3 R2: m_expt, the experimental uncertainty budget of the all-experimental route for the registered reaction
+      CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 1/2 O2 + 2 Li (2 electrons). In that route Delta_G = DfH(Ca(ClO4)2) -
+      2 DfH(LiClO4) + DfG(CO2) - DfG(CaCO3), the LiClO4 free energies cancelling; the budget is the linear sum of the
+      tabulated uncertainties of those inputs (as printed: 2 sigma for USGS B2131, the stated value for JANAF, the upper
+      end of the NBS convention) plus the bound on the neglected exchange entropy times 298.15 K. A linear sum is used
+      because the budget is a bound, not a standard deviation.
 
   # ================================================================ regime inputs, R-slurry (charter/regimes.yaml)
   ph_slurry:
@@ -839,6 +1643,8 @@ params:
     unit: "1"
     regimes: [R-slurry]
     distinct: true
+    role: sensitivity
+    of: ph_slurry
     conditions: water-processed cathode slurries with pH modifiers (H3PO4, PAA, acetic acid, Li2SO4, pressurised CO2)
     admit:
       - {row: TA-003}
@@ -948,9 +1754,11 @@ params:
     regimes: [R-slurry]
     status: gap
     reason: >-
-      gap: no water activity during drying was found; a_w = 1 holds in the wet slurry by definition (charter) and the
-      lower bound during drying is not sourced; residual water contents after drying (TJ-054, TJ-055) are not activities
+      gap for the primary drying state: no water activity of a drying aqueous electrode film was found (day 3 search,
+      T-L gaps.md). In the wet slurry a_w = 1 by the charter definition; the secondary drying state is
+      a_w_drying_secondary
     comparators: [TJ-054, TJ-055]
+    notes: F7 reports a_w per registered drying state; this key is the primary (convective) drying state.
   ionic_strength_slurry:
     symbol: I_ionic
     unit: mol kg^-1
@@ -992,6 +1800,16 @@ params:
       s^-1) and are exponentiated. TJ-005 is the prefactor before the activation term (TJ-006 includes it). Per-field
       (TJ-014 to TJ-016) and per-volume (TJ-018 to TJ-022) prefactors have other units and are comparators.
     correlation_group: cnt_fit
+  patch_area:
+    symbol: A_patch
+    unit: m^2
+    regimes: [R-slurry]
+    status: gap
+    reason: >-
+      gap: no measured contact area between a cathode particle and the aluminium collector was found (T-L gaps.md); a
+      particle size (TL-086) is not a contact area
+    comparators: [TL-086]
+    notes: N_req = 1/A_patch (n_req) stays undetermined while this is a gap.
   nucleation_density:
     symbol: N_s
     unit: m^-2
@@ -1000,27 +1818,93 @@ params:
     reason: gap - island densities of CaCO3 on templates are shown only in figures (Hamm Fig. 1, Hu Fig. 3, Li and Jun Fig. 5), not printed (T-J gaps)
 
   # ================================================================ regime inputs, R-cell
-  e_cell_max:
+  e_cell_max_lfp:
     symbol: E_cell_max
     unit: V
     regimes: [R-cell]
     distinct: true
-    conditions: upper charge cut-off potentials vs Li+/Li of cathodes (LFP, LCO, NMC111/622/811, NCA, LNMO), water-processed electrodes and reviews
+    conditions: upper charge cut-off vs Li+/Li, half cells or stated vs Li+/Li, LiFePO4 (olivine) cathodes
     admit:
-      - {row: TA-047}
-      - {row: TA-048}
-      - {row: TA-049}
+      - {row: TJ-038}
+      - {row: TK-041}
+      - {row: TK-042}
+    notes: Cathode class LiFePO4 of the E_cell_max design axis (cp3 R2).
+  e_cell_max_layered:
+    symbol: E_cell_max
+    unit: V
+    regimes: [R-cell]
+    distinct: true
+    conditions: "upper charge cut-off vs Li+/Li, half cells or stated vs Li+/Li, layered Ni-containing oxides: NMC111, NMC532, NMC622, NMC811 and Ni-rich NCM, and NCA"
+    admit:
       - {row: TA-050}
       - {row: TA-051}
       - {row: TA-052}
       - {row: TJ-036}
       - {row: TJ-037}
-      - {row: TJ-038}
       - {row: TJ-039}
-      - {row: TJ-040}
+      - {row: TK-043}
+      - {row: TK-050}
+      - {row: TK-051}
+      - {row: TK-052}
+      - {row: TK-053}
+      - {row: TK-054}
+      - {row: TK-055}
+    notes: Cathode class layered NMC/NCA of the E_cell_max design axis (cp3 R2). TA-052 reports one cut-off for NCA and LMO electrodes and is admitted to both classes.
+  e_cell_max_lco:
+    symbol: E_cell_max
+    unit: V
+    regimes: [R-cell]
+    distinct: true
+    conditions: upper charge cut-off vs Li+/Li, half cells or stated vs Li+/Li, LiCoO2 cathodes, conventional and high-voltage protocols
+    admit:
       - {row: TJ-041}
       - {row: TJ-042}
-    notes: The cut-off is a property of the cathode, so cells with fluorinated salts are admitted; the range runs from LFP (3.6 V) to LNMO (5.0 V).
+      - {row: TK-044}
+      - {row: TK-046}
+      - {row: TK-047}
+      - {row: TK-048}
+      - {row: TK-049}
+    comparators: [TK-045]
+    notes: Cathode class LiCoO2 of the E_cell_max design axis (cp3 R2). TK-045 is a full-cell voltage against graphite, not vs Li+/Li, and is a comparator; TJ-042 (> 4.6 V) is read at its bound.
+  e_cell_max_lmo:
+    symbol: E_cell_max
+    unit: V
+    regimes: [R-cell]
+    distinct: true
+    conditions: upper charge cut-off vs Li+/Li, half cells or stated vs Li+/Li, LiMn2O4 spinel cathodes
+    admit:
+      - {row: TA-052}
+      - {row: TK-056}
+      - {row: TK-057}
+    notes: Cathode class LiMn2O4 of the E_cell_max design axis (cp3 R2). TA-052 reports one cut-off for NCA and LMO electrodes and is admitted to both classes.
+  e_cell_max_lnmo:
+    symbol: E_cell_max
+    unit: V
+    regimes: [R-cell]
+    distinct: true
+    conditions: upper charge cut-off vs Li+/Li, half cells or stated vs Li+/Li, high-voltage spinel LiNi0.5Mn1.5O4 cathodes
+    admit:
+      - {row: TA-047}
+      - {row: TA-048}
+      - {row: TA-049}
+      - {row: TJ-040}
+    notes: Cathode class LiNi0.5Mn1.5O4 of the E_cell_max design axis (cp3 R2).
+  e_cell_max:
+    symbol: E_cell_max
+    unit: V
+    regimes: [R-cell]
+    role: design-axis
+    axis:
+      classes:
+        - {label: LiFePO4, key: e_cell_max_lfp}
+        - {label: layered NMC/NCA, key: e_cell_max_layered}
+        - {label: LiCoO2, key: e_cell_max_lco}
+        - {label: LiMn2O4, key: e_cell_max_lmo}
+        - {label: LiNi0.5Mn1.5O4, key: e_cell_max_lnmo}
+    notes: >-
+      cp3 R2: E_cell_max is a design axis keyed to cathode class. The charge cut-off is a property of the cathode, so
+      cells with fluorinated salts are admitted for it. The C5 R-cell verdict is reported per class; no class is
+      preferred. The charter's single value (cp2 edit 5d) lies in the layered NMC/NCA class.
   e_cell_min:
     symbol: E_cell_min
     unit: V
@@ -1156,6 +2040,8 @@ aliases:
   thresholds.C5.formation_energy_error: formation_energy_mae
   regimes.R-slurry.parameters.ACC_offset: acc_offset
   thresholds.C5.window_margin: window_margin
+  thresholds.C5.window_margin_expt: window_margin_expt
+  regimes.R-slurry.parameters.patch_area: patch_area
   regimes.R-cell.parameters.gas_reference_schemes: gas_reference_schemes
   regimes.R-cell.parameters.al_phases: al_phases
   regimes.R-slurry.parameters.J0_het: j0_het

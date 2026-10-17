@@ -1,0 +1,495 @@
+# Display labels of the SI parameter table (lane p0-w1): a quantity name per lit/params.yaml key and, where
+# the key's symbol is not registered in theory/symbols.yaml, its LaTeX symbol. Text only; no values.
+gamma_nl_calcite:
+  label: calcite-water interfacial free energy
+gamma_nl_acc:
+  label: ACC-water interfacial free energy
+gamma_sl0_template:
+  label: template-water interfacial free energy, Ca-free (cut at zero)
+gamma_sl0_template_untruncated:
+  label: template-water interfacial free energy, uncut
+gamma_sn0_template:
+  label: template-nucleus contact energy, dry reference
+delta_gamma_w:
+  label: water-displacement correction
+gamma_eff_het_organic:
+  label: effective interfacial energy on organic templates
+  latex: \gamma_\mathrm{eff}
+v_m_calcite:
+  label: molar volume, calcite
+v_m_acc:
+  label: molar volume, ACC (with structural water)
+v_m_aragonite:
+  label: molar volume, aragonite
+v_m_vaterite:
+  label: molar volume, vaterite
+log10_ksp_calcite:
+  label: solubility product, calcite
+log10_ksp_acc:
+  label: solubility product, ACC
+log10_ksp_aragonite:
+  label: solubility product, aragonite
+log10_ksp_vaterite:
+  label: solubility product, vaterite
+acc_offset:
+  label: free-energy offset of ACC above calcite
+pk1_carbonic:
+  label: first dissociation constant of carbonic acid
+pk2_carbonic:
+  label: second dissociation constant of carbonic acid
+log10_k_cahco3:
+  label: formation constant of CaHCO3+
+log10_k_caco3_aq:
+  label: formation constant of CaCO3(aq)
+a_co3_slurry:
+  label: carbonate activity in the slurry
+gamma_nv_calcite:
+  label: dry surface energy of calcite {10-14}
+gamma_nv_acc:
+  label: dry surface energy of ACC
+gamma_nv_acc_calcite_analog:
+  label: dry surface energy of ACC, calcite analog
+gamma_sn_ignorance_calcite:
+  label: template-nucleus contact energy in water, calcite framing
+gamma_sn_ignorance_acc:
+  label: template-nucleus contact energy in water, ACC framing
+gamma_sn_ignorance_acc_analog:
+  label: template-nucleus contact energy, ACC framing with calcite analog
+gamma_ow_ignorance:
+  label: oxide-water interfacial free energy
+gamma_op_ignorance:
+  label: oxide-polymer interfacial free energy
+log10_k_caoh:
+  label: hydrolysis constant of CaOH+
+debye_huckel_a:
+  label: Debye-Hueckel constant A
+davies_b:
+  label: Davies linear coefficient
+davies_i_val:
+  label: validity limit of the Davies equation
+ca_total_slurry:
+  label: total dissolved calcium (design input)
+acc_hydration_n:
+  label: structural water of ACC per CaCO3
+a_w_drying_secondary:
+  label: water activity, secondary (vacuum) drying state
+a_ca_slurry:
+  label: Ca2+ activity in the slurry
+c_bulk_slurry:
+  label: bulk Ca2+ concentration
+gamma_w:
+  label: surface tension of water
+water_density:
+  label: density of water
+pka_catechol:
+  label: first dissociation constant of catechol
+pka2_catechol:
+  label: second dissociation constant of catechol
+pka_carboxyl:
+  label: dissociation constant of carboxyl groups
+delta_g_site:
+  label: transfer free energy to the binding site
+log10_k_ca_catecholate:
+  label: Ca2+-catecholate binding constant
+  latex: K_\mathrm{Ca,cat}
+log10_k_ca_carboxylate:
+  label: Ca2+-carboxylate binding constant
+  latex: K_\mathrm{Ca,COO}
+dg_bind_ca_acetate:
+  label: Ca2+-acetate binding free energy
+  latex: \Delta G_\mathrm{bind}
+dg_bind_ca_cooh_monolayer:
+  label: Ca2+ binding to carboxyl monolayers (minus free energy)
+  latex: -\Delta G_\mathrm{bind}
+dg_bind_calcite_template:
+  label: calcite-template binding free energy
+  latex: \Delta G_\mathrm{bind,cc}
+gamma_s_site_density:
+  label: areal density of binding sites
+delta_s:
+  label: binding-layer thickness
+site_footprint_area:
+  label: footprint area of one binding site
+pda_density:
+  label: mass density of polydopamine
+  latex: \rho_\mathrm{PDA}
+pda_binding_site_content:
+  label: accessible binding sites of polydopamine per mass
+  latex: c_\mathrm{sites}
+template_group_density:
+  label: volume density of catechol groups
+template_group_density_site_analog:
+  label: volume density of binding groups, site analog
+template_layer_thickness:
+  label: template (polydopamine) layer thickness
+ca_ionic_radius:
+  label: ionic radius of Ca2+
+ca_o_distance_aqueous_analog:
+  label: Ca-O distance of hydrated Ca2+, analog
+gamma_s_geometric_bound_analog:
+  label: geometric upper bound on the site density, analog
+v_site:
+  label: volume per binding site
+dg_hyd_ca_marcus:
+  label: hydration free energy of Ca2+, Marcus scale
+  latex: \Delta G_\mathrm{hyd}
+dg_hyd_ca_tissandier:
+  label: hydration free energy of Ca2+, cluster-pair scale
+  latex: \Delta G_\mathrm{hyd}
+gamma_ow_alumina:
+  label: oxide-water interfacial free energy (measured)
+gamma_op:
+  label: oxide-polymer interfacial free energy (measured)
+gamma_o_alumina:
+  label: dry surface energy of the Al oxide
+gamma_p_pda:
+  label: dry surface energy of polydopamine
+delta_f_pmf:
+  label: anchoring free energy from the PMF
+w_adh_wet_catechol_oxide_analog:
+  label: wet adhesion of catechol films on oxides, analog
+a_c:
+  label: fragment contact area
+rho_e_caco3:
+  label: electronic resistivity of CaCO3
+phi_b_caco3:
+  label: tunnelling barrier height of CaCO3
+band_gap_caco3:
+  label: band gap of CaCO3
+  latex: E_\mathrm{g}
+j_0_tunnel:
+  label: tunnelling prefactor current density
+r_a_max:
+  label: admissible area-specific resistance
+j_req:
+  label: required current density
+d_film:
+  label: film thickness
+g_phase_database:
+  label: database Gibbs energies of phases
+mu_li0:
+  label: Li chemical potential in Li metal
+delta_g_r:
+  label: reaction free energy against Li metal
+mu_h2o:
+  label: chemical potential of water
+drg_caco3_decomposition:
+  label: Gibbs energy of CaCO3 -> CaO + CO2
+  latex: \Delta_\mathrm{r}G
+drh_caco3_decomposition:
+  label: enthalpy of CaCO3 -> CaO + CO2
+  latex: \Delta_\mathrm{r}H
+dfg_caco3_calcite:
+  label: Gibbs energy of formation, calcite
+  latex: \Delta_\mathrm{f}G
+dfg_caco3_aragonite:
+  label: Gibbs energy of formation, aragonite
+  latex: \Delta_\mathrm{f}G
+dfg_cao:
+  label: Gibbs energy of formation, lime
+  latex: \Delta_\mathrm{f}G
+dfg_co2_g:
+  label: Gibbs energy of formation, CO2(g)
+  latex: \Delta_\mathrm{f}G
+dfg_ca2_aq:
+  label: Gibbs energy of formation, Ca2+(aq)
+  latex: \Delta_\mathrm{f}G
+dfg_co3_aq:
+  label: Gibbs energy of formation, CO3 2-(aq)
+  latex: \Delta_\mathrm{f}G
+dfg_hco3_aq:
+  label: Gibbs energy of formation, HCO3-(aq)
+  latex: \Delta_\mathrm{f}G
+dfg_co2_aq:
+  label: Gibbs energy of formation, CO2(aq)
+  latex: \Delta_\mathrm{f}G
+dfg_h2o_l:
+  label: Gibbs energy of formation, H2O(l)
+  latex: \Delta_\mathrm{f}G
+dfg_al3_aq:
+  label: Gibbs energy of formation, Al3+(aq)
+  latex: \Delta_\mathrm{f}G
+dfg_al_oh4_aq:
+  label: Gibbs energy of formation, Al(OH)4-(aq)
+  latex: \Delta_\mathrm{f}G
+dfg_corundum:
+  label: Gibbs energy of formation, corundum
+  latex: \Delta_\mathrm{f}G
+dfg_boehmite:
+  label: Gibbs energy of formation, boehmite
+  latex: \Delta_\mathrm{f}G
+dfg_gibbsite:
+  label: Gibbs energy of formation, gibbsite
+  latex: \Delta_\mathrm{f}G
+dfg_ca_no3_2:
+  label: Gibbs energy of formation, Ca(NO3)2
+  latex: \Delta_\mathrm{f}G
+dfg_cacl2:
+  label: Gibbs energy of formation, CaCl2
+  latex: \Delta_\mathrm{f}G
+dfg_caso4:
+  label: Gibbs energy of formation, CaSO4
+  latex: \Delta_\mathrm{f}G
+dfg_al2_so4_3:
+  label: Gibbs energy of formation, Al2(SO4)3
+  latex: \Delta_\mathrm{f}G
+dfg_li_aq:
+  label: Gibbs energy of formation, Li+(aq)
+  latex: \Delta_\mathrm{f}G
+dfg_licl:
+  label: Gibbs energy of formation, LiCl
+  latex: \Delta_\mathrm{f}G
+dfg_lino3:
+  label: Gibbs energy of formation, LiNO3
+  latex: \Delta_\mathrm{f}G
+dfg_li2so4:
+  label: Gibbs energy of formation, Li2SO4
+  latex: \Delta_\mathrm{f}G
+dfg_liclo4_aq:
+  label: Gibbs energy of formation, LiClO4(aq)
+  latex: \Delta_\mathrm{f}G
+dfg_al_no3_3:
+  label: Gibbs energy of formation, Al(NO3)3
+  latex: \Delta_\mathrm{f}G
+dfg_ca_clo4_2:
+  label: Gibbs energy of formation, Ca(ClO4)2
+  latex: \Delta_\mathrm{f}G
+s_li:
+  label: standard entropy, Li
+  latex: S^\circ
+s_ca:
+  label: standard entropy, Ca
+  latex: S^\circ
+s_liclo4:
+  label: standard entropy, LiClO4
+  latex: S^\circ
+s_cacl2:
+  label: standard entropy, CaCl2
+  latex: S^\circ
+s_ca_no3_2:
+  label: standard entropy, Ca(NO3)2
+  latex: S^\circ
+s_licl:
+  label: standard entropy, LiCl
+  latex: S^\circ
+s_nacl:
+  label: standard entropy, NaCl
+  latex: S^\circ
+s_kcl:
+  label: standard entropy, KCl
+  latex: S^\circ
+s_lino3:
+  label: standard entropy, LiNO3
+  latex: S^\circ
+s_nano3:
+  label: standard entropy, NaNO3
+  latex: S^\circ
+s_kno3:
+  label: standard entropy, KNO3
+  latex: S^\circ
+s_naclo4:
+  label: standard entropy, NaClO4
+  latex: S^\circ
+s_kclo4:
+  label: standard entropy, KClO4
+  latex: S^\circ
+s_ca_clo4_2:
+  label: entropy of Ca(ClO4)2
+  latex: S^\circ
+s_ca_clo4_2_analog_low:
+  label: entropy of Ca(ClO4)2, analog lower end
+  latex: S^\circ
+s_ca_clo4_2_analog_high:
+  label: entropy of Ca(ClO4)2, analog upper end
+  latex: S^\circ
+exchange_entropy_bound:
+  label: bound on the exchange entropy Ca + 2 LiClO4
+  latex: '|\Delta S_\mathrm{ex}|'
+dfh_ca_clo4_2:
+  label: formation enthalpy of Ca(ClO4)2
+  latex: \Delta_\mathrm{f}H
+dfh_liclo4:
+  label: formation enthalpy of LiClO4
+  latex: \Delta_\mathrm{f}H
+u_tab_dfg_caco3:
+  label: tabulated uncertainty, Gibbs energy of calcite
+  latex: u
+u_tab_dfg_co2:
+  label: tabulated uncertainty, Gibbs energy of CO2
+  latex: u
+u_tab_dfh_liclo4:
+  label: tabulated uncertainty, enthalpy of LiClO4
+  latex: u
+nbs_last_digit_dfh_ca_clo4_2:
+  label: last printed figure, enthalpy of Ca(ClO4)2
+  latex: u_1
+nbs_uncertainty_units:
+  label: NBS uncertainty convention, last-figure units
+  latex: n_u
+u_tab_dfh_ca_clo4_2:
+  label: tabulated uncertainty, enthalpy of Ca(ClO4)2
+  latex: u
+dfg_al_clo4_3:
+  label: Gibbs energy of formation, Al(ClO4)3
+  latex: \Delta_\mathrm{f}G
+dfg_alcl3:
+  label: Gibbs energy of formation, AlCl3
+  latex: \Delta_\mathrm{f}G
+formation_energy_mae:
+  label: error of corrected DFT formation energies, per atom
+decomposition_energy_mad:
+  label: error of DFT decomposition energies, per atom
+  latex: e_\mathrm{d}
+oxide_correction_mp2020:
+  label: fitted oxide energy correction
+  latex: \Delta E_\mathrm{O}
+li2co3_oxidation_onset:
+  label: Li2CO3 oxidation onset (gas evolution)
+li2co3_oxidation_equilibrium_potential:
+  label: Li2CO3 oxidation equilibrium potential
+transfer_free_energy_li_water_pc:
+  label: transfer free energy of Li+, water to PC
+  latex: \Delta G_\mathrm{tr}
+solvation_ca_vs_li:
+  label: solvation of Ca2+ relative to two Li+ in the electrolyte
+  latex: \Delta\Delta G_\mathrm{solv}
+solvation_al_vs_li:
+  label: solvation of Al3+ relative to three Li+ in the electrolyte
+  latex: \Delta\Delta G_\mathrm{solv}
+hydration_free_energy_li:
+  label: hydration free energy of Li+
+  latex: \Delta G_\mathrm{hyd}
+hydration_free_energy_ca:
+  label: hydration free energy of Ca2+
+  latex: \Delta G_\mathrm{hyd}
+hydration_free_energy_al:
+  label: hydration free energy of Al3+
+  latex: \Delta G_\mathrm{hyd}
+solvation_ca_vs_li_water_analog:
+  label: relative solvation of Ca2+ in water, analog
+  latex: \Delta\Delta G_\mathrm{solv}
+solvation_al_vs_li_water_analog:
+  label: relative solvation of Al3+ in water, analog
+  latex: \Delta\Delta G_\mathrm{solv}
+a_h_cell:
+  label: proton activity in the electrolyte
+  latex: a_{\mathrm{H}^+}
+a_ca_cell:
+  label: Ca2+ activity in the electrolyte
+a_co3_cell:
+  label: carbonate activity in the electrolyte
+rho_acc:
+  label: mass density of ACC
+  latex: \rho_\mathrm{ACC}
+c_o_bond_length_calcite:
+  label: C-O bond length, calcite
+  latex: d_\mathrm{CO}
+c_o_bond_length_acc:
+  label: C-O bond length, ACC
+  latex: d_\mathrm{CO}
+p_cred:
+  label: credible level of the verdict bands
+p_deg:
+  label: least mass shift counted as degradation
+m_cos:
+  label: C3 margin on cos theta
+contact_area_definition:
+  label: contact-area rule of C1
+  latex: A_\mathrm{c}\ \mathrm{rule}
+framing:
+  label: CaCO3 framing (ACC or calcite)
+  latex: \mathrm{framing}
+n_req:
+  label: required areal density of nuclei
+gas_reference_schemes:
+  label: CO2 and O2 reference schemes
+  latex: \mathrm{schemes}
+al_phases:
+  label: gated aluminium phases
+  latex: \mathrm{Al\ phases}
+m_s:
+  label: C4 margin on the spreading coefficient
+m_seq_method_error:
+  label: C2 margin, electronic-structure error
+implicit_solvation_error_ion:
+  label: implicit-solvation error of ion hydration
+  latex: m_\mathrm{solv}
+m_seq_with_solvation:
+  label: C2 margin with implicit-solvation error
+contact_angle_method_error:
+  label: force-field contact-angle error
+  latex: \delta\theta
+m_w_adh_wet:
+  label: C1 margin on the wet work of adhesion
+termination_weights:
+  label: weights of the oxide terminations
+  latex: w_\mathrm{term}
+m_eff_tunnel:
+  label: effective tunnelling mass
+  latex: m_\mathrm{eff}
+window_margin:
+  label: C5 window margin, DFT schemes
+window_margin_expt:
+  label: C5 window margin, all-experimental route
+ph_slurry:
+  label: slurry pH, unmodified
+ph_slurry_modified:
+  label: slurry pH with modifiers
+e_she_slurry:
+  label: potential of Al vs SHE in alkaline media
+t_slurry:
+  label: slurry temperature
+t_drying_primary:
+  label: primary drying temperature
+t_proc_slurry:
+  label: slurry contact time
+t_drying_secondary:
+  label: secondary (vacuum) drying time
+slurry_solids_fraction:
+  label: solids mass fraction of the slurry
+  latex: w_\mathrm{s}
+a_w_slurry:
+  label: water activity, primary drying state
+ionic_strength_slurry:
+  label: ionic strength of the slurry
+dic_slurry:
+  label: dissolved inorganic carbon of the slurry
+j0_het:
+  label: heterogeneous nucleation prefactor
+patch_area:
+  label: particle-collector contact patch area
+nucleation_density:
+  label: CaCO3 nucleation density
+e_cell_max_lfp:
+  label: charge cut-off, LiFePO4
+e_cell_max_layered:
+  label: charge cut-off, layered NMC/NCA
+e_cell_max_lco:
+  label: charge cut-off, LiCoO2
+e_cell_max_lmo:
+  label: charge cut-off, LiMn2O4
+e_cell_max_lnmo:
+  label: charge cut-off, LiNi0.5Mn1.5O4
+e_cell_max:
+  label: charge cut-off by cathode class (design axis)
+e_cell_min:
+  label: discharge cut-off
+al_onset_ffree:
+  label: Al oxidation onset, fluorine-free electrolytes
+t_cell:
+  label: cell temperature
+electrolyte_salt_molality:
+  label: salt molality of the electrolyte
+  latex: m_\mathrm{salt}
+electrolyte_salt_molarity:
+  label: salt concentration of the electrolyte
+  latex: c_\mathrm{salt}
+electrolyte_water_content:
+  label: water content of the electrolyte
+  latex: w_\mathrm{H_2O}
+electrolyte_salts:
+  label: registered fluorine-free salts
+  latex: \mathrm{salt}
+electrolyte_solvents:
+  label: registered solvents
+  latex: \mathrm{solvent}

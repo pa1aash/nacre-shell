@@ -28,22 +28,43 @@ Specification per key:
           original: <id>                             rows with one original id count once (E3; default: doi)
           offset_row: <row_id>                       add that row's value (a reference-electrode potential
                                                      vs SHE) to convert the scale; the row becomes a source
+          take: uncertainty | last_digit             read the printed ± (or one unit of the printed value's last
+                                                     decimal place) as the number (rule version 2, D1 inputs)
       fixed_from: <row_id>                           X3: a definitional value printed in that row
       categorical: [{label, sources: [...]}]         X3 categorical input
       comparators: [<row_id>, ...]                   named in notes, never admitted (E2)
       correlation_group: <group id>
     correlation_groups:
       <group>: {kind, reason, sources, matrix}       members are collected from the keys
+
+Rule version 2 (README section 7, cp3), per key:
+
+      role: primary | sensitivity | analog | design-axis   default primary; `of: <key>` for sensitivity/analog
+      flags: [...]                                   extra flags (single_source, truncated, widened and analog
+                                                     are also set automatically)
+      same_rows_as: <key>                            reuse that key's admit list (an uncut or analog twin)
+      truncate: {min|max: <bound>, ruling, sensitivity_key}                     T1
+      widen: {by: <key>, scale: free_energy | log10_constant}                   W1 (after the first pass)
+      derive: {expr, inputs: {name: key | key.min | key.max}, as: fixed | none}  D1
+      ignorance: {low, high, inputs: {name: key}, authority}                    I1
+      registered: {file, block, path, ruling}                                   R1
+      axis: {classes: [{label, key}]}                                           G1
+      margin_zero: {reason}                                                     M0 (margin zero, README 7.3)
+      margin_case: evidence | zero                   copied to the entry
 """
 import argparse
+import ast
 import datetime as dt
 import hashlib
+import itertools
 import math
+import re
 import statistics
 from pathlib import Path
 
 import numpy as np
 import yaml
+from scipy import constants as SC
 
 from nacre import _util
 from nacre.lit import evidence as E
@@ -55,8 +76,67 @@ RULE_FILE = Path("lit") / "corpus" / "params_README.md"
 GRADE_ORDER = {"A": 0, "B": 1, "C": 2, "D": 3}
 
 
+STANDARD_T = 298.15  # K, the IUPAC standard temperature (a definition, README 7.2 W1)
+PASS_THROUGH = ("role", "of", "margin_case", "ionic_strength")
+DEFERRED = ("derive", "ignorance", "registered", "axis", "margin_zero")
+# exact SI constants only (README section 1)
+EXPR_CONSTANTS = {"N_A": SC.N_A, "k_B": SC.k, "e": SC.e, "F": SC.N_A * SC.e, "R": SC.N_A * SC.k,
+                  "T0": STANDARD_T, "pi": math.pi}
+EXPR_FUNCS = {"abs": abs, "max": max, "min": min, "log": math.log, "log10": math.log10, "exp": math.exp,
+              "sqrt": math.sqrt}
+
+
 class SpecError(ValueError):
     pass
+
+
+def eval_expr(expr, names):
+    """Evaluate an arithmetic formula over named numbers (no attribute access, no other calls)."""
+    tree = ast.parse(str(expr), mode="eval")
+    allowed = (ast.Expression, ast.BinOp, ast.UnaryOp, ast.Call, ast.Name, ast.Load, ast.Constant, ast.Add,
+               ast.Sub, ast.Mult, ast.Div, ast.Pow, ast.USub, ast.UAdd)
+    for node in ast.walk(tree):
+        if not isinstance(node, allowed):
+            raise SpecError("formula %r: %s not allowed" % (expr, type(node).__name__))
+        if isinstance(node, ast.Call) and not (isinstance(node.func, ast.Name) and node.func.id in EXPR_FUNCS):
+            raise SpecError("formula %r: only %s may be called" % (expr, sorted(EXPR_FUNCS)))
+        if isinstance(node, ast.Name) and node.id not in names and node.id not in EXPR_CONSTANTS \
+                and node.id not in EXPR_FUNCS:
+            raise SpecError("formula %r: unknown name %r" % (expr, node.id))
+    return float(eval(compile(tree, "<formula>", "eval"), {"__builtins__": {}},
+                      {**EXPR_FUNCS, **EXPR_CONSTANTS, **names}))
+
+
+def _input_value(ref, params, which="value"):
+    """'key' -> value (or a corner bound), 'key.min' / 'key.max' -> that range bound."""
+    key, _, bound = ref.partition(".")
+    e = params.get(key)
+    if e is None:
+        raise KeyError(key)
+    if bound:
+        return None if e.get("range") is None else float(e["range"][bound])
+    if which == "value":
+        return None if e.get("value") is None else float(e["value"])
+    rng = e.get("range")
+    return None if rng is None else float(rng[which])
+
+
+def envelope(expr, inputs, params):
+    """Value at the input values and the envelope over every corner of the input ranges (README 7.2 D1).
+    Returns (value, lo, hi); None where an input lacks a value or a range."""
+    vals = {n: _input_value(r, params) for n, r in inputs.items()}
+    value = None if any(v is None for v in vals.values()) else eval_expr(expr, vals)
+    corners = []
+    for n, r in inputs.items():
+        if "." in r:
+            corners.append([_input_value(r, params)])
+        else:
+            lo, hi = _input_value(r, params, "min"), _input_value(r, params, "max")
+            if lo is None or hi is None:
+                return value, None, None
+            corners.append(sorted({lo, hi}))
+    outs = [eval_expr(expr, dict(zip(inputs, c))) for c in itertools.product(*corners)]
+    return value, min(outs), max(outs)
 
 
 def _sig(x, n=12):
@@ -99,8 +179,33 @@ def _apply_op(x, op):
     raise SpecError("unknown op %r" % op)
 
 
+def _take(row, adm, key_unit):
+    """README 7.2 D1 inputs read from a row's printed text: `take: uncertainty` is the printed ± as a point;
+    `take: last_digit` is one unit of the printed value's last decimal place, as a point."""
+    unit = adm.get("unit") or row["unit"]
+    take = adm["take"]
+    if take == "uncertainty":
+        rng = (row.get("range_or_uncertainty") or "").strip()
+        if not rng.startswith("±") or rng.endswith("%"):
+            raise SpecError("%s: take uncertainty needs a printed ±x" % row["row_id"])
+        x = float(rng[1:])
+    elif take == "last_digit":
+        v = (row.get("value") or "").strip().lstrip("<>=≤≥+-")
+        if "e" in v.lower() or not v:
+            raise SpecError("%s: take last_digit needs a plain decimal value" % row["row_id"])
+        decimals = len(v.split(".")[1]) if "." in v else 0
+        x = 10.0 ** -decimals
+    else:
+        raise SpecError("%s: unknown take %r" % (row["row_id"], take))
+    y = abs(_convert(x, unit, key_unit) - _convert(0.0, unit, key_unit)) if unit not in ("1", "dimensionless") else x
+    return {"row": row["row_id"], "grade": row["grade"], "original": adm.get("original") or row["doi"].lower(),
+            "u": None, "cmp": "", "point": y, "lo": y, "hi": y}
+
+
 def admitted_value(row, adm, key_unit):
     """One admitted row -> dict(point, lo, hi, u, kind, grade, original, row)."""
+    if adm.get("take"):
+        return _take(row, adm, key_unit)
     unit = adm.get("unit") or row["unit"]
     op = adm.get("op", "none")
     rng = (row.get("range_or_uncertainty") or "").strip()
@@ -162,7 +267,7 @@ def _clip(a, b, iv):
     return max(a, lo), min(b, hi)
 
 
-def build_entry(key, spec, rows, symbols):
+def _build_entry_core(key, spec, rows, symbols):
     unit = str(spec["unit"])
     transform = spec.get("transform", "none")
     sym = symbols.get(spec["symbol"]) if transform == "none" else None
@@ -291,13 +396,28 @@ def build_entry(key, spec, rows, symbols):
                    "method": "P1: one point value without uncertainty; the width is not sourced"}
             return out
         a, b = _clip(span[0], span[1], iv)
+        trunc = spec.get("truncate")
+        if trunc:
+            a0, b0 = a, b
+            a, b = max(a, float(trunc.get("min", -math.inf))), min(b, float(trunc.get("max", math.inf)))
+            if not a < b:
+                raise SpecError("%s: the truncation leaves no span" % key)
+            points = [x for x in points if a <= x <= b]
+            method.append("T1: sourced span %s to %s cut at %s by %s" % (_sig(a0), _sig(b0), _sig(a if a != a0 else b),
+                                                                         trunc["ruling"]))
+        if a == b and all(v["lo"] == v["hi"] == a for v in vals):
+            x = _sig(a)
+            return {**base, "status": status, "value": x, "range": {"min": x, "max": x},
+                    "prior": {"family": "fixed", "value": x}, "rule": "P1", **common,
+                    "method": "P1: %d independent sources print the same point without uncertainty; the width is "
+                              "not sourced" % n_orig}
         if a == b:
-            raise SpecError("%s: degenerate span from several identical points; P1 does not apply" % key)
+            raise SpecError("%s: degenerate span; P1 does not apply" % key)
         if a > 0 and b / a > 10 and transform == "none":
-            prior, rule = {"family": "loguniform", "low": _sig(a), "high": _sig(b)}, "L1"
+            prior, rule = {"family": "loguniform", "low": _sig(a), "high": _sig(b)}, "T1" if trunc else "L1"
             method.append("L1: span exceeds a decade")
         else:
-            prior, rule = {"family": "uniform", "low": _sig(a), "high": _sig(b)}, "U1"
+            prior, rule = {"family": "uniform", "low": _sig(a), "high": _sig(b)}, "T1" if trunc else "U1"
             method.append("U1: uniform over the sourced span")
         span = (a, b)
     if prior["family"] in ("uniform", "loguniform"):
@@ -318,6 +438,198 @@ def build_entry(key, spec, rows, symbols):
             "method": "; ".join(method)}
 
 
+def build_entry(key, spec, rows, symbols):
+    e = _build_entry_core(key, spec, rows, symbols)
+    if spec.get("truncate"):
+        if e["rule"] != "T1":
+            raise SpecError("%s: truncate applies only to a uniform or log-uniform span (T1)" % key)
+        t = spec["truncate"]
+        side = "min" if "min" in t else "max"
+        e["truncation"] = {"side": side, "bound": float(t[side]), "ruling": t["ruling"],
+                           "sensitivity_key": t["sensitivity_key"]}
+    return decorate(e, spec)
+
+
+def decorate(e, spec):
+    """Role, `of`, flags and the pass-through fields of rule version 2 (README 7.1)."""
+    for f in PASS_THROUGH:
+        if f in spec:
+            e[f] = spec[f]
+    e.setdefault("role", "primary")
+    flags = list(spec.get("flags") or [])
+    auto = {"single_source": e.get("status") == "single-source", "truncated": e.get("rule") == "T1",
+            "analog": e.get("role") == "analog", "widened": bool(e.get("widening", {}).get("applied")),
+            "registered": e.get("rule") == "R1"}
+    flags += [f for f, on in auto.items() if on and f not in flags]
+    e["flags"] = flags
+    return e
+
+
+def _no_prior(spec, status, reason, rule="X1", extra=None):
+    base = {"symbol": spec["symbol"], "transform": spec.get("transform", "none"), "unit": str(spec["unit"]),
+            "regimes": spec["regimes"], "status": status, "value": None, "range": None, "range_reason": reason,
+            "prior": {"family": "none"}, "rule": rule, "sources": [], "best_grade": None,
+            "method": "no admitted row (%s)" % rule, "conditions": str(spec.get("conditions") or "n.s."),
+            "correlation_group": spec.get("correlation_group"), "notes": str(spec.get("notes") or "").strip()}
+    return {**base, **(extra or {})}
+
+
+def _sources_of(keys, params, rows):
+    srcs = []
+    for k in keys:
+        for s in params[k]["sources"]:
+            if s not in srcs:
+                srcs.append(s)
+    best = min((rows[x]["grade"] for x in srcs), key=GRADE_ORDER.get) if srcs else None
+    return srcs, best
+
+
+def apply_widening(key, spec, e, params):
+    """W1: widen a single-source Ca2+ binding or transfer free energy (or log10 constant) to a half-width of
+    at least m (README 7.2)."""
+    w = spec["widen"]
+    if e["status"] != "single-source":
+        raise SpecError("%s: widening applies to single-source keys only (W1)" % key)
+    m_key = w["by"]
+    m = params[m_key]["value"]
+    if w["scale"] == "log10_constant":
+        m = m / (EXPR_CONSTANTS["R"] * STANDARD_T * math.log(10))
+    elif w["scale"] != "free_energy":
+        raise SpecError("%s: widen.scale must be free_energy or log10_constant" % key)
+    rng = e["range"]
+    lo, hi = float(rng["min"]), float(rng["max"])
+    mid, half = (lo + hi) / 2, (hi - lo) / 2
+    applied = half < m
+    half = max(half, m)
+    a, b = _sig(mid - half), _sig(mid + half)
+    e["prior"] = {"family": "uniform", "low": a, "high": b}
+    e["range"] = {"min": a, "max": b}
+    e["rule"] = "W1"
+    e["widening"] = {"by": m_key, "m": _sig(m), "scale": w["scale"], "unwidened": {"min": lo, "max": hi},
+                     "applied": applied, "sources": list(params[m_key]["sources"])}
+    e["method"] += "; W1: %s to a half-width of at least m = %s (%s%s)" % (
+        "widened about the midpoint" if applied else "sourced half-width already exceeds m, not widened",
+        _sig(m), m_key, ", divided by R T ln 10 at 298.15 K" if w["scale"] == "log10_constant" else "")
+    return e
+
+
+def build_deferred(key, spec, params, rows, root):
+    """D1, I1, R1, G1 and M0 entries, which depend on other keys or on an authority file."""
+    unit = str(spec["unit"])
+    if "registered" in spec:
+        r = spec["registered"]
+        node = registered_node(root, r)
+        if node is None:
+            raise SpecError("%s: %s has no path %s" % (key, r["file"], r["path"]))
+        x = float(node["primary"])
+        reg = {"file": r["file"], "block": r.get("block", "thresholds"), "path": r["path"], "ruling": r["ruling"]}
+        if "sweep" in node:
+            reg["sweep"] = [float(v) for v in node["sweep"]]
+        if "rule" in node:
+            reg["rule"] = str(node["rule"])
+            dep = r.get("sweep_from")
+            if dep:
+                src = registered_node(root, {**r, "path": dep["path"]})
+                reg["sweep"] = [_sig(eval_expr(node["rule"], {dep["name"]: float(v)})) for v in src["sweep"]]
+        e = {"symbol": spec["symbol"], "transform": "none", "unit": unit, "regimes": spec["regimes"],
+             "status": "registered", "value": x, "range": {"min": x, "max": x}, "prior": {"family": "fixed", "value": x},
+             "rule": "R1", "sources": [], "best_grade": None,
+             "method": "R1: registered value read from %s (%s), path %s" % (r["file"], reg["block"], r["path"]),
+             "conditions": str(spec.get("conditions") or "registration convention"),
+             "correlation_group": spec.get("correlation_group"), "notes": str(spec.get("notes") or "").strip(),
+             "registered": reg}
+        return decorate(e, spec)
+    if "margin_zero" in spec:
+        e = {"symbol": spec["symbol"], "transform": "none", "unit": unit, "regimes": spec["regimes"],
+             "status": "registered", "value": 0.0, "range": {"min": 0.0, "max": 0.0},
+             "prior": {"family": "fixed", "value": 0.0}, "rule": "M0", "sources": [], "best_grade": None,
+             "method": "M0: margin zero because the prior carries the method error (README 7.3)",
+             "conditions": str(spec.get("conditions") or "threshold margin"),
+             "correlation_group": spec.get("correlation_group"),
+             "notes": str(spec.get("notes") or "").strip(), "margin_case": "zero",
+             "margin_reason": str(spec["margin_zero"]["reason"]).strip()}
+        return decorate(e, spec)
+    if "axis" in spec:
+        opts = []
+        for c in spec["axis"]["classes"]:
+            k = c["key"]
+            if k not in params:
+                raise SpecError("%s: axis class key %s not built" % (key, k))
+            ce = params[k]
+            opts.append({"label": c["label"], "key": k, "value": ce["value"], "range": ce["range"],
+                         "sources": list(ce["sources"])})
+        srcs, best = _sources_of([c["key"] for c in spec["axis"]["classes"]], params, rows)
+        e = {"symbol": spec["symbol"], "transform": "none", "unit": unit, "regimes": spec["regimes"],
+             "status": "design-input", "value": None, "range": None,
+             "range_reason": "design axis keyed to class (G1); each option names its per-class key",
+             "prior": {"family": "categorical", "options": opts}, "rule": "G1", "sources": srcs, "best_grade": best,
+             "method": "G1: one option per class, each built from that class's rows; not sampled as one prior",
+             "conditions": str(spec.get("conditions") or "n.s."), "correlation_group": spec.get("correlation_group"),
+             "notes": str(spec.get("notes") or "").strip()}
+        return decorate(e, spec)
+    if "ignorance" in spec:
+        ig = spec["ignorance"]
+        inputs = ig["inputs"]
+        _, lo_a, lo_b = envelope(ig["low"], inputs, params)
+        _, hi_a, hi_b = envelope(ig["high"], inputs, params)
+        keys = [r.partition(".")[0] for r in inputs.values()]
+        ign = {"low": str(ig["low"]), "high": str(ig["high"]), "inputs": dict(inputs), "authority": ig["authority"]}
+        if None in (lo_a, hi_b):
+            return decorate(_no_prior(spec, "gap", "ignorance prior (I1) whose bound inputs lack a range: %s"
+                                      % ", ".join(keys), "X1", {"ignorance": ign}), spec)
+        e = {"symbol": spec["symbol"], "transform": "none", "unit": unit, "regimes": spec["regimes"],
+             "status": "gap", "value": None, "range": {"min": _sig(lo_a), "max": _sig(hi_b)},
+             "prior": {"family": "none"}, "rule": "I1", "sources": [], "best_grade": None,
+             "method": "I1: uniform between %s and %s, drawn per draw of the inputs; the range is the envelope over "
+                       "the input ranges (information only)" % (ig["low"], ig["high"]),
+             "conditions": str(spec.get("conditions") or "n.s."), "correlation_group": spec.get("correlation_group"),
+             "notes": str(spec.get("notes") or "").strip(), "ignorance": ign}
+        return decorate(e, spec)
+    if "derive" in spec:
+        d = spec["derive"]
+        inputs = d["inputs"]
+        keys = list(dict.fromkeys(r.partition(".")[0] for r in inputs.values()))
+        der = {"expr": str(d["expr"]), "inputs": dict(inputs)}
+        missing = [k for k in keys if params[k]["value"] is None and params[k]["range"] is None]
+        if missing:
+            return decorate(_no_prior(spec, spec.get("status", "gap"),
+                                      "derived (D1) from %s; no value for %s" % (", ".join(keys), ", ".join(missing)),
+                                      "X1", {"derived": der}), spec)
+        value, lo, hi = envelope(d["expr"], inputs, params)
+        srcs, best = _sources_of(keys, params, rows)
+        fam = d.get("as", "fixed")
+        status = spec.get("status", "computed")
+        e = {"symbol": spec["symbol"], "transform": spec.get("transform", "none"), "unit": unit,
+             "regimes": spec["regimes"], "status": status, "value": None if value is None else _sig(value),
+             "range": None if lo is None else {"min": _sig(lo), "max": _sig(hi)},
+             "prior": {"family": "fixed", "value": _sig(value)} if fam == "fixed" else {"family": "none"},
+             "rule": "D1", "sources": srcs, "best_grade": best,
+             "method": "D1: %s with %s; range is the envelope over the input ranges" % (
+                 d["expr"], ", ".join("%s = %s" % kv for kv in inputs.items())),
+             "conditions": str(spec.get("conditions") or "n.s."), "correlation_group": spec.get("correlation_group"),
+             "notes": str(spec.get("notes") or "").strip(), "derived": der}
+        if e["range"] is None:
+            e["range_reason"] = "an input has no range"
+        if fam == "fixed" and value is None:
+            raise SpecError("%s: a fixed derived key needs every input value" % key)
+        return decorate(e, spec)
+    raise SpecError("%s: nothing to defer" % key)
+
+
+def registered_node(root, r):
+    """The node at a dotted path of the machine-readable block of an authority file."""
+    text = (Path(root) / r["file"]).read_text(encoding="utf-8")
+    m = re.search(r"```%s\n(.*?)```" % re.escape(r.get("block", "thresholds")), text, re.S)
+    if not m:
+        raise SpecError("%s has no ```%s block" % (r["file"], r.get("block", "thresholds")))
+    node = yaml.safe_load(m.group(1))
+    for part in r["path"].split("."):
+        if not isinstance(node, dict) or part not in node:
+            return None
+        node = node[part]
+    return node
+
+
 def build(root, spec_path=None):
     root = Path(root)
     spec_path = Path(spec_path) if spec_path else root / SPEC
@@ -326,8 +638,34 @@ def build(root, spec_path=None):
     rows = {r["row_id"]: r for r in rows}
     symbols = P.load_symbols(root)
     params = {}
-    for key, ks in (spec.get("params") or {}).items():
+    specs = spec.get("params") or {}
+    for key, ks in specs.items():
+        if "same_rows_as" in ks:
+            twin = specs[ks["same_rows_as"]]
+            ks = {**ks, "admit": twin.get("admit") or [], "distinct": twin.get("distinct", False)}
+            specs[key] = ks
+    for key, ks in specs.items():
+        if any(f in ks for f in DEFERRED):
+            params[key] = None  # keeps the specification order
+            continue
         params[key] = build_entry(key, ks, rows, symbols)
+    for key, ks in specs.items():
+        if "widen" in ks:
+            params[key] = decorate(apply_widening(key, ks, params[key], params), ks)
+    pending = [k for k, v in params.items() if v is None]
+    while pending:
+        progress = []
+        for key in pending:
+            ks = specs[key]
+            deps = [r.partition(".")[0] for r in ((ks.get("derive") or ks.get("ignorance") or {}).get("inputs") or {}).values()]
+            deps += [c["key"] for c in (ks.get("axis") or {}).get("classes", [])]
+            if any(params.get(d) is None for d in deps):
+                continue
+            params[key] = build_deferred(key, ks, params, rows, root)
+            progress.append(key)
+        if not progress:
+            raise SpecError("unresolved derived keys (missing or circular inputs): %s" % pending)
+        pending = [k for k in pending if k not in progress]
     groups = {}
     for gid, g in (spec.get("correlation_groups") or {}).items():
         members = [k for k, e in params.items() if e.get("correlation_group") == gid]
