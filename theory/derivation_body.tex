@@ -393,9 +393,18 @@ N_\mathrm{nuc}\ge N_\mathrm{req}\iff \DGhet\le B_\mathrm{acc}=\kB T\ln\frac{J_0\
 \end{equation}
 Units: $J_0t_\mathrm{p}$ and $N_\mathrm{req}$ are both m$^{-2}$, so the logarithm is of a pure
 number. Equivalently, a count $\mathcal N$ on a collector area $A$ is $N_\mathrm{req}=\mathcal N/A$.
-P0 registers $N_\mathrm{req}=1/A_\mathrm{patch}$, with $A_\mathrm{patch}$ the contact patch through
-which a cathode particle touches the collector: at least one nucleus, in expectation, under every
-patch. It is fixed separately from the closure density of C4 (Section~\ref{th:sec:conformality}),
+What must be required is fixed by the contact patch $A_\mathrm{patch}$ through which a cathode
+particle touches the collector: a patch with no nucleus under it is a patch the mineral cannot
+cover from below. If nuclei land independently at mean areal density $N_\mathrm{nuc}$, the number
+under one patch is Poisson distributed with mean $N_\mathrm{nuc}A_\mathrm{patch}$, and the fraction
+of patches left empty is $\e^{-N_\mathrm{nuc}A_\mathrm{patch}}$. Requiring that at most a fraction
+$q_0$ of the patches be empty gives
+\begin{equation}\label{th:eq:nreq}
+\e^{-N_\mathrm{nuc}A_\mathrm{patch}}\le q_0\iff N_\mathrm{nuc}\ge N_\mathrm{req}=\frac{\ln(1/q_0)}{A_\mathrm{patch}} \un{m^{-2}},
+\end{equation}
+and P0 registers $q_0=1-p$, with $p$ the credible level of the decision rule
+(\texttt{theory/thresholds.md}; cp3). The expectation form, one nucleus per patch on average, is the
+special case $q_0=1/\e$. $N_\mathrm{req}$ is fixed separately from the closure density of C4 (Section~\ref{th:sec:conformality}),
 so that C3 does not borrow the island geometry of C4.
 Four properties make the criterion usable without a precise kinetic theory: only $\ln J_0$
 enters, so an order-of-magnitude prefactor moves $B_\mathrm{acc}$ by a few $\kB T$; the barrier
