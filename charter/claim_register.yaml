@@ -485,6 +485,7 @@ claims:
       and Al phases are stable at the anodic potential against the Li reservoir. These
       are different chemistries (design flag 7) and need different observables. Both are
       screening quantities: necessary, not sufficient, and blind to morphology.
+      Stability against dissolution is the same question as S > 1.
       If the bulk S is below 1, CaCO3 is unstable against dissolution at the template as
       well, because at equilibrium enrichment does not raise the driving force. C5 is
       decided at the bulk state; an evaluation at the C2-enriched concentrations is reported
