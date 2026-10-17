@@ -261,17 +261,67 @@ inconclusive otherwise.
 
 ### C5, thermodynamic stability (R-slurry and R-cell)
 
-**R-slurry, aqueous Pourbaix.**
+**R-slurry, dissolution: decided by Omega_bulk (cp3 R1).**
 
-- **Threshold and physics.** X = `Delta_G_pbx` (J mol^-1 per non-O, non-H atom), Eq. (40)
-  [th:eq:pbx], for the registered CaCO3 framing phase.
-  - It is evaluated at the regime activities of Ca2+ and carbonate (F2), at the bulk state: the
-    driving force is Omega_bulk (derivation, Section 7, rule 5).
-  - An "enriched" evaluation is a labelled non-equilibrium sensitivity, never a verdict.
-  - It is evaluated over the registered (pH, E_SHE) region (`regimes.R-slurry.parameters.pH_range`
-    and `regimes.R-slurry.parameters.E_SHE_range`), worst point.
-- **Tolerance.** tau_hull = n_at e_f / n_M, where e_f = `thresholds.C5.formation_energy_error` is
-  the expected error of a computed formation energy per atom, from the database benchmark. Per
+- **Threshold and physics.** X = `Omega_bulk` = a_Ca a_CO3 / K_sp with the sourced calcite solubility
+  product (`params.log10_ksp_calcite`) and the free-ion activities of the contract's carbonate
+  speciation (`a_CO3_speciation`, `a_Ca_speciation`) at the regime pH, C_T, Ca_T and I.
+  - A CaCO3 layer in contact with the slurry dissolves when Omega_bulk < 1 and is stable against
+    dissolution when Omega_bulk >= 1. The edge is 1, with no margin: the K_sp prior and the
+    speciation inputs carry their own uncertainty.
+  - This is the quantity C3 uses (derivation, Section 9, Eq. (45) [th:eq:pbx-omega]). A state that
+    cannot nucleate CaCO3 (Omega_bulk <= 1, no nuclei in C3 (b)) is a state in which the layer
+    dissolves. At equilibrium enrichment does not raise Omega (derivation, Section 7, rule 5),
+    so the bulk state decides; an "enriched" evaluation is a labelled non-equilibrium
+    sensitivity, never a verdict.
+- **Why a hull distance cannot decide dissolution.** At fixed C(IV) the hull distance of CaCO3
+  against its dissolved ions is (R T / n_M) ln(1/Omega_bulk) per non-O, non-H atom, Eq. (45)
+  [th:eq:pbx-omega].
+  - The tolerance n_at e_f / n_M therefore reports dissolution only below
+    ln Omega_bulk = -n_at e_f / (R T): the edge alone spans several decades of Omega.
+  - An error of the computed dissolution free energy shifts the proxy's K_sp by that error over
+    R T ln 10 decades. With the database's dissolved-ion reference this is a bias of its own.
+  - W5's falsifiability control (`ops/reports/P0-W5.2.md`, Task B) measured both. The hull
+    construction is therefore not used for dissolution.
+- **K_sp and framing.** The calcite K_sp decides under every registered framing (Section 3,
+  "Framings"). Under the ACC framing, Omega_bulk with the ACC K_sp is the labelled sensitivity
+  C5s_ACC (cp2 fix F6, below). It never decides.
+- **Design axes: the dose window.** The verdict is computed at each design point of the
+  registered axes (a_Ca, C_T): a_Ca the free Ca2+ activity (`params.a_ca_slurry`; where the
+  registered grid is in total calcium, `params.ca_total_slurry`, a_Ca is its speciated value and
+  both are printed) and C_T the dissolved inorganic carbon (`params.dic_slurry`). The report gives
+  the dose window, the set of design points at which C5s is feasible (P(Omega_bulk >= 1) >= p), with
+  the falsified and inconclusive sets beside it. Because C3 consumes the same activities, the
+  study verdict is formed design point by design point (Section 3).
+- **Falsifiability control (C5 item 21), applied to the Omega test.** At W5's registered
+  undersaturated control state (pH from `params.ph_slurry_modified`, the lowest registered C_T and
+  a_Ca) the Omega test must report dissolution, and at the supersaturated control state it must
+  report stability. If either control does not come out as it must, C5s is inconclusive.
+- **Carbon redox (assumption).** The regime fixes a_CO3 (G0 fix F2), and carbon is held in the
+  C(IV) carbonate system: reduction of dissolved carbonate to CH4 is not observed in aqueous
+  processing, so the reduced-carbon phases of the database are not admitted. The construction
+  with carbon redox allowed is reported as a labelled sensitivity, never a verdict, and it is
+  not a rate statement.
+- **States.** Every registered R-slurry state is evaluated, and the verdict is the worst over them
+  (Section 1, "States").
+- **Decision (per design point).**
+  - feasible if `P(Omega_bulk >= 1) >= p` at every registered state, **and** the control comes
+    out as it must;
+  - falsified if `P(Omega_bulk < 1) >= p` at some evaluated state;
+  - inconclusive otherwise, or if the control fails.
+
+**R-slurry, competing phases and the Al baseline: aqueous Pourbaix at fixed C(IV).**
+
+- **Competing-phase test.** X = `Delta_G_pbx` (J mol^-1 per non-O, non-H atom), Eq. (40)
+  [th:eq:pbx], for the registered CaCO3 framing phase, with C(IV) fixed at the regime C_T.
+  - The competitors are the solid phases of the system. The dissolved Ca-bearing species are
+    removed from the hull: dissolution is decided by the Omega test above, so the hull answers
+    only whether another solid (a hydroxide, an Al-Ca or Al-C compound) lies below CaCO3.
+  - It is evaluated over the registered (pH, E_SHE) region
+    (`regimes.R-slurry.parameters.pH_range` and `regimes.R-slurry.parameters.E_SHE_range`),
+    worst point.
+- **Tolerance (DFT).** tau_hull = n_at e_f / n_M, where e_f = `thresholds.C5.formation_energy_error`
+  is the expected error of a computed formation energy per atom, from the database benchmark. Per
   non-O, non-H atom this is the error of the phase's own formation energy, the largest single
   error entering its hull distance. For the ACC framing the edge is
   (n_at e_f + Delta_ACC) / n_M, with Delta_ACC = `regimes.R-slurry.parameters.ACC_offset`. ACC is
@@ -281,23 +331,30 @@ inconclusive otherwise.
   equal to the calcite-level test. ACC lies above calcite by Delta_ACC per formula unit, so
   Psi_ACC = Psi_calcite + Delta_ACC / n_M. It is never on the hull, so the hull is the same with or
   without it. The ACC test, Delta_G_pbx(ACC) <= (n_at e_f + Delta_ACC) / n_M, is therefore
-  identical to Psi_calcite - Psi_hull <= n_at e_f / n_M. In words, C5 R-slurry decides whether
-  CaCO3 is stable as a phase at the regime activities, up to the metastability that defines the
-  framing. It does not decide whether ACC itself survives.
+  identical to Psi_calcite - Psi_hull <= n_at e_f / n_M. In words, the competing-phase test decides
+  whether CaCO3 is stable as a phase against the other solids at the regime activities, up to the
+  metastability that defines the framing. It does not decide whether ACC itself survives.
 - **ACC-specific dissolution margin (labelled sensitivity, not gating).** Whether the regime
   solution is supersaturated with respect to ACC is Omega_bulk evaluated with the ACC solubility
   product, the quantity that already enters C3 through K_sp under the ACC framing. C5 reports
   `P(Omega_bulk >= 1)` for the ACC framing at each registered state, labelled as the ACC
   dissolution sensitivity. A value of Omega_bulk below 1 there means ACC dissolves at that state
-  even where CaCO3 passes C5.
+  even where calcite-level CaCO3 passes C5.
 - **Decision.**
-  - feasible if `P(Delta_G_pbx <= edge) >= p` at every point, **and** the falsifiability control
-    (item 21, W5) fails where it must;
+  - feasible if `P(Delta_G_pbx <= edge) >= p` at every point;
   - falsified if `P(Delta_G_pbx > edge) >= p` at some point;
-  - inconclusive otherwise, or if the control passes where it must fail.
-- **Al phases.** The native oxide's Pourbaix state is reported as the bare-oxide baseline. It does
-  not gate C5, because alkaline attack on the native oxide is the corrosion mode the slurry
-  regime describes.
+  - inconclusive otherwise.
+- **Al phases.** The native oxide's Pourbaix state is reported as the bare-oxide baseline, at
+  the same fixed C(IV) and with the same DFT tolerance. It does not gate C5, because alkaline
+  attack on the native oxide is the corrosion mode the slurry regime describes.
+
+**C5 R-slurry verdict.** feasible if the dissolution test and the competing-phase test are both
+feasible; falsified if either is falsified; inconclusive otherwise.
+
+**Disclosure (cp3 R1).** The rule was set after W5 reported that the Pourbaix screen's
+falsifiability control does not fail where it must, and after W5 printed the sourced-K_sp Omega
+beside each of its design points (`ops/reports/P0-W5.2.md`, Task B). The rule is therefore not
+independent of those values, and the report says so.
 
 **R-cell, Li-referenced window.**
 
@@ -365,6 +422,10 @@ inconclusive otherwise.
     one of which can end the mechanism; C5 is a necessary screen;
   - feasible only if all four are feasible and the deletion test below holds;
   - inconclusive otherwise.
+- **Design points (cp3 R1).** The verdicts are computed at each design point of the registered
+  axes (gap policy (ii): a_Ca and c_bulk; for the C5 dissolution test, (a_Ca, C_T)). The study
+  verdict at a design point combines the link verdicts at that point, and the report maps it over
+  the axes. C5 R-slurry reports its feasible set as the dose window.
 - **Sequestration premise.** The C2 finding of Section 2 is reported with the study verdict. If
   the premise fails, the report says so as a finding, whatever the verdict.
 - **Deletion test (`charter/deletion_register.yaml`, F1).** Only the controls that remove the
@@ -413,6 +474,11 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `thresholds.C5.formation_energy_error` | e_form | literature (database benchmark) | C5 |
 | `regimes.R-slurry.parameters.ACC_offset` | Delta_ACC | literature | C5 (ACC framing) |
 | `regimes.R-slurry.parameters.pH_range` | pH | literature | C5, all R-slurry states |
+| `params.log10_ksp_calcite` | K_sp (calcite) | literature | C5 dissolution under every framing (cp3 R1) |
+| `params.a_ca_slurry` | a_Ca | design axis | C5 dissolution dose window, C3 (cp3 R1) |
+| `params.ca_total_slurry` | Ca_T | design axis (total calcium) | speciation of a_Ca (cp3 R1) |
+| `params.dic_slurry` | C_T | design axis | C5 dissolution dose window, speciation (cp3 R1) |
+| `params.ph_slurry_modified` | pH (control) | literature | C5 falsifiability control (cp3 R1) |
 | `params.a_w_slurry` | a_w | literature (per drying state) | reported at every drying state (F7) |
 | `params.acc_hydration_n` | n_hyd | literature (ACC framing) | hydrated-IAP sensitivity (F7) |
 | `regimes.R-slurry.parameters.E_SHE_range` | E_SHE | literature | C5 |
@@ -560,6 +626,32 @@ links:
     tests:
       - id: C5s
         regime: R-slurry
+        role: dissolution
+        aggregation: worst_state
+        quantity: Omega_bulk
+        comparator: '>='
+        edge: '1'
+        K_sp: calcite under every registered framing (cp3 R1); ACC is the sensitivity C5s_ACC
+        activities: {a_Ca: a_Ca_speciation, a_CO3: a_CO3_speciation}
+        params: {K_sp: params.log10_ksp_calcite, a_Ca: params.a_ca_slurry, Ca_T: params.ca_total_slurry,
+                 C_T: params.dic_slurry, pH: regimes.R-slurry.parameters.pH_range}
+        design_axes: [a_Ca, C_T]
+        report_as: dose window (design points where C5s is feasible), with the falsified and inconclusive sets
+        shares_quantity_with: C3
+        state: bulk
+        requires: falsifiability_control_fails_where_it_must
+        control:
+          applies_to: C5s
+          undersaturated: must report dissolution (P(Omega_bulk < 1) >= p_cred)
+          supersaturated: must report stability (P(Omega_bulk >= 1) >= p_cred)
+          params: {pH: params.ph_slurry_modified}
+          on_failure: inconclusive
+        carbon_redox: {assumption: 'C(IV) fixed by the regime (a_CO3); carbonate reduction to CH4 is not observed in aqueous processing',
+                       sensitivity: construction with carbon redox allowed, labelled, never decides}
+        hull_not_used_for_dissolution: 'hull distance (R*T/N_M)*log(1/Omega_bulk) per atom; the tolerance hides dissolution down to log(Omega_bulk) = -N_atoms*e_form/(R*T)'
+      - id: C5s_phase
+        regime: R-slurry
+        role: competing_phase
         aggregation: worst_point
         quantity: Delta_G_pbx
         comparator: '<='
@@ -568,9 +660,11 @@ links:
           ACC: (N_atoms*e_form + Delta_ACC)/N_M
         params: {e_form: thresholds.C5.formation_energy_error, Delta_ACC: regimes.R-slurry.parameters.ACC_offset,
                  pH: regimes.R-slurry.parameters.pH_range, E_SHE: regimes.R-slurry.parameters.E_SHE_range}
+        carbon: C(IV) fixed at the regime C_T
+        competitors: solid phases only; dissolved Ca-bearing species excluded (dissolution is C5s)
         state: bulk
-        requires: falsifiability_control_fails_where_it_must
         acc_edge_equivalence: the ACC edge makes the test equal to the calcite-level test (cp2 fix F6)
+        al_baseline: {reported: true, gating: false, tolerance: same DFT tolerance, carbon: C(IV) fixed}
     sensitivities:
       - id: C5s_ACC
         label: ACC dissolution margin under the ACC framing (reported, not gating)
@@ -605,7 +699,7 @@ links:
                  schemes: regimes.R-cell.parameters.gas_reference_schemes}
         undetermined: never_passes
     gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, regimes.R-cell.parameters.al_phases]}
-    combine: 'C5s and C5c_ox and C5c_red'
+    combine: 'C5s and C5s_phase and C5c_ox and C5c_red'
 study:
   gating_links: [C1, C3, C4, C5]
   descriptor_links: [C2]
