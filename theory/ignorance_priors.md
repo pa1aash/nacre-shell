@@ -96,8 +96,9 @@ gamma_pw is not needed as an ignorance prior. It is the same quantity as gamma_s
 serve as a consistency check.
 
 The sourced range extends below zero (the van Oss route). A negative template-water energy would
-mean the template disperses or swells in water without limit. The conflict is reported to W1 as a
-flag. It does not override the sourced prior.
+mean the template disperses or swells in water without limit. At cp3 (R8) the prior of
+gamma_sl0 is truncated at zero, and the untruncated prior is a labelled sensitivity with the
+removed mass reported (`theory/thresholds.md`, Section 1).
 
 ## 2. Branch masses of the gamma_sn prior (properties of the prior)
 

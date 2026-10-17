@@ -86,6 +86,14 @@ toward feasibility. Two requirements follow:
 - where W1 supplies n (`params.acc_hydration_n`), the labelled sensitivity `Omega_bulk_hydrated`
   (contract) is reported beside every drying-state verdict. It never decides a verdict.
 
+**Truncation of gamma_sl0 at zero (cp3 R8).** The Ca-free template-liquid energy
+(`params.gamma_sl0_template`) is sampled from its sourced prior truncated to gamma_sl0 >= 0.
+A negative interfacial free energy would make the template disperse or swell in water without
+limit, so no sharp template-water interface would exist (interface stability,
+`theory/ignorance_priors.md`, Section 1). The untruncated prior is run as a labelled
+sensitivity, and the report prints the mass the truncation removed and every verdict that
+changes without it.
+
 **Bookkeeping (contract v2, unchanged in v3).** Every barrier is evaluated with Omega = Omega_bulk at the regime
 activities. The C2 binding enters only through Delta_gamma_ads in gamma_sl, and C2 itself is a
 reported descriptor, not a gate (Section 2) (derivation, Section 7
@@ -154,9 +162,16 @@ and the running half-widths, and no full draw table is held in memory.
   once for all fragments (`thresholds.C1.contact_area_definition`, Q5).
 - **Decision.** feasible if `P(W > m_W) >= p`; falsified if `P(W <= m_W) >= p`; inconclusive
   otherwise. This matches the charter bands ("exceeds" and "at or below the registered margin").
-- **Terminations.** The populated oxide terminations enter as a discrete input with weights
-  `regimes.R-slurry.parameters.termination_weights`, so the band masses are those of the
-  population-weighted mixture.
+- **Terminations (cp3 R8).** The populated oxide terminations are judged one by one, and the
+  report gives a C1 verdict per termination.
+  - The mixture verdict uses an ignorance mixture over the weights
+    (`regimes.R-slurry.parameters.termination_weights`): the weights are drawn uniformly on the
+    simplex (a flat Dirichlet), or uniformly on the sub-region W1's evidence bounds, and the band
+    masses are those of the mixture with the weights drawn alongside every other input.
+  - A point weight is never used: no fetched distribution of terminations exists, and a point
+    weight would put an unsourced number into the verdict.
+  - The C1 link verdict is the mixture verdict; the per-termination verdicts are printed beside
+    it, and a termination that alone is falsified is named.
 - **Regime.** R-slurry only. Retention in the cell is not judged (layer persistence is a stated
   limitation).
 
@@ -467,6 +482,9 @@ independent of those values, and the report says so.
 - **Disclosure (cp3 R2).** The scheme values for CaCO3 with LiClO4 were seen before this rule was
   set (`ops/reports/P0-W5.2.md`, Task C; cp3 packet decision 3). The rule is not independent of
   them, and the report says so beside the table.
+- **Gated phases (cp3 R8).** CaCO3, corundum (alpha-Al2O3) and boehmite (gamma-AlOOH). The
+  registration key `regimes.R-cell.parameters.al_phases` records corundum and boehmite. Other Al
+  phases (diaspore, gibbsite and the transition aluminas) are reported, not gated.
 - **Sink (cp2 fix F5 (b)).** A pass counts only with a solvated sink: Ca2+ or Al3+ leaving as
   solvated ions paired with the salt anion, with the solvation free energies relative to Li+.
   The LiBOB and LiPCP sinks stay undetermined (cp3 R8): they never give a pass.
@@ -588,7 +606,8 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `regimes.R-cell.parameters.E_max` | E_cell_max | literature; design axis by cathode class (cp3 R2) | C5 R-cell |
 | `regimes.R-cell.parameters.electrolyte_salts` | salts | literature (fluorine-free) | C5 R-cell sink |
 | `regimes.R-cell.parameters.gas_reference_schemes` | schemes | registration (cp2) | C5 R-cell |
-| `regimes.R-cell.parameters.al_phases` | phases | registration (cp2) | C5 R-cell |
+| `regimes.R-cell.parameters.al_phases` | phases | registration (cp3 R8: corundum and boehmite) | C5 R-cell |
+| `params.gamma_sl0_template` | gamma_sl0 | literature, truncated at 0 (cp3 R8) | C3, C4 through gamma_sl |
 
 The C2-to-C3 inputs that the thresholds consume through Delta_gamma_ads are the existing priors
 `Gamma_s`, `delta_s`, `c_bulk` and `gamma_sl0`. `gamma_sl0` is new in contract v2 and replaces a
@@ -648,6 +667,9 @@ decision:
     worst_state_links: falsification at an evaluated state stands; a pass needs every registered state
     path_sum: 'C3b (and the C4 closure route) cannot be falsified unless every registered state, drying included, is evaluated; with a state missing a shortfall is inconclusive and a pass stands'
     report: missing states and the links they bound
+  priors:
+    gamma_sl0: {truncate_below: '0', reason: interface stability, sensitivity: untruncated prior, labelled,
+                report: [truncated mass, verdicts that change], params: params.gamma_sl0_template}
   omega: Omega_bulk
   forbidden_in_verdicts: [Omega_local_ideal, Delta_mu_local_ideal, DG_het_local_ideal, DG_het_double, E_enr, c_local,
                           Omega_bulk_hydrated]
@@ -667,7 +689,9 @@ links:
         comparator: '>'
         edge: m_W
         params: {m_W: thresholds.C1.margin_W_adh_wet}
-        mixture: {over: termination, weights: regimes.R-slurry.parameters.termination_weights}
+        mixture: {over: termination, weights: regimes.R-slurry.parameters.termination_weights,
+                  weight_prior: 'ignorance: uniform on the simplex (flat Dirichlet), or on the sub-region W1 bounds',
+                  point_weight: never, per_termination_verdicts: reported (cp3 R8)}
     combine: C1
   C2:
     role: descriptor
@@ -832,7 +856,9 @@ links:
         params: {E_cell_min: regimes.R-cell.parameters.E_min, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes}
         undetermined: never_passes
-    gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, regimes.R-cell.parameters.al_phases]}
+    gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, corundum, boehmite]}
+    al_phases: {registered: [corundum, boehmite], params: regimes.R-cell.parameters.al_phases, others: reported, not gated}
+    sinks: {LiClO4: "CaCO3 via the Ca(ClO4)2 exchange route; Al phases undetermined until Al(ClO4)3 is tabulated", LiBOB: undetermined (never a pass), LiPCP: undetermined (never a pass)}
     combine: 'C5s and C5s_phase and C5c_ox and C5c_red'
 study:
   framings:
