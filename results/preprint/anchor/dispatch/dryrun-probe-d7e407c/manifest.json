@@ -1,0 +1,14 @@
+{
+ "files": [
+  {
+   "bytes": 31,
+   "path": "nested/note.txt",
+   "sha256": "ef0714960618edc8799e8ff32084f0d8e661b9da11dcb05b030a8d576a78d3df"
+  },
+  {
+   "bytes": 266,
+   "path": "probe.json",
+   "sha256": "2818639d71f6224be13fa37cb74b32eb6bc0642aed246b074f51433161fdc1d1"
+  }
+ ]
+}
