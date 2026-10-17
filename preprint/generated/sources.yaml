@@ -123,32 +123,38 @@ macros:
     section: 3. Overall pass rule
     pattern: '^N = ([0-9]+)$'
     format: d
-    claim: CL-T01
+    claim: CL-T02
   NumRetroPassCount:
     source: preprint/retrodiction/criterion.md
     section: 3. Overall pass rule
     pattern: '^k = ([0-9]+)$'
     format: d
-    claim: CL-T01
+    claim: CL-T02
   NumRetroChanceBound:
     source: preprint/retrodiction/criterion.md
     section: 3. Overall pass rule
     pattern: 'smallest integer with P\(X ≥ k \| N, 1/2\) ≤ ([0-9.]+)'
     format: g
-    claim: CL-T01
+    claim: CL-T02
   NumRetroIntervalLevel:
     source: preprint/retrodiction/criterion.md
     section: 2. Verdict for one case
     pattern: 'central ([0-9]+) % interval'
     format: d
     unit: '\%'
-    claim: CL-T01
+    claim: CL-T02
+  NumRetroLinkReported:
+    source: preprint/retrodiction/criterion.md
+    section: 5. Known limits of the test
+    pattern: 'In ([0-9]+) of the [0-9]+ cases the source itself reports'
+    format: d
+    claim: CL-T02
   NumRetroDraws:
     source: preprint/retrodiction/criterion.md
     section: 1. What is predicted
     pattern: 'There are ([0-9][0-9 ]*[0-9]) joint Monte Carlo draws'
     format: ','
-    claim: CL-T01
+    claim: CL-T02
   # --- Materials Project data (Methods; W5 cache manifest and attribution record) ---
   NumMpDatabaseVersion:
     source: results/preprint/pourbaix/cache/manifest.json
