@@ -5,8 +5,8 @@ result, a literature value or a parameter of the study. Each file carries "mock"
 figure builder writes figures built from it only to figures/out/mock/.
 
   retro_results.json   retro-results/v1 (lane p0-w2, SCHEMA.md section 5)       -> fig4
-  screen_summary.json  results schema v2, screen regimes (lane p0-w4)            -> fig5, fig6
-  stability.json       results schema v2, stability section C5 (p0-w4, p0-w5)    -> fig7
+  screen_summary.json  results schema v3, screen regimes (lane p0-w4)            -> fig5, fig6
+  screen_c5.json       results schema v3, claim C5 tests (lane p0-w4)            -> fig7
   params.yaml          mock rows in the layout of lit/params.yaml (lane p0-w1)    -> fig5, fig7
 
 Case ids, labels, terminations and observed relations of the retrodiction mock are read from
@@ -78,20 +78,39 @@ def retro_results(rng):
             "p_test_higher": _r(min(1.0, max(0.0, 0.5 + mid / (2 * (abs(mid) + half))))),
             "boundary_mass": _r(rng.uniform(0.0, 0.08)),
             "verdict": _verdict(rel, q05, q95),
+            "interface": ROUTES[len(out) % len(ROUTES)],
         })
     n = len(out)
     k = next(k for k in range(n + 1) if sum(comb(n, j) for j in range(k, n + 1)) / 2 ** n <= 0.05)
-    tally = {v: sum(1 for c in out if c["verdict"] == v) for v in ("correct", "incorrect", "inconclusive")}
+    tally = {v: sum(1 for c in out if c["verdict"] == v)
+             for v in ("correct", "incorrect", "inconclusive", "undetermined")}
     return {
         "schema": "retro-results/v1", "mock": True,
         "cases_sha256": "sha256:" + upstream.entry("retro_cases", ROOT)["sha256"],
         "criterion_sha256": ZSHA, "fixed_before_run_commit": ZERO40,
-        "provenance": {"git_sha": ZERO40, "git_dirty": False, "contract_sha": ZERO40, "params_file_hash": ZSHA},
+        "provenance": {"git_sha": ZERO40, "git_dirty": False, "contract_sha": ZERO40, "params_tag": "mock",
+                       "params_file_hash": ZSHA, "criterion_sha": ZERO40},
         "draws": 20000, "seed": 0, "cases": out,
         "summary": {"N": n, **tally, "k": k,
                     "chance_probability": _r(sum(comb(n, j) for j in range(k, n + 1)) / 2 ** n),
-                    "pass": tally["correct"] >= k},
+                    "pass": tally["correct"] >= k,
+                    "swap_check": {"holds": True, "max_abs_sum": 0.0},
+                    "permutation_null": {key: _null(rng, n, 2000, shift) for key, shift in
+                                         (("within_study", 0.0), ("across_studies", 0.4))}},
     }
+
+
+ROUTES = ("gamma_sn", "gamma_sl")
+
+
+def _null(rng, n, n_perm, shift):
+    """Synthetic permutation null: a binomial count of correct cases."""
+    draws = rng.binomial(n, 0.4 + 0.02 * shift, n_perm)
+    counts = np.bincount(draws, minlength=n + 1)[: n + 1]
+    return {"n_perm": n_perm, "median": float(np.median(draws)),
+            "range95": [float(np.quantile(draws, 0.025)), float(np.quantile(draws, 0.975))],
+            "mean": _r(draws.mean()), "fraction_ge_observed": _r(rng.uniform(0.05, 0.3)),
+            "counts": [int(c) for c in counts], "descriptive": True}
 
 
 # ------------------------------------------------------------------------------ fig 5, 6
@@ -126,6 +145,17 @@ def _nucleate(rng, n, omega_lo, omega_hi, a_med, b_acc_med):
             "fraction_theta_0": _r(clipped_0 / n), "fraction_theta_180": _r(clipped_180 / n),
             "fraction_total": _r((clipped_0 + clipped_180) / n)}
     return q, {"cos_theta": mass}
+
+
+def _prefactor():
+    """Synthetic reference inputs; B_kT from the contract functions at them (fig5 checks the match)."""
+    from nacre.physics import nucleation
+    g, vm, temp = 0.25, 3.5e-5, 300.0
+    omega = 10.0
+    b = nucleation.barrier_in_kT(nucleation.homogeneous_barrier_from_saturation(g, vm, omega, temp), temp)
+    return {"reference_gamma_nl": g, "V_m": vm, "T": temp, "B_kT": float(b * np.log(omega) ** 2),
+            "reference": NOTE, "state": "slurry",
+            "units": {"reference_gamma_nl": "J m^-2", "V_m": "m^3 mol^-1", "T": "K", "B_kT": "1"}}
 
 
 def _ci(est, half):
@@ -166,6 +196,7 @@ def screen_summary(rng):
             "sensitivity_scale": {quantity: "log10", "Omega_bulk": "log10"},
         }},
         "boundary_mass": {"nucleate": m_slurry},
+        "barrier_prefactor": _prefactor(),
         "dependence": {"method": "gaussian_copula",
                        "rank_correlations": [{"a": "gamma_sl0", "b": "gamma_sn0", "spearman_rho": 0.5,
                                               "source": "mock"}]},
@@ -173,7 +204,7 @@ def screen_summary(rng):
         "states": {"drying": {"quantities": {"nucleate": q_dry}, "boundary_mass": {"nucleate": m_dry}}},
     }
     return {
-        "schema_version": "2", "mock": True, "generated_utc": STAMP,
+        "schema_version": "3", "mock": True, "generated_utc": STAMP,
         "provenance": {"git_sha": ZERO40, "git_dirty": False, "config_hash": ZSHA,
                        "prior_file": "figures/src/mock/params.yaml", "prior_file_hash": ZSHA,
                        "contract_sha": None, "params_sha": None, "thresholds_file": None, "thresholds_hash": None,
@@ -186,96 +217,55 @@ def screen_summary(rng):
 
 # ----------------------------------------------------------------------------------- fig 7
 
-_PHASES = [
-    # (label, kind, [(species, kind)])
-    ("Al(OH)4[-] + Ca[2+] + HCO3[-]", "aqueous", [("Al(OH)4[-]", "aqueous"), ("Ca[2+]", "aqueous"), ("HCO3[-]", "aqueous")]),
-    ("Al2O3(s) + CaCO3(s)", "solid", [("Al2O3", "solid"), ("CaCO3", "solid")]),
-    ("Al(OH)4[-] + CaCO3(s)", "mixed", [("Al(OH)4[-]", "aqueous"), ("CaCO3", "solid")]),
-    ("Al2O3(s) + Ca[2+] + CO2(aq)", "mixed", [("Al2O3", "solid"), ("Ca[2+]", "aqueous"), ("CO2(aq)", "aqueous")]),
-    ("Al(s) + CaH2(s) + CH4(aq)", "mixed", [("Al", "solid"), ("CaH2", "solid"), ("CH4(aq)", "aqueous")]),
-    ("Al[3+] + Ca[2+] + CO2(aq)", "aqueous", [("Al[3+]", "aqueous"), ("Ca[2+]", "aqueous"), ("CO2(aq)", "aqueous")]),
-]
+CA_DOSES = (1e-6, 1e-5, 1e-4, 1e-3, 1e-2)  # mol dm^-3, synthetic grid
+CT_AT = ("min", "value", "max")
+A_W = ("wet", "dry")
 
 
-def _grid(ph, e, shift):
-    """Synthetic domain map: straight boundaries in (pH, E), indexed [i][j] at E[i], pH[j]."""
-    idx = np.empty((len(e), len(ph)), dtype=int)
-    for i, ev in enumerate(e):
-        for j, p in enumerate(ph):
-            red = ev < -1.75 - 0.06 * p
-            if red:
-                idx[i, j] = 4
-            elif p < 4.0 + shift:
-                idx[i, j] = 5 if p < 3.0 + shift else 3
-            elif p < 7.8 + shift:
-                idx[i, j] = 1
-            elif p < 11.2 + shift:
-                idx[i, j] = 2
-            else:
-                idx[i, j] = 0
-    return idx
+def _point(ca, at, aw, p_good):
+    verdict = "feasible" if p_good >= 0.9 else ("falsified" if p_good <= 0.1 else "inconclusive")
+    return {"axes": {"Ca_T": "%g mol dm^-3" % ca, "C_T": "dic_slurry@%s" % at, "a_w": aw},
+            "P_good": _r(p_good), "P_bad": _r(1 - p_good), "half_width": 0.0, "verdict": verdict, "state": "slurry"}
 
 
-def _state(ph, e, shift, a_ca, a_co3, rng):
-    idx = _grid(ph, e, shift)
-    phases = [{"index": k, "label": lab, "kind": kind,
-               "components": [{"species": s, "kind": sk, "material_id": None} for s, sk in comps]}
-              for k, (lab, kind, comps) in enumerate(_PHASES)]
-    dec = {}
-    for name, formula in (("calcite", "CaCO3"), ("corundum", "Al2O3")):
-        g = np.abs(rng.normal(0.0, 0.05, idx.shape)) + 0.02 * (idx != 1)
-        dec[name] = {"units": "eV/atom", "material_id": None, "formula": formula,
-                     "grid": [[_r(v, 4) for v in row] for row in g]}
-    return {"conditions": {"a_Ca": a_ca, "a_CO3": a_co3, "note": NOTE},
-            "phases": phases, "domains": {"index_grid": idx.tolist()}, "decomposition_energy": dec}
+def _row(phase, scheme, status, value, role="comparator", sink="mock-salt"):
+    return {"phase": phase, "sink": sink, "sink_kind": "solid_salt", "scheme": scheme,
+            "role": "governing" if scheme == "expt" else role, "status": status,
+            "value_V": None if status != "ok" else _r(value, 4), "benchmark_error_V": None}
 
 
-def _limit(status, value, reaction="", reason=""):
-    return {"status": status, "value_V": None if status == "undetermined" else _r(value, 4),
-            "reaction": reaction, "reason": reason}
-
-
-def stability(rng):
-    ph = np.round(np.linspace(0.0, 14.0, 57), 4)
-    e = np.round(np.linspace(-2.5, 1.5, 81), 4)
-    undet = "mock: no computable oxidation reaction for the active sink"
+def screen_c5(rng):
+    points = {}
+    for ca in CA_DOSES:
+        for k, at in enumerate(CT_AT):
+            p = 1.0 / (1.0 + np.exp(-(np.log10(ca) + 4.6 - 0.3 * k) * 3.0))
+            for aw in A_W:
+                points["Ca_T=%g; C_T=%s; a_w=%s" % (ca, at, aw)] = _point(ca, at, aw, p)
+    ox = [_row("CaCO3", "expt", "ok", 3.8), _row("CaCO3", "janaf", "ok", 4.2), _row("CaCO3", "janaf_corrected", "ok", 3.8),
+          _row("CaCO3", "mp", "ok", 3.6), _row("CaCO3", "mp_corrected", "ok", 3.8),
+          _row("corundum", "expt", "undetermined", None), _row("corundum", "janaf", "undetermined", None),
+          _row("CaCO3", "expt", "undetermined", None, sink="mock-other")]
+    red = [_row("CaCO3", "expt", "absent", None), _row("CaCO3", "janaf", "ok", 1.6), _row("CaCO3", "janaf_corrected", "ok", 1.3),
+           _row("CaCO3", "mp", "ok", 1.6), _row("CaCO3", "mp_corrected", "ok", 1.8),
+           _row("corundum", "expt", "absent", None), _row("corundum", "janaf", "ok", 1.2)]
+    cutoffs = {"class-A@min": 3.6, "class-A@value": 4.0, "class-A@max": 4.2,
+               "class-B@min": 4.3, "class-B@value": 4.5, "class-B@max": 4.6}
+    axis = {k: {"bound_V": v, "verdict": "falsified" if v > 3.9 else "inconclusive"} for k, v in cutoffs.items()}
     return {
-        "schema_version": "2", "mock": True, "generated_utc": STAMP,
+        "schema_version": "3", "mock": True, "generated_utc": STAMP,
         "provenance": {"git_sha": ZERO40, "git_dirty": False, "config_hash": ZSHA, "contract_sha": None,
                        "schema_sha": upstream.entry("results_schema", ROOT)["commit"]},
-        "stability": {
-            "R-slurry": {
-                "kind": "pourbaix", "reference_electrode": "SHE", "temperature_K": 298.15,
-                "axes": {"pH": ph.tolist(), "E_V": e.tolist()},
-                "states": {"bulk": _state(ph, e, 0.0, 1e-3, 1e-4, rng),
-                           "enriched": _state(ph, e, -0.6, 2e-2, 1e-4, rng)},
-            },
-            "R-cell": {
-                "kind": "window", "reference_electrode": "Li+/Li", "temperature_K": 298.15,
-                "convention": "mock",
-                "sink_assumption": {"active": "mock-sink", "statement": NOTE, "kind": "solid_salt"},
-                "windows": {
-                    "CaCO3": {
-                        "material_id": None,
-                        "reduction": _limit("ok", 1.55, "mock reduction"),
-                        "oxidation": _limit("ok", 3.7, "mock oxidation, lowest scheme"),
-                        "oxidation_by_scheme": {"scheme-1": _limit("ok", 3.7, "mock oxidation"),
-                                                "scheme-2": _limit("ok", 4.25, "mock oxidation")},
-                        "reduction_by_scheme": {"scheme-1": _limit("ok", 1.55, "mock reduction"),
-                                                "scheme-2": _limit("ok", 1.55, "mock reduction")},
-                    },
-                    "Al2O3": {
-                        "material_id": None,
-                        "reduction": _limit("ok", 1.2, "mock reduction"),
-                        "oxidation": _limit("undetermined", None, reason=undet),
-                        "oxidation_by_scheme": {"scheme-1": _limit("undetermined", None, reason=undet),
-                                                "scheme-2": _limit("ok", 4.6, "mock oxidation")},
-                        "reduction_by_scheme": {"scheme-1": _limit("ok", 1.2, "mock reduction"),
-                                                "scheme-2": _limit("ok", 1.2, "mock reduction")},
-                    },
-                },
-            },
-        },
+        "claims": {"C5": {"verdict": "inconclusive", "dose_window": {
+            "points": points,
+            "feasible_points": sorted(k for k, v in points.items() if v["verdict"] == "feasible"),
+            "falsified_points": sorted(k for k, v in points.items() if v["verdict"] == "falsified"),
+            "inconclusive_points": sorted(k for k, v in points.items() if v["verdict"] == "inconclusive")}, "tests": {
+            "C5s": {"verdict": "inconclusive"},
+            "C5c_ox": {"verdict": "inconclusive", "scheme_table": ox, "cutoff_axis": axis, "margin_V": 0.09,
+                       "crossovers": {"CaCO3": {"mock-salt": {"falsified_above_V": 3.89, "feasible_at_or_below_V": None}}}},
+            "C5c_red": {"verdict": "inconclusive", "scheme_table": red,
+                        "cutoff_axis": {"registered": {"bound_V": 3.0, "verdict": "inconclusive"}}},
+        }}},
         "extensions": {"p0-w6": {"note": NOTE}},
     }
 
@@ -292,10 +282,15 @@ def params():
     return {
         "mock": True,
         "meta": {"note": NOTE, "layout": "lit/params.yaml (lane p0-w1)"},
-        "thresholds": {"C3": {"margin_cos_theta": row("m_cos", 0.2)}},
+        "params": {"dic_slurry": row("dic_slurry", 9.0, 4.0, 16.0, "mol m^-3")},
+        "thresholds": {"C3": {"margin_cos_theta": row("m_cos", 0.2)},
+                       "decision": {"credible_level": row("p_cred", 0.9)}},
         "regimes": {
             "R-slurry": {"parameters": {"pH_range": row("pH_range", 11.0, 9.5, 12.5),
-                                        "E_SHE_range": row("E_SHE_range", -0.9, -1.25, -0.55, "V")}},
+                                        "E_SHE_range": row("E_SHE_range", -0.9, -1.25, -0.55, "V"),
+                                        "J0_het": row("j0_het", 1e18, unit="m^-2 s^-1"),
+                                        "t_proc": row("t_proc_slurry", 3600.0, unit="s"),
+                                        "patch_area": row("patch_area", 1e-10, unit="m^2")}},
             "R-cell": {"parameters": {"E_min": row("E_min", 2.5, unit="V"), "E_max": row("E_max", 4.1, unit="V")}},
         },
     }
@@ -305,11 +300,11 @@ def main():
     rng = np.random.default_rng(SEED)
     _write_json("retro_results.json", retro_results(rng))
     _write_json("screen_summary.json", screen_summary(rng))
-    _write_json("stability.json", stability(rng))
+    _write_json("screen_c5.json", screen_c5(rng))
     (HERE / "params.yaml").write_text(
         "# MOCK parameter rows in the layout of lit/params.yaml; synthetic, not literature values.\n"
         + yaml.safe_dump(params(), sort_keys=False))
-    print("wrote mock inputs: retro_results.json, screen_summary.json, stability.json, params.yaml")
+    print("wrote mock inputs: retro_results.json, screen_summary.json, screen_c5.json, params.yaml")
 
 
 if __name__ == "__main__":

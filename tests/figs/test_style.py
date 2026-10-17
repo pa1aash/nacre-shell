@@ -159,7 +159,7 @@ def test_mock_inputs_regenerate_identically(tmp_path, monkeypatch):
     spec_.loader.exec_module(mod)
     monkeypatch.setattr(mod, "HERE", tmp_path)
     mod.main()
-    for f in ["retro_results.json", "screen_summary.json", "stability.json", "params.yaml"]:
+    for f in ["retro_results.json", "screen_summary.json", "screen_c5.json", "params.yaml"]:
         assert (tmp_path / f).read_text() == (REPO / "figures/src/mock" / f).read_text(), f
 
 

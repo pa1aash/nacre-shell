@@ -1,33 +1,40 @@
 {
- "mock": true,
  "figures": {
   "fig4": {
    "id": "fig4",
-   "claim": "For each same-study pair, the sign of the predicted heterogeneous-barrier difference (test minus reference) agrees with the observed ordering of the two surfaces when its 90 % interval excludes zero on the observed side.",
-   "caption_key": "(a) One row per usable case (identifiers RC01 to RC12, defined in the caption with their surfaces and study). Marker: median of the predicted difference Delta = DG*_het(test) - DG*_het(reference) over the Monte Carlo draws, in units of k_B T; bar: its 5 % to 95 % interval. Marker shape and colour give the verdict of the pass criterion: filled circle, correct; filled square, incorrect; open diamond, inconclusive (the interval contains zero, which counts as not correct). Vertical line: Delta = 0. Horizontal axis linear within +-1 k_B T and logarithmic beyond. (b) Observed ordering of the same case: right-pointing triangle, test surface has the higher barrier; left-pointing, the lower. The caption states N, the number correct, k and the chance probability from the record's summary, and each case's boundary mass.",
+   "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",
+   "caption_key": "(a) One row per usable case, grouped by the interface its input acts on (the record's per-case interface): top group gamma_sn (crystal-template adhesion), then the net-energy case, then gamma_sl (Ca2+ binding and surface-energy cases); within a group by identifier (tick labels). Marker: median of the predicted difference Delta = DG*_het(test) - DG*_het(reference) over the Monte Carlo draws, in units of k_B T; bar: its 5 % to 95 % interval. Marker shape and colour give the verdict of the pass criterion: filled circle, correct; filled square, incorrect; open diamond, inconclusive (the interval contains zero; counted as a miss). Vertical line: Delta = 0. Horizontal axis linear within +-1 k_B T and logarithmic beyond. Narrow column: the observed ordering (right-pointing triangle, the test surface has the higher barrier). (b) Permutation null of the number of correct cases: the fraction of permutations giving each count, inputs shuffled within studies (solid outline) and across studies (dashed outline). Vertical line: the observed number correct. The swap check, N, the number correct, the registered pass count and the null's median and 95 % range are stated in the caption through macros.",
    "mock": true,
    "width": "single",
    "size_cm": [
     8.3,
-    8.0
+    10.0
    ],
    "input": "figures/src/mock/retro_results.json",
-   "input_sha256": "40bab82ef4a25846977177da84986d80155cfef3e981547d24d9cb90680a9cae",
+   "input_sha256": "b82b31a0d7688198649a3006abe11863a8e897557bf644e375122fbff8883c49",
+   "input_source": {
+    "path": "figures/src/mock/retro_results.json"
+   },
    "schema": "figures/src/schemas/retro_results_v1.schema.json",
    "aux": {},
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
-    "figures/out/mock/fig4.pdf": "88c39cee4fdc9e0e1260ebd961d5efc148163857c2e1a15069f50ca0bb16a98c",
-    "figures/out/mock/fig4.png": "8e5526bba73abdb6ad62bb0f084c0aba2ad2718e45783f17307d87ad8540ae61",
-    "figures/out/mock/cvd/fig4_deuteranopia.png": "66a565987daafea3949d441331029e7b5646cea43fd0fb1db89330918d461f92",
-    "figures/out/mock/cvd/fig4_protanopia.png": "47e3b0cea468ccbb380067824c9f86e72f17e7d592b30abb592ce28af4cd5475",
-    "figures/out/mock/cvd/fig4_tritanopia.png": "b6e04a4acc36b97d8b00578ee1a6ecf3135b307c3d950f6fa4c6914a03c85155"
+    "figures/out/mock/fig4.pdf": "58996bccb80a9afa93cf60289104289a24c92d55693c691f5edf73db0512fd50",
+    "figures/out/mock/fig4.png": "4cebd2e00808cdff20386cbfa3ad699ad0073af730bfad99c99b7dca194326bb",
+    "figures/out/mock/cvd/fig4_deuteranopia.png": "fe68ee8456afb58a28832e9cd290d6617024d260324e1dfd8199918b55d48e40",
+    "figures/out/mock/cvd/fig4_protanopia.png": "1cdbd79413088335f10f4de2344f78aa6029aafba837424ac6ef4b5512404e30",
+    "figures/out/mock/cvd/fig4_tritanopia.png": "80a1ed63b76688cbc72296a3ed332ce9ece07a7745ab5fe7e0b8422c7f359065"
    },
    "checker": "pass (artists and PDF text)"
   },
   "fig5": {
    "id": "fig5",
-   "claim": "At equilibrium the template acts on the barrier only through the wetting angle: at a given bulk saturation ratio the barrier on the template falls as the angle closes, and it is accessible only where both the angle and the bulk driving force allow it.",
-   "caption_key": "Colour: f(theta) DG*_hom(Omega_bulk)/k_B T on a logarithmic scale (colour bar), evaluated with the contract functions at the primary state's reference prefactor: the median homogeneous barrier at the median Omega_bulk, scaled to every Omega_bulk at fixed nucleus-liquid energy, molar volume and temperature (the caption states this reference). The vertical axis is the bulk saturation ratio; the template never changes it. Vertical black line: the C3a edge f(theta) = f at cos(theta) = m_cos (configs/preprint/thresholds.yaml). Curved black line: the C3b accessibility bound DG*_het = B_acc at the median B_acc/k_B T. Markers with bars: the screen's median and 5 % to 95 % range of theta and Omega_bulk for each registered state (filled circle, the primary state; open square, each further state in the order of the record). The caption reports the cos(theta) boundary mass of each state (draws clipped to theta = 0 and theta = 180 deg), which is not drawn.",
+   "claim": "At equilibrium the template acts on the barrier only through the wetting angle: at a given bulk saturation ratio the barrier on the template falls as the angle closes, and only angles on the wetting side of the C3a edge halve it; the screen's ignorance prior sits on the non-wetting side.",
+   "caption_key": "Colour: DG*_het/k_B T = f(theta) DG*_hom(Omega_bulk)/k_B T on a logarithmic scale (colour bar), from the contract functions at the reference inputs of the record's barrier prefactor (reference nucleus-liquid energy, molar volume and temperature, the prior medians of the primary state); the template never changes Omega_bulk. Vertical black line: the C3a edge f(theta) = f at cos(theta) = m_cos (configs/preprint/thresholds.yaml, parameter table). The C3b absolute-barrier bound DG*_het = k_B T ln(J0_het t_proc A_patch / ln(1/(1 - p_cred))) is drawn as a black contour only when every input has a value; A_patch is a registered gap, so it is absent and the caption says so. Outlines: the central 90 % (5 % to 95 % quantiles) of the screen's draws in theta and Omega_bulk under the ignorance prior set, primary state solid, further states dashed in record order: a property of the prior, not a finding. The caption reports the cos(theta) boundary mass (draws clipped to theta = 180 deg and theta = 0) and the favourable-template condition gamma_sn < gamma_sl (model section).",
    "mock": true,
    "width": "single",
    "size_cm": [
@@ -35,18 +42,26 @@
     7.0
    ],
    "input": "figures/src/mock/screen_summary.json",
-   "input_sha256": "2be70ac8c5e4da92f8a559cc4fb698067c7cb4f11c37355b0e8f55e9c11d6201",
-   "schema": "configs/preprint/results_schema.json@16fe14d (p0-w4)",
+   "input_sha256": "b2b287033ce92d3b8f91aa0e5eba0e06100d960e3fcfa5b100dc39f8b34477b7",
+   "input_source": {
+    "path": "figures/src/mock/screen_summary.json"
+   },
+   "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
    "aux": {
-    "params": "figures/src/mock/params.yaml sha256:a7c8d454d9403be522614b89e9c037cfe74205a91aef1db46ddb9cd7ca397526",
-    "thresholds": "configs/preprint/thresholds.yaml@884c487 (p0-w4)"
+    "params": "figures/src/mock/params.yaml sha256:b8f4e013dcfdbf9386e5324a5fbb0e2d15a994834179da33a35734ca5e91e6f8",
+    "thresholds": "configs/preprint/thresholds.yaml@4ed8fcf (p0-w4)"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
    },
    "outputs": {
-    "figures/out/mock/fig5.pdf": "682679543bf7181fa27f278851af2b6cdadb6afcee1d0830e8901659a7d349e8",
-    "figures/out/mock/fig5.png": "a5aebfc3e4eecb4fc36b7edb24b1e979bff623b074529e3d11ab31365e39035c",
-    "figures/out/mock/cvd/fig5_deuteranopia.png": "1df11fa40a57c0e7551ac14d8ab6d5713b968787d8d16a5da38ea32b1ca26673",
-    "figures/out/mock/cvd/fig5_protanopia.png": "e352c5eb92e7db3d865505c2a8874f131200a3f31cb2e7ca14c5b622555795a6",
-    "figures/out/mock/cvd/fig5_tritanopia.png": "6ce11c3b5a665a4feddbec351c3a8b350be0d9a4dda68781e871cfd17e1f1fff"
+    "figures/out/mock/fig5.pdf": "b22c6535a75b15eb2db5bc70f93b2145a2e7333b1807ec61f90934dcd9345886",
+    "figures/out/mock/fig5.png": "e3aeaf28b9410d7c9aae1abd33a665b4da4652116907b3b8f07463a0c261a6b1",
+    "figures/out/mock/cvd/fig5_deuteranopia.png": "801b54a8ba9d8cc1c2db2aa9a99e7212ed9ee39e46adda169f621ececcb621a3",
+    "figures/out/mock/cvd/fig5_protanopia.png": "1a3e85765c612d25a2c681e2b30f9673e41eefe7c16186c8f20dbb3e0ca2b5cc",
+    "figures/out/mock/cvd/fig5_tritanopia.png": "2b356436524b3f7993d527f0cf644060b645c39f140e5d8c800b08bc479bd4c3"
    },
    "checker": "pass (artists and PDF text)"
   },
@@ -61,42 +76,59 @@
     6.5
    ],
    "input": "figures/src/mock/screen_summary.json",
-   "input_sha256": "2be70ac8c5e4da92f8a559cc4fb698067c7cb4f11c37355b0e8f55e9c11d6201",
-   "schema": "configs/preprint/results_schema.json@16fe14d (p0-w4)",
+   "input_sha256": "b2b287033ce92d3b8f91aa0e5eba0e06100d960e3fcfa5b100dc39f8b34477b7",
+   "input_source": {
+    "path": "figures/src/mock/screen_summary.json"
+   },
+   "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
    "aux": {},
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
-    "figures/out/mock/fig6.pdf": "40254c9d0018d37800aaa9799dafd070cddd9fd082c9689a89efea995ace0f04",
-    "figures/out/mock/fig6.png": "f995d24754587962f09915990c447c0f767f1a0e853a650006ff87ba62d032f0",
-    "figures/out/mock/cvd/fig6_deuteranopia.png": "1aafaeaa9ba5832979ba0e98cfbf208df0330c1716e0ed154ba664cdf27da5ec",
-    "figures/out/mock/cvd/fig6_protanopia.png": "0356c419a6ab0fb1d1074cb7f327e230f085ff74de9ac366e104087eeb48be8b",
-    "figures/out/mock/cvd/fig6_tritanopia.png": "e672a1d9c0d2f2ec4d486297bd9664d7468161c954e28c0cc0d4d6e89f879f02"
+    "figures/out/mock/fig6.pdf": "363830122edad1e069b2fda9e13fff8d20024e4a19695b255a4b3b89232ad842",
+    "figures/out/mock/fig6.png": "1ada7d8bd56cd748f3e4ca373cf60fcfe2efb49a1bab5a4700279e7b7543b2d0",
+    "figures/out/mock/cvd/fig6_deuteranopia.png": "89948b897447600662da464a866eac9819046cdc3c2dae0ed6eb795046e54991",
+    "figures/out/mock/cvd/fig6_protanopia.png": "fef333dd313a27ade78f16cf2cf83cc4319dee50b2d93ff13032f81c12df7c39",
+    "figures/out/mock/cvd/fig6_tritanopia.png": "fafe1443565c1b91a625be823e3ba4d725939cf5f1b30c35ea87f2464b126076"
    },
    "checker": "pass (artists and PDF text)"
   },
   "fig7": {
    "id": "fig7",
-   "claim": "CaCO3 is thermodynamically stable over a bounded (pH, E) region of the slurry and between two potential limits in the cell; whether each regime's operating range lies inside, and whether a limit is determined at all, decides the stability link.",
-   "caption_key": "(a) R-slurry, bulk state (regime activities of Ca2+ and CO3 2-), potential vs SHE. Fill: class of the predominant domain, in the caption's order: CaCO3 solid present; an Al solid without CaCO3; no solid. Thin black lines: boundaries between domains (the caption lists each domain's components by position). Dashed rectangle: the regime's design range of pH and potential (parameter table). The enriched state is not drawn: at equilibrium C5 is decided at the bulk state, and the caption reports the enriched state only as a labelled non-equilibrium sensitivity. (b) R-cell, potential vs Li+/Li. One group of rows per phase (tick label); top row, black: the window used (the lowest oxidation and highest reduction limit over the gas-reference schemes); rows below: each scheme, in the caption's colour order. Solid segment with end ticks: both limits determined. Dotted continuation to the axis edge from an open circle: the limit on that side is undetermined (status undetermined, never read as a pass; the caption gives the reason). Grey band: the regime's operating range E_min to E_max. The caption states the active sink assumption.",
+   "claim": "CaCO3 resists dissolution in the slurry only where the calcium dose and the dissolved carbonate keep the bulk supersaturated, and in the cell it is oxidised below the charge cutoffs of most cathode classes; the aluminium-oxide phases have no determined oxidation limit.",
+   "caption_key": "(a) R-slurry, C5 dissolution test (Omega_bulk >= 1 with the calcite K_sp and the contract speciation) at each design point: total calcium dose Ca_T (horizontal) by total dissolved carbonate C_T at the parameter table's minimum, value and maximum (vertical). Fill and hatching: verdict of the point (in the caption's order: feasible, plain; inconclusive, single hatching; falsified, cross hatching); the two water-activity points give the same verdict everywhere. Black line: Omega_bulk = 1 at the credible boundary P(Omega_bulk >= 1) = 1/2, interpolated in log Ca_T and C_T between the design points. (b) R-cell, potential vs Li+/Li, the sink of the C5 crossover (the caption names it and states that every other sink is undetermined under every scheme). One group of rows per gated phase (tick label), one row per gas-reference scheme: black, the all-experimental route (governing); blue, JANAF-based and vermillion, MP-based DFT schemes (comparators), dashed where corrected by the benchmark error. Left end: reduction limit; right end: oxidation limit; end tick, determined. An open circle at the axis edge: limit undetermined; an open square: no route for that limit (absent). Grey segment after the governing oxidation limit: the margin m_expt, ending at the falsification bound. Thin dashed vertical lines: the cathode classes' charge cutoffs E_cell_max (class values; the caption identifies them left to right). The 4.025 V bound is stated through a macro.",
    "mock": true,
    "width": "double",
    "size_cm": [
     17.1,
     7.0
    ],
-   "input": "figures/src/mock/stability.json",
-   "input_sha256": "66e804d0502113579f94dff09f15238e109a1c618b64250c6878afbdedf0f475",
-   "schema": "configs/preprint/results_schema.json@16fe14d (p0-w4)",
+   "input": "figures/src/mock/screen_c5.json",
+   "input_sha256": "9beac7706fc96588a4cf7bd4496d0863d2ee65b4c10786d55cd64d8225261ffc",
+   "input_source": {
+    "path": "figures/src/mock/screen_c5.json"
+   },
+   "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
    "aux": {
-    "params": "figures/src/mock/params.yaml sha256:a7c8d454d9403be522614b89e9c037cfe74205a91aef1db46ddb9cd7ca397526"
+    "params": "figures/src/mock/params.yaml sha256:b8f4e013dcfdbf9386e5324a5fbb0e2d15a994834179da33a35734ca5e91e6f8"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
    },
    "outputs": {
-    "figures/out/mock/fig7.pdf": "86e07b53eb1df05f0cde8d71440be326ec8c52c65679d2ff168b350ce28ac4fc",
-    "figures/out/mock/fig7.png": "494aae9a58087ca3ef4ad5015f57b256749eba10b7fbc40ad2900aac4a795138",
-    "figures/out/mock/cvd/fig7_deuteranopia.png": "784c66ccd4beaa5921b00dc7128bdb343053ef5a541a643ad09915f3b436c216",
-    "figures/out/mock/cvd/fig7_protanopia.png": "0722037bf55546e83a4e56d228dd28e1a2ec4fd5f58a0833ca0281bdeba2abab",
-    "figures/out/mock/cvd/fig7_tritanopia.png": "6bebb1ba36ac53f2ce9f793eebcdf5e1f918034c24daf606b8474397cb7cff8f"
+    "figures/out/mock/fig7.pdf": "9f690017e4950c1041d16391f79a3f60dcaa4fc6a7d232e24b15ccf65c9f89e2",
+    "figures/out/mock/fig7.png": "125cada1c373b261bbe8377d22d3c8f22152c6c53844543e50b33657f4507289",
+    "figures/out/mock/cvd/fig7_deuteranopia.png": "60899adfb32d59e8ed60cff194b8e2b2493641219136fb08d3346e47c70d9ede",
+    "figures/out/mock/cvd/fig7_protanopia.png": "12c8da6ff6283ce0bc54c5e58e8dfb7f548061eca579393094d41c098cb54fbf",
+    "figures/out/mock/cvd/fig7_tritanopia.png": "24e7e2350a76d842ecaca86039a609b31a325974ec9db895eb11af02c99c06e0"
    },
    "checker": "pass (artists and PDF text)"
   }
- }
+ },
+ "mock": true
 }
