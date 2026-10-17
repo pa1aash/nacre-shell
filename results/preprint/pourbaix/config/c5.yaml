@@ -1,0 +1,187 @@
+# C5 inputs configuration, session P0-W5.3 (Day 3; cp3 decisions 2 and 3). Not mock.
+#
+# Same construction as final.yaml (P0-W5.2), with three changes: total dissolved Al is a document
+# axis of R-slurry (one schema v2 document per a_Ca, C_T and total Al), the R-cell verdicts use the
+# governing route of cp3 decision 3 over W1's cathode classes, and m_expt is read from W1's keys.
+# Every number comes from lit/params.yaml at params_sha (frozen in
+# results/preprint/pourbaix/inputs/params_<sha7>.json), from the offline cache, or is a design grid
+# marked provisional (gap policy (ii)). Rule R7: if lit/params.yaml changes after tag p0-cp3, rerun
+# with a dated note.
+#
+# 2026-10-17: rerun at W1's P0-W1.3 params (8bc15c8, was 680a44b). Every R-slurry and Omega-fixture key
+# is unchanged between the two shas; the R-cell inputs changed: e_cell_max became a design axis by
+# cathode class (cp3 R2), window_margin and window_margin_expt are computed, the solvation keys stay
+# gaps with flagged water analogs (cp3 R10).
+#
+# Run: uv run python -m nacre.pourbaix.c5 --config results/preprint/pourbaix/config/c5.yaml
+mock: false
+run: c5
+session: P0-W5.3
+params_sha: 8bc15c88f5f4a28e64d394186729836bac01cfec
+
+R-slurry:
+  question: >-
+    At the regime pH and potential (E vs SHE at the Al open-circuit potential), and at the bulk
+    Ca2+ activity and dissolved carbonate of each design point, is calcite (or ACC) the
+    equilibrium state of Ca and C(IV), how far above that equilibrium does it sit per atom, and
+    is the native Al oxide the equilibrium state of Al? (thermodynamic proxies; no rates)
+  temperature_K:
+    value: 298.15
+    source: choice
+    reason: >-
+      The aqueous construction is fixed at 298.15 K (ion reference data and Nernst prefactor).
+      298.15 K lies inside the sourced slurry range (key t_slurry, range min to max); the central
+      value of t_slurry is not used. The drying temperature (key t_drying_primary) is outside the
+      construction and is not evaluated.
+    cites: [t_slurry, t_drying_primary]
+  pH: {key: ph_slurry, from: range, n: 31}
+  E_V_SHE: {key: e_she_slurry, from: range, n: 41}
+  acc_offset: {key: acc_offset, unit: J mol^-1, convert_to: eV per CaCO3 formula unit, scan: [range.min, value, range.max]}
+  formation_energy_error: {key: formation_energy_mae, unit: J mol^-1 per atom}
+  design_axes:
+    a_Ca:
+      key: a_ca_slurry
+      status: provisional
+      grid: [1.0e-6, 1.0e-5, 1.0e-4, 1.0e-3, 1.0e-2, 1.0e-1]
+      reason: >-
+        Provisional design grid of the free Ca2+ activity, one point per decade. a_ca_slurry is a
+        design input with no registered grid at this params sha (design-input status, gap policy
+        (ii)); the grid is a design choice, not a literature value, and is replaced by the
+        registered grid when cp3 registers one.
+    C_T:
+      key: dic_slurry
+      status: sourced
+      grid_from: [range.min, value, range.max]
+      unit: mol m^-3
+      convert: >-
+        mol m^-3 to mol dm^-3 (divide by 1000) and read per kilogram of water, the W1 convention
+        for dilute aqueous concentrations printed per volume (key ionic_strength_slurry notes)
+    c_bulk:
+      key: c_bulk_slurry
+      status: provisional
+      relation: >-
+        c_bulk is the bulk Ca2+ concentration; in this ideal-solution screen it is a_Ca read in
+        mol dm^-3 and converted to mol m^-3 (times 1000). It is reported beside each a_Ca, not
+        varied independently.
+  al_activity:
+    status: provisional
+    grid: [1.0e-8, 1.0e-6, 1.0e-4]
+    map_value: 1.0e-6
+    reason: >-
+      No params key gives dissolved Al in the slurry. Total dissolved Al enters the native-oxide
+      baseline as a provisional grid, and the domain map uses its middle value. It does not enter
+      the Ca-C decomposition energies (exact subsystem).
+  carbonate:
+    system: closed
+    speciation: exact per pH column (ideal solution) from the cached ion energies
+    oxidation_state: C(IV) only
+    reason: >-
+      The regime fixes a_CO3 as an input (G0 fix F2; C5 at the regime a_Ca and a_CO3). Carbon is
+      therefore held in the C(IV) carbonate system. Reduced carbon (CH4, formate, acetate, oxalate,
+      graphite, carbides) is excluded from the decision hull. The regime potentials lie at the Al
+      open-circuit potential, below the carbonate/methane couple, so unconstrained equilibrium
+      reduces carbonate. That case is reported as a labelled sensitivity (carbon redox allowed),
+      never as the decision.
+    compare_keys: [pk1_carbonic, pk2_carbonic, log10_ksp_calcite, log10_ksp_acc, ionic_strength_slurry]
+  states:
+    bulk: {a_w: 1.0, a_w_source: "charter: a_w = 1 in the wet slurry by definition (key a_w_slurry notes)"}
+    enriched:
+      equals: bulk
+      reason: >-
+        At equilibrium the template does not change Delta mu: every ion carries its bulk
+        electrochemical potential (theory/derivation_body.tex section 7, rule 5; contract v2,
+        thresholds.md C5). The C2-enriched state equals the bulk state and is not computed
+        separately.
+    drying:
+      a_w: null
+      a_w_key: a_w_slurry
+      reason: gap at this params sha; the drying states are not evaluated separately.
+  falsifiability_control:
+    calcite_undersaturated:
+      pH: {key: ph_slurry_modified, from: range.min}
+      C_T: {key: dic_slurry, from: range.min}
+      a_Ca: {from: design_axes.a_Ca, pick: min}
+      expectation: >-
+        experimental Omega = a_Ca a_CO3 / Ksp < 1 with the sourced Ksp and pK values, so the proxy
+        must report calcite above the C5 edge at every potential of the region
+    native_oxide_alkaline:
+      pH: {key: ph_slurry, from: range.max}
+      E: {key: e_she_slurry, from: range}
+      al_activity: {from: al_activity, pick: map_value}
+      expectation: >-
+        aluminium corrodes in alkaline media at its open-circuit potential (sources of key
+        e_she_slurry), so the proxy must report corundum above its edge
+    calcite_supersaturated:
+      pH: {key: ph_slurry, from: value}
+      C_T: {key: dic_slurry, from: value}
+      a_Ca: {from: design_axes.a_Ca, pick: max}
+      expectation: >-
+        experimental Omega > 1, so the proxy must report calcite within its edge (a check that the
+        screen is not failed by construction either)
+  numerics: {}
+
+R-cell:
+  question: >-
+    Between which potentials vs Li+/Li are CaCO3 and the native Al oxide at equilibrium against
+    lithiation (Li-open grand potential) and against oxidation that releases CO2 and O2 with the
+    cation taken up by the anion of each registered electrolyte salt? Does the registered regime
+    range [E_cell_min, E_cell_max] lie inside each window under every gas-reference scheme?
+    (thermodynamic windows; no kinetic statement)
+  temperature_K:
+    value: 298.15
+    source: choice
+    reason: >-
+      298.15 K lies inside the sourced cell range (key t_cell, range min to max), and it is the
+      temperature of the benchmark and of every tabulated free energy used by the expt scheme.
+    cites: [t_cell]
+  E_min: {key: e_cell_min}
+  E_max: {key: e_cell_max}
+  window_margin: {key: window_margin}
+  m_expt:
+    keys: [window_margin_expt]
+    reason: >-
+      The uncertainty budget of the governing all-experimental route (cp3 R2), supplied by W1 at
+      P0-W1.3 for the registered reaction CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 1/2 O2 + 2 Li. The
+      provisional budget of P0-W5.3 (sourced ranges of the W1 keys in each reaction) stays beside it
+      as a comparator.
+  m_dft:
+    key: window_margin
+    reason: >-
+      The margin of the DFT-based schemes; it applies where the benchmark-corrected DFT schemes govern
+      and to the DFT reduction limit.
+  phases:
+    CaCO3: {material_id: mp-3953, cation: Ca, gases: [O2, CO2], lithiation_chemsys: Li-Ca-C-O}
+    Al2O3: {material_id: mp-1143, cation: Al, gases: [O2], lithiation_chemsys: Li-Al-O,
+            note: "corundum; key al_phases is registered at cp2 and is null at this sha"}
+  gas_pressure_bar: {O2: 1.0, CO2: 1.0, source: choice, reason: standard state of the benchmark}
+  schemes: [janaf, mp, expt]
+  salts:
+    # the registered salts (key electrolyte_salts); each gives the admissible sink of its anion
+    LiClO4: {li_source: LiClO4, products: {Ca: [Ca(ClO4)2], Al: [Al(ClO4)3]}}
+    LiBOB: {li_source: LiB(C2O4)2, products: {Ca: [CaB2C8O16], Al: [AlB3C12O24]},
+            note: "BOB = bis(oxalato)borate, B(C2O4)2-"}
+    LiPCP: {li_source: LiC8N5, products: {Ca: [Ca(C8N5)2], Al: [Al(C8N5)3]},
+            note: "PCP = pentacyanopropenide, C3(CN)5-"}
+  solvated:
+    keys: [solvation_ca_vs_li, solvation_al_vs_li]
+    reason: >-
+      The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte
+      solvent; both keys are gaps at this params sha, so it is undetermined.
+    analog_keys: [solvation_ca_vs_li_water_analog, solvation_al_vs_li_water_analog]
+    analog_reason: >-
+      The flagged water analogs are differences of absolute single-ion hydration free energies
+      (Delta_G_hyd(M) - z Delta_G_hyd(Li+)). An onset from them needs the gas-phase ion formation free
+      energies of Ca2+, Al3+ and Li+, which are not params keys, so no analog onset is computed here;
+      it is logged as an outstanding input.
+  exchange:
+    reason: >-
+      Where a sink salt has a tabulated enthalpy of formation but no free energy and no DFT entry,
+      it enters through the exchange Ca + 2 LiA -> CaA2 + 2 Li, whose enthalpy is taken from the
+      tables (solid entropies of the exchange neglected, as every scheme neglects solid entropy):
+      G(CaA2) = 2 G(LiA) + [dfH(CaA2) - 2 dfH(LiA)] under each scheme.
+    salts: {Ca(ClO4)2: LiClO4}
+  comparators:
+    note: anions of salts that are not registered; reported, never part of a verdict
+    LiNO3: {li_source: LiNO3, products: {Ca: [Ca(NO3)2], Al: [Al(NO3)3]}}
+    Li2SO4: {li_source: Li2SO4, products: {Ca: [CaSO4], Al: [Al2(SO4)3]}}
+    LiCl: {li_source: LiCl, products: {Ca: [CaCl2], Al: [AlCl3]}}

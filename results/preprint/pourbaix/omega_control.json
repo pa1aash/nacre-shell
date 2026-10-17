@@ -1,0 +1,238 @@
+{
+ "cases": [
+  {
+   "conditions": {
+    "C_T": {
+     "from": "value",
+     "key": "dic_slurry",
+     "row_ids": [
+      "TA-019",
+      "TF-032"
+     ],
+     "status": "sourced",
+     "unit": "mol m^-3",
+     "value": 10.75,
+     "value_mol_kg": 0.01075
+    },
+    "T_K": 298.15,
+    "a_Ca": {
+     "basis": "free Ca2+ activity of the calcite-saturated reference slurry (see reference_state); not a typed number",
+     "unit": "1",
+     "value": 9.659730177263121e-07
+    },
+    "pH": {
+     "from": "range.min",
+     "key": "ph_slurry_modified",
+     "row_ids": [
+      "TA-003",
+      "TA-007",
+      "TA-008",
+      "TA-009",
+      "TB-012",
+      "TB-016",
+      "TF-034",
+      "TJ-088"
+     ],
+     "status": "sourced",
+     "unit": "1",
+     "value": 6.3
+    },
+    "phase": "calcite"
+   },
+   "expected": {
+    "evaluator_must_report": "instability (dissolution)",
+    "omega_relation": "Omega < 1",
+    "omega_test": "dissolves"
+   },
+   "id": "calcite_dissolves_after_acidification",
+   "purpose": "the falsifiability control: the Omega test must report calcite unstable here (C5, Phase 7 item 21)",
+   "reference_values": {
+    "ion_pairs": [
+     "CaHCO3+ (log10_k_cahco3)",
+     "CaCO3(aq) (log10_k_caco3_aq)"
+    ],
+    "log10_omega_ideal_central": -3.8604238324610556,
+    "log10_omega_ideal_over_pK_ranges": [
+     -3.8916236138466385,
+     -3.830453538112975
+    ],
+    "log10_omega_with_ion_pairs": -3.8604264066884095,
+    "margin_log10": 3.830453538112975,
+    "note": "ideal solution, closed C(IV) system; W4's contract activity model may shift log10 Omega; the expectation holds while that shift is below margin_log10",
+    "sign_holds_for_all_reference_variants": true
+   }
+  },
+  {
+   "conditions": {
+    "C_T": {
+     "from": "range.max",
+     "key": "dic_slurry",
+     "row_ids": [
+      "TA-019",
+      "TF-032"
+     ],
+     "status": "sourced",
+     "unit": "mol m^-3",
+     "value": 18.3,
+     "value_mol_kg": 0.0183
+    },
+    "T_K": 298.15,
+    "a_Ca": {
+     "basis": "free Ca2+ activity of the calcite-saturated reference slurry (see reference_state); not a typed number",
+     "unit": "1",
+     "value": 9.659730177263121e-07
+    },
+    "pH": {
+     "from": "range.max",
+     "key": "ph_slurry",
+     "row_ids": [
+      "TA-001",
+      "TA-002",
+      "TA-005",
+      "TA-006",
+      "TA-010",
+      "TA-011",
+      "TA-012",
+      "TA-016",
+      "TB-015",
+      "TF-033",
+      "TJ-094",
+      "TJ-095",
+      "TJ-096",
+      "TJ-097",
+      "TJ-098"
+     ],
+     "status": "sourced",
+     "unit": "1",
+     "value": 13.0
+    },
+    "phase": "calcite"
+   },
+   "expected": {
+    "evaluator_must_report": "stability",
+    "omega_relation": "Omega > 1",
+    "omega_test": "precipitates"
+   },
+   "id": "calcite_supersaturated_alkaline_high_dic",
+   "purpose": "the companion control: the Omega test must report calcite stable here",
+   "reference_values": {
+    "ion_pairs": [
+     "CaHCO3+ (log10_k_cahco3)",
+     "CaCO3(aq) (log10_k_caco3_aq)"
+    ],
+    "log10_omega_ideal_central": 0.7264896371645504,
+    "log10_omega_ideal_over_pK_ranges": [
+     0.7264449075080064,
+     0.72653027355787
+    ],
+    "log10_omega_with_ion_pairs": 0.7257954398760642,
+    "margin_log10": 0.7257954398760642,
+    "note": "ideal solution, closed C(IV) system; W4's contract activity model may shift log10 Omega; the expectation holds while that shift is below margin_log10",
+    "sign_holds_for_all_reference_variants": true
+   }
+  }
+ ],
+ "for": "lane p0-w4, the C5 R-slurry Omega evaluator (cp3 decision 2)",
+ "generated_utc": "2026-10-17T12:45:10Z",
+ "ion_pair_keys": [
+  {
+   "from": "value",
+   "key": "log10_k_cahco3",
+   "row_ids": [
+    "TF-043"
+   ],
+   "status": "single-source",
+   "unit": "1",
+   "value": 1.11
+  },
+  {
+   "from": "value",
+   "key": "log10_k_caco3_aq",
+   "row_ids": [
+    "TF-044"
+   ],
+   "status": "single-source",
+   "unit": "1",
+   "value": 3.22
+  }
+ ],
+ "kind": "omega-test-fixture",
+ "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+ "params_snapshot": "results/preprint/pourbaix/inputs/params_8bc15c8.json",
+ "question": "Does the C5 R-slurry Omega test (measured Ksp, contract carbonate speciation) report calcite unstable at a sourced condition where it dissolves, and stable where it is supersaturated? (thermodynamic proxy; no rates)",
+ "reference_state": {
+  "C_T": {
+   "from": "value",
+   "key": "dic_slurry",
+   "row_ids": [
+    "TA-019",
+    "TF-032"
+   ],
+   "status": "sourced",
+   "unit": "mol m^-3",
+   "value": 10.75,
+   "value_mol_kg": 0.01075
+  },
+  "a_CO3_ideal": 0.003427954149920259,
+  "a_Ca_saturated": 9.659730177263121e-07,
+  "log10_ksp_calcite": {
+   "from": "value",
+   "key": "log10_ksp_calcite",
+   "row_ids": [
+    "TC-033"
+   ],
+   "status": "single-source",
+   "unit": "1",
+   "value": -8.48
+  },
+  "pH": {
+   "from": "range.min",
+   "key": "ph_slurry",
+   "row_ids": [
+    "TA-001",
+    "TA-002",
+    "TA-005",
+    "TA-006",
+    "TA-010",
+    "TA-011",
+    "TA-012",
+    "TA-016",
+    "TB-015",
+    "TF-033",
+    "TJ-094",
+    "TJ-095",
+    "TJ-096",
+    "TJ-097",
+    "TJ-098"
+   ],
+   "status": "sourced",
+   "unit": "1",
+   "value": 10.0
+  },
+  "pk1_carbonic": {
+   "from": "value",
+   "key": "pk1_carbonic",
+   "row_ids": [
+    "TF-039",
+    "TF-041"
+   ],
+   "status": "sourced",
+   "unit": "1",
+   "value": 6.351
+  },
+  "pk2_carbonic": {
+   "from": "value",
+   "key": "pk2_carbonic",
+   "row_ids": [
+    "TF-040",
+    "TF-042"
+   ],
+   "status": "sourced",
+   "unit": "1",
+   "value": 10.3295
+  },
+  "statement": "a slurry saturated with calcite (Omega = 1) at the low end of the unmodified slurry pH and the central dissolved carbonate; it fixes the free Ca2+ activity carried into both cases"
+ },
+ "scope": "Thermodynamic proxies only: Omega says whether calcite is at or above equilibrium, never how fast it dissolves.",
+ "session": "P0-W5.3"
+}

@@ -1261,6 +1261,62 @@
    "unit": "1",
    "value": 1.825
   },
+  "log10_k_caco3_aq": {
+   "best_grade": "C",
+   "conditions": "Ca2+ + CO3 2- = CaCO3(aq), 298.15 K, I = 0",
+   "correlation_group": "carbonate_system",
+   "method": "U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)",
+   "notes": "WATEQ4F value; original Plummer and Busenberg 1982.",
+   "prior": {
+    "family": "uniform",
+    "high": 3.5,
+    "low": 2.94
+   },
+   "range": {
+    "max": 3.5,
+    "min": 2.94
+   },
+   "regimes": [
+    "R-slurry"
+   ],
+   "rule": "U1",
+   "sources": [
+    "TF-044"
+   ],
+   "status": "single-source",
+   "symbol": "K_CaCO3_aq",
+   "transform": "log10",
+   "unit": "1",
+   "value": 3.22
+  },
+  "log10_k_cahco3": {
+   "best_grade": "C",
+   "conditions": "Ca2+ + HCO3- = CaHCO3+, 298.15 K, I = 0",
+   "correlation_group": "carbonate_system",
+   "method": "U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)",
+   "notes": "WATEQ4F value; original Plummer and Busenberg 1982.",
+   "prior": {
+    "family": "uniform",
+    "high": 1.25,
+    "low": 0.97
+   },
+   "range": {
+    "max": 1.25,
+    "min": 0.97
+   },
+   "regimes": [
+    "R-slurry"
+   ],
+   "rule": "U1",
+   "sources": [
+    "TF-043"
+   ],
+   "status": "single-source",
+   "symbol": "K_CaHCO3",
+   "transform": "log10",
+   "unit": "1",
+   "value": 1.11
+  },
   "log10_ksp_acc": {
    "best_grade": "B",
    "conditions": "ACC at 24.5-25 C; titration-onset free-ion products (pH 9-10) and dissolution equilibria of separately prepared ACC",
@@ -2885,6 +2941,44 @@
    "thread": "T-F",
    "unit": "1",
    "value": "10.33"
+  },
+  "TF-043": {
+   "conditions": "T=298.15 K; pH=n.a.; I=0; solvent=water; phase=aqueous; surface=n.a.",
+   "contrary": "n",
+   "doi": "10.3133/ofr91183",
+   "extraction_route": "full text",
+   "grade": "C",
+   "locator": "p. 26 (pdf p. 32), Table 2, species 77 (kCaHCO3 +)",
+   "method": "compilation: WATEQ4F database (Ball & Nordstrom 1991)",
+   "notes": "Source 53 = Plummer & Busenberg 1982 (original paywalled). DrH0 5.410 kcal/mol; temperature function log K = 1209.12 + 0.31294T - 34765.05/T - 478.782 log T. Must be used with the WATEQ Debye-Huckel parameters (TF-045 to TF-047) for consistency.",
+   "quantity": "logk_cahco3",
+   "range_or_uncertainty": "\u00b10.07",
+   "retrieved_at": "2026-10-16T20:02:53Z",
+   "retro_candidate": "n",
+   "row_id": "TF-043",
+   "symbol": "log K (Ca2+ + HCO3- = CaHCO3+)",
+   "thread": "T-F",
+   "unit": "1",
+   "value": "1.11"
+  },
+  "TF-044": {
+   "conditions": "T=298.15 K; pH=n.a.; I=0; solvent=water; phase=aqueous; surface=n.a.",
+   "contrary": "n",
+   "doi": "10.3133/ofr91183",
+   "extraction_route": "full text",
+   "grade": "C",
+   "locator": "p. 26 (pdf p. 32), Table 2, species 78 (kCaCO3 aq)",
+   "method": "compilation: WATEQ4F database (Ball & Nordstrom 1991)",
+   "notes": "Source 53 = Plummer & Busenberg 1982. DrH0 4.030 kcal/mol; log K = -1228.732 - 0.299444T + 35512.75/T + 485.818 log T. Same table: calcite log Ksp -8.48 +- 0.02 and aragonite -8.336 +- 0.020 (same original as Day 1 ksp rows).",
+   "quantity": "logk_caco3_aq",
+   "range_or_uncertainty": "\u00b10.14",
+   "retrieved_at": "2026-10-16T20:02:53Z",
+   "retro_candidate": "n",
+   "row_id": "TF-044",
+   "symbol": "log K (Ca2+ + CO3 2- = CaCO3 0)",
+   "thread": "T-F",
+   "unit": "1",
+   "value": "3.22"
   },
   "TF-045": {
    "conditions": "T=25 C (A and B temperature dependent); pH=n.a.; I=n.s.; solvent=water; phase=aqueous; surface=n.a.",

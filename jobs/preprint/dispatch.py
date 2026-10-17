@@ -30,6 +30,9 @@ RUN_JOB = HERE / "remote" / "run_job.sh"
 LEDGER = REPO / "jobs" / "ledger" / "p0-w5.jsonl"
 SSH_OPTS = ["-o", "ServerAliveInterval=15", "-o", "ServerAliveCountMax=4", "-o", "BatchMode=yes"]
 LEDGER_FORMAT = "p0-dispatch/1"
+# A collected file is committed (git add -f, since *.log and *.out are ignored) only up to this size;
+# a larger one stays local and the ledger records it under local_only by sha256 and size (lane note N19).
+COMMIT_LIMIT_BYTES = 1 << 20
 
 
 def utc_now():
@@ -173,7 +176,8 @@ class SSHTransport(Transport):
             raise DispatchError("scp get failed: %s" % p.stderr[-300:])
 
     def describe(self):
-        return {"transport": self.name, "target": self.target, "port": self.port, "remote_root": self.remote_root}
+        # committed in the ledger: no user, host, port or key path (standing rule on the SSH string)
+        return {"transport": self.name, "host": "cpu-pod", "remote_root": self.remote_root}
 
 
 # =================================================================================== jobs
@@ -303,11 +307,36 @@ def collect(tr, spec, dest):
     return man, got
 
 
-def ledger_line(spec, commit, sync_info, launch_info, final, collected, dest, tr, ledger=LEDGER, session="P0-W5.2"):
+def split_for_commit(files, limit=COMMIT_LIMIT_BYTES):
+    """(committed, local_only) ledger entries. `outputs` lists only files that are committed, which is
+    what `nacre verify`'s provenance check requires of a clean checkout; larger files are recorded by
+    hash with local_only set and are never listed as outputs."""
+    committed, local = [], []
+    for p in files:
+        rel = Path(p).resolve().relative_to(REPO).as_posix()
+        size = Path(p).stat().st_size
+        entry = {"path": rel, "sha256": sha256_file(p)}
+        if size <= limit:
+            committed.append(entry)
+        else:
+            local.append({**entry, "bytes": size, "local_only": True})
+    return committed, local
+
+
+def git_add_outputs(rec, repo=REPO):
+    """Stage every committed output of a ledger record, ignored files included (git add -f)."""
+    paths = [o["path"] for o in rec["outputs"]]
+    if paths:
+        subprocess.run(["git", "-C", str(repo), "add", "-f", "--"] + paths, check=True)
+    return paths
+
+
+def ledger_line(spec, commit, sync_info, launch_info, final, collected, dest, tr, ledger=LEDGER, session="P0-W5.3"):
     """One line per job (format p0-dispatch/1, README.md)."""
     state, hb, st, beats = final
     files = [p["path"] for p in collected]
     files += sorted(Path(dest).joinpath("logs").glob("*")) + [Path(dest) / "manifest.json"]
+    committed, local = split_for_commit(files)
     rec = {
         "format": LEDGER_FORMAT, "session": session, "run": spec["run_id"], "kind": "dispatch",
         "job": spec["id"], "mock": bool(spec.get("mock", False)), "transport": tr.describe(),
@@ -317,7 +346,7 @@ def ledger_line(spec, commit, sync_info, launch_info, final, collected, dest, tr
         "finished_utc": (st or {}).get("finished_utc"), "state": state, "exit_code": (st or {}).get("exit_code"),
         "heartbeats": beats, "heartbeat_last_utc": (hb or {}).get("utc"),
         "packages": spec["packages"], "utc": utc_now(),
-        "outputs": [{"path": Path(p).resolve().relative_to(REPO).as_posix(), "sha256": sha256_file(p)} for p in files],
+        "commit_limit_bytes": COMMIT_LIMIT_BYTES, "outputs": committed, "local_only": local,
     }
     Path(ledger).parent.mkdir(parents=True, exist_ok=True)
     with open(ledger, "a", encoding="utf-8") as fh:
@@ -325,42 +354,97 @@ def ledger_line(spec, commit, sync_info, launch_info, final, collected, dest, tr
     return rec
 
 
-def run_job(spec_path, tr, dest_root=REPO / "results" / "preprint" / "anchor" / "dispatch", commit="HEAD",
-            ledger=LEDGER, timeout_s=3600, poll_s=5, run_id=None):
+DEST_ROOT = REPO / "results" / "preprint" / "anchor" / "dispatch"
+RUNS = REPO / ".local" / "w5" / "runs"  # local-only launch records, read back by `collect`
+
+
+def start_job(spec_path, tr, commit="HEAD", run_id=None, runs=RUNS):
+    """Pin, sync and launch; write the launch record that `finish_job` reads back."""
     spec = load_spec(spec_path)
     commit = pin(commit)
     spec["run_id"] = run_id or "%s-%s" % (spec["id"], commit[:7])
-    dest = Path(dest_root) / spec["run_id"]
     with tempfile.TemporaryDirectory() as work:
         info = sync(tr, spec, commit, work)
     li = launch(tr, spec)
+    rec = {"spec_path": str(spec_path), "spec": spec, "commit": commit, "sync": info, "launch": li}
+    Path(runs).mkdir(parents=True, exist_ok=True)
+    (Path(runs) / (spec["run_id"] + ".json")).write_text(json.dumps(rec, indent=1, sort_keys=True), encoding="utf-8")
+    return rec
+
+
+def finish_job(started, tr, dest_root=DEST_ROOT, ledger=LEDGER, timeout_s=3600, poll_s=5, session="P0-W5.3"):
+    """Wait for a launched job, collect it hash-verified and append its ledger line."""
+    spec = started["spec"]
     final = wait(tr, spec, timeout_s=timeout_s, poll_s=poll_s)
     if final[0] not in ("done", "failed"):
         raise DispatchError("job %s ended in state %s" % (spec["run_id"], final[0]))
+    dest = Path(dest_root) / spec["run_id"]
     man, got = collect(tr, spec, dest)
-    return ledger_line(spec, commit, info, li, final, got, dest, tr, ledger=ledger)
+    return ledger_line(spec, started["commit"], started["sync"], started["launch"], final, got, dest, tr,
+                       ledger=ledger, session=session)
+
+
+def run_job(spec_path, tr, dest_root=DEST_ROOT, commit="HEAD", ledger=LEDGER, timeout_s=3600, poll_s=5,
+            run_id=None, runs=RUNS, session="P0-W5.3"):
+    started = start_job(spec_path, tr, commit=commit, run_id=run_id, runs=runs)
+    return finish_job(started, tr, dest_root=dest_root, ledger=ledger, timeout_s=timeout_s, poll_s=poll_s,
+                      session=session)
+
+
+def _transport(args):
+    if args.transport == "local":
+        return LocalTransport(args.root or REPO / ".local" / "pod", extra_path=[args.tmux_bin])
+    ssh = args.ssh
+    if args.ssh_file:
+        ssh = Path(args.ssh_file).read_text(encoding="utf-8").strip()
+    if not ssh:
+        raise SystemExit("--ssh or --ssh-file is required for the ssh transport")
+    return SSHTransport(ssh, args.remote_root)
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="jobs/preprint/dispatch.py")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    r = sub.add_parser("run", help="sync, launch, wait, collect and write the ledger line")
-    r.add_argument("--spec", required=True)
-    r.add_argument("--transport", choices=["local", "ssh"], required=True)
-    r.add_argument("--root", help="local transport: directory that plays the pod")
-    r.add_argument("--ssh", help="ssh transport: the pod's SSH string")
-    r.add_argument("--remote-root", default="/workspace/nacre")
-    r.add_argument("--commit", default="HEAD")
-    r.add_argument("--timeout", type=int, default=6 * 3600)
-    r.add_argument("--tmux-bin", default=str(Path.home() / ".nacre-envs" / "tmux" / "bin"))
+    cmds = {"run": "sync, launch, wait, collect and write the ledger line",
+            "launch": "sync and launch only; writes .local/w5/runs/<run_id>.json",
+            "status": "print the state and heartbeat of a launched run",
+            "collect": "wait for a launched run, collect it and write the ledger line"}
+    for name, help_ in cmds.items():
+        r = sub.add_parser(name, help=help_)
+        if name in ("run", "launch"):
+            r.add_argument("--spec", required=True)
+            r.add_argument("--commit", default="HEAD")
+            r.add_argument("--run-id")
+        else:
+            r.add_argument("--run-id", required=True)
+        r.add_argument("--transport", choices=["local", "ssh"], required=True)
+        r.add_argument("--root", help="local transport: directory that plays the pod")
+        r.add_argument("--ssh", help="ssh transport: the pod's SSH string")
+        r.add_argument("--ssh-file", help="ssh transport: file holding the SSH string (kept under .local/)")
+        r.add_argument("--remote-root", default="/workspace/nacre")
+        r.add_argument("--timeout", type=int, default=6 * 3600)
+        r.add_argument("--session", default="P0-W5.3")
+        r.add_argument("--stage", action="store_true", help="git add -f the committed outputs")
+        r.add_argument("--tmux-bin", default=str(Path.home() / ".nacre-envs" / "tmux" / "bin"))
     args = ap.parse_args(argv)
-    if args.transport == "local":
-        tr = LocalTransport(args.root or REPO / ".local" / "pod", extra_path=[args.tmux_bin])
+    tr = _transport(args)
+    if args.cmd == "launch":
+        rec = start_job(args.spec, tr, commit=args.commit, run_id=args.run_id)
+        print(json.dumps({"run": rec["spec"]["run_id"], "session": rec["launch"]["session"],
+                          "archive_sha256": rec["sync"]["archive_sha256"]}, indent=1))
+        return 0
+    if args.cmd in ("status", "collect"):
+        started = json.loads((RUNS / (args.run_id + ".json")).read_text(encoding="utf-8"))
+        if args.cmd == "status":
+            state, hb, st = status(tr, started["spec"])
+            print(json.dumps({"run": args.run_id, "state": state, "heartbeat": hb, "status": st}, indent=1))
+            return 0
+        rec = finish_job(started, tr, timeout_s=args.timeout, session=args.session)
     else:
-        if not args.ssh:
-            raise SystemExit("--ssh is required for the ssh transport")
-        tr = SSHTransport(args.ssh, args.remote_root)
-    rec = run_job(args.spec, tr, commit=args.commit, timeout_s=args.timeout)
+        rec = run_job(args.spec, tr, commit=args.commit, timeout_s=args.timeout, run_id=args.run_id,
+                      session=args.session)
+    if args.stage:
+        git_add_outputs(rec)
     print(json.dumps({k: rec[k] for k in ("run", "state", "exit_code", "heartbeats", "archive_sha256")}, indent=1))
     return 0 if rec["state"] == "done" else 1
 

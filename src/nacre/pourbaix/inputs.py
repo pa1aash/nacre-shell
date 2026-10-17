@@ -33,6 +33,7 @@ KEYS = [
     "ph_slurry", "ph_slurry_modified", "e_she_slurry", "acc_offset", "a_ca_slurry", "c_bulk_slurry",
     "a_co3_slurry", "dic_slurry", "a_w_slurry", "t_slurry", "t_drying_primary", "t_drying_secondary",
     "ionic_strength_slurry", "pk1_carbonic", "pk2_carbonic", "log10_ksp_calcite", "log10_ksp_acc",
+    "log10_k_cahco3", "log10_k_caco3_aq",
     "framing", "formation_energy_mae", "dfg_corundum", "dfg_boehmite", "dfg_gibbsite",
     # R-cell
     "e_cell_min", "e_cell_max", "al_onset_ffree", "t_cell", "electrolyte_salts", "electrolyte_solvents",
@@ -47,6 +48,13 @@ KEYS = [
     # anchor (protocol test and binding cycle)
     "m_seq_method_error", "dg_hyd_ca_marcus", "dg_hyd_ca_tissandier", "dg_bind_ca_acetate",
     "log10_k_ca_carboxylate", "water_density",
+]
+
+# Keys W1 added at P0-W1.3 (cp3 R2 and R10): read when present, so that snapshots of earlier params
+# shas still build.
+OPTIONAL_KEYS = [
+    "window_margin_expt", "e_cell_max_lfp", "e_cell_max_layered", "e_cell_max_lco", "e_cell_max_lmo",
+    "e_cell_max_lnmo", "solvation_ca_vs_li_water_analog", "solvation_al_vs_li_water_analog",
 ]
 
 # Evidence rows read beyond the sources of KEYS: the DFT protocol benchmarks (task D) and the
@@ -89,6 +97,7 @@ def build_snapshot(params_sha):
     if missing:
         raise SnapshotError("params at %s lacks keys %s" % (params_sha, missing))
     entries = {k: doc["params"][k] for k in KEYS}
+    entries.update({k: doc["params"][k] for k in OPTIONAL_KEYS if k in doc["params"]})
     want = set(EXTRA_ROWS)
     for e in entries.values():
         want |= set(e.get("sources") or [])

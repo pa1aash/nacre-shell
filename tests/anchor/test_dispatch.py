@@ -43,13 +43,16 @@ def test_full_cycle_on_the_local_transport(tmp_path):
     ledger = tmp_path / "ledger.jsonl"
     dest = REPO / ".local" / "test_dispatch" / tmp_path.name
     try:
-        rec = D.run_job(spec, tr, dest_root=dest, ledger=ledger, timeout_s=120, poll_s=1, run_id="t-%d" % time.time_ns())
+        rec = D.run_job(spec, tr, dest_root=dest, ledger=ledger, timeout_s=120, poll_s=1, run_id="t-%d" % time.time_ns(),
+                        runs=tmp_path / "runs")
         assert rec["state"] == "done" and rec["exit_code"] == 0
         assert rec["format"] == D.LEDGER_FORMAT and rec["heartbeats"] >= 1
         paths = {o["path"].rsplit("/", 1)[-1] for o in rec["outputs"]}
         assert {"a.txt", "b.txt", "manifest.json", "install.log", "status.json"} <= paths
         line = json.loads(ledger.read_text().splitlines()[-1])
         assert line["run"] == rec["run"] and line["packages"] == ["demo==1.0"]
+        assert line["session"] == "P0-W5.3" and line["local_only"] == []
+        assert (tmp_path / "runs" / (rec["run"] + ".json")).is_file()
         install = (dest / rec["run"] / "logs" / "install.log").read_text()
         assert "would install demo==1.0" in install
     finally:
@@ -107,3 +110,38 @@ def test_ssh_string_parsing():
     assert "-P" in t._scp() and "-p" in t._ssh() and "StrictHostKeyChecking=no" in t._ssh()
     with pytest.raises(D.DispatchError):
         D.SSHTransport("ssh -p 22", "/x")
+
+
+def test_ssh_description_names_no_user_host_or_port():
+    t = D.SSHTransport("ssh -p 2222 root@203.0.113.7 -i ~/.ssh/k", "/workspace/n")
+    text = json.dumps(t.describe())
+    for secret in ("root@", "203.0.113.7", "2222", ".ssh"):
+        assert secret not in text
+
+
+def test_files_over_the_commit_limit_are_recorded_local_only(tmp_path):
+    dest = REPO / ".local" / "test_dispatch" / ("split-" + tmp_path.name)
+    dest.mkdir(parents=True)
+    try:
+        small, big = dest / "job.log", dest / "big.log"
+        small.write_text("ok\n")
+        big.write_bytes(b"x" * 101)
+        committed, local = D.split_for_commit([small, big], limit=100)
+        assert [c["path"].rsplit("/", 1)[-1] for c in committed] == ["job.log"]
+        assert local[0]["path"].endswith("big.log") and local[0]["local_only"] is True
+        assert local[0]["bytes"] == 101 and len(local[0]["sha256"]) == 64
+    finally:
+        shutil.rmtree(dest, ignore_errors=True)
+
+
+def test_every_ledger_output_is_tracked_by_git():
+    """A clean checkout has every listed output (nacre verify provenance; lane note N19)."""
+    import subprocess
+
+    tracked = set(subprocess.run(["git", "-C", str(REPO), "ls-files", "-z"], capture_output=True,
+                                 text=True, check=True).stdout.split("\0"))
+    for no, line in enumerate((REPO / "jobs" / "ledger" / "p0-w5.jsonl").read_text().splitlines(), 1):
+        if not line.strip():
+            continue
+        for out in json.loads(line).get("outputs") or []:
+            assert out["path"] in tracked, (no, out["path"])

@@ -1,0 +1,380 @@
+{
+ "results/preprint/pourbaix/c5/slurry/aCa1e-01_CTmax_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-01_CTmax_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-01_CTmax_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-01_CTmin_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-01_CTmin_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-01_CTmin_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-01_CTvalue_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-01_CTvalue_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-01_CTvalue_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-02_CTmax_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-02_CTmax_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-02_CTmax_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-02_CTmin_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-02_CTmin_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-02_CTmin_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-02_CTvalue_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-02_CTvalue_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-02_CTvalue_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-03_CTmax_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-03_CTmax_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-03_CTmax_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-03_CTmin_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-03_CTmin_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-03_CTmin_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-03_CTvalue_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-03_CTvalue_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-03_CTvalue_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-04_CTmax_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-04_CTmax_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-04_CTmax_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-04_CTmin_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-04_CTmin_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-04_CTmin_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-04_CTvalue_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-04_CTvalue_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-04_CTvalue_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-05_CTmax_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-05_CTmax_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-05_CTmax_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-05_CTmin_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-05_CTmin_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-05_CTmin_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-05_CTvalue_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-05_CTvalue_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-05_CTvalue_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-06_CTmax_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-06_CTmax_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-06_CTmax_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-06_CTmin_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-06_CTmin_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-06_CTmin_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-06_CTvalue_Al1e-04.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-06_CTvalue_Al1e-06.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/c5/slurry/aCa1e-06_CTvalue_Al1e-08.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ }
+}

@@ -57,3 +57,22 @@ def test_ion_records_are_plain_json(offline):  # noqa: F811
     json.dumps(recs)
     carbonates = {r["identifier"] for r in recs if r["data"]["MajElements"] == "C"}
     assert {"CO2(aq)", "HCO3[-]", "CO3[2-]"} <= carbonates
+
+
+def test_no_cached_entry_is_excluded_by_licence(offline):  # noqa: F811
+    """Every cached Materials Project entry carries BY-C; GNoME (BY-NC) entries are excluded."""
+    for name in cache.files_of_kind("mp_entries"):
+        assert cache.excluded_entries(name) == [], name
+
+
+def test_load_entries_drops_a_by_nc_entry(offline, tmp_path):  # noqa: F811
+    import shutil
+
+    name = cache.files_of_kind("mp_entries")[0]
+    shutil.copy(cache.CACHE_DIR / cache.MANIFEST, tmp_path / cache.MANIFEST)
+    rec = cache.load(name)
+    n = len(rec["response"])
+    rec["response"][0]["data"]["license"] = "BY-NC"
+    (tmp_path / name).write_text(json.dumps(rec), encoding="utf-8")
+    assert len(cache.load_entries(name, tmp_path)) == n - 1
+    assert cache.excluded_entries(name, tmp_path)[0][1] == "BY-NC"
