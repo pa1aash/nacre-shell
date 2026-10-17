@@ -7,9 +7,9 @@ meta:
   generated_by: uv run python -m nacre.lit.build_params
   spec: lit/corpus/params_spec.yaml
   rule: lit/corpus/params_README.md
-  rule_sha256: 423f4daccd0fbd501aaf90922d4f75091c4fa9436588e56a24789543829a99ad
-  evidence_table_sha256: a4fbbc91519ec565f586312b1d13914a12b92c46edf6c84bde973456ce0346b7
-  generated_utc: '2026-10-16T20:44:35Z'
+  rule_sha256: 6c78f4bf46dc55cd300b7b3cb7b8ffc1f00e5ba82d02eec8e48cd36f86e12734
+  evidence_table_sha256: 90c034cb8b79c2f8161fca0d3f0824ae321189d57692cb47c66d9d70dfb93666
+  generated_utc: '2026-10-17T11:00:21Z'
   session: P0-W1.2
   inputs_from:
   - theory/derivation_body.tex section 11
@@ -54,6 +54,8 @@ params:
       (not admitted, E2): TC-014, TC-017, TC-018, TC-019, TC-020. Same original as an admitted row, not counted
       again (E3): TC-006, TC-007.'
     method: 'U1: uniform over the sourced span; 7 admitted row(s), 7 independent original(s)'
+    role: primary
+    flags: []
   gamma_nl_acc:
     symbol: gamma_nl
     transform: none
@@ -80,7 +82,50 @@ params:
       abstract only, grade D) is excluded by E5 and recorded in lit/conflicts.md. Comparators (not admitted, E2):
       TG-018.'
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   gamma_sl0_template:
+    symbol: gamma_sl0
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 0.002
+    range:
+      min: 0.0
+      max: 0.0034
+    prior:
+      family: uniform
+      low: 0.0
+      high: 0.0034
+    rule: T1
+    sources:
+    - TH-049
+    - TH-052
+    - TH-054
+    - TH-056
+    best_grade: C
+    conditions: polydopamine film against water, from contact angles of probe liquids (van Oss and Owens-Wendt analyses)
+    correlation_group: young_energies
+    notes: 'Template (polydopamine) - water interfacial free energy, derived from printed surface-energy components
+      (grade C). The same quantity is gamma_pw of C1. The three Owens-Wendt rows are three deposition times in one
+      paper. The van Oss route gives a negative value and Owens-Wendt small positive ones; the sign follows the
+      model (lit/conflicts.md). No COOH, chitosan or alginate value was found. Measured in pure water, these are
+      Ca-free values: gamma_sl0 of contract v2 (theory/thresholds.md), not gamma_sl at the regime Ca2+ activity.
+      cp3 R8: the prior is truncated at 0 (gamma >= 0; a negative template-water energy is a van Oss artifact, theory/ignorance_priors.md
+      1d), and the untruncated span is kept as gamma_sl0_template_untruncated, a labelled sensitivity.'
+    method: 'T1: sourced span -0.027 to 0.0034 cut at 0.0 by cp3 ruling R8 (2026-10-17); U1: uniform over the sourced
+      span; 4 admitted row(s), 4 independent original(s)'
+    truncation:
+      side: min
+      bound: 0.0
+      ruling: cp3 ruling R8 (2026-10-17)
+      sensitivity_key: gamma_sl0_template_untruncated
+    role: primary
+    flags:
+    - truncated
+  gamma_sl0_template_untruncated:
     symbol: gamma_sl0
     transform: none
     unit: J m^-2
@@ -102,14 +147,14 @@ params:
     - TH-054
     - TH-056
     best_grade: C
-    conditions: polydopamine film against water, from contact angles of probe liquids (van Oss and Owens-Wendt analyses)
+    conditions: as gamma_sl0_template
     correlation_group: young_energies
-    notes: 'Template (polydopamine) - water interfacial free energy, derived from printed surface-energy components
-      (grade C). The same quantity is gamma_pw of C1. The three Owens-Wendt rows are three deposition times in one
-      paper. The van Oss route gives a negative value and Owens-Wendt small positive ones; the sign follows the
-      model (lit/conflicts.md). No COOH, chitosan or alginate value was found. Measured in pure water, these are
-      Ca-free values: gamma_sl0 of contract v2 (theory/thresholds.md), not gamma_sl at the regime Ca2+ activity.'
+    notes: 'Labelled sensitivity (cp3 R8): the sourced span of gamma_sl0_template without the cut at zero, including
+      the negative van Oss value (TH-049). Never decides a verdict.'
     method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s)'
+    role: sensitivity
+    of: gamma_sl0_template
+    flags: []
   gamma_sn0_template:
     symbol: gamma_sn0
     transform: none
@@ -131,6 +176,8 @@ params:
     correlation_group: young_energies
     notes: 'Comparators (not admitted, E2): TC-088, TH-038.'
     method: no admitted row (X1)
+    role: primary
+    flags: []
   delta_gamma_w:
     symbol: Delta_gamma_w
     transform: none
@@ -151,6 +198,8 @@ params:
     correlation_group: young_energies
     notes: 'Comparators (not admitted, E2): TH-024.'
     method: no admitted row (X1)
+    role: primary
+    flags: []
   gamma_eff_het_organic:
     symbol: gamma_eff_het
     transform: none
@@ -206,6 +255,8 @@ params:
       (not admitted, E2): TC-084, TC-085, TC-086, TC-087, TC-089, TC-090, TC-091, TC-092, TH-020, TH-021. Same original
       as an admitted row, not counted again (E3): TC-080, TC-081.'
     method: 'U1: uniform over the sourced span; 27 admitted row(s), 27 independent original(s)'
+    role: primary
+    flags: []
   v_m_calcite:
     symbol: V_m
     transform: none
@@ -234,6 +285,8 @@ params:
     notes: Volume per formula unit times the Avogadro constant (exact SI) for TC-049. TF-008 is biogenic (otolith)
       calcite.
     method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s)'
+    role: primary
+    flags: []
   v_m_acc:
     symbol: V_m
     transform: none
@@ -260,6 +313,9 @@ params:
       ACC (TC-054, TC-055) is far lower; that gap is in lit/conflicts.md. The molar volume per CaCO3 includes structural
       water. Comparators (not admitted, E2): TC-054, TC-055, TG-017.'
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   v_m_aragonite:
     symbol: V_m
     transform: none
@@ -284,6 +340,8 @@ params:
     correlation_group: null
     notes: ''
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   v_m_vaterite:
     symbol: V_m
     transform: none
@@ -307,6 +365,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   log10_ksp_calcite:
     symbol: K_sp
     transform: log10
@@ -331,6 +392,9 @@ params:
       dependence and are not at 298 K. Comparators (not admitted, E2): TC-034, TC-036. Same original as an admitted
       row, not counted again (E3): TC-035.'
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   log10_ksp_acc:
     symbol: K_sp
     transform: log10
@@ -368,6 +432,8 @@ params:
       (not admitted, E2): TC-039, TG-005, TG-006, TG-008. Same original as an admitted row, not counted again (E3):
       TC-038.'
     method: 'U1: uniform over the sourced span; 8 admitted row(s), 8 independent original(s)'
+    role: primary
+    flags: []
   log10_ksp_aragonite:
     symbol: K_sp
     transform: log10
@@ -390,6 +456,9 @@ params:
     correlation_group: solubility
     notes: 'Same original as an admitted row, not counted again (E3): TC-046.'
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   log10_ksp_vaterite:
     symbol: K_sp
     transform: log10
@@ -412,23 +481,26 @@ params:
     correlation_group: solubility
     notes: 'Same original as an admitted row, not counted again (E3): TC-044.'
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   acc_offset:
     symbol: Delta_ACC
     transform: none
     unit: J mol^-1
-    regimes: &id039
+    regimes: &id074
     - shared
     status: sourced
     value: 11930.0
-    range: &id040
+    range: &id075
       min: 5380.0
       max: 13000.0
-    prior: &id041
+    prior: &id076
       family: uniform
       low: 5380.0
       high: 13000.0
     rule: U1
-    sources: &id042
+    sources: &id077
     - TC-030
     - TG-011
     - TG-012
@@ -441,6 +513,8 @@ params:
       enthalpies (TC-026 to TC-029, TG-009) are enthalpies, not free energies. Comparators (not admitted, E2): TC-026,
       TC-027, TC-028, TC-029, TG-009. Same original as an admitted row, not counted again (E3): TC-031.'
     method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: &id078 []
   pk1_carbonic:
     symbol: pK1_carbonic
     transform: none
@@ -465,6 +539,8 @@ params:
     correlation_group: carbonate_system
     notes: ''
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   pk2_carbonic:
     symbol: pK2_carbonic
     transform: none
@@ -489,6 +565,8 @@ params:
     correlation_group: carbonate_system
     notes: ''
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   log10_k_cahco3:
     symbol: K_CaHCO3
     transform: log10
@@ -512,6 +590,9 @@ params:
     correlation_group: carbonate_system
     notes: WATEQ4F value; original Plummer and Busenberg 1982.
     method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   log10_k_caco3_aq:
     symbol: K_CaCO3_aq
     transform: log10
@@ -535,6 +616,9 @@ params:
     correlation_group: carbonate_system
     notes: WATEQ4F value; original Plummer and Busenberg 1982.
     method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   a_co3_slurry:
     symbol: a_CO3
     transform: none
@@ -556,6 +640,471 @@ params:
     correlation_group: null
     notes: 'Comparators (not admitted, E2): TF-045, TF-046, TF-047.'
     method: no admitted row (X2)
+    role: primary
+    flags: []
+  gamma_nv_calcite:
+    symbol: gamma_nv
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 0.527
+    range:
+      min: 0.428
+      max: 0.86
+    prior:
+      family: uniform
+      low: 0.428
+      high: 0.86
+    rule: U1
+    sources:
+    - TL-001
+    - TL-008
+    - TL-009
+    - TL-016
+    - TL-017
+    - TL-018
+    - TL-019
+    - TL-020
+    best_grade: B
+    conditions: calcite {10-14} surface free energy against vacuum, relaxed slabs, DFT (0 K and 300 K), force fields
+      and MD
+    correlation_group: null
+    notes: 'Dry surface energy of the calcite framing (theory/ignorance_priors.md 1a: gamma_max = gamma_p + gamma_nv).
+      Every admitted value is computed: no experiment gives the free energy against vacuum. TL-027 (water spreads
+      on fresh cleavage, so the total exceeds the water surface tension) is a consistent lower bound; TL-023 (an
+      equation-of-state estimate its authors judge unrealistic) and the dispersive components (TL-025 to TL-030)
+      are not this quantity. Other faces (TL-002 to TL-007, TL-010 to TL-015) are higher; {10-14} is the cleavage
+      and growth face. Comparators (not admitted, E2): TL-021, TL-022, TL-023, TL-024, TL-027, TL-002, TL-003, TL-004,
+      TL-005, TL-006, TL-007, TL-010, TL-011, TL-012, TL-013, TL-014, TL-015, TL-025, TL-026, TL-028, TL-029, TL-030.'
+    method: 'U1: uniform over the sourced span; 8 admitted row(s), 8 independent original(s)'
+    role: primary
+    flags: []
+  gamma_nv_acc:
+    symbol: gamma_nv
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    value: null
+    range: null
+    range_reason: 'gap: no measured or computed dry surface free energy of ACC was found; the source that studies
+      ACC energetics states it is unknown (TL-031). Navrotsky-group surface enthalpies are a different quantity'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: The flagged analog gamma_nv_acc_calcite_analog (calcite {10-14}) runs beside the ignorance prior of the
+      ACC framing.
+    method: no admitted row (X1)
+    role: primary
+    flags: []
+  gamma_nv_acc_calcite_analog:
+    symbol: gamma_nv
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 0.527
+    range:
+      min: 0.428
+      max: 0.86
+    prior:
+      family: uniform
+      low: 0.428
+      high: 0.86
+    rule: U1
+    sources:
+    - TL-001
+    - TL-008
+    - TL-009
+    - TL-016
+    - TL-017
+    - TL-018
+    - TL-019
+    - TL-020
+    best_grade: B
+    conditions: as gamma_nv_calcite
+    correlation_group: null
+    notes: 'Flagged analog (A1): the calcite {10-14} dry surface energy standing in for ACC, whose value is unknown
+      (TL-031). Verdicts under the ACC framing that use it are conditional on the analog.'
+    method: 'U1: uniform over the sourced span; 8 admitted row(s), 8 independent original(s)'
+    role: analog
+    of: gamma_nv_acc
+    flags:
+    - analog
+  gamma_sn_ignorance_calcite:
+    symbol: gamma_sn
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    value: null
+    range:
+      min: 0.0
+      max: 0.9213
+    prior:
+      family: none
+    rule: I1
+    sources: []
+    best_grade: null
+    method: 'I1: uniform between 0 and g_p + g_nv, drawn per draw of the inputs; the range is the envelope over
+      the input ranges (information only)'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Ignorance prior of the template-nucleus contact energy in water, calcite framing (cp2 gap policy, D15):
+      uniform on [0, gamma_p + gamma_nv], drawn per draw of gamma_p_pda and gamma_nv_calcite. No measured analog
+      of gamma_sn exists (lit/conflicts.md); gamma_eff_het_organic is a validation input of the combined barrier,
+      not of gamma_sn.'
+    ignorance:
+      low: '0'
+      high: g_p + g_nv
+      inputs:
+        g_p: gamma_p_pda
+        g_nv: gamma_nv_calcite
+      authority: theory/ignorance_priors.md section 1a
+    role: primary
+    flags: []
+  gamma_sn_ignorance_acc:
+    symbol: gamma_sn
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    value: null
+    range: null
+    range_reason: 'ignorance prior (I1) whose bound inputs lack a range: gamma_p_pda, gamma_nv_acc'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    method: no admitted row (X1)
+    conditions: n.s.
+    correlation_group: null
+    notes: ACC framing; its bound needs gamma_nv_acc, a gap, so the analog gamma_sn_ignorance_acc_analog runs beside
+      it.
+    ignorance:
+      low: '0'
+      high: g_p + g_nv
+      inputs:
+        g_p: gamma_p_pda
+        g_nv: gamma_nv_acc
+      authority: theory/ignorance_priors.md section 1a
+    role: primary
+    flags: []
+  gamma_sn_ignorance_acc_analog:
+    symbol: gamma_sn
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    value: null
+    range:
+      min: 0.0
+      max: 0.9213
+    prior:
+      family: none
+    rule: I1
+    sources: []
+    best_grade: null
+    method: 'I1: uniform between 0 and g_p + g_nv, drawn per draw of the inputs; the range is the envelope over
+      the input ranges (information only)'
+    conditions: n.s.
+    correlation_group: null
+    notes: The ACC-framing ignorance prior with the calcite dry surface energy as a flagged analog of gamma_nv_acc.
+    ignorance:
+      low: '0'
+      high: g_p + g_nv
+      inputs:
+        g_p: gamma_p_pda
+        g_nv: gamma_nv_acc_calcite_analog
+      authority: theory/ignorance_priors.md section 1a
+    role: analog
+    of: gamma_sn_ignorance_acc
+    flags:
+    - analog
+  gamma_ow_ignorance:
+    symbol: gamma_ow
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    value: null
+    range:
+      min: 0.0
+      max: 0.12931
+    prior:
+      family: none
+    rule: I1
+    sources: []
+    best_grade: null
+    method: 'I1: uniform between 0 and g_o + g_w, drawn per draw of the inputs; the range is the envelope over the
+      input ranges (information only)'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Oxide-water ignorance prior of the C1 comparator route. The tighter complete-wetting bound is not used:
+      measured water contact angles on alumina run from zero on UV-cleaned sapphire to about ninety degrees (TM-040
+      to TM-046), so complete wetting is not established for the native oxide.'
+    ignorance:
+      low: '0'
+      high: g_o + g_w
+      inputs:
+        g_o: gamma_o_alumina
+        g_w: gamma_w
+      authority: theory/ignorance_priors.md section 1c
+    role: primary
+    flags: []
+  gamma_op_ignorance:
+    symbol: gamma_op
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    value: null
+    range:
+      min: 0.0
+      max: 0.1179
+    prior:
+      family: none
+    rule: I1
+    sources: []
+    best_grade: null
+    method: 'I1: uniform between 0 and g_o + g_p, drawn per draw of the inputs; the range is the envelope over the
+      input ranges (information only)'
+    conditions: n.s.
+    correlation_group: null
+    notes: Oxide-polymer ignorance prior of the C1 comparator route; the measured analog is w_adh_wet_catechol_oxide_analog.
+    ignorance:
+      low: '0'
+      high: g_o + g_p
+      inputs:
+        g_o: gamma_o_alumina
+        g_p: gamma_p_pda
+      authority: theory/ignorance_priors.md section 1c
+    role: primary
+    flags: []
+  log10_k_caoh:
+    symbol: K_CaOH
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: single-source
+    value: -12.78
+    range:
+      min: -12.78
+      max: -12.78
+    prior:
+      family: fixed
+      value: -12.78
+    rule: P1
+    sources:
+    - TL-032
+    best_grade: C
+    conditions: Ca2+ + H2O = CaOH+ + H+, 25 C, I = 0
+    correlation_group: null
+    notes: 'Both database manuals trace the value to one original (Nordstrom et al. 1990), so it counts once and
+      the width is not sourced. TL-034 and TL-035 are association constants Ca2+ + OH- = CaOH+ (I = 1 M and I =
+      0), a different reaction. A speciation constant from a critically evaluated database, not a template binding
+      energy, so the W1 widening does not apply. Comparators (not admitted, E2): TL-034, TL-035. Same original as
+      an admitted row, not counted again (E3): TL-033.'
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  debye_huckel_a:
+    symbol: A_DH
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 0.5114
+    range:
+      min: 0.5058
+      max: 0.5241
+    prior:
+      family: uniform
+      low: 0.5058
+      high: 0.5241
+    rule: U1
+    sources:
+    - TL-037
+    - TL-038
+    - TL-039
+    - TL-040
+    - TL-041
+    - TL-044
+    - TL-046
+    best_grade: C
+    conditions: Debye-Hueckel A for log10 activity coefficients on the molality scale, water, 293.15 to 313.15 K
+      (the slurry temperature span)
+    correlation_group: null
+    notes: 'Printed in kg^0.5 mol^-0.5 and stored as the number multiplying the square root of I/(1 mol/kg) (the
+      contract''s A_DH is dimensionless). TL-037 to TL-041 (Archer-Wang, converted by the thread from the osmotic
+      slope, grade C) span the slurry temperatures; TL-044 and TL-046 are values at 25 C. A rises with temperature,
+      so the span is a temperature span; the screen may tie it to t_slurry. TL-036 and TL-042 lie outside the slurry
+      temperatures. Comparators (not admitted, E2): TL-036, TL-042, TL-043, TL-045.'
+    method: 'U1: uniform over the sourced span; 7 admitted row(s), 7 independent original(s)'
+    role: primary
+    flags: []
+  davies_b:
+    symbol: b_D
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 0.3
+    range:
+      min: 0.2
+      max: 0.3
+    prior:
+      family: uniform
+      low: 0.2
+      high: 0.3
+    rule: U1
+    sources:
+    - TL-047
+    - TL-048
+    - TL-049
+    best_grade: C
+    conditions: linear coefficient of the Davies equation, water
+    correlation_group: null
+    notes: The geochemical codes use 0.3; Davies' original form uses 0.2 (read through a quoting source). Both are
+      admitted.
+    method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: []
+  davies_i_val:
+    symbol: I_val
+    transform: none
+    unit: mol kg^-1
+    regimes:
+    - R-slurry
+    status: single-source
+    value: 0.3
+    range:
+      min: 0.1
+      max: 0.5
+    prior:
+      family: uniform
+      low: 0.1
+      high: 0.5
+    rule: U1
+    sources:
+    - TL-050
+    - TL-051
+    best_grade: C
+    conditions: ionic strength up to which the Davies equation is stated to hold
+    correlation_group: null
+    notes: 'Davies'' own statement (about 2 percent accuracy) is the lower end; the upper end is a later textbook
+      statement. TL-052 is the validity of a whole speciation model, not of the Davies equation. Draws of I above
+      I_val are refused (contract v3), and the slurry ionic strength (ionic_strength_slurry) reaches into this span.
+      Comparators (not admitted, E2): TL-052.'
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags:
+    - single_source
+  ca_total_slurry:
+    symbol: Ca_T
+    transform: none
+    unit: mol m^-3
+    regimes:
+    - R-slurry
+    status: design-input
+    value: null
+    range: null
+    range_reason: 'design input (gap policy (ii)): total dissolved calcium Ca_T is set by the design (the Ca source
+      added to the slurry); no aqueous cathode slurry with calcium was found (T-F gaps.md). a_ca_slurry and c_bulk_slurry
+      follow from it through the contract v3 speciation'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: ''
+    method: no admitted row (X1)
+    role: primary
+    flags: []
+  acc_hydration_n:
+    symbol: n_hyd
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 1.2
+    range:
+      min: 0.98
+      max: 1.6
+    prior:
+      family: uniform
+      low: 0.98
+      high: 1.6
+    rule: U1
+    sources:
+    - TL-053
+    - TL-054
+    - TL-055
+    - TL-056
+    - TL-057
+    - TL-059
+    - TL-062
+    best_grade: A
+    conditions: structural water n of synthetic Mg-free ACC CaCO3.nH2O, freshly prepared, by thermogravimetry
+    correlation_group: null
+    notes: 'F7: n of the hydrated framing for the labelled sensitivity Omega_bulk_hydrated. Biogenic ACC (TL-058)
+      and heat-treated ACC (TL-060) hold less water and are comparators; TL-061 is the mass fraction behind TL-062.
+      Comparators (not admitted, E2): TL-058, TL-060, TL-061.'
+    method: 'U1: uniform over the sourced span; 7 admitted row(s), 7 independent original(s)'
+    role: primary
+    flags: []
+  a_w_drying_secondary:
+    symbol: a_w
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: single-source
+    value: 0.00130055
+    range:
+      min: 1.1e-06
+      max: 0.0026
+    prior:
+      family: loguniform
+      low: 1.1e-06
+      high: 0.0026
+    rule: L1
+    sources:
+    - TL-063
+    - TL-064
+    best_grade: C
+    conditions: water activity of the gas over electrodes during vacuum post-drying and in the dry room after drying,
+      from the printed dew points
+    correlation_group: null
+    notes: 'F7, per drying state: the gas-phase water activity that a dried film approaches at equilibrium in the
+      secondary (vacuum) drying and dry-room states. It is the activity of the surroundings, not a measured activity
+      of the film. Dew points (TL-065 to TL-067) and residual water contents (TL-068 to TL-071) are comparators.
+      Comparators (not admitted, E2): TL-065, TL-066, TL-067, TL-068, TL-069, TL-070, TL-071.'
+    method: 'L1: span exceeds a decade; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   a_ca_slurry:
     symbol: a_Ca
     transform: none
@@ -576,6 +1125,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
   c_bulk_slurry:
     symbol: c_bulk
     transform: none
@@ -595,6 +1146,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
   gamma_w:
     symbol: gamma_w
     transform: none
@@ -618,6 +1171,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   water_density:
     symbol: rho_water
     transform: none
@@ -640,6 +1196,9 @@ params:
     correlation_group: null
     notes: For the anchor's standard-state conversion (W5).
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   pka_catechol:
     symbol: pKa
     transform: none
@@ -647,24 +1206,76 @@ params:
     regimes:
     - R-slurry
     status: sourced
-    value: 8.83
+    value: 9.325
     range:
-      min: 8.77
+      min: 9.15
       max: 9.43
     prior:
       family: uniform
-      low: 8.77
+      low: 9.15
       high: 9.43
     rule: U1
     sources:
-    - TF-021
-    - TF-025
+    - TM-001
+    - TM-003
+    - TM-005
+    - TM-007
+    - TM-009
+    - TM-010
+    - TM-011
+    - TM-012
+    - TM-013
+    - TM-014
+    - TM-016
+    - TM-017
     best_grade: B
-    conditions: first dissociation of catechol itself, about 25 C; ionic strength not stated in TF-021
+    conditions: first dissociation of catechol itself (1,2-dihydroxybenzene), 18 to 25 C, ionic strength stated
+      and between 0.06 and 0.15 mol dm^-3 (KCl, KNO3 or unnamed salt)
     correlation_group: null
-    notes: 'Dopamine and L-DOPA constants (TD-042 to TD-047, TF-024) are comparators; TF-022 is the second constant
-      (13.07). Comparators (not admitted, E2): TD-042, TD-043, TD-044, TD-045, TD-046, TD-047, TF-022, TF-023, TF-024.'
-    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    notes: 'cp3 R8: catechol itself, no proxy, with an ionic-strength flag. Dopamine and L-DOPA constants (TD-042
+      to TD-047, TF-024) are proxies. TF-021 (8.83, Britton-Robinson buffer, I not stated), TF-025 and TM-018 to
+      TM-026 (Romero 2018 compilation, I not stated) and TM-015 (I not printed) are comparators because their ionic
+      strength is not stated. TM-009 to TM-017 are the literature values compiled in Antikainen 1973 Table 6, each
+      a different original. Comparators (not admitted, E2): TF-021, TF-025, TM-015, TM-018, TM-019, TM-020, TM-021,
+      TM-022, TM-023, TM-024, TM-025, TM-026, TD-042, TD-043, TD-044, TD-045, TD-046, TD-047, TF-024.'
+    method: 'U1: uniform over the sourced span; 12 admitted row(s), 12 independent original(s)'
+    ionic_strength: Admitted rows state I between 0.06 and 0.15 mol dm^-3, inside the slurry span of ionic_strength_slurry;
+      rows that do not state I are comparators (cp3 R8). No admitted source extrapolates to I = 0.
+    role: primary
+    flags:
+    - ionic_strength
+  pka2_catechol:
+    symbol: pKa
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 11.975
+    range:
+      min: 10.984
+      max: 13.28
+    prior:
+      family: uniform
+      low: 10.984
+      high: 13.28
+    rule: U1
+    sources:
+    - TM-002
+    - TM-004
+    - TM-006
+    - TM-008
+    best_grade: B
+    conditions: second dissociation of catechol itself, 25 C, I = 0.10 to 0.15 mol dm^-3
+    correlation_group: null
+    notes: 'Second catechol constant, which sets the catecholate dianion fraction at the upper end of the slurry
+      pH (cp3 R8). Glass-electrode titrations near pH 12 (TM-002, TM-004) read lower than NMR-pH titration (TM-008);
+      see lit/conflicts.md. Comparators (not admitted, E2): TF-022.'
+    method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s)'
+    ionic_strength: Admitted rows state I = 0.10 to 0.15 mol dm^-3; TF-022 (I not stated) is a comparator.
+    role: primary
+    flags:
+    - ionic_strength
   pka_carboxyl:
     symbol: pKa
     transform: none
@@ -692,6 +1303,8 @@ params:
     correlation_group: null
     notes: No surface pKa of a COOH monolayer was read (T-F gaps).
     method: 'U1: uniform over the sourced span; 5 admitted row(s), 5 independent original(s)'
+    role: primary
+    flags: []
   delta_g_site:
     symbol: Delta_G_site
     transform: none
@@ -712,6 +1325,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: []
   log10_k_ca_catecholate:
     symbol: K_Ca_catecholate
     transform: log10
@@ -721,13 +1336,13 @@ params:
     status: single-source
     value: 4.24
     range:
-      min: 3.51
-      max: 4.99
+      min: 2.98923125096
+      max: 5.51076874904
     prior:
       family: uniform
-      low: 3.51
-      high: 4.99
-    rule: U1
+      low: 2.98923125096
+      high: 5.51076874904
+    rule: W1
     sources:
     - TD-048
     - TD-049
@@ -738,7 +1353,24 @@ params:
       (lit/conflicts.md). Tiron (a sulfonated catecholate, TF-014 to TF-016) is a different ligand and not admitted.
       Comparators (not admitted, E2): TF-014, TF-015, TF-016, TF-017.'
     method: 'not concordant within 2 combined standard uncertainties, so U1; U1: uniform over the sourced span;
-      2 admitted row(s), 2 independent original(s)'
+      2 admitted row(s), 2 independent original(s); W1: widened about the midpoint to a half-width of at least m
+      = 1.26076874904 (m_seq_method_error, divided by R T ln 10 at 298.15 K)'
+    role: primary
+    flags:
+    - single_source
+    - widened
+    widening:
+      by: m_seq_method_error
+      m: 1.26076874904
+      scale: log10_constant
+      unwidened:
+        min: 3.51
+        max: 4.99
+      applied: true
+      sources:
+      - TE-061
+      - TE-062
+      - TE-063
   log10_k_ca_carboxylate:
     symbol: K_Ca_carboxylate
     transform: log10
@@ -765,6 +1397,8 @@ params:
     correlation_group: null
     notes: Anchor comparison range (W5); spans mono-, di- and polycarboxylates.
     method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s)'
+    role: primary
+    flags: []
   dg_bind_ca_acetate:
     symbol: Delta_G_bind_Ca_carboxylate
     transform: none
@@ -774,13 +1408,13 @@ params:
     status: single-source
     value: -9500.0
     range:
-      min: -9500.0
-      max: -4400.0
+      min: -14146.48
+      max: 246.48
     prior:
       family: uniform
-      low: -9500.0
-      high: -4400.0
-    rule: U1
+      low: -14146.48
+      high: 246.48
+    rule: W1
     sources:
     - TH-026
     - TH-029
@@ -789,7 +1423,24 @@ params:
     correlation_group: null
     notes: 'Single carboxylate group (simulation and compiled experiment, one paper). Aspartate and citrate (multidentate)
       are comparators. Comparators (not admitted, E2): TH-027, TH-028, TH-030, TH-031.'
-    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s); W1: widened about
+      the midpoint to a half-width of at least m = 7196.48 (m_seq_method_error)'
+    role: primary
+    flags:
+    - single_source
+    - widened
+    widening:
+      by: m_seq_method_error
+      m: 7196.48
+      scale: free_energy
+      unwidened:
+        min: -9500.0
+        max: -4400.0
+      applied: true
+      sources:
+      - TE-061
+      - TE-062
+      - TE-063
   dg_bind_ca_cooh_monolayer:
     symbol: minus_Delta_G_bind_Ca_COOH_monolayer
     transform: none
@@ -816,6 +1467,8 @@ params:
     notes: 'Magnitude (binding strength) as printed. The PMF route spans 30-170 kJ/mol by method; comparator for
       delta_g_site. Same original as an admitted row, not counted again (E3): TH-034.'
     method: 'L1: span exceeds a decade; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   dg_bind_calcite_template:
     symbol: Delta_G_bind_calcite_template
     transform: none
@@ -831,7 +1484,7 @@ params:
       family: uniform
       low: -30961.6
       high: -6694.4
-    rule: U1
+    rule: W1
     sources:
     - TC-066
     - TH-001
@@ -843,7 +1496,23 @@ params:
     notes: 'Crystal-template binding, paired with gamma_eff on the same SAMs (TC-061 to TC-064); the relation of
       binding to the barrier is discussed in lit/conflicts.md and the report. kT-scaled rows (TC-074, TH-006, TH-007)
       are comparators. Comparators (not admitted, E2): TC-074, TH-006, TH-007, TH-004, TH-005, TH-012, TH-022, TH-023.'
-    method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s)'
+    method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s); W1: sourced half-width
+      already exceeds m, not widened to a half-width of at least m = 7196.48 (m_seq_method_error)'
+    role: primary
+    flags:
+    - single_source
+    widening:
+      by: m_seq_method_error
+      m: 7196.48
+      scale: free_energy
+      unwidened:
+        min: -30961.6
+        max: -6694.4
+      applied: false
+      sources:
+      - TE-061
+      - TE-062
+      - TE-063
   gamma_s_site_density:
     symbol: Gamma_s
     transform: none
@@ -870,6 +1539,8 @@ params:
       found. Comparators (not admitted, E2): TF-037, TC-075, TA-031. Same original as an admitted row, not counted
       again (E3): TF-038.'
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   delta_s:
     symbol: delta_s
     transform: none
@@ -890,6 +1561,262 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
+  site_footprint_area:
+    symbol: a_site
+    transform: none
+    unit: m^2
+    regimes:
+    - R-slurry
+    status: gap
+    value: null
+    range: null
+    range_reason: 'gap: no area per Ca2+-binding site with its bound ion, nor a Ca2+ to headgroup ratio on a carboxylate
+      or catechol layer, was found in an open source (T-L gaps.md)'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: ''
+    method: no admitted row (X1)
+    role: primary
+    flags: []
+  pda_density:
+    symbol: rho_PDA
+    transform: none
+    unit: kg m^-3
+    regimes:
+    - R-slurry
+    status: single-source
+    value: 1200.0
+    range:
+      min: 1000.0
+      max: 1400.0
+    prior:
+      family: uniform
+      low: 1000.0
+      high: 1400.0
+    rule: U1
+    sources:
+    - TL-072
+    best_grade: B
+    conditions: polydopamine grains, mass density
+    correlation_group: null
+    notes: 'Melanin values (TL-073, TL-074) and a nominal density (TL-075) are comparators. Comparators (not admitted,
+      E2): TL-073, TL-074, TL-075.'
+    method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
+  pda_binding_site_content:
+    symbol: c_sites
+    transform: none
+    unit: mol kg^-1
+    regimes:
+    - R-slurry
+    status: single-source
+    value: 1.5
+    range:
+      min: 1.1
+      max: 1.9
+    prior:
+      family: uniform
+      low: 1.1
+      high: 1.9
+    rule: U1
+    sources:
+    - TL-076
+    best_grade: B
+    conditions: accessible amine-binding sites of polydopamine per mass, pH 8.5
+    correlation_group: null
+    notes: A proxy for the catechol content (accessible binding sites, not all catechol groups).
+    method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
+  template_group_density:
+    symbol: rho_L
+    transform: none
+    unit: mol m^-3
+    regimes:
+    - R-slurry
+    status: gap
+    value: null
+    range: null
+    range_reason: gap - no volume density of catechol groups in polydopamine was found; only an accessible-site
+      content (proxy)
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: The flagged analog template_group_density_site_analog runs beside the gap.
+    method: no admitted row (X1)
+    role: primary
+    flags: []
+  template_group_density_site_analog:
+    symbol: rho_L
+    transform: none
+    unit: mol m^-3
+    regimes:
+    - R-slurry
+    status: computed
+    value: 1800.0
+    range:
+      min: 1100.0
+      max: 2660.0
+    prior:
+      family: fixed
+      value: 1800.0
+    rule: D1
+    sources:
+    - TL-072
+    - TL-076
+    best_grade: B
+    method: 'D1: rho * c with rho = pda_density, c = pda_binding_site_content; range is the envelope over the input
+      ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Flagged analog (A1): PDA density times its accessible binding-site content.'
+    derived:
+      expr: rho * c
+      inputs:
+        rho: pda_density
+        c: pda_binding_site_content
+    role: analog
+    of: template_group_density
+    flags:
+    - analog
+  template_layer_thickness:
+    symbol: d_layer
+    transform: none
+    unit: m
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 2.5e-08
+    range:
+      min: 2.0e-09
+      max: 5.0e-08
+    prior:
+      family: loguniform
+      low: 2.0e-09
+      high: 5.0e-08
+    rule: L1
+    sources:
+    - TL-077
+    - TL-078
+    - TL-079
+    - TL-080
+    - TL-081
+    - TL-082
+    best_grade: B
+    conditions: polydopamine film thickness, 2 g/L dopamine at pH 8.5 in Tris (aerated or not, or with oxidant),
+      on silicon, quartz-crystal sensors or chromium
+    correlation_group: null
+    notes: Depends on deposition time and oxygen supply. No film on aluminium oxide was measured; the substrates
+      differ.
+    method: 'L1: span exceeds a decade; 6 admitted row(s), 6 independent original(s)'
+    role: primary
+    flags: []
+  ca_ionic_radius:
+    symbol: r_Ca
+    transform: none
+    unit: m
+    regimes:
+    - R-slurry
+    status: gap
+    value: null
+    range: null
+    range_reason: gap - the ionic-radius compilation (Shannon 1976) is paywalled and no open primary source was
+      read
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: The flagged analog ca_o_distance_aqueous_analog runs beside the gap.
+    method: no admitted row (X1)
+    role: primary
+    flags: []
+  ca_o_distance_aqueous_analog:
+    symbol: r_Ca
+    transform: none
+    unit: m
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 2.47e-10
+    range:
+      min: 2.35e-10
+      max: 2.48e-10
+    prior:
+      family: uniform
+      low: 2.35e-10
+      high: 2.48e-10
+    rule: U1
+    sources:
+    - TL-083
+    - TL-084
+    - TL-085
+    best_grade: C
+    conditions: Ca-O distance of hydrated Ca2+ in aqueous solution (diffraction and EXAFS reviews)
+    correlation_group: null
+    notes: 'Flagged analog (A1): the Ca-O distance exceeds r_Ca by the radius of the water oxygen, so using it for
+      r_Ca makes the lower bound 2 r_Ca of delta_s larger than the true bound.'
+    method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: analog
+    of: ca_ionic_radius
+    flags:
+    - analog
+  gamma_s_geometric_bound_analog:
+    symbol: Gamma_s
+    transform: none
+    unit: mol m^-2
+    regimes:
+    - R-slurry
+    status: computed
+    value: 4.5e-05
+    range:
+      min: 2.2e-06
+      max: 0.000133
+    prior:
+      family: none
+    rule: D1
+    sources:
+    - TL-072
+    - TL-076
+    - TL-077
+    - TL-078
+    - TL-079
+    - TL-080
+    - TL-081
+    - TL-082
+    best_grade: B
+    method: 'D1: rho_l * d with rho_l = template_group_density_site_analog, d = template_layer_thickness; range
+      is the envelope over the input ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: The geometric upper bound rho_L d_layer on Gamma_s (theory/ignorance_priors.md 4) with the analog group
+      density; 1/(N_A a_site) is not available (site_footprint_area is a gap). gamma_s_site_density is checked against
+      it in lit/conflicts.md.
+    derived:
+      expr: rho_l * d
+      inputs:
+        rho_l: template_group_density_site_analog
+        d: template_layer_thickness
+    role: analog
+    of: gamma_s_site_density
+    flags:
+    - analog
   v_site:
     symbol: V_site
     transform: none
@@ -909,6 +1836,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
   dg_hyd_ca_marcus:
     symbol: Delta_G_hyd_Ca
     transform: none
@@ -918,12 +1847,13 @@ params:
     status: single-source
     value: -1504984.8
     range:
-      min: -1504984.8
-      max: -1504984.8
+      min: -1512181.28
+      max: -1497788.32
     prior:
-      family: fixed
-      value: -1504984.8
-    rule: P1
+      family: uniform
+      low: -1512181.28
+      high: -1497788.32
+    rule: W1
     sources:
     - TD-054
     best_grade: C
@@ -931,7 +1861,24 @@ params:
     correlation_group: null
     notes: 'Benchmark for the anchor; fitted force-field values (TD-055, TD-057) are not independent. Comparators
       (not admitted, E2): TD-055, TD-057, TE-064. Same original as an admitted row, not counted again (E3): TD-056.'
-    method: 'P1: one point value without uncertainty; the width is not sourced'
+    method: 'P1: one point value without uncertainty; the width is not sourced; W1: widened about the midpoint to
+      a half-width of at least m = 7196.48 (m_seq_method_error)'
+    role: primary
+    flags:
+    - single_source
+    - widened
+    widening:
+      by: m_seq_method_error
+      m: 7196.48
+      scale: free_energy
+      unwidened:
+        min: -1504984.8
+        max: -1504984.8
+      applied: true
+      sources:
+      - TE-061
+      - TE-062
+      - TE-063
   dg_hyd_ca_tissandier:
     symbol: Delta_G_hyd_Ca
     transform: none
@@ -947,7 +1894,7 @@ params:
       family: uniform
       low: -1635525.6
       high: -1568581.6
-    rule: U1
+    rule: W1
     sources:
     - TF-051
     best_grade: C
@@ -955,7 +1902,23 @@ params:
     correlation_group: null
     notes: 'Rescaled Marcus value, not independent of dg_hyd_ca_marcus. Comparators (not admitted, E2): TF-050,
       TD-059.'
-    method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s); W1: sourced half-width
+      already exceeds m, not widened to a half-width of at least m = 7196.48 (m_seq_method_error)'
+    role: primary
+    flags:
+    - single_source
+    widening:
+      by: m_seq_method_error
+      m: 7196.48
+      scale: free_energy
+      unwidened:
+        min: -1635525.6
+        max: -1568581.6
+      applied: false
+      sources:
+      - TE-061
+      - TE-062
+      - TE-063
   gamma_ow_alumina:
     symbol: gamma_ow
     transform: none
@@ -976,6 +1939,8 @@ params:
     correlation_group: null
     notes: 'Comparators (not admitted, E2): TB-052, TB-053, TB-056, TH-060, TH-061.'
     method: no admitted row (X1)
+    role: primary
+    flags: []
   gamma_op:
     symbol: gamma_op
     transform: none
@@ -995,6 +1960,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
   gamma_o_alumina:
     symbol: gamma_o
     transform: none
@@ -1022,6 +1989,8 @@ params:
     notes: Air-exposed oxides show water angles of 57-91 degrees against 0 simulated for clean hydroxylated alumina
       (lit/conflicts.md).
     method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s)'
+    role: primary
+    flags: []
   gamma_p_pda:
     symbol: gamma_p
     transform: none
@@ -1048,6 +2017,8 @@ params:
     correlation_group: null
     notes: 'TH-058 is chitosan. Comparators (not admitted, E2): TH-058.'
     method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s)'
+    role: primary
+    flags: []
   delta_f_pmf:
     symbol: Delta_F_pmf
     transform: none
@@ -1067,6 +2038,49 @@ params:
     correlation_group: null
     notes: 'Comparators (not admitted, E2): TD-025, TD-026, TD-027, TD-028, TD-030.'
     method: no admitted row (X2)
+    role: primary
+    flags: []
+  w_adh_wet_catechol_oxide_analog:
+    symbol: W_adh_wet
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 0.002
+    range:
+      min: 0.0001
+      max: 0.015
+    prior:
+      family: loguniform
+      low: 0.0001
+      high: 0.015
+    rule: L1
+    sources:
+    - TD-025
+    - TD-026
+    - TD-027
+    - TD-028
+    - TD-030
+    - TM-034
+    - TM-035
+    - TM-036
+    - TM-038
+    - TM-039
+    best_grade: B
+    conditions: measured works of adhesion in water of catechol-bearing films on oxide surfaces (mica, SiO2, CuO),
+      surface forces apparatus, pH 3 to 7.5
+    correlation_group: null
+    notes: 'Flagged analog (A1, cp2 gap policy) for the C1 work of adhesion in water, which the study computes from
+      delta_f_pmf and a_c. No source measures a polydopamine film on an aluminium oxide in water; these are DOPA-protein
+      and catecholic-surfactant films on mica, silica and copper oxide. TM-037 (film against film) and TD-032 (dry,
+      upper-bound estimate) are comparators. Run beside the C1 route, never in its place. Comparators (not admitted,
+      E2): TM-037, TD-032.'
+    method: 'L1: span exceeds a decade; 10 admitted row(s), 10 independent original(s)'
+    role: analog
+    of: delta_f_pmf
+    flags:
+    - analog
   a_c:
     symbol: A_c
     transform: none
@@ -1086,45 +2100,51 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: []
   rho_e_caco3:
     symbol: rho_e
     transform: none
     unit: ohm m
-    regimes: &id065
+    regimes: &id111
     - R-cell
     status: gap
     value: null
     range: null
     range_reason: gap - no electronic resistivity of pure CaCO3 was found (T-G gaps)
-    prior: &id066
+    prior: &id112
       family: none
     rule: X1
-    sources: &id067 []
+    sources: &id113 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: &id114 []
   phi_b_caco3:
     symbol: phi_B
     transform: none
     unit: J
-    regimes: &id068
+    regimes: &id115
     - R-cell
     status: gap
     value: null
     range: null
     range_reason: 'gap: no tunnelling barrier height of a CaCO3 film; Al oxide tunnel barriers (TG-021 to TG-025)
       are proxies (E2); the CaCO3 band gap is key band_gap_caco3'
-    prior: &id069
+    prior: &id116
       family: none
     rule: X1
-    sources: &id070 []
+    sources: &id117 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
     notes: 'Comparators (not admitted, E2): TG-021, TG-022, TG-023, TG-024, TG-025.'
     method: no admitted row (X1)
+    role: primary
+    flags: &id118 []
   band_gap_caco3:
     symbol: E_g_CaCO3
     transform: none
@@ -1147,64 +2167,73 @@ params:
     correlation_group: null
     notes: 'Upper bound on phi_B; TG-019 (6.0 eV) is abstract only. Comparators (not admitted, E2): TG-019.'
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   j_0_tunnel:
     symbol: j_0
     transform: none
     unit: A m^-2
-    regimes: &id074
+    regimes: &id123
     - R-cell
     status: gap
     value: null
     range: null
     range_reason: gap - no tunnelling prefactor for a carbonate film; TG-026 is an Al oxide proxy decay constant
       (E2)
-    prior: &id075
+    prior: &id124
       family: none
     rule: X1
-    sources: &id076 []
+    sources: &id125 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
     notes: 'Comparators (not admitted, E2): TG-026.'
     method: no admitted row (X1)
+    role: primary
+    flags: &id126 []
   r_a_max:
     symbol: R_A_max
     transform: none
     unit: ohm m^2
-    regimes: &id059
+    regimes: &id103
     - R-cell
     status: registered
     value: null
     range: null
     range_reason: registration input set at G2 (theory/derivation_body.tex section 11), not a literature value (X2)
-    prior: &id060
+    prior: &id104
       family: none
     rule: X2
-    sources: &id061 []
+    sources: &id105 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: &id106 []
   j_req:
     symbol: j_req
     transform: none
     unit: A m^-2
-    regimes: &id062
+    regimes: &id107
     - R-cell
     status: registered
     value: null
     range: null
     range_reason: registration input set at G2, not a literature value (X2)
-    prior: &id063
+    prior: &id108
       family: none
     rule: X2
-    sources: &id064 []
+    sources: &id109 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: &id110 []
   d_film:
     symbol: d_film
     transform: none
@@ -1224,6 +2253,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
   g_phase_database:
     symbol: G_phase
     transform: none
@@ -1244,6 +2275,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: []
   mu_li0:
     symbol: mu_Li0
     transform: none
@@ -1263,6 +2296,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: []
   delta_g_r:
     symbol: Delta_G_r
     transform: none
@@ -1282,6 +2317,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: []
   mu_h2o:
     symbol: mu_H2O
     transform: none
@@ -1301,6 +2338,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: []
   drg_caco3_decomposition:
     symbol: Delta_rG_CaCO3_CaO_CO2
     transform: none
@@ -1326,6 +2365,8 @@ params:
     notes: 'Benchmark of the CO2 reference scheme (W5). Two evaluations (USGS B2131; USGS OFR 83-79) differ by 1.6
       kJ/mol, about their combined 2 sigma. Comparators (not admitted, E2): TI-011, TI-053.'
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   drh_caco3_decomposition:
     symbol: Delta_rH_CaCO3_CaO_CO2
     transform: none
@@ -1350,6 +2391,8 @@ params:
     correlation_group: caco3_decomposition
     notes: 'Comparators (not admitted, E2): TI-052.'
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   dfg_caco3_calcite:
     symbol: G_phase
     transform: none
@@ -1374,6 +2417,8 @@ params:
     correlation_group: caco3_decomposition
     notes: ''
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   dfg_caco3_aragonite:
     symbol: G_phase
     transform: none
@@ -1397,6 +2442,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_cao:
     symbol: G_phase
     transform: none
@@ -1421,6 +2469,8 @@ params:
     correlation_group: caco3_decomposition
     notes: ''
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   dfg_co2_g:
     symbol: G_phase
     transform: none
@@ -1444,6 +2494,9 @@ params:
     correlation_group: caco3_decomposition
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_ca2_aq:
     symbol: G_phase
     transform: none
@@ -1467,6 +2520,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_co3_aq:
     symbol: G_phase
     transform: none
@@ -1490,6 +2546,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_hco3_aq:
     symbol: G_phase
     transform: none
@@ -1513,6 +2572,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_co2_aq:
     symbol: G_phase
     transform: none
@@ -1536,6 +2598,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_h2o_l:
     symbol: G_phase
     transform: none
@@ -1559,6 +2624,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_al3_aq:
     symbol: G_phase
     transform: none
@@ -1582,6 +2650,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_al_oh4_aq:
     symbol: G_phase
     transform: none
@@ -1604,6 +2675,9 @@ params:
     correlation_group: null
     notes: Grade D (abstract) admitted under E5, no grade A-C row; B2131's value was not legible (T-I gaps).
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   dfg_corundum:
     symbol: G_phase
     transform: none
@@ -1627,6 +2701,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_boehmite:
     symbol: G_phase
     transform: none
@@ -1650,6 +2727,9 @@ params:
     correlation_group: null
     notes: 'TB-033 (-917.82 kJ/mol, grade D) agrees. Comparators (not admitted, E2): TB-033.'
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_gibbsite:
     symbol: G_phase
     transform: none
@@ -1670,6 +2750,8 @@ params:
     correlation_group: null
     notes: 'Comparators (not admitted, E2): TI-028, TB-035.'
     method: no admitted row (X1)
+    role: primary
+    flags: []
   dfg_ca_no3_2:
     symbol: G_phase
     transform: none
@@ -1693,6 +2775,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_cacl2:
     symbol: G_phase
     transform: none
@@ -1716,6 +2801,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_caso4:
     symbol: G_phase
     transform: none
@@ -1739,6 +2827,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_al2_so4_3:
     symbol: G_phase
     transform: none
@@ -1762,6 +2853,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   dfg_li_aq:
     symbol: G_phase
     transform: none
@@ -1784,6 +2878,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   dfg_licl:
     symbol: G_phase
     transform: none
@@ -1806,6 +2903,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   dfg_lino3:
     symbol: G_phase
     transform: none
@@ -1828,6 +2928,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   dfg_li2so4:
     symbol: G_phase
     transform: none
@@ -1850,6 +2953,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   dfg_liclo4_aq:
     symbol: G_phase
     transform: none
@@ -1872,6 +2978,9 @@ params:
     correlation_group: null
     notes: ''
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   dfg_al_no3_3:
     symbol: G_phase
     transform: none
@@ -1892,6 +3001,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
   dfg_ca_clo4_2:
     symbol: G_phase
     transform: none
@@ -1901,7 +3012,8 @@ params:
     status: gap
     value: null
     range: null
-    range_reason: gap - Ca(ClO4)2 not found in a legible fetched table
+    range_reason: gap - no DfG of anhydrous Ca(ClO4)2 in any fetched table (NBS TN 270-6 prints DfH only, TK-033);
+      W5 enters it through the exchange enthalpy, and the neglected entropy is bounded by exchange_entropy_bound
     prior:
       family: none
     rule: X1
@@ -1911,6 +3023,750 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
+  s_li:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 29.09
+    range:
+      min: 28.69
+      max: 29.49
+    prior:
+      family: normal
+      mean: 29.09
+      sd: 0.2
+    rule: N2
+    sources:
+    - TK-007
+    best_grade: A
+    conditions: standard molar entropy at 298.15 K, Li metal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
+  s_ca:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 42.9
+    range:
+      min: 42.7
+      max: 43.1
+    prior:
+      family: normal
+      mean: 42.9
+      sd: 0.1
+    rule: N2
+    sources:
+    - TK-008
+    best_grade: A
+    conditions: standard molar entropy at 298.15 K, Ca metal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
+  s_liclo4:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 126.0
+    range:
+      min: 117.6
+      max: 134.4
+    prior:
+      family: uniform
+      low: 117.6
+      high: 134.4
+    rule: U1
+    sources:
+    - TK-029
+    best_grade: C
+    conditions: standard molar entropy at 298.15 K, LiClO4 crystal (JANAF estimate from KClO4)
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2). TK-029 is bracketed by JANAF as an estimate (grade C);
+      in the Li-based analogs it cancels.
+    method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
+  s_cacl2:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: sourced
+    value: 104.6
+    range:
+      min: 102.0
+      max: 107.2
+    prior:
+      family: uniform
+      low: 102.0
+      high: 107.2
+    rule: U1
+    sources:
+    - TK-012
+    - TK-019
+    best_grade: A
+    conditions: standard molar entropy at 298.15 K, CaCl2 crystal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
+  s_ca_no3_2:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 193.3
+    range:
+      min: 192.5
+      max: 194.1
+    prior:
+      family: normal
+      mean: 193.3
+      sd: 0.4
+    rule: N2
+    sources:
+    - TK-015
+    best_grade: A
+    conditions: standard molar entropy at 298.15 K, Ca(NO3)2 crystal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
+  s_licl:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 59.32912
+    range:
+      min: 59.32912
+      max: 59.32912
+    prior:
+      family: fixed
+      value: 59.32912
+    rule: P1
+    sources:
+    - TK-065
+    best_grade: B
+    conditions: standard molar entropy at 298.15 K, LiCl crystal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  s_nacl:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: sourced
+    value: 72.11608
+    range:
+      min: 71.7
+      max: 72.5
+    prior:
+      family: uniform
+      low: 71.7
+      high: 72.5
+    rule: U1
+    sources:
+    - TK-071
+    - TK-066
+    best_grade: A
+    conditions: standard molar entropy at 298.15 K, NaCl crystal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
+  s_kcl:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: sourced
+    value: 82.59608
+    range:
+      min: 82.2
+      max: 83.0
+    prior:
+      family: uniform
+      low: 82.2
+      high: 83.0
+    rule: U1
+    sources:
+    - TK-072
+    - TK-067
+    best_grade: A
+    conditions: standard molar entropy at 298.15 K, KCl crystal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
+  s_lino3:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 89.956
+    range:
+      min: 89.956
+      max: 89.956
+    prior:
+      family: fixed
+      value: 89.956
+    rule: P1
+    sources:
+    - TK-068
+    best_grade: B
+    conditions: standard molar entropy at 298.15 K, LiNO3 crystal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  s_nano3:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: sourced
+    value: 116.5122
+    range:
+      min: 115.1
+      max: 117.9
+    prior:
+      family: uniform
+      low: 115.1
+      high: 117.9
+    rule: U1
+    sources:
+    - TK-073
+    - TK-069
+    best_grade: A
+    conditions: standard molar entropy at 298.15 K, NaNO3 crystal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
+  s_kno3:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: sourced
+    value: 133.0756
+    range:
+      min: 131.7
+      max: 134.5
+    prior:
+      family: uniform
+      low: 131.7
+      high: 134.5
+    rule: U1
+    sources:
+    - TK-074
+    - TK-070
+    best_grade: A
+    conditions: standard molar entropy at 298.15 K, KNO3 crystal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
+  s_naclo4:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 142.256
+    range:
+      min: 142.256
+      max: 142.256
+    prior:
+      family: fixed
+      value: 142.256
+    rule: P1
+    sources:
+    - TK-027
+    best_grade: B
+    conditions: standard molar entropy at 298.15 K, NaClO4 crystal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  s_kclo4:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 151.0424
+    range:
+      min: 151.0424
+      max: 151.0424
+    prior:
+      family: fixed
+      value: 151.0424
+    rule: P1
+    sources:
+    - TK-028
+    best_grade: B
+    conditions: standard molar entropy at 298.15 K, KClO4 crystal
+    correlation_group: null
+    notes: Input of the Ca(ClO4)2 entropy bound (cp3 R2).
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  s_ca_clo4_2:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    value: null
+    range: null
+    range_reason: 'gap (cp3 R10): no table gives S(298.15 K) of anhydrous Ca(ClO4)2 or of any anhydrous alkaline-earth
+      perchlorate; the only solid calcium perchlorate entropy is the tetrahydrate (TK-023)'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: 'The analog bound is s_ca_clo4_2_analog_low and s_ca_clo4_2_analog_high. Comparators (not admitted, E2):
+      TK-023, TK-022, TK-024, TK-025, TK-026.'
+    method: no admitted row (X1)
+    role: primary
+    flags: []
+  s_ca_clo4_2_analog_low:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: computed
+    value: 229.2336
+    range:
+      min: 218.54176
+      max: 232.7848
+    prior:
+      family: fixed
+      value: 229.2336
+    rule: D1
+    sources:
+    - TK-012
+    - TK-019
+    - TK-015
+    - TK-029
+    - TK-027
+    - TK-028
+    - TK-065
+    - TK-071
+    - TK-066
+    - TK-072
+    - TK-067
+    - TK-068
+    - TK-073
+    - TK-069
+    - TK-074
+    - TK-070
+    best_grade: A
+    method: 'D1: min(cacl2 + 2 * (liclo4 - licl), cacl2 + 2 * (naclo4 - nacl), cacl2 + 2 * (kclo4 - kcl), cano3
+      + 2 * (liclo4 - lino3), cano3 + 2 * (naclo4 - nano3), cano3 + 2 * (kclo4 - kno3)) with cacl2 = s_cacl2, cano3
+      = s_ca_no3_2, liclo4 = s_liclo4, naclo4 = s_naclo4, kclo4 = s_kclo4, licl = s_licl, nacl = s_nacl, kcl = s_kcl,
+      lino3 = s_lino3, nano3 = s_nano3, kno3 = s_kno3; range is the envelope over the input ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Lower end of the analog bound (cp3 R2): S(CaX2) + 2 [S(MClO4) - S(MX)] for X = Cl, NO3 and M = Li, Na,
+      K, the anion-exchange increment taken from alkali salts of one table set. With M = Li the estimate is the
+      exchange entropy of Ca + 2 LiX -> CaX2 + 2 Li carried over to the perchlorate. Within one anion the tabulated
+      crystal entropies rise Mg < Ca < Sr < Ba (chlorides TK-018 to TK-021, nitrates TK-014 to TK-017), so the Ca
+      salt sits between its neighbours, as the analog assumes.'
+    derived:
+      expr: min(cacl2 + 2 * (liclo4 - licl), cacl2 + 2 * (naclo4 - nacl), cacl2 + 2 * (kclo4 - kcl), cano3 + 2 *
+        (liclo4 - lino3), cano3 + 2 * (naclo4 - nano3), cano3 + 2 * (kclo4 - kno3))
+      inputs:
+        cacl2: s_cacl2
+        cano3: s_ca_no3_2
+        liclo4: s_liclo4
+        naclo4: s_naclo4
+        kclo4: s_kclo4
+        licl: s_licl
+        nacl: s_nacl
+        kcl: s_kcl
+        lino3: s_lino3
+        nano3: s_nano3
+        kno3: s_kno3
+    role: analog
+    of: s_ca_clo4_2
+    flags:
+    - analog
+  s_ca_clo4_2_analog_high:
+    symbol: S_std
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: computed
+    value: 265.388
+    range:
+      min: 247.788
+      max: 282.988
+    prior:
+      family: fixed
+      value: 265.388
+    rule: D1
+    sources:
+    - TK-012
+    - TK-019
+    - TK-015
+    - TK-029
+    - TK-027
+    - TK-028
+    - TK-065
+    - TK-071
+    - TK-066
+    - TK-072
+    - TK-067
+    - TK-068
+    - TK-073
+    - TK-069
+    - TK-074
+    - TK-070
+    best_grade: A
+    method: 'D1: max(cacl2 + 2 * (liclo4 - licl), cacl2 + 2 * (naclo4 - nacl), cacl2 + 2 * (kclo4 - kcl), cano3
+      + 2 * (liclo4 - lino3), cano3 + 2 * (naclo4 - nano3), cano3 + 2 * (kclo4 - kno3)) with cacl2 = s_cacl2, cano3
+      = s_ca_no3_2, liclo4 = s_liclo4, naclo4 = s_naclo4, kclo4 = s_kclo4, licl = s_licl, nacl = s_nacl, kcl = s_kcl,
+      lino3 = s_lino3, nano3 = s_nano3, kno3 = s_kno3; range is the envelope over the input ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Upper end of the analog bound, as s_ca_clo4_2_analog_low. Independent upper check: the tetrahydrate
+      entropy (TK-023) exceeds it, as an anhydrous salt must lie below its hydrate.'
+    derived:
+      expr: max(cacl2 + 2 * (liclo4 - licl), cacl2 + 2 * (naclo4 - nacl), cacl2 + 2 * (kclo4 - kcl), cano3 + 2 *
+        (liclo4 - lino3), cano3 + 2 * (naclo4 - nano3), cano3 + 2 * (kclo4 - kno3))
+      inputs:
+        cacl2: s_cacl2
+        cano3: s_ca_no3_2
+        liclo4: s_liclo4
+        naclo4: s_naclo4
+        kclo4: s_kclo4
+        licl: s_licl
+        nacl: s_nacl
+        kcl: s_kcl
+        lino3: s_lino3
+        nano3: s_nano3
+        kno3: s_kno3
+    role: analog
+    of: s_ca_clo4_2
+    flags:
+    - analog
+  exchange_entropy_bound:
+    symbol: Delta_S_ex
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: computed
+    value: 28.668
+    range:
+      min: 19.7352
+      max: 64.068
+    prior:
+      family: fixed
+      value: 28.668
+    rule: D1
+    sources:
+    - TK-012
+    - TK-019
+    - TK-015
+    - TK-029
+    - TK-027
+    - TK-028
+    - TK-065
+    - TK-071
+    - TK-066
+    - TK-072
+    - TK-067
+    - TK-068
+    - TK-073
+    - TK-069
+    - TK-074
+    - TK-070
+    - TK-007
+    - TK-008
+    best_grade: A
+    method: 'D1: max(abs(lo + 2 * li - ca - 2 * liclo4), abs(hi + 2 * li - ca - 2 * liclo4)) with lo = s_ca_clo4_2_analog_low,
+      hi = s_ca_clo4_2_analog_high, li = s_li, ca = s_ca, liclo4 = s_liclo4; range is the envelope over the input
+      ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: Bound on |Delta_S| of the exchange Ca + 2 LiClO4 -> Ca(ClO4)2 + 2 Li, the entropy that W5's all-experimental
+      route neglects when it enters Ca(ClO4)2 through the tabulated exchange enthalpy (cp3 R2).
+    derived:
+      expr: max(abs(lo + 2 * li - ca - 2 * liclo4), abs(hi + 2 * li - ca - 2 * liclo4))
+      inputs:
+        lo: s_ca_clo4_2_analog_low
+        hi: s_ca_clo4_2_analog_high
+        li: s_li
+        ca: s_ca
+        liclo4: s_liclo4
+    role: primary
+    flags: []
+  dfh_ca_clo4_2:
+    symbol: H_phase
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: -736760.56
+    range:
+      min: -736760.56
+      max: -736760.56
+    prior:
+      family: fixed
+      value: -736760.56
+    rule: P1
+    sources:
+    - TK-033
+    best_grade: B
+    conditions: anhydrous Ca(ClO4)2 crystal, 298.15 K (NBS TN 270-6)
+    correlation_group: null
+    notes: No uncertainty printed; the table's convention is 2 to 20 units of the last figure (TK-030).
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  dfh_liclo4:
+    symbol: H_phase
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: sourced
+    value: -380847.52
+    range:
+      min: -386500.0
+      max: -374900.0
+    prior:
+      family: uniform
+      low: -386500.0
+      high: -374900.0
+    rule: U1
+    sources:
+    - TK-039
+    - TI-042
+    best_grade: A
+    conditions: LiClO4 crystal, 298.15 K
+    correlation_group: null
+    notes: JANAF (TK-039, with its uncertainty) and NBS TN 270-8 (TI-042) agree within the JANAF uncertainty.
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
+  u_tab_dfg_caco3:
+    symbol: u_tab
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 1400.0
+    range:
+      min: 1400.0
+      max: 1400.0
+    prior:
+      family: fixed
+      value: 1400.0
+    rule: P1
+    sources:
+    - TI-002
+    best_grade: A
+    conditions: tabulated uncertainty (2 sigma, USGS B2131) of DfG of calcite
+    correlation_group: null
+    notes: ''
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  u_tab_dfg_co2:
+    symbol: u_tab
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 200.0
+    range:
+      min: 200.0
+      max: 200.0
+    prior:
+      family: fixed
+      value: 200.0
+    rule: P1
+    sources:
+    - TI-008
+    best_grade: A
+    conditions: tabulated uncertainty (2 sigma, USGS B2131) of DfG of CO2(g)
+    correlation_group: null
+    notes: ''
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  u_tab_dfh_liclo4:
+    symbol: u_tab
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 2900.0
+    range:
+      min: 2900.0
+      max: 2900.0
+    prior:
+      family: fixed
+      value: 2900.0
+    rule: P1
+    sources:
+    - TK-039
+    best_grade: A
+    conditions: tabulated uncertainty of DfH of LiClO4(cr) (JANAF)
+    correlation_group: null
+    notes: ''
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  nbs_last_digit_dfh_ca_clo4_2:
+    symbol: u_tab
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 41.84
+    range:
+      min: 41.84
+      max: 41.84
+    prior:
+      family: fixed
+      value: 41.84
+    rule: P1
+    sources:
+    - TK-033
+    best_grade: B
+    conditions: one unit of the last printed figure of DfH of Ca(ClO4)2 in NBS TN 270-6
+    correlation_group: null
+    notes: ''
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  nbs_uncertainty_units:
+    symbol: n_units
+    transform: none
+    unit: '1'
+    regimes:
+    - R-cell
+    status: sourced
+    value: 20.0
+    range:
+      min: 2.0
+      max: 20.0
+    prior:
+      family: uniform
+      low: 2.0
+      high: 20.0
+    rule: U1
+    sources:
+    - TK-030
+    - TK-031
+    best_grade: C
+    conditions: stated overall uncertainty of the NBS TN 270 values, in units of the last figure
+    correlation_group: null
+    notes: ''
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
+  u_tab_dfh_ca_clo4_2:
+    symbol: u_tab
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: computed
+    value: 836.8
+    range:
+      min: 836.8
+      max: 836.8
+    prior:
+      family: fixed
+      value: 836.8
+    rule: D1
+    sources:
+    - TK-030
+    - TK-031
+    - TK-033
+    best_grade: B
+    method: 'D1: n * d with n = nbs_uncertainty_units.max, d = nbs_last_digit_dfh_ca_clo4_2; range is the envelope
+      over the input ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: The upper end of the NBS convention (TK-030) applied to the printed figure of TK-033.
+    derived:
+      expr: n * d
+      inputs:
+        n: nbs_uncertainty_units.max
+        d: nbs_last_digit_dfh_ca_clo4_2
+    role: primary
+    flags: []
   dfg_al_clo4_3:
     symbol: G_phase
     transform: none
@@ -1930,6 +3786,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
   dfg_alcl3:
     symbol: G_phase
     transform: none
@@ -1949,23 +3807,25 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
   formation_energy_mae:
     symbol: e_form
     transform: none
     unit: J mol^-1
-    regimes: &id026
+    regimes: &id049
     - shared
     status: sourced
     value: 4776.0239401
-    range: &id027
+    range: &id050
       min: 4341.83994555
       max: 5210.20793466
-    prior: &id028
+    prior: &id051
       family: uniform
       low: 4341.83994555
       high: 5210.20793466
     rule: U1
-    sources: &id029
+    sources: &id052
     - TI-080
     - TI-082
     - TI-083
@@ -1977,6 +3837,8 @@ params:
     notes: 'Error basis for a hull tolerance (W3). Uncorrected GGA and PBE errors (TI-081, TI-086, TI-091) are comparators.
       Comparators (not admitted, E2): TI-081, TI-086, TI-091, TI-092, TI-093, TI-094.'
     method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s)'
+    role: primary
+    flags: &id053 []
   decomposition_energy_mad:
     symbol: dE_d_MAD_per_atom
     transform: none
@@ -2004,6 +3866,9 @@ params:
     notes: One paper (Bartel 2019); TI-090 is for reactions between compounds only, the class of CaCO3 -> CaO +
       CO2.
     method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   oxide_correction_mp2020:
     symbol: dE_O_correction
     transform: none
@@ -2027,6 +3892,9 @@ params:
     correlation_group: null
     notes: 'Comparators (not admitted, E2): TI-087.'
     method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
   li2co3_oxidation_onset:
     symbol: E_Li
     transform: none
@@ -2034,7 +3902,7 @@ params:
     regimes:
     - R-cell
     status: sourced
-    value: 3.85
+    value: 3.8
     range:
       min: 3.8
       max: 3.9
@@ -2044,14 +3912,50 @@ params:
       high: 3.9
     rule: U1
     sources:
-    - TI-059
+    - TK-059
+    - TK-062
     - TI-061
     best_grade: B
-    conditions: Li2CO3 electro-oxidation onset vs Li+/Li in LiTFSI glyme electrolytes, room temperature
+    conditions: Li2CO3 electro-oxidation onset vs Li+/Li by gas evolution, LiTFSI glyme electrolytes, room temperature
     correlation_group: null
-    notes: 'Carbonate-salt benchmark for the R-cell window; TI-063 (about 3.5 V, chemical route via protons) is
-      grade D and contrary. Comparators (not admitted, E2): TI-060, TI-063.'
-    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    notes: 'cp3 R2: the carbonate-oxidation reading rests on Li2CO3 oxidation being measured near its equilibrium
+      value. Wang 2022 states the onset at two places (Fig. 1a text and conclusions), kept as two readings of one
+      source. Both sources print the equilibrium potential (li2co3_oxidation_equilibrium_potential, TK-058, TK-061)
+      and measure the onset by gas evolution at about that value, and both state that the onset lies close to it
+      (TK-060, TK-063, qualitative). TK-064 (contrary): in LiPF6 EC/EMC, CO2 above 4.3 V comes from a chemical route
+      even with Li2CO3 isolated from the electrode. TI-063 (about 3.5 V, chemical route via protons) is grade D
+      and contrary. Comparators (not admitted, E2): TI-060, TI-063, TK-060, TK-063, TK-064. Same original as an
+      admitted row, not counted again (E3): TI-059.'
+    method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: []
+  li2co3_oxidation_equilibrium_potential:
+    symbol: E_Li
+    transform: none
+    unit: V
+    regimes:
+    - R-cell
+    status: sourced
+    value: 3.82
+    range:
+      min: 3.82
+      max: 3.82
+    prior:
+      family: fixed
+      value: 3.82
+    rule: P1
+    sources:
+    - TK-058
+    - TK-061
+    best_grade: C
+    conditions: thermodynamic potential of 2 Li2CO3 -> 4 Li+ + 4 e- + 2 CO2 + O2 vs Li+/Li, 298 K, as printed by
+      each source
+    correlation_group: null
+    notes: The equilibrium potential printed by the two onset sources (cp3 R2). W5's all-experimental route gives
+      the same reaction from JANAF (gas_reference.md, B6); that is W5's computation, not a row.
+    method: 'P1: 2 independent sources print the same point without uncertainty; the width is not sourced'
+    role: primary
+    flags: []
   transfer_free_energy_li_water_pc:
     symbol: Delta_G_tr_Li
     transform: none
@@ -2072,8 +3976,13 @@ params:
     best_grade: C
     conditions: Li+ water -> propylene carbonate, 25 C (IUPAC selected)
     correlation_group: null
-    notes: ''
+    notes: Marcus 1983 states that a value printed to one decimal is one on which sources agree within 1 to 2 kJ
+      mol^-1 (TK-004); the extrathermodynamic assumptions agree within about 6 kJ mol^-1 in general (TK-006, Gritzner
+      1988). No Li+ value was found for EC, DMC or the sulfone.
     method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   solvation_ca_vs_li:
     symbol: Delta_G_solv_Ca_vs_Li
     transform: none
@@ -2083,8 +3992,10 @@ params:
     status: gap
     value: null
     range: null
-    range_reason: gap - no single-ion transfer or solvation free energy of Ca2+ in carbonate or ether solvents;
-      TI-078/TI-079 are Ca-BF4 cluster energies, not single-ion values
+    range_reason: 'gap (cp3 R10, searched on day 3): no single-ion Gibbs energy of transfer of Ca2+ from water into
+      any registered electrolyte solvent (PC, EC, DMC, EC:DMC, EC:EMC, ethyl isopropyl sulfone) or any other aprotic
+      solvent was found in an open source; the IUPAC selections (Marcus 1983, TI-077 context; Gritzner 1988) give
+      none for Ca2+. TI-078/TI-079 are Ca-BF4 cluster energies, not single-ion values'
     prior:
       family: none
     rule: X1
@@ -2092,8 +4003,12 @@ params:
     best_grade: null
     conditions: n.s.
     correlation_group: null
-    notes: 'Comparators (not admitted, E2): TI-078, TI-079.'
+    notes: 'Solvated-sink input of C5 R-cell: Delta_G_solv(Ca2+) - 2 Delta_G_solv(Li+) in the electrolyte. The aqueous
+      analog solvation_ca_vs_li_water_analog is flagged and runs beside the gap; no R-cell pass can count while
+      this is a gap (cp2 fix F5). Comparators (not admitted, E2): TI-078, TI-079.'
     method: no admitted row (X1)
+    role: primary
+    flags: []
   solvation_al_vs_li:
     symbol: Delta_G_solv_Al_vs_Li
     transform: none
@@ -2103,7 +4018,9 @@ params:
     status: gap
     value: null
     range: null
-    range_reason: gap - no Al3+ solvation or transfer free energy in an organic electrolyte was found
+    range_reason: 'gap (cp3 R10, searched on day 3): no Al3+ transfer or solvation Gibbs energy in any registered
+      electrolyte solvent or other aprotic solvent was found in an open source; Al3+ is absent from the IUPAC transfer
+      selections'
     prior:
       family: none
     rule: X1
@@ -2111,8 +4028,156 @@ params:
     best_grade: null
     conditions: n.s.
     correlation_group: null
-    notes: ''
+    notes: 'Solvated-sink input of C5 R-cell: Delta_G_solv(Al3+) - 3 Delta_G_solv(Li+) in the electrolyte. The aqueous
+      analog solvation_al_vs_li_water_analog is flagged and runs beside the gap.'
     method: no admitted row (X1)
+    role: primary
+    flags: []
+  hydration_free_energy_li:
+    symbol: Delta_G_hyd
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: -475000.0
+    range:
+      min: -475000.0
+      max: -475000.0
+    prior:
+      family: fixed
+      value: -475000.0
+    rule: P1
+    sources:
+    - TK-001
+    best_grade: D
+    conditions: single-ion hydration Gibbs energy, gas to water, 298.15 K (Marcus 1991 scale, read through an open
+      secondary source)
+    correlation_group: null
+    notes: Grade D (the original is paywalled; read through a quoting paper). Input of the aqueous analogs only.
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  hydration_free_energy_ca:
+    symbol: Delta_G_hyd
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: -1505000.0
+    range:
+      min: -1505000.0
+      max: -1505000.0
+    prior:
+      family: fixed
+      value: -1505000.0
+    rule: P1
+    sources:
+    - TK-002
+    best_grade: D
+    conditions: as hydration_free_energy_li
+    correlation_group: null
+    notes: 'Grade D, same original as TD-054 (dg_hyd_ca_marcus, read from another quoting source). Input of the
+      aqueous analogs only; dg_hyd_ca_* remain the anchor''s comparison keys. Comparators (not admitted, E2): TD-054.'
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  hydration_free_energy_al:
+    symbol: Delta_G_hyd
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: -4525000.0
+    range:
+      min: -4525000.0
+      max: -4525000.0
+    prior:
+      family: fixed
+      value: -4525000.0
+    rule: P1
+    sources:
+    - TK-003
+    best_grade: D
+    conditions: as hydration_free_energy_li
+    correlation_group: null
+    notes: Grade D. Input of the aqueous analog only.
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
+  solvation_ca_vs_li_water_analog:
+    symbol: Delta_G_solv_Ca_vs_Li
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: computed
+    value: -555000.0
+    range:
+      min: -555000.0
+      max: -555000.0
+    prior:
+      family: fixed
+      value: -555000.0
+    rule: D1
+    sources:
+    - TK-002
+    - TK-001
+    best_grade: D
+    method: 'D1: g_ca - 2 * g_li with g_ca = hydration_free_energy_ca, g_li = hydration_free_energy_li; range is
+      the envelope over the input ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Flagged analog (A1): the relative solvation of Ca2+ against two Li+ in water, not in the electrolyte.
+      The transfer into a carbonate solvent is unknown for Ca2+ (gap), so the analog''s verdict is conditional on
+      water standing in for the solvent.'
+    derived:
+      expr: g_ca - 2 * g_li
+      inputs:
+        g_ca: hydration_free_energy_ca
+        g_li: hydration_free_energy_li
+    role: analog
+    of: solvation_ca_vs_li
+    flags:
+    - analog
+  solvation_al_vs_li_water_analog:
+    symbol: Delta_G_solv_Al_vs_Li
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: computed
+    value: -3100000.0
+    range:
+      min: -3100000.0
+      max: -3100000.0
+    prior:
+      family: fixed
+      value: -3100000.0
+    rule: D1
+    sources:
+    - TK-003
+    - TK-001
+    best_grade: D
+    method: 'D1: g_al - 3 * g_li with g_al = hydration_free_energy_al, g_li = hydration_free_energy_li; range is
+      the envelope over the input ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: Flagged analog (A1) in water, as solvation_ca_vs_li_water_analog.
+    derived:
+      expr: g_al - 3 * g_li
+      inputs:
+        g_al: hydration_free_energy_al
+        g_li: hydration_free_energy_li
+    role: analog
+    of: solvation_al_vs_li
+    flags:
+    - analog
   a_h_cell:
     symbol: a_H_cell
     transform: none
@@ -2133,6 +4198,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
   a_ca_cell:
     symbol: a_Ca
     transform: none
@@ -2153,6 +4220,8 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
   a_co3_cell:
     symbol: a_CO3
     transform: none
@@ -2172,199 +4241,354 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: []
+  rho_acc:
+    symbol: rho_ACC
+    transform: none
+    unit: kg m^-3
+    regimes:
+    - R-slurry
+    status: single-source
+    value: 2355.0
+    range:
+      min: 2278.0
+      max: 2432.0
+    prior:
+      family: uniform
+      low: 2278.0
+      high: 2432.0
+    rule: U1
+    sources:
+    - TG-013
+    - TG-014
+    best_grade: A
+    conditions: synthetic Mg-free ACC, dried powder, gas pycnometry, CaCO3.nH2O with n = 1.1 and 0.5
+    correlation_group: null
+    notes: 'N16 (W7 drawing parameter). Mass density of the ACC phase including its structural water; the two rows
+      are two hydration states of one paper. Mg-ACC (TM-027), biogenic ACC from a scattering fit (TM-028), a force-field
+      model (TM-029) and SAXS of wet colloids (TC-054, TC-055) are comparators. Comparators (not admitted, E2):
+      TG-017, TM-027, TM-028, TM-029, TC-054, TC-055.'
+    method: 'not concordant within 2 combined standard uncertainties, so U1; U1: uniform over the sourced span;
+      2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags:
+    - single_source
+  c_o_bond_length_calcite:
+    symbol: d_CO
+    transform: none
+    unit: m
+    regimes:
+    - shared
+    status: single-source
+    value: 1.2814e-10
+    range:
+      min: 1.2806e-10
+      max: 1.2822e-10
+    prior:
+      family: normal
+      mean: 1.2814e-10
+      sd: 4.0e-14
+    rule: N2
+    sources:
+    - TM-030
+    best_grade: A
+    conditions: calcite single crystal, X-ray refinement at 294 K
+    correlation_group: null
+    notes: 'N16 (W7 drawing parameter). TM-030 (refined distance) and TM-031 (the same refinement after a libration
+      correction) are one determination; the grade-A row stands for it (E3). Same original as an admitted row, not
+      counted again (E3): TM-031.'
+    method: 'N2: one grade-A value with a stated uncertainty; 1 admitted row(s), 1 independent original(s)'
+    role: primary
+    flags:
+    - single_source
+  c_o_bond_length_acc:
+    symbol: d_CO
+    transform: none
+    unit: m
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 1.295e-10
+    range:
+      min: 1.27e-10
+      max: 1.32e-10
+    prior:
+      family: uniform
+      low: 1.27e-10
+      high: 1.32e-10
+    rule: U1
+    sources:
+    - TM-032
+    - TM-033
+    best_grade: B
+    conditions: amorphous calcium carbonate, structure model fitted to scattering data (Mg-ACC) and first pair-distribution
+      peak
+    correlation_group: null
+    notes: N16 (W7 drawing parameter) for the ACC framing; one fitted model (Mg-ACC) and one pair-distribution peak.
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   p_cred:
     symbol: p_cred
     transform: none
     unit: '1'
-    regimes: &id001
+    regimes: &id006
     - shared
     status: registered
-    value: null
-    range: null
-    range_reason: registration convention set at cp2 (theory/thresholds.md); not yet ruled when this table was built
-    prior: &id002
-      family: none
-    rule: X2
-    sources: &id003 []
+    value: 0.9
+    range: &id007
+      min: 0.9
+      max: 0.9
+    prior: &id008
+      family: fixed
+      value: 0.9
+    rule: R1
+    sources: &id009 []
     best_grade: null
-    conditions: n.s.
+    method: 'R1: registered value read from theory/thresholds.md (thresholds), path decision.conventions.p_cred'
+    conditions: registration convention
     correlation_group: null
-    notes: ''
-    method: no admitted row (X2)
+    notes: Credible level of the verdict bands; the registered sweep is reported beside the primary result.
+    registered: &id010
+      file: theory/thresholds.md
+      block: thresholds
+      path: decision.conventions.p_cred
+      ruling: cp2 ruling 2026-10-17 (decision D14)
+      sweep:
+      - 0.6
+      - 0.9
+      - 0.99
+    role: primary
+    flags: &id011
+    - registered
   p_deg:
     symbol: p_deg
     transform: none
     unit: '1'
-    regimes: &id004
+    regimes: &id012
     - shared
     status: registered
-    value: null
-    range: null
-    range_reason: registration convention set at cp2; not yet ruled
-    prior: &id005
-      family: none
-    rule: X2
-    sources: &id006 []
+    value: 0.1
+    range: &id013
+      min: 0.1
+      max: 0.1
+    prior: &id014
+      family: fixed
+      value: 0.1
+    rule: R1
+    sources: &id015 []
     best_grade: null
-    conditions: n.s.
+    method: 'R1: registered value read from theory/thresholds.md (thresholds), path decision.conventions.p_deg'
+    conditions: registration convention
     correlation_group: null
-    notes: ''
-    method: no admitted row (X2)
+    notes: Registered as the rule p_deg = 1 - p_cred, so it moves with the p_cred sweep; the sweep here is that
+      rule applied to the registered p_cred sweep.
+    registered: &id016
+      file: theory/thresholds.md
+      block: thresholds
+      path: decision.conventions.p_deg
+      ruling: cp2 ruling 2026-10-17 (decision D14)
+      rule: 1 - p_cred
+      sweep:
+      - 0.4
+      - 0.1
+      - 0.01
+    role: primary
+    flags: &id017
+    - registered
   m_cos:
     symbol: m_cos
     transform: none
     unit: '1'
-    regimes: &id017
+    regimes: &id033
     - R-slurry
     status: registered
-    value: null
-    range: null
-    range_reason: 'registration convention set at cp2 (W3 proposes zero: the method error is carried by the interfacial-energy
-      priors); not yet ruled'
-    prior: &id018
-      family: none
-    rule: X2
-    sources: &id019 []
+    value: 0.0
+    range: &id034
+      min: 0.0
+      max: 0.0
+    prior: &id035
+      family: fixed
+      value: 0.0
+    rule: R1
+    sources: &id036 []
     best_grade: null
-    conditions: n.s.
+    method: 'R1: registered value read from theory/thresholds.md (thresholds), path decision.conventions.m_cos'
+    conditions: registration convention
     correlation_group: null
-    notes: ''
-    method: no admitted row (X2)
+    notes: C3 margin on cos(theta); zero primary because the interfacial-energy priors carry the method error.
+    registered: &id037
+      file: theory/thresholds.md
+      block: thresholds
+      path: decision.conventions.m_cos
+      ruling: cp2 ruling 2026-10-17 (decision D14)
+      sweep:
+      - 0.1
+      - 0.2
+    role: primary
+    flags: &id038
+    - registered
   contact_area_definition:
     symbol: A_c_rule
     transform: none
     unit: '1'
-    regimes: &id010
+    regimes: &id024
     - R-slurry
     status: registered
     value: null
     range: null
-    range_reason: registration convention set at cp2; not yet ruled
-    prior: &id011
+    range_reason: registration convention named by theory/thresholds.md (C1, Q5); no ruling text in the cp2 or cp3
+      record available to this table, so it is not filled
+    prior: &id025
       family: none
     rule: X2
-    sources: &id012 []
+    sources: &id026 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: &id027 []
   framing:
     symbol: framing
     transform: none
     unit: '1'
-    regimes: &id036
+    regimes: &id070
     - R-slurry
     status: registered
     value: null
     range: null
-    range_reason: 'registration at cp3 (lane note N5): ACC or calcite; keys gamma_nl_*, v_m_*, log10_ksp_* carry
-      both framings'
-    prior: &id037
+    range_reason: 'registration at cp3 (lane note N5): ACC or calcite; the cp3 ruling text on the framing is not
+      in this table''s inputs; keys gamma_nl_*, v_m_*, log10_ksp_* and gamma_nv_* carry both framings'
+    prior: &id071
       family: none
     rule: X2
-    sources: &id038 []
+    sources: &id072 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: &id073 []
   n_req:
     symbol: N_req
     transform: none
     unit: m^-2
-    regimes: &id020
+    regimes: &id039
     - R-slurry
     status: registered
     value: null
     range: null
-    range_reason: registration at cp2 (decision 4); literature island densities are key nucleation_density as a
-      comparator
-    prior: &id021
+    range_reason: derived (D1) from patch_area; no value for patch_area
+    prior: &id040
       family: none
-    rule: X2
-    sources: &id022 []
+    rule: X1
+    sources: &id041 []
     best_grade: null
+    method: no admitted row (X1)
     conditions: n.s.
     correlation_group: null
-    notes: ''
-    method: no admitted row (X2)
+    notes: Registered rule N_req = 1/A_patch (cp2 fix F4, decision D14), derived per draw from patch_area. The Poisson
+      refinement ln(1/q_0)/A_patch (theory/cp2_brief.md D) is a cp3 proposal and is not applied here.
+    derived: &id042
+      expr: 1 / A_patch
+      inputs:
+        A_patch: patch_area
+    role: primary
+    flags: &id043 []
   gas_reference_schemes:
     symbol: gas_reference_schemes
     transform: none
     unit: '1'
-    regimes: &id077
+    regimes: &id127
     - R-cell
     status: registered
     value: null
     range: null
-    range_reason: registration at cp2; benchmark drg_caco3_decomposition supports the choice
-    prior: &id078
+    range_reason: registration (cp3 packet decision 3); the ruling text on the scheme set is not in this table's
+      inputs. cp3 R2 sets the margin of the all-experimental route (window_margin_expt); the benchmark drg_caco3_decomposition
+      and W5's gas_reference.md bear on the choice
+    prior: &id128
       family: none
     rule: X2
-    sources: &id079 []
+    sources: &id129 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: &id130 []
   al_phases:
     symbol: al_phases
     transform: none
     unit: '1'
-    regimes: &id080
+    regimes: &id131
     - R-cell
     status: registered
     value: null
     range: null
-    range_reason: registration at cp2
-    prior: &id081
+    range_reason: registration named by theory/thresholds.md (C5 R-cell); no ruling text available to this table
+    prior: &id132
       family: none
     rule: X2
-    sources: &id082 []
+    sources: &id133 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
     notes: ''
     method: no admitted row (X2)
+    role: primary
+    flags: &id134 []
   m_s:
     symbol: m_S
     transform: none
     unit: J m^-2
-    regimes: &id023
+    regimes: &id044
     - R-slurry
     status: registered
-    value: null
-    range: null
-    range_reason: W1 proposes m_S = 0 for the energies that carry priors (gamma_nl_*, gamma_sl0_template), as theory/thresholds.md
-      allows; gamma_sn0_template and delta_gamma_w have no prior, so their method error is not carried and cp2 must
-      register the margin
-    prior: &id024
-      family: none
-    rule: X2
-    sources: &id025 []
+    value: 0.0
+    range: &id045
+      min: 0.0
+      max: 0.0
+    prior: &id046
+      family: fixed
+      value: 0.0
+    rule: M0
+    sources: &id047 []
     best_grade: null
-    conditions: n.s.
+    method: 'M0: margin zero because the prior carries the method error (README 7.3)'
+    conditions: threshold margin
     correlation_group: null
-    notes: ''
-    method: no admitted row (X2)
+    notes: Threshold margin of C4 (theory/thresholds.md conventions, m_S); the zero case of README 7.3.
+    margin_case: zero
+    margin_reason: 'S_spread = gamma_sl - gamma_sn - gamma_nl is evaluated only on priors: gamma_nl_* and gamma_sl0_template
+      are uniform over their sourced spans (U1, T1), whose width already holds the scatter between methods (a factor
+      of 6.8 for calcite), and gamma_sn has the ignorance prior U[0, gamma_p + gamma_nv] (theory/ignorance_priors.md
+      1a), which covers every admissible value, so no method error lies outside it. Delta_gamma_w = 0 by the registered
+      rule. Nothing in S_spread is a single computed number whose systematic error the priors miss.'
+    role: primary
+    flags: &id048 []
   m_seq_method_error:
     symbol: m_seq
     transform: none
     unit: J mol^-1
-    regimes: &id013
+    regimes: &id028
     - R-slurry
     status: single-source
     value: 7196.48
-    range: &id014
+    range: &id029
       min: 5857.6
       max: 7949.6
-    prior: &id015
+    prior: &id030
       family: uniform
       low: 5857.6
       high: 7949.6
     rule: U1
-    sources: &id016
+    sources: &id031
     - TE-061
     - TE-062
     - TE-063
@@ -2372,107 +4596,310 @@ params:
     conditions: mean unsigned error of hybrid DFT against CCSD(T)/CBS for Ca2+-ligand (La-to-Ca exchange) energies,
       gas phase
     correlation_group: null
-    notes: 'Electronic-structure error only; the implicit-solvation error of ion hydration (TE-081, 4.65 kcal/mol
-      for cations with GFN2-xTB/ALPB; TE-067 SMD ions) is larger and is not included. W3 decides whether m_seq adds
-      it. Comparators (not admitted, E2): TE-081, TE-082, TE-067.'
+    notes: 'Electronic-structure error only. m_seq does not include the implicit-solvation error (stated at P0-W1.3
+      for cp3 decision 8): that error is the separate key implicit_solvation_error_ion, and m_seq_with_solvation
+      is their sum, a labelled sensitivity. W1 keeps the electronic-structure error as m_seq because the anchor''s
+      binding cycle and the single-source widening (W1) are defined against the electronic-structure benchmark of
+      Ca2+-ligand energies; the solvation error belongs to the solvated cycle and is reported beside it. Comparators
+      (not admitted, E2): TE-081, TE-082, TE-067.'
     method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: &id032
+    - single_source
+  implicit_solvation_error_ion:
+    symbol: m_solv
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-slurry
+    status: single-source
+    value: 29371.68
+    range:
+      min: 19455.6
+      max: 39287.76
+    prior:
+      family: uniform
+      low: 19455.6
+      high: 39287.76
+    rule: U1
+    sources:
+    - TE-081
+    - TE-082
+    best_grade: B
+    conditions: mean absolute error of implicit-solvent hydration free energies of ions against experiment, water,
+      298 K
+    correlation_group: null
+    notes: 'Cations (TE-081) and anions (TE-082) of one benchmark paper with the semi-empirical implicit model used
+      for the anchor geometries. TE-067 (SMD ions, abstract only, grade D) is a comparator under E5. Not part of
+      m_seq. Comparators (not admitted, E2): TE-067.'
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags:
+    - single_source
+  m_seq_with_solvation:
+    symbol: m_seq
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-slurry
+    status: computed
+    value: 36568.16
+    range:
+      min: 25313.2
+      max: 47237.36
+    prior:
+      family: fixed
+      value: 36568.16
+    rule: D1
+    sources:
+    - TE-061
+    - TE-062
+    - TE-063
+    - TE-081
+    - TE-082
+    best_grade: B
+    method: 'D1: m_el + m_solv with m_el = m_seq_method_error, m_solv = implicit_solvation_error_ion; range is the
+      envelope over the input ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Labelled sensitivity for cp3 decision 8: m_seq plus the implicit-solvation error of ions. Never decides
+      a verdict and is not used for the W1 widening.'
+    derived:
+      expr: m_el + m_solv
+      inputs:
+        m_el: m_seq_method_error
+        m_solv: implicit_solvation_error_ion
+    role: sensitivity
+    of: m_seq_method_error
+    flags: []
+  contact_angle_method_error:
+    symbol: dtheta
+    transform: none
+    unit: rad
+    regimes:
+    - R-slurry
+    status: single-source
+    value: 0.0523598775598
+    range:
+      min: 0.0523598775598
+      max: 0.0523598775598
+    prior:
+      family: fixed
+      value: 0.0523598775598
+    rule: P1
+    sources:
+    - TL-088
+    best_grade: B
+    conditions: deviation of force-field water contact angles from experiment on silica surfaces
+    correlation_group: null
+    notes: 'The closest benchmarked method error of a computed wetting free energy found (T-L). Comparators (not
+      admitted, E2): TL-087, TL-089.'
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: primary
+    flags:
+    - single_source
   m_w_adh_wet:
     symbol: m_W
     transform: none
     unit: J m^-2
-    regimes: &id007
+    regimes: &id018
     - R-slurry
-    status: gap
-    value: null
-    range: null
-    range_reason: 'gap: no method-error benchmark of a wet adhesion free energy per area; it follows from the PMF
-      method error divided by N_A A_c once the contact-area rule is registered (m_seq_method_error is the closest
-      energy benchmark)'
-    prior: &id008
-      family: none
-    rule: X1
-    sources: &id009 []
-    best_grade: null
+    status: computed
+    value: 0.00376938758553
+    range: &id019
+      min: 0.00373168847369
+      max: 0.00380708669737
+    prior: &id020
+      family: fixed
+      value: 0.00376938758553
+    rule: D1
+    sources: &id021
+    - TF-048
+    - TL-088
+    best_grade: B
+    method: 'D1: g_w * dth with g_w = gamma_w, dth = contact_angle_method_error; range is the envelope over the
+      input ranges'
     conditions: n.s.
     correlation_group: null
-    notes: ''
-    method: no admitted row (X1)
+    notes: 'Case evidence (README 7.3): the work of adhesion of water follows Young-Dupre, W = gamma_w (1 + cos
+      theta), so a contact-angle error dtheta moves W by at most gamma_w dtheta (|d cos theta / d theta| <= 1).
+      With the benchmarked force-field contact-angle error (TL-088, silica) this is the systematic error of a computed
+      wet adhesion free energy per area that no prior carries: the C1 work is a computed number (delta_f_pmf), not
+      a sampled prior. TL-087 (immersion enthalpies within 0 to 7 mJ m^-2) is consistent in size and is a comparator
+      (an enthalpy). No catechol-on-alumina benchmark exists.'
+    derived: &id022
+      expr: g_w * dth
+      inputs:
+        g_w: gamma_w
+        dth: contact_angle_method_error
+    margin_case: evidence
+    role: primary
+    flags: &id023 []
   termination_weights:
     symbol: termination_weights
     transform: none
     unit: '1'
-    regimes: &id033
+    regimes: &id066
     - R-slurry
     status: gap
     value: null
     range: null
-    range_reason: gap - no fetched distribution of native-oxide surface terminations (hydroxyl types) on Al foil;
-      Day 1 hydroxyl densities (TB rows) do not give weights. Outstanding for P0-W1.3
-    prior: &id034
+    range_reason: 'gap (cp3 ruling R8): no fetched distribution of the populated native-oxide terminations on Al
+      foil in alkaline water. Reporting rule: C1 is reported per termination, and the mixture over terminations
+      uses an ignorance mixture (weights uniform on the simplex of the registered terminations); no point weight
+      is set.'
+    prior: &id067
       family: none
     rule: X1
-    sources: &id035 []
+    sources: &id068 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
-    notes: ''
+    notes: 'cp3 R8: termination weights are a gap. The verdict per termination is reported; the mixture verdict
+      is computed under the ignorance mixture and labelled as such. Hydroxyl-type evidence found on day 3 (TM-047,
+      TM-048: single-crystal faces, qualitative) is listed in lit/conflicts.md and does not give weights.'
     method: no admitted row (X1)
+    role: primary
+    flags: &id069 []
   m_eff_tunnel:
     symbol: m_eff
     transform: none
     unit: kg
-    regimes: &id071
+    regimes: &id119
     - R-cell
     status: gap
     value: null
     range: null
     range_reason: gap - no effective tunnelling mass for a CaCO3 film was searched or found; outstanding for P0-W1.3
-    prior: &id072
+    prior: &id120
       family: none
     rule: X1
-    sources: &id073 []
+    sources: &id121 []
     best_grade: null
     conditions: n.s.
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
+    role: primary
+    flags: &id122 []
   window_margin:
     symbol: m_E
     transform: none
     unit: V
-    regimes: &id030
+    regimes: &id054
     - R-cell
-    status: gap
-    value: null
-    range: null
-    range_reason: to be derived from formation_energy_mae (e_form) with the atoms per transferred electron of the
-      registered sink reactions, which W5 fixes after the cp2 sink ruling; outstanding for P0-W1.3
-    prior: &id031
-      family: none
-    rule: X1
-    sources: &id032 []
-    best_grade: null
+    status: computed
+    value: 0.12375
+    range: &id055
+      min: 0.1125
+      max: 0.135
+    prior: &id056
+      family: fixed
+      value: 0.12375
+    rule: D1
+    sources: &id057
+    - TI-080
+    - TI-082
+    - TI-083
+    - TI-085
+    best_grade: B
+    method: 'D1: e_form * 5 / (2 * F) with e_form = formation_energy_mae; range is the envelope over the input ranges'
     conditions: n.s.
     correlation_group: null
-    notes: ''
-    method: no admitted row (X1)
+    notes: 'Margin of the DFT-based schemes (janaf, mp) for the registered reaction CaCO3 + 2 LiClO4 -> Ca(ClO4)2
+      + CO2 + 1/2 O2 + 2 Li, from fetched method-error evidence (README 7.3, case evidence): e_form per atom times
+      the atoms whose DFT error does not cancel, per transferred electron. In W5''s exchange route Ca(ClO4)2 enters
+      as 2 LiClO4 plus a tabulated enthalpy, so the LiClO4 energies cancel and only the 5 atoms of CaCO3 carry a
+      DFT error; 2 electrons move. Other reactions scale by their own count of uncancelled atoms per electron. W5''s
+      provisional value counted every solid atom, which double counts the cancelling salt. The gas references are
+      the schemes'' own and are benchmarked separately (gas_reference.md); this margin does not carry them.'
+    derived: &id058
+      expr: e_form * 5 / (2 * F)
+      inputs:
+        e_form: formation_energy_mae
+    margin_case: evidence
+    role: primary
+    flags: &id059 []
+  window_margin_expt:
+    symbol: m_E
+    transform: none
+    unit: V
+    regimes: &id060
+    - R-cell
+    status: computed
+    value: 0.0869778018619
+    range: &id061
+      min: 0.073176147966
+      max: 0.141672695727
+    prior: &id062
+      family: fixed
+      value: 0.0869778018619
+    rule: D1
+    sources: &id063
+    - TK-030
+    - TK-031
+    - TK-033
+    - TK-039
+    - TI-008
+    - TI-002
+    - TK-012
+    - TK-019
+    - TK-015
+    - TK-029
+    - TK-027
+    - TK-028
+    - TK-065
+    - TK-071
+    - TK-066
+    - TK-072
+    - TK-067
+    - TK-068
+    - TK-073
+    - TK-069
+    - TK-074
+    - TK-070
+    - TK-007
+    - TK-008
+    best_grade: A
+    method: 'D1: (u_caclo4 + 2 * u_liclo4 + u_co2 + u_caco3 + T0 * ds) / (2 * F) with u_caclo4 = u_tab_dfh_ca_clo4_2,
+      u_liclo4 = u_tab_dfh_liclo4, u_co2 = u_tab_dfg_co2, u_caco3 = u_tab_dfg_caco3, ds = exchange_entropy_bound;
+      range is the envelope over the input ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'cp3 R2: m_expt, the experimental uncertainty budget of the all-experimental route for the registered
+      reaction CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 1/2 O2 + 2 Li (2 electrons). In that route Delta_G = DfH(Ca(ClO4)2)
+      - 2 DfH(LiClO4) + DfG(CO2) - DfG(CaCO3), the LiClO4 free energies cancelling; the budget is the linear sum
+      of the tabulated uncertainties of those inputs (as printed: 2 sigma for USGS B2131, the stated value for JANAF,
+      the upper end of the NBS convention) plus the bound on the neglected exchange entropy times 298.15 K. A linear
+      sum is used because the budget is a bound, not a standard deviation.'
+    derived: &id064
+      expr: (u_caclo4 + 2 * u_liclo4 + u_co2 + u_caco3 + T0 * ds) / (2 * F)
+      inputs:
+        u_caclo4: u_tab_dfh_ca_clo4_2
+        u_liclo4: u_tab_dfh_liclo4
+        u_co2: u_tab_dfg_co2
+        u_caco3: u_tab_dfg_caco3
+        ds: exchange_entropy_bound
+    margin_case: evidence
+    role: primary
+    flags: &id065 []
   ph_slurry:
     symbol: pH
     transform: none
     unit: '1'
-    regimes: &id051
+    regimes: &id093
     - R-slurry
     status: sourced
     value: 12.0
-    range: &id052
+    range: &id094
       min: 10.0
       max: 13.0
-    prior: &id053
+    prior: &id095
       family: uniform
       low: 10.0
       high: 13.0
     rule: U1
-    sources: &id054
+    sources: &id096
     - TA-001
     - TA-002
     - TA-005
@@ -2497,6 +4924,8 @@ params:
       an anode (LTO) slurry, TA-017 abstract only. Slurries with pH modifiers are the separate key ph_slurry_modified.
       Comparators (not admitted, E2): TA-015, TA-013, TA-017.'
     method: 'U1: uniform over the sourced span; 15 admitted row(s), 15 independent original(s)'
+    role: primary
+    flags: &id097 []
   ph_slurry_modified:
     symbol: pH
     transform: none
@@ -2529,23 +4958,26 @@ params:
     notes: 'Processed slurries whose pH was lowered on purpose; not the alkaline regime of the charter, kept for
       a design variant. Bounds printed as < are taken at the bound. Comparators (not admitted, E2): TA-014.'
     method: 'U1: uniform over the sourced span; 8 admitted row(s), 8 independent original(s)'
+    role: sensitivity
+    of: ph_slurry
+    flags: []
   e_she_slurry:
     symbol: E_SHE
     transform: none
     unit: V
-    regimes: &id055
+    regimes: &id098
     - R-slurry
     status: sourced
     value: -1.34
-    range: &id056
+    range: &id099
       min: -1.4617
       max: -0.4758
-    prior: &id057
+    prior: &id100
       family: uniform
       low: -1.4617
       high: -0.4758
     rule: U1
-    sources: &id058
+    sources: &id101
     - TJ-023
     - TJ-024
     - TJ-025
@@ -2560,6 +4992,8 @@ params:
       from the standard by 5 to 11 mV, small against the spread. No open-circuit potential of Al in a slurry was
       found (T-J gaps). Comparators (not admitted, E2): TJ-027, TJ-028.'
     method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: &id102 []
   t_slurry:
     symbol: T
     transform: none
@@ -2584,6 +5018,8 @@ params:
     correlation_group: null
     notes: ''
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   t_drying_primary:
     symbol: T
     transform: none
@@ -2617,23 +5053,25 @@ params:
     notes: 'Secondary vacuum drying (90 to 180 C; comparators) happens after the liquid water is removed. Comparators
       (not admitted, E2): TJ-052, TJ-059, TJ-075, TJ-080, TJ-086, TJ-093.'
     method: 'U1: uniform over the sourced span; 9 admitted row(s), 9 independent original(s)'
+    role: primary
+    flags: []
   t_proc_slurry:
     symbol: t_proc
     transform: none
     unit: s
-    regimes: &id047
+    regimes: &id088
     - R-slurry
     status: sourced
     value: 7200.0
-    range: &id048
+    range: &id089
       min: 1200.0
       max: 1209600.0
-    prior: &id049
+    prior: &id090
       family: loguniform
       low: 1200.0
       high: 1209600.0
     rule: L1
-    sources: &id050
+    sources: &id091
     - TJ-064
     - TJ-067
     - TJ-071
@@ -2652,6 +5090,8 @@ params:
       vacuum drying, key t_drying_secondary). TJ-091 (14 days) is a stored LFP paste. TJ-057 is one mixing step.
       Comparators (not admitted, E2): TJ-057.'
     method: 'L1: span exceeds a decade; 10 admitted row(s), 10 independent original(s)'
+    role: primary
+    flags: &id092 []
   t_drying_secondary:
     symbol: t_proc
     transform: none
@@ -2681,6 +5121,8 @@ params:
     notes: After the liquid water is removed; residual water 110 to 1168 ppm (TJ-054, TJ-055). Not the wet-state
       time.
     method: 'L1: span exceeds a decade; 6 admitted row(s), 6 independent original(s)'
+    role: primary
+    flags: []
   slurry_solids_fraction:
     symbol: w_solids
     transform: none
@@ -2710,6 +5152,8 @@ params:
     correlation_group: null
     notes: The water mass fraction is one minus this value.
     method: 'U1: uniform over the sourced span; 7 admitted row(s), 7 independent original(s)'
+    role: primary
+    flags: []
   a_w_slurry:
     symbol: a_w
     transform: none
@@ -2719,9 +5163,9 @@ params:
     status: gap
     value: null
     range: null
-    range_reason: 'gap: no water activity during drying was found; a_w = 1 holds in the wet slurry by definition
-      (charter) and the lower bound during drying is not sourced; residual water contents after drying (TJ-054,
-      TJ-055) are not activities'
+    range_reason: 'gap for the primary drying state: no water activity of a drying aqueous electrode film was found
+      (day 3 search, T-L gaps.md). In the wet slurry a_w = 1 by the charter definition; the secondary drying state
+      is a_w_drying_secondary'
     prior:
       family: none
     rule: X1
@@ -2729,8 +5173,11 @@ params:
     best_grade: null
     conditions: n.s.
     correlation_group: null
-    notes: 'Comparators (not admitted, E2): TJ-054, TJ-055.'
+    notes: 'F7 reports a_w per registered drying state; this key is the primary (convective) drying state. Comparators
+      (not admitted, E2): TJ-054, TJ-055.'
     method: no admitted row (X1)
+    role: primary
+    flags: []
   ionic_strength_slurry:
     symbol: I_ionic
     transform: none
@@ -2758,6 +5205,8 @@ params:
       few percent). TA-022 is an added-salt processing solution. Comparators (not admitted, E2): TA-022, TJ-099,
       TJ-100, TJ-101, TJ-102, TJ-103.'
     method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: []
   dic_slurry:
     symbol: C_T
     transform: none
@@ -2782,23 +5231,25 @@ params:
     correlation_group: carbonate_system
     notes: 'Washing solutions, not slurries; see lit/conflicts.md. Comparators (not admitted, E2): TF-031.'
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   j0_het:
     symbol: J0_het
     transform: none
     unit: m^-2 s^-1
-    regimes: &id043
+    regimes: &id083
     - R-slurry
     status: sourced
     value: 3.49342710575e+19
-    range: &id044
+    range: &id084
       min: 210000000000000.0
       max: 3.83100800072e+22
-    prior: &id045
+    prior: &id085
       family: loguniform
       low: 210000000000000.0
       high: 3.83100800072e+22
     rule: L1
-    sources: &id046
+    sources: &id086
     - TJ-001
     - TJ-002
     - TJ-003
@@ -2813,6 +5264,30 @@ params:
       it). Per-field (TJ-014 to TJ-016) and per-volume (TJ-018 to TJ-022) prefactors have other units and are comparators.
       Comparators (not admitted, E2): TJ-005, TJ-014, TJ-015, TJ-016, TJ-018, TJ-019, TJ-020, TJ-021, TJ-022.'
     method: 'L1: span exceeds a decade; 5 admitted row(s), 5 independent original(s)'
+    role: primary
+    flags: &id087 []
+  patch_area:
+    symbol: A_patch
+    transform: none
+    unit: m^2
+    regimes: &id079
+    - R-slurry
+    status: gap
+    value: null
+    range: null
+    range_reason: 'gap: no measured contact area between a cathode particle and the aluminium collector was found
+      (T-L gaps.md); a particle size (TL-086) is not a contact area'
+    prior: &id080
+      family: none
+    rule: X1
+    sources: &id081 []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: 'N_req = 1/A_patch (n_req) stays undetermined while this is a gap. Comparators (not admitted, E2): TL-086.'
+    method: no admitted row (X1)
+    role: primary
+    flags: &id082 []
   nucleation_density:
     symbol: N_s
     transform: none
@@ -2833,60 +5308,290 @@ params:
     correlation_group: null
     notes: ''
     method: no admitted row (X1)
-  e_cell_max:
+    role: primary
+    flags: []
+  e_cell_max_lfp:
     symbol: E_cell_max
     transform: none
     unit: V
-    regimes: &id087
+    regimes:
+    - R-cell
+    status: sourced
+    value: 4.0
+    range: &id001
+      min: 3.6
+      max: 4.2
+    prior:
+      family: uniform
+      low: 3.6
+      high: 4.2
+    rule: U1
+    sources:
+    - TJ-038
+    - TK-041
+    - TK-042
+    best_grade: B
+    conditions: upper charge cut-off vs Li+/Li, half cells or stated vs Li+/Li, LiFePO4 (olivine) cathodes
+    correlation_group: null
+    notes: Cathode class LiFePO4 of the E_cell_max design axis (cp3 R2).
+    method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: []
+  e_cell_max_layered:
+    symbol: E_cell_max
+    transform: none
+    unit: V
+    regimes:
     - R-cell
     status: sourced
     value: 4.3
-    range: &id088
-      min: 3.6
-      max: 5.0
-    prior: &id089
+    range: &id002
+      min: 4.25
+      max: 4.5
+    prior:
       family: uniform
-      low: 3.6
-      high: 5.0
+      low: 4.25
+      high: 4.5
     rule: U1
-    sources: &id090
-    - TA-047
-    - TA-048
-    - TA-049
+    sources:
     - TA-050
     - TA-051
     - TA-052
     - TJ-036
     - TJ-037
-    - TJ-038
     - TJ-039
-    - TJ-040
+    - TK-043
+    - TK-050
+    - TK-051
+    - TK-052
+    - TK-053
+    - TK-054
+    - TK-055
+    best_grade: B
+    conditions: 'upper charge cut-off vs Li+/Li, half cells or stated vs Li+/Li, layered Ni-containing oxides: NMC111,
+      NMC532, NMC622, NMC811 and Ni-rich NCM, and NCA'
+    correlation_group: null
+    notes: Cathode class layered NMC/NCA of the E_cell_max design axis (cp3 R2). TA-052 reports one cut-off for
+      NCA and LMO electrodes and is admitted to both classes.
+    method: 'U1: uniform over the sourced span; 13 admitted row(s), 13 independent original(s)'
+    role: primary
+    flags: []
+  e_cell_max_lco:
+    symbol: E_cell_max
+    transform: none
+    unit: V
+    regimes:
+    - R-cell
+    status: sourced
+    value: 4.5
+    range: &id003
+      min: 4.2
+      max: 4.6
+    prior:
+      family: uniform
+      low: 4.2
+      high: 4.6
+    rule: U1
+    sources:
     - TJ-041
     - TJ-042
+    - TK-044
+    - TK-046
+    - TK-047
+    - TK-048
+    - TK-049
     best_grade: B
-    conditions: upper charge cut-off potentials vs Li+/Li of cathodes (LFP, LCO, NMC111/622/811, NCA, LNMO), water-processed
-      electrodes and reviews
+    conditions: upper charge cut-off vs Li+/Li, half cells or stated vs Li+/Li, LiCoO2 cathodes, conventional and
+      high-voltage protocols
     correlation_group: null
-    notes: The cut-off is a property of the cathode, so cells with fluorinated salts are admitted; the range runs
-      from LFP (3.6 V) to LNMO (5.0 V).
-    method: 'U1: uniform over the sourced span; 13 admitted row(s), 13 independent original(s)'
+    notes: 'Cathode class LiCoO2 of the E_cell_max design axis (cp3 R2). TK-045 is a full-cell voltage against graphite,
+      not vs Li+/Li, and is a comparator; TJ-042 (> 4.6 V) is read at its bound. Comparators (not admitted, E2):
+      TK-045.'
+    method: 'U1: uniform over the sourced span; 7 admitted row(s), 7 independent original(s)'
+    role: primary
+    flags: []
+  e_cell_max_lmo:
+    symbol: E_cell_max
+    transform: none
+    unit: V
+    regimes:
+    - R-cell
+    status: sourced
+    value: 4.5
+    range: &id004
+      min: 4.3
+      max: 4.5
+    prior:
+      family: uniform
+      low: 4.3
+      high: 4.5
+    rule: U1
+    sources:
+    - TA-052
+    - TK-056
+    - TK-057
+    best_grade: B
+    conditions: upper charge cut-off vs Li+/Li, half cells or stated vs Li+/Li, LiMn2O4 spinel cathodes
+    correlation_group: null
+    notes: Cathode class LiMn2O4 of the E_cell_max design axis (cp3 R2). TA-052 reports one cut-off for NCA and
+      LMO electrodes and is admitted to both classes.
+    method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: []
+  e_cell_max_lnmo:
+    symbol: E_cell_max
+    transform: none
+    unit: V
+    regimes:
+    - R-cell
+    status: sourced
+    value: 4.9
+    range: &id005
+      min: 4.9
+      max: 5.0
+    prior:
+      family: uniform
+      low: 4.9
+      high: 5.0
+    rule: U1
+    sources:
+    - TA-047
+    - TA-048
+    - TA-049
+    - TJ-040
+    best_grade: B
+    conditions: upper charge cut-off vs Li+/Li, half cells or stated vs Li+/Li, high-voltage spinel LiNi0.5Mn1.5O4
+      cathodes
+    correlation_group: null
+    notes: Cathode class LiNi0.5Mn1.5O4 of the E_cell_max design axis (cp3 R2).
+    method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s)'
+    role: primary
+    flags: []
+  e_cell_max:
+    symbol: E_cell_max
+    transform: none
+    unit: V
+    regimes: &id140
+    - R-cell
+    status: design-input
+    value: null
+    range: null
+    range_reason: design axis keyed to class (G1); each option names its per-class key
+    prior: &id141
+      family: categorical
+      options:
+      - label: LiFePO4
+        key: e_cell_max_lfp
+        value: 4.0
+        range: *id001
+        sources:
+        - TJ-038
+        - TK-041
+        - TK-042
+      - label: layered NMC/NCA
+        key: e_cell_max_layered
+        value: 4.3
+        range: *id002
+        sources:
+        - TA-050
+        - TA-051
+        - TA-052
+        - TJ-036
+        - TJ-037
+        - TJ-039
+        - TK-043
+        - TK-050
+        - TK-051
+        - TK-052
+        - TK-053
+        - TK-054
+        - TK-055
+      - label: LiCoO2
+        key: e_cell_max_lco
+        value: 4.5
+        range: *id003
+        sources:
+        - TJ-041
+        - TJ-042
+        - TK-044
+        - TK-046
+        - TK-047
+        - TK-048
+        - TK-049
+      - label: LiMn2O4
+        key: e_cell_max_lmo
+        value: 4.5
+        range: *id004
+        sources:
+        - TA-052
+        - TK-056
+        - TK-057
+      - label: LiNi0.5Mn1.5O4
+        key: e_cell_max_lnmo
+        value: 4.9
+        range: *id005
+        sources:
+        - TA-047
+        - TA-048
+        - TA-049
+        - TJ-040
+    rule: G1
+    sources: &id142
+    - TJ-038
+    - TK-041
+    - TK-042
+    - TA-050
+    - TA-051
+    - TA-052
+    - TJ-036
+    - TJ-037
+    - TJ-039
+    - TK-043
+    - TK-050
+    - TK-051
+    - TK-052
+    - TK-053
+    - TK-054
+    - TK-055
+    - TJ-041
+    - TJ-042
+    - TK-044
+    - TK-046
+    - TK-047
+    - TK-048
+    - TK-049
+    - TK-056
+    - TK-057
+    - TA-047
+    - TA-048
+    - TA-049
+    - TJ-040
+    best_grade: B
+    method: 'G1: one option per class, each built from that class''s rows; not sampled as one prior'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'cp3 R2: E_cell_max is a design axis keyed to cathode class. The charge cut-off is a property of the
+      cathode, so cells with fluorinated salts are admitted for it. The C5 R-cell verdict is reported per class;
+      no class is preferred. The charter''s single value (cp2 edit 5d) lies in the layered NMC/NCA class.'
+    role: design-axis
+    flags: &id143 []
   e_cell_min:
     symbol: E_cell_min
     transform: none
     unit: V
-    regimes: &id083
+    regimes: &id135
     - R-cell
     status: sourced
     value: 3.0
-    range: &id084
+    range: &id136
       min: 2.8
       max: 3.0
-    prior: &id085
+    prior: &id137
       family: uniform
       low: 2.8
       high: 3.0
     rule: U1
-    sources: &id086
+    sources: &id138
     - TJ-106
     - TJ-107
     - TJ-108
@@ -2896,6 +5601,8 @@ params:
     notes: Lowest collector potential of the cycling range. The charter's 4 V is not this quantity; it is the deck's
       Al dissolution onset (key al_onset_ffree).
     method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: &id139 []
   al_onset_ffree:
     symbol: E_Li
     transform: none
@@ -2926,6 +5633,8 @@ params:
       TB-068, TJ-033, TJ-034, TJ-035, TA-041, TB-071. Same original as an admitted row, not counted again (E3):
       TJ-032.'
     method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: []
   t_cell:
     symbol: T
     transform: none
@@ -2952,6 +5661,8 @@ params:
     notes: Fluorine-free Al studies also report 40 C (TB-065) and 60 C (TI-064 to TI-069) in their conditions; no
       row records them as a temperature.
     method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: primary
+    flags: []
   electrolyte_salt_molality:
     symbol: m_salt
     transform: none
@@ -2976,6 +5687,8 @@ params:
     correlation_group: null
     notes: ''
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   electrolyte_salt_molarity:
     symbol: c_salt
     transform: none
@@ -3000,6 +5713,8 @@ params:
     correlation_group: null
     notes: 'TJ-047 is LiPF6. Comparators (not admitted, E2): TJ-047.'
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   electrolyte_water_content:
     symbol: w_H2O_electrolyte
     transform: none
@@ -3025,17 +5740,19 @@ params:
     notes: 'Both are upper limits (< 20 ppm, < 4 ppm), taken at the bound; TJ-049 is the dry-box atmosphere. Comparators
       (not admitted, E2): TJ-049.'
     method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    role: primary
+    flags: []
   electrolyte_salts:
     symbol: salt_identity
     transform: none
     unit: '1'
-    regimes: &id091
+    regimes: &id144
     - R-cell
     status: sourced
     value: null
     range: null
     range_reason: categorical input; options listed in the prior
-    prior: &id092
+    prior: &id145
       family: categorical
       options:
       - label: LiBOB
@@ -3054,7 +5771,7 @@ params:
         - TI-070
         - TI-074
     rule: X3
-    sources: &id093
+    sources: &id146
     - TB-060
     - TB-065
     - TB-067
@@ -3070,6 +5787,8 @@ params:
     notes: Fluorine-free salts used in aluminium-collector studies; the sink thermochemistry exists for LiClO4 (aqueous)
       only among these (dfg_* keys).
     method: options and their source rows; not sampled (X3)
+    role: primary
+    flags: &id147 []
   electrolyte_solvents:
     symbol: solvent_identity
     transform: none
@@ -3116,12 +5835,15 @@ params:
     correlation_group: null
     notes: ''
     method: options and their source rows; not sampled (X3)
+    role: primary
+    flags: []
 correlation_groups:
   young_energies:
     members:
     - gamma_nl_calcite
     - gamma_nl_acc
     - gamma_sl0_template
+    - gamma_sl0_template_untruncated
     - gamma_sn0_template
     - delta_gamma_w
     kind: assumed independent
@@ -3131,22 +5853,33 @@ correlation_groups:
       - 0.0
       - 0.0
       - 0.0
+      - 0.0
     - - 0.0
+      - 1.0
+      - 0.0
+      - 0.0
+      - 0.0
+      - 0.0
+    - - 0.0
+      - 0.0
       - 1.0
       - 0.0
       - 0.0
       - 0.0
     - - 0.0
       - 0.0
+      - 0.0
       - 1.0
       - 0.0
       - 0.0
     - - 0.0
       - 0.0
       - 0.0
+      - 0.0
       - 1.0
       - 0.0
     - - 0.0
+      - 0.0
       - 0.0
       - 0.0
       - 0.0
@@ -3312,171 +6045,199 @@ thresholds:
       symbol: p_cred
       transform: none
       unit: '1'
-      regimes: *id001
+      regimes: *id006
       status: registered
-      value: null
-      range: null
-      range_reason: registration convention set at cp2 (theory/thresholds.md); not yet ruled when this table was
-        built
-      prior: *id002
-      rule: X2
-      sources: *id003
+      value: 0.9
+      range: *id007
+      prior: *id008
+      rule: R1
+      sources: *id009
       best_grade: null
-      conditions: n.s.
+      method: 'R1: registered value read from theory/thresholds.md (thresholds), path decision.conventions.p_cred'
+      conditions: registration convention
       correlation_group: null
-      notes: ''
-      method: no admitted row (X2)
+      notes: Credible level of the verdict bands; the registered sweep is reported beside the primary result.
+      registered: *id010
+      role: primary
+      flags: *id011
     degrade_mass_min:
       key: p_deg
       symbol: p_deg
       transform: none
       unit: '1'
-      regimes: *id004
+      regimes: *id012
       status: registered
-      value: null
-      range: null
-      range_reason: registration convention set at cp2; not yet ruled
-      prior: *id005
-      rule: X2
-      sources: *id006
+      value: 0.1
+      range: *id013
+      prior: *id014
+      rule: R1
+      sources: *id015
       best_grade: null
-      conditions: n.s.
+      method: 'R1: registered value read from theory/thresholds.md (thresholds), path decision.conventions.p_deg'
+      conditions: registration convention
       correlation_group: null
-      notes: ''
-      method: no admitted row (X2)
+      notes: Registered as the rule p_deg = 1 - p_cred, so it moves with the p_cred sweep; the sweep here is that
+        rule applied to the registered p_cred sweep.
+      registered: *id016
+      role: primary
+      flags: *id017
   C1:
     margin_W_adh_wet:
       key: m_w_adh_wet
       symbol: m_W
       transform: none
       unit: J m^-2
-      regimes: *id007
-      status: gap
-      value: null
-      range: null
-      range_reason: 'gap: no method-error benchmark of a wet adhesion free energy per area; it follows from the
-        PMF method error divided by N_A A_c once the contact-area rule is registered (m_seq_method_error is the
-        closest energy benchmark)'
-      prior: *id008
-      rule: X1
-      sources: *id009
-      best_grade: null
+      regimes: *id018
+      status: computed
+      value: 0.00376938758553
+      range: *id019
+      prior: *id020
+      rule: D1
+      sources: *id021
+      best_grade: B
+      method: 'D1: g_w * dth with g_w = gamma_w, dth = contact_angle_method_error; range is the envelope over the
+        input ranges'
       conditions: n.s.
       correlation_group: null
-      notes: ''
-      method: no admitted row (X1)
+      notes: 'Case evidence (README 7.3): the work of adhesion of water follows Young-Dupre, W = gamma_w (1 + cos
+        theta), so a contact-angle error dtheta moves W by at most gamma_w dtheta (|d cos theta / d theta| <= 1).
+        With the benchmarked force-field contact-angle error (TL-088, silica) this is the systematic error of a
+        computed wet adhesion free energy per area that no prior carries: the C1 work is a computed number (delta_f_pmf),
+        not a sampled prior. TL-087 (immersion enthalpies within 0 to 7 mJ m^-2) is consistent in size and is a
+        comparator (an enthalpy). No catechol-on-alumina benchmark exists.'
+      derived: *id022
+      margin_case: evidence
+      role: primary
+      flags: *id023
     contact_area_definition:
       key: contact_area_definition
       symbol: A_c_rule
       transform: none
       unit: '1'
-      regimes: *id010
+      regimes: *id024
       status: registered
       value: null
       range: null
-      range_reason: registration convention set at cp2; not yet ruled
-      prior: *id011
+      range_reason: registration convention named by theory/thresholds.md (C1, Q5); no ruling text in the cp2 or
+        cp3 record available to this table, so it is not filled
+      prior: *id025
       rule: X2
-      sources: *id012
+      sources: *id026
       best_grade: null
       conditions: n.s.
       correlation_group: null
       notes: ''
       method: no admitted row (X2)
+      role: primary
+      flags: *id027
   C2:
     margin_DG_seq:
       key: m_seq_method_error
       symbol: m_seq
       transform: none
       unit: J mol^-1
-      regimes: *id013
+      regimes: *id028
       status: single-source
       value: 7196.48
-      range: *id014
-      prior: *id015
+      range: *id029
+      prior: *id030
       rule: U1
-      sources: *id016
+      sources: *id031
       best_grade: B
       conditions: mean unsigned error of hybrid DFT against CCSD(T)/CBS for Ca2+-ligand (La-to-Ca exchange) energies,
         gas phase
       correlation_group: null
-      notes: 'Electronic-structure error only; the implicit-solvation error of ion hydration (TE-081, 4.65 kcal/mol
-        for cations with GFN2-xTB/ALPB; TE-067 SMD ions) is larger and is not included. W3 decides whether m_seq
-        adds it. Comparators (not admitted, E2): TE-081, TE-082, TE-067.'
+      notes: 'Electronic-structure error only. m_seq does not include the implicit-solvation error (stated at P0-W1.3
+        for cp3 decision 8): that error is the separate key implicit_solvation_error_ion, and m_seq_with_solvation
+        is their sum, a labelled sensitivity. W1 keeps the electronic-structure error as m_seq because the anchor''s
+        binding cycle and the single-source widening (W1) are defined against the electronic-structure benchmark
+        of Ca2+-ligand energies; the solvation error belongs to the solvated cycle and is reported beside it. Comparators
+        (not admitted, E2): TE-081, TE-082, TE-067.'
       method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+      role: primary
+      flags: *id032
   C3:
     margin_cos_theta:
       key: m_cos
       symbol: m_cos
       transform: none
       unit: '1'
-      regimes: *id017
+      regimes: *id033
       status: registered
-      value: null
-      range: null
-      range_reason: 'registration convention set at cp2 (W3 proposes zero: the method error is carried by the interfacial-energy
-        priors); not yet ruled'
-      prior: *id018
-      rule: X2
-      sources: *id019
+      value: 0.0
+      range: *id034
+      prior: *id035
+      rule: R1
+      sources: *id036
       best_grade: null
-      conditions: n.s.
+      method: 'R1: registered value read from theory/thresholds.md (thresholds), path decision.conventions.m_cos'
+      conditions: registration convention
       correlation_group: null
-      notes: ''
-      method: no admitted row (X2)
+      notes: C3 margin on cos(theta); zero primary because the interfacial-energy priors carry the method error.
+      registered: *id037
+      role: primary
+      flags: *id038
     N_req:
       key: n_req
       symbol: N_req
       transform: none
       unit: m^-2
-      regimes: *id020
+      regimes: *id039
       status: registered
       value: null
       range: null
-      range_reason: registration at cp2 (decision 4); literature island densities are key nucleation_density as
-        a comparator
-      prior: *id021
-      rule: X2
-      sources: *id022
+      range_reason: derived (D1) from patch_area; no value for patch_area
+      prior: *id040
+      rule: X1
+      sources: *id041
       best_grade: null
+      method: no admitted row (X1)
       conditions: n.s.
       correlation_group: null
-      notes: ''
-      method: no admitted row (X2)
+      notes: Registered rule N_req = 1/A_patch (cp2 fix F4, decision D14), derived per draw from patch_area. The
+        Poisson refinement ln(1/q_0)/A_patch (theory/cp2_brief.md D) is a cp3 proposal and is not applied here.
+      derived: *id042
+      role: primary
+      flags: *id043
   C4:
     margin_S_spread:
       key: m_s
       symbol: m_S
       transform: none
       unit: J m^-2
-      regimes: *id023
+      regimes: *id044
       status: registered
-      value: null
-      range: null
-      range_reason: W1 proposes m_S = 0 for the energies that carry priors (gamma_nl_*, gamma_sl0_template), as
-        theory/thresholds.md allows; gamma_sn0_template and delta_gamma_w have no prior, so their method error is
-        not carried and cp2 must register the margin
-      prior: *id024
-      rule: X2
-      sources: *id025
+      value: 0.0
+      range: *id045
+      prior: *id046
+      rule: M0
+      sources: *id047
       best_grade: null
-      conditions: n.s.
+      method: 'M0: margin zero because the prior carries the method error (README 7.3)'
+      conditions: threshold margin
       correlation_group: null
-      notes: ''
-      method: no admitted row (X2)
+      notes: Threshold margin of C4 (theory/thresholds.md conventions, m_S); the zero case of README 7.3.
+      margin_case: zero
+      margin_reason: 'S_spread = gamma_sl - gamma_sn - gamma_nl is evaluated only on priors: gamma_nl_* and gamma_sl0_template
+        are uniform over their sourced spans (U1, T1), whose width already holds the scatter between methods (a
+        factor of 6.8 for calcite), and gamma_sn has the ignorance prior U[0, gamma_p + gamma_nv] (theory/ignorance_priors.md
+        1a), which covers every admissible value, so no method error lies outside it. Delta_gamma_w = 0 by the registered
+        rule. Nothing in S_spread is a single computed number whose systematic error the priors miss.'
+      role: primary
+      flags: *id048
   C5:
     formation_energy_error:
       key: formation_energy_mae
       symbol: e_form
       transform: none
       unit: J mol^-1
-      regimes: *id026
+      regimes: *id049
       status: sourced
       value: 4776.0239401
-      range: *id027
-      prior: *id028
+      range: *id050
+      prior: *id051
       rule: U1
-      sources: *id029
+      sources: *id052
       best_grade: B
       conditions: mean absolute error per atom of corrected GGA(+U) formation energies against experiment (fitted
         elemental or anion corrections); per mole of atoms
@@ -3484,25 +6245,64 @@ thresholds:
       notes: 'Error basis for a hull tolerance (W3). Uncorrected GGA and PBE errors (TI-081, TI-086, TI-091) are
         comparators. Comparators (not admitted, E2): TI-081, TI-086, TI-091, TI-092, TI-093, TI-094.'
       method: 'U1: uniform over the sourced span; 4 admitted row(s), 4 independent original(s)'
+      role: primary
+      flags: *id053
     window_margin:
       key: window_margin
       symbol: m_E
       transform: none
       unit: V
-      regimes: *id030
-      status: gap
-      value: null
-      range: null
-      range_reason: to be derived from formation_energy_mae (e_form) with the atoms per transferred electron of
-        the registered sink reactions, which W5 fixes after the cp2 sink ruling; outstanding for P0-W1.3
-      prior: *id031
-      rule: X1
-      sources: *id032
-      best_grade: null
+      regimes: *id054
+      status: computed
+      value: 0.12375
+      range: *id055
+      prior: *id056
+      rule: D1
+      sources: *id057
+      best_grade: B
+      method: 'D1: e_form * 5 / (2 * F) with e_form = formation_energy_mae; range is the envelope over the input
+        ranges'
       conditions: n.s.
       correlation_group: null
-      notes: ''
-      method: no admitted row (X1)
+      notes: 'Margin of the DFT-based schemes (janaf, mp) for the registered reaction CaCO3 + 2 LiClO4 -> Ca(ClO4)2
+        + CO2 + 1/2 O2 + 2 Li, from fetched method-error evidence (README 7.3, case evidence): e_form per atom times
+        the atoms whose DFT error does not cancel, per transferred electron. In W5''s exchange route Ca(ClO4)2 enters
+        as 2 LiClO4 plus a tabulated enthalpy, so the LiClO4 energies cancel and only the 5 atoms of CaCO3 carry
+        a DFT error; 2 electrons move. Other reactions scale by their own count of uncancelled atoms per electron.
+        W5''s provisional value counted every solid atom, which double counts the cancelling salt. The gas references
+        are the schemes'' own and are benchmarked separately (gas_reference.md); this margin does not carry them.'
+      derived: *id058
+      margin_case: evidence
+      role: primary
+      flags: *id059
+    window_margin_expt:
+      key: window_margin_expt
+      symbol: m_E
+      transform: none
+      unit: V
+      regimes: *id060
+      status: computed
+      value: 0.0869778018619
+      range: *id061
+      prior: *id062
+      rule: D1
+      sources: *id063
+      best_grade: A
+      method: 'D1: (u_caclo4 + 2 * u_liclo4 + u_co2 + u_caco3 + T0 * ds) / (2 * F) with u_caclo4 = u_tab_dfh_ca_clo4_2,
+        u_liclo4 = u_tab_dfh_liclo4, u_co2 = u_tab_dfg_co2, u_caco3 = u_tab_dfg_caco3, ds = exchange_entropy_bound;
+        range is the envelope over the input ranges'
+      conditions: n.s.
+      correlation_group: null
+      notes: 'cp3 R2: m_expt, the experimental uncertainty budget of the all-experimental route for the registered
+        reaction CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 1/2 O2 + 2 Li (2 electrons). In that route Delta_G = DfH(Ca(ClO4)2)
+        - 2 DfH(LiClO4) + DfG(CO2) - DfG(CaCO3), the LiClO4 free energies cancelling; the budget is the linear sum
+        of the tabulated uncertainties of those inputs (as printed: 2 sigma for USGS B2131, the stated value for
+        JANAF, the upper end of the NBS convention) plus the bound on the neglected exchange entropy times 298.15
+        K. A linear sum is used because the budget is a bound, not a standard deviation.'
+      derived: *id064
+      margin_case: evidence
+      role: primary
+      flags: *id065
 regimes:
   R-slurry:
     parameters:
@@ -3511,51 +6311,59 @@ regimes:
         symbol: termination_weights
         transform: none
         unit: '1'
-        regimes: *id033
+        regimes: *id066
         status: gap
         value: null
         range: null
-        range_reason: gap - no fetched distribution of native-oxide surface terminations (hydroxyl types) on Al
-          foil; Day 1 hydroxyl densities (TB rows) do not give weights. Outstanding for P0-W1.3
-        prior: *id034
+        range_reason: 'gap (cp3 ruling R8): no fetched distribution of the populated native-oxide terminations on
+          Al foil in alkaline water. Reporting rule: C1 is reported per termination, and the mixture over terminations
+          uses an ignorance mixture (weights uniform on the simplex of the registered terminations); no point weight
+          is set.'
+        prior: *id067
         rule: X1
-        sources: *id035
+        sources: *id068
         best_grade: null
         conditions: n.s.
         correlation_group: null
-        notes: ''
+        notes: 'cp3 R8: termination weights are a gap. The verdict per termination is reported; the mixture verdict
+          is computed under the ignorance mixture and labelled as such. Hydroxyl-type evidence found on day 3 (TM-047,
+          TM-048: single-crystal faces, qualitative) is listed in lit/conflicts.md and does not give weights.'
         method: no admitted row (X1)
+        role: primary
+        flags: *id069
       framing:
         key: framing
         symbol: framing
         transform: none
         unit: '1'
-        regimes: *id036
+        regimes: *id070
         status: registered
         value: null
         range: null
-        range_reason: 'registration at cp3 (lane note N5): ACC or calcite; keys gamma_nl_*, v_m_*, log10_ksp_* carry
-          both framings'
-        prior: *id037
+        range_reason: 'registration at cp3 (lane note N5): ACC or calcite; the cp3 ruling text on the framing is
+          not in this table''s inputs; keys gamma_nl_*, v_m_*, log10_ksp_* and gamma_nv_* carry both framings'
+        prior: *id071
         rule: X2
-        sources: *id038
+        sources: *id072
         best_grade: null
         conditions: n.s.
         correlation_group: null
         notes: ''
         method: no admitted row (X2)
+        role: primary
+        flags: *id073
       ACC_offset:
         key: acc_offset
         symbol: Delta_ACC
         transform: none
         unit: J mol^-1
-        regimes: *id039
+        regimes: *id074
         status: sourced
         value: 11930.0
-        range: *id040
-        prior: *id041
+        range: *id075
+        prior: *id076
         rule: U1
-        sources: *id042
+        sources: *id077
         best_grade: C
         conditions: free energy of ACC minus calcite per CaCO3 formula unit at 25 C, from solubility products
         correlation_group: solubility
@@ -3565,18 +6373,42 @@ regimes:
           enthalpies (TC-026 to TC-029, TG-009) are enthalpies, not free energies. Comparators (not admitted, E2):
           TC-026, TC-027, TC-028, TC-029, TG-009. Same original as an admitted row, not counted again (E3): TC-031.'
         method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+        role: primary
+        flags: *id078
+      patch_area:
+        key: patch_area
+        symbol: A_patch
+        transform: none
+        unit: m^2
+        regimes: *id079
+        status: gap
+        value: null
+        range: null
+        range_reason: 'gap: no measured contact area between a cathode particle and the aluminium collector was
+          found (T-L gaps.md); a particle size (TL-086) is not a contact area'
+        prior: *id080
+        rule: X1
+        sources: *id081
+        best_grade: null
+        conditions: n.s.
+        correlation_group: null
+        notes: 'N_req = 1/A_patch (n_req) stays undetermined while this is a gap. Comparators (not admitted, E2):
+          TL-086.'
+        method: no admitted row (X1)
+        role: primary
+        flags: *id082
       J0_het:
         key: j0_het
         symbol: J0_het
         transform: none
         unit: m^-2 s^-1
-        regimes: *id043
+        regimes: *id083
         status: sourced
         value: 3.49342710575e+19
-        range: *id044
-        prior: *id045
+        range: *id084
+        prior: *id085
         rule: L1
-        sources: *id046
+        sources: *id086
         best_grade: C
         conditions: calcite nucleation on SAMs (COOH, SH, PO4) at pH 10.55 and on quartz at pH 7.8-8.0, 25 C; fitted
           CNT prefactors per area
@@ -3587,18 +6419,20 @@ regimes:
           comparators. Comparators (not admitted, E2): TJ-005, TJ-014, TJ-015, TJ-016, TJ-018, TJ-019, TJ-020, TJ-021,
           TJ-022.'
         method: 'L1: span exceeds a decade; 5 admitted row(s), 5 independent original(s)'
+        role: primary
+        flags: *id087
       t_proc:
         key: t_proc_slurry
         symbol: t_proc
         transform: none
         unit: s
-        regimes: *id047
+        regimes: *id088
         status: sourced
         value: 7200.0
-        range: *id048
-        prior: *id049
+        range: *id089
+        prior: *id090
         rule: L1
-        sources: *id050
+        sources: *id091
         best_grade: B
         conditions: time the cathode material and template spend in the wet slurry (mixing, degassing, waiting before
           casting, paste storage)
@@ -3607,18 +6441,20 @@ regimes:
           secondary vacuum drying, key t_drying_secondary). TJ-091 (14 days) is a stored LFP paste. TJ-057 is one
           mixing step. Comparators (not admitted, E2): TJ-057.'
         method: 'L1: span exceeds a decade; 10 admitted row(s), 10 independent original(s)'
+        role: primary
+        flags: *id092
       pH_range:
         key: ph_slurry
         symbol: pH
         transform: none
         unit: '1'
-        regimes: *id051
+        regimes: *id093
         status: sourced
         value: 12.0
-        range: *id052
-        prior: *id053
+        range: *id094
+        prior: *id095
         rule: U1
-        sources: *id054
+        sources: *id096
         best_grade: B
         conditions: water-processed cathode slurries and cathode-powder dispersions without pH modifiers, room temperature,
           minutes to a week after mixing
@@ -3628,18 +6464,20 @@ regimes:
           an anode (LTO) slurry, TA-017 abstract only. Slurries with pH modifiers are the separate key ph_slurry_modified.
           Comparators (not admitted, E2): TA-015, TA-013, TA-017.'
         method: 'U1: uniform over the sourced span; 15 admitted row(s), 15 independent original(s)'
+        role: primary
+        flags: *id097
       E_SHE_range:
         key: e_she_slurry
         symbol: E_SHE
         transform: none
         unit: V
-        regimes: *id055
+        regimes: *id098
         status: sourced
         value: -1.34
-        range: *id056
-        prior: *id057
+        range: *id099
+        prior: *id100
         rule: U1
-        sources: *id058
+        sources: *id101
         best_grade: B
         conditions: mixed (open-circuit) potential of aluminium in alkaline aqueous media (1 M and 4 M NaOH; pH
           8.8 water-glycol); not measured in a cathode slurry
@@ -3649,6 +6487,8 @@ regimes:
           from the standard by 5 to 11 mV, small against the spread. No open-circuit potential of Al in a slurry
           was found (T-J gaps). Comparators (not admitted, E2): TJ-027, TJ-028.'
         method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+        role: primary
+        flags: *id102
   R-cell:
     parameters:
       R_A_max:
@@ -3656,202 +6496,227 @@ regimes:
         symbol: R_A_max
         transform: none
         unit: ohm m^2
-        regimes: *id059
+        regimes: *id103
         status: registered
         value: null
         range: null
         range_reason: registration input set at G2 (theory/derivation_body.tex section 11), not a literature value
           (X2)
-        prior: *id060
+        prior: *id104
         rule: X2
-        sources: *id061
+        sources: *id105
         best_grade: null
         conditions: n.s.
         correlation_group: null
         notes: ''
         method: no admitted row (X2)
+        role: primary
+        flags: *id106
       j_req:
         key: j_req
         symbol: j_req
         transform: none
         unit: A m^-2
-        regimes: *id062
+        regimes: *id107
         status: registered
         value: null
         range: null
         range_reason: registration input set at G2, not a literature value (X2)
-        prior: *id063
+        prior: *id108
         rule: X2
-        sources: *id064
+        sources: *id109
         best_grade: null
         conditions: n.s.
         correlation_group: null
         notes: ''
         method: no admitted row (X2)
+        role: primary
+        flags: *id110
       rho_e:
         key: rho_e_caco3
         symbol: rho_e
         transform: none
         unit: ohm m
-        regimes: *id065
+        regimes: *id111
         status: gap
         value: null
         range: null
         range_reason: gap - no electronic resistivity of pure CaCO3 was found (T-G gaps)
-        prior: *id066
+        prior: *id112
         rule: X1
-        sources: *id067
+        sources: *id113
         best_grade: null
         conditions: n.s.
         correlation_group: null
         notes: ''
         method: no admitted row (X1)
+        role: primary
+        flags: *id114
       phi_B:
         key: phi_b_caco3
         symbol: phi_B
         transform: none
         unit: J
-        regimes: *id068
+        regimes: *id115
         status: gap
         value: null
         range: null
         range_reason: 'gap: no tunnelling barrier height of a CaCO3 film; Al oxide tunnel barriers (TG-021 to TG-025)
           are proxies (E2); the CaCO3 band gap is key band_gap_caco3'
-        prior: *id069
+        prior: *id116
         rule: X1
-        sources: *id070
+        sources: *id117
         best_grade: null
         conditions: n.s.
         correlation_group: null
         notes: 'Comparators (not admitted, E2): TG-021, TG-022, TG-023, TG-024, TG-025.'
         method: no admitted row (X1)
+        role: primary
+        flags: *id118
       m_eff:
         key: m_eff_tunnel
         symbol: m_eff
         transform: none
         unit: kg
-        regimes: *id071
+        regimes: *id119
         status: gap
         value: null
         range: null
         range_reason: gap - no effective tunnelling mass for a CaCO3 film was searched or found; outstanding for
           P0-W1.3
-        prior: *id072
+        prior: *id120
         rule: X1
-        sources: *id073
+        sources: *id121
         best_grade: null
         conditions: n.s.
         correlation_group: null
         notes: ''
         method: no admitted row (X1)
+        role: primary
+        flags: *id122
       j_0:
         key: j_0_tunnel
         symbol: j_0
         transform: none
         unit: A m^-2
-        regimes: *id074
+        regimes: *id123
         status: gap
         value: null
         range: null
         range_reason: gap - no tunnelling prefactor for a carbonate film; TG-026 is an Al oxide proxy decay constant
           (E2)
-        prior: *id075
+        prior: *id124
         rule: X1
-        sources: *id076
+        sources: *id125
         best_grade: null
         conditions: n.s.
         correlation_group: null
         notes: 'Comparators (not admitted, E2): TG-026.'
         method: no admitted row (X1)
+        role: primary
+        flags: *id126
       gas_reference_schemes:
         key: gas_reference_schemes
         symbol: gas_reference_schemes
         transform: none
         unit: '1'
-        regimes: *id077
+        regimes: *id127
         status: registered
         value: null
         range: null
-        range_reason: registration at cp2; benchmark drg_caco3_decomposition supports the choice
-        prior: *id078
+        range_reason: registration (cp3 packet decision 3); the ruling text on the scheme set is not in this table's
+          inputs. cp3 R2 sets the margin of the all-experimental route (window_margin_expt); the benchmark drg_caco3_decomposition
+          and W5's gas_reference.md bear on the choice
+        prior: *id128
         rule: X2
-        sources: *id079
+        sources: *id129
         best_grade: null
         conditions: n.s.
         correlation_group: null
         notes: ''
         method: no admitted row (X2)
+        role: primary
+        flags: *id130
       al_phases:
         key: al_phases
         symbol: al_phases
         transform: none
         unit: '1'
-        regimes: *id080
+        regimes: *id131
         status: registered
         value: null
         range: null
-        range_reason: registration at cp2
-        prior: *id081
+        range_reason: registration named by theory/thresholds.md (C5 R-cell); no ruling text available to this table
+        prior: *id132
         rule: X2
-        sources: *id082
+        sources: *id133
         best_grade: null
         conditions: n.s.
         correlation_group: null
         notes: ''
         method: no admitted row (X2)
+        role: primary
+        flags: *id134
       E_min:
         key: e_cell_min
         symbol: E_cell_min
         transform: none
         unit: V
-        regimes: *id083
+        regimes: *id135
         status: sourced
         value: 3.0
-        range: *id084
-        prior: *id085
+        range: *id136
+        prior: *id137
         rule: U1
-        sources: *id086
+        sources: *id138
         best_grade: B
         conditions: lower (discharge) cut-off potentials vs Li+/Li of NMC cathodes
         correlation_group: null
         notes: Lowest collector potential of the cycling range. The charter's 4 V is not this quantity; it is the
           deck's Al dissolution onset (key al_onset_ffree).
         method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+        role: primary
+        flags: *id139
       E_max:
         key: e_cell_max
         symbol: E_cell_max
         transform: none
         unit: V
-        regimes: *id087
-        status: sourced
-        value: 4.3
-        range: *id088
-        prior: *id089
-        rule: U1
-        sources: *id090
+        regimes: *id140
+        status: design-input
+        value: null
+        range: null
+        range_reason: design axis keyed to class (G1); each option names its per-class key
+        prior: *id141
+        rule: G1
+        sources: *id142
         best_grade: B
-        conditions: upper charge cut-off potentials vs Li+/Li of cathodes (LFP, LCO, NMC111/622/811, NCA, LNMO),
-          water-processed electrodes and reviews
+        method: 'G1: one option per class, each built from that class''s rows; not sampled as one prior'
+        conditions: n.s.
         correlation_group: null
-        notes: The cut-off is a property of the cathode, so cells with fluorinated salts are admitted; the range
-          runs from LFP (3.6 V) to LNMO (5.0 V).
-        method: 'U1: uniform over the sourced span; 13 admitted row(s), 13 independent original(s)'
+        notes: 'cp3 R2: E_cell_max is a design axis keyed to cathode class. The charge cut-off is a property of
+          the cathode, so cells with fluorinated salts are admitted for it. The C5 R-cell verdict is reported per
+          class; no class is preferred. The charter''s single value (cp2 edit 5d) lies in the layered NMC/NCA class.'
+        role: design-axis
+        flags: *id143
       electrolyte_salts:
         key: electrolyte_salts
         symbol: salt_identity
         transform: none
         unit: '1'
-        regimes: *id091
+        regimes: *id144
         status: sourced
         value: null
         range: null
         range_reason: categorical input; options listed in the prior
-        prior: *id092
+        prior: *id145
         rule: X3
-        sources: *id093
+        sources: *id146
         best_grade: B
         conditions: n.s.
         correlation_group: null
         notes: Fluorine-free salts used in aluminium-collector studies; the sink thermochemistry exists for LiClO4
           (aqueous) only among these (dfg_* keys).
         method: options and their source rows; not sampled (X3)
+        role: primary
+        flags: *id147
