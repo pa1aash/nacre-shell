@@ -591,7 +591,7 @@ lane_notes:
   date: '2026-10-17'
   day: 3
   lanes: [p0-w5]
-  note: 'Drop the check against W6''s deleted Fig 7 schema and write W4''s schema-v2 stability section instead. On the pod, use full SMD, including the non-electrostatic term, and Linux x86_64 xtb and CREST pins.'
+  note: 'Drop the check against W6''s deleted Fig 7 schema and write W4''s schema-v2 stability section instead. On the pod, use full SMD, including the non-electrostatic term, and Linux x86_64 xtb and CREST pins. Also: the ledger record at jobs/ledger/p0-w5.jsonl line 10 lists the dry-run files install.log and job.log under results/preprint/anchor/dispatch/dryrun-probe-d7e407c/logs/, which the *.log ignore rule keeps out of git, so nacre verify --strict fails the provenance check on a clean checkout. Add both files with git add -f (their hashes match the record) or stop the dispatch tool listing ignored files as outputs.'
 - id: N13
   date: '2026-10-17'
   day: 3
