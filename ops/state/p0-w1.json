@@ -36,11 +36,12 @@
   "notes": "129 params keys (R-slurry 71, R-cell 42, shared 16); priors uniform 50, normal 13, loguniform 4, fixed 13, categorical 2, none 47; 5 correlation groups, all assumed independent. 344 new evidence rows (740 total). All W3 threshold keys added as aliases (several are cp2/cp3 registrations or gaps); W5 needs covered except sink salts Al(NO3)3, Ca(ClO4)2, Al(ClO4)3, AlCl3 and Ca/Al solvation. Rule file at lit/corpus/params_README.md (ownership). Fluorine-free Al onset 3.5-4.25 V: charter 4 V is not a sourced lower bound. Next: P0-W1.3 conflicts and SI parameter table.",
   "params": {
     "status": "ready",
-    "sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
-    "rule": "lit/corpus/params_README.md",
-    "keys": 129,
-    "w3_threshold_keys": "added (aliases under regimes.* and thresholds.*)"
+    "rule": "lit/corpus/params_README.md (rule version 2, section 7)",
+    "keys": 200,
+    "w3_threshold_keys": "added (aliases under regimes.* and thresholds.*); cp2 fix-up keys added or recorded as gaps",
+    "cp3": "R2, R8, R10 applied"
   }
 }
