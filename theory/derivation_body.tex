@@ -870,9 +870,32 @@ inconclusive, so that a pass counts only with the solvated sink; (4) a sink whos
 is missing makes the limit \emph{undetermined}, which never counts as a pass; (5) where the
 CO$_2$ (or O$_2$) reference is uncertain, the limit is evaluated under each registered reference
 scheme: a pass must hold under the scheme with the lowest onset, a falsification under every
-scheme, and anything else is inconclusive (cp2 fix F5). \emph{Limitation:} the electrolyte's own
+scheme, and anything else is inconclusive (cp2 fix F5); since cp3 this rule applies only where the
+all-experimental route is missing (next paragraph). \emph{Limitation:} the electrolyte's own
 anodic limit is a separate quantity. Above it the solvent and salt oxidise first, and it is not
 assessed here, so a pass says nothing about the stability of the electrolyte.
+
+\paragraph{Which thermochemistry decides the limit (cp3).} $E^{*}=\Delta G_\mathrm{r}/(\Delta n\,\Fc)$
+is only as good as $\Delta G_\mathrm{r}$. A computed reaction energy that combines database solids with
+a gas reference carries the error of the carbonate formation energy and of the CO$_2$ reference, and
+the two reference schemes bracket the measured reaction energies from opposite sides. Where every
+reactant and product is tabulated, the all-experimental route has no such error and governs; its
+margin $m_\mathrm{expt}$ is the experimental uncertainty budget (the tabulated uncertainties per
+transferred electron, plus a bound on any neglected solid entropy, such as that of a sink salt
+tabulated by its enthalpy only, taken from analog salts). A computed scheme corrected by its
+measured benchmark error reproduces that same experimental route, so it is a check of the
+bookkeeping and not an independent confirmation. Because the solid-salt sink is an upper bound on
+the onset, the governing rule is: falsified if $E_\mathrm{ox}^\mathrm{expt}+m_\mathrm{expt}<E_\mathrm{cell}^{\max}$
+with either sink; feasible only if $E_\mathrm{ox}^\mathrm{expt}-m_\mathrm{expt}\ge E_\mathrm{cell}^{\max}$
+with the solvated sink. The charge cutoff $E_\mathrm{cell}^{\max}$ is a property of the cathode, so
+the verdict is a function of it, with crossovers at $E_\mathrm{ox}^\mathrm{expt}\pm m_\mathrm{expt}$.
+\emph{Why the carbonate-oxidation reading is physical.} For the analogous reaction of Li$_2$CO$_3$,
+Li$_2$CO$_3\to2$Li + CO$_2$ + $\tfrac12$O$_2$ referenced to Li$^+$/Li, the measured oxidation onset
+lies near the experimental equilibrium limit of the same reaction (W1 key
+\texttt{li2co3\_oxidation\_onset} against the experimental route of W5's gas-reference benchmark):
+a solid carbonate in a non-aqueous cell oxidises close to its thermodynamic limit, with little
+kinetic overpotential. The window limit of CaCO$_3$ is therefore read as the onset of an observable
+reaction, not merely as a bound that kinetics could postpone indefinitely.
 
 \section{The insulating-film limitation}\label{th:sec:film}
 

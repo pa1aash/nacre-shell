@@ -725,6 +725,11 @@ def check_thresholds(ctx, contract, rep):
             fal = test.get("falsify")
             if isinstance(fal, dict) and "edge" in fal:
                 check_edge(link, test["id"] + " falsify", fal["quantity"], fal["edge"], params)
+            miss = test.get("where_expt_missing")
+            if isinstance(miss, dict):
+                for k in ("edge_pass", "edge_falsify"):
+                    if k in miss:
+                        check_edge(link, "%s %s (no expt route)" % (test["id"], k), test["quantity"], miss[k], params)
             eq = test.get("equivalent_single_state")
             if eq:
                 check_edge(link, test["id"] + " single state", eq["quantity"], eq["edge"], params)

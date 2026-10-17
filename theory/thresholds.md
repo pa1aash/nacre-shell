@@ -81,6 +81,7 @@ exists, and W1 records each under its key with the cp2 ruling as the source.
 | C1 margin m_W | set by W1 from fetched method-error evidence, or zero where the prior carries it | `thresholds.C1.margin_W_adh_wet` |
 | C4 margin m_S | set by W1 as for m_W | `thresholds.C4.margin_S_spread` |
 | C5 window margin m_E | set by W1 as for m_W | `thresholds.C5.window_margin` |
+| C5 experimental margin m_expt (cp3 R2) | set by W1: the experimental uncertainty budget of the governing route (tabulated uncertainties plus the bound on the neglected Ca(ClO4)2 solid entropy from analog entropies) | `thresholds.C5.expt_margin` |
 
 - **p_deg in the sweep.** p_deg is registered as the rule 1 - p_cred, so it moves with the
   credible level in the p_cred sweep (0.4, 0.1, 0.01). A rise of the falsified-side mass by
@@ -356,60 +357,84 @@ falsifiability control does not fail where it must, and after W5 printed the sou
 beside each of its design points (`ops/reports/P0-W5.2.md`, Task B). The rule is therefore not
 independent of those values, and the report says so.
 
-**R-cell, Li-referenced window.**
+**R-cell, Li-referenced window (cp3 R2).**
 
 - **Threshold and physics.** Eq. (42) [th:eq:window] with the electrolyte-fixed sink of Eq. (43)
-  [th:eq:sink] for CaCO3 and the protecting Al phases (`regimes.R-cell.parameters.al_phases`).
-  The registered regime potential range [E_cell_min, E_cell_max] (V vs Li+/Li,
-  `regimes.R-cell.parameters.E_min` and `regimes.R-cell.parameters.E_max`) must lie inside every
-  window:
+  [th:eq:sink] for the gated phases (Section 2, C5, "Gated phases"). The collector potential range
+  [E_cell_min, E_cell_max] (V vs Li+/Li) must lie inside each phase's window: E_red below
+  E_cell_min and E_ox above E_cell_max, each beyond its margin.
+- **Governing route (cp3 R2).** Wherever its inputs exist, the **all-experimental route**
+  (`expt`: tabulated thermochemistry of every reactant and product, gas references included)
+  governs the limit.
+  - The DFT-referenced schemes (`regimes.R-cell.parameters.gas_reference_schemes`, database
+    solids with a JANAF or a database CO2 reference) are **comparators**, each printed with its
+    measured benchmark error (W5's gas-reference benchmark).
+  - A DFT scheme corrected by its own benchmark error equals the experimental route by
+    construction, because the benchmark is that experimental route. A benchmark-corrected value is
+    therefore not a second confirmation, and it is never counted as one.
+  - Where an input of the experimental route is missing (a reaction with no tabulated product),
+    the limit is decided by the cp2 rule over the DFT schemes (fix F5: a pass under the
+    lowest-onset scheme, a falsification under every scheme, margin m_E), and the report marks the
+    limit as DFT-decided.
+- **Margin m_expt.** The experimental uncertainty budget of the route
+  (`thresholds.C5.expt_margin`, per transferred electron), not the DFT formation-energy margin:
+  - the tabulated uncertainties of every reactant and product, combined per transferred electron;
+  - plus a bound on the neglected solid entropy of Ca(ClO4)2, whose free energy enters through its
+    tabulated enthalpy (W5's exchange route), taken from the entropies of analog solid salts
+    (W1 keys `params.s_ca_clo4_2_analog_bound`, from `params.s_solid_salt_analogs`).
 
-  E_red + m_E <= E_cell_min and E_cell_max + m_E <= E_ox.
+  W1 derives the value and lists its parts in the key's notes.
+- **Oxidation rule (the governing route).**
+  - **falsified** if E_ox(expt) + m_expt < E_cell_max, with either sink. The solid-salt sink stands
+    here: the true product is the lower in free energy of the solid salt and the solvated ions, so
+    a solid-salt onset is an upper bound on the true onset, and a falsification computed with it
+    stands.
+  - **feasible** only if E_ox(expt) - m_expt >= E_cell_max with the **solvated sink**. A pass
+    computed with the solid-salt sink is inconclusive, because the solvated sink can only lower the
+    onset.
+  - inconclusive otherwise.
+- **Reduction rule.** The same with the signs mirrored: falsified if E_red(expt) - m_expt >
+  E_cell_min; feasible if E_red(expt) + m_expt <= E_cell_min; inconclusive otherwise. The
+  reduction limits are Li-open and need no gas reference.
+- **E_cell_max is a design axis.** The charge cutoff is a property of the cathode, so it is
+  registered per cathode class (`regimes.R-cell.parameters.E_max`, keyed by
+  `regimes.R-cell.parameters.cathode_class`), and the verdict is reported as a function of the
+  cutoff:
+  - falsified for every cutoff above E_ox(expt) + m_expt;
+  - feasible (solvated sink only) for every cutoff at or below E_ox(expt) - m_expt;
+  - inconclusive between.
 
-- **Margin.** m_E = `thresholds.C5.window_margin`, the expected error of a computed reaction energy
-  per transferred electron, derived by W1 from `thresholds.C5.formation_energy_error`.
-- **Reference schemes (cp2 fix F5 (a)).** Each limit is computed under every registered CO2 and
-  O2 reference scheme (`regimes.R-cell.parameters.gas_reference_schemes`).
-  - A **pass** must hold under the scheme with the lowest onset: the lowest E_ox and the highest
-    E_red over the schemes.
-  - A **falsification** must hold under every registered scheme.
-  - Otherwise the limit is inconclusive. A verdict that changes with the reference scheme is
-    decided by none of them.
+  The report prints these two crossover cutoffs for each gated phase and sink, and the verdict of
+  each registered cathode class.
+- **Every scheme in one table.** For each gated phase and sink the report prints E_ox and E_red
+  under `expt`, under each DFT scheme, and under each benchmark-corrected DFT scheme, with the
+  benchmark errors, whether or not they decide.
+- **Disclosure (cp3 R2).** The scheme values for CaCO3 with LiClO4 were seen before this rule was
+  set (`ops/reports/P0-W5.2.md`, Task C; cp3 packet decision 3). The rule is not independent of
+  them, and the report says so beside the table.
 - **Sink (cp2 fix F5 (b)).** A pass counts only with a solvated sink: Ca2+ or Al3+ leaving as
   solvated ions paired with the salt anion, with the solvation free energies relative to Li+.
-  - The true product is the lower in free energy of the solid salt and the solvated ions. A limit
-    computed with the solid-salt sink alone (CaA2 or AlA3 as a solid) is therefore an upper bound
-    on the oxidation onset.
-  - A falsification computed with the solid-salt sink stands, because the true onset is at or
-    below it.
-  - A pass computed with the solid-salt sink is inconclusive, because the solvated sink can only
-    lower the onset.
+  The LiBOB and LiPCP sinks stay undetermined (cp3 R8): they never give a pass.
 - **Undetermined never passes.** A limit with status `undetermined` (a missing sink phase, a
   missing solvation free energy for the solvated sink, an unregistered salt, or an unbounded
-  Li-open limit) gives at best inconclusive. The same holds if E_cell_max is not registered.
+  Li-open limit) gives at best inconclusive.
+- **Why carbonate oxidation is the right reading (physics).** Derivation, Section 9, "The
+  oxidation sink": the measured onset of Li2CO3 oxidation (`params.li2co3_oxidation_onset`) lies
+  near the experimental equilibrium limit of the same reaction (W5 benchmark B6), so a carbonate
+  in the cell oxidises close to its thermodynamic limit. That supports reading the CaCO3 limit as
+  the onset of an observable reaction, not only as a bound.
 - **Decision.**
-  - feasible if both inequalities hold for every gated phase, under the lowest-onset scheme and
+  - feasible if both rules are feasible for every gated phase, every registered sink determined,
     with a solvated sink;
-  - falsified if, for any gated phase, a limit fails beyond its margin (E_ox < E_cell_max - m_E,
-    or E_red > E_cell_min + m_E) under every registered scheme, with either sink;
+  - falsified if, for any gated phase, a limit is falsified by the governing route (or, where the
+    experimental route is missing, under every DFT scheme);
   - inconclusive otherwise.
 
-  The limits are deterministic, so the band mass is 0 or 1 for each scheme and sink.
+  The limits are deterministic, so the band mass is 0 or 1 for each route and sink.
 - **Limitation: the electrolyte's own anodic limit (cp2 fix F5 (c)).** Above the electrolyte's
   anodic limit the solvent and salt oxidise first. C5 does not assess that limit. A pass of the
   E_ox test says only that the gated phases are stable up to E_cell_max against the registered
   sinks, not that the electrolyte is.
-- **W5's reported limits (inputs to the decision, not adjudicated here).** `ops/reports/P0-W5.1.md`
-  (R-cell section) reports:
-  - a CaCO3 oxidation onset under the nitrate sink that differs by the CO2 reference (JANAF
-    against the Materials Project CO2 energy), with the spread stated there;
-  - an Al2O3 limit that is undetermined under nitrate (sink phase missing) and finite under
-    sulfate or chloride.
-
-  Both are solid-salt limits. Under this file, a CaCO3 falsification must hold under both CO2
-  schemes, and a CaCO3 pass needs the solvated sink and the lower of the two schemes. Al2O3 under
-  a nitrate electrolyte stays undetermined (never a pass) until the sink thermochemistry is
-  fetched.
 
 **C5 verdict.** feasible if both regimes are feasible; falsified if either is falsified;
 inconclusive otherwise.
@@ -482,9 +507,14 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `params.a_w_slurry` | a_w | literature (per drying state) | reported at every drying state (F7) |
 | `params.acc_hydration_n` | n_hyd | literature (ACC framing) | hydrated-IAP sensitivity (F7) |
 | `regimes.R-slurry.parameters.E_SHE_range` | E_SHE | literature | C5 |
-| `thresholds.C5.window_margin` | m_E | literature (derived from e_form) | C5 R-cell |
+| `thresholds.C5.window_margin` | m_E | literature (derived from e_form) | C5 R-cell, only where the experimental route is missing (cp3 R2) |
+| `thresholds.C5.expt_margin` | m_expt | literature (experimental uncertainty budget) | C5 R-cell governing route (cp3 R2) |
+| `params.s_ca_clo4_2_analog_bound` | S bound | literature (analog entropies) | m_expt (cp3 R2) |
+| `params.s_solid_salt_analogs` | S analogs | literature | m_expt (cp3 R2) |
+| `regimes.R-cell.parameters.cathode_class` | cathode class | design axis | E_cell_max per class (cp3 R2) |
+| `params.li2co3_oxidation_onset` | E (Li2CO3 onset) | literature | physics justification of the carbonate-oxidation reading (cp3 R2) |
 | `regimes.R-cell.parameters.E_min` | E_cell_min | literature | C5 R-cell |
-| `regimes.R-cell.parameters.E_max` | E_cell_max | literature | C5 R-cell |
+| `regimes.R-cell.parameters.E_max` | E_cell_max | literature; design axis by cathode class (cp3 R2) | C5 R-cell |
 | `regimes.R-cell.parameters.electrolyte_salts` | salts | literature (fluorine-free) | C5 R-cell sink |
 | `regimes.R-cell.parameters.gas_reference_schemes` | schemes | registration (cp2) | C5 R-cell |
 | `regimes.R-cell.parameters.al_phases` | phases | registration (cp2) | C5 R-cell |
@@ -677,25 +707,40 @@ links:
         regime: R-cell
         quantity: E_ox
         comparator: '>='
-        edge: E_cell_max + m_E
-        pass: {reduce: min_over_reference_schemes, sink: solvated}
-        falsify: {quantity: E_ox, comparator: '<', edge: E_cell_max - m_E, reduce: every_reference_scheme, sink: [solvated, solid_salt]}
+        edge: E_cell_max + m_expt
+        governing_route: expt (all-experimental thermochemistry) wherever its inputs exist (cp3 R2)
+        pass: {route: expt, sink: solvated}
+        falsify: {quantity: E_ox, comparator: '<', edge: E_cell_max - m_expt, route: expt, sink: [solvated, solid_salt]}
         otherwise: inconclusive
-        params: {E_cell_max: regimes.R-cell.parameters.E_max, m_E: thresholds.C5.window_margin,
+        comparators: {dft_schemes: regimes.R-cell.parameters.gas_reference_schemes, printed_with: measured benchmark errors,
+                      benchmark_corrected: equals expt by construction; never a second confirmation}
+        where_expt_missing: {rule: cp2 fix F5, pass: lowest-onset DFT scheme, falsify: every DFT scheme, margin: m_E,
+                             edge_pass: E_cell_max + m_E, edge_falsify: E_cell_max - m_E, label: DFT-decided}
+        params: {E_cell_max: regimes.R-cell.parameters.E_max, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes,
                  salts: regimes.R-cell.parameters.electrolyte_salts}
+        m_expt_parts: [tabulated uncertainties of reactants and products per transferred electron,
+                       bound on the neglected solid entropy of Ca(ClO4)2 from analog solid-salt entropies]
+        m_expt_params: [params.s_ca_clo4_2_analog_bound, params.s_solid_salt_analogs]
+        design_axis: {E_cell_max: by cathode class, params: regimes.R-cell.parameters.cathode_class,
+                      report: [crossover E_ox - m_expt (feasible at or below, solvated sink), crossover E_ox + m_expt (falsified above)]}
         undetermined: never_passes
         solid_salt_sink: {falsification: stands, pass: inconclusive, reason: upper bound on the onset}
+        table: every route and scheme printed (expt, each DFT scheme, each benchmark-corrected scheme)
+        disclosure: scheme values were seen before this rule (cp3 R2; packet p0-3 decision 3)
         limitation: electrolyte anodic limit not assessed
       - id: C5c_red
         regime: R-cell
         quantity: E_red
         comparator: '<='
-        edge: E_cell_min - m_E
-        pass: {reduce: max_over_reference_schemes}
-        falsify: {quantity: E_red, comparator: '>', edge: E_cell_min + m_E, reduce: every_reference_scheme}
+        edge: E_cell_min - m_expt
+        governing_route: expt wherever its inputs exist (cp3 R2)
+        pass: {route: expt}
+        falsify: {quantity: E_red, comparator: '>', edge: E_cell_min + m_expt, route: expt}
         otherwise: inconclusive
-        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_E: thresholds.C5.window_margin,
+        where_expt_missing: {rule: cp2 fix F5, margin: m_E, edge_pass: E_cell_min - m_E, edge_falsify: E_cell_min + m_E,
+                             label: DFT-decided}
+        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes}
         undetermined: never_passes
     gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, regimes.R-cell.parameters.al_phases]}
