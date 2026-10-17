@@ -33,6 +33,7 @@ KEYS = [
     "ph_slurry", "ph_slurry_modified", "e_she_slurry", "acc_offset", "a_ca_slurry", "c_bulk_slurry",
     "a_co3_slurry", "dic_slurry", "a_w_slurry", "t_slurry", "t_drying_primary", "t_drying_secondary",
     "ionic_strength_slurry", "pk1_carbonic", "pk2_carbonic", "log10_ksp_calcite", "log10_ksp_acc",
+    "log10_k_cahco3", "log10_k_caco3_aq",
     "framing", "formation_energy_mae", "dfg_corundum", "dfg_boehmite", "dfg_gibbsite",
     # R-cell
     "e_cell_min", "e_cell_max", "al_onset_ffree", "t_cell", "electrolyte_salts", "electrolyte_solvents",

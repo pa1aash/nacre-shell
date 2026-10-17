@@ -1,0 +1,2069 @@
+{
+ "E_cell_min": {
+  "key": "e_cell_min",
+  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "sources": [
+   "TJ-106",
+   "TJ-107",
+   "TJ-108"
+  ],
+  "status": "sourced"
+ },
+ "cathode_classes": {
+  "LCO": {
+   "E_cell_max_V": {
+    "max": 4.2,
+    "min": 4.2
+   },
+   "lower_bound": false,
+   "rows": [
+    "TJ-041"
+   ],
+   "values_V": [
+    4.2
+   ]
+  },
+  "LCO, high-voltage": {
+   "E_cell_max_V": {
+    "max": 4.6,
+    "min": 4.6
+   },
+   "lower_bound": true,
+   "rows": [
+    "TJ-042"
+   ],
+   "values_V": [
+    4.6
+   ]
+  },
+  "LFP": {
+   "E_cell_max_V": {
+    "max": 3.6,
+    "min": 3.6
+   },
+   "lower_bound": false,
+   "rows": [
+    "TJ-038"
+   ],
+   "values_V": [
+    3.6
+   ]
+  },
+  "LNMO": {
+   "E_cell_max_V": {
+    "max": 5.0,
+    "min": 4.9
+   },
+   "lower_bound": false,
+   "rows": [
+    "TA-047",
+    "TA-048",
+    "TA-049",
+    "TJ-040"
+   ],
+   "values_V": [
+    4.9,
+    4.9,
+    5.0,
+    4.9
+   ]
+  },
+  "NCA": {
+   "E_cell_max_V": {
+    "max": 4.3,
+    "min": 4.3
+   },
+   "lower_bound": false,
+   "rows": [
+    "TA-052",
+    "TJ-036"
+   ],
+   "values_V": [
+    4.3,
+    4.3
+   ]
+  },
+  "NMC": {
+   "E_cell_max_V": {
+    "max": 4.3,
+    "min": 4.25
+   },
+   "lower_bound": false,
+   "rows": [
+    "TA-050",
+    "TA-051",
+    "TJ-036",
+    "TJ-037",
+    "TJ-039"
+   ],
+   "values_V": [
+    4.3,
+    4.25,
+    4.3,
+    4.3,
+    4.3
+   ]
+  }
+ },
+ "generated_utc": "2026-10-17T10:40:25Z",
+ "m_expt": {
+  "gaps": [
+   "window_margin"
+  ],
+  "keys": [
+   {
+    "key": "window_margin",
+    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "sources": [],
+    "status": "gap"
+   }
+  ],
+  "reading": "while any key is a gap m_expt = 0 is used and margin_to_flip_V says how large m_expt would have to be to change each class verdict",
+  "status": "gap",
+  "value_used_V": 0.0
+ },
+ "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+ "phases": {
+  "Al2O3": {
+   "by_cathode_class": {
+    "LCO": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "inconclusive"
+    },
+    "LCO, high-voltage": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "inconclusive"
+    },
+    "LFP": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "inconclusive"
+    },
+    "LNMO": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "inconclusive"
+    },
+    "NCA": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "inconclusive"
+    },
+    "NMC": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "inconclusive"
+    }
+   },
+   "by_sink": {
+    "LiBOB": {
+     "benchmark_error_V_per_electron": {
+      "janaf": 0.3822570719388049,
+      "mp": -0.23270246997539404
+     },
+     "by_cathode_class": {
+      "LCO": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 4.2
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-041"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LCO, high-voltage": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.6
+       },
+       "lower_bound": true,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-042"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LFP": {
+       "E_cell_max_V": {
+        "max": 3.6,
+        "min": 3.6
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LNMO": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NCA": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.3
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TJ-036"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NMC": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.25
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039"
+       ],
+       "verdict": "inconclusive"
+      }
+     },
+     "cutoff_dependence": {
+      "undetermined": true
+     },
+     "expt_V": null,
+     "governing_V": {},
+     "governing_route": null,
+     "janaf_V": null,
+     "janaf_corrected_V": null,
+     "m_expt_provisional_V": null,
+     "m_expt_unbudgeted_species": [],
+     "mp_V": null,
+     "mp_corrected_V": null,
+     "phase": "Al2O3",
+     "reaction": "Al2O3 + 6 LiB(CO2)4 -> 2 AlB3(CO2)12 + 1.5 O2 + 6 Li",
+     "reason": "phase AlB3C12O24 absent from the cached data; phase LiB(C2O4)2 absent from the cached data",
+     "sink": "LiBOB",
+     "sink_kind": "solid_salt",
+     "status": "undetermined"
+    },
+    "LiClO4": {
+     "benchmark_error_V_per_electron": {
+      "janaf": 0.3822570719388049,
+      "mp": -0.23270246997539404
+     },
+     "by_cathode_class": {
+      "LCO": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 4.2
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-041"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LCO, high-voltage": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.6
+       },
+       "lower_bound": true,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-042"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LFP": {
+       "E_cell_max_V": {
+        "max": 3.6,
+        "min": 3.6
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LNMO": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NCA": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.3
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TJ-036"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NMC": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.25
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039"
+       ],
+       "verdict": "inconclusive"
+      }
+     },
+     "cutoff_dependence": {
+      "undetermined": true
+     },
+     "expt_V": null,
+     "governing_V": {},
+     "governing_route": null,
+     "janaf_V": null,
+     "janaf_corrected_V": null,
+     "m_expt_provisional_V": null,
+     "m_expt_unbudgeted_species": [],
+     "mp_V": null,
+     "mp_corrected_V": null,
+     "phase": "Al2O3",
+     "reaction": "Al2O3 + 6 LiClO4 -> 2 Al(ClO4)3 + 1.5 O2 + 6 Li",
+     "reason": "phase Al(ClO4)3 absent from the cached data",
+     "sink": "LiClO4",
+     "sink_kind": "solid_salt",
+     "status": "undetermined"
+    },
+    "LiPCP": {
+     "benchmark_error_V_per_electron": {
+      "janaf": 0.3822570719388049,
+      "mp": -0.23270246997539404
+     },
+     "by_cathode_class": {
+      "LCO": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 4.2
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-041"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LCO, high-voltage": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.6
+       },
+       "lower_bound": true,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-042"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LFP": {
+       "E_cell_max_V": {
+        "max": 3.6,
+        "min": 3.6
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LNMO": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NCA": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.3
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TJ-036"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NMC": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.25
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039"
+       ],
+       "verdict": "inconclusive"
+      }
+     },
+     "cutoff_dependence": {
+      "undetermined": true
+     },
+     "expt_V": null,
+     "governing_V": {},
+     "governing_route": null,
+     "janaf_V": null,
+     "janaf_corrected_V": null,
+     "m_expt_provisional_V": null,
+     "m_expt_unbudgeted_species": [],
+     "mp_V": null,
+     "mp_corrected_V": null,
+     "phase": "Al2O3",
+     "reaction": "Al2O3 + 6 LiC8N5 -> 2 Al(C8N5)3 + 1.5 O2 + 6 Li",
+     "reason": "phase LiC8N5 absent from the cached data",
+     "sink": "LiPCP",
+     "sink_kind": "solid_salt",
+     "status": "undetermined"
+    },
+    "solvated": {
+     "benchmark_error_V_per_electron": {
+      "janaf": 0.3822570719388049,
+      "mp": -0.23270246997539404
+     },
+     "by_cathode_class": {
+      "LCO": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 4.2
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-041"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LCO, high-voltage": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.6
+       },
+       "lower_bound": true,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-042"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LFP": {
+       "E_cell_max_V": {
+        "max": 3.6,
+        "min": 3.6
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LNMO": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NCA": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.3
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TJ-036"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NMC": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.25
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039"
+       ],
+       "verdict": "inconclusive"
+      }
+     },
+     "cutoff_dependence": {
+      "undetermined": true
+     },
+     "expt_V": null,
+     "governing_V": {},
+     "governing_route": null,
+     "janaf_V": null,
+     "janaf_corrected_V": null,
+     "m_expt_provisional_V": null,
+     "m_expt_unbudgeted_species": [],
+     "mp_V": null,
+     "mp_corrected_V": null,
+     "phase": "Al2O3",
+     "reaction": "",
+     "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+     "sink": "solvated",
+     "sink_kind": "solvated",
+     "status": "undetermined"
+    }
+   },
+   "reduction": {
+    "delta_g_ev": -0.4579205409375309,
+    "delta_n_li": -0.375,
+    "method": "Li-open grand potential, first lithiation reaction on the hull",
+    "reaction": "Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al",
+    "reason": "",
+    "status": "ok",
+    "value_V": 1.2211214425000823
+   },
+   "reduction_verdict": "feasible"
+  },
+  "CaCO3": {
+   "by_cathode_class": {
+    "LCO": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "falsified"
+    },
+    "LCO, high-voltage": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "falsified"
+    },
+    "LFP": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "inconclusive"
+    },
+    "LNMO": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "falsified"
+    },
+    "NCA": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "falsified"
+    },
+    "NMC": {
+     "best_over_registered_sinks": "inconclusive",
+     "worst_over_registered_sinks": "falsified"
+    }
+   },
+   "by_sink": {
+    "LiBOB": {
+     "benchmark_error_V_per_electron": {
+      "janaf": 0.3822570719388049,
+      "mp": -0.23270246997539404
+     },
+     "by_cathode_class": {
+      "LCO": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 4.2
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-041"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LCO, high-voltage": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.6
+       },
+       "lower_bound": true,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-042"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LFP": {
+       "E_cell_max_V": {
+        "max": 3.6,
+        "min": 3.6
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LNMO": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NCA": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.3
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TJ-036"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NMC": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.25
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039"
+       ],
+       "verdict": "inconclusive"
+      }
+     },
+     "cutoff_dependence": {
+      "undetermined": true
+     },
+     "expt_V": null,
+     "governing_V": {},
+     "governing_route": null,
+     "janaf_V": null,
+     "janaf_corrected_V": null,
+     "m_expt_provisional_V": null,
+     "m_expt_unbudgeted_species": [],
+     "mp_V": null,
+     "mp_corrected_V": null,
+     "phase": "CaCO3",
+     "reaction": "CaCO3 + 2 LiB(CO2)4 -> CaB2(CO2)8 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "phase CaB2C8O16 absent from the cached data; phase LiB(C2O4)2 absent from the cached data",
+     "sink": "LiBOB",
+     "sink_kind": "solid_salt",
+     "status": "undetermined"
+    },
+    "LiClO4": {
+     "benchmark_error_V_per_electron": {
+      "janaf": 0.3822570719388049,
+      "mp": -0.23270246997539404
+     },
+     "by_cathode_class": {
+      "LCO": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 4.2
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": 0.26218384039526965,
+       "oxidation_verdict": "falsified",
+       "rows": [
+        "TJ-041"
+       ],
+       "verdict": "falsified",
+       "verdict_at_provisional_m_expt": "falsified"
+      },
+      "LCO, high-voltage": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.6
+       },
+       "lower_bound": true,
+       "margin_to_flip_V": 0.6621838403952691,
+       "oxidation_verdict": "falsified",
+       "rows": [
+        "TJ-042"
+       ],
+       "verdict": "falsified",
+       "verdict_at_provisional_m_expt": "falsified"
+      },
+      "LFP": {
+       "E_cell_max_V": {
+        "max": 3.6,
+        "min": 3.6
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": 0.33781615960473044,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at_provisional_m_expt": "inconclusive"
+      },
+      "LNMO": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": 0.9621838403952698,
+       "oxidation_verdict": "falsified",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict": "falsified",
+       "verdict_at_provisional_m_expt": "falsified"
+      },
+      "NCA": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.3
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": 0.3621838403952693,
+       "oxidation_verdict": "falsified",
+       "rows": [
+        "TA-052",
+        "TJ-036"
+       ],
+       "verdict": "falsified",
+       "verdict_at_provisional_m_expt": "falsified"
+      },
+      "NMC": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.25
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": 0.3121838403952695,
+       "oxidation_verdict": "falsified",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039"
+       ],
+       "verdict": "falsified",
+       "verdict_at_provisional_m_expt": "falsified"
+      }
+     },
+     "cutoff_dependence": {
+      "falsified_for_E_cell_max_above_V": 3.9378161596047305,
+      "solid_salt_pass_inconclusive_for_E_cell_max_at_or_below_V": 3.9378161596047305
+     },
+     "expt_V": 3.9378161596047305,
+     "governing_V": {
+      "expt": 3.9378161596047305
+     },
+     "governing_route": "expt",
+     "janaf_V": 4.320073231543534,
+     "janaf_corrected_V": 3.9378161596047296,
+     "m_expt_provisional_V": 0.016582831450019476,
+     "m_expt_unbudgeted_species": [
+      "Ca(ClO4)2",
+      "LiClO4"
+     ],
+     "mp_V": 3.7051136896293344,
+     "mp_corrected_V": 3.9378161596047283,
+     "phase": "CaCO3",
+     "reaction": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink": "LiClO4",
+     "sink_kind": "solid_salt",
+     "status": "ok"
+    },
+    "LiPCP": {
+     "benchmark_error_V_per_electron": {
+      "janaf": 0.3822570719388049,
+      "mp": -0.23270246997539404
+     },
+     "by_cathode_class": {
+      "LCO": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 4.2
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-041"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LCO, high-voltage": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.6
+       },
+       "lower_bound": true,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-042"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LFP": {
+       "E_cell_max_V": {
+        "max": 3.6,
+        "min": 3.6
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LNMO": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NCA": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.3
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TJ-036"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NMC": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.25
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039"
+       ],
+       "verdict": "inconclusive"
+      }
+     },
+     "cutoff_dependence": {
+      "undetermined": true
+     },
+     "expt_V": null,
+     "governing_V": {},
+     "governing_route": null,
+     "janaf_V": null,
+     "janaf_corrected_V": null,
+     "m_expt_provisional_V": null,
+     "m_expt_unbudgeted_species": [],
+     "mp_V": null,
+     "mp_corrected_V": null,
+     "phase": "CaCO3",
+     "reaction": "CaCO3 + 2 LiC8N5 -> Ca(C8N5)2 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "phase LiC8N5 absent from the cached data",
+     "sink": "LiPCP",
+     "sink_kind": "solid_salt",
+     "status": "undetermined"
+    },
+    "solvated": {
+     "benchmark_error_V_per_electron": {
+      "janaf": 0.3822570719388049,
+      "mp": -0.23270246997539404
+     },
+     "by_cathode_class": {
+      "LCO": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 4.2
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-041"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LCO, high-voltage": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.6
+       },
+       "lower_bound": true,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-042"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LFP": {
+       "E_cell_max_V": {
+        "max": 3.6,
+        "min": 3.6
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038"
+       ],
+       "verdict": "inconclusive"
+      },
+      "LNMO": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NCA": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.3
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TJ-036"
+       ],
+       "verdict": "inconclusive"
+      },
+      "NMC": {
+       "E_cell_max_V": {
+        "max": 4.3,
+        "min": 4.25
+       },
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039"
+       ],
+       "verdict": "inconclusive"
+      }
+     },
+     "cutoff_dependence": {
+      "undetermined": true
+     },
+     "expt_V": null,
+     "governing_V": {},
+     "governing_route": null,
+     "janaf_V": null,
+     "janaf_corrected_V": null,
+     "m_expt_provisional_V": null,
+     "m_expt_unbudgeted_species": [],
+     "mp_V": null,
+     "mp_corrected_V": null,
+     "phase": "CaCO3",
+     "reaction": "",
+     "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+     "sink": "solvated",
+     "sink_kind": "solvated",
+     "status": "undetermined"
+    }
+   },
+   "reduction": {
+    "delta_g_ev": -2.1645503742357053,
+    "delta_n_li": -1.3333333333,
+    "method": "Li-open grand potential, first lithiation reaction on the hull",
+    "reaction": "CaCO3 + 1.333 Li -> 0.6667 Li2CO3 + CaO + 0.3333 C",
+    "reason": "",
+    "status": "ok",
+    "value_V": 1.6234127807173644
+   },
+   "reduction_verdict": "feasible"
+  }
+ },
+ "provenance": {
+  "config_file": "results/preprint/pourbaix/config/c5.yaml",
+  "config_file_hash": "sha256:af9ec33bba2b29e938d2542e6d00df5aaaf5788f4c9b51bcf98b1e5c9c84c703",
+  "config_hash": "sha256:8a3db045a0275d3dd7ff6d5c7f5a814ec7e75661b0223edb4f8e54cd679cb2cf",
+  "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
+  "git_dirty": true,
+  "git_sha": "69088a27a975c78746d35350117753a93bdba441",
+  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "schema_sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
+  "thresholds_file": null,
+  "thresholds_hash": null
+ },
+ "question": "Per phase and registered sink, what is the oxidation onset vs Li+/Li under the governing route of cp3 decision 3, how do the comparator schemes compare, and what is the verdict for each cathode class's charge cut-off? (thermodynamic windows; no rates)",
+ "rule": "cp3 decision 3: where an all-experimental thermochemical route exists for a reaction it governs; DFT-based schemes corrected by their benchmark error (B2, CaCO3 -> Ca + CO2 + 1/2 O2, per electron) apply only where experimental data are missing and only to CO2-releasing reactions; janaf and mp uncorrected are comparators. Verdict: cp2 F5 on the governing route (a falsification must hold for every governing value; a solid-salt pass is inconclusive; undetermined never passes), combined with the reduction verdict.",
+ "sequence_disclosure": "The R-cell onsets were computed (P0-W5.2) before the scheme rule was proposed; the rule is therefore not independent of them (cp3 packet).",
+ "session": "P0-W5.3",
+ "solvated_sink": {
+  "keys": [
+   {
+    "key": "solvation_ca_vs_li",
+    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "sources": [],
+    "status": "gap"
+   },
+   {
+    "key": "solvation_al_vs_li",
+    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "sources": [],
+    "status": "gap"
+   }
+  ],
+  "reading": "no solvated-sink onset is computed while the Ca2+ and Al3+ transfer free energies relative to Li+ are gaps; no R-cell pass can count",
+  "status": "gap"
+ },
+ "table": [
+  {
+   "benchmark_error_V_per_electron": {
+    "janaf": 0.3822570719388049,
+    "mp": -0.23270246997539404
+   },
+   "by_cathode_class": {
+    "LCO": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 4.2
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-041"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LCO, high-voltage": {
+     "E_cell_max_V": {
+      "max": 4.6,
+      "min": 4.6
+     },
+     "lower_bound": true,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-042"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LFP": {
+     "E_cell_max_V": {
+      "max": 3.6,
+      "min": 3.6
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LNMO": {
+     "E_cell_max_V": {
+      "max": 5.0,
+      "min": 4.9
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-047",
+      "TA-048",
+      "TA-049",
+      "TJ-040"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NCA": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.3
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TJ-036"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NMC": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.25
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-050",
+      "TA-051",
+      "TJ-036",
+      "TJ-037",
+      "TJ-039"
+     ],
+     "verdict": "inconclusive"
+    }
+   },
+   "cutoff_dependence": {
+    "undetermined": true
+   },
+   "expt_V": null,
+   "governing_V": {},
+   "governing_route": null,
+   "janaf_V": null,
+   "janaf_corrected_V": null,
+   "m_expt_provisional_V": null,
+   "m_expt_unbudgeted_species": [],
+   "mp_V": null,
+   "mp_corrected_V": null,
+   "phase": "Al2O3",
+   "reaction": "Al2O3 + 6 LiB(CO2)4 -> 2 AlB3(CO2)12 + 1.5 O2 + 6 Li",
+   "reason": "phase AlB3C12O24 absent from the cached data; phase LiB(C2O4)2 absent from the cached data",
+   "sink": "LiBOB",
+   "sink_kind": "solid_salt",
+   "status": "undetermined"
+  },
+  {
+   "benchmark_error_V_per_electron": {
+    "janaf": 0.3822570719388049,
+    "mp": -0.23270246997539404
+   },
+   "by_cathode_class": {
+    "LCO": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 4.2
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-041"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LCO, high-voltage": {
+     "E_cell_max_V": {
+      "max": 4.6,
+      "min": 4.6
+     },
+     "lower_bound": true,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-042"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LFP": {
+     "E_cell_max_V": {
+      "max": 3.6,
+      "min": 3.6
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LNMO": {
+     "E_cell_max_V": {
+      "max": 5.0,
+      "min": 4.9
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-047",
+      "TA-048",
+      "TA-049",
+      "TJ-040"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NCA": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.3
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TJ-036"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NMC": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.25
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-050",
+      "TA-051",
+      "TJ-036",
+      "TJ-037",
+      "TJ-039"
+     ],
+     "verdict": "inconclusive"
+    }
+   },
+   "cutoff_dependence": {
+    "undetermined": true
+   },
+   "expt_V": null,
+   "governing_V": {},
+   "governing_route": null,
+   "janaf_V": null,
+   "janaf_corrected_V": null,
+   "m_expt_provisional_V": null,
+   "m_expt_unbudgeted_species": [],
+   "mp_V": null,
+   "mp_corrected_V": null,
+   "phase": "Al2O3",
+   "reaction": "Al2O3 + 6 LiClO4 -> 2 Al(ClO4)3 + 1.5 O2 + 6 Li",
+   "reason": "phase Al(ClO4)3 absent from the cached data",
+   "sink": "LiClO4",
+   "sink_kind": "solid_salt",
+   "status": "undetermined"
+  },
+  {
+   "benchmark_error_V_per_electron": {
+    "janaf": 0.3822570719388049,
+    "mp": -0.23270246997539404
+   },
+   "by_cathode_class": {
+    "LCO": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 4.2
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-041"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LCO, high-voltage": {
+     "E_cell_max_V": {
+      "max": 4.6,
+      "min": 4.6
+     },
+     "lower_bound": true,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-042"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LFP": {
+     "E_cell_max_V": {
+      "max": 3.6,
+      "min": 3.6
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LNMO": {
+     "E_cell_max_V": {
+      "max": 5.0,
+      "min": 4.9
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-047",
+      "TA-048",
+      "TA-049",
+      "TJ-040"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NCA": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.3
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TJ-036"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NMC": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.25
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-050",
+      "TA-051",
+      "TJ-036",
+      "TJ-037",
+      "TJ-039"
+     ],
+     "verdict": "inconclusive"
+    }
+   },
+   "cutoff_dependence": {
+    "undetermined": true
+   },
+   "expt_V": null,
+   "governing_V": {},
+   "governing_route": null,
+   "janaf_V": null,
+   "janaf_corrected_V": null,
+   "m_expt_provisional_V": null,
+   "m_expt_unbudgeted_species": [],
+   "mp_V": null,
+   "mp_corrected_V": null,
+   "phase": "Al2O3",
+   "reaction": "Al2O3 + 6 LiC8N5 -> 2 Al(C8N5)3 + 1.5 O2 + 6 Li",
+   "reason": "phase LiC8N5 absent from the cached data",
+   "sink": "LiPCP",
+   "sink_kind": "solid_salt",
+   "status": "undetermined"
+  },
+  {
+   "benchmark_error_V_per_electron": {
+    "janaf": 0.3822570719388049,
+    "mp": -0.23270246997539404
+   },
+   "by_cathode_class": {
+    "LCO": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 4.2
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-041"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LCO, high-voltage": {
+     "E_cell_max_V": {
+      "max": 4.6,
+      "min": 4.6
+     },
+     "lower_bound": true,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-042"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LFP": {
+     "E_cell_max_V": {
+      "max": 3.6,
+      "min": 3.6
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LNMO": {
+     "E_cell_max_V": {
+      "max": 5.0,
+      "min": 4.9
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-047",
+      "TA-048",
+      "TA-049",
+      "TJ-040"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NCA": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.3
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TJ-036"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NMC": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.25
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-050",
+      "TA-051",
+      "TJ-036",
+      "TJ-037",
+      "TJ-039"
+     ],
+     "verdict": "inconclusive"
+    }
+   },
+   "cutoff_dependence": {
+    "undetermined": true
+   },
+   "expt_V": null,
+   "governing_V": {},
+   "governing_route": null,
+   "janaf_V": null,
+   "janaf_corrected_V": null,
+   "m_expt_provisional_V": null,
+   "m_expt_unbudgeted_species": [],
+   "mp_V": null,
+   "mp_corrected_V": null,
+   "phase": "Al2O3",
+   "reaction": "",
+   "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+   "sink": "solvated",
+   "sink_kind": "solvated",
+   "status": "undetermined"
+  },
+  {
+   "benchmark_error_V_per_electron": {
+    "janaf": 0.3822570719388049,
+    "mp": -0.23270246997539404
+   },
+   "by_cathode_class": {
+    "LCO": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 4.2
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-041"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LCO, high-voltage": {
+     "E_cell_max_V": {
+      "max": 4.6,
+      "min": 4.6
+     },
+     "lower_bound": true,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-042"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LFP": {
+     "E_cell_max_V": {
+      "max": 3.6,
+      "min": 3.6
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LNMO": {
+     "E_cell_max_V": {
+      "max": 5.0,
+      "min": 4.9
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-047",
+      "TA-048",
+      "TA-049",
+      "TJ-040"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NCA": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.3
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TJ-036"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NMC": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.25
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-050",
+      "TA-051",
+      "TJ-036",
+      "TJ-037",
+      "TJ-039"
+     ],
+     "verdict": "inconclusive"
+    }
+   },
+   "cutoff_dependence": {
+    "undetermined": true
+   },
+   "expt_V": null,
+   "governing_V": {},
+   "governing_route": null,
+   "janaf_V": null,
+   "janaf_corrected_V": null,
+   "m_expt_provisional_V": null,
+   "m_expt_unbudgeted_species": [],
+   "mp_V": null,
+   "mp_corrected_V": null,
+   "phase": "CaCO3",
+   "reaction": "CaCO3 + 2 LiB(CO2)4 -> CaB2(CO2)8 + 0.5 O2 + CO2 + 2 Li",
+   "reason": "phase CaB2C8O16 absent from the cached data; phase LiB(C2O4)2 absent from the cached data",
+   "sink": "LiBOB",
+   "sink_kind": "solid_salt",
+   "status": "undetermined"
+  },
+  {
+   "benchmark_error_V_per_electron": {
+    "janaf": 0.3822570719388049,
+    "mp": -0.23270246997539404
+   },
+   "by_cathode_class": {
+    "LCO": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 4.2
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": 0.26218384039526965,
+     "oxidation_verdict": "falsified",
+     "rows": [
+      "TJ-041"
+     ],
+     "verdict": "falsified",
+     "verdict_at_provisional_m_expt": "falsified"
+    },
+    "LCO, high-voltage": {
+     "E_cell_max_V": {
+      "max": 4.6,
+      "min": 4.6
+     },
+     "lower_bound": true,
+     "margin_to_flip_V": 0.6621838403952691,
+     "oxidation_verdict": "falsified",
+     "rows": [
+      "TJ-042"
+     ],
+     "verdict": "falsified",
+     "verdict_at_provisional_m_expt": "falsified"
+    },
+    "LFP": {
+     "E_cell_max_V": {
+      "max": 3.6,
+      "min": 3.6
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": 0.33781615960473044,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at_provisional_m_expt": "inconclusive"
+    },
+    "LNMO": {
+     "E_cell_max_V": {
+      "max": 5.0,
+      "min": 4.9
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": 0.9621838403952698,
+     "oxidation_verdict": "falsified",
+     "rows": [
+      "TA-047",
+      "TA-048",
+      "TA-049",
+      "TJ-040"
+     ],
+     "verdict": "falsified",
+     "verdict_at_provisional_m_expt": "falsified"
+    },
+    "NCA": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.3
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": 0.3621838403952693,
+     "oxidation_verdict": "falsified",
+     "rows": [
+      "TA-052",
+      "TJ-036"
+     ],
+     "verdict": "falsified",
+     "verdict_at_provisional_m_expt": "falsified"
+    },
+    "NMC": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.25
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": 0.3121838403952695,
+     "oxidation_verdict": "falsified",
+     "rows": [
+      "TA-050",
+      "TA-051",
+      "TJ-036",
+      "TJ-037",
+      "TJ-039"
+     ],
+     "verdict": "falsified",
+     "verdict_at_provisional_m_expt": "falsified"
+    }
+   },
+   "cutoff_dependence": {
+    "falsified_for_E_cell_max_above_V": 3.9378161596047305,
+    "solid_salt_pass_inconclusive_for_E_cell_max_at_or_below_V": 3.9378161596047305
+   },
+   "expt_V": 3.9378161596047305,
+   "governing_V": {
+    "expt": 3.9378161596047305
+   },
+   "governing_route": "expt",
+   "janaf_V": 4.320073231543534,
+   "janaf_corrected_V": 3.9378161596047296,
+   "m_expt_provisional_V": 0.016582831450019476,
+   "m_expt_unbudgeted_species": [
+    "Ca(ClO4)2",
+    "LiClO4"
+   ],
+   "mp_V": 3.7051136896293344,
+   "mp_corrected_V": 3.9378161596047283,
+   "phase": "CaCO3",
+   "reaction": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + 0.5 O2 + CO2 + 2 Li",
+   "reason": "",
+   "sink": "LiClO4",
+   "sink_kind": "solid_salt",
+   "status": "ok"
+  },
+  {
+   "benchmark_error_V_per_electron": {
+    "janaf": 0.3822570719388049,
+    "mp": -0.23270246997539404
+   },
+   "by_cathode_class": {
+    "LCO": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 4.2
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-041"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LCO, high-voltage": {
+     "E_cell_max_V": {
+      "max": 4.6,
+      "min": 4.6
+     },
+     "lower_bound": true,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-042"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LFP": {
+     "E_cell_max_V": {
+      "max": 3.6,
+      "min": 3.6
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LNMO": {
+     "E_cell_max_V": {
+      "max": 5.0,
+      "min": 4.9
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-047",
+      "TA-048",
+      "TA-049",
+      "TJ-040"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NCA": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.3
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TJ-036"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NMC": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.25
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-050",
+      "TA-051",
+      "TJ-036",
+      "TJ-037",
+      "TJ-039"
+     ],
+     "verdict": "inconclusive"
+    }
+   },
+   "cutoff_dependence": {
+    "undetermined": true
+   },
+   "expt_V": null,
+   "governing_V": {},
+   "governing_route": null,
+   "janaf_V": null,
+   "janaf_corrected_V": null,
+   "m_expt_provisional_V": null,
+   "m_expt_unbudgeted_species": [],
+   "mp_V": null,
+   "mp_corrected_V": null,
+   "phase": "CaCO3",
+   "reaction": "CaCO3 + 2 LiC8N5 -> Ca(C8N5)2 + 0.5 O2 + CO2 + 2 Li",
+   "reason": "phase LiC8N5 absent from the cached data",
+   "sink": "LiPCP",
+   "sink_kind": "solid_salt",
+   "status": "undetermined"
+  },
+  {
+   "benchmark_error_V_per_electron": {
+    "janaf": 0.3822570719388049,
+    "mp": -0.23270246997539404
+   },
+   "by_cathode_class": {
+    "LCO": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 4.2
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-041"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LCO, high-voltage": {
+     "E_cell_max_V": {
+      "max": 4.6,
+      "min": 4.6
+     },
+     "lower_bound": true,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-042"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LFP": {
+     "E_cell_max_V": {
+      "max": 3.6,
+      "min": 3.6
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038"
+     ],
+     "verdict": "inconclusive"
+    },
+    "LNMO": {
+     "E_cell_max_V": {
+      "max": 5.0,
+      "min": 4.9
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-047",
+      "TA-048",
+      "TA-049",
+      "TJ-040"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NCA": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.3
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TJ-036"
+     ],
+     "verdict": "inconclusive"
+    },
+    "NMC": {
+     "E_cell_max_V": {
+      "max": 4.3,
+      "min": 4.25
+     },
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-050",
+      "TA-051",
+      "TJ-036",
+      "TJ-037",
+      "TJ-039"
+     ],
+     "verdict": "inconclusive"
+    }
+   },
+   "cutoff_dependence": {
+    "undetermined": true
+   },
+   "expt_V": null,
+   "governing_V": {},
+   "governing_route": null,
+   "janaf_V": null,
+   "janaf_corrected_V": null,
+   "m_expt_provisional_V": null,
+   "m_expt_unbudgeted_species": [],
+   "mp_V": null,
+   "mp_corrected_V": null,
+   "phase": "CaCO3",
+   "reaction": "",
+   "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+   "sink": "solvated",
+   "sink_kind": "solvated",
+   "status": "undetermined"
+  }
+ ],
+ "undetermined_sinks": [
+  "Al2O3/LiBOB",
+  "Al2O3/LiClO4",
+  "Al2O3/LiPCP",
+  "Al2O3/solvated",
+  "CaCO3/LiBOB",
+  "CaCO3/LiPCP",
+  "CaCO3/solvated"
+ ]
+}

@@ -1,0 +1,200 @@
+{
+ "extensions": {
+  "p0-w5": {
+   "F5": {
+    "Al2O3": {
+     "oxidation_verdict": "inconclusive",
+     "reason": "undetermined never passes",
+     "reduction_verdict": "feasible",
+     "verdict": "inconclusive"
+    },
+    "CaCO3": {
+     "oxidation_verdict": "inconclusive",
+     "reason": "undetermined never passes",
+     "reduction_verdict": "feasible",
+     "verdict": "inconclusive"
+    }
+   },
+   "config": "results/preprint/pourbaix/config/c5.yaml",
+   "provenance_pourbaix": {
+    "cache_hash": "sha256:a143176fd20e15dd8c7a2b8381cc0e3a8e71b23a1230ad5179571f174282f7ce",
+    "library_versions": {
+     "ase": "3.29.0",
+     "emmet-core": "0.87.3",
+     "mp-api": "0.46.5",
+     "numpy": "2.5.4",
+     "pymatgen": "2026.9.24",
+     "pyyaml": "6.0.3",
+     "rdkit": "2026.9.1",
+     "scipy": "1.18.1"
+    },
+    "mp_database_version": "2026.04.13",
+    "params_blob": "48cfe2145f234b57712a9ce9a510cc85a300a72e",
+    "params_snapshot": "results/preprint/pourbaix/inputs/params_680a44b.json",
+    "thresholds": {
+     "path": "theory/thresholds.md",
+     "rev": "800d5ea"
+    }
+   },
+   "question": "Between which potentials vs Li+/Li are CaCO3 and the native Al oxide at equilibrium against lithiation (Li-open grand potential) and against oxidation that releases CO2 and O2 with the cation taken up by the anion of each registered electrolyte salt? Does the registered regime range [E_cell_min, E_cell_max] lie inside each window under every gas-reference scheme? (thermodynamic windows; no kinetic statement)",
+   "scope": "Thermodynamic proxies only: a stability domain, a decomposition energy or a window says which state is at equilibrium, never how fast anything corrodes, dissolves or decomposes.",
+   "session": "P0-W5.3",
+   "sink": "solvated"
+  }
+ },
+ "generated_utc": "2026-10-17T10:40:25Z",
+ "mock": false,
+ "provenance": {
+  "config_file": "results/preprint/pourbaix/config/c5.yaml",
+  "config_file_hash": "sha256:af9ec33bba2b29e938d2542e6d00df5aaaf5788f4c9b51bcf98b1e5c9c84c703",
+  "config_hash": "sha256:8a3db045a0275d3dd7ff6d5c7f5a814ec7e75661b0223edb4f8e54cd679cb2cf",
+  "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
+  "git_dirty": true,
+  "git_sha": "69088a27a975c78746d35350117753a93bdba441",
+  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "schema_sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
+  "thresholds_file": null,
+  "thresholds_hash": null
+ },
+ "schema_version": "2",
+ "stability": {
+  "R-cell": {
+   "convention": "theory contract E_window = Delta_G_r/(Delta_n_Li F_c); E_ox = min over Delta_n_Li > 0",
+   "kind": "window",
+   "reference_electrode": "Li+/Li",
+   "sink_assumption": {
+    "active": "solvated",
+    "kind": "solvated",
+    "statement": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+    "switch": "one document per registered salt"
+   },
+   "temperature_K": 298.15,
+   "windows": {
+    "Al2O3": {
+     "material_id": "mp-1143",
+     "notes": [
+      "reduction does not depend on the gas scheme (no gas in lithiation)",
+      "oxidation: lowest over the schemes; the cp2 rule F5 verdict is in extensions.p0-w5"
+     ],
+     "oxidation": {
+      "reaction": "",
+      "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+      "status": "undetermined",
+      "value_V": null
+     },
+     "oxidation_by_scheme": {
+      "expt": {
+       "reaction": "",
+       "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "janaf": {
+       "reaction": "",
+       "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "mp": {
+       "reaction": "",
+       "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+       "status": "undetermined",
+       "value_V": null
+      }
+     },
+     "reduction": {
+      "delta_g_ev": -0.4579205409375309,
+      "delta_n_li": -0.375,
+      "method": "Li-open grand potential, first lithiation reaction on the hull",
+      "reaction": "Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al",
+      "reason": "",
+      "status": "ok",
+      "value_V": 1.2211214425000823
+     },
+     "reduction_by_scheme": {
+      "janaf": {
+       "delta_g_ev": -0.4579205409375309,
+       "delta_n_li": -0.375,
+       "method": "Li-open grand potential, first lithiation reaction on the hull",
+       "reaction": "Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al",
+       "reason": "",
+       "status": "ok",
+       "value_V": 1.2211214425000823
+      },
+      "mp": {
+       "delta_g_ev": -0.4579205409375309,
+       "delta_n_li": -0.375,
+       "method": "Li-open grand potential, first lithiation reaction on the hull",
+       "reaction": "Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al",
+       "reason": "",
+       "status": "ok",
+       "value_V": 1.2211214425000823
+      }
+     }
+    },
+    "CaCO3": {
+     "material_id": "mp-3953",
+     "notes": [
+      "reduction does not depend on the gas scheme (no gas in lithiation)",
+      "oxidation: lowest over the schemes; the cp2 rule F5 verdict is in extensions.p0-w5"
+     ],
+     "oxidation": {
+      "reaction": "",
+      "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+      "status": "undetermined",
+      "value_V": null
+     },
+     "oxidation_by_scheme": {
+      "expt": {
+       "reaction": "",
+       "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "janaf": {
+       "reaction": "",
+       "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "mp": {
+       "reaction": "",
+       "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent; both keys are gaps at this params sha, so it is undetermined.",
+       "status": "undetermined",
+       "value_V": null
+      }
+     },
+     "reduction": {
+      "delta_g_ev": -2.1645503742357053,
+      "delta_n_li": -1.3333333333,
+      "method": "Li-open grand potential, first lithiation reaction on the hull",
+      "reaction": "CaCO3 + 1.333 Li -> 0.6667 Li2CO3 + CaO + 0.3333 C",
+      "reason": "",
+      "status": "ok",
+      "value_V": 1.6234127807173644
+     },
+     "reduction_by_scheme": {
+      "janaf": {
+       "delta_g_ev": -2.1645503742357053,
+       "delta_n_li": -1.3333333333,
+       "method": "Li-open grand potential, first lithiation reaction on the hull",
+       "reaction": "CaCO3 + 1.333 Li -> 0.6667 Li2CO3 + CaO + 0.3333 C",
+       "reason": "",
+       "status": "ok",
+       "value_V": 1.6234127807173644
+      },
+      "mp": {
+       "delta_g_ev": -2.1645503742357053,
+       "delta_n_li": -1.3333333333,
+       "method": "Li-open grand potential, first lithiation reaction on the hull",
+       "reaction": "CaCO3 + 1.333 Li -> 0.6667 Li2CO3 + CaO + 0.3333 C",
+       "reason": "",
+       "status": "ok",
+       "value_V": 1.6234127807173644
+      }
+     }
+    }
+   }
+  }
+ }
+}

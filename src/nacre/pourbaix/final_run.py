@@ -44,9 +44,11 @@ def _clean(obj):
     return obj
 
 
-def _dump(path, doc):
+def _dump(path, doc, compact=False):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(_clean(doc), indent=1, sort_keys=True) + "\n", encoding="utf-8")
+    text = (json.dumps(_clean(doc), sort_keys=True, separators=(",", ":")) if compact else
+            json.dumps(_clean(doc), indent=1, sort_keys=True))
+    path.write_text(text + "\n", encoding="utf-8")
     return path
 
 
@@ -74,9 +76,9 @@ def w4_provenance(meta, params_sha):
             "schema_sha": provenance.W4_SCHEMA_V2[0]}
 
 
-def lane_extension(params, meta):
+def lane_extension(params, meta, session="P0-W5.2"):
     m = cache.manifest()
-    return {"session": "P0-W5.2", "scope": SCOPE,
+    return {"session": session, "scope": SCOPE,
             "provenance_pourbaix": {"cache_hash": cache.cache_hash(), "mp_database_version": m["mp_database_version"],
                                     "library_versions": provenance.lib_versions(),
                                     "params_snapshot": rel(inputs.snapshot_path(params.sha)),
@@ -144,7 +146,10 @@ def water_lines_record(ph):
                     "schema v2 field for the Fig 7 water-stability lines (lane notes N12, N13)"}
 
 
-def run_slurry(raw, meta, params):
+def run_slurry(raw, meta, params, out=None, session="P0-W5.2", al_axis=False, compact=False):
+    """R-slurry documents and summary. With al_axis, one document per (a_Ca, C_T, total Al); otherwise
+    one per (a_Ca, C_T) at the map value of total Al (P0-W5.2)."""
+    out = OUT if out is None else out
     cfg = raw["R-slurry"]
     S = F.setup()
     consts = F.implied_constants(S["all"])
@@ -160,7 +165,8 @@ def run_slurry(raw, meta, params):
     pk1, pk2 = params.value("pk1_carbonic"), params.value("pk2_carbonic")
     lk_cal, lk_acc = params.value("log10_ksp_calcite"), params.value("log10_ksp_acc")
     prov = w4_provenance(meta, params.sha)
-    ext = lane_extension(params, meta)
+    ext = lane_extension(params, meta, session=session)
+    doc_al = al_grid if al_axis else [a_al_map]
 
     # Al baseline (no Ca), per total dissolved Al
     baseline = {}
@@ -181,38 +187,45 @@ def run_slurry(raw, meta, params):
             margins = {s: F.ca_c_exact(S, a_ca, ct["mol_kg"], ph, E, o["eV_per_formula_unit"], consts,
                                        exclude_carbonates=True, target="ACC") for s, o in offs.items()}
             unc = F.ca_c_unconstrained(S, a_ca, ct["mol_kg"], ph, E)
-            phases, idx, cross, _ = F.domain_map(S, a_ca, ct["mol_kg"], a_al_map, ph, E, off_c)
-            dec_al, _, _ = F.al_baseline(S, a_al_map, ph, E)
             a_co3 = F.alpha2(ph, consts["pKa1"], consts["pKa2"]) * ct["mol_kg"]
             om_cal = [F.experimental_omega(a_ca, ct["mol_kg"], p, pk1, pk2, lk_cal) for p in ph]
             om_acc = [F.experimental_omega(a_ca, ct["mol_kg"], p, pk1, pk2, lk_acc) for p in ph]
-            conditions = {
-                "a_Ca": a_ca, "a_CO3": None,
-                "a_CO3_by_pH": _r(a_co3, 12), "a_CO3_note": "a_CO3 = alpha2(pH) C_T (ideal solution, "
-                "closed C(IV) system); it varies along the pH axis, so the scalar is null",
-                "c_bulk_mol_m3": a_ca * 1000.0, "C_T_mol_kg": ct["mol_kg"], "C_T_source": params.cite("dic_slurry"),
-                "a_Ca_grid_status": "provisional design grid (gap policy (ii))",
-                "a_w": 1.0, "temperature_K": F.T_K, "a_Al_total_map": a_al_map,
-                "carbon": "C(IV) only; exact speciation per pH column for calcite and ACC; predominance "
-                          "convention for the domain map",
-                "acc_offset": {"J_per_mol": offs["value"]["J_per_mol"], "eV_per_formula_unit": off_c,
-                               "source": params.cite("acc_offset")}}
-            dec = {"calcite": cal, "ACC": acc, **{r: dec_al[r] for r in F.AL_ROLES}}
-            bulk = schema_state(conditions, phases, idx, dec, S["roles"], {**S["named"], "ACC": None})
-            enriched = json.loads(json.dumps(_clean(bulk)))
-            enriched["conditions"]["state_note"] = (
-                "identical to the bulk state by derivation: at equilibrium the template does not change "
-                "Delta mu (theory/derivation_body.tex section 7, rule 5; contract v2); not computed separately")
-            doc = {"schema_version": "2", "mock": False, "generated_utc": provenance.utc_now(),
-                   "provenance": prov,
-                   "stability": {"R-slurry": {"kind": "pourbaix", "reference_electrode": "SHE",
-                                              "temperature_K": F.T_K,
-                                              "axes": {"pH": _r(ph), "E_V": _r(E)},
-                                              "states": {"bulk": bulk, "enriched": enriched}}},
-                   "extensions": {"p0-w5": {**ext, "question": cfg["question"], "design_point": pid,
-                                            "design_axes": {"a_Ca": a_ca, "C_T": ct},
-                                            "water_lines": water_lines_record(ph)}}}
-            docs.append(_dump(OUT / "slurry" / ("%s.json" % pid), doc))
+            point_docs = []
+            for a_al in doc_al:
+                phases, idx, cross, _ = F.domain_map(S, a_ca, ct["mol_kg"], a_al, ph, E, off_c)
+                dec_al, _, _ = F.al_baseline(S, a_al, ph, E)
+                conditions = {
+                    "a_Ca": a_ca, "a_CO3": None,
+                    "a_CO3_by_pH": _r(a_co3, 12), "a_CO3_note": "a_CO3 = alpha2(pH) C_T (ideal solution, "
+                    "closed C(IV) system); it varies along the pH axis, so the scalar is null",
+                    "c_bulk_mol_m3": a_ca * 1000.0, "C_T_mol_kg": ct["mol_kg"], "C_T_source": params.cite("dic_slurry"),
+                    "a_Ca_grid_status": "provisional design grid (gap policy (ii))",
+                    "a_w": 1.0, "temperature_K": F.T_K, "a_Al_total_map": a_al,
+                    "carbon": "C(IV) only; exact speciation per pH column for calcite and ACC; predominance "
+                              "convention for the domain map",
+                    "acc_offset": {"J_per_mol": offs["value"]["J_per_mol"], "eV_per_formula_unit": off_c,
+                                   "source": params.cite("acc_offset")}}
+                dec = {"calcite": cal, "ACC": acc, **{r: dec_al[r] for r in F.AL_ROLES}}
+                bulk = schema_state(conditions, phases, idx, dec, S["roles"], {**S["named"], "ACC": None})
+                enriched = json.loads(json.dumps(_clean(bulk)))
+                enriched["conditions"]["state_note"] = (
+                    "identical to the bulk state by derivation: at equilibrium the template does not change "
+                    "Delta mu (theory/derivation_body.tex section 7, rule 5; contract v2); not computed separately")
+                doc = {"schema_version": "2", "mock": False, "generated_utc": provenance.utc_now(),
+                       "provenance": prov,
+                       "stability": {"R-slurry": {"kind": "pourbaix", "reference_electrode": "SHE",
+                                                  "temperature_K": F.T_K,
+                                                  "axes": {"pH": _r(ph), "E_V": _r(E)},
+                                                  "states": {"bulk": bulk, "enriched": enriched}}},
+                       "extensions": {"p0-w5": {**ext, "question": cfg["question"], "design_point": pid,
+                                                "design_axes": {"a_Ca": a_ca, "C_T": ct, "a_Al_total": a_al},
+                                                "water_lines": water_lines_record(ph)}}}
+                name = pid if not al_axis else "%s_Al%.0e" % (pid, a_al)
+                path = _dump(out / "slurry" / ("%s.json" % name), doc, compact=compact)
+                docs.append(path)
+                point_docs.append(rel(path))
+                if a_al == a_al_map:
+                    phases_map, idx_map, cross_map = phases, idx, cross
             worst_cal = float(cal.max())
             points.append({
                 "id": pid, "a_Ca": a_ca, "c_bulk_mol_m3": a_ca * 1000.0, "C_T": ct,
@@ -227,14 +240,15 @@ def run_slurry(raw, meta, params):
                                              "fraction_above_edge": float(np.mean(unc > edge_cal))},
                 "experimental_omega": {"calcite_min": float(min(om_cal)), "calcite_max": float(max(om_cal)),
                                        "ACC_min": float(min(om_acc)), "ACC_max": float(max(om_acc))},
-                "domains_in_region": sorted({phases[k]["label"] for k in np.unique(idx)}),
-                "cross_compounds_stable": cross,
-                "document": rel(docs[-1])})
+                "domains_in_region": sorted({phases_map[k]["label"] for k in np.unique(idx_map)}),
+                "cross_compounds_stable": cross_map,
+                "document": next(d for d in point_docs if not al_axis or d.endswith("_Al%.0e.json" % a_al_map)),
+                "documents": point_docs})
 
     controls = run_controls(raw, S, consts, params, ph, E, edge_cal, a_ca_grid, cts, al_grid, a_al_map)
     bias = consts["log10_ksp_calcite"] - lk_cal
     summary = {
-        "session": "P0-W5.2", "generated_utc": provenance.utc_now(), "provenance": prov, "extensions": ext,
+        "session": session, "generated_utc": provenance.utc_now(), "provenance": prov, "extensions": ext,
         "question": cfg["question"], "scope": SCOPE,
         "axes": {"pH": {"from": params.cite("ph_slurry"), "min": float(ph[0]), "max": float(ph[-1]), "n": len(ph)},
                  "E_V_SHE": {"from": params.cite("e_she_slurry"), "min": float(E[0]), "max": float(E[-1]), "n": len(E)}},
@@ -274,7 +288,7 @@ def run_slurry(raw, meta, params):
         "enriched_state": cfg["states"]["enriched"]["reason"],
         "falsifiability_control": controls,
     }
-    spath = _dump(OUT / "slurry_summary.json", summary)
+    spath = _dump(out / "slurry_summary.json", summary)
     return summary, docs + [spath]
 
 
@@ -368,8 +382,8 @@ def run_controls(raw, S, consts, params, ph, E, edge_cal, a_ca_grid, cts, al_gri
 
 
 # ================================================================================== main
-def ledger(run, outputs, prov):
-    rec = {"session": "P0-W5.2", "run": run, "kind": "pourbaix-final", "mock": False, "utc": provenance.utc_now(),
+def ledger(run, outputs, prov, session="P0-W5.2"):
+    rec = {"session": session, "run": run, "kind": "pourbaix-final", "mock": False, "utc": provenance.utc_now(),
            "git_sha": prov["git_sha"], "git_dirty": prov["git_dirty"], "config_hash": prov["config_hash"],
            "params_sha": prov["params_sha"], "cache_hash": cache.cache_hash(),
            "contract_sha": prov["contract_sha"], "schema_sha": prov["schema_sha"],

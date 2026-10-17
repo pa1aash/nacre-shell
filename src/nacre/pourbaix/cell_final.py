@@ -203,13 +203,14 @@ def worst(vs):
     return max(vs, key=ORDER.index)
 
 
-def run_cell(raw, meta, params, prov, ext):
+def run_cell(raw, meta, params, prov, ext, out=None, session="P0-W5.2"):
     import json
 
     import numpy as np
 
     from nacre.pourbaix import final_run as R
 
+    out = R.OUT if out is None else out
     cfg = raw["R-cell"]
     T = float(cfg["temperature_K"]["value"])
     e_min = float(params.value(cfg["E_min"]["key"]))
@@ -329,10 +330,10 @@ def run_cell(raw, meta, params, prov, ext):
                    "windows": windows}},
                "extensions": {"p0-w5": {**ext, "question": cfg["question"], "sink": salt_id,
                                         "F5": {ph: phase_out[ph]["by_sink"][salt_id]["F5"] for ph in phase_out}}}}
-        out_files.append(R._dump(R.OUT / "cell" / ("%s.json" % salt_id), doc))
+        out_files.append(R._dump(out / "cell" / ("%s.json" % salt_id), doc))
 
     summary = {
-        "session": "P0-W5.2", "generated_utc": R.provenance.utc_now(), "provenance": prov, "extensions": ext,
+        "session": session, "generated_utc": R.provenance.utc_now(), "provenance": prov, "extensions": ext,
         "question": cfg["question"], "scope": R.SCOPE, "temperature": cfg["temperature_K"],
         "regime_range": {"E_cell_min": {"value": e_min, "range": e_min_rng, "source": params.cite(cfg["E_min"]["key"])},
                          "E_cell_max": {"value": e_max, "range": e_max_rng, "source": params.cite(cfg["E_max"]["key"])}},
@@ -364,7 +365,7 @@ def run_cell(raw, meta, params, prov, ext):
         "comparator_al_onset_ffree": {**params.cite("al_onset_ffree"), "value": params.value("al_onset_ffree"),
                                       "range": params.range("al_onset_ffree")},
     }
-    out_files.append(R._dump(R.OUT / "cell_summary.json", summary))
+    out_files.append(R._dump(out / "cell_summary.json", summary))
     return out_files
 
 
