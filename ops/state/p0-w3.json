@@ -1,5 +1,5 @@
 {
-  "last_session": "P0-W3.3",
+  "last_session": "P0-W3.4",
   "status": "DONE",
   "day": 3,
   "equation_sheet": {
@@ -41,6 +41,7 @@
     ".local/packets/p0-2.zip (local only)",
     "ops/reports/P0-W3.2.md",
     "ops/reports/P0-W3.3.md",
+    "ops/reports/P0-W3.4.md",
     "theory/blind_rederivation.md",
     "theory/blind_rederivation/checks.py.txt",
     "theory/blind_rederivation/compare.py",
@@ -48,6 +49,7 @@
     "theory/blind_rederivation/results.py",
     "theory/build/derivation.pdf",
     "theory/build/equation_sheet.pdf",
+    "theory/build/si_derivation_standalone.pdf",
     "theory/contract.yaml",
     "theory/cp2_brief.md",
     "theory/cp2_fixes.md",
@@ -58,6 +60,8 @@
     "theory/ignorance_priors.md",
     "theory/macros.tex",
     "theory/open_questions.md",
+    "theory/si_derivation.tex",
+    "theory/si_derivation_standalone.tex",
     "theory/symbols.yaml",
     "theory/thresholds.md",
     "theory/tools/check_contract.py",
@@ -80,7 +84,12 @@
     "cp3 (P0-W3.3): R1-R3, R5-R8 amended one commit each, R9 recorded; thresholds block v2, contract unchanged at v3; thresholds_cp3 ready at 74ac69c.",
     "Interpretations for cp4: competing-phase hull without dissolved Ca (R1); per-design-point verdicts (R1); F5 fallback where no expt route (R2); C4 feasible side is the joint either-route mass (R3+R7); worst-state mirror of the missing-state rule (R7).",
     "Blind re-derivation 9/9 agree; three clarifications applied to the derivation (f23632d), flagged for cp4.",
-    "verify --strict fails only on the known N17 provenance item (W5 ledger logs)."
+    "verify --strict fails only on the known N17 provenance item (W5 ledger logs).",
+    "cp3b (P0-W3.4): A1-A4 registered one commit each; thresholds block v3, ignorance block v2; thresholds_cp3b ready at fd29fcd.",
+    "Geometric gaps open: A_patch, a_site, rho_L, Gamma_s cap; evaluable now: delta_s (2 r_Ca term dropped), V_site.",
+    "nacre track check refuses (theory/thresholds.md changed after p0-cp3); deviation entry text for the integrator in ops/reports/P0-W3.4.md (ops/** not writable by this lane).",
+    "pytest: 1 failed (W4 threshold-copy equality handshake, closes when W4.3 regenerates the copy from fd29fcd), 1298 passed; verify --strict FAIL on that test only.",
+    "4c0a3b0 was pushed with check_contract failing on a decimal in the equation sheet (exit status masked); fixed in fd29fcd."
   ],
   "contract_v3": {
     "status": "ready",
@@ -152,5 +161,18 @@
     },
     "for_w4": "regenerate configs/preprint/thresholds.yaml from block version 3: m_expt params path is now thresholds.C5.window_margin_expt (was thresholds.C5.expt_margin); margin_by_route (m_expt for expt, m_E only where expt is missing, comparators carry none; absent margin key -> undetermined); C1 mixture W_mix = sum w_k W_k with w ~ Dirichlet(1,...,1) and weight-free bounds; C1 p0_inputs (registered PMF route = gap; analog and Dupre-ignorance estimates side by side, labelled); C3b A_patch is a gap (report flip values); ignorance block v2: delta_s evaluable now as Gamma_s*V_m <= delta_s <= d_layer, V_site derived; A_patch, a_site, rho_L and the Gamma_s cap are gaps; analog bounds never refuse draws",
     "track_check": "refuses (theory/thresholds.md changed after p0-cp3); the deviation entry is integrator-owned (ops/**), text in ops/reports/P0-W3.4.md"
+  },
+  "si_derivation": {
+    "file": "theory/si_derivation.tex",
+    "sha": "35c8b478b1b317358c34a9c736d14d657639d43e",
+    "standalone": "theory/build/si_derivation_standalone.pdf (10 pages)",
+    "si_build": "S1 on pages 1-6 of a 7-page SI draft build (local copy of main_si.tex); no overfull box or undefined reference from the text",
+    "macros_for_w8": [
+      "NumPcred",
+      "NumPcredSweepLow",
+      "NumPcredSweepHigh",
+      "NumMexpt",
+      "NumMwindow"
+    ]
   }
 }
