@@ -1,4 +1,4 @@
-% Derivation body (sessions P0-W3.1, P0-W3.2; contract v3). SI-ready: \input-able into the SI or the paper.
+% Derivation body (sessions P0-W3.1, P0-W3.2, P0-W3.3; contract v3). SI-ready: \input-able into the SI or the paper.
 % Requirements of the including document: amsmath, array, and \input of theory/macros.tex.
 % Labels carry the prefix th: so they do not collide with the paper's labels.
 % Symbolic only: no literature value appears in this file. Numbers reach paper text only
@@ -31,7 +31,7 @@ C1 anchor & \Rs & template held at the oxide against water & $\Wwet>0$, Eq.~\eqr
 C2 sequester & \Rs & Ca$^{2+}$ held at the template against hydrated Ca$^{2+}$ & $\DGseq<0$, Eq.~\eqref{th:eq:enr}; it acts on C3 only through $\dga$, Eq.~\eqref{th:eq:gibbs}\\
 C3 nucleate & \Rs & heterogeneous barrier lowered, and accessible at $\Omb$ & $f(\theta)$ small; $\DGhet(\Omb)\le B_\mathrm{acc}$, Eqs.~\eqref{th:eq:het}, \eqref{th:eq:access}\\
 C4 conformal & \Rs, \Rc & a continuous film that closes below the thickness bound & $\Ssp\ge0$ or closure below $d_\mathrm{max}$, Eqs.~\eqref{th:eq:spread}, \eqref{th:eq:combined}\\
-C5 stable & \Rs & mineral and oxide on the aqueous Pourbaix hull & $\DGpbx=0$ (tolerance at G2), Eq.~\eqref{th:eq:pbx}\\
+C5 stable & \Rs & CaCO$_3$ not dissolving; no solid below it; oxide baseline reported & $\Omb\ge1$ with the calcite $\Ksp$ (the $\Omb$ of C3), Eq.~\eqref{th:eq:pbx-omega}; $\DGpbx$ within tolerance against solid competitors, Eq.~\eqref{th:eq:pbx}\\
 C5 stable & \Rc & phases inside their Li-referenced window & $E_\mathrm{red}<\ELi<E_\mathrm{ox}$, Eq.~\eqref{th:eq:window}\\
 \hline
 \end{tabular}
@@ -195,7 +195,7 @@ mean electrostatic potential.
 \begin{equation}\label{th:eq:omega}
 \Om=\frac{\mathrm{IAP}}{\Ksp}=\frac{\aCa\,\aCO}{\Ksp} \un{1},\qquad \Dmu=\kB T\ln\Om \un{J},
 \end{equation}
-with $\Ksp$ the solubility product of the registered framing (ACC or calcite), $\Dmu$ the
+with $\Ksp$ the solubility product of the framing (calcite and ACC are both registered, and each is run as a whole chain with its own $\Ksp$, $\Vm$ and $\gnl$), $\Dmu$ the
 chemical-potential drop per CaCO$_3$ formula unit on crystallisation, and $\Vm$ the molar volume per
 CaCO$_3$ formula unit. Units: activities and $\Ksp$ are pure numbers on the molal scale; $\kB T$ is
 in J. Nucleation requires $\Om>1$. This is the charter's convention (F3): its $S$ is this $\Om$.
@@ -393,9 +393,18 @@ N_\mathrm{nuc}\ge N_\mathrm{req}\iff \DGhet\le B_\mathrm{acc}=\kB T\ln\frac{J_0\
 \end{equation}
 Units: $J_0t_\mathrm{p}$ and $N_\mathrm{req}$ are both m$^{-2}$, so the logarithm is of a pure
 number. Equivalently, a count $\mathcal N$ on a collector area $A$ is $N_\mathrm{req}=\mathcal N/A$.
-P0 registers $N_\mathrm{req}=1/A_\mathrm{patch}$, with $A_\mathrm{patch}$ the contact patch through
-which a cathode particle touches the collector: at least one nucleus, in expectation, under every
-patch. It is fixed separately from the closure density of C4 (Section~\ref{th:sec:conformality}),
+What must be required is fixed by the contact patch $A_\mathrm{patch}$ through which a cathode
+particle touches the collector: a patch with no nucleus under it is a patch the mineral cannot
+cover from below. If nuclei land independently at mean areal density $N_\mathrm{nuc}$, the number
+under one patch is Poisson distributed with mean $N_\mathrm{nuc}A_\mathrm{patch}$, and the fraction
+of patches left empty is $\e^{-N_\mathrm{nuc}A_\mathrm{patch}}$. Requiring that at most a fraction
+$q_0$ of the patches be empty gives
+\begin{equation}\label{th:eq:nreq}
+\e^{-N_\mathrm{nuc}A_\mathrm{patch}}\le q_0\iff N_\mathrm{nuc}\ge N_\mathrm{req}=\frac{\ln(1/q_0)}{A_\mathrm{patch}} \un{m^{-2}},
+\end{equation}
+and P0 registers $q_0=1-p$, with $p$ the credible level of the decision rule
+(\texttt{theory/thresholds.md}; cp3). The expectation form, one nucleus per patch on average, is the
+special case $q_0=1/\e$. $N_\mathrm{req}$ is fixed separately from the closure density of C4 (Section~\ref{th:sec:conformality}),
 so that C3 does not borrow the island geometry of C4.
 Four properties make the criterion usable without a precise kinetic theory: only $\ln J_0$
 enters, so an order-of-magnitude prefactor moves $B_\mathrm{acc}$ by a few $\kB T$; the barrier
@@ -564,9 +573,10 @@ $\Gs$ and $\ds$ only. Its properties:
 \item $\partial\dga/\partial\DGseq=\Gs\Theta>0$: each site contributes its occupancy, so deeper
 binding lowers $\gsl$;
 \item $\partial\dga/\partial\mu_\mathrm{Ca}=-\GCa$: the Gibbs equation itself;
-\item at strong binding ($x\gg1$), $\dga\to\Gs\DGseq+\Rg T\Gs\ln(\cmax/\cb)$ plus terms that
-vanish: each site gives its binding free energy, less the free energy of concentrating the ion
-from the bulk concentration to that of a filled site;
+\item at strong binding ($x\gg1$), $\dga\to\Gs\DGseq+\Rg T\Gs\ln(\cmax/\cb)+\Rg T\ds\cb+O(1/x)$:
+each site gives its binding free energy, less the free energy of concentrating the ion from the
+bulk concentration to that of a filled site, plus the bulk-depletion term $\Rg T\ds\cb$, which does
+not vanish with $x$ but is small when $\ds\cb\ll\Gs$;
 \item a template that repels Ca$^{2+}$ ($\DGseq\to+\infty$) has $\dga\to+\Rg T\ds\cb>0$: negative
 adsorption raises $\gsl$;
 \item with no specific interaction ($\DGseq=0$) $\dga=\Rg T\Gs[y-\ln(1+y)]$ with $y=\cb\ds/\Gs$,
@@ -594,7 +604,10 @@ the stoichiometric crystal on one side and the bare template on the other. Ca$^{
 excess at the contact, for example as an ion bridge between a carboxylate and the crystal surface
 (carboxylate--Ca--calcite). With the dividing surface at the template and the excess counted
 relative to the stoichiometric nucleus, such a Ca$^{2+}$ excess $\GCasn$ is inside $\gsn$, and the
-Gibbs equation applies to it as it does to $\gsl$. With $\GCasl\equiv\GCa$ of
+Gibbs equation applies to it as it does to $\gsl$. This assumes that the contact is in
+exchange equilibrium with the reservoir, so that its Ca$^{2+}$ carries the bulk chemical potential;
+a buried contact sealed from the solution would hold a fixed amount instead, and the relation below
+would not apply to it. With $\GCasl\equiv\GCa$ of
 Eq.~\eqref{th:eq:excess} the template--liquid excess,
 \begin{equation}\label{th:eq:gibbs-sn}
 \frac{\partial\gsn}{\partial\mu_\mathrm{Ca}}=-\GCasn,\qquad
@@ -690,7 +703,7 @@ without the displaced water). Any Ca$^{2+}$ excess at the contact is inside it,
 $\partial\gsn/\partial\mu_\mathrm{Ca}=-\GCasn$. $\DGseq$ and $\dga$ are never added to $\gsn$. This
 is a rule for the supplied input, not a claim that $\GCasn=0$.
 \item Carbonate needs no correction: a mean potential cancels in $\Om$ and in $\Dmu$.
-\item The same rule governs R-slurry stability: dissolution of CaCO$_3$ is decided by $\Omb$. An
+\item The same rule governs R-slurry stability: dissolution of CaCO$_3$ is decided by $\Omb$, the quantity C3 uses (Section~\ref{th:sec:stability}). An
 evaluation at an ``enriched'' state is a non-equilibrium sensitivity, never an equilibrium result.
 \end{enumerate}
 
@@ -764,6 +777,27 @@ electron transport (Section~\ref{th:sec:film}). Neither (a) nor (b) contains eit
 (c) is the independent condition. C4 therefore registers one criterion from the (a)/(b) family
 and uses (c) as the independent supporting condition (\texttt{theory/thresholds.md}).
 
+\paragraph{Complete wetting is excluded on a hydrophilic template (cp3).} Interface stability
+gives $\gsn\ge0$: a negative interfacial free energy between two immiscible solids would make the
+system create contact without limit. Equation~\eqref{th:eq:spread} then bounds the spreading
+coefficient by the two in-water energies alone,
+\begin{equation}\label{th:eq:spread-bound}
+\Ssp=\gsl-\gsn-\gnl\le\gsl-\gnl \un{J\,m^{-2}},
+\end{equation}
+so complete wetting, $\Ssp\ge0$, needs $\gsl\ge\gnl$: the template--water interface must cost at
+least as much per area as the mineral--water interface. A hydrophilic template is one that water
+wets at least as favourably as it wets the mineral, $\gsl\le\gnl$; for it $\Ssp\le-\gsn<0$ for
+every admissible $\gsn>0$ (equality only on the boundary $\gsn=0$, $\gsl=\gnl$), whatever the
+template--nucleus contact is. ``Hydrophilic'' is meant here relative to the mineral; the usual
+criterion, a small water contact angle in air, constrains $\gp-\gsl$ and does not by itself place
+$\gsl$ below $\gnl$, so whether a template meets the condition is a question for the inputs, which
+is why $P(\gsl>\gnl)$ is reported. Under the condition, complete wetting is excluded, and a continuous film on such a
+template can form only by coalescence of islands, condition~\eqref{th:eq:nclosure}. The
+mechanism's own premise pushes the same way: Ca$^{2+}$ binding lowers $\gsl$ ($\dga<0$ for a
+binding template, Section~\ref{th:sec:template}). The screen reports $P(\gsl>\gnl)$, the largest
+mass the spreading route can carry, and C4 is feasible through either route
+(\texttt{theory/thresholds.md}).
+
 \section{Thermodynamic stability}\label{th:sec:stability}
 
 \textit{Physics.} A layer that is thermodynamically unstable in its own environment dissolves or
@@ -785,16 +819,44 @@ are favoured by raising $\ESHE$, and species with $2n_\mathrm{O}-n_\mathrm{H}>0$
 $\Psi_\mathrm{hull}$ is the lower envelope over all species and mixtures of the same metal
 composition, and $\DGpbx=0$ means stable. \emph{What it can say:} whether the phase is the
 equilibrium state at the chosen (pH, $\ESHE$) and dissolved-ion activities. \emph{What it cannot
-say:} rates, passivation, local pH at the interface, morphology. Two traps: the amorphous framing
-lies above the calcite hull by its offset, so ACC is never on the hull and the tolerance must be
-registered (C5 open item). Adding the offset to the edge makes the ACC test equal to the
-calcite-level test: $\Psi_\mathrm{ACC}=\Psi_\mathrm{calcite}+\Delta_\mathrm{ACC}/n_\mathrm{M}$
-and the hull is unchanged, so the test asks whether CaCO$_3$ is stable as a phase at the regime
+say:} rates, passivation, local pH at the interface, morphology.
+
+\paragraph{Dissolution is decided by $\Omb$, the quantity C3 uses.} Carbon is held in the C(IV)
+carbonate system: the regime fixes $\aCO$, and reduction of dissolved carbonate to CH$_4$ is not
+observed in aqueous processing, so reduced-carbon phases are not admitted (an assumption; the
+construction with carbon redox allowed is a labelled sensitivity). At fixed C(IV), dissolving a
+CaCO$_3$ layer is the reaction CaCO$_3$(s) $\to$ Ca$^{2+}$ + CO$_3^{2-}$ at the regime activities,
+with free energy $\Rg T\ln\Ksp-\Rg T\ln(\aCa\aCO)=-\Rg T\ln\Omb$ per mole of CaCO$_3$, where $\Ksp$
+and the activities are those of Eq.~\eqref{th:eq:omega} (activities from the speciation of
+Section~\ref{th:sec:supersaturation}). The layer dissolves when $\Omb<1$ and is stable against
+dissolution when $\Omb\ge1$. This is the same $\Omb$ that drives C3: a slurry state that cannot
+nucleate CaCO$_3$ is a state in which a CaCO$_3$ layer dissolves, and by
+Section~\ref{th:sec:supersaturation} enrichment at the template changes neither. Written as a
+hull distance per non-O, non-H atom ($n_\mathrm{M}=2$ for CaCO$_3$), with the dissolved ions on the
+hull,
+\begin{equation}\label{th:eq:pbx-omega}
+\DGpbx\big|_\mathrm{diss}=\frac{\Rg T}{n_\mathrm{M}}\ln\frac{1}{\Omb}\quad(\Omb<1) \un{J\,mol^{-1}}.
+\end{equation}
+Two consequences follow, and they are why a computed hull distance cannot decide dissolution.
+First, a hull tolerance $\tau=n_\mathrm{at}e_\mathrm{f}/n_\mathrm{M}$ reports dissolution only
+below $\ln\Omb=-n_\mathrm{at}e_\mathrm{f}/(\Rg T)$: since $\Rg T$ is small against a typical formation-energy
+error times $n_\mathrm{at}$, the tolerance hides several decades of undersaturation. Second, an error $\delta$
+in the computed dissolution free energy per mole shifts the apparent $\Ksp$ by
+$\delta/(\Rg T\ln10)$ decades, so the database's dissolved-ion reference adds a bias of its own.
+Dissolution is therefore decided from $\Omb$ with the measured calcite $\Ksp$ (the registered
+framing's $\Ksp$ for ACC is reported beside it as a sensitivity), and the screen must show that
+this test reports dissolution where the solution is undersaturated (C5 item 21, Q8).
+
+\paragraph{Competing phases and the oxide baseline.} The hull of Eq.~\eqref{th:eq:pbx}, with
+C(IV) fixed and the dissolved Ca-bearing species removed (dissolution is the $\Omb$ test), answers
+the remaining question: whether another solid lies below CaCO$_3$. It carries the tolerance of the
+computed formation energies. The amorphous framing lies above the calcite hull by its offset, so
+ACC is never on the hull. Adding the offset to the edge makes the ACC test equal to the
+calcite-level test: $\Psi_\mathrm{ACC}=\Psi_\mathrm{calcite}+\Delta_\mathrm{ACC}/n_\mathrm{M}$ and
+the hull is unchanged, so the test asks whether CaCO$_3$ is stable as a phase at the regime
 activities, up to the framing's metastability. Whether ACC itself dissolves is $\Om$ with the ACC
-solubility product, which C3 already carries and C5 reports as a labelled sensitivity (cp2 fix
-F6); and the dissolved-ion activities chosen for the aqueous species decide
-whether solids appear stable at all, so the screen can be satisfied by construction unless it is
-shown to fail where it must (C5 item 21, Q8).
+solubility product, a labelled sensitivity (cp2 fix F6). The native oxide's Pourbaix state at the
+same fixed C(IV) is the bare-oxide baseline and does not gate.
 
 \paragraph{\Rc: Li-open grand potential.} In the cell the solvent is not water and the reference
 is Li$^+$/Li. Holding the collector at $\ELi$ fixes the Li chemical potential,
@@ -842,9 +904,32 @@ inconclusive, so that a pass counts only with the solvated sink; (4) a sink whos
 is missing makes the limit \emph{undetermined}, which never counts as a pass; (5) where the
 CO$_2$ (or O$_2$) reference is uncertain, the limit is evaluated under each registered reference
 scheme: a pass must hold under the scheme with the lowest onset, a falsification under every
-scheme, and anything else is inconclusive (cp2 fix F5). \emph{Limitation:} the electrolyte's own
+scheme, and anything else is inconclusive (cp2 fix F5); since cp3 this rule applies only where the
+all-experimental route is missing (next paragraph). \emph{Limitation:} the electrolyte's own
 anodic limit is a separate quantity. Above it the solvent and salt oxidise first, and it is not
 assessed here, so a pass says nothing about the stability of the electrolyte.
+
+\paragraph{Which thermochemistry decides the limit (cp3).} $E^{*}=\Delta G_\mathrm{r}/(\Delta n\,\Fc)$
+is only as good as $\Delta G_\mathrm{r}$. A computed reaction energy that combines database solids with
+a gas reference carries the error of the carbonate formation energy and of the CO$_2$ reference, and
+the two reference schemes bracket the measured reaction energies from opposite sides. Where every
+reactant and product is tabulated, the all-experimental route has no such error and governs; its
+margin $m_\mathrm{expt}$ is the experimental uncertainty budget (the tabulated uncertainties per
+transferred electron, plus a bound on any neglected solid entropy, such as that of a sink salt
+tabulated by its enthalpy only, taken from analog salts). A computed scheme corrected by its
+measured benchmark error reproduces that same experimental route, so it is a check of the
+bookkeeping and not an independent confirmation. Because the solid-salt sink is an upper bound on
+the onset, the governing rule is: falsified if $E_\mathrm{ox}^\mathrm{expt}+m_\mathrm{expt}<E_\mathrm{cell}^{\max}$
+with either sink; feasible only if $E_\mathrm{ox}^\mathrm{expt}-m_\mathrm{expt}\ge E_\mathrm{cell}^{\max}$
+with the solvated sink. The charge cutoff $E_\mathrm{cell}^{\max}$ is a property of the cathode, so
+the verdict is a function of it, with crossovers at $E_\mathrm{ox}^\mathrm{expt}\pm m_\mathrm{expt}$.
+\emph{Why the carbonate-oxidation reading is physical.} For the analogous reaction of Li$_2$CO$_3$,
+Li$_2$CO$_3\to2$Li + CO$_2$ + $\tfrac12$O$_2$ referenced to Li$^+$/Li, the measured oxidation onset
+lies near the experimental equilibrium limit of the same reaction (W1 key
+\texttt{li2co3\_oxidation\_onset} against the experimental route of W5's gas-reference benchmark):
+a solid carbonate in a non-aqueous cell oxidises close to its thermodynamic limit, with little
+kinetic overpotential. The window limit of CaCO$_3$ is therefore read as the onset of an observable
+reaction, not merely as a bound that kinetics could postpone indefinitely.
 
 \section{The insulating-film limitation}\label{th:sec:film}
 
@@ -904,7 +989,7 @@ Super\-saturation & \Rs & \texttt{Omega\_bulk}, \texttt{Delta\_mu}; demonstratio
 W1 (activities from speciation at the regime pH and ionic strength)\\
 C3 nucleation & \Rs & \texttt{r\_star}, \texttt{DG\_hom}, \texttt{f\_theta}, \texttt{DG\_het}, \texttt{cos\_theta\_young}, \texttt{cos\_theta\_template}, \texttt{gamma\_sl\_insitu}, \texttt{theta\_young}, \texttt{B\_acc}, \texttt{N\_nuc}; audit: \texttt{gamma\_eff\_deck}, \texttt{cos\_theta\_deck} &
 \texttt{gamma\_nl}, \texttt{gamma\_sl0} (or \texttt{gamma\_sl} in situ), \texttt{gamma\_sn0}, \texttt{Delta\_gamma\_w}, \texttt{V\_m}, \texttt{T}, \texttt{J0\_het}, \texttt{t\_proc}, \texttt{N\_req}, with $\Omb$ and \texttt{Delta\_gamma\_ads} &
-W1 priors and computed slabs; framing at G2\\
+W1 priors and computed slabs; both framings registered (cp3)\\
 C4 conformality & \Rs & \texttt{S\_spread}, \texttt{h\_c}, \texttt{h\_cl}, \texttt{N\_s\_closure} &
 C3 energies, \texttt{N\_s}, \texttt{d\_max} &
 nucleation-and-growth model (item 17); \texttt{N\_nuc} as an upper estimate\\

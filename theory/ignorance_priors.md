@@ -96,8 +96,9 @@ gamma_pw is not needed as an ignorance prior. It is the same quantity as gamma_s
 serve as a consistency check.
 
 The sourced range extends below zero (the van Oss route). A negative template-water energy would
-mean the template disperses or swells in water without limit. The conflict is reported to W1 as a
-flag. It does not override the sourced prior.
+mean the template disperses or swells in water without limit. At cp3 (R8) the prior of
+gamma_sl0 is truncated at zero, and the untruncated prior is a labelled sensitivity with the
+removed mass reported (`theory/thresholds.md`, Section 1).
 
 ## 2. Branch masses of the gamma_sn prior (properties of the prior)
 
@@ -137,7 +138,16 @@ the priors of gamma_sl and gamma_nl, not by the ignorance on gamma_sn.
 
 If gamma_sl <= gamma_nl over their whole support, then S_spread < 0 for every admissible gamma_sn.
 The C4 criterion then fails whatever gamma_sn is. That is a physical result that does not depend
-on the ignorance prior (Section 3). The ruling asked this file to show non-zero mass on all three
+on the ignorance prior (Section 3).
+
+**Physical result (cp3 R3; derivation, Section 8, Eq. [th:eq:spread-bound]).** Because gamma_sn >= 0,
+S_spread = gamma_sl - gamma_sn - gamma_nl <= gamma_sl - gamma_nl. For any hydrophilic template,
+gamma_sl <= gamma_nl (water wets the template at least as favourably as it wets the mineral), so
+S_spread <= -gamma_sn < 0 for every admissible gamma_sn > 0: complete wetting is excluded, and the
+complete-wetting branch mass of this prior is zero, not by assumption but because the cut point
+a = gamma_sl - gamma_nl lies at or below zero. Ca2+ binding lowers gamma_sl further. C4 then rests
+on coalescence (the second route of `theory/thresholds.md`, C4), and the report prints
+P(gamma_sl > gamma_nl), the largest mass the spreading route can carry. The ruling asked this file to show non-zero mass on all three
 branches. That holds only under the two conditions above, and the session report records the
 difference.
 
@@ -260,6 +270,7 @@ branches:
     partial: 2*gamma_nl/(gamma_p + gamma_nv)
     non: 1 - (gamma_sl + gamma_nl)/(gamma_p + gamma_nv)
   interior_when: ['gamma_sl - gamma_nl > 0', 'gamma_sl + gamma_nl < gamma_p + gamma_nv']
+  complete_wetting_excluded_when: 'gamma_sl <= gamma_nl (hydrophilic template; S_spread <= gamma_sl - gamma_nl - gamma_sn)'
   clipping: masses are clipped to [0, 1] when a cut leaves [0, span]
 geometry:
   Gamma_s:

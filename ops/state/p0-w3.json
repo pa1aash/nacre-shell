@@ -1,7 +1,7 @@
 {
-  "last_session": "P0-W3.2",
+  "last_session": "P0-W3.3",
   "status": "DONE",
-  "day": 2,
+  "day": 3,
   "equation_sheet": {
     "status": "ready",
     "sha": "4d03ab0a3db0e866825ebc99684a7bf7203f0f2a",
@@ -37,24 +37,31 @@
     }
   },
   "artifacts": [
-    "theory/contract.yaml",
-    "theory/symbols.yaml",
-    "theory/tools/check_contract.py",
-    "theory/tools/gen_symbol_table.py",
-    "theory/generated/symbol_table.tex",
-    "theory/equation_sheet.tex",
+    ".local/early_read/derivation_for_coauthors.pdf (local only)",
+    ".local/packets/p0-2.zip (local only)",
+    "ops/reports/P0-W3.2.md",
+    "ops/reports/P0-W3.3.md",
+    "theory/blind_rederivation.md",
+    "theory/blind_rederivation/checks.py.txt",
+    "theory/blind_rederivation/compare.py",
+    "theory/blind_rederivation/rederivation.txt",
+    "theory/blind_rederivation/results.py",
+    "theory/build/derivation.pdf",
     "theory/build/equation_sheet.pdf",
-    "theory/macros.tex",
+    "theory/contract.yaml",
+    "theory/cp2_brief.md",
+    "theory/cp2_fixes.md",
     "theory/derivation.tex",
     "theory/derivation_body.tex",
-    "theory/build/derivation.pdf",
-    "theory/open_questions.md",
-    "theory/thresholds.md",
-    "theory/cp2_brief.md",
+    "theory/equation_sheet.tex",
+    "theory/generated/symbol_table.tex",
     "theory/ignorance_priors.md",
-    "theory/cp2_fixes.md",
-    "ops/reports/P0-W3.2.md",
-    ".local/packets/p0-2.zip (local only)"
+    "theory/macros.tex",
+    "theory/open_questions.md",
+    "theory/symbols.yaml",
+    "theory/thresholds.md",
+    "theory/tools/check_contract.py",
+    "theory/tools/gen_symbol_table.py"
   ],
   "notes": [
     "Q1/Q2 settled: uniform electrochemical potential; Delta_mu = k_B T ln Omega_bulk at the template; enrichment (binding or psi) never changes the driving force.",
@@ -69,7 +76,11 @@
     "N_req = 1/A_patch (regimes.R-slurry.parameters.patch_area); thresholds.C3.N_req becomes derived.",
     "Ignorance priors: gamma_sn ~ U[0, gamma_p + gamma_nv]; complete-wetting mass is non-zero only if gamma_sl > gamma_nl on the prior support (recorded, not forced).",
     "Charter texts for the integrator in theory/cp2_brief.md sections A, B, E (approved) and C (C2 kill_criterion/verdict_bands consistency: needs a ruling).",
-    "W4 handshake: 3 W4 contract tests still fail on this branch (now v3: 22 functions to implement incl. the v2 ones); 773 other tests pass."
+    "W4 handshake: 3 W4 contract tests still fail on this branch (now v3: 22 functions to implement incl. the v2 ones); 773 other tests pass.",
+    "cp3 (P0-W3.3): R1-R3, R5-R8 amended one commit each, R9 recorded; thresholds block v2, contract unchanged at v3; thresholds_cp3 ready at 74ac69c.",
+    "Interpretations for cp4: competing-phase hull without dissolved Ca (R1); per-design-point verdicts (R1); F5 fallback where no expt route (R2); C4 feasible side is the joint either-route mass (R3+R7); worst-state mirror of the missing-state rule (R7).",
+    "Blind re-derivation 9/9 agree; three clarifications applied to the derivation (f23632d), flagged for cp4.",
+    "verify --strict fails only on the known N17 provenance item (W5 ledger logs)."
   ],
   "contract_v3": {
     "status": "ready",
@@ -94,5 +105,34 @@
     "ignorance_priors": "9249661f4c1b044a12ff3fdfab2a7afee82ea545",
     "speciation": "717485662dae8d3442202fb0e3e9ef279301064b",
     "fix_log": "theory/cp2_fixes.md @ f3d7570f5a0e459bffb3ad1964cc305a048977e9"
-  }
+  },
+  "thresholds_cp3": {
+    "status": "ready",
+    "sha": "74ac69c2586c017e2bc08efecbfbc918b94f48ee",
+    "file": "theory/thresholds.md",
+    "machine_block_version": 2,
+    "contract_version": 3,
+    "check_contract": "PASS",
+    "ruling": "planning chat 2026-10-17, cp3 PASS once R1-R12 applied; W3 items R1-R3, R5-R8 amended, R9 recorded",
+    "items": {
+      "R8": "d782db2f19fafb5a40367f604502c36f75d0cc16",
+      "R7": "faca26521255fda6f1fa6d293911ff52b655b458",
+      "R6": "01a809e6d48420b015c0332dea8c8f048c7eacc5",
+      "R5": "1ade8de3d9fecf6493a0345e416f61114a73152d",
+      "R3": "63e086ba59ebd87fae849b91abc54b1c231aae53",
+      "R2": "eed03d8b8b28fa1437663c35eddeffbe29733d97",
+      "R1": "cfa9f2d3644f2d284781f5772b3f6a5b4eae3a49"
+    },
+    "written_before_screen_output": true,
+    "for_w4": "regenerate configs/preprint/thresholds.yaml from this block (version 2): C5s is now the Omega_bulk dissolution test (calcite K_sp, speciation activities, dose window) plus C5s_phase; C5c uses the expt route with m_expt (DFT schemes as comparators, F5 rule only where expt is missing); C4 is either route with joint masses; C3b edge log(1/(1 - p_cred))/A_patch; framings calcite and ACC both run as whole chains; joint link masses; every registered state propagated; termination ignorance mixture; gamma_sl0 truncated at 0"
+  },
+  "blind": "9/9 agree",
+  "blind_rederivation": {
+    "record": "theory/blind_rederivation.md",
+    "outputs": "theory/blind_rederivation/ (results.py, rederivation.txt, checks.py.txt, compare.py)",
+    "compare": "21 of 21 expressions agree by symbolic equality",
+    "derivation_fix": "f23632d (strong-binding limit wording, contact exchange assumption, hydrophilic condition); flagged for cp4"
+  },
+  "cp3_fix_log": "theory/cp2_fixes.md (cp3 section) @ 46fb82a",
+  "early_read": ".local/early_read/derivation_for_coauthors.pdf (local only, 19 pages)"
 }

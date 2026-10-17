@@ -1,0 +1,48 @@
+import sys; sys.path.insert(0, sys.argv[1])
+import sympy as sp
+from results import *
+th=theta; c=sp.cos(th)
+# (a)
+r=sp.Symbol('r',positive=True)
+Vcap=sp.integrate(sp.pi*(r**2-sp.Symbol('u')**2),(sp.Symbol('u'),r*c,r))
+print('Vcap/(4/3 pi r^3) - f =',sp.simplify(Vcap/(sp.Rational(4,3)*sp.pi*r**3)-f_theta))
+surf=2*sp.pi*r**2*(1-c) - c*sp.pi*r**2*sp.sin(th)**2   # gamma_nl units, Young substituted
+print('surf/(4 pi r^2) - f =',sp.simplify(surf/(4*sp.pi*r**2)-f_theta))
+print('f(0),f(pi/2),f(pi)=',[f_theta.subs(th,v) for v in (0,sp.pi/2,sp.pi)])
+print("f' =",sp.simplify(sp.diff(f_theta,th)- sp.Rational(3,4)*sp.sin(th)**3))
+# (b)
+print('dcos/dDgw',dcos_dDgw,' df/dDgw - 3 sin^2/(4gnl) =', sp.simplify(df_dDgw.subs(Delta_gamma_w,gamma_sl-gamma_sn0-gamma_nl*c)-3*sp.sin(th)**2/(4*gamma_nl)))
+print('deck derivative', sp.simplify(EXTRA['dcos_dDgw_deck']))
+# (d)
+cc=sp.Symbol('cc',positive=True)
+E=sp.exp(-Delta_G_seq/(R*T)); x=E*cc*delta_s/Gamma_s
+G=Gamma_s*x/(1+x)-delta_s*cc
+integ=-R*T*sp.integrate(sp.simplify(G/cc),(cc,0,c_bulk))
+print('Dgads check', sp.simplify(integ-Delta_gamma_ads))
+th_=x_bind/(1+x_bind)
+print('dDg/dDGseq - Gs Theta', sp.simplify(sp.diff(Delta_gamma_ads,Delta_G_seq)-Gamma_s*th_))
+# dDg/dmu_Ca, mu = RT ln c
+Gam=Gamma_s*th_-delta_s*c_bulk
+print('dDg/dmu + Gamma_Ca', sp.simplify(c_bulk*sp.diff(Delta_gamma_ads,c_bulk)/(R*T)+Gam))
+# (e)
+rr=sp.Symbol('rr',positive=True); vm=V_m/N_A
+G_hom=-sp.Rational(4,3)*sp.pi*rr**3*Delta_mu/vm+4*sp.pi*rr**2*gamma_nl
+sol=[s for s in sp.solve(sp.diff(G_hom,rr),rr) if s!=0][0]
+print('r*',sp.simplify(sol-r_star),' DG*',sp.simplify(G_hom.subs(rr,sol)-DG_hom))
+# (i)
+y,aCa=sp.symbols('y aCa',positive=True)
+eq=sp.expand((m_CT-A_c*y-P_c*aCa*y).subs(aCa,m_CaT/(D_c+P_c*y))*(D_c+P_c*y))
+print('quadratic:',sp.collect(sp.expand(-eq),y))
+print('root satisfies:',sp.simplify(eq.subs(y,a_CO3_root)))
+print('Ca_T=0 limit:',sp.simplify(a_CO3_root.subs(m_CaT,0)))
+print('P_c->0 limit:',sp.limit(a_CO3_root,P_c,0))
+print('Davies I->0:',sp.limit(gamma_davies_z1,I,0),sp.limit(gamma_davies_z2,I,0), ' z2 vs z1^4:',sp.simplify(gamma_davies_z2-gamma_davies_z1**4))
+# (h)
+print('sum P interior:',sp.simplify(P_complete+P_partial+P_non))
+import random
+for _ in range(3):
+    vals={gamma_sl:random.uniform(0,1),gamma_nl:random.uniform(0,1),gamma_max:random.uniform(0.1,2)}
+    gs=[random.uniform(0,float(vals[gamma_max])) for _ in range(200000)]
+    S=[vals[gamma_sl]-g-vals[gamma_nl] for g in gs]; co=[(vals[gamma_sl]-g)/vals[gamma_nl] for g in gs]
+    mc=sum(s>=0 for s in S)/len(gs); mn=sum(cv<=-1 for cv in co)/len(gs)
+    print('MC',round(mc,3),float(P_complete_clipped.subs(vals)),round(mn,3),float(P_non_clipped.subs(vals)),round(1-mc-mn,3),float(P_partial_clipped.subs(vals)))

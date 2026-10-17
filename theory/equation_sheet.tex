@@ -21,7 +21,7 @@
 \begin{document}
 
 {\large\bfseries Equation sheet: governing relations of the CaCO$_3$-barrier screen}\par
-{\small P0-W3.2 (cp2 fix-up), contract v3. Symbolic only; every symbol is in the table overleaf and in \texttt{theory/symbols.yaml}; units in brackets.}
+{\small P0-W3.2 (cp2 fix-up) and P0-W3.3 (cp3), contract v3. Symbolic only; every symbol is in the table overleaf and in \texttt{theory/symbols.yaml}; units in brackets.}
 
 \smallskip
 \begin{tabular}{@{}p{\dimexpr\textwidth*10/97\relax}p{\dimexpr\textwidth*41/97\relax}p{\dimexpr\textwidth*41/97\relax}@{}}
@@ -114,6 +114,7 @@ $\geff\equiv\gnl-\dgw$ (deck form) is \textbf{not} used: Young and $\DGhom$ take
 \begin{equation}
 \begin{gathered}J=J_0\e^{-\DGhet/\kB T},\qquad N_\mathrm{nuc}=J t_\mathrm{p}\ge N_\mathrm{req}\\ \iff\ \DGhet\le B_\mathrm{acc}=\kB T\ln(J_0t_\mathrm{p}/N_\mathrm{req})\end{gathered}
 \end{equation}
+$N_\mathrm{req}=\ln(1/q_0)/A_\mathrm{patch}$ with $q_0=1-p$: Poisson occupancy leaves a fraction $\e^{-N_\mathrm{nuc}A_\mathrm{patch}}\le q_0$ of the particle--collector contact patches without a nucleus.
 
 \hd{7\quad Conformality (C4, \Rs)}
 \phys{A barrier needs a continuous film; whether the mineral spreads or beads is a wetting balance, not a barrier height.}
@@ -128,7 +129,7 @@ $\Ssp\ge0$: no finite $\theta$ ($\theta\to0$, $f\to0$), layer-by-layer growth. $
 \Psi_\phi=\tfrac{1}{n_\mathrm{M}}\big[G_\phi-n_\mathrm{O}\mu_{\mathrm{H_2O}}-\Rg T\ln10\,(2n_\mathrm{O}-n_\mathrm{H})\,\mathrm{pH}\\
 -(2n_\mathrm{O}-n_\mathrm{H}+Q)\Fc\ESHE\big]
 \end{multline}
-$\DGpbx=\Psi_\phi-\Psi_\mathrm{hull}\ge0$; zero means stable at (pH, $\ESHE$).
+$\DGpbx=\Psi_\phi-\Psi_\mathrm{hull}\ge0$; zero means stable at (pH, $\ESHE$). \textbf{Dissolution is decided by $\Omb\ge1$} with the calcite $\Ksp$, the $\Omb$ of C3: at fixed C(IV), $\DGpbx|_\mathrm{diss}=(\Rg T/n_\mathrm{M})\ln(1/\Omb)$, so a hull tolerance hides undersaturation. The hull (dissolved Ca removed) decides only competing solids; the oxide is a baseline.
 
 (b) \Rc, Li open, $\ELi$ vs Li$^+$/Li [J\,mol$^{-1}$; V]:
 \begin{equation}
@@ -150,6 +151,5 @@ j=j_0\e^{-2\kappa d},\ \ \kappa=\frac{\sqrt{2m_\mathrm{e}\phiB}}{\hbar}\;\Righta
 \smallskip
 \input{generated/symbol_table}
 
-\smallskip
-{\small \textbf{Conventions.} Angles in rad; free energies per formula unit (J) or per mole (J\,mol$^{-1}$) as stated; activities on the molal scale; potentials vs SHE in \Rs\ and vs Li$^+$/Li in \Rc. $\Om$ is the only supersaturation variable (the charter's $S$ for C3 is $\Om$). The functions W4 implements, with exact limits, monotonicity and the sign-flip tests, are in \texttt{theory/contract.yaml}.}
+{\footnotesize \textbf{Conventions.} Angles in rad; free energies per formula unit (J) or per mole (J\,mol$^{-1}$) as stated; activities on the molal scale; potentials vs SHE in \Rs\ and vs Li$^+$/Li in \Rc. $\Om$ is the only supersaturation variable (the charter's $S$ for C3 is $\Om$). Functions, limits and sign-flip tests: \texttt{theory/contract.yaml}.}
 \end{document}

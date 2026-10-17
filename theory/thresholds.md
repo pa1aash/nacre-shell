@@ -1,4 +1,4 @@
-# Thresholds and decision rules of the P0 screen (G0 fix F9; checkpoint cp2)
+# Thresholds and decision rules of the P0 screen (G0 fix F9; checkpoints cp2 and cp3)
 
 **Written before any screen output existed.** This file was written in session P0-W3.2 on top
 of commit `49100a9d92b5dc48f1db1d15529967dfeeece12d` (lane p0-w3, contract v2 at
@@ -6,7 +6,10 @@ of commit `49100a9d92b5dc48f1db1d15529967dfeeece12d` (lane p0-w3, contract v2 at
 (rule R7). The commit that adds this file is recorded in `ops/state/p0-w3.json` under
 `thresholds.sha`. The cp2 fix-up (P0-W3.2, 2026-10-17) applied the audit fixes F3 to F9 and set
 the conventions below, again before any screen output existed; `theory/cp2_fixes.md` lists each
-change with its commit.
+change with its commit. The cp3 amendments (P0-W3.3, planning ruling of 2026-10-17, items R1 to R8,
+one commit each) were applied before any screen output existed as well; they are logged with their
+commits in the cp3 section of `theory/cp2_fixes.md`. R1 and R2 were set after W5's C5 results
+were seen, and R6 after an early calcite estimate; each carries its disclosure.
 
 This file is the threshold authority of track p0 (rule R-thr). `configs/preprint/thresholds.yaml`
 (W4) is a copy of the fenced `thresholds` block at the end, and W4 checks the two equal. After tag
@@ -16,7 +19,7 @@ No literature number is typed here (rule R2). Every physical quantity a threshol
 by the `lit/params.yaml` key that will supply it, and "Params keys" at the end lists them.
 Rationals such as 1/2 are exact values of the theory, not literature values. The only typed
 numbers are the method conventions set by the cp2 audit (Section 1, "Registered conventions"). Equation numbers refer to the
-P0-W3.2 cp2 fix-up build of `theory/build/derivation.pdf`, with the stable label in brackets.
+P0-W3.3 cp3 build of `theory/build/derivation.pdf`, with the stable label in brackets.
 
 What a verdict means: a link that is "feasible" under these rules meets a necessary condition
 under the stated framing and inputs. It does not show that a barrier works, and no rate, capacity
@@ -48,10 +51,34 @@ With p > 1/2, feasible and falsified cannot both hold.
 with cos(theta) <= -1 count as theta = pi (f = 1). The boundary mass is reported for every link
 that uses theta.
 
-**States.** C1, the C3 wetting part, C4 and C5 are necessary at every registered state at
-which they apply. A link's verdict is therefore the worst over those states, ordered feasible <
-inconclusive < falsified. The C3 accessibility part is cumulative: nuclei may form at any state
-along the registered R-slurry path, so it uses the path sum of Eq. (26) [th:eq:access].
+**Link masses are joint, draw by draw (cp3 R7 (1)).** A link with several tests has one good
+indicator per Monte Carlo draw, and its band masses are the masses of that indicator, computed on
+the same draws:
+- an "A and B" link (C3: (a) and (b); C5: its tests) is good on a draw only if every test is good,
+  so its falsified-side mass is P(A bad **or** B bad);
+- C4 is good on a draw if either route is good, so its falsified-side mass is
+  P(S_spread route bad **and** closure route bad) (Section 2, C4).
+
+The verdict applies the shared rule to these joint masses (P_good = 1 - P_bad of the link), and
+the deletion test compares the same joint falsified-side masses. The single-test masses are
+reported beside them. This replaces the per-test maximum or minimum (W4's interpretation (i)).
+
+**States (cp3 R7 (4)).** Every registered state of a regime is propagated (for R-slurry: slurry
+contact and every drying state); no link is run at one representative state.
+- C1, the C3 wetting part, C4's spreading route and C5 are necessary at every registered state at
+  which they apply. A link's verdict is therefore the worst over those states, ordered feasible <
+  inconclusive < falsified, with the joint link mass formed within each state.
+- The C3 accessibility part is cumulative: nuclei may form at any state along the registered
+  R-slurry path, so it uses the path sum of Eq. (26) [th:eq:access]. The path sum only grows as
+  states are added.
+- **A missing state.** If a registered state cannot be evaluated (for example a drying state whose
+  water activity is a gap), the verdicts are bounded by what was evaluated:
+  - C3 (b) (and C4's closure route, which uses the same N_nuc) cannot be falsified unless every
+    registered state, drying included, has been evaluated. With a state missing, a shortfall is
+    inconclusive and a pass stands, because the missing terms can only add nuclei;
+  - for a worst-state link the mirror holds: a falsification at an evaluated state stands, and a
+    pass needs every registered state, so with a state missing a pass is inconclusive.
+  The report lists every missing state and the links it bounds.
 
 **Water activity at drying states (cp2 fix F7, Q13).** The ion activity product stays
 IAP = a_Ca a_CO3. For a hydrated ACC framing CaCO3.nH2O the full product carries a_w^n, and
@@ -62,10 +89,18 @@ toward feasibility. Two requirements follow:
 - where W1 supplies n (`params.acc_hydration_n`), the labelled sensitivity `Omega_bulk_hydrated`
   (contract) is reported beside every drying-state verdict. It never decides a verdict.
 
+**Truncation of gamma_sl0 at zero (cp3 R8).** The Ca-free template-liquid energy
+(`params.gamma_sl0_template`) is sampled from its sourced prior truncated to gamma_sl0 >= 0.
+A negative interfacial free energy would make the template disperse or swell in water without
+limit, so no sharp template-water interface would exist (interface stability,
+`theory/ignorance_priors.md`, Section 1). The untruncated prior is run as a labelled
+sensitivity, and the report prints the mass the truncation removed and every verdict that
+changes without it.
+
 **Bookkeeping (contract v2, unchanged in v3).** Every barrier is evaluated with Omega = Omega_bulk at the regime
 activities. The C2 binding enters only through Delta_gamma_ads in gamma_sl, and C2 itself is a
 reported descriptor, not a gate (Section 2) (derivation, Section 7
-(rule), Eqs. (32) to (35) [th:eq:gibbs to th:eq:composite]). `Omega_local_ideal` and the demonstration composites never enter a
+(rule), Eqs. (33) to (36) [th:eq:gibbs to th:eq:composite]). `Omega_local_ideal` and the demonstration composites never enter a
 verdict.
 
 ### Registered conventions (cp2 ruling, 2026-10-17)
@@ -81,6 +116,7 @@ exists, and W1 records each under its key with the cp2 ruling as the source.
 | C1 margin m_W | set by W1 from fetched method-error evidence, or zero where the prior carries it | `thresholds.C1.margin_W_adh_wet` |
 | C4 margin m_S | set by W1 as for m_W | `thresholds.C4.margin_S_spread` |
 | C5 window margin m_E | set by W1 as for m_W | `thresholds.C5.window_margin` |
+| C5 experimental margin m_expt (cp3 R2) | set by W1: the experimental uncertainty budget of the governing route (tabulated uncertainties plus the bound on the neglected Ca(ClO4)2 solid entropy from analog entropies) | `thresholds.C5.expt_margin` |
 
 - **p_deg in the sweep.** p_deg is registered as the rule 1 - p_cred, so it moves with the
   credible level in the p_cred sweep (0.4, 0.1, 0.01). A rise of the falsified-side mass by
@@ -97,6 +133,8 @@ exists, and W1 records each under its key with the cp2 ruling as the source.
 - State aggregation: the worst state per link, and a path sum for C3 (b).
 - C4: the square-lattice closure is the optimistic supporting condition (Q14). C4 is
   S_spread >= m_S, and a falsified verdict needs the coalescence condition to fail as well.
+  Amended at cp3 (R3): coalescence is a second route to feasibility, not only a supporting
+  condition (Section 2, C4).
 - The enrichment factor E_enr is reported only as a labelled, non-gating sensitivity. It never
   enters a verdict.
 
@@ -127,9 +165,16 @@ and the running half-widths, and no full draw table is held in memory.
   once for all fragments (`thresholds.C1.contact_area_definition`, Q5).
 - **Decision.** feasible if `P(W > m_W) >= p`; falsified if `P(W <= m_W) >= p`; inconclusive
   otherwise. This matches the charter bands ("exceeds" and "at or below the registered margin").
-- **Terminations.** The populated oxide terminations enter as a discrete input with weights
-  `regimes.R-slurry.parameters.termination_weights`, so the band masses are those of the
-  population-weighted mixture.
+- **Terminations (cp3 R8).** The populated oxide terminations are judged one by one, and the
+  report gives a C1 verdict per termination.
+  - The mixture verdict uses an ignorance mixture over the weights
+    (`regimes.R-slurry.parameters.termination_weights`): the weights are drawn uniformly on the
+    simplex (a flat Dirichlet), or uniformly on the sub-region W1's evidence bounds, and the band
+    masses are those of the mixture with the weights drawn alongside every other input.
+  - A point weight is never used: no fetched distribution of terminations exists, and a point
+    weight would put an unsourced number into the verdict.
+  - The C1 link verdict is the mixture verdict; the per-termination verdicts are printed beside
+    it, and a termination that alone is falsified is named.
 - **Regime.** R-slurry only. Retention in the cell is not judged (layer persistence is a stated
   limitation).
 
@@ -140,10 +185,10 @@ kill criterion (cp2 ruling, fix F3).
 
 - **Why it does not gate.** At equilibrium the Ca2+ chemical potential is uniform, so binding does
   not raise the driving force (derivation, Section 4). Its only route to nucleation is the
-  template-liquid energy, through Delta_gamma_ads, Eq. (32) [th:eq:gibbs], and that route is
+  template-liquid energy, through Delta_gamma_ads, Eq. (33) [th:eq:gibbs], and that route is
   already judged inside C3. A separate C2 verdict would judge the same binding a second time, as a
   pass or kill of its own, which is the double count the bookkeeping removes. At fixed gamma_sl0
-  and gamma_sn, the C2 term raises the C3 barrier: SF2, Eq. (34) [th:eq:young-ads].
+  and gamma_sn, the C2 term raises the C3 barrier: SF2, Eq. (35) [th:eq:young-ads].
 - **Reported (every registered R-slurry state).** The distributions of `Delta_G_seq` (J mol^-1,
   the transfer free energy of Ca2+ from hydrated bulk to the site, Eq. (4) [th:eq:cycle]),
   `Theta_occ`, `Gamma_Ca` and `Delta_gamma_ads` at the regime activity. P0 uses one effective
@@ -169,7 +214,7 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
 **(a) Wetting part: bands for f(theta).**
 
 - **Threshold and physics.** X = f(theta), with cos(theta) from `cos_theta_template` (or from
-  `cos_theta_young` with an in-situ gamma_sl), Eq. (34) [th:eq:young-ads]. The deck's starting
+  `cos_theta_young` with an in-situ gamma_sl), Eq. (35) [th:eq:young-ads]. The deck's starting
   bands (charter C3 `threshold.proposed`) are **replaced** by one edge at f = 1/2, which is theta = pi/2 and cos(theta) = 0.
   - f = 1/2 is the only value in (0, 1) where the physics changes. There gamma_sl = gamma_sn: the
     sign of the Young numerator flips.
@@ -188,7 +233,8 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
 - **Decision.** feasible if `P(f <= f_e) >= p`; falsified if `P(f > f_e) >= p`; inconclusive
   otherwise. The mass at the clipped boundaries (N2) is reported.
 - **Framing consistency (Q12).** K_sp, V_m and gamma_nl come from one framing (ACC or calcite),
-  keyed by `regimes.R-slurry.parameters.framing`. A draw that mixes framings is refused.
+  keyed by `regimes.R-slurry.parameters.framing`. A draw that mixes framings is refused. Both
+  framings are registered (cp3 R6), and each is run as a whole chain (Section 3, "Framings").
 
 **(b) Accessibility part: absolute barrier in k_B T.**
 
@@ -201,22 +247,30 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
   DG_het <= B_acc = k_B T ln(J_0 t_p / N_req),
 
   with DG_het at Omega_bulk. A count N on a collector area A enters as N_req = N / A.
-- **N_req (cp2 fix F4).** N_req is a separately fixed areal density, not the C4 closure density:
+- **N_req (cp2 fix F4, amended at cp3 R5).** N_req is a separately fixed areal density, not the
+  C4 closure density:
 
-  N_req = 1 / A_patch,
+  N_req = ln(1/q_0) / A_patch, with q_0 = 1 - p_cred,
 
-  with A_patch the particle-collector contact patch, a literature process input. The criterion
-  asks for at least one nucleus, in expectation, under every contact patch through which the
-  cathode particles touch the collector. The closure density N_s_closure stays in C4 only.
+  with A_patch the particle-collector contact patch, a literature process input.
+  - Physics (derivation, Section 5, Eq. [th:eq:nreq]): if nuclei land independently with mean
+    areal density N_nuc, the number under one patch is Poisson with mean N_nuc A_patch, so the
+    fraction of patches with no nucleus is exp(-N_nuc A_patch). N_nuc >= N_req is exactly the
+    statement that at most a fraction q_0 of the patches is left without a nucleus.
+  - q_0 = 1 - p_cred ties the admissible fraction of empty patches to the credible level, so it
+    moves with the p_cred sweep. The cp2 form 1/A_patch is the special case q_0 = 1/e, which is
+    not registered.
+  - The closure density N_s_closure stays in C4 only.
 - **Keys.**
   - J_0 = `regimes.R-slurry.parameters.J0_het`: a loguniform prior over its fetched range, because
     only ln J_0 enters.
   - t_p = `regimes.R-slurry.parameters.t_proc`: per registered state, slurry contact and drying.
   - A_patch = `regimes.R-slurry.parameters.patch_area`: the particle-collector contact patch
-    (literature process input), with N_req = 1/A_patch. The former key `thresholds.C3.N_req` is
-    no longer an independent input: W1 records it as derived from `patch_area`.
-  - A proposal for cp3 (a Poisson-occupancy refinement of 1/A_patch) is in
-    `theory/cp2_brief.md`, section D. It is not applied.
+    (literature process input), with N_req = ln(1/(1 - p_cred))/A_patch. The former key
+    `thresholds.C3.N_req` is no longer an independent input: W1 records it as derived from
+    `patch_area` and the credible level.
+  - The Poisson-occupancy form, proposed in `theory/cp2_brief.md` section D, is the registered
+    rule since cp3 (R5).
 - **Margin.** None beyond the J_0 prior. N_nuc ignores exclusion zones, so it is an upper estimate
   and the criterion is necessary, not sufficient. A state with Omega_bulk <= 1 contributes no
   nuclei.
@@ -225,13 +279,14 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
 - **Reported, not gating.** DG_het / k_B T and the homogeneous reference DG_hom / k_B T at the
   same state.
 
-**C3 verdict.** feasible if (a) and (b) are both feasible; falsified if either is falsified;
-inconclusive otherwise.
+**C3 verdict (joint mass, cp3 R7).** Per draw C3 is good only if (a) and (b) are both good.
+feasible if P((a) good and (b) good) >= p; falsified if P((a) bad or (b) bad) >= p; inconclusive
+otherwise. Either part falsified on its own is sufficient for a falsified C3.
 
 ### C4, conformality (R-slurry for wetting, R-cell for the thickness bound)
 
-- **Chosen criterion (lane note N1).** X = `S_spread` (J m^-2), Eq. (36) [th:eq:spread].
-  - Derivation Eq. (38) [th:eq:n1] shows that a small-angle bound theta <= theta_max and
+- **Chosen criterion (lane note N1).** X = `S_spread` (J m^-2), Eq. (37) [th:eq:spread].
+  - Derivation Eq. (39) [th:eq:n1] shows that a small-angle bound theta <= theta_max and
     S_spread >= -s are one criterion at different strictness, both tests of the Young numerator
     relative to gamma_nl.
   - S_spread >= 0 is chosen. It is the strict end (complete wetting) and the only member of the
@@ -242,36 +297,105 @@ inconclusive otherwise.
     bound is met by how much mineral is grown, not by coalescence.
 - **Margin.** e = +m_S, where m_S = `thresholds.C4.margin_S_spread` is the systematic error not
   carried in the interfacial-energy priors.
-- **Supporting condition (independent): coalescence below the thickness bound.**
-  - The condition is N_s >= N_s_closure = tan^2(theta/2) / (2 d_max^2), Eq. (39)
-    [th:eq:nclosure], with d_max = max(d_max_ohm, d_max_tun), Eqs. (41) to (43).
+- **Second route (independent; cp3 R3, formerly the supporting condition): coalescence below the thickness bound.**
+  - The condition is N_s >= N_s_closure = tan^2(theta/2) / (2 d_max^2), Eq. (40)
+    [th:eq:nclosure], with d_max = max(d_max_ohm, d_max_tun), Eqs. (47) to (49) [th:eq:ohm to th:eq:combined].
   - The island density is N_s = N_nuc from C3(b), an upper estimate. A failure of closure with
     N_nuc is therefore conservative, and a success is only optimistic.
   - The condition is geometric: it uses the geometric thicknesses h_c and h_cl. The charter's
     kinetic critical coalescence thickness (C4 candidate (c)) is named h_coal (cp2 fix F9). It
     needs a nucleation-and-growth model and is not computed in P0.
-- **Decision.**
-  - feasible if `P(S_spread >= m_S) >= p`;
-  - falsified if `P(S_spread < m_S) >= p` **and** `P(N_nuc < N_s_closure) >= p`: islands that do
-    not close below the thickness bound, which is the charter's kill criterion;
-  - inconclusive otherwise, including island growth with credible closure. A thermodynamic
-    screen cannot exclude a coalesced film there.
+- **Decision (cp3 R3, with the joint mass of cp3 R7).** Either route to a continuous film
+  suffices: complete wetting, or islands that close below the thickness bound. Per draw, C4 is
+  good if S_spread >= m_S **or** N_nuc >= N_s_closure, with N_nuc the upper estimate of C3 (b)
+  (the path sum over the registered states). The link masses are those of this indicator:
+  P_bad(C4) = P(S_spread < m_S and N_nuc < N_s_closure), computed draw by draw, and
+  P_good(C4) = 1 - P_bad(C4).
+  - feasible if P_good(C4) >= p. In particular `P(S_spread >= m_S) >= p` **or**
+    `P(N_nuc >= N_s_closure) >= p` is sufficient (cp3 R3). A feasible verdict reached through
+    closure inherits the optimism of the upper estimate, and the report gives the mass of each
+    route separately and says which carried the verdict;
+  - falsified if P_bad(C4) >= p, which needs both routes to fail at p: `P(S_spread < m_S) >= p`
+    **and** `P(N_nuc < N_s_closure) >= p`;
+  - inconclusive otherwise.
+- **Reported: P(gamma_sl > gamma_nl).** Complete wetting needs gamma_sl >= gamma_nl + gamma_sn >=
+  gamma_nl, because gamma_sn >= 0. The prior mass P(gamma_sl > gamma_nl) (gamma_sl at the regime
+  activities) is therefore an upper bound on the mass the S_spread route can ever carry, and the
+  report prints it at every registered state.
+- **Physical result (cp3 R3; derivation, Section 8; `theory/ignorance_priors.md`, Section 2).**
+  For any hydrophilic template, gamma_sl <= gamma_nl: water wets the template at least as
+  favourably, per area, as it wets the mineral. Then S_spread = gamma_sl - gamma_sn - gamma_nl <=
+  -gamma_sn < 0 for every admissible gamma_sn > 0, so complete wetting is excluded whatever the
+  template-nucleus contact is, and the C4 S_spread route fails. C4 then rests on coalescence alone.
+  Ca2+ binding lowers gamma_sl further (Delta_gamma_ads < 0 for a binding template), so the
+  mechanism's own C2 premise works against complete wetting. This is a physics result, not a
+  property of the ignorance prior.
 - **Regimes.** The wetting energies are R-slurry (solid-water). d_max is the R-cell
   electron-transfer bound and is reported as a limitation, not a performance figure.
 
 ### C5, thermodynamic stability (R-slurry and R-cell)
 
-**R-slurry, aqueous Pourbaix.**
+**R-slurry, dissolution: decided by Omega_bulk (cp3 R1).**
 
-- **Threshold and physics.** X = `Delta_G_pbx` (J mol^-1 per non-O, non-H atom), Eq. (40)
-  [th:eq:pbx], for the registered CaCO3 framing phase.
-  - It is evaluated at the regime activities of Ca2+ and carbonate (F2), at the bulk state: the
-    driving force is Omega_bulk (derivation, Section 7, rule 5).
-  - An "enriched" evaluation is a labelled non-equilibrium sensitivity, never a verdict.
-  - It is evaluated over the registered (pH, E_SHE) region (`regimes.R-slurry.parameters.pH_range`
-    and `regimes.R-slurry.parameters.E_SHE_range`), worst point.
-- **Tolerance.** tau_hull = n_at e_f / n_M, where e_f = `thresholds.C5.formation_energy_error` is
-  the expected error of a computed formation energy per atom, from the database benchmark. Per
+- **Threshold and physics.** X = `Omega_bulk` = a_Ca a_CO3 / K_sp with the sourced calcite solubility
+  product (`params.log10_ksp_calcite`) and the free-ion activities of the contract's carbonate
+  speciation (`a_CO3_speciation`, `a_Ca_speciation`) at the regime pH, C_T, Ca_T and I.
+  - A CaCO3 layer in contact with the slurry dissolves when Omega_bulk < 1 and is stable against
+    dissolution when Omega_bulk >= 1. The edge is 1, with no margin: the K_sp prior and the
+    speciation inputs carry their own uncertainty.
+  - This is the quantity C3 uses (derivation, Section 9, Eq. (43) [th:eq:pbx-omega]). A state that
+    cannot nucleate CaCO3 (Omega_bulk <= 1, no nuclei in C3 (b)) is a state in which the layer
+    dissolves. At equilibrium enrichment does not raise Omega (derivation, Section 7, rule 5),
+    so the bulk state decides; an "enriched" evaluation is a labelled non-equilibrium
+    sensitivity, never a verdict.
+- **Why a hull distance cannot decide dissolution.** At fixed C(IV) the hull distance of CaCO3
+  against its dissolved ions is (R T / n_M) ln(1/Omega_bulk) per non-O, non-H atom, Eq. (43)
+  [th:eq:pbx-omega].
+  - The tolerance n_at e_f / n_M therefore reports dissolution only below
+    ln Omega_bulk = -n_at e_f / (R T): the edge alone spans several decades of Omega.
+  - An error of the computed dissolution free energy shifts the proxy's K_sp by that error over
+    R T ln 10 decades. With the database's dissolved-ion reference this is a bias of its own.
+  - W5's falsifiability control (`ops/reports/P0-W5.2.md`, Task B) measured both. The hull
+    construction is therefore not used for dissolution.
+- **K_sp and framing.** The calcite K_sp decides under every registered framing (Section 3,
+  "Framings"). Under the ACC framing, Omega_bulk with the ACC K_sp is the labelled sensitivity
+  C5s_ACC (cp2 fix F6, below). It never decides.
+- **Design axes: the dose window.** The verdict is computed at each design point of the
+  registered axes (a_Ca, C_T): a_Ca the free Ca2+ activity (`params.a_ca_slurry`; where the
+  registered grid is in total calcium, `params.ca_total_slurry`, a_Ca is its speciated value and
+  both are printed) and C_T the dissolved inorganic carbon (`params.dic_slurry`). The report gives
+  the dose window, the set of design points at which C5s is feasible (P(Omega_bulk >= 1) >= p), with
+  the falsified and inconclusive sets beside it. Because C3 consumes the same activities, the
+  study verdict is formed design point by design point (Section 3).
+- **Falsifiability control (C5 item 21), applied to the Omega test.** At W5's registered
+  undersaturated control state (pH from `params.ph_slurry_modified`, the lowest registered C_T and
+  a_Ca) the Omega test must report dissolution, and at the supersaturated control state it must
+  report stability. If either control does not come out as it must, C5s is inconclusive.
+- **Carbon redox (assumption).** The regime fixes a_CO3 (G0 fix F2), and carbon is held in the
+  C(IV) carbonate system: reduction of dissolved carbonate to CH4 is not observed in aqueous
+  processing, so the reduced-carbon phases of the database are not admitted. The construction
+  with carbon redox allowed is reported as a labelled sensitivity, never a verdict, and it is
+  not a rate statement.
+- **States.** Every registered R-slurry state is evaluated, and the verdict is the worst over them
+  (Section 1, "States").
+- **Decision (per design point).**
+  - feasible if `P(Omega_bulk >= 1) >= p` at every registered state, **and** the control comes
+    out as it must;
+  - falsified if `P(Omega_bulk < 1) >= p` at some evaluated state;
+  - inconclusive otherwise, or if the control fails.
+
+**R-slurry, competing phases and the Al baseline: aqueous Pourbaix at fixed C(IV).**
+
+- **Competing-phase test.** X = `Delta_G_pbx` (J mol^-1 per non-O, non-H atom), Eq. (42)
+  [th:eq:pbx], for the registered CaCO3 framing phase, with C(IV) fixed at the regime C_T.
+  - The competitors are the solid phases of the system. The dissolved Ca-bearing species are
+    removed from the hull: dissolution is decided by the Omega test above, so the hull answers
+    only whether another solid (a hydroxide, an Al-Ca or Al-C compound) lies below CaCO3.
+  - It is evaluated over the registered (pH, E_SHE) region
+    (`regimes.R-slurry.parameters.pH_range` and `regimes.R-slurry.parameters.E_SHE_range`),
+    worst point.
+- **Tolerance (DFT).** tau_hull = n_at e_f / n_M, where e_f = `thresholds.C5.formation_energy_error`
+  is the expected error of a computed formation energy per atom, from the database benchmark. Per
   non-O, non-H atom this is the error of the phase's own formation energy, the largest single
   error entering its hull distance. For the ACC framing the edge is
   (n_at e_f + Delta_ACC) / n_M, with Delta_ACC = `regimes.R-slurry.parameters.ACC_offset`. ACC is
@@ -281,78 +405,112 @@ inconclusive otherwise.
   equal to the calcite-level test. ACC lies above calcite by Delta_ACC per formula unit, so
   Psi_ACC = Psi_calcite + Delta_ACC / n_M. It is never on the hull, so the hull is the same with or
   without it. The ACC test, Delta_G_pbx(ACC) <= (n_at e_f + Delta_ACC) / n_M, is therefore
-  identical to Psi_calcite - Psi_hull <= n_at e_f / n_M. In words, C5 R-slurry decides whether
-  CaCO3 is stable as a phase at the regime activities, up to the metastability that defines the
-  framing. It does not decide whether ACC itself survives.
+  identical to Psi_calcite - Psi_hull <= n_at e_f / n_M. In words, the competing-phase test decides
+  whether CaCO3 is stable as a phase against the other solids at the regime activities, up to the
+  metastability that defines the framing. It does not decide whether ACC itself survives.
 - **ACC-specific dissolution margin (labelled sensitivity, not gating).** Whether the regime
   solution is supersaturated with respect to ACC is Omega_bulk evaluated with the ACC solubility
   product, the quantity that already enters C3 through K_sp under the ACC framing. C5 reports
   `P(Omega_bulk >= 1)` for the ACC framing at each registered state, labelled as the ACC
   dissolution sensitivity. A value of Omega_bulk below 1 there means ACC dissolves at that state
-  even where CaCO3 passes C5.
+  even where calcite-level CaCO3 passes C5.
 - **Decision.**
-  - feasible if `P(Delta_G_pbx <= edge) >= p` at every point, **and** the falsifiability control
-    (item 21, W5) fails where it must;
+  - feasible if `P(Delta_G_pbx <= edge) >= p` at every point;
   - falsified if `P(Delta_G_pbx > edge) >= p` at some point;
-  - inconclusive otherwise, or if the control passes where it must fail.
-- **Al phases.** The native oxide's Pourbaix state is reported as the bare-oxide baseline. It does
-  not gate C5, because alkaline attack on the native oxide is the corrosion mode the slurry
-  regime describes.
+  - inconclusive otherwise.
+- **Al phases.** The native oxide's Pourbaix state is reported as the bare-oxide baseline, at
+  the same fixed C(IV) and with the same DFT tolerance. It does not gate C5, because alkaline
+  attack on the native oxide is the corrosion mode the slurry regime describes.
 
-**R-cell, Li-referenced window.**
+**C5 R-slurry verdict.** feasible if the dissolution test and the competing-phase test are both
+feasible; falsified if either is falsified; inconclusive otherwise.
 
-- **Threshold and physics.** Eq. (42) [th:eq:window] with the electrolyte-fixed sink of Eq. (43)
-  [th:eq:sink] for CaCO3 and the protecting Al phases (`regimes.R-cell.parameters.al_phases`).
-  The registered regime potential range [E_cell_min, E_cell_max] (V vs Li+/Li,
-  `regimes.R-cell.parameters.E_min` and `regimes.R-cell.parameters.E_max`) must lie inside every
-  window:
+**Disclosure (cp3 R1).** The rule was set after W5 reported that the Pourbaix screen's
+falsifiability control does not fail where it must, and after W5 printed the sourced-K_sp Omega
+beside each of its design points (`ops/reports/P0-W5.2.md`, Task B). The rule is therefore not
+independent of those values, and the report says so.
 
-  E_red + m_E <= E_cell_min and E_cell_max + m_E <= E_ox.
+**R-cell, Li-referenced window (cp3 R2).**
 
-- **Margin.** m_E = `thresholds.C5.window_margin`, the expected error of a computed reaction energy
-  per transferred electron, derived by W1 from `thresholds.C5.formation_energy_error`.
-- **Reference schemes (cp2 fix F5 (a)).** Each limit is computed under every registered CO2 and
-  O2 reference scheme (`regimes.R-cell.parameters.gas_reference_schemes`).
-  - A **pass** must hold under the scheme with the lowest onset: the lowest E_ox and the highest
-    E_red over the schemes.
-  - A **falsification** must hold under every registered scheme.
-  - Otherwise the limit is inconclusive. A verdict that changes with the reference scheme is
-    decided by none of them.
+- **Threshold and physics.** Eq. (45) [th:eq:window] with the electrolyte-fixed sink of Eq. (46)
+  [th:eq:sink] for the gated phases (Section 2, C5, "Gated phases"). The collector potential range
+  [E_cell_min, E_cell_max] (V vs Li+/Li) must lie inside each phase's window: E_red below
+  E_cell_min and E_ox above E_cell_max, each beyond its margin.
+- **Governing route (cp3 R2).** Wherever its inputs exist, the **all-experimental route**
+  (`expt`: tabulated thermochemistry of every reactant and product, gas references included)
+  governs the limit.
+  - The DFT-referenced schemes (`regimes.R-cell.parameters.gas_reference_schemes`, database
+    solids with a JANAF or a database CO2 reference) are **comparators**, each printed with its
+    measured benchmark error (W5's gas-reference benchmark).
+  - A DFT scheme corrected by its own benchmark error equals the experimental route by
+    construction, because the benchmark is that experimental route. A benchmark-corrected value is
+    therefore not a second confirmation, and it is never counted as one.
+  - Where an input of the experimental route is missing (a reaction with no tabulated product),
+    the limit is decided by the cp2 rule over the DFT schemes (fix F5: a pass under the
+    lowest-onset scheme, a falsification under every scheme, margin m_E), and the report marks the
+    limit as DFT-decided.
+- **Margin m_expt.** The experimental uncertainty budget of the route
+  (`thresholds.C5.expt_margin`, per transferred electron), not the DFT formation-energy margin:
+  - the tabulated uncertainties of every reactant and product, combined per transferred electron;
+  - plus a bound on the neglected solid entropy of Ca(ClO4)2, whose free energy enters through its
+    tabulated enthalpy (W5's exchange route), taken from the entropies of analog solid salts
+    (W1 keys `params.s_ca_clo4_2_analog_bound`, from `params.s_solid_salt_analogs`).
+
+  W1 derives the value and lists its parts in the key's notes.
+- **Oxidation rule (the governing route).**
+  - **falsified** if E_ox(expt) + m_expt < E_cell_max, with either sink. The solid-salt sink stands
+    here: the true product is the lower in free energy of the solid salt and the solvated ions, so
+    a solid-salt onset is an upper bound on the true onset, and a falsification computed with it
+    stands.
+  - **feasible** only if E_ox(expt) - m_expt >= E_cell_max with the **solvated sink**. A pass
+    computed with the solid-salt sink is inconclusive, because the solvated sink can only lower the
+    onset.
+  - inconclusive otherwise.
+- **Reduction rule.** The same with the signs mirrored: falsified if E_red(expt) - m_expt >
+  E_cell_min; feasible if E_red(expt) + m_expt <= E_cell_min; inconclusive otherwise. The
+  reduction limits are Li-open and need no gas reference.
+- **E_cell_max is a design axis.** The charge cutoff is a property of the cathode, so it is
+  registered per cathode class (`regimes.R-cell.parameters.E_max`, keyed by
+  `regimes.R-cell.parameters.cathode_class`), and the verdict is reported as a function of the
+  cutoff:
+  - falsified for every cutoff above E_ox(expt) + m_expt;
+  - feasible (solvated sink only) for every cutoff at or below E_ox(expt) - m_expt;
+  - inconclusive between.
+
+  The report prints these two crossover cutoffs for each gated phase and sink, and the verdict of
+  each registered cathode class.
+- **Every scheme in one table.** For each gated phase and sink the report prints E_ox and E_red
+  under `expt`, under each DFT scheme, and under each benchmark-corrected DFT scheme, with the
+  benchmark errors, whether or not they decide.
+- **Disclosure (cp3 R2).** The scheme values for CaCO3 with LiClO4 were seen before this rule was
+  set (`ops/reports/P0-W5.2.md`, Task C; cp3 packet decision 3). The rule is not independent of
+  them, and the report says so beside the table.
+- **Gated phases (cp3 R8).** CaCO3, corundum (alpha-Al2O3) and boehmite (gamma-AlOOH). The
+  registration key `regimes.R-cell.parameters.al_phases` records corundum and boehmite. Other Al
+  phases (diaspore, gibbsite and the transition aluminas) are reported, not gated.
 - **Sink (cp2 fix F5 (b)).** A pass counts only with a solvated sink: Ca2+ or Al3+ leaving as
   solvated ions paired with the salt anion, with the solvation free energies relative to Li+.
-  - The true product is the lower in free energy of the solid salt and the solvated ions. A limit
-    computed with the solid-salt sink alone (CaA2 or AlA3 as a solid) is therefore an upper bound
-    on the oxidation onset.
-  - A falsification computed with the solid-salt sink stands, because the true onset is at or
-    below it.
-  - A pass computed with the solid-salt sink is inconclusive, because the solvated sink can only
-    lower the onset.
+  The LiBOB and LiPCP sinks stay undetermined (cp3 R8): they never give a pass.
 - **Undetermined never passes.** A limit with status `undetermined` (a missing sink phase, a
   missing solvation free energy for the solvated sink, an unregistered salt, or an unbounded
-  Li-open limit) gives at best inconclusive. The same holds if E_cell_max is not registered.
+  Li-open limit) gives at best inconclusive.
+- **Why carbonate oxidation is the right reading (physics).** Derivation, Section 9, "The
+  oxidation sink": the measured onset of Li2CO3 oxidation (`params.li2co3_oxidation_onset`) lies
+  near the experimental equilibrium limit of the same reaction (W5 benchmark B6), so a carbonate
+  in the cell oxidises close to its thermodynamic limit. That supports reading the CaCO3 limit as
+  the onset of an observable reaction, not only as a bound.
 - **Decision.**
-  - feasible if both inequalities hold for every gated phase, under the lowest-onset scheme and
+  - feasible if both rules are feasible for every gated phase, every registered sink determined,
     with a solvated sink;
-  - falsified if, for any gated phase, a limit fails beyond its margin (E_ox < E_cell_max - m_E,
-    or E_red > E_cell_min + m_E) under every registered scheme, with either sink;
+  - falsified if, for any gated phase, a limit is falsified by the governing route (or, where the
+    experimental route is missing, under every DFT scheme);
   - inconclusive otherwise.
 
-  The limits are deterministic, so the band mass is 0 or 1 for each scheme and sink.
+  The limits are deterministic, so the band mass is 0 or 1 for each route and sink.
 - **Limitation: the electrolyte's own anodic limit (cp2 fix F5 (c)).** Above the electrolyte's
   anodic limit the solvent and salt oxidise first. C5 does not assess that limit. A pass of the
   E_ox test says only that the gated phases are stable up to E_cell_max against the registered
   sinks, not that the electrolyte is.
-- **W5's reported limits (inputs to the decision, not adjudicated here).** `ops/reports/P0-W5.1.md`
-  (R-cell section) reports:
-  - a CaCO3 oxidation onset under the nitrate sink that differs by the CO2 reference (JANAF
-    against the Materials Project CO2 energy), with the spread stated there;
-  - an Al2O3 limit that is undetermined under nitrate (sink phase missing) and finite under
-    sulfate or chloride.
-
-  Both are solid-salt limits. Under this file, a CaCO3 falsification must hold under both CO2
-  schemes, and a CaCO3 pass needs the solvated sink and the lower of the two schemes. Al2O3 under
-  a nitrate electrolyte stays undetermined (never a pass) until the sink thermochemistry is
-  fetched.
 
 **C5 verdict.** feasible if both regimes are feasible; falsified if either is falsified;
 inconclusive otherwise.
@@ -365,15 +523,35 @@ inconclusive otherwise.
     one of which can end the mechanism; C5 is a necessary screen;
   - feasible only if all four are feasible and the deletion test below holds;
   - inconclusive otherwise.
+- **Design points (cp3 R1).** The verdicts are computed at each design point of the registered
+  axes (gap policy (ii): a_Ca and c_bulk; for the C5 dissolution test, (a_Ca, C_T)). The study
+  verdict at a design point combines the link verdicts at that point, and the report maps it over
+  the axes. C5 R-slurry reports its feasible set as the dose window.
 - **Sequestration premise.** The C2 finding of Section 2 is reported with the study verdict. If
   the premise fails, the report says so as a finding, whatever the verdict.
+- **Framings (cp3 R6).** Calcite and ACC are both registered framings
+  (`regimes.R-slurry.parameters.framing`). The screen runs the whole chain once per framing, with
+  K_sp, V_m and gamma_nl of that framing in every link (Q12), and forms a study verdict per framing
+  (including its deletion test). The registered study verdict combines them:
+  - **falsified** only if the study is falsified under every registered framing;
+  - **feasible** if it is feasible under at least one framing. The report names that framing and
+    prints the verdict under the other framing beside it;
+  - **inconclusive** otherwise.
+
+  Framings are never mixed across links: a chain that is feasible under ACC in C3 and under
+  calcite in C4 is not feasible. The C5 dissolution test uses the calcite K_sp under both framings
+  (Section 2, C5).
+  - **Disclosure.** A calcite-framing estimate near one half was available when the project was
+    designed (lane note N5). Registering both framings, with the rule above, keeps the verdict
+    from depending on a framing chosen after that estimate; the paper states the sequence.
 - **Deletion test (`charter/deletion_register.yaml`, F1).** Only the controls that remove the
   mechanism gate it: `bare_oxide` and `PVDF`.
   - For each of the two, the screen is rerun with the control in place of the template, at the
     same states and with the same rules.
   - The test holds if, for each control, at least one of C3 or C4 degrades. A link degrades
-    when its verdict is strictly worse (feasible < inconclusive < falsified), or when its
-    falsified-side mass rises by at least p_deg (`thresholds.decision.degrade_mass_min`).
+    when its verdict is strictly worse (feasible < inconclusive < falsified), or when its joint
+    falsified-side mass (Section 1, cp3 R7) rises by at least p_deg
+    (`thresholds.decision.degrade_mass_min`).
   - A degradation of C1 alone does not count. C2 is not a deletion link: the control's binding
     descriptors are reported beside the template's, and the binding reaches the test through C3.
   - If the test fails for either control, the study is reported as a generic adhesion study, and
@@ -399,10 +577,10 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `regimes.R-slurry.parameters.termination_weights` | weights | literature | C1 |
 | `thresholds.C2.margin_DG_seq` | m_seq | literature (method error) | C2 labelled sensitivity (not gating) |
 | `thresholds.C3.margin_cos_theta` | m_cos | registration (cp2; proposed zero) | C3 (a) |
-| `regimes.R-slurry.parameters.framing` | framing | registration (cp3, N5) | C3, C5 |
+| `regimes.R-slurry.parameters.framing` | framing | registration (cp3 R6: calcite and ACC both registered) | C3, C4, C5 sensitivity; study combination |
 | `regimes.R-slurry.parameters.J0_het` | J0_het | literature | C3 (b), C4 |
 | `regimes.R-slurry.parameters.t_proc` | t_proc | literature or process input | C3 (b), C4 |
-| `regimes.R-slurry.parameters.patch_area` | A_patch | literature (process input; N_req = 1/A_patch, cp2 fix F4) | C3 (b) |
+| `regimes.R-slurry.parameters.patch_area` | A_patch | literature (process input; N_req = ln(1/(1 - p_cred))/A_patch, cp3 R5) | C3 (b) |
 | `thresholds.C4.margin_S_spread` | m_S | literature (method error) | C4 |
 | `regimes.R-cell.parameters.R_A_max` | R_A_max | registration input | C4 (d_max) |
 | `regimes.R-cell.parameters.j_req` | j_req | registration input | C4 (d_max) |
@@ -413,15 +591,26 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `thresholds.C5.formation_energy_error` | e_form | literature (database benchmark) | C5 |
 | `regimes.R-slurry.parameters.ACC_offset` | Delta_ACC | literature | C5 (ACC framing) |
 | `regimes.R-slurry.parameters.pH_range` | pH | literature | C5, all R-slurry states |
+| `params.log10_ksp_calcite` | K_sp (calcite) | literature | C5 dissolution under every framing (cp3 R1) |
+| `params.a_ca_slurry` | a_Ca | design axis | C5 dissolution dose window, C3 (cp3 R1) |
+| `params.ca_total_slurry` | Ca_T | design axis (total calcium) | speciation of a_Ca (cp3 R1) |
+| `params.dic_slurry` | C_T | design axis | C5 dissolution dose window, speciation (cp3 R1) |
+| `params.ph_slurry_modified` | pH (control) | literature | C5 falsifiability control (cp3 R1) |
 | `params.a_w_slurry` | a_w | literature (per drying state) | reported at every drying state (F7) |
 | `params.acc_hydration_n` | n_hyd | literature (ACC framing) | hydrated-IAP sensitivity (F7) |
 | `regimes.R-slurry.parameters.E_SHE_range` | E_SHE | literature | C5 |
-| `thresholds.C5.window_margin` | m_E | literature (derived from e_form) | C5 R-cell |
+| `thresholds.C5.window_margin` | m_E | literature (derived from e_form) | C5 R-cell, only where the experimental route is missing (cp3 R2) |
+| `thresholds.C5.expt_margin` | m_expt | literature (experimental uncertainty budget) | C5 R-cell governing route (cp3 R2) |
+| `params.s_ca_clo4_2_analog_bound` | S bound | literature (analog entropies) | m_expt (cp3 R2) |
+| `params.s_solid_salt_analogs` | S analogs | literature | m_expt (cp3 R2) |
+| `regimes.R-cell.parameters.cathode_class` | cathode class | design axis | E_cell_max per class (cp3 R2) |
+| `params.li2co3_oxidation_onset` | E (Li2CO3 onset) | literature | physics justification of the carbonate-oxidation reading (cp3 R2) |
 | `regimes.R-cell.parameters.E_min` | E_cell_min | literature | C5 R-cell |
-| `regimes.R-cell.parameters.E_max` | E_cell_max | literature | C5 R-cell |
+| `regimes.R-cell.parameters.E_max` | E_cell_max | literature; design axis by cathode class (cp3 R2) | C5 R-cell |
 | `regimes.R-cell.parameters.electrolyte_salts` | salts | literature (fluorine-free) | C5 R-cell sink |
 | `regimes.R-cell.parameters.gas_reference_schemes` | schemes | registration (cp2) | C5 R-cell |
-| `regimes.R-cell.parameters.al_phases` | phases | registration (cp2) | C5 R-cell |
+| `regimes.R-cell.parameters.al_phases` | phases | registration (cp3 R8: corundum and boehmite) | C5 R-cell |
+| `params.gamma_sl0_template` | gamma_sl0 | literature, truncated at 0 (cp3 R8) | C3, C4 through gamma_sl |
 
 The C2-to-C3 inputs that the thresholds consume through Delta_gamma_ads are the existing priors
 `Gamma_s`, `delta_s`, `c_bulk` and `gamma_sl0`. `gamma_sl0` is new in contract v2 and replaces a
@@ -435,11 +624,13 @@ checks that every expression parses, that only registered ids appear, and that e
 unit of its quantity.
 
 ```thresholds
-version: 1
+version: 2
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
 revised: {session: P0-W3.2 cp2 fix-up, base_commit: 800d5ea3de41a0fb16084519d5c2680eeb14952d, fixes: theory/cp2_fixes.md}
+revised_cp3: {session: P0-W3.3, ruling: planning chat 2026-10-17 (cp3), base_commit: ac5cdfb, items: [R1, R2, R3, R5, R6, R7, R8],
+              log: theory/cp2_fixes.md (cp3 section), disclosures: [R1, R2, R6]}
 contract_version: 3
 decision:
   statistic: band_mass
@@ -470,6 +661,20 @@ decision:
     wall_clock_cap: 6 h per run
     chunk: 2**14 draws, streamed
     on_cap: report as capped with the half-widths reached
+  link_mass:
+    rule: joint, draw by draw, on the same draws (cp3 R7 (1))
+    and_links: 'falsified side = P(any test bad)'
+    C4: 'falsified side = P(S_spread route bad and closure route bad)'
+    verdict: shared rule on the joint masses; single-test masses reported
+    deletion_test: joint falsified-side mass
+  states:
+    propagate: every registered state of the regime (cp3 R7 (4))
+    worst_state_links: falsification at an evaluated state stands; a pass needs every registered state
+    path_sum: 'C3b (and the C4 closure route) cannot be falsified unless every registered state, drying included, is evaluated; with a state missing a shortfall is inconclusive and a pass stands'
+    report: missing states and the links they bound
+  priors:
+    gamma_sl0: {truncate_below: '0', reason: interface stability, sensitivity: untruncated prior, labelled,
+                report: [truncated mass, verdicts that change], params: params.gamma_sl0_template}
   omega: Omega_bulk
   forbidden_in_verdicts: [Omega_local_ideal, Delta_mu_local_ideal, DG_het_local_ideal, DG_het_double, E_enr, c_local,
                           Omega_bulk_hydrated]
@@ -489,7 +694,9 @@ links:
         comparator: '>'
         edge: m_W
         params: {m_W: thresholds.C1.margin_W_adh_wet}
-        mixture: {over: termination, weights: regimes.R-slurry.parameters.termination_weights}
+        mixture: {over: termination, weights: regimes.R-slurry.parameters.termination_weights,
+                  weight_prior: 'ignorance: uniform on the simplex (flat Dirichlet), or on the sub-region W1 bounds',
+                  point_weight: never, per_termination_verdicts: reported (cp3 R8)}
     combine: C1
   C2:
     role: descriptor
@@ -526,13 +733,15 @@ links:
         aggregation: path_sum
         quantity: N_nuc
         comparator: '>='
-        edge: 1/A_patch
-        N_req: {equals: 1/A_patch, rule: cp2 fix F4, not the C4 closure density}
-        equivalent_single_state: {quantity: DG_het, comparator: '<=', edge: k_B*T*log(J0_het*t_proc*A_patch)}
+        edge: log(1/(1 - p_cred))/A_patch
+        N_req: {equals: log(1/(1 - p_cred))/A_patch, q_0: 1 - p_cred, rule: cp3 R5 (Poisson occupancy; empty-patch fraction at most q_0),
+                not: the C4 closure density}
+        equivalent_single_state: {quantity: DG_het, comparator: '<=', edge: k_B*T*log(J0_het*t_proc*A_patch/log(1/(1 - p_cred)))}
         params: {J0_het: regimes.R-slurry.parameters.J0_het, t_proc: regimes.R-slurry.parameters.t_proc,
-                 A_patch: regimes.R-slurry.parameters.patch_area}
+                 A_patch: regimes.R-slurry.parameters.patch_area, p_cred: thresholds.decision.credible_level}
         report: [DG_het/(k_B*T), DG_hom/(k_B*T)]
     combine: 'C3a and C3b'
+    joint_mass: 'falsified side P(C3a bad or C3b bad), draw by draw (cp3 R7)'
   C4:
     regimes: [R-slurry, R-cell]
     aggregation: worst_state
@@ -543,7 +752,7 @@ links:
         edge: m_S
         params: {m_S: thresholds.C4.margin_S_spread}
       - id: C4s
-        role: supporting
+        role: alternative route (cp3 R3; was supporting)
         quantity: N_nuc
         comparator: '>='
         edge: tan(theta/2)**2/(2*d_max**2)
@@ -552,14 +761,45 @@ links:
                  rho_e: regimes.R-cell.parameters.rho_e, phi_B: regimes.R-cell.parameters.phi_B,
                  m_e: regimes.R-cell.parameters.m_eff, j_0: regimes.R-cell.parameters.j_0}
     combine:
-      feasible: 'C4 feasible'
-      falsified: 'C4 falsified and C4s falsified'
+      indicator: 'good per draw if C4 holds or C4s holds'
+      feasible: 'P(C4 holds or C4s holds) >= p_cred (sufficient: C4 feasible, or C4s feasible)'
+      falsified: 'P(C4 fails and C4s fails) >= p_cred (needs C4 falsified and C4s falsified)'
       inconclusive: otherwise
+      joint_mass: 'falsified side P(S_spread < m_S and N_nuc < N_s_closure), draw by draw (cp3 R7)'
+      N_nuc: upper estimate of C3b (path sum); a pass through closure is optimistic and labelled
+    report_mass: 'P(gamma_sl > gamma_nl) at every registered state'
+    complete_wetting_excluded_when: 'gamma_sl <= gamma_nl (hydrophilic template): S_spread <= -gamma_sn for every admissible gamma_sn'
   C5:
     regimes: [R-slurry, R-cell]
     tests:
       - id: C5s
         regime: R-slurry
+        role: dissolution
+        aggregation: worst_state
+        quantity: Omega_bulk
+        comparator: '>='
+        edge: '1'
+        K_sp: calcite under every registered framing (cp3 R1); ACC is the sensitivity C5s_ACC
+        activities: {a_Ca: a_Ca_speciation, a_CO3: a_CO3_speciation}
+        params: {K_sp: params.log10_ksp_calcite, a_Ca: params.a_ca_slurry, Ca_T: params.ca_total_slurry,
+                 C_T: params.dic_slurry, pH: regimes.R-slurry.parameters.pH_range}
+        design_axes: [a_Ca, C_T]
+        report_as: dose window (design points where C5s is feasible), with the falsified and inconclusive sets
+        shares_quantity_with: C3
+        state: bulk
+        requires: falsifiability_control_fails_where_it_must
+        control:
+          applies_to: C5s
+          undersaturated: must report dissolution (P(Omega_bulk < 1) >= p_cred)
+          supersaturated: must report stability (P(Omega_bulk >= 1) >= p_cred)
+          params: {pH: params.ph_slurry_modified}
+          on_failure: inconclusive
+        carbon_redox: {assumption: 'C(IV) fixed by the regime (a_CO3); carbonate reduction to CH4 is not observed in aqueous processing',
+                       sensitivity: construction with carbon redox allowed, labelled, never decides}
+        hull_not_used_for_dissolution: 'hull distance (R*T/N_M)*log(1/Omega_bulk) per atom; the tolerance hides dissolution down to log(Omega_bulk) = -N_atoms*e_form/(R*T)'
+      - id: C5s_phase
+        regime: R-slurry
+        role: competing_phase
         aggregation: worst_point
         quantity: Delta_G_pbx
         comparator: '<='
@@ -568,9 +808,11 @@ links:
           ACC: (N_atoms*e_form + Delta_ACC)/N_M
         params: {e_form: thresholds.C5.formation_energy_error, Delta_ACC: regimes.R-slurry.parameters.ACC_offset,
                  pH: regimes.R-slurry.parameters.pH_range, E_SHE: regimes.R-slurry.parameters.E_SHE_range}
+        carbon: C(IV) fixed at the regime C_T
+        competitors: solid phases only; dissolved Ca-bearing species excluded (dissolution is C5s)
         state: bulk
-        requires: falsifiability_control_fails_where_it_must
         acc_edge_equivalence: the ACC edge makes the test equal to the calcite-level test (cp2 fix F6)
+        al_baseline: {reported: true, gating: false, tolerance: same DFT tolerance, carbon: C(IV) fixed}
     sensitivities:
       - id: C5s_ACC
         label: ACC dissolution margin under the ACC framing (reported, not gating)
@@ -583,30 +825,56 @@ links:
         regime: R-cell
         quantity: E_ox
         comparator: '>='
-        edge: E_cell_max + m_E
-        pass: {reduce: min_over_reference_schemes, sink: solvated}
-        falsify: {quantity: E_ox, comparator: '<', edge: E_cell_max - m_E, reduce: every_reference_scheme, sink: [solvated, solid_salt]}
+        edge: E_cell_max + m_expt
+        governing_route: expt (all-experimental thermochemistry) wherever its inputs exist (cp3 R2)
+        pass: {route: expt, sink: solvated}
+        falsify: {quantity: E_ox, comparator: '<', edge: E_cell_max - m_expt, route: expt, sink: [solvated, solid_salt]}
         otherwise: inconclusive
-        params: {E_cell_max: regimes.R-cell.parameters.E_max, m_E: thresholds.C5.window_margin,
+        comparators: {dft_schemes: regimes.R-cell.parameters.gas_reference_schemes, printed_with: measured benchmark errors,
+                      benchmark_corrected: equals expt by construction; never a second confirmation}
+        where_expt_missing: {rule: cp2 fix F5, pass: lowest-onset DFT scheme, falsify: every DFT scheme, margin: m_E,
+                             edge_pass: E_cell_max + m_E, edge_falsify: E_cell_max - m_E, label: DFT-decided}
+        params: {E_cell_max: regimes.R-cell.parameters.E_max, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes,
                  salts: regimes.R-cell.parameters.electrolyte_salts}
+        m_expt_parts: [tabulated uncertainties of reactants and products per transferred electron,
+                       bound on the neglected solid entropy of Ca(ClO4)2 from analog solid-salt entropies]
+        m_expt_params: [params.s_ca_clo4_2_analog_bound, params.s_solid_salt_analogs]
+        design_axis: {E_cell_max: by cathode class, params: regimes.R-cell.parameters.cathode_class,
+                      report: [crossover E_ox - m_expt (feasible at or below, solvated sink), crossover E_ox + m_expt (falsified above)]}
         undetermined: never_passes
         solid_salt_sink: {falsification: stands, pass: inconclusive, reason: upper bound on the onset}
+        table: every route and scheme printed (expt, each DFT scheme, each benchmark-corrected scheme)
+        disclosure: scheme values were seen before this rule (cp3 R2; packet p0-3 decision 3)
         limitation: electrolyte anodic limit not assessed
       - id: C5c_red
         regime: R-cell
         quantity: E_red
         comparator: '<='
-        edge: E_cell_min - m_E
-        pass: {reduce: max_over_reference_schemes}
-        falsify: {quantity: E_red, comparator: '>', edge: E_cell_min + m_E, reduce: every_reference_scheme}
+        edge: E_cell_min - m_expt
+        governing_route: expt wherever its inputs exist (cp3 R2)
+        pass: {route: expt}
+        falsify: {quantity: E_red, comparator: '>', edge: E_cell_min + m_expt, route: expt}
         otherwise: inconclusive
-        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_E: thresholds.C5.window_margin,
+        where_expt_missing: {rule: cp2 fix F5, margin: m_E, edge_pass: E_cell_min - m_E, edge_falsify: E_cell_min + m_E,
+                             label: DFT-decided}
+        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes}
         undetermined: never_passes
-    gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, regimes.R-cell.parameters.al_phases]}
-    combine: 'C5s and C5c_ox and C5c_red'
+    gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, corundum, boehmite]}
+    al_phases: {registered: [corundum, boehmite], params: regimes.R-cell.parameters.al_phases, others: reported, not gated}
+    sinks: {LiClO4: "CaCO3 via the Ca(ClO4)2 exchange route; Al phases undetermined until Al(ClO4)3 is tabulated", LiBOB: undetermined (never a pass), LiPCP: undetermined (never a pass)}
+    combine: 'C5s and C5s_phase and C5c_ox and C5c_red'
 study:
+  framings:
+    registered: [calcite, ACC]
+    params: {framing: regimes.R-slurry.parameters.framing}
+    run: whole chain per framing (K_sp, V_m, gamma_nl of one framing; never mixed across links)
+    falsified: falsified under every registered framing
+    feasible: feasible under at least one framing; name it and report the other beside it
+    inconclusive: otherwise
+    c5_dissolution: calcite K_sp under both framings
+    disclosure: a calcite-framing estimate near one half was available when the project was designed (N5)
   gating_links: [C1, C3, C4, C5]
   descriptor_links: [C2]
   falsified: 'any of C1, C3, C4, C5 falsified'

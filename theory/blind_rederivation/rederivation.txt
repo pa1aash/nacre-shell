@@ -1,0 +1,224 @@
+# Blind re-derivation of the CaCO3-barrier screen relations
+
+Only input: `derivation.pdf`. Each target was derived from the prose premises before I compared it with the PDF's displayed result. The sympy checks are in `checks.py` and the final expressions are in `results.py`. Every check passes: the integrals, the stationary points, the quadratic root and its limits, and a Monte Carlo test of the branch masses.
+
+---
+
+## (a) Shape factor f(theta)
+
+**Premises (PDF §5):** "a cap cut from a sphere of radius r, meeting the substrate at contact angle θ measured through the cap". Capillarity, flat substrate, no line tension. Young's relation γsl − γsn = γnl cos θ.
+
+**Derivation.**
+1. Put the sphere centre at height −r cos θ below the substrate plane, so that the cap's tangent makes angle θ with the substrate, measured inside the cap. The cap occupies the heights u ∈ [r cos θ, r] measured from the centre. Its height is h = r(1 − cos θ) and its base radius is ρ = r sin θ.
+2. Volume: V_cap = ∫_{r cosθ}^{r} π(r² − u²) du = (πr³/3)(1 − cosθ)²(2 + cosθ) (sympy-checked).
+3. Curved area (zone of a sphere): A_cap = 2πr h = 2πr²(1 − cos θ). Base area: A_base = πρ² = πr² sin²θ.
+4. ΔG_het(r) = −V_cap Δμ/v_m + γnl A_cap + (γsn − γsl) A_base. Substitute Young, γsn − γsl = −γnl cos θ.
+   Surface term = πr²γnl[2(1−c) − c(1−c²)] = πr²γnl(1−c)(2 − c − c²) = πr²γnl(1−c)²(2+c), with c = cos θ.
+5. Define f = (2+c)(1−c)²/4 = (2 − 3c + c³)/4. Then V_cap = (4πr³/3) f and the surface term is 4πr²γnl f. So ΔG_het(r) = f(θ) ΔG_hom(r) at every r. The two functions share r*, and ΔG*_het = f ΔG*_hom.
+
+**Result:** f(θ) = (2 + cos θ)(1 − cos θ)²/4.
+- Limits: f(0) = 0, f(π/2) = 1/2, f(π) = 1.
+- Derivative: f′(θ) = (3/4) sin³θ ≥ 0 on [0, π], so f is monotone non-decreasing and 0 ≤ ΔG*_het ≤ ΔG*_hom.
+- Also ∂f/∂cos θ = −(3/4) sin²θ.
+- f is the ratio of the cap volume to the full-sphere volume.
+- The factorisation needs the γnl that multiplies A_cap to be the same γnl as in Young.
+
+**PDF comparison:** Agrees (Eqs. 19–24 and the properties paragraph).
+
+---
+
+## (b) Young's relation with the water-displacement correction
+
+**Premises (PDF §6):**
+- "cos θ is the free energy gained per unit contact area by replacing substrate–liquid interface with substrate–nucleus interface, divided by the nucleus–liquid interfacial free energy."
+- Δγw ≡ γsn − γsn⁽⁰⁾, and "Δγw > 0 is a cost". The cost is paid over the contact area only.
+
+**Derivation.**
+- Move the contact line outward by dA. Substrate–liquid area is replaced by substrate–nucleus area, and the cap surface grows by dA cos θ. Stationarity gives γsl − γsn − γnl cos θ = 0.
+- The displaced water layer sits under the contact disc only, so the correction belongs to the substrate–nucleus term: γsn = γsn⁽⁰⁾ + Δγw. The cap's free surface never touches the template, so γnl is unaffected. The same γnl must also appear in Young for the factorisation in (a) to hold.
+- This gives cos θ = (γsl − γsn⁽⁰⁾ − Δγw)/γnl.
+- ∂cos θ/∂Δγw = −1/γnl < 0.
+- ∂f/∂Δγw = (∂f/∂cos θ)(∂cos θ/∂Δγw) = (3/4) sin²θ / γnl ≥ 0. A displacement cost raises θ, f and ΔG*_het.
+- Branches: the angle is finite only for |γsl − γsn| ≤ γnl. Clip cos θ to [−1, 1]. Clipping to 1 gives f = 0 (spreading) and clipping to −1 gives f = 1.
+
+**Alternative ("deck") form:** cos θ_deck = (γsl − γsn⁽⁰⁾)/(γnl − Δγw).
+- ∂cos θ_deck/∂Δγw = (γsl − γsn⁽⁰⁾)/(γnl − Δγw)². This is positive on the wetting side (γsl > γsn⁽⁰⁾). A cost would then raise cos θ and lower the barrier, which is the wrong sign.
+- The deck form also breaks the factorisation, because γeff ≠ γnl on A_cap. It diverges at Δγw = γnl.
+- Its ∂f/∂Δγw = −(3/4) sin²θ (γsl − γsn⁽⁰⁾)/(γnl − Δγw)².
+
+**PDF comparison:** Agrees with Eqs. (28)–(31), including the sign of (31) and the rejection of the deck form.
+
+---
+
+## (c) Uniform electrochemical potential gives Δμ = k_BT ln Ω_bulk
+
+**Premises (PDF §4):**
+- μ̃_i(r) = μ_i° + w_i^sp(r) + k_BT ln(γ_i m_i/m°) + z_i eψ(r).
+- The interfacial region exchanges ions with a reservoir.
+- Ω = a_Ca a_CO3/K_sp.
+
+**Derivation.**
+1. Open-system equilibrium. Transferring dN_i of ion i from position r to the bulk changes the free energy by (μ̃_i,bulk − μ̃_i(r)) dN_i. At the minimum this must vanish for every i and r, so μ̃_i(r) = μ̃_i,bulk.
+2. Adding one formula unit to a nucleus at r removes one Ca²⁺ and one CO3²⁻ from position r. The free-energy drop is Δμ(r) = μ̃_Ca(r) + μ̃_CO3(r) − μ_CaCO3(s) = μ̃_Ca,bulk + μ̃_CO3,bulk − μ_CaCO3(s).
+3. In the bulk, w = ψ = 0 and μ_CaCO3(s) = μ_Ca° + μ_CO3° + k_BT ln K_sp, which is the definition of K_sp. So Δμ = k_BT ln(a_Ca a_CO3/K_sp) = k_BT ln Ω_bulk, with no dependence on r.
+4. **Specific binding.** At a site, w^sp lowers the standard part by ΔG_seq/N_A. The concentration term rises by k_BT ln E with E = exp(−ΔG_seq/RT). The sum k_BT ln E + ΔG_seq/N_A = 0, using R = N_A k_B.
+5. **Mean potential.** The potential contributes (z_Ca + z_CO3) eψ = (2 − 2) eψ = 0, because the solid is neutral. At equal non-specific γ, the local concentrations scale as e^{∓2eψ/kT}, so their product is unchanged.
+6. Any template effect is therefore an interfacial excess, entering through γsl or γsn and not through Δμ.
+
+**Result:** Δμ = k_BT ln(a_Ca a_CO3/K_sp) per formula unit. It is independent of w^sp and ψ.
+
+**PDF comparison:** Agrees (Eqs. 10, 13–16).
+
+**Caveat:** step 4 holds exactly for the PMF w of the Ca ion. ΔG_seq also contains the deprotonation term −RT ln α. Strictly, E is the occupancy-averaged Boltzmann factor, and the cancellation is formal: it holds for whatever local standard potential produces the enrichment. This does not change the conclusion.
+
+---
+
+## (d) Δγ_ads from the Gibbs equation with a Langmuir isotherm, and the headline relation
+
+**Premises (PDF §3, §7.3):**
+- There are Γs sites per area in a layer of thickness δs, so c_max = Γs/δs.
+- Langmuir occupancy Θ = x/(1+x), with x = E c/c_max and E = exp(−ΔG_seq/RT).
+- Relative excess: Γ_Ca = Γs Θ − δs c.
+- The adsorbing component is a neutral solute, and dμ_Ca = RT d ln c (dilute, fixed γ, fixed pH and I).
+- The integral runs from the Ca-free template (c = 0) to c_bulk.
+
+**Derivation.**
+1. dγsl = −Γ_Ca dμ_Ca, so Δγ_ads = −RT ∫₀^{c_bulk} Γ_Ca(c) dc/c.
+2. ∫₀^{c_bulk} Γs (E/c_max)/(1 + Ec/c_max) dc = Γs ln(1 + x), and ∫₀^{c_bulk} δs dc = δs c_bulk.
+3. **Δγ_ads = −RT [Γs ln(1 + x) − δs c_bulk]**, with x = exp(−ΔG_seq/RT) c_bulk δs/Γs. Units: J mol⁻¹ × mol m⁻² = J m⁻².
+4. Checks:
+   - ∂Δγ_ads/∂ΔG_seq = Γs Θ > 0, so stronger binding lowers γsl.
+   - (c ∂/∂c)/RT applied to Δγ_ads gives −Γ_Ca, which recovers the Gibbs equation.
+   - For x ≫ 1: Δγ_ads → Γs ΔG_seq + RT Γs ln(c_max/c_bulk) + RT δs c_bulk + O(1/x).
+   - For x → 0 (repulsion): Δγ_ads → +RT δs c_bulk.
+   - For ΔG_seq = 0: Δγ_ads = RT Γs[y − ln(1+y)] with y = c_bulk δs/Γs.
+5. **Headline relation.** γsn is likewise a grand-canonical excess with its own Ca excess Γ_Ca,sn, so dγsn = −Γ_Ca,sn dμ_Ca. Subtracting:
+   **∂(γsl − γsn)/∂μ_Ca = −(Γ_Ca,sl − Γ_Ca,sn).** Raising a_Ca raises cos θ only if Γ_Ca,sn > Γ_Ca,sl.
+6. With γsn held fixed as supplied, ∂cos θ/∂ΔG_seq = ΓsΘ/γnl > 0. Binding therefore acts as an adsorbed inhibitor.
+
+**PDF comparison:** Agrees with Eqs. (33)–(35) and the bullet properties.
+
+One small point of exposition: the PDF's strong-binding bullet writes the limit as Γs ΔG_seq + RT Γs ln(c_max/c_bulk) "plus terms that vanish". The term +RT δs c_bulk does not vanish as x → ∞. It is a fixed term, small whenever δs c_bulk ≪ Γs. The headline relation needs the buried template–crystal contact to be in exchange equilibrium with the reservoir, which the PDF assumes implicitly. I also endorse the PDF's own caveat that the electrocapillary (Lippmann, −σ dψ0) term is omitted.
+
+---
+
+## (e) Homogeneous and heterogeneous barriers
+
+**Premises:** capillarity, a sphere of radius r, n = (4πr³/3)/v_m formula units with v_m = V_m/N_A, and Δμ = k_BT ln Ω per formula unit.
+
+**Derivation.**
+- ΔG(r) = −(4πr³/3)Δμ/v_m + 4πr²γnl.
+- Setting dΔG/dr = 0 gives −4πr²Δμ/v_m + 8πrγnl = 0, so **r* = 2γnl v_m/Δμ**.
+- **ΔG*_hom = 16πγnl³ v_m²/(3Δμ²) = (4/3)π r*² γnl.**
+- **ΔG*_het = f(θ) ΔG*_hom**, by (a). The cap has the same r*.
+- Limits: as Ω → 1⁺ the barrier diverges, and as Ω → ∞ it goes to 0.
+
+**PDF comparison:** Agrees (Eqs. 17, 18, 24).
+
+---
+
+## (f) Accessibility criterion and N_req
+
+**Premises (PDF §5):**
+- J = J0 exp(−ΔG*_het/k_BT) per area per time, and N_nuc = J t_p.
+- Nuclei are independent, so the count under a patch is Poisson with mean N_nuc A_patch.
+- At most a fraction q0 of patches may be empty, with q0 = 1 − p.
+
+**Derivation.**
+1. N_nuc ≥ N_req ⇔ J0 t_p e^{−ΔG/kT} ≥ N_req ⇔ ΔG*_het ≤ **B_acc = k_BT ln(J0 t_p/N_req)**. The logarithm is monotone, and the condition is non-empty only if J0 t_p > N_req.
+2. The probability that a patch is empty is P(0) = exp(−N_nuc A_patch). Requiring P(0) ≤ q0 gives N_nuc ≥ **N_req = ln(1/q0)/A_patch**.
+3. **q0 = 1 − p.** The case q0 = 1/e recovers the expectation form, one nucleus per patch.
+
+**PDF comparison:** Agrees (Eqs. 25–27). The PDF also correctly notes that the criterion is necessary but not sufficient.
+
+---
+
+## (g) Spreading coefficient and complete wetting
+
+**Premise:** a thick nucleus layer replaces substrate–liquid interface. It creates substrate–nucleus and nucleus–liquid interfaces.
+
+**Derivation.**
+- The free energy gained per area is **S_spread = γsl − (γsn + γnl)**.
+- On the partial-wetting branch, Young gives γsl − γsn = γnl cos θ, so **S_spread = γnl(cos θ − 1) ≤ 0**.
+- S_spread ≥ 0 ⇔ (γsl − γsn)/γnl ≥ 1. No finite angle exists, θ → 0 and f → 0.
+
+**Complete wetting with γsn ≥ 0:** S_spread ≤ γsl − γnl. Therefore S_spread ≥ 0 requires **γsl ≥ γnl + γsn ≥ γnl**.
+- For γsl ≤ γnl: S_spread ≤ −γsn ≤ 0. Equality holds only at γsn = 0 and γsl = γnl.
+- Δγw > 0 lowers S, so spreading becomes harder.
+- Binding (Δγ_ads < 0) lowers γsl, which also pushes against spreading.
+
+**PDF comparison:** Agrees (Eqs. 37, 41). Two remarks:
+1. The PDF *defines* "hydrophilic template" as γsl ≤ γnl, meaning the template–water interface is cheaper than the mineral–water interface. That is a stipulation, not the usual meaning of hydrophilic (a low water contact angle in air). The result "complete wetting is excluded" holds exactly under the stipulated definition. It does not follow from hydrophilicity in the ordinary sense.
+2. γsn ≥ 0 is a stability assumption. γsn is a grand-canonical excess that can include adsorbed Ca, so the assumption deserves explicit status, which the PDF does give it.
+
+---
+
+## (h) Branch masses for γsn ~ U[0, γ_max], with γsl and γnl fixed
+
+**Branch definitions**, from Young and S:
+- **Complete wetting:** S ≥ 0 ⇔ γsn ≤ γsl − γnl.
+- **Non-wetting:** cos θ ≤ −1 ⇔ γsl − γsn ≤ −γnl ⇔ γsn ≥ γsl + γnl.
+- **Partial wetting:** |cos θ| < 1 ⇔ γsl − γnl < γsn < γsl + γnl.
+
+The three sets partition the support. The boundaries are measure zero.
+
+**Clipped general result**, with clip(u) = min(1, max(0, u)):
+- P_complete = clip((γsl − γnl)/γ_max)
+- P_non = clip((γ_max − γsl − γnl)/γ_max) = 1 − clip((γsl + γnl)/γ_max)
+- P_partial = 1 − P_complete − P_non = [min(γ_max, γsl + γnl) − max(0, γsl − γnl)]₊/γ_max
+
+**Interior case** (0 ≤ γsl − γnl and γsl + γnl ≤ γ_max):
+- P_complete = (γsl − γnl)/γ_max
+- P_partial = 2γnl/γ_max
+- P_non = (γ_max − γsl − γnl)/γ_max
+
+The three sum to 1.
+
+**Clipping cases:**
+- If γsl < γnl, then P_complete = 0. This is the "hydrophilic" exclusion of (g).
+- If γsl + γnl ≥ γ_max, then P_non = 0.
+- If γsl − γnl ≥ γ_max, then P_complete = 1.
+
+A Monte Carlo test of 2×10⁵ draws per case matches these expressions to about 10⁻³. Under any prior on γsn ≥ 0, P_complete ≤ 1[γsl ≥ γnl]. This is consistent with the PDF's statement that P(γsl > γnl) bounds the spreading route.
+
+**PDF comparison:** The PDF does not display these expressions. They are consistent with its §6 branch statements and with Eq. (41).
+
+---
+
+## (i) Carbonate speciation
+
+**Premises (PDF §4):**
+- a_HCO3 = 10^{pK2−pH} y and a_CO2 = 10^{pK1+pK2−2pH} y.
+- a_CaCO3° = K1 a_Ca y and a_CaHCO3+ = K2 a_Ca a_HCO3.
+- a_CaOH+ = *K a_Ca a_w / a_H.
+- Charged species take γ±1 or γ±2 by charge. Neutral species take γ = 1.
+- The system is closed and nothing has precipitated.
+
+**Derivation.**
+1. Convert activities to molalities by dividing by γ.
+   - Carbon: m_CT = y[10^{pK1+pK2−2pH} + 10^{pK2−pH}/γ1 + 1/γ2] + a_Ca y [K_CaCO3 + K_CaHCO3 10^{pK2−pH}/γ1] = A_c y + P_c a_Ca y.
+   - Calcium: m_CaT = a_Ca[1/γ2 + *K a_w 10^{pH}/γ1] + P_c a_Ca y = D_c a_Ca + P_c a_Ca y.
+   - Both pairs carry one Ca and one C, so P_c appears in both balances.
+2. From the Ca balance, a_Ca = m_CaT/(D_c + P_c y). Substitute into the C balance and multiply by (D_c + P_c y):
+   **A_c P_c y² + [A_c D_c + P_c(m_CaT − m_CT)] y − m_CT D_c = 0.**
+3. The product of the roots is −m_CT D_c/(A_c P_c) < 0, so the roots have opposite signs and exactly one is positive. With B = A_c D_c + P_c(m_CaT − m_CT):
+   - y = [−B + √(B² + 4A_cP_c m_CT D_c)]/(2A_cP_c)
+   - Rationalised: **y = 2 m_CT D_c / (B + √(B² + 4A_cP_c m_CT D_c))**. This form is regular as P_c → 0 and gives m_CT/A_c in that limit.
+4. Limits:
+   - m_CaT = 0: B² + 4A_cP_c m_CT D_c = (A_cD_c − P_c m_CT)² + 4A_cD_cP_c m_CT = (A_cD_c + P_c m_CT)². So y = 2m_CT D_c/(2A_cD_c) = **m_CT/A_c**, the carbonate system alone.
+   - In general, m_CT = A_c y + P_c a_Ca y ≥ A_c y, so pairs can only lower y.
+   - Davies: log10 γ_z = −A_DH z²[√I/(1+√I) − b_D I]. As I → 0 every γ → 1, so ideal activities are recovered. The form also gives γ2 = γ1⁴.
+5. The admissible root is positive provided the denominator is positive. The square root exceeds |B|, so the denominator is positive for any sign of B.
+
+**PDF comparison:** Agrees (Eqs. 11–12, the stated limits, and the Davies form with the s* turning point). Two points I would make explicit:
+1. I is taken as given rather than computed self-consistently. The PDF states this.
+2. The ion pairs CaCO3° and CaHCO3⁺ are correctly counted in both totals.
+
+---
+
+## Overall
+
+I found no sign or algebra errors in the PDF's displayed results for (a)–(i). The minor remarks are:
+1. The "terms that vanish" wording in the strong-binding limit of Δγ_ads leaves out a fixed +RT δs c_bulk.
+2. "Hydrophilic ⇒ no complete wetting" rests on a stipulated definition (γsl ≤ γnl) and on the assumption γsn ≥ 0. It is not a consequence of hydrophilicity in the usual sense.
+3. The relation ∂γsn/∂μ_Ca = −Γ_Ca,sn needs the buried contact to exchange Ca with the reservoir.

@@ -725,9 +725,19 @@ def check_thresholds(ctx, contract, rep):
             fal = test.get("falsify")
             if isinstance(fal, dict) and "edge" in fal:
                 check_edge(link, test["id"] + " falsify", fal["quantity"], fal["edge"], params)
+            miss = test.get("where_expt_missing")
+            if isinstance(miss, dict):
+                for k in ("edge_pass", "edge_falsify"):
+                    if k in miss:
+                        check_edge(link, "%s %s (no expt route)" % (test["id"], k), test["quantity"], miss[k], params)
             eq = test.get("equivalent_single_state")
             if eq:
                 check_edge(link, test["id"] + " single state", eq["quantity"], eq["edge"], params)
+                if test["quantity"] == "N_nuc":
+                    s = ctx.syms
+                    want = s["k_B"] * s["T"] * sp.log(s["J0_het"] * s["t_proc"] / ctx.parse(str(test["edge"])))
+                    rep.add(numeric_zero(ctx.parse(str(eq["edge"])) - want), "thresholds", "%s %s" % (link, test["id"]),
+                            "single-state edge = k_B T ln(J0_het t_proc / N_req) at the registered N_req")
             for q in test.get("report", []) + spec.get("report", []):
                 ctx.parse(str(q))
             if test.get("cos_function") and test["cos_function"] not in fnames:
