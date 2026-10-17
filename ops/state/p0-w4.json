@@ -26,7 +26,9 @@
     "units": "src/nacre/screen/units.py",
     "decision_layer": "src/nacre/screen/study.py",
     "retrodiction_entry": "src/nacre/screen/retro.py",
-    "mock_params_cp3": "configs/preprint/mock_params_cp3.yaml"
+    "mock_params_cp3": "configs/preprint/mock_params_cp3.yaml",
+    "gap_table": "configs/preprint/gap_resolution.yaml",
+    "gap_table_loader": "src/nacre/screen/gaps.py"
   },
   "notes": [
     "Contract v3 implemented (53 functions + composite); equivalence PASS at rtol 1e-12 against W3 d27552a (contract db872ae), max rel err 4.2e-12 (W_adh_dry_fn); D11 xfails removed.",
@@ -51,5 +53,6 @@
     "block_version": 2,
     "equality": "EQUAL",
     "poll": "ready at 10:42 UTC (third poll)"
-  }
+  },
+  "gap_table_sha": "185b8b8ccdbc69bef1edc2ecb776dd252d3f6114"
 }
