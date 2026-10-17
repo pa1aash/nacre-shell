@@ -94,5 +94,25 @@
     "ignorance_priors": "9249661f4c1b044a12ff3fdfab2a7afee82ea545",
     "speciation": "717485662dae8d3442202fb0e3e9ef279301064b",
     "fix_log": "theory/cp2_fixes.md @ f3d7570f5a0e459bffb3ad1964cc305a048977e9"
+  },
+  "thresholds_cp3": {
+    "status": "ready",
+    "sha": "74ac69c2586c017e2bc08efecbfbc918b94f48ee",
+    "file": "theory/thresholds.md",
+    "machine_block_version": 2,
+    "contract_version": 3,
+    "check_contract": "PASS",
+    "ruling": "planning chat 2026-10-17, cp3 PASS once R1-R12 applied; W3 items R1-R3, R5-R8 amended, R9 recorded",
+    "items": {
+      "R8": "d782db2f19fafb5a40367f604502c36f75d0cc16",
+      "R7": "faca26521255fda6f1fa6d293911ff52b655b458",
+      "R6": "01a809e6d48420b015c0332dea8c8f048c7eacc5",
+      "R5": "1ade8de3d9fecf6493a0345e416f61114a73152d",
+      "R3": "63e086ba59ebd87fae849b91abc54b1c231aae53",
+      "R2": "eed03d8b8b28fa1437663c35eddeffbe29733d97",
+      "R1": "cfa9f2d3644f2d284781f5772b3f6a5b4eae3a49"
+    },
+    "written_before_screen_output": true,
+    "for_w4": "regenerate configs/preprint/thresholds.yaml from this block (version 2): C5s is now the Omega_bulk dissolution test (calcite K_sp, speciation activities, dose window) plus C5s_phase; C5c uses the expt route with m_expt (DFT schemes as comparators, F5 rule only where expt is missing); C4 is either route with joint masses; C3b edge log(1/(1 - p_cred))/A_patch; framings calcite and ACC both run as whole chains; joint link masses; every registered state propagated; termination ignorance mixture; gamma_sl0 truncated at 0"
   }
 }
