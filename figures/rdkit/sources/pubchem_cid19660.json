@@ -1,0 +1,13 @@
+{
+  "PropertyTable": {
+    "Properties": [
+      {
+        "CID": 19660,
+        "SMILES": "C(=O)([O-])[O-]",
+        "InChIKey": "BVKZGUZCCUSVTD-UHFFFAOYSA-L",
+        "IUPACName": "carbonate",
+        "Title": "Carbonate Ion"
+      }
+    ]
+  }
+}

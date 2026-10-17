@@ -1,0 +1,561 @@
+{
+ "schema_version": "2",
+ "mock": true,
+ "generated_utc": "2026-10-17T00:00:00Z",
+ "provenance": {
+  "git_sha": "0000000000000000000000000000000000000000",
+  "git_dirty": false,
+  "config_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "prior_file": "figures/src/mock/params.yaml",
+  "prior_file_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "contract_sha": null,
+  "params_sha": null,
+  "thresholds_file": null,
+  "thresholds_hash": null,
+  "thresholds_source_sha": null,
+  "schema_sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88"
+ },
+ "regimes": {
+  "R-slurry": {
+   "draws": 40000,
+   "seed": 20261017,
+   "sobol_design": {
+    "method": "mock",
+    "base_samples": 4096,
+    "evaluations": 40960,
+    "bootstrap_resamples": 0,
+    "confidence_level": 0.95
+   },
+   "parameters": [
+    "gamma_nl",
+    "gamma_sl0",
+    "gamma_sn0",
+    "Delta_gamma_w",
+    "Delta_G_site",
+    "V_m",
+    "a_Ca",
+    "T"
+   ],
+   "links": {
+    "nucleate": {
+     "quantities": {
+      "Omega_bulk": {
+       "symbol": "Omega_bulk",
+       "units": "1",
+       "n_valid": 40000,
+       "mean": 19.1157,
+       "sd": 15.4403,
+       "quantiles": {
+        "0.005": 3.04177,
+        "0.025": 3.22561,
+        "0.05": 3.48242,
+        "0.1": 4.03949,
+        "0.25": 6.39078,
+        "0.5": 13.5599,
+        "0.75": 28.6097,
+        "0.9": 44.4797,
+        "0.95": 51.7922,
+        "0.975": 55.8172,
+        "0.995": 59.1266
+       }
+      },
+      "cos_theta": {
+       "symbol": "cos(theta) (clipped to [-1, 1])",
+       "units": "1",
+       "n_valid": 40000,
+       "mean": 0.336254,
+       "sd": 0.415206,
+       "quantiles": {
+        "0.005": -0.794611,
+        "0.025": -0.513622,
+        "0.05": -0.37251,
+        "0.1": -0.216662,
+        "0.25": 0.0490831,
+        "0.5": 0.349377,
+        "0.75": 0.651323,
+        "0.9": 0.918995,
+        "0.95": 1.0,
+        "0.975": 1.0,
+        "0.995": 1.0
+       }
+      },
+      "f_theta": {
+       "symbol": "f(theta)",
+       "units": "1",
+       "n_valid": 40000,
+       "mean": 0.295654,
+       "sd": 0.246221,
+       "quantiles": {
+        "0.005": 0.0,
+        "0.025": 0.0,
+        "0.05": 0.0,
+        "0.1": 0.00478851,
+        "0.25": 0.0805842,
+        "0.5": 0.248629,
+        "0.75": 0.463217,
+        "0.9": 0.659954,
+        "0.95": 0.76646,
+        "0.975": 0.851342,
+        "0.995": 0.970528
+       }
+      },
+      "barrier_hom_bulk_kT": {
+       "symbol": "Delta_G*_hom(Omega_bulk) / k_B T",
+       "units": "k_B T",
+       "n_valid": 40000,
+       "mean": 225.74,
+       "sd": 240.924,
+       "quantiles": {
+        "0.005": 21.6457,
+        "0.025": 31.533,
+        "0.05": 39.0207,
+        "0.1": 49.8954,
+        "0.25": 77.7214,
+        "0.5": 140.213,
+        "0.75": 279.106,
+        "0.9": 509.502,
+        "0.95": 706.757,
+        "0.975": 908.578,
+        "0.995": 1383.51
+       }
+      },
+      "barrier_het_template_kT": {
+       "symbol": "f(theta) Delta_G*_hom(Omega_bulk) / k_B T",
+       "units": "k_B T",
+       "n_valid": 40000,
+       "mean": 67.055,
+       "sd": 108.907,
+       "quantiles": {
+        "0.005": 0.0,
+        "0.025": 0.0,
+        "0.05": 0.0,
+        "0.1": 0.571743,
+        "0.25": 9.01649,
+        "0.5": 30.7149,
+        "0.75": 77.2634,
+        "0.9": 168.404,
+        "0.95": 260.961,
+        "0.975": 371.472,
+        "0.995": 673.424
+       }
+      },
+      "B_acc_kT": {
+       "symbol": "B_acc / k_B T",
+       "units": "k_B T",
+       "n_valid": 40000,
+       "mean": 61.9896,
+       "sd": 3.00828,
+       "quantiles": {
+        "0.005": 54.314,
+        "0.025": 56.0941,
+        "0.05": 57.0516,
+        "0.1": 58.1341,
+        "0.25": 59.9406,
+        "0.5": 62.0002,
+        "0.75": 64.0239,
+        "0.9": 65.8418,
+        "0.95": 66.9424,
+        "0.975": 67.8585,
+        "0.995": 69.6594
+       }
+      }
+     },
+     "sobol": {
+      "barrier_het_template_kT": {
+       "gamma_nl": {
+        "first_order": {
+         "estimate": 0.351127,
+         "ci_low": 0.34268,
+         "ci_high": 0.359574
+        },
+        "total_order": {
+         "estimate": 0.455462,
+         "ci_low": 0.449579,
+         "ci_high": 0.461344
+        }
+       },
+       "gamma_sl0": {
+        "first_order": {
+         "estimate": 0.182521,
+         "ci_low": 0.172866,
+         "ci_high": 0.192176
+        },
+        "total_order": {
+         "estimate": 0.264941,
+         "ci_low": 0.259083,
+         "ci_high": 0.2708
+        }
+       },
+       "gamma_sn0": {
+        "first_order": {
+         "estimate": 0.157906,
+         "ci_low": 0.151189,
+         "ci_high": 0.164622
+        },
+        "total_order": {
+         "estimate": 0.215065,
+         "ci_low": 0.204293,
+         "ci_high": 0.225838
+        }
+       },
+       "Delta_gamma_w": {
+        "first_order": {
+         "estimate": 0.0688808,
+         "ci_low": 0.0595711,
+         "ci_high": 0.0781905
+        },
+        "total_order": {
+         "estimate": 0.10692,
+         "ci_low": 0.102595,
+         "ci_high": 0.111244
+        }
+       },
+       "Delta_G_site": {
+        "first_order": {
+         "estimate": 0.0473708,
+         "ci_low": 0.040555,
+         "ci_high": 0.0541866
+        },
+        "total_order": {
+         "estimate": 0.0655025,
+         "ci_low": 0.0558899,
+         "ci_high": 0.0751151
+        }
+       },
+       "V_m": {
+        "first_order": {
+         "estimate": 0.0387527,
+         "ci_low": 0.0304838,
+         "ci_high": 0.0470217
+        },
+        "total_order": {
+         "estimate": 0.0602462,
+         "ci_low": 0.0532184,
+         "ci_high": 0.067274
+        }
+       },
+       "a_Ca": {
+        "first_order": {
+         "estimate": 0.0246907,
+         "ci_low": 0.0189114,
+         "ci_high": 0.0304699
+        },
+        "total_order": {
+         "estimate": 0.0368563,
+         "ci_low": 0.0250179,
+         "ci_high": 0.0486947
+        }
+       },
+       "T": {
+        "first_order": {
+         "estimate": 0.00792217,
+         "ci_low": 0.000587212,
+         "ci_high": 0.0152571
+        },
+        "total_order": {
+         "estimate": 0.0126119,
+         "ci_low": 0.00560957,
+         "ci_high": 0.0196142
+        }
+       }
+      }
+     },
+     "threshold_evaluation": null,
+     "shapley": {
+      "barrier_het_template_kT": {
+       "gamma_nl": {
+        "estimate": 0.38,
+        "ci_low": 0.366824,
+        "ci_high": 0.393176
+       },
+       "gamma_sl0": {
+        "estimate": 0.21,
+        "ci_low": 0.202282,
+        "ci_high": 0.217718
+       },
+       "gamma_sn0": {
+        "estimate": 0.17,
+        "ci_low": 0.155656,
+        "ci_high": 0.184344
+       },
+       "Delta_gamma_w": {
+        "estimate": 0.09,
+        "ci_low": 0.0832181,
+        "ci_high": 0.0967819
+       },
+       "Delta_G_site": {
+        "estimate": 0.06,
+        "ci_low": 0.0458148,
+        "ci_high": 0.0741852
+       },
+       "V_m": {
+        "estimate": 0.05,
+        "ci_low": 0.0417079,
+        "ci_high": 0.0582921
+       },
+       "a_Ca": {
+        "estimate": 0.03,
+        "ci_low": 0.0187479,
+        "ci_high": 0.0412521
+       },
+       "T": {
+        "estimate": 0.01,
+        "ci_low": 0.00012251,
+        "ci_high": 0.0198775
+       }
+      }
+     },
+     "sensitivity_scale": {
+      "barrier_het_template_kT": "log10",
+      "Omega_bulk": "log10"
+     }
+    }
+   },
+   "boundary_mass": {
+    "nucleate": {
+     "cos_theta": {
+      "n_finite": 37092,
+      "n_clipped_theta_0": 2864,
+      "n_clipped_theta_180": 44,
+      "fraction_theta_0": 0.0716,
+      "fraction_theta_180": 0.0011,
+      "fraction_total": 0.0727
+     }
+    }
+   },
+   "dependence": {
+    "method": "gaussian_copula",
+    "rank_correlations": [
+     {
+      "a": "gamma_sl0",
+      "b": "gamma_sn0",
+      "spearman_rho": 0.5,
+      "source": "mock"
+     }
+    ]
+   },
+   "primary_state": "slurry",
+   "states": {
+    "drying": {
+     "quantities": {
+      "nucleate": {
+       "Omega_bulk": {
+        "symbol": "Omega_bulk",
+        "units": "1",
+        "n_valid": 40000,
+        "mean": 80.3573,
+        "sd": 76.8297,
+        "quantiles": {
+         "0.005": 8.14223,
+         "0.025": 8.7316,
+         "0.05": 9.60061,
+         "0.1": 11.441,
+         "0.25": 19.6841,
+         "0.5": 49.1734,
+         "0.75": 120.668,
+         "0.9": 208.894,
+         "0.95": 250.495,
+         "0.975": 274.025,
+         "0.995": 294.43
+        }
+       },
+       "cos_theta": {
+        "symbol": "cos(theta) (clipped to [-1, 1])",
+        "units": "1",
+        "n_valid": 40000,
+        "mean": 0.335591,
+        "sd": 0.421372,
+        "quantiles": {
+         "0.005": -0.806153,
+         "0.025": -0.525042,
+         "0.05": -0.385713,
+         "0.1": -0.226113,
+         "0.25": 0.0422198,
+         "0.5": 0.349484,
+         "0.75": 0.654623,
+         "0.9": 0.931375,
+         "0.95": 1.0,
+         "0.975": 1.0,
+         "0.995": 1.0
+        }
+       },
+       "f_theta": {
+        "symbol": "f(theta)",
+        "units": "1",
+        "n_valid": 40000,
+        "mean": 0.296862,
+        "sd": 0.249463,
+        "quantiles": {
+         "0.005": 0.0,
+         "0.025": 0.0,
+         "0.05": 0.0,
+         "0.1": 0.00345127,
+         "0.25": 0.0791645,
+         "0.5": 0.248558,
+         "0.75": 0.468354,
+         "0.9": 0.666695,
+         "0.95": 0.774939,
+         "0.975": 0.857597,
+         "0.995": 0.973639
+        }
+       },
+       "barrier_hom_bulk_kT": {
+        "symbol": "Delta_G*_hom(Omega_bulk) / k_B T",
+        "units": "k_B T",
+        "n_valid": 40000,
+        "mean": 78.6231,
+        "sd": 68.7065,
+        "quantiles": {
+         "0.005": 10.1298,
+         "0.025": 14.6045,
+         "0.05": 17.6931,
+         "0.1": 22.3973,
+         "0.25": 33.7594,
+         "0.5": 56.7107,
+         "0.75": 99.6788,
+         "0.9": 163.053,
+         "0.95": 214.142,
+         "0.975": 266.667,
+         "0.995": 391.741
+        }
+       },
+       "barrier_het_template_kT": {
+        "symbol": "f(theta) Delta_G*_hom(Omega_bulk) / k_B T",
+        "units": "k_B T",
+        "n_valid": 40000,
+        "mean": 23.3054,
+        "sd": 32.9302,
+        "quantiles": {
+         "0.005": 0.0,
+         "0.025": 0.0,
+         "0.05": 0.0,
+         "0.1": 0.169769,
+         "0.25": 3.6883,
+         "0.5": 12.48,
+         "0.75": 29.3581,
+         "0.9": 58.0169,
+         "0.95": 84.9265,
+         "0.975": 115.139,
+         "0.995": 190.196
+        }
+       },
+       "B_acc_kT": {
+        "symbol": "B_acc / k_B T",
+        "units": "k_B T",
+        "n_valid": 40000,
+        "mean": 66.0083,
+        "sd": 2.9986,
+        "quantiles": {
+         "0.005": 58.2907,
+         "0.025": 60.1141,
+         "0.05": 61.0906,
+         "0.1": 62.1704,
+         "0.25": 63.9908,
+         "0.5": 66.0087,
+         "0.75": 68.0287,
+         "0.9": 69.8346,
+         "0.95": 70.9188,
+         "0.975": 71.8666,
+         "0.995": 73.7747
+        }
+       }
+      }
+     },
+     "boundary_mass": {
+      "nucleate": {
+       "cos_theta": {
+        "n_finite": 36898,
+        "n_clipped_theta_0": 3052,
+        "n_clipped_theta_180": 50,
+        "fraction_theta_0": 0.0763,
+        "fraction_theta_180": 0.00125,
+        "fraction_total": 0.07755
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "required_precision": {
+  "R-slurry": {
+   "gamma_nl": {
+    "status": "ok",
+    "units": "mock",
+    "prior_width": 0.936644,
+    "required_width": 0.346432,
+    "width_ratio": 0.369865,
+    "nearest_threshold": "C3a",
+    "method": "mock"
+   },
+   "gamma_sl0": {
+    "status": "ok",
+    "units": "mock",
+    "prior_width": 0.454731,
+    "required_width": 0.12503,
+    "width_ratio": 0.274955,
+    "nearest_threshold": "C3a",
+    "method": "mock"
+   },
+   "gamma_sn0": {
+    "status": "ok",
+    "units": "mock",
+    "prior_width": 0.269529,
+    "required_width": 0.0666777,
+    "width_ratio": 0.247386,
+    "nearest_threshold": "C3a",
+    "method": "mock"
+   },
+   "Delta_gamma_w": {
+    "status": "ok",
+    "units": "mock",
+    "prior_width": 0.939555,
+    "required_width": 0.16912,
+    "width_ratio": 0.18,
+    "nearest_threshold": "C3a",
+    "method": "mock"
+   },
+   "Delta_G_site": {
+    "status": "already_clears",
+    "units": "mock",
+    "prior_width": 0.403733,
+    "required_width": 0.403733,
+    "width_ratio": 1.0,
+    "nearest_threshold": "C3a",
+    "method": "mock"
+   },
+   "V_m": {
+    "status": "ok",
+    "units": "mock",
+    "prior_width": 0.655525,
+    "required_width": 0.0879479,
+    "width_ratio": 0.134164,
+    "nearest_threshold": "C3a",
+    "method": "mock"
+   },
+   "a_Ca": {
+    "status": "unreachable",
+    "units": "mock",
+    "prior_width": 0.362744,
+    "required_width": null,
+    "width_ratio": null,
+    "nearest_threshold": "C3a",
+    "method": "mock"
+   },
+   "T": {
+    "status": "already_clears",
+    "units": "mock",
+    "prior_width": 0.716143,
+    "required_width": 0.716143,
+    "width_ratio": 1.0,
+    "nearest_threshold": "C3a",
+    "method": "mock"
+   }
+  }
+ },
+ "extensions": {
+  "p0-w6": {
+   "note": "MOCK: synthetic values to exercise the template; not a result"
+  }
+ }
+}

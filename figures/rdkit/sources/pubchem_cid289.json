@@ -1,0 +1,13 @@
+{
+  "PropertyTable": {
+    "Properties": [
+      {
+        "CID": 289,
+        "SMILES": "C1=CC=C(C(=C1)O)O",
+        "InChIKey": "YCIMNLLNPGFGHC-UHFFFAOYSA-N",
+        "IUPACName": "benzene-1,2-diol",
+        "Title": "Catechol"
+      }
+    ]
+  }
+}

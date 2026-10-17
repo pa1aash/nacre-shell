@@ -1,0 +1,998 @@
+# Retrodiction cases for the C3 link (templated CaCO3 nucleation), track p0.
+#
+# Session P0-W2.2, lane p0-w2. Fixed before any retrodiction run, in the same commit as
+# criterion.md. Schema and selection rules: SCHEMA.md. Validator: `uv run nacre retro check`.
+# Every outcome and every input was read in the source named, through an open route; copies are
+# local-only. Numbers read from a figure say so in their locator.
+schema: retro-cases/v1
+session: P0-W2.2
+fixed_before_run: true
+
+# Template-independent inputs, drawn once per Monte Carlo draw and shared by both surfaces of a
+# pair. lit/params.yaml (lane p0-w1, P0-W1.2) does not yet exist; each key lists the evidence rows
+# it is to be built from. W2.3 checks every key exists before running (SCHEMA.md, section 3.4).
+shared_priors:
+  gamma_nl:
+    symbol: gamma_nl
+    meaning: calcite-water interfacial free energy (bare, Young denominator)
+    params_key: gamma_calcite_water
+    evidence_rows: [TC-006, TC-007, TC-010, TC-011, TC-012, TC-013, TC-014, TC-017, TC-020]
+    note: >-
+      The fetched values span 0.055-0.49 J m^-2 (rows TC-008..TC-020). The spread is common-mode
+      inside a pair; it moves both barriers together and mainly changes the clipping boundary mass.
+  V_m:
+    symbol: V_m
+    meaning: molar volume of calcite
+    params_key: molar_volume_calcite
+    evidence_rows: [TC-049]
+  K_sp:
+    symbol: K_sp
+    meaning: calcite solubility product (activity basis)
+    params_key: ksp_calcite
+    evidence_rows: [TC-033, TC-035]
+  water_owrk_components:
+    symbol: gamma_w
+    meaning: water surface tension and its polar and dispersive components (OWRK)
+    value: {gamma_w: 72.8, gamma_w_polar: 51.0, gamma_w_dispersive: 21.8}
+    unit: mJ m^-2
+    doi: 10.3390/foods6040031
+    locator: p. 5, Table 1 (water, 20 C)
+    note: Senturk Parreidt, Schmid, Hauser, Foods 6, 31 (2017); used only by the S-GIUFFRE2013 cases.
+
+studies:
+  - id: S-HAMM2014
+    doi: 10.1073/pnas.1312369111
+    citation: Hamm LM, Giuffre AJ, Han N, Tao J, Wang D, De Yoreo JJ, Dove PM. Proc. Natl. Acad. Sci. USA 111, 1304-1309 (2014)
+    read: full text
+    route: Europe PMC PDF render through an archived copy (PMC3910584)
+    conditions:
+      mineral: calcite
+      polymorph: calcite (Raman; no ACC seen optically or by SEM)
+      supersaturation: {quantity: "sigma = ln(a_Ca a_CO3 / K_sp,calcite)", range: [4.66, 5.12], locator: "p. 1308, Materials and Methods, Nucleation Rate Measurements"}
+      pH: {value: 10.55, sd: 0.10, locator: "p. 1308, Materials and Methods"}
+      T: {value: 25, unit: "C", locator: "p. 1308, Materials and Methods"}
+      ionic_strength: {value: "not reported", note: "CaCl2 and Na2CO3 flow solutions, Mg-free series used here"}
+      method: flow-cell optical counting of calcite crystallites on alkanethiol SAMs on template-stripped Au; DFS of SAM-functionalised tips on calcite {104} in calcite-saturated solution at pH 10.55
+    reference: C16-COOH (rule 3b, carboxyl SAM of a SAM series)
+
+  - id: S-NIELSEN2020
+    doi: 10.1021/acs.cgd.0c00029
+    citation: Nielsen AR, Jelavic S, Murray D, Rad B, Andersson MP, Ceccato M, Mitchell AC, Stipp SLS, Zuckermann RN, Sand KK. Cryst. Growth Des. 20, 3762-3771 (2020)
+    read: full text
+    route: Unpaywall location (cc-by) through an archived copy
+    conditions:
+      mineral: calcite
+      polymorph: calcite (morphology; prismatic, rhombohedral)
+      supersaturation: {quantity: "sigma = ln(a_Ca a_CO3 / K_sp,calcite)", range: [5.25, 5.85], locator: 'p. 3764, Section 2.2'}
+      pH: {value: 9.5, sd: 0.1, locator: 'p. 3764, Section 2.2 (NaHCO3 titrated to pH 9.5 +- 0.1); Section 3.1 (p. 3766) says pH 9.0; DFS at pH 8.2 (p. 3767, Section 3.2)'}
+      T: {value: 23, unit: "C", locator: 'p. 3764, Section 2.2 (ambient temperature, 23 C)'}
+      ionic_strength: {value: "7-11 mM CaCl2 plus NaHCO3", locator: "p. 3764, Section 2.2"}
+      method: flow-through steady-state nucleation rates on alkanethiol SAMs and B28 peptoid SAMs; DFS of SAM tips on calcite {10.4}; COSMO-RS
+    reference: carboxyl SAM (rule 3b)
+
+  - id: S-HU2012
+    doi: 10.1039/c2fd20124k
+    citation: Hu Q, Nielsen MH, Freeman CL, Hamm LM, Tao J, Lee JRI, Han TYJ, Becker U, Harding JH, Dove PM, De Yoreo JJ. Faraday Discuss. 159, 509-523 (2012)
+    read: full text (accepted manuscript, White Rose repository; page numbers are those of the manuscript PDF)
+    route: OpenAlex open location (eprints.whiterose.ac.uk/86509)
+    conditions:
+      mineral: calcite
+      polymorph: calcite (Raman of quenched samples)
+      supersaturation: {quantity: "sigma (calcite)", range: [3.506, 4.853], locator: "pdf p. 28, SI Table S1 (MINTEQ2 activities)"}
+      pH: {value: "not stated for the rate series", note: "10.55 is stated for the MUO comparison solutions (pdf p. 17, Figure 1 caption)"}
+      T: {value: "room temperature", locator: "pdf p. 9"}
+      ionic_strength: {value: "10-30 mM CaCl2 plus NaHCO3", locator: "pdf p. 28, SI solution preparation"}
+      method: flow-cell optical nucleation rates on MHA (C16) and MUA (C11) carboxyl SAMs; MD of calcite on even and odd carboxyl SAMs
+    reference: MHA, the even-parity C16 carboxyl SAM (rule 3a, the authors' principal surface)
+
+  - id: S-GIUFFRE2013
+    doi: 10.1073/pnas.1222162110
+    citation: Giuffre AJ, Hamm LM, Han N, De Yoreo JJ, Dove PM. Proc. Natl. Acad. Sci. USA 110, 9261-9266 (2013)
+    read: full text (PMC3677451 HTML) and SI (archived PNAS supplement PDF)
+    route: PubMed Central HTML; SI through an archived copy of the PNAS supplement
+    conditions:
+      mineral: calcite
+      polymorph: calcite only, by rhombohedral morphology
+      supersaturation: {quantity: "sigma = ln(a_Ca a_CO3 / K_sp,calcite)", range: [4.83, 5.63], locator: "Results, first paragraph after Eq. 1; Materials and Methods"}
+      pH: {value: 10.8, sd: 0.1, locator: "Materials and Methods"}
+      T: {value: 25.0, sd: 0.5, unit: "C", locator: "Materials and Methods"}
+      ionic_strength: {value: "0.007-0.013", unit: "M", locator: "Results, first paragraph after Eq. 1"}
+      method: flow-through nucleation rates on electrodeposited polysaccharide films on Au; OWRK surface free energy from contact angles of water, glycerol and ethylene glycol (SI section S3)
+    reference: chitosan (rule 3c)
+
+  - id: S-DENG2015
+    doi: 10.1093/rb/rbv010
+    citation: Deng H, Wang S, Wang X, Du C, Shen X, Wang Y, Cui F. Regen. Biomater. 2, 187-195 (2015)
+    read: full text (Europe PMC XML, PMC4669016, CC-BY); Figure 2 image from PubMed Central
+    route: Europe PMC full-text XML; figure from the PMC CDN
+    conditions:
+      mineral: CaCO3
+      polymorph: calcite (COOH); ACC then vaterite (OH, NH2); none (CH3)
+      supersaturation: {quantity: "not reported", note: "CO2 from ammonium carbonate diffusing into 1 mM CaCl2 (Experimental set-up)"}
+      pH: {value: "not reported"}
+      T: {value: "room temperature", locator: "Experimental set-up"}
+      ionic_strength: {value: "1 mM CaCl2 initial", locator: "Experimental set-up"}
+      method: SAMs on Au(111) facing down in 1 mM CaCl2 under ammonium carbonate vapour; near-surface Ca2+ by ion-selective electrode; SEM, XRD, ATR-FTIR at 15 min to 12 h
+    reference: COOH SAM (rule 3b)
+
+  - id: S-YU2023
+    doi: 10.3390/coatings13020306
+    citation: Yu XL, Wang BB, Xu ZM et al. Coatings 13, 306 (2023)
+    read: full text (13 pp.)
+    route: Unpaywall location (MDPI) through an archived copy
+    conditions:
+      mineral: CaCO3
+      polymorph: not identified (no XRD in the paper)
+      supersaturation: {quantity: "Ca2+ and CO3 2- each 360 mg/L", note: "pH not reported, so the IAP is not fixed", locator: "p. 7, Section 4.1.4"}
+      pH: {value: "not reported"}
+      T: {value: 70, unit: "C", note: "70 C chosen over 90 C under rule 4 (closer to R-slurry)", locator: "p. 8, Figure 7"}
+      ionic_strength: {value: "not reported"}
+      method: static immersion 12 h, scale mass by weighing; MD (COMPASS) of a CaCO3 solution on an Fe plate with and without a PDA layer
+    reference: bare Q235 carbon steel (rule 3a, the authors' control)
+
+cases:
+  # ------------------------------------------------------------------ S-HAMM2014 (theta channel, DFS)
+  - id: RC01
+    study: S-HAMM2014
+    termination: thiol
+    templated: none
+    test: {label: "C16-SH", chemistry: "1,16-hexadecanedithiol SAM on Au"}
+    reference: {label: "C16-COOH", chemistry: "16-mercaptohexadecanoic acid SAM on Au"}
+    mineral: calcite
+    polymorph: calcite
+    outcome:
+      comparison: pairwise
+      observable: cnt_slope_B
+      test_value: -680
+      reference_value: -572
+      unit: '1'
+      relation: test_higher_barrier
+      reading: B is the slope of ln J0 against sigma^-2 and is proportional to the barrier at fixed sigma (Eq. 6b); |B| larger means a higher barrier.
+      doi: 10.1073/pnas.1312369111
+      locator: p. 1307, Table 2 (Mg2+/Ca2+ = 0 rows)
+    channel: theta
+    inputs:
+      - {symbol: "dG_bind", role: "test", distribution: {type: "normal", mean: -4.4, sd: 0.47}, unit: "kcal mol^-1", doi: "10.1073/pnas.1312369111", locator: "p. 1307, Table 2, row C16-SH", maps_to: 'cos_theta_young = |dG_bind|/(a gamma_nl) - 1 (SCHEMA.md section 4)', assumption: true, basis: 'mean as reported; sd not reported, set to 0.8 kT (0.47 kcal/mol at 298 K), the largest DFS sd reported by Nielsen et al. 2020 (10.1021/acs.cgd.0c00029, p. 3767, Section 3.2)', derived_from_outcome: false}
+      - {symbol: "dG_bind", role: "reference", distribution: {type: "normal", mean: -7.4, sd: 0.47}, unit: "kcal mol^-1", doi: "10.1073/pnas.1312369111", locator: "p. 1307, Table 2, row C16-COOH", evidence_row: "TC-066", maps_to: "as test", assumption: true, basis: "sd as for the test surface", derived_from_outcome: false}
+      - {symbol: "A_c", role: "shared", distribution: {type: "uniform", low: 0.2, high: 0.6}, unit: "nm^2", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3768, Section 3.3.2", evidence_row: "TC-075", maps_to: "contact area a per SAM molecule in Young-Dupre", assumption: true, basis: 'range of Nielsen et al. 2020; Hamm et al. state a is at least (0.5 nm)^2 and below 1 nm^2 (p. 1306)', derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "uniform_log", low_sigma: 4.66, high_sigma: 5.12}, unit: '1', doi: "10.1073/pnas.1312369111", locator: "p. 1308, Materials and Methods", maps_to: 'Omega = exp(sigma)', assumption: false, derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 298.15, unit: "K", doi: "10.1073/pnas.1312369111", locator: "p. 1308, Materials and Methods (25 C)", assumption: false, derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC01-1", text: 'DFS binding to calcite {104} stands for binding of the nucleating (012) face; the authors give the same caveat (p. 1307).'}
+      - {id: "A-RC01-2", text: 'Contact area per molecule a is common to both SAMs (shared draw).'}
+      - {id: "A-RC01-3", text: 'The DFS free energy is a full in-water free energy, so Delta_gamma_w = 0 (theory/contract.yaml, water_displacement).'}
+    evidence_rows: [TC-061, TC-062, TC-066]
+    link_reported_in_source: true
+    negative: false
+    status: usable
+
+  - id: RC02
+    study: S-HAMM2014
+    termination: thiol
+    templated: none
+    test: {label: "C11-SH", chemistry: "1,11-undecanedithiol SAM on Au"}
+    reference: {label: "C16-COOH", chemistry: "16-mercaptohexadecanoic acid SAM on Au"}
+    mineral: calcite
+    polymorph: calcite
+    outcome:
+      comparison: pairwise
+      observable: cnt_slope_B
+      test_value: -806
+      reference_value: -572
+      unit: '1'
+      relation: test_higher_barrier
+      reading: as RC01
+      doi: 10.1073/pnas.1312369111
+      locator: p. 1307, Table 2 (Mg2+/Ca2+ = 0 rows)
+    channel: theta
+    inputs:
+      - {symbol: "dG_bind", role: "test", distribution: {type: "normal", mean: -2.9, sd: 0.47}, unit: "kcal mol^-1", doi: "10.1073/pnas.1312369111", locator: "p. 1307, Table 2, row C11-SH", maps_to: "as RC01", assumption: true, basis: "sd as in RC01", derived_from_outcome: false}
+      - {symbol: "dG_bind", role: "reference", distribution: {type: "normal", mean: -7.4, sd: 0.47}, unit: "kcal mol^-1", doi: "10.1073/pnas.1312369111", locator: "p. 1307, Table 2, row C16-COOH", evidence_row: "TC-066", maps_to: "as RC01", assumption: true, basis: "sd as in RC01", derived_from_outcome: false}
+      - {symbol: "A_c", role: "shared", distribution: {type: "uniform", low: 0.2, high: 0.6}, unit: "nm^2", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3768, Section 3.3.2", evidence_row: "TC-075", maps_to: "as RC01", assumption: true, basis: "as RC01", derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "uniform_log", low_sigma: 4.66, high_sigma: 5.12}, unit: '1', doi: "10.1073/pnas.1312369111", locator: "p. 1308, Materials and Methods", maps_to: 'Omega = exp(sigma)', assumption: false, derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 298.15, unit: "K", doi: "10.1073/pnas.1312369111", locator: "p. 1308, Materials and Methods (25 C)", assumption: false, derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC02-1", text: "as A-RC01-1"}
+      - {id: "A-RC02-2", text: "as A-RC01-2; chain length (C11 against C16) changes packing, so a common a is a stronger assumption here"}
+      - {id: "A-RC02-3", text: "as A-RC01-3"}
+    evidence_rows: [TC-061, TC-063, TC-066]
+    link_reported_in_source: true
+    negative: false
+    status: usable
+
+  - id: RC03
+    study: S-HAMM2014
+    termination: phosphate
+    templated: none
+    test: {label: "C11-PO4", chemistry: "11-mercaptoundecylphosphoric acid SAM on Au"}
+    reference: {label: "C16-COOH", chemistry: "16-mercaptohexadecanoic acid SAM on Au"}
+    mineral: calcite
+    polymorph: calcite
+    outcome:
+      comparison: pairwise
+      observable: cnt_slope_B
+      test_value: -983
+      reference_value: -572
+      unit: '1'
+      relation: test_higher_barrier
+      reading: as RC01
+      doi: 10.1073/pnas.1312369111
+      locator: p. 1307, Table 2 (Mg2+/Ca2+ = 0 rows)
+    channel: theta
+    inputs:
+      - {symbol: "dG_bind", role: "test", distribution: {type: "normal", mean: -1.6, sd: 0.47}, unit: "kcal mol^-1", doi: "10.1073/pnas.1312369111", locator: "p. 1307, Table 2, row C11-PO4", maps_to: "as RC01", assumption: true, basis: "sd as in RC01", derived_from_outcome: false}
+      - {symbol: "dG_bind", role: "reference", distribution: {type: "normal", mean: -7.4, sd: 0.47}, unit: "kcal mol^-1", doi: "10.1073/pnas.1312369111", locator: "p. 1307, Table 2, row C16-COOH", evidence_row: "TC-066", maps_to: "as RC01", assumption: true, basis: "sd as in RC01", derived_from_outcome: false}
+      - {symbol: "A_c", role: "shared", distribution: {type: "uniform", low: 0.2, high: 0.6}, unit: "nm^2", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3768, Section 3.3.2", evidence_row: "TC-075", maps_to: "as RC01", assumption: true, basis: "as RC01", derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "uniform_log", low_sigma: 4.66, high_sigma: 5.12}, unit: '1', doi: "10.1073/pnas.1312369111", locator: "p. 1308, Materials and Methods", maps_to: 'Omega = exp(sigma)', assumption: false, derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 298.15, unit: "K", doi: "10.1073/pnas.1312369111", locator: "p. 1308, Materials and Methods (25 C)", assumption: false, derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC03-1", text: "as A-RC01-1"}
+      - {id: "A-RC03-2", text: "as A-RC02-2"}
+      - {id: "A-RC03-3", text: "as A-RC01-3"}
+    evidence_rows: [TC-061, TC-064, TC-066]
+    link_reported_in_source: true
+    negative: false
+    status: usable
+
+  # ------------------------------------------------------------------ S-NIELSEN2020 (theta channel, DFS)
+  - id: RC04
+    study: S-NIELSEN2020
+    termination: amine
+    templated: none
+    test: {label: "NH2 SAM", chemistry: "11-amino-1-undecanethiol SAM on Au"}
+    reference: {label: "carboxyl SAM", chemistry: "11-mercaptoundecanoic acid SAM on Au"}
+    mineral: calcite
+    polymorph: calcite
+    outcome:
+      comparison: pairwise
+      observable: cnt_slope_B
+      test_value: 859
+      reference_value: 397
+      unit: '1'
+      relation: test_higher_barrier
+      reading: 'B proportional to the barrier (Eq. 2); B = 859 +- 334 (amine) and 397 +- 65 (carboxyl). The rate J0 at sigma = 5.73 orders the same way here (17 and 2400 site/min), but rates are not used (SCHEMA.md 3.3).'
+      doi: 10.1021/acs.cgd.0c00029
+      locator: p. 3766, Table 1
+    channel: theta
+    inputs:
+      - {symbol: "dG_bind", role: "test", distribution: {type: "normal", mean: -3.6, sd: 0.6}, unit: "kT", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3767, Section 3.2 and Figure 6 (amine SAM-calcite 3.6 +- 0.6 kT)", maps_to: 'as RC01, sign written negative for binding', assumption: false, derived_from_outcome: false}
+      - {symbol: "dG_bind", role: "reference", distribution: {type: "normal", mean: -5.0, sd: 0.7}, unit: "kT", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3767, Section 3.2 and Figure 6 (calcite-carboxyl SAM 5.0 +- 0.7 kT)", evidence_row: "TC-074", maps_to: "as test", assumption: false, derived_from_outcome: false}
+      - {symbol: "A_c", role: "shared", distribution: {type: "uniform", low: 0.2, high: 0.6}, unit: "nm^2", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3768, Section 3.3.2", evidence_row: "TC-075", maps_to: "as RC01", assumption: true, basis: 'range used by the authors for well- to poorly-organised SAMs; common to both SAMs', derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "uniform_log", low_sigma: 5.25, high_sigma: 5.85}, unit: '1', doi: "10.1021/acs.cgd.0c00029", locator: "p. 3764, Section 2.2 (evidence row TC-069 conditions)", maps_to: 'Omega = exp(sigma)', assumption: false, derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 296.15, unit: "K", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3764, Section 2.2 (23 C, evidence row TC-069)", assumption: false, derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC04-1", text: 'DFS was done at pH 8.2 and nucleation at pH 9.5 +- 0.1 (methods; the text of Section 3.1 says 9.0); the binding free energies are taken to hold at the nucleation pH. The authors note the pH dependence of the electrostatic part (p. 3767).'}
+      - {id: "A-RC04-2", text: "DFS on calcite {10.4} stands for the nucleating faces ({01.l} on carboxyl, {10.3} on amine)."}
+      - {id: "A-RC04-3", text: "as A-RC01-3"}
+      - {id: "A-RC04-4", text: 'The DFS route is used, not the COSMO-RS route of the same paper; the choice is fixed here, before the run, because DFS is a measurement and COSMO-RS was run for uncharged model dimers only.'}
+    evidence_rows: [TC-069, TC-070, TC-074, TC-075]
+    link_reported_in_source: true
+    negative: false
+    status: usable
+
+  - id: RC05
+    study: S-NIELSEN2020
+    termination: mixed
+    templated: none
+    test: {label: "1:1 COOH/NH2 SAM", chemistry: 'mixed 11-mercaptoundecanoic acid / 11-amino-1-undecanethiol SAM (about 50 % each by XPS)'}
+    reference: {label: "carboxyl SAM", chemistry: "11-mercaptoundecanoic acid SAM on Au"}
+    mineral: calcite
+    polymorph: calcite on the reference; none on the test surface
+    outcome:
+      comparison: pairwise
+      observable: presence_absence
+      test_value: absent
+      reference_value: present
+      relation: test_higher_barrier
+      reading: 'No nucleation was observed on the 1:1 SAM during the rate experiments (p. 3768, Section 3.3.1), while the carboxyl SAM nucleated across the same sigma range; absence under identical flow conditions is read as a higher barrier, assuming a kinetic prefactor not lower by enough to explain it alone.'
+      doi: 10.1021/acs.cgd.0c00029
+      locator: p. 3768, Section 3.3.1, and Table 1
+    channel: theta
+    inputs:
+      - {symbol: "dG_bind", role: "test", distribution: {type: "normal", mean: -2.3, sd: 0.8}, unit: "kT", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3767, Section 3.2 and Figure 6 (calcite-1:1 SAM 2.3 +- 0.8 kT)", maps_to: "as RC04", assumption: false, derived_from_outcome: false}
+      - {symbol: "dG_bind", role: "reference", distribution: {type: "normal", mean: -5.0, sd: 0.7}, unit: "kT", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3767, Section 3.2 and Figure 6", evidence_row: "TC-074", maps_to: "as RC04", assumption: false, derived_from_outcome: false}
+      - {symbol: "A_c", role: "shared", distribution: {type: "uniform", low: 0.2, high: 0.6}, unit: "nm^2", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3768, Section 3.3.2", evidence_row: "TC-075", maps_to: "as RC01", assumption: true, basis: "as RC04", derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "uniform_log", low_sigma: 5.25, high_sigma: 5.85}, unit: '1', doi: "10.1021/acs.cgd.0c00029", locator: "p. 3764, Section 2.2 (evidence row TC-071 conditions)", maps_to: 'Omega = exp(sigma)', assumption: false, derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 296.15, unit: "K", doi: "10.1021/acs.cgd.0c00029", locator: "p. 3764, Section 2.2 (23 C)", assumption: false, derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC05-1", text: "as A-RC04-1"}
+      - {id: "A-RC05-2", text: 'Absence of nucleation implies the higher barrier (common or not much higher prefactor).'}
+      - {id: "A-RC05-3", text: "as A-RC01-3"}
+      - {id: "A-RC05-4", text: "as A-RC04-4"}
+    evidence_rows: [TC-071, TC-074, TC-075]
+    link_reported_in_source: true
+    negative: true
+    status: usable
+
+  # ------------------------------------------------------------------ S-HU2012 (theta channel, MD)
+  - id: RC06
+    study: S-HU2012
+    termination: carboxyl
+    templated: none
+    test: {label: "MUA (C11, odd parity)", chemistry: "11-mercaptoundecanoic acid SAM on Au(111)"}
+    reference: {label: "MHA (C16, even parity)", chemistry: "16-mercaptohexadecanoic acid SAM on Au(111)"}
+    mineral: calcite
+    polymorph: calcite
+    outcome:
+      comparison: pairwise
+      observable: cnt_slope_B
+      test_value: 81
+      reference_value: 72
+      unit: mJ m^-2 (alpha from the slope of ln J against sigma^-2)
+      relation: test_higher_barrier
+      reading: 'alpha is the slope-derived effective interfacial energy and orders as the slope B; the authors give mid-range barriers of 27 kT (MUA) and 19 kT (MHA). Used as the observed ordering only, never as an input.'
+      doi: 10.1039/c2fd20124k
+      locator: pdf p. 9 (manuscript p. 8), Section 3
+    channel: theta
+    inputs:
+      - {symbol: "gamma_net_sim", role: "test", distribution: {type: "normal", mean: 102, sd: 6}, unit: "mJ m^-2", doi: "10.1039/c2fd20124k", locator: "pdf p. 11 (manuscript p. 10), Section 4 (odd SAM, 102 +- 6 mJ/m2)", maps_to: 'f_theta = (gamma_net_sim/gamma_nl)^3 (SCHEMA.md section 4)', assumption: false, derived_from_outcome: false}
+      - {symbol: "gamma_net_sim", role: "reference", distribution: {type: "normal", mean: 56, sd: 6}, unit: "mJ m^-2", doi: "10.1039/c2fd20124k", locator: "pdf p. 11 (manuscript p. 10), Section 4 (even SAM, 56 mJ/m2)", maps_to: "as test", assumption: true, basis: 'mean as reported; sd not stated for the even SAM, set to the 6 mJ/m2 stated for the odd SAM', derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "uniform_log", low_sigma: 3.506, high_sigma: 4.853}, unit: '1', doi: "10.1039/c2fd20124k", locator: "pdf p. 28, SI Table S1", maps_to: 'Omega = exp(sigma)', assumption: false, derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 298.15, unit: "K", doi: "10.1039/c2fd20124k", locator: "pdf p. 9 (room temperature)", assumption: true, basis: "room temperature taken as 25 C", derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC06-1", text: 'The simulated interfacial energies come from crystallisation simulations of calcite on the SAMs (configurational energies; the authors note free energies are not extracted directly, SI pdf p. 30-31). They are independent of the measured rates.'}
+      - {id: "A-RC06-2", text: 'Both nuclei share one shape factor, so f(theta) = (gamma_net/gamma_nl)^3; values above gamma_nl clip to theta = pi.'}
+    evidence_rows: [TC-057, TC-058]
+    link_reported_in_source: true
+    negative: false
+    status: usable
+
+  # ------------------------------------------------------------------ S-GIUFFRE2013 (theta channel, OWRK)
+  - id: RC07
+    study: S-GIUFFRE2013
+    termination: polysaccharide
+    templated: chitosan
+    test: {label: "heparin", chemistry: "electrodeposited heparin film on Au (charge -1.36 per monosaccharide, SI Table S1)"}
+    reference: {label: "chitosan", chemistry: 'electrodeposited chitosan film on Au (75-90 % deacetylated; charge +0.28 per monosaccharide, SI Table S1)'}
+    mineral: calcite
+    polymorph: calcite
+    outcome:
+      comparison: pairwise
+      observable: cnt_slope_B
+      test_value: 376
+      reference_value: 121
+      unit: '1'
+      relation: test_higher_barrier
+      reading: B proportional to the barrier (Eq. 3); heparin B = 376 +- 60, chitosan B = 121 +- 22.
+      doi: 10.1073/pnas.1222162110
+      locator: Figure 2 caption (A, D)
+    channel: theta
+    inputs:
+      - {symbol: "gamma_s_owrk", role: "test", value: {polar: 81.4, dispersive: 2.76}, unit: "mJ m^-2", doi: "10.1073/pnas.1222162110", locator: "SI p. 3, Table S2, row heparin", maps_to: 'gamma_sl by OWRK against water (SCHEMA.md section 4)', assumption: true, basis: 'uncertainty not reported; W2.3 uses sd 2 mJ/m2 on each component', derived_from_outcome: false}
+      - {symbol: "gamma_s_owrk", role: "reference", value: {polar: 28.1, dispersive: 11.0}, unit: "mJ m^-2", doi: "10.1073/pnas.1222162110", locator: "SI p. 3, Table S2, row chitosan", maps_to: "as test", assumption: true, basis: "as test", derived_from_outcome: false}
+      - {symbol: "cos_theta_ref", role: "shared", distribution: {type: "uniform", low: -1.0, high: 1.0}, unit: '1', doi: "10.1073/pnas.1222162110", locator: 'not reported (nuisance); see A-RC07-1', maps_to: 'cos_theta_test = cos_theta_ref + (gamma_sl,test - gamma_sl,ref)/gamma_nl, clipped (N2)', assumption: true, basis: "no contact angle of a calcite nucleus on chitosan is reported; uninformative over the admissible interval", derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "uniform_log", low_sigma: 4.83, high_sigma: 5.63}, unit: '1', doi: "10.1073/pnas.1222162110", locator: "Materials and Methods", maps_to: 'Omega = exp(sigma)', assumption: false, derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 298.15, unit: "K", doi: "10.1073/pnas.1222162110", locator: "Materials and Methods (25.0 +- 0.5 C)", assumption: false, derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC07-1", text: 'gamma_sn (substrate-nucleus) is equal for the two films. The authors read their data this way, with gamma_SL as the primary control and gamma_SC a secondary one (Discussion).'}
+      - {id: "A-RC07-2", text: 'gamma_S-air from contact angles on films in air stands for the in-water surface through OWRK; the authors call it a rough proxy for gamma_SL (Results).'}
+      - {id: "A-RC07-3", text: 'OWRK water components from Foods 6, 31 (2017), Table 1 (shared_priors.water_owrk_components).'}
+    evidence_rows: [TC-080, TC-081, TC-083]
+    link_reported_in_source: true
+    negative: false
+    status: usable
+
+  - id: RC08
+    study: S-GIUFFRE2013
+    termination: polysaccharide
+    templated: chitosan
+    test: {label: "LG alginate", chemistry: "electrodeposited low-guluronic-acid alginate film on Au (charge -1.02 per monosaccharide)"}
+    reference: {label: "chitosan", chemistry: "electrodeposited chitosan film on Au"}
+    mineral: calcite
+    polymorph: calcite
+    outcome:
+      comparison: pairwise
+      observable: cnt_slope_B
+      test_value: 390
+      reference_value: 121
+      unit: '1'
+      relation: test_higher_barrier
+      reading: LG alginate B = 390 +- 11, chitosan B = 121 +- 22.
+      doi: 10.1073/pnas.1222162110
+      locator: Figure 2 caption (B, D)
+    channel: theta
+    inputs:
+      - {symbol: "gamma_s_owrk", role: "test", value: {polar: 72.2, dispersive: 4.88}, unit: "mJ m^-2", doi: "10.1073/pnas.1222162110", locator: "SI p. 3, Table S2, row LG alginate", maps_to: "as RC07", assumption: true, basis: "as RC07", derived_from_outcome: false}
+      - {symbol: "gamma_s_owrk", role: "reference", value: {polar: 28.1, dispersive: 11.0}, unit: "mJ m^-2", doi: "10.1073/pnas.1222162110", locator: "SI p. 3, Table S2, row chitosan", maps_to: "as RC07", assumption: true, basis: "as RC07", derived_from_outcome: false}
+      - {symbol: "cos_theta_ref", role: "shared", distribution: {type: "uniform", low: -1.0, high: 1.0}, unit: '1', doi: "10.1073/pnas.1222162110", locator: "not reported (nuisance)", maps_to: "as RC07", assumption: true, basis: "as RC07", derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "uniform_log", low_sigma: 4.83, high_sigma: 5.63}, unit: '1', doi: "10.1073/pnas.1222162110", locator: "Materials and Methods", maps_to: 'Omega = exp(sigma)', assumption: false, derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 298.15, unit: "K", doi: "10.1073/pnas.1222162110", locator: "Materials and Methods", assumption: false, derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC08-1", text: "as A-RC07-1"}
+      - {id: "A-RC08-2", text: "as A-RC07-2"}
+      - {id: "A-RC08-3", text: "as A-RC07-3"}
+    evidence_rows: [TC-083]
+    link_reported_in_source: true
+    negative: false
+    status: usable
+
+  - id: RC09
+    study: S-GIUFFRE2013
+    termination: polysaccharide
+    templated: chitosan
+    test: {label: "HG alginate", chemistry: "electrodeposited high-guluronic-acid alginate film on Au (charge -1.02 per monosaccharide)"}
+    reference: {label: "chitosan", chemistry: "electrodeposited chitosan film on Au"}
+    mineral: calcite
+    polymorph: calcite
+    outcome:
+      comparison: pairwise
+      observable: cnt_slope_B
+      test_value: 294
+      reference_value: 121
+      unit: '1'
+      relation: test_higher_barrier
+      reading: HG alginate B = 294 +- 45, chitosan B = 121 +- 22.
+      doi: 10.1073/pnas.1222162110
+      locator: Figure 2 caption (B, D)
+    channel: theta
+    inputs:
+      - {symbol: "gamma_s_owrk", role: "test", value: {polar: 72.3, dispersive: 4.77}, unit: "mJ m^-2", doi: "10.1073/pnas.1222162110", locator: "SI p. 3, Table S2, row HG alginate", maps_to: "as RC07", assumption: true, basis: "as RC07", derived_from_outcome: false}
+      - {symbol: "gamma_s_owrk", role: "reference", value: {polar: 28.1, dispersive: 11.0}, unit: "mJ m^-2", doi: "10.1073/pnas.1222162110", locator: "SI p. 3, Table S2, row chitosan", maps_to: "as RC07", assumption: true, basis: "as RC07", derived_from_outcome: false}
+      - {symbol: "cos_theta_ref", role: "shared", distribution: {type: "uniform", low: -1.0, high: 1.0}, unit: '1', doi: "10.1073/pnas.1222162110", locator: "not reported (nuisance)", maps_to: "as RC07", assumption: true, basis: "as RC07", derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "uniform_log", low_sigma: 4.83, high_sigma: 5.63}, unit: '1', doi: "10.1073/pnas.1222162110", locator: "Materials and Methods", maps_to: 'Omega = exp(sigma)', assumption: false, derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 298.15, unit: "K", doi: "10.1073/pnas.1222162110", locator: "Materials and Methods", assumption: false, derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC09-1", text: "as A-RC07-1"}
+      - {id: "A-RC09-2", text: "as A-RC07-2"}
+      - {id: "A-RC09-3", text: "as A-RC07-3"}
+    evidence_rows: [TC-080, TC-083]
+    link_reported_in_source: true
+    negative: false
+    status: usable
+
+  - id: RC10
+    study: S-GIUFFRE2013
+    termination: polysaccharide
+    templated: chitosan
+    test: {label: "hyaluronate", chemistry: "electrodeposited hyaluronate film on Au (charge -0.52 per monosaccharide)"}
+    reference: {label: "chitosan", chemistry: "electrodeposited chitosan film on Au"}
+    mineral: calcite
+    polymorph: calcite
+    outcome:
+      comparison: pairwise
+      observable: cnt_slope_B
+      test_value: 253
+      reference_value: 121
+      unit: '1'
+      relation: test_higher_barrier
+      reading: hyaluronate B = 253 +- 58, chitosan B = 121 +- 22.
+      doi: 10.1073/pnas.1222162110
+      locator: Figure 2 caption (C, D)
+    channel: theta
+    inputs:
+      - {symbol: "gamma_s_owrk", role: "test", value: {polar: 52.4, dispersive: 11.1}, unit: "mJ m^-2", doi: "10.1073/pnas.1222162110", locator: "SI p. 3, Table S2, row hyaluronate", maps_to: "as RC07", assumption: true, basis: "as RC07", derived_from_outcome: false}
+      - {symbol: "gamma_s_owrk", role: "reference", value: {polar: 28.1, dispersive: 11.0}, unit: "mJ m^-2", doi: "10.1073/pnas.1222162110", locator: "SI p. 3, Table S2, row chitosan", maps_to: "as RC07", assumption: true, basis: "as RC07", derived_from_outcome: false}
+      - {symbol: "cos_theta_ref", role: "shared", distribution: {type: "uniform", low: -1.0, high: 1.0}, unit: '1', doi: "10.1073/pnas.1222162110", locator: "not reported (nuisance)", maps_to: "as RC07", assumption: true, basis: "as RC07", derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "uniform_log", low_sigma: 4.83, high_sigma: 5.63}, unit: '1', doi: "10.1073/pnas.1222162110", locator: "Materials and Methods", maps_to: 'Omega = exp(sigma)', assumption: false, derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 298.15, unit: "K", doi: "10.1073/pnas.1222162110", locator: "Materials and Methods", assumption: false, derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC10-1", text: "as A-RC07-1"}
+      - {id: "A-RC10-2", text: "as A-RC07-2"}
+      - {id: "A-RC10-3", text: "as A-RC07-3"}
+    evidence_rows: [TC-083]
+    link_reported_in_source: true
+    negative: false
+    status: usable
+
+  # ------------------------------------------------------------------ S-DENG2015 (omega channel)
+  - id: RC11
+    study: S-DENG2015
+    termination: methyl
+    templated: none
+    test: {label: "CH3 SAM", chemistry: "methyl-terminated alkanethiol SAM on Au(111)"}
+    reference: {label: "COOH SAM", chemistry: "carboxyl-terminated alkanethiol SAM on Au(111)"}
+    mineral: CaCO3
+    polymorph: calcite (with some vaterite) on the reference; none on the test surface
+    outcome:
+      comparison: pairwise
+      observable: presence_absence
+      test_value: absent
+      reference_value: present
+      relation: test_higher_barrier
+      reading: '"Neither ACC nor crystalline CaCO3 is observed on -CH3 surface" over 12 h, while calcite formed on -COOH in the same set-up; absence is read as the higher barrier.'
+      doi: 10.1093/rb/rbv010
+      locator: Abstract; Results (SEM, XRD, ATR-FTIR at 15 min to 12 h)
+    channel: omega
+    inputs:
+      - {symbol: "c_local", role: "test", distribution: {type: "normal", mean: 2.05, sd: 0.1}, unit: "mM", doi: "10.1093/rb/rbv010", locator: 'Figure 2, CH3 curve, peak near 42 min (read from the figure)', maps_to: 'E_enr = c_local/c_bulk; Omega_local = E_enr Omega_bulk (theory/contract.yaml, enrichment)', assumption: true, basis: 'peak value read from Figure 2; sd 0.1 mM is the reading resolution, not a reported uncertainty', derived_from_outcome: false}
+      - {symbol: "c_local", role: "reference", distribution: {type: "normal", mean: 4.9, sd: 0.1}, unit: "mM", doi: "10.1093/rb/rbv010", locator: 'Figure 2, COOH curve, peak near 30 min (read from the figure); the text gives about five times the initial concentration at about 30 min (Results)', maps_to: "as test", assumption: true, basis: "as test", derived_from_outcome: false}
+      - {symbol: "c_bulk", role: "shared", value: 1.0, unit: "mM", doi: "10.1093/rb/rbv010", locator: "Experimental set-up (1 mM CaCl2)", assumption: false, derived_from_outcome: false}
+      - {symbol: "Omega_bulk", role: "shared", distribution: {type: "loguniform", low: 2, high: 100}, unit: '1', doi: "10.1093/rb/rbv010", locator: "not reported (ammonium carbonate diffusion)", maps_to: "Omega_bulk", assumption: true, basis: 'not reported; the sign of the predicted barrier difference does not depend on Omega_bulk for an omega-channel pair with a common theta', derived_from_outcome: false}
+      - {symbol: "cos_theta", role: "shared", distribution: {type: "uniform", low: -1.0, high: 1.0}, unit: '1', doi: "10.1093/rb/rbv010", locator: "not reported (nuisance)", assumption: true, basis: "see A-RC11-1", derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 298.15, unit: "K", doi: "10.1093/rb/rbv010", locator: "Experimental set-up (room temperature)", assumption: true, basis: "room temperature taken as 25 C", derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC11-1", text: 'theta is common to the CH3 and COOH surfaces. This is a strong assumption with no source: no calcite-CH3 or calcite-COOH interfacial free energy in water could be sourced (see RX12), so only the Ca2+ enrichment channel carries template information in this case.'}
+      - {id: "A-RC11-2", text: 'The ion-selective electrode placed "as close as possible" to the surface measures a near-surface concentration, taken as c_local of the binding layer.'}
+      - {id: "A-RC11-3", text: 'Each surface''s peak concentration is the enrichment that governs nucleation on it.'}
+      - {id: "A-RC11-4", text: 'Absence of any CaCO3 over 12 h implies the higher barrier.'}
+    evidence_rows: []
+    link_reported_in_source: false
+    negative: true
+    status: usable
+
+  # ------------------------------------------------------------------ S-YU2023 (theta channel, MD), contrary entry B10
+  - id: RC12
+    study: S-YU2023
+    termination: catechol
+    templated: pda
+    test: {label: "PDA coating", chemistry: 'electroplated polydopamine on Q235 steel (1.2 g/L dopamine, 15 V, Ni anode, 3 min; EDS shows Ni in the coating)'}
+    reference: {label: "bare carbon steel", chemistry: "Q235 carbon steel"}
+    mineral: CaCO3
+    polymorph: not identified
+    outcome:
+      comparison: pairwise
+      observable: deposit_mass
+      test_value: 0.300
+      reference_value: 0.667
+      unit: mg cm^-2
+      relation: test_higher_barrier
+      reading: 'Scale mass after 12 h at 70 C (scale-inhibition efficiency 55.02 %); less deposit is read as a higher heterogeneous barrier, assuming a common prefactor and that adhesion of bulk-formed particles does not dominate the mass.'
+      doi: 10.3390/coatings13020306
+      locator: p. 8, Figure 7 and text (70 C)
+    channel: theta
+    inputs:
+      - {symbol: "E_int", role: "test", value: -0.64, unit: "eV", doi: "10.3390/coatings13020306", locator: 'p. 11, Section 4.2.3: PDA-coated plate-CaCO3 -0.29 eV plus near-surface water layer-CaCO3 -0.35 eV', maps_to: 'W = |E_int|/A_c; cos_theta_young = W/gamma_nl - 1', assumption: true, basis: 'sum of the plate and adsorbed-water-layer terms as the interaction with the hydrated substrate; configurational MD energy taken as an adhesion free energy', derived_from_outcome: false}
+      - {symbol: "E_int", role: "reference", value: -85.75, unit: "eV", doi: "10.3390/coatings13020306", locator: 'p. 10, Section 4.2.3: Fe plate-CaCO3 -1.53 eV plus surface water adsorption layer-CaCO3 -84.22 eV', maps_to: "as test", assumption: true, basis: "as test", derived_from_outcome: false}
+      - {symbol: "A_c", role: "shared", distribution: {type: "loguniform", low: 1.0, high: 100.0}, unit: "nm^2", doi: "10.3390/coatings13020306", locator: "not reported (MD cell contact area; Section 3.1 gives the model only)", maps_to: "contact area of the CaCO3 aggregate", assumption: true, basis: "not reported; wide shared prior", derived_from_outcome: false}
+      - {symbol: "Omega", role: "shared", distribution: {type: "loguniform", low: 2, high: 1000}, unit: '1', doi: "10.3390/coatings13020306", locator: 'p. 7, Section 4.1.4 (Ca2+ and CO3 2- each 360 mg/L; pH not reported)', maps_to: "Omega", assumption: true, basis: 'IAP not computable without pH; the sign of the predicted difference does not depend on a shared Omega', derived_from_outcome: false}
+      - {symbol: "T", role: "shared", value: 343.15, unit: "K", doi: "10.3390/coatings13020306", locator: "p. 8, Figure 7 (70 C)", assumption: false, derived_from_outcome: false}
+    assumptions:
+      - {id: "A-RC12-1", text: 'The MD interaction energies (COMPASS, 0.8 mol/L CaCO3, Section 3.1) stand for crystal-substrate adhesion in water. The paper reports two different water-surface energies for PDA (abstract -5.69 eV, Table 2 -7.51 eV); those are not inputs here.'}
+      - {id: "A-RC12-2", text: 'Deposit mass measures nucleation on the surface, not adhesion of bulk-precipitated particles; contrary entry B10 states this mixing.'}
+      - {id: "A-RC12-3", text: "Steel and electroplated PDA (with Ni) stand for an oxide and a catechol template; neither is the P0 system."}
+      - {id: "A-RC12-4", text: "Of the two reported temperatures, 70 C is used (rule 4)."}
+    evidence_rows: []
+    link_reported_in_source: true
+    negative: true
+    status: usable
+
+  # ================================================================== excluded candidates
+  - id: RX01
+    study: S-HAMM2014
+    termination: hydroxyl
+    templated: none
+    test: {label: "C11-OH", chemistry: "11-mercapto-1-undecanol SAM on Au"}
+    reference: {label: "C16-COOH", chemistry: "16-mercaptohexadecanoic acid SAM on Au"}
+    mineral: calcite
+    polymorph: calcite (very few crystallites)
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "absent", reference_value: "present", relation: "test_higher_barrier", reading: 'very few crystallites; rates not measurable', doi: "10.1073/pnas.1312369111", locator: "p. 1306, Results"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-065]
+    link_reported_in_source: false
+    negative: true
+    status: excluded
+    exclusion_reason: 'Inputs cannot be sourced: no DFS binding free energy was measured for the OH SAM (Table 2 and Figure 3 list C16-COOH, C16-SH, C11-SH, C11-PO4 and the Au control only), and no other independent calcite-OH SAM interfacial energy in water was found.'
+
+  - id: RX02
+    study: S-NIELSEN2020
+    termination: peptoid
+    templated: peptoid
+    test: {label: "B28 peptoid SAM", chemistry: "nanosheet-forming B28 peptoid monolayer on HOPG"}
+    reference: {label: "carboxyl SAM", chemistry: "11-mercaptoundecanoic acid SAM on Au"}
+    mineral: calcite
+    polymorph: calcite
+    outcome: {comparison: "pairwise", observable: "cnt_slope_B", test_value: 267, reference_value: 397, unit: '1', relation: "test_lower_barrier", reading: 'B = 267 +- 125 against 397 +- 65; J0 at sigma = 5.73 orders the opposite way (0.79 against 2400 site/min)', doi: "10.1021/acs.cgd.0c00029", locator: "p. 3766, Table 1"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-068]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Inputs cannot be sourced: DFS was not possible on the B28 polymer (p. 3767, Section 3.2) and COSMO-RS was run for the alkanethiol SAMs only; the only B28 interfacial energy is gamma_net = 68 mJ/m2 fitted from the same rates (circular, rule 6).'
+
+  - id: RX03
+    study: S-HU2012
+    termination: hydroxyl
+    templated: none
+    test: {label: "MUO", chemistry: "11-mercapto-1-undecanol SAM on Au"}
+    reference: {label: "MHA", chemistry: "16-mercaptohexadecanoic acid SAM on Au"}
+    mineral: calcite
+    polymorph: ACC formed homogeneously and dissolved; calcite nucleated elsewhere
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_higher_barrier", reading: 'pathway difference (ACC on MUO, direct calcite on MHA), not a barrier ordering', doi: "10.1039/c2fd20124k", locator: "pdf p. 12 (manuscript p. 11), Section 5"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-097]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Outcome is a pathway, not a directional barrier ordering (rule 5), and no independent calcite-MUO interfacial energy is given (the MD covers the carboxyl SAMs only).'
+
+  - id: RX04
+    study: S-HU2012
+    termination: metal
+    templated: none
+    test: {label: "bare Au", chemistry: "SAM-free gold film"}
+    reference: {label: "MHA", chemistry: "16-mercaptohexadecanoic acid SAM on Au"}
+    mineral: calcite
+    polymorph: calcite (few, randomly oriented)
+    outcome: {comparison: "pairwise", observable: "nucleation_rate", test_value: "few nuclei", reference_value: "many nuclei", relation: "test_higher_barrier", reading: 'few randomly oriented nuclei under identical conditions', doi: "10.1039/c2fd20124k", locator: "pdf p. 9 (manuscript p. 8), Section 3"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-096]
+    link_reported_in_source: false
+    negative: true
+    status: excluded
+    exclusion_reason: 'Inputs cannot be sourced: the only calcite-Au binding datum is the control rupture-force curve of Hamm et al. 2014, Figure 3B, which gives no binding free energy.'
+
+  - id: RX05
+    study: S-DENG2015
+    termination: hydroxyl
+    templated: none
+    test: {label: "OH SAM", chemistry: "hydroxyl-terminated alkanethiol SAM on Au(111)"}
+    reference: {label: "COOH SAM", chemistry: "carboxyl-terminated alkanethiol SAM on Au(111)"}
+    mineral: CaCO3
+    polymorph: ACC then vaterite (test); calcite (reference)
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_higher_barrier", reading: 'both surfaces carry CaCO3; they differ in pathway and polymorph only', doi: "10.1093/rb/rbv010", locator: "Abstract; Results"}
+    channel: omega
+    inputs: []
+    assumptions: []
+    evidence_rows: []
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Outcome is not directional against the reference (rule 5): both surfaces nucleate CaCO3 and differ only in pathway (ACC to vaterite against direct calcite).'
+
+  - id: RX06
+    study: S-DENG2015
+    termination: amine
+    templated: none
+    test: {label: "NH2 SAM", chemistry: "amine-terminated alkanethiol SAM on Au(111)"}
+    reference: {label: "COOH SAM", chemistry: "carboxyl-terminated alkanethiol SAM on Au(111)"}
+    mineral: CaCO3
+    polymorph: ACC then vaterite (test); calcite (reference)
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_higher_barrier", reading: "as RX05", doi: "10.1093/rb/rbv010", locator: "Abstract; Results"}
+    channel: omega
+    inputs: []
+    assumptions: []
+    evidence_rows: []
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: Outcome is not directional against the reference (rule 5), as RX05.
+
+  - id: RX07
+    study: S-KNIGHT2024
+    termination: polysaccharide
+    templated: chitosan
+    test: {label: "sulfated chitosans and carboxymethyl chitosan", chemistry: 'O-, N- and O,N-sulfated chitosan films (cross-linked, drop-cast) and electrodeposited CMCS'}
+    reference: {label: "chitosan", chemistry: 'chitosan film (control A cross-linked, control B not cross-linked)'}
+    mineral: calcite
+    polymorph: calcite, no ACC
+    outcome: {comparison: "pairwise", observable: "cnt_slope_B", test_value: 'gamma_net 54-72 mJ/m2', reference_value: 'gamma_net 57-59 mJ/m2', unit: "mJ m^-2", relation: "test_higher_barrier", reading: "gamma_net rises with degree of sulfation", doi: "10.1021/acs.cgd.4c00602", locator: 'p. 6347 (pdf p. 10), Figure 6 caption'}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-076, TC-077, TC-078, TC-082]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Inputs cannot be sourced: the only interfacial energies are gamma_net fitted from the same rates (circular, rule 6); the MD reports water structuring and Ca-sulfate distances, not interfacial free energies. Chitosan-templated mineralisation is carried by RC07-RC10 instead.'
+
+  - id: RX08
+    study: S-KOISHI2019
+    termination: hydroxyl
+    templated: none
+    test: {label: "OH-phlogopite", chemistry: "hydroxylated phlogopite mica"}
+    reference: {label: "F-phlogopite", chemistry: "fluorinated phlogopite mica"}
+    mineral: CaCO3
+    polymorph: ACC first on both; persists on OH, crystallises on F
+    outcome: {comparison: "pairwise", observable: "nucleation_rate", test_value: 'alpha_calcite about 43 mJ/m2', reference_value: 'alpha_calcite about 43 mJ/m2', unit: "mJ m^-2", relation: "test_higher_barrier", reading: 'identical effective interfacial energies on both micas', doi: "10.1021/acs.chemmater.9b00417", locator: "pdf p. 4, Results"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-093, TC-094]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Outcome is an equality of barriers, not a direction (rule 5); the difference is in crystallisation kinetics of ACC. The contact angles in the paper are set values (5 and 90 degrees, Figure 7 caption), not measurements.'
+
+  - id: RX09
+    study: S-LI2014
+    termination: mineral
+    templated: none
+    test: {label: "quartz", chemistry: "quartz"}
+    reference: {label: "muscovite mica", chemistry: "muscovite mica"}
+    mineral: CaCO3 (vaterite probable nucleus)
+    polymorph: calcite and vaterite
+    outcome: {comparison: "pairwise", observable: "nucleation_rate", test_value: 'alpha prime 32 mJ/m2', reference_value: 'alpha prime 24 mJ/m2', unit: "mJ m^-2", relation: "test_higher_barrier", reading: "GISAXS-rate-derived alpha prime", doi: "10.1021/es405141j", locator: "abstract"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-084, TC-085]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Circular and abstract only: alpha prime is fitted from the same rates (rule 6); no independent interfacial input was readable (paywalled). The mineral substrates are not templates.'
+
+  - id: RX10
+    study: S-QUARTZ-SALINITY
+    termination: mineral
+    templated: none
+    test: {label: "quartz in 0.15 M NaCl", chemistry: "quartz"}
+    reference: {label: "quartz in 0.85 M NaCl", chemistry: "quartz"}
+    mineral: CaCO3
+    polymorph: n.s.
+    outcome: {comparison: "pairwise", observable: "nucleation_rate", test_value: 'alpha 48 mJ/m2', reference_value: 'alpha 35 mJ/m2', unit: "mJ m^-2", relation: "test_higher_barrier", reading: "effective alpha decreases with salinity", doi: "10.1021/acs.jpcc.9b00378", locator: "abstract"}
+    channel: omega
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-089, TC-090]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Circular and abstract only (rule 6); the comparison varies the solution, not the surface, so it does not test the template channel.'
+
+  - id: RX11
+    study: S-AIZENBERG1999
+    termination: methyl
+    templated: none
+    test: {label: "CH3- and N(CH3)3+-terminated SAMs", chemistry: "alkanethiol SAMs on Au and Ag"}
+    reference: {label: "bare metal", chemistry: "Au and Ag films"}
+    mineral: calcite
+    polymorph: calcite
+    outcome: {comparison: "pairwise", observable: "nucleation_rate", test_value: "fewer crystals", reference_value: "more crystals", relation: "test_higher_barrier", reading: 'nucleation inhibited relative to bare metal', doi: "10.1021/ja984254k", locator: "abstract"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-098, TC-099]
+    link_reported_in_source: false
+    negative: true
+    status: excluded
+    exclusion_reason: 'Abstract only (paywalled, no open copy on Unpaywall, OpenAlex or Europe PMC) and no independent interfacial input for CH3 or bare metal could be sourced.'
+
+  - id: RX12
+    study: S-DENG2015
+    termination: methyl
+    templated: none
+    test: {label: "CH3 SAM (theta channel)", chemistry: "methyl-terminated alkanethiol SAM"}
+    reference: {label: "COOH SAM", chemistry: "carboxyl-terminated alkanethiol SAM"}
+    mineral: CaCO3
+    polymorph: none on CH3
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "absent", reference_value: "present", relation: "test_higher_barrier", reading: "as RC11", doi: "10.1093/rb/rbv010", locator: "Abstract"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: []
+    link_reported_in_source: false
+    negative: true
+    status: excluded
+    exclusion_reason: 'Recorded so the theta route for RC11 is not silently dropped: no calcite-CH3 or calcite-COOH interfacial free energy in water was found. The OWRK route would need dry calcite surface-energy components; the only fetched ones are an IGC value on dry powder at 120 C (10.2320/matertrans.mer2008388, abstract) and 10.15376/frc.1997.2.911 states that contact angles on high-energy calcite are unreliable (pdf p. 3). RC11 therefore uses the omega channel only.'
+
+  - id: RX13
+    study: S-OSORIO2020
+    termination: metal
+    templated: none
+    test: {label: "AA 2024-T3", chemistry: "abraded and polished Al alloy with native oxide"}
+    reference: {label: "AA 3003-H14", chemistry: "abraded and polished Al alloy with native oxide"}
+    mineral: calcite
+    polymorph: calcite (PXRD)
+    outcome: {comparison: "pairwise", observable: "deposit_mass", test_value: 0.0552, reference_value: 0.2665, unit: "kg m^-2", relation: "test_higher_barrier", reading: 'scale mass tracks roughness (authors)', doi: "10.1021/acsomega.0c01538", locator: "Table 1"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TB-001, TB-002, TB-003, TB-004]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Deposit is bulk-precipitated fouling scale at 90 C whose mass the authors attribute to roughness; no interfacial input distinguishes the two oxides. Kept in contrary entry B1.'
+
+  - id: RX14
+    study: S-PALANISAMY2020
+    termination: metal
+    templated: none
+    test: {label: "aluminium coin", chemistry: "as-received Al"}
+    reference: {label: "copper coin", chemistry: "as-received Cu"}
+    mineral: CaCO3
+    polymorph: calcite, aragonite, vaterite (suspended Al coin, 60 C)
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_higher_barrier", reading: "polymorph difference only", doi: "10.1016/j.heliyon.2020.e03506", locator: 'p. 5, Fig. 1e-f; p. 6, Fig. 2e-f'}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TB-006, TB-007, TB-008]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Not directional (polymorph outcome only), DTPA inhibitor present throughout, and no interfacial inputs for either metal.'
+
+  - id: RX15
+    study: S-LAJEVARDI2011
+    termination: metal
+    templated: none
+    test: {label: "5052 Al above -1.2 V/SCE", chemistry: "Al alloy under cathodic polarisation"}
+    reference: {label: "5052 Al below -1.2 V/SCE", chemistry: "Al alloy under cathodic polarisation"}
+    mineral: calcareous deposit (aragonite, brucite)
+    polymorph: aragonite (artificial sea water)
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "absent", reference_value: "present", relation: "test_higher_barrier", reading: "potential-driven deposition", doi: "10.1179/174327809x409132", locator: "abstract"}
+    channel: omega
+    inputs: []
+    assumptions: []
+    evidence_rows: [TB-009, TB-010]
+    link_reported_in_source: false
+    negative: true
+    status: excluded
+    exclusion_reason: 'Driven by an applied cathodic potential (interfacial pH rise), outside the pipeline (rule 5); abstract only.'
+
+  - id: RX16
+    study: S-HEYWOOD1994
+    termination: carboxyl
+    templated: none
+    test: {label: "sulfate and phosphonate monolayers", chemistry: "compressed Langmuir monolayers"}
+    reference: {label: "octadecanoic acid monolayer", chemistry: "compressed Langmuir monolayer"}
+    mineral: calcite or aragonite
+    polymorph: oriented calcite
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_higher_barrier", reading: "orientation outcome only", doi: "10.1021/cm00039a011", locator: "abstract"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-107]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: Orientation outcome, not a barrier ordering (rule 5); abstract only.
+
+  - id: RX17
+    study: S-STEARIC2008
+    termination: carboxyl
+    templated: none
+    test: {label: "stearic acid monolayer", chemistry: "compressed Langmuir monolayer"}
+    reference: {label: "none", chemistry: "no stated reference"}
+    mineral: ACC then calcite
+    polymorph: ACC then calcite
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_lower_barrier", reading: "pathway outcome only", doi: "10.1021/la8029424", locator: "abstract"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-108]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: No reference surface and a pathway outcome (rules 3 and 5); abstract only.
+
+  - id: RX18
+    study: S-PDA-PREPRINT2024
+    termination: carboxyl
+    templated: none
+    test: {label: "polydiacetylene film with phosphoserine", chemistry: "acidic polydiacetylene Langmuir film"}
+    reference: {label: "polydiacetylene film", chemistry: "acidic polydiacetylene Langmuir film"}
+    mineral: calcite, vaterite or ACC
+    polymorph: switches with additive concentration
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_higher_barrier", reading: "additive-driven polymorph switch", doi: "10.26434/chemrxiv-2024-mdqtl", locator: 'pdf p. 1, abstract; pdf p. 4, Results'}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-100, TC-101]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Polymorph and orientation outcome driven by a solution additive, same template (rule 5); preprint.'
+
+  - id: RX19
+    study: S-FALINI1996
+    termination: polysaccharide
+    templated: polypeptide
+    test: {label: "beta-chitin and silk with calcitic-layer macromolecules", chemistry: "beta-chitin and silk fibroin with adsorbed shell macromolecules"}
+    reference: {label: "beta-chitin and silk with aragonitic-layer macromolecules", chemistry: "as test"}
+    mineral: aragonite or calcite
+    polymorph: aragonite or calcite
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_higher_barrier", reading: "polymorph selection only", doi: "10.1126/science.271.5245.67", locator: "abstract"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-105]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: Polymorph outcome (rule 5); abstract only; no interfacial inputs.
+
+  - id: RX20
+    study: S-N16N2010
+    termination: polysaccharide
+    templated: polypeptide
+    test: {label: "n16N on beta-chitin with silk gel", chemistry: "nacre peptide on beta-chitin"}
+    reference: {label: "pAsp or pGlu controls", chemistry: "polyacidic peptides"}
+    mineral: vaterite, ACC, calcite
+    polymorph: vaterite and ACC against flat calcite
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_higher_barrier", reading: "polymorph and pathway outcome", doi: "10.1021/cg1009303", locator: "abstract"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-106]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: Polymorph and pathway outcome (rule 5); abstract only; no interfacial inputs.
+
+  - id: RX21
+    study: S-UCAR2024
+    termination: peptoid
+    templated: peptoid
+    test: {label: "B28 peptoid nanosheets (feedback)", chemistry: "free-floating peptoid nanosheets"}
+    reference: {label: "B28 peptoid nanosheets (batch)", chemistry: "same template"}
+    mineral: ACC or vaterite
+    polymorph: ACC (feedback) against vaterite (batch)
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_higher_barrier", reading: "supersaturation history decides the phase on one template", doi: "10.1021/acsami.4c00434", locator: 'p. 19496 (pdf p. 1), abstract'}
+    channel: omega
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-109]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Same template, two supersaturation histories; phase outcome, not a surface comparison (rules 3 and 5).'
+
+  - id: RX22
+    study: S-XU2018
+    termination: polypeptide
+    templated: polypeptide
+    test: {label: "glass with pAsp in solution", chemistry: "hydrophilic glass, poly(aspartic acid) dissolved"}
+    reference: {label: "glass without pAsp", chemistry: "hydrophilic glass"}
+    mineral: ACC film then calcite or vaterite
+    polymorph: ACC film then platelets against 20 um calcite
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_higher_barrier", reading: "solution additive stabilises ACC", doi: "10.1038/s41467-018-05006-w", locator: 'p. 2, Results'}
+    channel: omega
+    inputs: []
+    assumptions: []
+    evidence_rows: [TC-102]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'The polypeptide acts in solution, not as a template, and the outcome is a pathway (rule 5).'
+
+  - id: RX23
+    study: S-KIM2010
+    termination: catechol
+    templated: pda
+    test: {label: "dopamine in solution", chemistry: "dopamine (bulk)"}
+    reference: {label: "none", chemistry: "no surface"}
+    mineral: vaterite
+    polymorph: vaterite microspheres
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_lower_barrier", reading: "bulk precipitation with dopamine", doi: "10.1016/j.biomaterials.2010.05.004", locator: "abstract"}
+    channel: omega
+    inputs: []
+    assumptions: []
+    evidence_rows: [TD-061]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: Bulk precipitation without a surface or reference (rule 3); abstract only.
+
+  - id: RX24
+    study: S-MURARI2020
+    termination: catechol
+    templated: pda
+    test: {label: "PDA-coated PCL", chemistry: "polydopamine on plasma-treated PCL"}
+    reference: {label: "plasma-treated PCL", chemistry: "no PDA"}
+    mineral: calcium phosphate
+    polymorph: calcium phosphate
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "present", relation: "test_lower_barrier", reading: 'growth mode (Stranski-Krastanov against Volmer-Weber)', doi: "10.1038/s41598-020-71900-3", locator: "pdf p. 5"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: [TD-062, TD-063]
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'Calcium phosphate, not CaCO3 (rule 2), and a growth-mode outcome (rule 5).'
+
+  - id: RX25
+    study: S-LI2017
+    termination: catechol
+    templated: pda
+    test: {label: "PDA on silicon", chemistry: "polydopamine film on Si"}
+    reference: {label: "bare silicon", chemistry: "Si"}
+    mineral: ACC then calcite film
+    polymorph: ACC then continuous calcite film (with poly(acrylic acid))
+    outcome: {comparison: "pairwise", observable: "presence_absence", test_value: "present", reference_value: "unknown", relation: "test_lower_barrier", reading: 'not readable: the continuous film needed poly(acrylic acid) in solution (contrary entry B10, abstract)', doi: "10.1007/s11998-016-9898-x", locator: "abstract"}
+    channel: theta
+    inputs: []
+    assumptions: []
+    evidence_rows: []
+    link_reported_in_source: false
+    negative: false
+    status: excluded
+    exclusion_reason: 'No open copy and no abstract retrievable in this session (prior-art row 1); the reference outcome and the conditions cannot be read.'

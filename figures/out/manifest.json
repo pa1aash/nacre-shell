@@ -1,0 +1,158 @@
+{
+ "rdkit": {
+  "acetate": {
+   "smiles": "CC(=O)[O-]",
+   "source": "nacre.anchor.builders.LIGANDS['acetate']",
+   "derive": null,
+   "outputs": {
+    "figures/out/rdkit/acetate.svg": "839e55f0b39eeb1fc3795c69777cace72f381e3bd9ffa857d27b3570e757fc91",
+    "figures/out/rdkit/acetate.pdf": "b60aeb649ca94d9cfd1fcee7b54c6a1b4e68ebfa1abe402e2ce07f2569d17e1d",
+    "figures/out/rdkit/acetate.png": "25dd8ce558883a9917a2ead4c72c3db08747c69eac2342bf20563290f80b541b",
+    "figures/out/rdkit/cvd/acetate_deuteranopia.png": "04d6476b87f26e398bf6e0a181ec43d86c2d77e7951877ffc3885c0da912559f",
+    "figures/out/rdkit/cvd/acetate_protanopia.png": "236a36638246ec7aa9e4376bd41754f7bd6ea3e197899c0c32e80756c92640f0",
+    "figures/out/rdkit/cvd/acetate_tritanopia.png": "f8235e4d227cb2a9d7c631184fdd9a7f5cda101588d37778a63e8735869fc0ab"
+   }
+  },
+  "catechol": {
+   "smiles": "C1=CC=C(C(=C1)O)O",
+   "source": "PubChem CID 289 (figures/rdkit/sources)",
+   "derive": null,
+   "outputs": {
+    "figures/out/rdkit/catechol.svg": "d08cd17f0560c3e71ce6f854c9b94b4b93cd0dc636bc225bc562e1d49e079a3a",
+    "figures/out/rdkit/catechol.pdf": "84d9126a8690ec66f221883e9af1a97e8b877c978ad7587284c486b918e6402c",
+    "figures/out/rdkit/catechol.png": "3b62ba8c72422eab78f780453abc94652988f106d700164750f5f22ddd7d16ec",
+    "figures/out/rdkit/cvd/catechol_deuteranopia.png": "0ba4243710051e1c8ed296191c936e92e680e6d3801341139ed74295ccfb821e",
+    "figures/out/rdkit/cvd/catechol_protanopia.png": "13409ff9ae1b1824443d180212daf1daef25e3dab4229bdce57d8ddd872ba6d9",
+    "figures/out/rdkit/cvd/catechol_tritanopia.png": "6d04f8d1d9508a7b9ed6c85eeb5bd4bb1575f500ad18a318ac16e1d057563a30"
+   }
+  },
+  "catecholate_dianion": {
+   "smiles": "[O-]c1ccccc1[O-]",
+   "source": "nacre.anchor.builders.LIGANDS['catecholate_dianion']",
+   "derive": null,
+   "outputs": {
+    "figures/out/rdkit/catecholate_dianion.svg": "4ebe583739e1b663a3dc131f240a74c4ae52ba547afd03c8569e3eba6782f1c6",
+    "figures/out/rdkit/catecholate_dianion.pdf": "8c88bb5ea5438c94187048dd6eb9f621a4043796e48db77345e47716379f9ecc",
+    "figures/out/rdkit/catecholate_dianion.png": "3838977d158af399c2693f700589a95098a6789ada88101c456f6579ffbcdc9f",
+    "figures/out/rdkit/cvd/catecholate_dianion_deuteranopia.png": "c950d65ac61c4bf6ddd39488ff4b7c89ad2f60a66d7d7dde690c45ce939cc228",
+    "figures/out/rdkit/cvd/catecholate_dianion_protanopia.png": "edcb186ac9cc4a718ae4bd9705e1c4e8ee0ab1562717b7ef0cee2b107031649f",
+    "figures/out/rdkit/cvd/catecholate_dianion_tritanopia.png": "7e5a6deba00889685aab4dfdaf6d27dcad6d19155d65491fa0d94519303a7259"
+   }
+  },
+  "catecholate_monoanion": {
+   "smiles": "[O-]c1ccccc1O",
+   "source": "nacre.anchor.builders.LIGANDS['catecholate_monoanion']",
+   "derive": null,
+   "outputs": {
+    "figures/out/rdkit/catecholate_monoanion.svg": "47396981ad1c94f504dec4d96d20c637c7d7ecd25899ce09fb1e044678e51d40",
+    "figures/out/rdkit/catecholate_monoanion.pdf": "9fc2b39d33083e2a7277cfcf3d5d5f0e1b0db718964fc6ad09e8f70d783d700d",
+    "figures/out/rdkit/catecholate_monoanion.png": "e16655c48f15dbefe45eabdbe23cfd7a9be4fddb69373ad474ffc316ff81890f",
+    "figures/out/rdkit/cvd/catecholate_monoanion_deuteranopia.png": "0849d6f98ab4511accc893527062639640b08838f32a49d3203dd3025d20253e",
+    "figures/out/rdkit/cvd/catecholate_monoanion_protanopia.png": "8918f46a168a1209b5c34947a072c0da47547bd4612222f150155cc9cd3efb65",
+    "figures/out/rdkit/cvd/catecholate_monoanion_tritanopia.png": "66270edf49205c27f441fa384e70d671e3421bc43adba9b3ba0fd4c8a9f1c3a8"
+   }
+  },
+  "chitosan_unit": {
+   "smiles": "C([C@@H]1[C@H]([C@@H]([C@H]([C@@H](O1)O)N)O)O)O",
+   "source": "PubChem CID 441477 (figures/rdkit/sources)",
+   "derive": "beta_1_4_repeat_unit",
+   "outputs": {
+    "figures/out/rdkit/chitosan_unit.svg": "ef944d6f944c97fc8a215c56039f46f5b44b3d667c6ed0b989a0c491b4a2bf9c",
+    "figures/out/rdkit/chitosan_unit.pdf": "d46026647391b0af32b0775688aaffabdbcfa2238489a08f3d19d104c6917a53",
+    "figures/out/rdkit/chitosan_unit.png": "8f6bb82d692a4e4493f668dde0661b5c027fcce6accf32ea165e302f5e1ced32",
+    "figures/out/rdkit/cvd/chitosan_unit_deuteranopia.png": "ccc8f3cb9aa0ce442b57bb91fca885fbf12ea4c256ee0c6136784d61823dfd4a",
+    "figures/out/rdkit/cvd/chitosan_unit_protanopia.png": "a54147c3d90a5a5af19d69d81053c21eb92460b631db77a4b52e623b7a105524",
+    "figures/out/rdkit/cvd/chitosan_unit_tritanopia.png": "0a91bed3ad0a96a207c75946a0bcbc3bddf9a8f1453c9eead7e741a3d6217dcd"
+   }
+  },
+  "oligomer": {
+   "smiles": "Oc1cc2cc(-c3c(O)c(O)cc4cc(-c5c(O)c(O)cc6cc(-c7c(O)c(O)cc8cc[nH]c78)[nH]c56)[nH]c34)[nH]c2cc1O",
+   "source": "nacre.structures.oligomer.dhi_chain_smiles(4)",
+   "derive": null,
+   "outputs": {
+    "figures/out/rdkit/oligomer.svg": "d786903bddb07a4e58f8112d74d6f01a39c1c1672edbba3ae34d788ec1347195",
+    "figures/out/rdkit/oligomer.pdf": "9592dbe8c0351e2a528001e8c391e377324de07d17ba548f2e8d3ea73580d8b8",
+    "figures/out/rdkit/oligomer.png": "ed2f92bd58ce6a4bf73aaf5311c8ee35ca93b42bcccfd5377c923fde44a385e4",
+    "figures/out/rdkit/cvd/oligomer_deuteranopia.png": "6b7852a12ae630e594ec261054125586eac61ffaef5292d61899d1d183cb30cb",
+    "figures/out/rdkit/cvd/oligomer_protanopia.png": "2464d90ece06b5b0f20c7141c332541ddd048da83bba97f37c1aca067fe02f64",
+    "figures/out/rdkit/cvd/oligomer_tritanopia.png": "1dc7e8e19fdf251b1b8d3b1f46a5629ca0a196680a3526019daf26402f40f1a8"
+   }
+  },
+  "oligomer_unit": {
+   "smiles": "Oc1cc2cc[nH]c2cc1O",
+   "source": "nacre.structures.oligomer.dhi_chain_smiles(1)",
+   "derive": null,
+   "outputs": {
+    "figures/out/rdkit/oligomer_unit.svg": "be7aba0741ce1ad4c4b79e37e4cd80867f98857f10c04e468a4878c4fd9632b7",
+    "figures/out/rdkit/oligomer_unit.pdf": "2b888806792b945db03c9d1a54e57b444ab5c2821d82fd9a56308748718ae99c",
+    "figures/out/rdkit/oligomer_unit.png": "941f95b24291f2b654a857cecd859ea3cec0657c8d252936f2a9dd9ba3aaeeec",
+    "figures/out/rdkit/cvd/oligomer_unit_deuteranopia.png": "3c065542dd46af03899f3fcc6e7e106b2e9f6a6cbaaf5d730b604fca8964f1c8",
+    "figures/out/rdkit/cvd/oligomer_unit_protanopia.png": "9ed9e380b7ade9613630f09e133a5ab2541eb71525493ac011ad5398f1a3d512",
+    "figures/out/rdkit/cvd/oligomer_unit_tritanopia.png": "9945033b8c37e8e7219fd8aa40a7fb33aab605da4c48c5b704db61e70349af3d"
+   }
+  },
+  "quinone": {
+   "smiles": "C1=CC(=O)C(=O)C=C1",
+   "source": "PubChem CID 11421 (figures/rdkit/sources)",
+   "derive": null,
+   "outputs": {
+    "figures/out/rdkit/quinone.svg": "76d1c0f88d76012c4c3c23625fbb01b71efe0353cb51b7bc8db9f810f00e07fe",
+    "figures/out/rdkit/quinone.pdf": "3b30beaf5f40c3cecba3b0aefa8e3561e4ad0ef4ceb5d0116e0db280b66cbb5f",
+    "figures/out/rdkit/quinone.png": "ca6114e3e5b251eb658cf3eb3f86e570113776057c57c7258a7eb0516e038c13",
+    "figures/out/rdkit/cvd/quinone_deuteranopia.png": "7ff8ca274138aa9d54ca90463dfe3d6049080bfb2c9b3b1708c54a812db1b945",
+    "figures/out/rdkit/cvd/quinone_protanopia.png": "3a0e729c7189ba7ce267f3b0509d4718889ac996f6bf793ea03237865f30537c",
+    "figures/out/rdkit/cvd/quinone_tritanopia.png": "d6dadb0d11970f07ff6f0f74b9db827314a3683c2fb10c86a39867e5c77a65ab"
+   }
+  }
+ },
+ "schematics": {
+  "fig2": {
+   "tex": "figures/tikz/fig2.tex",
+   "claim": "The coating can only act through a chain of interfacial steps: the catechol-bearing layer must displace interfacial water to adhere, binds a few Ca2+ at its sites without raising the bulk supersaturation, hosts an amorphous CaCO3 nucleus whose contact with the template sets the barrier, and the nuclei must coalesce into a continuous film.",
+   "caption": "figures/src/captions/fig2.md",
+   "text_free": true,
+   "source": "theory/derivation_body.tex Sections 2 (adhesion in water), 3 and 7 (sequestration, template), 8 (conformality)",
+   "w3_commit": null,
+   "checker": "pass (PDF: no text, strokes, page width)",
+   "outputs": {
+    "figures/out/fig2.pdf": "b38689a7eccb715f3d33aca7d20cbb55b0382b084c0fa6655b56ee3afa3ce31d",
+    "figures/out/fig2.png": "ea0b1a90321da643d5c2f0afb3c710a3569417b603517944cdb8076dee6b8cda",
+    "figures/out/cvd/fig2_deuteranopia.png": "c11dc99a884bba679272f361c2d1e55ba4fe74319fb8da1a5b8fcd42a177a79a",
+    "figures/out/cvd/fig2_protanopia.png": "90ba23bb5980704d1ef1718bf359b336c1b4dbcbb5e5bf75cddfd7404287329f",
+    "figures/out/cvd/fig2_tritanopia.png": "4e705a4b6f437a9b034a251b2ece9ce51eb5f3486d49d3efeb2e553f92ffa3c5"
+   }
+  },
+  "fig3": {
+   "tex": "figures/tikz/fig3.tex",
+   "claim": "Ca2+ binding enters the nucleation barrier once, through the template-liquid energy; the nucleus is fed from the bulk reservoir at the bulk driving force, and the template helps only through how well the nucleus wets it.",
+   "caption": "figures/src/captions/fig3.md",
+   "text_free": true,
+   "source": "theory/derivation_body.tex Section 7 (lane p0-w3); commit in w3_commit",
+   "w3_commit": "db872ae9190c3b729bc2b13898919fbfbe56815b",
+   "checker": "pass (PDF: no text, strokes, page width)",
+   "outputs": {
+    "figures/out/fig3.pdf": "de24ceb8a43647ef9692ce57cf41efcd344e359d1d36b8f1cd3b4835eeefb0dc",
+    "figures/out/fig3.png": "332cc810a43ff8d8242ac7f2b81abaa221561084becef28d7d079f874957d8b8",
+    "figures/out/cvd/fig3_deuteranopia.png": "f7381ddefcc80bcc6e50710b15544cc8f50f7638a8380905e172e34545ec660e",
+    "figures/out/cvd/fig3_protanopia.png": "63fd0b4dcd242b685c3d8f7eda9729faab721f960505d239c76e42285aa02c99",
+    "figures/out/cvd/fig3_tritanopia.png": "9d41c40cba072c8d711e9a89f2440e6e398d5613e476ff944673a6b88fa2c4bd"
+   }
+  },
+  "fig3_symbols": {
+   "tex": "figures/tikz/variants/fig3_symbols.tex",
+   "claim": "as fig3",
+   "caption": "figures/src/captions/fig3.md",
+   "text_free": false,
+   "source": "as fig3",
+   "w3_commit": null,
+   "checker": "pass (PDF: text allowed, strokes, page width)",
+   "outputs": {
+    "figures/out/variants/fig3_symbols.pdf": "12b9ea65b991bef148d797ac6bc5072e293201f8d1f5018d067c6b5b753b618b",
+    "figures/out/variants/fig3_symbols.png": "4909327187ffd91e9a090673739e4557025118bc88f2b321f62c292fbe502502",
+    "figures/out/variants/cvd/fig3_symbols_deuteranopia.png": "838af6e67537920cd22bb7069b909e041edc8a27c95828f939aa78dab25913f0",
+    "figures/out/variants/cvd/fig3_symbols_protanopia.png": "95a654cfb2e5f446fc403b5be2cc09af7b8528a386b7a07680473cb60a9879ce",
+    "figures/out/variants/cvd/fig3_symbols_tritanopia.png": "c05bae0606e627b72a7a7a758825f04b8922fef70650e9a9878cccd92c632d3a"
+   }
+  }
+ }
+}

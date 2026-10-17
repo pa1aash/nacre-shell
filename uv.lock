@@ -943,7 +943,9 @@ p0-w5 = [
 p0-w6 = [
     { name = "cmcrameri" },
     { name = "colorspacious" },
+    { name = "jsonschema" },
     { name = "matplotlib" },
+    { name = "pymupdf" },
 ]
 
 [package.metadata]
@@ -977,7 +979,9 @@ p0-w5 = [
 p0-w6 = [
     { name = "cmcrameri", specifier = "==1.10" },
     { name = "colorspacious", specifier = ">=1.1.2" },
+    { name = "jsonschema", specifier = ">=4.26.0" },
     { name = "matplotlib", specifier = ">=3.11.2" },
+    { name = "pymupdf", specifier = ">=1.28.2" },
 ]
 p0-w7 = []
 p0-w8 = []

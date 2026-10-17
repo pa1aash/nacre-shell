@@ -1,0 +1,55 @@
+# The RDKit structure set of the preprint figures (lane p0-w6). Read by nacre.figs.structures.
+#
+# Every SMILES comes from a shared definition when one exists in the repository:
+#   shared_ligand    nacre.anchor.builders.LIGANDS[<ligand>][0] (lane p0-w5)
+#   shared_oligomer  nacre.structures.oligomer.dhi_chain_smiles(<n_units>) (lane p0-w7); n_units
+#                    "default" means the builder's DEFAULTS["n_units"], the oligomer it builds
+#   pubchem          figures/rdkit/sources/pubchem_cid<cid>.json, fetched by fetch_sources.py and
+#                    logged in figures/style/fetch_log.jsonl (no shared SMILES exists)
+# derive names a deterministic edit of the fetched structure (nacre.figs.structures.DERIVATIONS);
+# standalone: false keeps a structure out of the drawn set (it is used only as a schematic pictogram).
+# No SMILES is typed in this file or in code.
+structures:
+  catechol:
+    source: pubchem
+    cid: 289
+    meaning: benzene-1,2-diol, the anchoring group in its neutral form
+  catecholate_monoanion:
+    source: shared_ligand
+    ligand: catecholate_monoanion
+    meaning: catechol with one phenolic proton removed
+  catecholate_dianion:
+    source: shared_ligand
+    ligand: catecholate_dianion
+    meaning: catechol with both phenolic protons removed
+  quinone:
+    source: pubchem
+    cid: 11421
+    meaning: 1,2-benzoquinone, the oxidised form of catechol
+  oligomer:
+    source: shared_oligomer
+    n_units: default
+    meaning: the generic catechol-bearing oligomer exactly as the structure builder makes it
+  oligomer_unit:
+    source: shared_oligomer
+    n_units: 1
+    meaning: one 5,6-dihydroxyindole unit of the generic oligomer (same function, one unit)
+  acetate:
+    source: shared_ligand
+    ligand: acetate
+    meaning: acetate, the carboxylate binding site model
+  chitosan_unit:
+    source: pubchem
+    cid: 441477
+    derive: beta_1_4_repeat_unit
+    meaning: the beta-(1->4)-linked D-glucosamine repeat unit of chitosan, with its two attachment points
+  water:
+    source: pubchem
+    cid: 962
+    standalone: false
+    meaning: water, used only as a pictogram (hydration shell) in the schematics
+  carbonate:
+    source: pubchem
+    cid: 19660
+    standalone: false
+    meaning: carbonate ion, used only as a pictogram in the schematics

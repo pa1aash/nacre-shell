@@ -1,0 +1,13 @@
+% Fig. 3, symbol variant: the default figure with the symbols on the arrows (Delta G_seq,
+% gamma_sl, gamma_sn, gamma_nl), set in the figure font (Arial, applied.font_family), 7 pt.
+% For the operator's decision whether symbols count as labels; the default stays text-free
+% until then. Built by `nacre figs` with XeLaTeX (fontspec).
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Arial}
+\newcommand{\sym}[2]{#1\textsubscript{#2}}
+\input{schematic_preamble.tex}
+\newif\ifsymbols \symbolstrue
+\begin{document}
+\input{fig3_body.tex}
+\end{document}

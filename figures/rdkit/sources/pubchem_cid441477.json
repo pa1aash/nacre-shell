@@ -1,0 +1,13 @@
+{
+  "PropertyTable": {
+    "Properties": [
+      {
+        "CID": 441477,
+        "SMILES": "C([C@@H]1[C@H]([C@@H]([C@H]([C@@H](O1)O)N)O)O)O",
+        "InChIKey": "MSWZFWKMSRAUBD-QZABAPFNSA-N",
+        "IUPACName": "(2R,3R,4R,5S,6R)-3-amino-6-(hydroxymethyl)oxane-2,4,5-triol",
+        "Title": "beta-D-Glucosamine"
+      }
+    ]
+  }
+}

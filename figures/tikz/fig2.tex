@@ -1,0 +1,78 @@
+% Fig. 2: the mechanism chain, panels a-d left to right (illustrative construction, not a
+% simulated structure). No text (R7): panel letters are set by the manuscript outside the
+% artwork, and every identification is in figures/src/captions/fig2.md, by position.
+% The dashed boxes with diagonals are placeholders for the small renders of lane p0-w7
+% (session P0-W7.3); they are replaced, not removed, when those renders exist.
+% Built by `nacre figs`.
+\documentclass[tikz,border=0pt]{standalone}
+\input{schematic_preamble.tex}
+\def\b{0.2}       % pictogram bond length (cm)
+\def\yo{1.0}      % oxide top
+\def\yt{1.55}     % template-liquid interface
+\begin{document}
+\begin{tikzpicture}
+\useasboundingbox (0,0) rectangle (17.1,4.6);
+\foreach \x in {0.05,4.3,8.55,12.8} {\fill[statebox] (\x,0.15) rectangle ++(4.25,4.3);}
+\foreach \x in {0.05,4.3,8.55,12.8} {\placeholder{\x+2.75}{3.0}{\x+4.1}{4.3}}
+
+% ------------------------------------------------- a: adhesion in water, water displaced
+\begin{scope}[shift={(0.05,0)}]
+  \oxidestrip{0.15}{4.1}{\yo}
+  % interfacial water on the bare oxide (left), oxygen towards the hydroxyls
+  \foreach \x in {0.45,1.05,1.65} {\pic[scale=0.24, rotate=180] at (\x,\yo+0.2) {water};}
+  % catechol-bearing units bound through their catechol oxygens (right)
+  \foreach \x in {2.35,3.35} {\pic[scale=\b, rotate=180] at (\x,\yo+0.42) {oligomerunit};}
+  % water released from the contact, moving into the liquid
+  \foreach \x/\y in {2.35/2.75,3.35/2.75} {\pic[scale=0.24, rotate=180] at (\x,\y) {water};}
+  \foreach \x in {2.35,3.35} {\draw[thin, -{Stealth[length=3.5bp,width=3bp]}] (\x,2.15) -- (\x,2.5);}
+\end{scope}
+
+% ------------------------------------------------- b: a few Ca2+ captured at the sites
+\begin{scope}[shift={(4.3,0)}]
+  \oxidestrip{0.15}{4.1}{\yo}
+  \fill[template] (0.15,\yo) rectangle (4.1,\yt);
+  \foreach \x in {0.5,1.95,2.85} {\pic[scale=\b] at (\x,\yt-0.25) {catecholatedianion};}
+  \foreach \x in {1.22,3.6} {\pic[scale=\b] at (\x,\yt-0.04) {acetate};}
+  \caion{1.95,\yt+0.23}
+  \caion{3.6,\yt+0.23}
+  % the solution: the same sparse ions everywhere, no gradient towards the template
+  \caion{0.7,3.6}
+  \pic[scale=0.2] at (1.9,3.95) {carbonate};
+  \pic[scale=0.2] at (2.4,2.6) {carbonate};
+  \caion{0.9,2.45}
+\end{scope}
+
+% ------------------------------------------------- c: an amorphous CaCO3 nucleus, low contact angle
+\begin{scope}[shift={(8.55,0)}]
+  \oxidestrip{0.15}{4.1}{\yo}
+  \fill[template] (0.15,\yo) rectangle (4.1,\yt);
+  \foreach \x in {0.55,1.55,2.15,2.75,3.75} {\pic[scale=\b] at (\x,\yt-0.25) {catecholatedianion};}
+  % cap: base 1.0..3.4, contact angle 35 deg (radius 2.092, centre below the interface by 1.714)
+  \fill[nucleus] (3.4,\yt) arc[start angle=55, end angle=125, radius=2.092] -- cycle;
+  \pic[scale=0.16, rotate=25] at (1.75,\yt+0.4) {carbonate};
+  \pic[scale=0.16, rotate=-20] at (2.6,\yt+0.4) {carbonate};
+  \filldraw[ion] (2.2,\yt+0.28) circle (0.1);
+  \draw[thin, draw=okblack] (3.4,\yt) arc[start angle=55, end angle=125, radius=2.092];
+  % the template-nucleus contact, the focus of the panel, with Ca2+ bridging at the sites
+  \draw[bold, draw=okvermillion] (1.0,\yt) -- (3.4,\yt);
+  \foreach \x in {1.55,2.15,2.75} {\filldraw[ion] (\x,\yt+0.11) circle (0.1);}
+  \caion{0.55,\yt+0.23}
+  \caion{3.75,\yt+0.23}
+\end{scope}
+
+% ------------------------------------------------- d: coalescence into a continuous film
+\begin{scope}[shift={(12.8,0)}]
+  \oxidestrip{0.15}{4.1}{\yo}
+  \fill[template] (0.15,\yo) rectangle (4.1,\yt);
+  \fill[nucleus] (0.15,\yt) -- (0.15,\yt+0.32)
+    .. controls (0.6,\yt+0.42) and (0.9,\yt+0.3) .. (1.25,\yt+0.36)
+    .. controls (1.7,\yt+0.44) and (2.0,\yt+0.3) .. (2.45,\yt+0.37)
+    .. controls (2.9,\yt+0.44) and (3.3,\yt+0.3) .. (4.1,\yt+0.36) -- (4.1,\yt) -- cycle;
+  \draw[thin] (0.15,\yt+0.32)
+    .. controls (0.6,\yt+0.42) and (0.9,\yt+0.3) .. (1.25,\yt+0.36)
+    .. controls (1.7,\yt+0.44) and (2.0,\yt+0.3) .. (2.45,\yt+0.37)
+    .. controls (2.9,\yt+0.44) and (3.3,\yt+0.3) .. (4.1,\yt+0.36);
+  \draw[bold, draw=okvermillion] (0.15,\yt) -- (4.1,\yt);
+\end{scope}
+\end{tikzpicture}
+\end{document}
