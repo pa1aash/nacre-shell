@@ -1,6 +1,7 @@
 import json
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 from urllib.parse import unquote
 
 import pytest
@@ -36,7 +37,8 @@ def env(tmp_path):
     base = "http://127.0.0.1:%d" % srv.server_address[1]
     (tmp_path / "paper").mkdir()
     fetcher = Fetcher(venue_dir=tmp_path / "f", retries=0, sleep=lambda s: None, timeout=5)
-    kw = {"fetcher": fetcher, "doi_base": base + "/doi/", "crossref_base": base + "/works/", "out": lambda *a: None}
+    kw = {"fetcher": fetcher, "doi_base": base + "/doi/", "crossref_base": base + "/works/",
+          "datacite_base": base + "/datacite/", "out": lambda *a: None}
     yield tmp_path, kw
     srv.shutdown()
     srv.server_close()
@@ -225,3 +227,58 @@ def test_refresh_of_an_unknown_key_is_an_error(env):
     bib.add(root, "10.0000/nacre.test", **kw)
     with pytest.raises(bib.BibError):
         bib.refresh(root, "nobody2000nothing", **kw)
+
+
+# --- DataCite fallback --------------------------------------------------------------------
+DATA = Path(__file__).resolve().parents[4] / "ops" / "fixtures" / "bib"
+JANAF = "10.18434/t42s31"   # NIST-JANAF, a DataCite DOI: doi.org 403 and Crossref 404 when W8 tried it
+USGS = "10.3133/b2131"      # USGS Bulletin 2131: Crossref has a title and no authors, DataCite 404
+
+
+def _serve_recorded(route, name, code=200, ctype="application/vnd.api+json"):
+    _H.routes[route] = (code, ctype, (DATA / name).read_bytes())
+
+
+def test_datacite_fallback_builds_entry_from_the_recorded_record(env):
+    root, kw = env
+    _H.routes["/doi/" + JANAF] = (403, "text/html", b"forbidden")
+    _serve_recorded("/datacite/" + JANAF, "datacite_10.18434_t42s31.json")
+    assert bib.add(root, JANAF, **kw) == 0
+    text = (root / "paper" / "refs.bib").read_text(encoding="utf-8")
+    assert text.startswith("@misc{allison2013nist,")
+    assert "title={NIST-JANAF Thermochemical Tables - SRD 13}" in text
+    assert "author={Thomas C. Allison}" in text and "year={2013}" in text
+    assert "publisher={National Institute of Standards and Technology}" in text
+    assert "doi={10.18434/t42s31}" in text and "url={https://janaf.nist.gov/}" in text
+    rec = json.loads((root / "paper" / "bib" / "provenance.jsonl").read_text().splitlines()[0])
+    assert rec["doi"] == JANAF and rec["built_from"] == "datacite metadata" and len(rec["sha256"]) == 64
+    assert bib.check(root, out=lambda *a: None) == 0
+
+
+def test_crossref_is_tried_before_datacite(env):
+    root, kw = env
+    _serve_doi("10.0000/nacre.test")
+    _serve_recorded("/datacite/10.0000/nacre.test", "datacite_10.18434_t42s31.json")
+    bib.add(root, "10.0000/nacre.test", **kw)
+    rec = json.loads((root / "paper" / "bib" / "provenance.jsonl").read_text().splitlines()[0])
+    assert "built_from" not in rec
+
+
+def test_datacite_record_without_creators_is_refused(env):
+    root, kw = env
+    record = json.loads((DATA / "datacite_10.18434_t42s31.json").read_text())
+    record["data"]["attributes"]["creators"] = []
+    _H.routes["/datacite/" + JANAF] = (200, "application/vnd.api+json", json.dumps(record).encode())
+    with pytest.raises(bib.BibError, match="no creators"):
+        bib.add(root, JANAF, **kw)
+    assert not (root / "paper" / "refs.bib").exists()
+
+
+def test_usgs_bulletin_2131_stays_unresolved(env):
+    """Crossref's record has a title but no authors and DataCite does not hold the DOI: no entry is made."""
+    root, kw = env
+    _serve_recorded("/works/" + USGS, "crossref_10.3133_b2131.json", ctype="application/json")
+    _serve_recorded("/datacite/" + USGS, "datacite_10.3133_b2131.json", code=404)
+    with pytest.raises(bib.BibError, match="could not fetch BibTeX"):
+        bib.add(root, USGS, **kw)
+    assert not (root / "paper" / "refs.bib").exists()

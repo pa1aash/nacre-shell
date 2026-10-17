@@ -1,7 +1,9 @@
 """DOI-only bibliography pipeline.
 
 Entries come from content negotiation at doi.org, with Crossref's transform endpoint
-as the fallback. An entry is stored as fetched; only its citation key is replaced by a
+as the first fallback and the DataCite API (for DOIs Crossref does not hold, such as
+datasets) as the second; a DataCite entry is built from the fetched metadata record. An entry
+is otherwise stored as fetched; only its citation key is replaced by a
 deterministic one. There is no manual-entry path. Every entry has a provenance record in
 paper/bib/provenance.jsonl.
 """
@@ -15,6 +17,7 @@ from nacre.report.fetch import Fetcher
 
 DOI_BASE = "https://doi.org/"
 CROSSREF_BASE = "https://api.crossref.org/works/"
+DATACITE_BASE = "https://api.datacite.org/dois/"
 ACCEPT = "application/x-bibtex"
 STOPWORDS = {"a", "an", "the", "on", "of", "in", "for", "and", "to", "with", "from", "by", "at", "as", "is",
              "are", "using", "via", "into", "its", "their", "toward", "towards", "new", "novel"}
@@ -137,7 +140,46 @@ def read_provenance(root, bib=None):
 
 
 # -- retrieval ---------------------------------------------------------------------------
-def _obtain(fetcher, doi, doi_base, crossref_base):
+def _bib_escape(text):
+    return re.sub(r"([&%$#_])", r"\\\1", re.sub(r"\s+", " ", text).strip())
+
+
+def _datacite_author(creator):
+    given, family = creator.get("givenName"), creator.get("familyName")
+    if creator.get("nameType") == "Personal" and given and family:
+        return "%s, %s" % (_bib_escape(family), _bib_escape(given))
+    name = _bib_escape(creator.get("name") or "")
+    return name if creator.get("nameType") == "Personal" else "{%s}" % name
+
+
+def datacite_to_bibtex(doi, body):
+    """A BibTeX entry built from a DataCite DOI record (JSON:API body). Only fields the record
+    carries are written; a record without a title or creators is refused."""
+    try:
+        attrs = json.loads(body)["data"]["attributes"]
+        title = next(t["title"] for t in attrs["titles"] if t.get("title", "").strip())
+        authors = [_datacite_author(c) for c in attrs["creators"] if (c.get("name") or "").strip()]
+    except (ValueError, KeyError, TypeError, StopIteration):
+        raise BibError("DataCite record for %s has no title" % doi)
+    if not authors:
+        raise BibError("DataCite record for %s has no creators" % doi)
+    kind = attrs.get("types", {}).get("bibtex") or "misc"
+    fields = [("title", _bib_escape(title)), ("author", " and ".join(authors))]
+    if attrs.get("publicationYear"):
+        fields.append(("year", str(attrs["publicationYear"])))
+    if attrs.get("publisher"):
+        fields.append(("publisher", _bib_escape(attrs["publisher"] if isinstance(attrs["publisher"], str)
+                                                else attrs["publisher"].get("name", ""))))
+    if attrs.get("version"):
+        fields.append(("version", _bib_escape(str(attrs["version"]))))
+    fields.append(("doi", doi))
+    if attrs.get("url"):
+        fields.append(("url", attrs["url"]))
+    lines = ["  %s={%s}" % (k, v) for k, v in fields]
+    return "@%s{datacite,\n%s\n}\n" % (kind, ",\n".join(lines))
+
+
+def _obtain(fetcher, doi, doi_base, crossref_base, datacite_base=DATACITE_BASE):
     attempts = []
     candidates = [(doi_base + quote(doi, safe="/"), "doi.org content negotiation"),
                   (crossref_base + quote(doi, safe="") + "/transform/" + ACCEPT, "Crossref transform")]
@@ -151,6 +193,14 @@ def _obtain(fetcher, doi, doi_base, crossref_base):
             attempts.append("%s: response is not BibTeX (%s)" % (label, res.content_type or "no content type"))
             continue
         return res, text
+    res = fetcher.get(datacite_base + quote(doi, safe="/"), accept="application/vnd.api+json", wayback=False)
+    if res.ok:
+        try:
+            return res, datacite_to_bibtex(doi, res.text())
+        except BibError as exc:
+            attempts.append("DataCite: %s" % exc)
+    else:
+        attempts.append("DataCite: %s" % res.error)
     raise BibError("could not fetch BibTeX for %s:\n  %s" % (doi, "\n  ".join(attempts)))
 
 
@@ -178,21 +228,24 @@ def _with_pages(entry, number):
     return head + "\n  pages={%s}\n}\n" % number, True
 
 
-def _retrieve(fetcher, doi, doi_base, crossref_base, key):
+def _retrieve(fetcher, doi, doi_base, crossref_base, key, datacite_base=DATACITE_BASE):
     """(entry text under `key`, provenance record) for a DOI. `key` is a string or a function of the fetched text."""
-    res, text = _obtain(fetcher, doi, doi_base, crossref_base)
+    res, text = _obtain(fetcher, doi, doi_base, crossref_base, datacite_base)
     _, original_key, m = parse_head(text)
     key = key(text) if callable(key) else key
     entry = (text[:m.start(2)] + key + text[m.end(2):]).strip() + "\n"
     entry, filled = _with_pages(entry, _article_number(fetcher, doi, crossref_base))
     record = {"doi": doi, "key": key, "original_key": original_key, "url": res.final_url or res.url,
               "retrieved_utc": res.retrieved_utc, "sha256": res.sha256}
+    if res.url.startswith(datacite_base):
+        record["built_from"] = "datacite metadata"
     if filled:
         record["pages_from"] = "crossref article-number"
     return entry, record, text
 
 
-def add(root, doi_in, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE, crossref_base=CROSSREF_BASE, out=print):
+def add(root, doi_in, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE, crossref_base=CROSSREF_BASE, out=print,
+        datacite_base=DATACITE_BASE):
     root = Path(root)
     doi = normalise_doi(doi_in)
     p = paths(root, bib)
@@ -203,7 +256,8 @@ def add(root, doi_in, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE, 
         return 0
     fetcher = fetcher or Fetcher(venue_dir=p["fetch"])
     taken = set(index) | {r["key"] for r in prov}
-    entry, record, _ = _retrieve(fetcher, doi, doi_base, crossref_base, lambda text: make_key(text, taken))
+    entry, record, _ = _retrieve(fetcher, doi, doi_base, crossref_base, lambda text: make_key(text, taken),
+                                  datacite_base)
     if dry_run:
         out(entry)
         out(json.dumps(record, sort_keys=True))
@@ -222,7 +276,7 @@ def add(root, doi_in, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE, 
 
 
 def refresh(root, key, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE, crossref_base=CROSSREF_BASE,
-            out=print):
+            out=print, datacite_base=DATACITE_BASE):
     """Re-fetch the entry `key` by its DOI. The key is kept; the entry and its provenance record are replaced."""
     root = Path(root)
     p = paths(root, bib)
@@ -237,7 +291,7 @@ def refresh(root, key, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE,
         raise BibError("entry %s has no doi to refresh from" % key)
     doi = normalise_doi(raw)
     fetcher = fetcher or Fetcher(venue_dir=p["fetch"])
-    entry, record, _ = _retrieve(fetcher, doi, doi_base, crossref_base, key)
+    entry, record, _ = _retrieve(fetcher, doi, doi_base, crossref_base, key, datacite_base)
     old = next((r for r in prov if r["key"] == key), None)
     if old and "original_key" in old:
         record["original_key"] = old["original_key"]
