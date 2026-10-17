@@ -3,7 +3,7 @@
  "aggregation_over_salts": "electrolyte_salts lists three options and none is registered as the electrolyte. verdict_by_salt gives each option; verdict_any_registered_salt is the worst over them (rule 2 of theory Eq. th:eq:sink if every option's anion is admissible) and verdict_all_registered_salts the best (the phase is falsified as a design only if every option falsifies it).",
  "comparator_al_onset_ffree": {
   "key": "al_onset_ffree",
-  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
   "range": {
    "max": 4.25,
    "min": 3.5
@@ -42,8 +42,8 @@
     "scipy": "1.18.1"
    },
    "mp_database_version": "2026.04.13",
-   "params_blob": "48cfe2145f234b57712a9ce9a510cc85a300a72e",
-   "params_snapshot": "results/preprint/pourbaix/inputs/params_680a44b.json",
+   "params_blob": "cc68303ff6cad6d45b77bfc776e28e210f8c2553",
+   "params_snapshot": "results/preprint/pourbaix/inputs/params_8bc15c8.json",
    "thresholds": {
     "path": "theory/thresholds.md",
     "rev": "800d5ea"
@@ -52,7 +52,7 @@
   "scope": "Thermodynamic proxies only: a stability domain, a decomposition energy or a window says which state is at equilibrium, never how fast anything corrodes, dissolves or decomposes.",
   "session": "P0-W5.3"
  },
- "generated_utc": "2026-10-17T10:40:25Z",
+ "generated_utc": "2026-10-17T12:45:23Z",
  "limitations": [
   "The electrolyte's own anodic stability limit (oxidation of the anion or the solvent) is not assessed: above it the electrolyte reacts first, and it may lie below any limit here (theory section 9).",
   "Measured anodic onsets of Al in fluorine-free electrolytes (key al_onset_ffree) are a comparator, not an input.",
@@ -61,9 +61,9 @@
  ],
  "m_E": {
   "provisional_recipe": "Provisional m_E (V) by W1's stated recipe: e_form times the atoms of the DFT-computed solids\n    in the reaction, per transferred electron (linear sum). W1 owns window_margin (P0-W1.3).",
-  "reason": "to be derived from formation_energy_mae (e_form) with the atoms per transferred electron of the registered sink reactions, which W5 fixes after the cp2 sink ruling; outstanding for P0-W1.3",
-  "status": "gap",
-  "value_used": 0.0
+  "reason": null,
+  "status": "computed",
+  "value_used": 0.12375
  },
  "phases": {
   "Al2O3": {
@@ -83,7 +83,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_al2_so4_3",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-036"
            ],
@@ -96,7 +96,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_corundum",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-024"
            ],
@@ -114,7 +114,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_li2so4",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-046"
            ],
@@ -257,12 +257,11 @@
     },
     "LiBOB": {
      "F5": {
-      "m_E_status": "gap",
+      "m_E_status": "computed",
       "m_E_that_turns_a_falsification_inconclusive_V": null,
-      "m_E_used": 0.0,
+      "m_E_used": 0.12375,
       "over_E_cell_max_range": {
        "3.6": "inconclusive",
-       "4.3": "inconclusive",
        "5.0": "inconclusive"
       },
       "oxidation_verdict": "inconclusive",
@@ -367,7 +366,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_corundum",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-024"
            ],
@@ -391,7 +390,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_licl",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-040"
            ],
@@ -534,12 +533,11 @@
     },
     "LiClO4": {
      "F5": {
-      "m_E_status": "gap",
+      "m_E_status": "computed",
       "m_E_that_turns_a_falsification_inconclusive_V": null,
-      "m_E_used": 0.0,
+      "m_E_used": 0.12375,
       "over_E_cell_max_range": {
        "3.6": "inconclusive",
-       "4.3": "inconclusive",
        "5.0": "inconclusive"
       },
       "oxidation_verdict": "inconclusive",
@@ -708,12 +706,11 @@
     },
     "LiPCP": {
      "F5": {
-      "m_E_status": "gap",
+      "m_E_status": "computed",
       "m_E_that_turns_a_falsification_inconclusive_V": null,
-      "m_E_used": 0.0,
+      "m_E_used": 0.12375,
       "over_E_cell_max_range": {
        "3.6": "inconclusive",
-       "4.3": "inconclusive",
        "5.0": "inconclusive"
       },
       "oxidation_verdict": "inconclusive",
@@ -814,13 +811,13 @@
      "missing_keys": [
       {
        "key": "solvation_ca_vs_li",
-       "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+       "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
        "sources": [],
        "status": "gap"
       },
       {
        "key": "solvation_al_vs_li",
-       "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+       "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
        "sources": [],
        "status": "gap"
       }
@@ -877,7 +874,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_co2_g",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-008"
            ],
@@ -890,7 +887,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_caco3_calcite",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-002",
             "TI-056"
@@ -904,7 +901,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_caso4",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-034"
            ],
@@ -922,7 +919,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_li2so4",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-046"
            ],
@@ -1077,12 +1074,11 @@
     },
     "LiBOB": {
      "F5": {
-      "m_E_status": "gap",
+      "m_E_status": "computed",
       "m_E_that_turns_a_falsification_inconclusive_V": null,
-      "m_E_used": 0.0,
+      "m_E_used": 0.12375,
       "over_E_cell_max_range": {
        "3.6": "inconclusive",
-       "4.3": "inconclusive",
        "5.0": "inconclusive"
       },
       "oxidation_verdict": "inconclusive",
@@ -1192,7 +1188,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_co2_g",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-008"
            ],
@@ -1205,7 +1201,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_caco3_calcite",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-002",
             "TI-056"
@@ -1219,7 +1215,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_cacl2",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-032"
            ],
@@ -1237,7 +1233,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_licl",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-040"
            ],
@@ -1392,22 +1388,21 @@
     },
     "LiClO4": {
      "F5": {
-      "m_E_status": "gap",
-      "m_E_that_turns_a_falsification_inconclusive_V": null,
-      "m_E_used": 0.0,
+      "m_E_status": "computed",
+      "m_E_that_turns_a_falsification_inconclusive_V": 0.6799267684564656,
+      "m_E_used": 0.12375,
       "over_E_cell_max_range": {
        "3.6": "inconclusive",
-       "4.3": "inconclusive",
        "5.0": "falsified"
       },
-      "oxidation_verdict": "inconclusive",
-      "reason": "the schemes straddle E_cell_max (4.300 V, margin 0.000 V): onsets 3.705 to 4.320 V",
+      "oxidation_verdict": "falsified",
+      "reason": "E_ox < E_cell_max - m_E under every scheme (highest 4.320 V < 4.876 V); solid-salt limit is an upper bound on the onset, so the falsification stands",
       "reduction_verdict": "feasible",
-      "two_scheme_set": "inconclusive",
-      "verdict": "inconclusive",
+      "two_scheme_set": "falsified",
+      "verdict": "falsified",
       "verdict_at_provisional_m_E": {
        "m_E_V": 0.6929999999994413,
-       "reason": "the schemes straddle E_cell_max (4.300 V, margin 0.693 V): onsets 3.705 to 4.320 V",
+       "reason": "the schemes straddle E_cell_max (5.000 V, margin 0.693 V): onsets 3.705 to 4.320 V",
        "verdict": "inconclusive"
       }
      },
@@ -1430,7 +1425,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_co2_g",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-008"
            ],
@@ -1449,7 +1444,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_caco3_calcite",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-002",
             "TI-056"
@@ -1629,7 +1624,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_co2_g",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-008"
            ],
@@ -1642,7 +1637,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_ca_no3_2",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-030"
            ],
@@ -1655,7 +1650,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_caco3_calcite",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-002",
             "TI-056"
@@ -1674,7 +1669,7 @@
           "kind": "expt",
           "source": {
            "key": "dfg_lino3",
-           "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
            "sources": [
             "TI-048"
            ],
@@ -1829,12 +1824,11 @@
     },
     "LiPCP": {
      "F5": {
-      "m_E_status": "gap",
+      "m_E_status": "computed",
       "m_E_that_turns_a_falsification_inconclusive_V": null,
-      "m_E_used": 0.0,
+      "m_E_used": 0.12375,
       "over_E_cell_max_range": {
        "3.6": "inconclusive",
-       "4.3": "inconclusive",
        "5.0": "inconclusive"
       },
       "oxidation_verdict": "inconclusive",
@@ -1940,13 +1934,13 @@
      "missing_keys": [
       {
        "key": "solvation_ca_vs_li",
-       "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+       "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
        "sources": [],
        "status": "gap"
       },
       {
        "key": "solvation_al_vs_li",
-       "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+       "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
        "sources": [],
        "status": "gap"
       }
@@ -1980,22 +1974,22 @@
     "e_above_hull_eV_per_atom": 0.0
    },
    "verdict_all_registered_salts": "inconclusive",
-   "verdict_any_registered_salt": "inconclusive",
+   "verdict_any_registered_salt": "falsified",
    "verdict_by_salt": {
     "LiBOB": "inconclusive",
-    "LiClO4": "inconclusive",
+    "LiClO4": "falsified",
     "LiPCP": "inconclusive"
    }
   }
  },
  "provenance": {
   "config_file": "results/preprint/pourbaix/config/c5.yaml",
-  "config_file_hash": "sha256:af9ec33bba2b29e938d2542e6d00df5aaaf5788f4c9b51bcf98b1e5c9c84c703",
-  "config_hash": "sha256:8a3db045a0275d3dd7ff6d5c7f5a814ec7e75661b0223edb4f8e54cd679cb2cf",
+  "config_file_hash": "sha256:528b4d581ce7e61e2fca654ddbd1cd00def1eeb746f2b14224a59e9621926a6d",
+  "config_hash": "sha256:be377fc2efffbdb3cd623e06f65002bf6e853f48ba54d4ed58047bc6d634cfcd",
   "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
   "git_dirty": true,
-  "git_sha": "69088a27a975c78746d35350117753a93bdba441",
-  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "git_sha": "a8ee100d29fe17a4af57103bd93884db94aaf60d",
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
   "schema_sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
   "thresholds_file": null,
   "thresholds_hash": null
@@ -2003,31 +1997,48 @@
  "question": "Between which potentials vs Li+/Li are CaCO3 and the native Al oxide at equilibrium against lithiation (Li-open grand potential) and against oxidation that releases CO2 and O2 with the cation taken up by the anion of each registered electrolyte salt? Does the registered regime range [E_cell_min, E_cell_max] lie inside each window under every gas-reference scheme? (thermodynamic windows; no kinetic statement)",
  "regime_range": {
   "E_cell_max": {
+   "basis": "e_cell_max is a design axis by cathode class (e_cell_max_lfp, e_cell_max_layered, e_cell_max_lco, e_cell_max_lmo, e_cell_max_lnmo); single verdict at the upper end of the envelope of the class ranges",
    "range": {
     "max": 5.0,
     "min": 3.6
    },
    "source": {
     "key": "e_cell_max",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [
-     "TA-047",
-     "TA-048",
-     "TA-049",
+     "TJ-038",
+     "TK-041",
+     "TK-042",
      "TA-050",
      "TA-051",
      "TA-052",
      "TJ-036",
      "TJ-037",
-     "TJ-038",
      "TJ-039",
-     "TJ-040",
+     "TK-043",
+     "TK-050",
+     "TK-051",
+     "TK-052",
+     "TK-053",
+     "TK-054",
+     "TK-055",
      "TJ-041",
-     "TJ-042"
+     "TJ-042",
+     "TK-044",
+     "TK-046",
+     "TK-047",
+     "TK-048",
+     "TK-049",
+     "TK-056",
+     "TK-057",
+     "TA-047",
+     "TA-048",
+     "TA-049",
+     "TJ-040"
     ],
-    "status": "sourced"
+    "status": "design-input"
    },
-   "value": 4.3
+   "value": 5.0
   },
   "E_cell_min": {
    "range": {
@@ -2036,7 +2047,7 @@
    },
    "source": {
     "key": "e_cell_min",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [
      "TJ-106",
      "TJ-107",
@@ -2081,7 +2092,7 @@
    "status": "undetermined",
    "w1_key": {
     "key": "dfg_al_no3_3",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [],
     "status": "gap"
    },
@@ -2113,11 +2124,11 @@
    "status": "dfH only (exchange route)",
    "w1_key": {
     "key": "dfg_ca_clo4_2",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [],
     "status": "gap"
    },
-   "w1_reason": "gap - Ca(ClO4)2 not found in a legible fetched table"
+   "w1_reason": "gap - no DfG of anhydrous Ca(ClO4)2 in any fetched table (NBS TN 270-6 prints DfH only, TK-033); W5 enters it through the exchange enthalpy, and the neglected entropy is bounded by exchange_entropy_bound"
   },
   {
    "formula": "Al(ClO4)3",
@@ -2145,7 +2156,7 @@
    "status": "undetermined",
    "w1_key": {
     "key": "dfg_al_clo4_3",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [],
     "status": "gap"
    },
@@ -2177,7 +2188,7 @@
    "status": "determined (JANAF, NBS, MP)",
    "w1_key": {
     "key": "dfg_alcl3",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [],
     "status": "gap"
    },
@@ -2255,7 +2266,7 @@
    "mp": 3.7051136896293344,
    "phase": "CaCO3",
    "salt": "LiClO4",
-   "verdict": "inconclusive"
+   "verdict": "falsified"
   },
   {
    "expt": null,

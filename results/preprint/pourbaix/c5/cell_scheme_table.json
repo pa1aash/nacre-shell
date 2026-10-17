@@ -1,7 +1,7 @@
 {
  "E_cell_min": {
   "key": "e_cell_min",
-  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
   "sources": [
    "TJ-106",
    "TJ-107",
@@ -10,50 +10,62 @@
   "status": "sourced"
  },
  "cathode_classes": {
-  "LCO": {
-   "E_cell_max_V": {
-    "max": 4.2,
-    "min": 4.2
-   },
-   "lower_bound": false,
-   "rows": [
-    "TJ-041"
-   ],
-   "values_V": [
-    4.2
-   ]
-  },
-  "LCO, high-voltage": {
+  "LiCoO2": {
    "E_cell_max_V": {
     "max": 4.6,
-    "min": 4.6
+    "min": 4.2,
+    "value": 4.5
    },
-   "lower_bound": true,
-   "rows": [
-    "TJ-042"
-   ],
-   "values_V": [
-    4.6
-   ]
-  },
-  "LFP": {
-   "E_cell_max_V": {
-    "max": 3.6,
-    "min": 3.6
-   },
+   "key": "e_cell_max_lco",
    "lower_bound": false,
    "rows": [
-    "TJ-038"
+    "TJ-041",
+    "TJ-042",
+    "TK-044",
+    "TK-046",
+    "TK-047",
+    "TK-048",
+    "TK-049"
    ],
-   "values_V": [
-    3.6
-   ]
+   "status": "sourced"
   },
-  "LNMO": {
+  "LiFePO4": {
+   "E_cell_max_V": {
+    "max": 4.2,
+    "min": 3.6,
+    "value": 4.0
+   },
+   "key": "e_cell_max_lfp",
+   "lower_bound": false,
+   "rows": [
+    "TJ-038",
+    "TK-041",
+    "TK-042"
+   ],
+   "status": "sourced"
+  },
+  "LiMn2O4": {
+   "E_cell_max_V": {
+    "max": 4.5,
+    "min": 4.3,
+    "value": 4.5
+   },
+   "key": "e_cell_max_lmo",
+   "lower_bound": false,
+   "rows": [
+    "TA-052",
+    "TK-056",
+    "TK-057"
+   ],
+   "status": "sourced"
+  },
+  "LiNi0.5Mn1.5O4": {
    "E_cell_max_V": {
     "max": 5.0,
-    "min": 4.9
+    "min": 4.9,
+    "value": 4.9
    },
+   "key": "e_cell_max_lnmo",
    "lower_bound": false,
    "rows": [
     "TA-047",
@@ -61,92 +73,108 @@
     "TA-049",
     "TJ-040"
    ],
-   "values_V": [
-    4.9,
-    4.9,
-    5.0,
-    4.9
-   ]
+   "status": "sourced"
   },
-  "NCA": {
+  "layered NMC/NCA": {
    "E_cell_max_V": {
-    "max": 4.3,
-    "min": 4.3
+    "max": 4.5,
+    "min": 4.25,
+    "value": 4.3
    },
-   "lower_bound": false,
-   "rows": [
-    "TA-052",
-    "TJ-036"
-   ],
-   "values_V": [
-    4.3,
-    4.3
-   ]
-  },
-  "NMC": {
-   "E_cell_max_V": {
-    "max": 4.3,
-    "min": 4.25
-   },
+   "key": "e_cell_max_layered",
    "lower_bound": false,
    "rows": [
     "TA-050",
     "TA-051",
+    "TA-052",
     "TJ-036",
     "TJ-037",
-    "TJ-039"
+    "TJ-039",
+    "TK-043",
+    "TK-050",
+    "TK-051",
+    "TK-052",
+    "TK-053",
+    "TK-054",
+    "TK-055"
    ],
-   "values_V": [
-    4.3,
-    4.25,
-    4.3,
-    4.3,
-    4.3
-   ]
+   "status": "sourced"
   }
  },
- "generated_utc": "2026-10-17T10:40:25Z",
- "m_expt": {
-  "gaps": [
-   "window_margin"
+ "generated_utc": "2026-10-17T12:45:23Z",
+ "m_dft": {
+  "key": "window_margin",
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+  "reading": "the margin of rows governed by the benchmark-corrected DFT schemes and of the DFT reduction limit; W1 states it for the registered reaction (other reactions scale by their uncancelled atoms per electron)",
+  "sources": [
+   "TI-080",
+   "TI-082",
+   "TI-083",
+   "TI-085"
   ],
+  "status": "computed",
+  "value_used_V": 0.12375
+ },
+ "m_expt": {
+  "gaps": [],
   "keys": [
    {
-    "key": "window_margin",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
-    "sources": [],
-    "status": "gap"
+    "key": "window_margin_expt",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+    "sources": [
+     "TK-030",
+     "TK-031",
+     "TK-033",
+     "TK-039",
+     "TI-008",
+     "TI-002",
+     "TK-012",
+     "TK-019",
+     "TK-015",
+     "TK-029",
+     "TK-027",
+     "TK-028",
+     "TK-065",
+     "TK-071",
+     "TK-066",
+     "TK-072",
+     "TK-067",
+     "TK-068",
+     "TK-073",
+     "TK-069",
+     "TK-074",
+     "TK-070",
+     "TK-007",
+     "TK-008"
+    ],
+    "status": "computed"
    }
   ],
-  "reading": "while any key is a gap m_expt = 0 is used and margin_to_flip_V says how large m_expt would have to be to change each class verdict",
-  "status": "gap",
-  "value_used_V": 0.0
+  "reading": "the margin of rows governed by the all-experimental route; while any key is a gap m_expt = 0 is used and margin_to_flip_V says how large it would have to be to change each class verdict",
+  "status": "sourced",
+  "value_used_V": 0.0869778018619
  },
- "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+ "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
  "phases": {
   "Al2O3": {
    "by_cathode_class": {
-    "LCO": {
+    "LiCoO2": {
      "best_over_registered_sinks": "inconclusive",
      "worst_over_registered_sinks": "inconclusive"
     },
-    "LCO, high-voltage": {
+    "LiFePO4": {
      "best_over_registered_sinks": "inconclusive",
      "worst_over_registered_sinks": "inconclusive"
     },
-    "LFP": {
+    "LiMn2O4": {
      "best_over_registered_sinks": "inconclusive",
      "worst_over_registered_sinks": "inconclusive"
     },
-    "LNMO": {
+    "LiNi0.5Mn1.5O4": {
      "best_over_registered_sinks": "inconclusive",
      "worst_over_registered_sinks": "inconclusive"
     },
-    "NCA": {
-     "best_over_registered_sinks": "inconclusive",
-     "worst_over_registered_sinks": "inconclusive"
-    },
-    "NMC": {
+    "layered NMC/NCA": {
      "best_over_registered_sinks": "inconclusive",
      "worst_over_registered_sinks": "inconclusive"
     }
@@ -158,50 +186,83 @@
       "mp": -0.23270246997539404
      },
      "by_cathode_class": {
-      "LCO": {
-       "E_cell_max_V": {
-        "max": 4.2,
-        "min": 4.2
-       },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-041"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LCO, high-voltage": {
+      "LiCoO2": {
        "E_cell_max_V": {
         "max": 4.6,
-        "min": 4.6
+        "min": 4.2,
+        "value": 4.5
        },
-       "lower_bound": true,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-042"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LFP": {
-       "E_cell_max_V": {
-        "max": 3.6,
-        "min": 3.6
-       },
+       "key": "e_cell_max_lco",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
-        "TJ-038"
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "LNMO": {
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
        "E_cell_max_V": {
         "max": 5.0,
-        "min": 4.9
+        "min": 4.9,
+        "value": 4.9
        },
+       "key": "e_cell_max_lnmo",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
@@ -211,38 +272,44 @@
         "TA-049",
         "TJ-040"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "NCA": {
+      "layered NMC/NCA": {
        "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.3
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
        },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TA-052",
-        "TJ-036"
-       ],
-       "verdict": "inconclusive"
-      },
-      "NMC": {
-       "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.25
-       },
+       "key": "e_cell_max_layered",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
         "TA-050",
         "TA-051",
+        "TA-052",
         "TJ-036",
         "TJ-037",
-        "TJ-039"
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       }
      },
      "cutoff_dependence": {
@@ -255,6 +322,8 @@
      "janaf_corrected_V": null,
      "m_expt_provisional_V": null,
      "m_expt_unbudgeted_species": [],
+     "margin_V": 0.0,
+     "margin_key": [],
      "mp_V": null,
      "mp_corrected_V": null,
      "phase": "Al2O3",
@@ -270,50 +339,83 @@
       "mp": -0.23270246997539404
      },
      "by_cathode_class": {
-      "LCO": {
-       "E_cell_max_V": {
-        "max": 4.2,
-        "min": 4.2
-       },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-041"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LCO, high-voltage": {
+      "LiCoO2": {
        "E_cell_max_V": {
         "max": 4.6,
-        "min": 4.6
+        "min": 4.2,
+        "value": 4.5
        },
-       "lower_bound": true,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-042"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LFP": {
-       "E_cell_max_V": {
-        "max": 3.6,
-        "min": 3.6
-       },
+       "key": "e_cell_max_lco",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
-        "TJ-038"
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "LNMO": {
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
        "E_cell_max_V": {
         "max": 5.0,
-        "min": 4.9
+        "min": 4.9,
+        "value": 4.9
        },
+       "key": "e_cell_max_lnmo",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
@@ -323,38 +425,44 @@
         "TA-049",
         "TJ-040"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "NCA": {
+      "layered NMC/NCA": {
        "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.3
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
        },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TA-052",
-        "TJ-036"
-       ],
-       "verdict": "inconclusive"
-      },
-      "NMC": {
-       "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.25
-       },
+       "key": "e_cell_max_layered",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
         "TA-050",
         "TA-051",
+        "TA-052",
         "TJ-036",
         "TJ-037",
-        "TJ-039"
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       }
      },
      "cutoff_dependence": {
@@ -367,6 +475,8 @@
      "janaf_corrected_V": null,
      "m_expt_provisional_V": null,
      "m_expt_unbudgeted_species": [],
+     "margin_V": 0.0,
+     "margin_key": [],
      "mp_V": null,
      "mp_corrected_V": null,
      "phase": "Al2O3",
@@ -382,50 +492,83 @@
       "mp": -0.23270246997539404
      },
      "by_cathode_class": {
-      "LCO": {
-       "E_cell_max_V": {
-        "max": 4.2,
-        "min": 4.2
-       },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-041"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LCO, high-voltage": {
+      "LiCoO2": {
        "E_cell_max_V": {
         "max": 4.6,
-        "min": 4.6
+        "min": 4.2,
+        "value": 4.5
        },
-       "lower_bound": true,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-042"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LFP": {
-       "E_cell_max_V": {
-        "max": 3.6,
-        "min": 3.6
-       },
+       "key": "e_cell_max_lco",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
-        "TJ-038"
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "LNMO": {
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
        "E_cell_max_V": {
         "max": 5.0,
-        "min": 4.9
+        "min": 4.9,
+        "value": 4.9
        },
+       "key": "e_cell_max_lnmo",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
@@ -435,38 +578,44 @@
         "TA-049",
         "TJ-040"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "NCA": {
+      "layered NMC/NCA": {
        "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.3
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
        },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TA-052",
-        "TJ-036"
-       ],
-       "verdict": "inconclusive"
-      },
-      "NMC": {
-       "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.25
-       },
+       "key": "e_cell_max_layered",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
         "TA-050",
         "TA-051",
+        "TA-052",
         "TJ-036",
         "TJ-037",
-        "TJ-039"
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       }
      },
      "cutoff_dependence": {
@@ -479,6 +628,8 @@
      "janaf_corrected_V": null,
      "m_expt_provisional_V": null,
      "m_expt_unbudgeted_species": [],
+     "margin_V": 0.0,
+     "margin_key": [],
      "mp_V": null,
      "mp_corrected_V": null,
      "phase": "Al2O3",
@@ -494,50 +645,83 @@
       "mp": -0.23270246997539404
      },
      "by_cathode_class": {
-      "LCO": {
-       "E_cell_max_V": {
-        "max": 4.2,
-        "min": 4.2
-       },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-041"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LCO, high-voltage": {
+      "LiCoO2": {
        "E_cell_max_V": {
         "max": 4.6,
-        "min": 4.6
+        "min": 4.2,
+        "value": 4.5
        },
-       "lower_bound": true,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-042"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LFP": {
-       "E_cell_max_V": {
-        "max": 3.6,
-        "min": 3.6
-       },
+       "key": "e_cell_max_lco",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
-        "TJ-038"
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "LNMO": {
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
        "E_cell_max_V": {
         "max": 5.0,
-        "min": 4.9
+        "min": 4.9,
+        "value": 4.9
        },
+       "key": "e_cell_max_lnmo",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
@@ -547,38 +731,44 @@
         "TA-049",
         "TJ-040"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "NCA": {
+      "layered NMC/NCA": {
        "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.3
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
        },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TA-052",
-        "TJ-036"
-       ],
-       "verdict": "inconclusive"
-      },
-      "NMC": {
-       "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.25
-       },
+       "key": "e_cell_max_layered",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
         "TA-050",
         "TA-051",
+        "TA-052",
         "TJ-036",
         "TJ-037",
-        "TJ-039"
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       }
      },
      "cutoff_dependence": {
@@ -591,6 +781,8 @@
      "janaf_corrected_V": null,
      "m_expt_provisional_V": null,
      "m_expt_unbudgeted_species": [],
+     "margin_V": 0.0,
+     "margin_key": [],
      "mp_V": null,
      "mp_corrected_V": null,
      "phase": "Al2O3",
@@ -614,27 +806,23 @@
   },
   "CaCO3": {
    "by_cathode_class": {
-    "LCO": {
+    "LiCoO2": {
      "best_over_registered_sinks": "inconclusive",
      "worst_over_registered_sinks": "falsified"
     },
-    "LCO, high-voltage": {
+    "LiFePO4": {
      "best_over_registered_sinks": "inconclusive",
      "worst_over_registered_sinks": "falsified"
     },
-    "LFP": {
-     "best_over_registered_sinks": "inconclusive",
-     "worst_over_registered_sinks": "inconclusive"
-    },
-    "LNMO": {
+    "LiMn2O4": {
      "best_over_registered_sinks": "inconclusive",
      "worst_over_registered_sinks": "falsified"
     },
-    "NCA": {
+    "LiNi0.5Mn1.5O4": {
      "best_over_registered_sinks": "inconclusive",
      "worst_over_registered_sinks": "falsified"
     },
-    "NMC": {
+    "layered NMC/NCA": {
      "best_over_registered_sinks": "inconclusive",
      "worst_over_registered_sinks": "falsified"
     }
@@ -646,50 +834,83 @@
       "mp": -0.23270246997539404
      },
      "by_cathode_class": {
-      "LCO": {
-       "E_cell_max_V": {
-        "max": 4.2,
-        "min": 4.2
-       },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-041"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LCO, high-voltage": {
+      "LiCoO2": {
        "E_cell_max_V": {
         "max": 4.6,
-        "min": 4.6
+        "min": 4.2,
+        "value": 4.5
        },
-       "lower_bound": true,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-042"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LFP": {
-       "E_cell_max_V": {
-        "max": 3.6,
-        "min": 3.6
-       },
+       "key": "e_cell_max_lco",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
-        "TJ-038"
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "LNMO": {
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
        "E_cell_max_V": {
         "max": 5.0,
-        "min": 4.9
+        "min": 4.9,
+        "value": 4.9
        },
+       "key": "e_cell_max_lnmo",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
@@ -699,38 +920,44 @@
         "TA-049",
         "TJ-040"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "NCA": {
+      "layered NMC/NCA": {
        "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.3
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
        },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TA-052",
-        "TJ-036"
-       ],
-       "verdict": "inconclusive"
-      },
-      "NMC": {
-       "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.25
-       },
+       "key": "e_cell_max_layered",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
         "TA-050",
         "TA-051",
+        "TA-052",
         "TJ-036",
         "TJ-037",
-        "TJ-039"
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       }
      },
      "cutoff_dependence": {
@@ -743,6 +970,8 @@
      "janaf_corrected_V": null,
      "m_expt_provisional_V": null,
      "m_expt_unbudgeted_species": [],
+     "margin_V": 0.0,
+     "margin_key": [],
      "mp_V": null,
      "mp_corrected_V": null,
      "phase": "CaCO3",
@@ -758,53 +987,86 @@
       "mp": -0.23270246997539404
      },
      "by_cathode_class": {
-      "LCO": {
+      "LiCoO2": {
        "E_cell_max_V": {
-        "max": 4.2,
-        "min": 4.2
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
        },
+       "key": "e_cell_max_lco",
        "lower_bound": false,
        "margin_to_flip_V": 0.26218384039526965,
        "oxidation_verdict": "falsified",
        "rows": [
-        "TJ-041"
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
        ],
        "verdict": "falsified",
+       "verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       },
        "verdict_at_provisional_m_expt": "falsified"
       },
-      "LCO, high-voltage": {
+      "LiFePO4": {
        "E_cell_max_V": {
-        "max": 4.6,
-        "min": 4.6
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
        },
-       "lower_bound": true,
-       "margin_to_flip_V": 0.6621838403952691,
+       "key": "e_cell_max_lfp",
+       "lower_bound": false,
+       "margin_to_flip_V": 0.26218384039526965,
+       "oxidation_verdict": "inconclusive to falsified",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict": "inconclusive to falsified",
+       "verdict_at": {
+        "max": "falsified",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "verdict_at_provisional_m_expt": "inconclusive to falsified"
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "lower_bound": false,
+       "margin_to_flip_V": 0.3621838403952693,
        "oxidation_verdict": "falsified",
        "rows": [
-        "TJ-042"
+        "TA-052",
+        "TK-056",
+        "TK-057"
        ],
        "verdict": "falsified",
+       "verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       },
        "verdict_at_provisional_m_expt": "falsified"
       },
-      "LFP": {
-       "E_cell_max_V": {
-        "max": 3.6,
-        "min": 3.6
-       },
-       "lower_bound": false,
-       "margin_to_flip_V": 0.33781615960473044,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-038"
-       ],
-       "verdict": "inconclusive",
-       "verdict_at_provisional_m_expt": "inconclusive"
-      },
-      "LNMO": {
+      "LiNi0.5Mn1.5O4": {
        "E_cell_max_V": {
         "max": 5.0,
-        "min": 4.9
+        "min": 4.9,
+        "value": 4.9
        },
+       "key": "e_cell_max_lnmo",
        "lower_bound": false,
        "margin_to_flip_V": 0.9621838403952698,
        "oxidation_verdict": "falsified",
@@ -815,45 +1077,54 @@
         "TJ-040"
        ],
        "verdict": "falsified",
+       "verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       },
        "verdict_at_provisional_m_expt": "falsified"
       },
-      "NCA": {
+      "layered NMC/NCA": {
        "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.3
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
        },
-       "lower_bound": false,
-       "margin_to_flip_V": 0.3621838403952693,
-       "oxidation_verdict": "falsified",
-       "rows": [
-        "TA-052",
-        "TJ-036"
-       ],
-       "verdict": "falsified",
-       "verdict_at_provisional_m_expt": "falsified"
-      },
-      "NMC": {
-       "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.25
-       },
+       "key": "e_cell_max_layered",
        "lower_bound": false,
        "margin_to_flip_V": 0.3121838403952695,
        "oxidation_verdict": "falsified",
        "rows": [
         "TA-050",
         "TA-051",
+        "TA-052",
         "TJ-036",
         "TJ-037",
-        "TJ-039"
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
        ],
        "verdict": "falsified",
+       "verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       },
        "verdict_at_provisional_m_expt": "falsified"
       }
      },
      "cutoff_dependence": {
-      "falsified_for_E_cell_max_above_V": 3.9378161596047305,
-      "solid_salt_pass_inconclusive_for_E_cell_max_at_or_below_V": 3.9378161596047305
+      "falsified_for_E_cell_max_above_V": 4.024793961466631,
+      "inconclusive_between_V": [
+       3.8508383577428305,
+       4.024793961466631
+      ],
+      "solid_salt_pass_inconclusive_for_E_cell_max_at_or_below_V": 3.8508383577428305
      },
      "expt_V": 3.9378161596047305,
      "governing_V": {
@@ -866,6 +1137,10 @@
      "m_expt_unbudgeted_species": [
       "Ca(ClO4)2",
       "LiClO4"
+     ],
+     "margin_V": 0.0869778018619,
+     "margin_key": [
+      "window_margin_expt"
      ],
      "mp_V": 3.7051136896293344,
      "mp_corrected_V": 3.9378161596047283,
@@ -882,50 +1157,83 @@
       "mp": -0.23270246997539404
      },
      "by_cathode_class": {
-      "LCO": {
-       "E_cell_max_V": {
-        "max": 4.2,
-        "min": 4.2
-       },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-041"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LCO, high-voltage": {
+      "LiCoO2": {
        "E_cell_max_V": {
         "max": 4.6,
-        "min": 4.6
+        "min": 4.2,
+        "value": 4.5
        },
-       "lower_bound": true,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-042"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LFP": {
-       "E_cell_max_V": {
-        "max": 3.6,
-        "min": 3.6
-       },
+       "key": "e_cell_max_lco",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
-        "TJ-038"
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "LNMO": {
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
        "E_cell_max_V": {
         "max": 5.0,
-        "min": 4.9
+        "min": 4.9,
+        "value": 4.9
        },
+       "key": "e_cell_max_lnmo",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
@@ -935,38 +1243,44 @@
         "TA-049",
         "TJ-040"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "NCA": {
+      "layered NMC/NCA": {
        "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.3
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
        },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TA-052",
-        "TJ-036"
-       ],
-       "verdict": "inconclusive"
-      },
-      "NMC": {
-       "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.25
-       },
+       "key": "e_cell_max_layered",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
         "TA-050",
         "TA-051",
+        "TA-052",
         "TJ-036",
         "TJ-037",
-        "TJ-039"
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       }
      },
      "cutoff_dependence": {
@@ -979,6 +1293,8 @@
      "janaf_corrected_V": null,
      "m_expt_provisional_V": null,
      "m_expt_unbudgeted_species": [],
+     "margin_V": 0.0,
+     "margin_key": [],
      "mp_V": null,
      "mp_corrected_V": null,
      "phase": "CaCO3",
@@ -994,50 +1310,83 @@
       "mp": -0.23270246997539404
      },
      "by_cathode_class": {
-      "LCO": {
-       "E_cell_max_V": {
-        "max": 4.2,
-        "min": 4.2
-       },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-041"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LCO, high-voltage": {
+      "LiCoO2": {
        "E_cell_max_V": {
         "max": 4.6,
-        "min": 4.6
+        "min": 4.2,
+        "value": 4.5
        },
-       "lower_bound": true,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TJ-042"
-       ],
-       "verdict": "inconclusive"
-      },
-      "LFP": {
-       "E_cell_max_V": {
-        "max": 3.6,
-        "min": 3.6
-       },
+       "key": "e_cell_max_lco",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
-        "TJ-038"
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "LNMO": {
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "lower_bound": false,
+       "margin_to_flip_V": null,
+       "oxidation_verdict": "inconclusive",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
        "E_cell_max_V": {
         "max": 5.0,
-        "min": 4.9
+        "min": 4.9,
+        "value": 4.9
        },
+       "key": "e_cell_max_lnmo",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
@@ -1047,38 +1396,44 @@
         "TA-049",
         "TJ-040"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       },
-      "NCA": {
+      "layered NMC/NCA": {
        "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.3
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
        },
-       "lower_bound": false,
-       "margin_to_flip_V": null,
-       "oxidation_verdict": "inconclusive",
-       "rows": [
-        "TA-052",
-        "TJ-036"
-       ],
-       "verdict": "inconclusive"
-      },
-      "NMC": {
-       "E_cell_max_V": {
-        "max": 4.3,
-        "min": 4.25
-       },
+       "key": "e_cell_max_layered",
        "lower_bound": false,
        "margin_to_flip_V": null,
        "oxidation_verdict": "inconclusive",
        "rows": [
         "TA-050",
         "TA-051",
+        "TA-052",
         "TJ-036",
         "TJ-037",
-        "TJ-039"
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
        ],
-       "verdict": "inconclusive"
+       "verdict": "inconclusive",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
       }
      },
      "cutoff_dependence": {
@@ -1091,6 +1446,8 @@
      "janaf_corrected_V": null,
      "m_expt_provisional_V": null,
      "m_expt_unbudgeted_species": [],
+     "margin_V": 0.0,
+     "margin_key": [],
      "mp_V": null,
      "mp_corrected_V": null,
      "phase": "CaCO3",
@@ -1115,12 +1472,12 @@
  },
  "provenance": {
   "config_file": "results/preprint/pourbaix/config/c5.yaml",
-  "config_file_hash": "sha256:af9ec33bba2b29e938d2542e6d00df5aaaf5788f4c9b51bcf98b1e5c9c84c703",
-  "config_hash": "sha256:8a3db045a0275d3dd7ff6d5c7f5a814ec7e75661b0223edb4f8e54cd679cb2cf",
+  "config_file_hash": "sha256:528b4d581ce7e61e2fca654ddbd1cd00def1eeb746f2b14224a59e9621926a6d",
+  "config_hash": "sha256:be377fc2efffbdb3cd623e06f65002bf6e853f48ba54d4ed58047bc6d634cfcd",
   "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
   "git_dirty": true,
-  "git_sha": "69088a27a975c78746d35350117753a93bdba441",
-  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "git_sha": "a8ee100d29fe17a4af57103bd93884db94aaf60d",
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
   "schema_sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
   "thresholds_file": null,
   "thresholds_hash": null
@@ -1133,19 +1490,43 @@
   "keys": [
    {
     "key": "solvation_ca_vs_li",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [],
     "status": "gap"
    },
    {
     "key": "solvation_al_vs_li",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [],
     "status": "gap"
    }
   ],
   "reading": "no solvated-sink onset is computed while the Ca2+ and Al3+ transfer free energies relative to Li+ are gaps; no R-cell pass can count",
-  "status": "gap"
+  "status": "gap",
+  "water_analogs": {
+   "keys": [
+    {
+     "key": "solvation_ca_vs_li_water_analog",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+     "sources": [
+      "TK-002",
+      "TK-001"
+     ],
+     "status": "computed"
+    },
+    {
+     "key": "solvation_al_vs_li_water_analog",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+     "sources": [
+      "TK-003",
+      "TK-001"
+     ],
+     "status": "computed"
+    }
+   ],
+   "reason": "The flagged water analogs are differences of absolute single-ion hydration free energies (Delta_G_hyd(M) - z Delta_G_hyd(Li+)). An onset from them needs the gas-phase ion formation free energies of Ca2+, Al3+ and Li+, which are not params keys, so no analog onset is computed here; it is logged as an outstanding input.",
+   "status": "not converted"
+  }
  },
  "table": [
   {
@@ -1154,50 +1535,83 @@
     "mp": -0.23270246997539404
    },
    "by_cathode_class": {
-    "LCO": {
-     "E_cell_max_V": {
-      "max": 4.2,
-      "min": 4.2
-     },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-041"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LCO, high-voltage": {
+    "LiCoO2": {
      "E_cell_max_V": {
       "max": 4.6,
-      "min": 4.6
+      "min": 4.2,
+      "value": 4.5
      },
-     "lower_bound": true,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-042"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LFP": {
-     "E_cell_max_V": {
-      "max": 3.6,
-      "min": 3.6
-     },
+     "key": "e_cell_max_lco",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
-      "TJ-038"
+      "TJ-041",
+      "TJ-042",
+      "TK-044",
+      "TK-046",
+      "TK-047",
+      "TK-048",
+      "TK-049"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "LNMO": {
+    "LiFePO4": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 3.6,
+      "value": 4.0
+     },
+     "key": "e_cell_max_lfp",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038",
+      "TK-041",
+      "TK-042"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiMn2O4": {
+     "E_cell_max_V": {
+      "max": 4.5,
+      "min": 4.3,
+      "value": 4.5
+     },
+     "key": "e_cell_max_lmo",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TK-056",
+      "TK-057"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiNi0.5Mn1.5O4": {
      "E_cell_max_V": {
       "max": 5.0,
-      "min": 4.9
+      "min": 4.9,
+      "value": 4.9
      },
+     "key": "e_cell_max_lnmo",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
@@ -1207,38 +1621,44 @@
       "TA-049",
       "TJ-040"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "NCA": {
+    "layered NMC/NCA": {
      "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.3
+      "max": 4.5,
+      "min": 4.25,
+      "value": 4.3
      },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TA-052",
-      "TJ-036"
-     ],
-     "verdict": "inconclusive"
-    },
-    "NMC": {
-     "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.25
-     },
+     "key": "e_cell_max_layered",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
       "TA-050",
       "TA-051",
+      "TA-052",
       "TJ-036",
       "TJ-037",
-      "TJ-039"
+      "TJ-039",
+      "TK-043",
+      "TK-050",
+      "TK-051",
+      "TK-052",
+      "TK-053",
+      "TK-054",
+      "TK-055"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     }
    },
    "cutoff_dependence": {
@@ -1251,6 +1671,8 @@
    "janaf_corrected_V": null,
    "m_expt_provisional_V": null,
    "m_expt_unbudgeted_species": [],
+   "margin_V": 0.0,
+   "margin_key": [],
    "mp_V": null,
    "mp_corrected_V": null,
    "phase": "Al2O3",
@@ -1266,50 +1688,83 @@
     "mp": -0.23270246997539404
    },
    "by_cathode_class": {
-    "LCO": {
-     "E_cell_max_V": {
-      "max": 4.2,
-      "min": 4.2
-     },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-041"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LCO, high-voltage": {
+    "LiCoO2": {
      "E_cell_max_V": {
       "max": 4.6,
-      "min": 4.6
+      "min": 4.2,
+      "value": 4.5
      },
-     "lower_bound": true,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-042"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LFP": {
-     "E_cell_max_V": {
-      "max": 3.6,
-      "min": 3.6
-     },
+     "key": "e_cell_max_lco",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
-      "TJ-038"
+      "TJ-041",
+      "TJ-042",
+      "TK-044",
+      "TK-046",
+      "TK-047",
+      "TK-048",
+      "TK-049"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "LNMO": {
+    "LiFePO4": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 3.6,
+      "value": 4.0
+     },
+     "key": "e_cell_max_lfp",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038",
+      "TK-041",
+      "TK-042"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiMn2O4": {
+     "E_cell_max_V": {
+      "max": 4.5,
+      "min": 4.3,
+      "value": 4.5
+     },
+     "key": "e_cell_max_lmo",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TK-056",
+      "TK-057"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiNi0.5Mn1.5O4": {
      "E_cell_max_V": {
       "max": 5.0,
-      "min": 4.9
+      "min": 4.9,
+      "value": 4.9
      },
+     "key": "e_cell_max_lnmo",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
@@ -1319,38 +1774,44 @@
       "TA-049",
       "TJ-040"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "NCA": {
+    "layered NMC/NCA": {
      "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.3
+      "max": 4.5,
+      "min": 4.25,
+      "value": 4.3
      },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TA-052",
-      "TJ-036"
-     ],
-     "verdict": "inconclusive"
-    },
-    "NMC": {
-     "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.25
-     },
+     "key": "e_cell_max_layered",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
       "TA-050",
       "TA-051",
+      "TA-052",
       "TJ-036",
       "TJ-037",
-      "TJ-039"
+      "TJ-039",
+      "TK-043",
+      "TK-050",
+      "TK-051",
+      "TK-052",
+      "TK-053",
+      "TK-054",
+      "TK-055"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     }
    },
    "cutoff_dependence": {
@@ -1363,6 +1824,8 @@
    "janaf_corrected_V": null,
    "m_expt_provisional_V": null,
    "m_expt_unbudgeted_species": [],
+   "margin_V": 0.0,
+   "margin_key": [],
    "mp_V": null,
    "mp_corrected_V": null,
    "phase": "Al2O3",
@@ -1378,50 +1841,83 @@
     "mp": -0.23270246997539404
    },
    "by_cathode_class": {
-    "LCO": {
-     "E_cell_max_V": {
-      "max": 4.2,
-      "min": 4.2
-     },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-041"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LCO, high-voltage": {
+    "LiCoO2": {
      "E_cell_max_V": {
       "max": 4.6,
-      "min": 4.6
+      "min": 4.2,
+      "value": 4.5
      },
-     "lower_bound": true,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-042"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LFP": {
-     "E_cell_max_V": {
-      "max": 3.6,
-      "min": 3.6
-     },
+     "key": "e_cell_max_lco",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
-      "TJ-038"
+      "TJ-041",
+      "TJ-042",
+      "TK-044",
+      "TK-046",
+      "TK-047",
+      "TK-048",
+      "TK-049"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "LNMO": {
+    "LiFePO4": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 3.6,
+      "value": 4.0
+     },
+     "key": "e_cell_max_lfp",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038",
+      "TK-041",
+      "TK-042"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiMn2O4": {
+     "E_cell_max_V": {
+      "max": 4.5,
+      "min": 4.3,
+      "value": 4.5
+     },
+     "key": "e_cell_max_lmo",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TK-056",
+      "TK-057"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiNi0.5Mn1.5O4": {
      "E_cell_max_V": {
       "max": 5.0,
-      "min": 4.9
+      "min": 4.9,
+      "value": 4.9
      },
+     "key": "e_cell_max_lnmo",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
@@ -1431,38 +1927,44 @@
       "TA-049",
       "TJ-040"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "NCA": {
+    "layered NMC/NCA": {
      "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.3
+      "max": 4.5,
+      "min": 4.25,
+      "value": 4.3
      },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TA-052",
-      "TJ-036"
-     ],
-     "verdict": "inconclusive"
-    },
-    "NMC": {
-     "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.25
-     },
+     "key": "e_cell_max_layered",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
       "TA-050",
       "TA-051",
+      "TA-052",
       "TJ-036",
       "TJ-037",
-      "TJ-039"
+      "TJ-039",
+      "TK-043",
+      "TK-050",
+      "TK-051",
+      "TK-052",
+      "TK-053",
+      "TK-054",
+      "TK-055"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     }
    },
    "cutoff_dependence": {
@@ -1475,6 +1977,8 @@
    "janaf_corrected_V": null,
    "m_expt_provisional_V": null,
    "m_expt_unbudgeted_species": [],
+   "margin_V": 0.0,
+   "margin_key": [],
    "mp_V": null,
    "mp_corrected_V": null,
    "phase": "Al2O3",
@@ -1490,50 +1994,83 @@
     "mp": -0.23270246997539404
    },
    "by_cathode_class": {
-    "LCO": {
-     "E_cell_max_V": {
-      "max": 4.2,
-      "min": 4.2
-     },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-041"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LCO, high-voltage": {
+    "LiCoO2": {
      "E_cell_max_V": {
       "max": 4.6,
-      "min": 4.6
+      "min": 4.2,
+      "value": 4.5
      },
-     "lower_bound": true,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-042"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LFP": {
-     "E_cell_max_V": {
-      "max": 3.6,
-      "min": 3.6
-     },
+     "key": "e_cell_max_lco",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
-      "TJ-038"
+      "TJ-041",
+      "TJ-042",
+      "TK-044",
+      "TK-046",
+      "TK-047",
+      "TK-048",
+      "TK-049"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "LNMO": {
+    "LiFePO4": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 3.6,
+      "value": 4.0
+     },
+     "key": "e_cell_max_lfp",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038",
+      "TK-041",
+      "TK-042"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiMn2O4": {
+     "E_cell_max_V": {
+      "max": 4.5,
+      "min": 4.3,
+      "value": 4.5
+     },
+     "key": "e_cell_max_lmo",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TK-056",
+      "TK-057"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiNi0.5Mn1.5O4": {
      "E_cell_max_V": {
       "max": 5.0,
-      "min": 4.9
+      "min": 4.9,
+      "value": 4.9
      },
+     "key": "e_cell_max_lnmo",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
@@ -1543,38 +2080,44 @@
       "TA-049",
       "TJ-040"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "NCA": {
+    "layered NMC/NCA": {
      "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.3
+      "max": 4.5,
+      "min": 4.25,
+      "value": 4.3
      },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TA-052",
-      "TJ-036"
-     ],
-     "verdict": "inconclusive"
-    },
-    "NMC": {
-     "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.25
-     },
+     "key": "e_cell_max_layered",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
       "TA-050",
       "TA-051",
+      "TA-052",
       "TJ-036",
       "TJ-037",
-      "TJ-039"
+      "TJ-039",
+      "TK-043",
+      "TK-050",
+      "TK-051",
+      "TK-052",
+      "TK-053",
+      "TK-054",
+      "TK-055"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     }
    },
    "cutoff_dependence": {
@@ -1587,6 +2130,8 @@
    "janaf_corrected_V": null,
    "m_expt_provisional_V": null,
    "m_expt_unbudgeted_species": [],
+   "margin_V": 0.0,
+   "margin_key": [],
    "mp_V": null,
    "mp_corrected_V": null,
    "phase": "Al2O3",
@@ -1602,50 +2147,83 @@
     "mp": -0.23270246997539404
    },
    "by_cathode_class": {
-    "LCO": {
-     "E_cell_max_V": {
-      "max": 4.2,
-      "min": 4.2
-     },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-041"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LCO, high-voltage": {
+    "LiCoO2": {
      "E_cell_max_V": {
       "max": 4.6,
-      "min": 4.6
+      "min": 4.2,
+      "value": 4.5
      },
-     "lower_bound": true,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-042"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LFP": {
-     "E_cell_max_V": {
-      "max": 3.6,
-      "min": 3.6
-     },
+     "key": "e_cell_max_lco",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
-      "TJ-038"
+      "TJ-041",
+      "TJ-042",
+      "TK-044",
+      "TK-046",
+      "TK-047",
+      "TK-048",
+      "TK-049"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "LNMO": {
+    "LiFePO4": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 3.6,
+      "value": 4.0
+     },
+     "key": "e_cell_max_lfp",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038",
+      "TK-041",
+      "TK-042"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiMn2O4": {
+     "E_cell_max_V": {
+      "max": 4.5,
+      "min": 4.3,
+      "value": 4.5
+     },
+     "key": "e_cell_max_lmo",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TK-056",
+      "TK-057"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiNi0.5Mn1.5O4": {
      "E_cell_max_V": {
       "max": 5.0,
-      "min": 4.9
+      "min": 4.9,
+      "value": 4.9
      },
+     "key": "e_cell_max_lnmo",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
@@ -1655,38 +2233,44 @@
       "TA-049",
       "TJ-040"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "NCA": {
+    "layered NMC/NCA": {
      "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.3
+      "max": 4.5,
+      "min": 4.25,
+      "value": 4.3
      },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TA-052",
-      "TJ-036"
-     ],
-     "verdict": "inconclusive"
-    },
-    "NMC": {
-     "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.25
-     },
+     "key": "e_cell_max_layered",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
       "TA-050",
       "TA-051",
+      "TA-052",
       "TJ-036",
       "TJ-037",
-      "TJ-039"
+      "TJ-039",
+      "TK-043",
+      "TK-050",
+      "TK-051",
+      "TK-052",
+      "TK-053",
+      "TK-054",
+      "TK-055"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     }
    },
    "cutoff_dependence": {
@@ -1699,6 +2283,8 @@
    "janaf_corrected_V": null,
    "m_expt_provisional_V": null,
    "m_expt_unbudgeted_species": [],
+   "margin_V": 0.0,
+   "margin_key": [],
    "mp_V": null,
    "mp_corrected_V": null,
    "phase": "CaCO3",
@@ -1714,53 +2300,86 @@
     "mp": -0.23270246997539404
    },
    "by_cathode_class": {
-    "LCO": {
+    "LiCoO2": {
      "E_cell_max_V": {
-      "max": 4.2,
-      "min": 4.2
+      "max": 4.6,
+      "min": 4.2,
+      "value": 4.5
      },
+     "key": "e_cell_max_lco",
      "lower_bound": false,
      "margin_to_flip_V": 0.26218384039526965,
      "oxidation_verdict": "falsified",
      "rows": [
-      "TJ-041"
+      "TJ-041",
+      "TJ-042",
+      "TK-044",
+      "TK-046",
+      "TK-047",
+      "TK-048",
+      "TK-049"
      ],
      "verdict": "falsified",
+     "verdict_at": {
+      "max": "falsified",
+      "min": "falsified",
+      "value": "falsified"
+     },
      "verdict_at_provisional_m_expt": "falsified"
     },
-    "LCO, high-voltage": {
+    "LiFePO4": {
      "E_cell_max_V": {
-      "max": 4.6,
-      "min": 4.6
+      "max": 4.2,
+      "min": 3.6,
+      "value": 4.0
      },
-     "lower_bound": true,
-     "margin_to_flip_V": 0.6621838403952691,
+     "key": "e_cell_max_lfp",
+     "lower_bound": false,
+     "margin_to_flip_V": 0.26218384039526965,
+     "oxidation_verdict": "inconclusive to falsified",
+     "rows": [
+      "TJ-038",
+      "TK-041",
+      "TK-042"
+     ],
+     "verdict": "inconclusive to falsified",
+     "verdict_at": {
+      "max": "falsified",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     },
+     "verdict_at_provisional_m_expt": "inconclusive to falsified"
+    },
+    "LiMn2O4": {
+     "E_cell_max_V": {
+      "max": 4.5,
+      "min": 4.3,
+      "value": 4.5
+     },
+     "key": "e_cell_max_lmo",
+     "lower_bound": false,
+     "margin_to_flip_V": 0.3621838403952693,
      "oxidation_verdict": "falsified",
      "rows": [
-      "TJ-042"
+      "TA-052",
+      "TK-056",
+      "TK-057"
      ],
      "verdict": "falsified",
+     "verdict_at": {
+      "max": "falsified",
+      "min": "falsified",
+      "value": "falsified"
+     },
      "verdict_at_provisional_m_expt": "falsified"
     },
-    "LFP": {
-     "E_cell_max_V": {
-      "max": 3.6,
-      "min": 3.6
-     },
-     "lower_bound": false,
-     "margin_to_flip_V": 0.33781615960473044,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-038"
-     ],
-     "verdict": "inconclusive",
-     "verdict_at_provisional_m_expt": "inconclusive"
-    },
-    "LNMO": {
+    "LiNi0.5Mn1.5O4": {
      "E_cell_max_V": {
       "max": 5.0,
-      "min": 4.9
+      "min": 4.9,
+      "value": 4.9
      },
+     "key": "e_cell_max_lnmo",
      "lower_bound": false,
      "margin_to_flip_V": 0.9621838403952698,
      "oxidation_verdict": "falsified",
@@ -1771,45 +2390,54 @@
       "TJ-040"
      ],
      "verdict": "falsified",
+     "verdict_at": {
+      "max": "falsified",
+      "min": "falsified",
+      "value": "falsified"
+     },
      "verdict_at_provisional_m_expt": "falsified"
     },
-    "NCA": {
+    "layered NMC/NCA": {
      "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.3
+      "max": 4.5,
+      "min": 4.25,
+      "value": 4.3
      },
-     "lower_bound": false,
-     "margin_to_flip_V": 0.3621838403952693,
-     "oxidation_verdict": "falsified",
-     "rows": [
-      "TA-052",
-      "TJ-036"
-     ],
-     "verdict": "falsified",
-     "verdict_at_provisional_m_expt": "falsified"
-    },
-    "NMC": {
-     "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.25
-     },
+     "key": "e_cell_max_layered",
      "lower_bound": false,
      "margin_to_flip_V": 0.3121838403952695,
      "oxidation_verdict": "falsified",
      "rows": [
       "TA-050",
       "TA-051",
+      "TA-052",
       "TJ-036",
       "TJ-037",
-      "TJ-039"
+      "TJ-039",
+      "TK-043",
+      "TK-050",
+      "TK-051",
+      "TK-052",
+      "TK-053",
+      "TK-054",
+      "TK-055"
      ],
      "verdict": "falsified",
+     "verdict_at": {
+      "max": "falsified",
+      "min": "falsified",
+      "value": "falsified"
+     },
      "verdict_at_provisional_m_expt": "falsified"
     }
    },
    "cutoff_dependence": {
-    "falsified_for_E_cell_max_above_V": 3.9378161596047305,
-    "solid_salt_pass_inconclusive_for_E_cell_max_at_or_below_V": 3.9378161596047305
+    "falsified_for_E_cell_max_above_V": 4.024793961466631,
+    "inconclusive_between_V": [
+     3.8508383577428305,
+     4.024793961466631
+    ],
+    "solid_salt_pass_inconclusive_for_E_cell_max_at_or_below_V": 3.8508383577428305
    },
    "expt_V": 3.9378161596047305,
    "governing_V": {
@@ -1822,6 +2450,10 @@
    "m_expt_unbudgeted_species": [
     "Ca(ClO4)2",
     "LiClO4"
+   ],
+   "margin_V": 0.0869778018619,
+   "margin_key": [
+    "window_margin_expt"
    ],
    "mp_V": 3.7051136896293344,
    "mp_corrected_V": 3.9378161596047283,
@@ -1838,50 +2470,83 @@
     "mp": -0.23270246997539404
    },
    "by_cathode_class": {
-    "LCO": {
-     "E_cell_max_V": {
-      "max": 4.2,
-      "min": 4.2
-     },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-041"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LCO, high-voltage": {
+    "LiCoO2": {
      "E_cell_max_V": {
       "max": 4.6,
-      "min": 4.6
+      "min": 4.2,
+      "value": 4.5
      },
-     "lower_bound": true,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-042"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LFP": {
-     "E_cell_max_V": {
-      "max": 3.6,
-      "min": 3.6
-     },
+     "key": "e_cell_max_lco",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
-      "TJ-038"
+      "TJ-041",
+      "TJ-042",
+      "TK-044",
+      "TK-046",
+      "TK-047",
+      "TK-048",
+      "TK-049"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "LNMO": {
+    "LiFePO4": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 3.6,
+      "value": 4.0
+     },
+     "key": "e_cell_max_lfp",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038",
+      "TK-041",
+      "TK-042"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiMn2O4": {
+     "E_cell_max_V": {
+      "max": 4.5,
+      "min": 4.3,
+      "value": 4.5
+     },
+     "key": "e_cell_max_lmo",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TK-056",
+      "TK-057"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiNi0.5Mn1.5O4": {
      "E_cell_max_V": {
       "max": 5.0,
-      "min": 4.9
+      "min": 4.9,
+      "value": 4.9
      },
+     "key": "e_cell_max_lnmo",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
@@ -1891,38 +2556,44 @@
       "TA-049",
       "TJ-040"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "NCA": {
+    "layered NMC/NCA": {
      "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.3
+      "max": 4.5,
+      "min": 4.25,
+      "value": 4.3
      },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TA-052",
-      "TJ-036"
-     ],
-     "verdict": "inconclusive"
-    },
-    "NMC": {
-     "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.25
-     },
+     "key": "e_cell_max_layered",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
       "TA-050",
       "TA-051",
+      "TA-052",
       "TJ-036",
       "TJ-037",
-      "TJ-039"
+      "TJ-039",
+      "TK-043",
+      "TK-050",
+      "TK-051",
+      "TK-052",
+      "TK-053",
+      "TK-054",
+      "TK-055"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     }
    },
    "cutoff_dependence": {
@@ -1935,6 +2606,8 @@
    "janaf_corrected_V": null,
    "m_expt_provisional_V": null,
    "m_expt_unbudgeted_species": [],
+   "margin_V": 0.0,
+   "margin_key": [],
    "mp_V": null,
    "mp_corrected_V": null,
    "phase": "CaCO3",
@@ -1950,50 +2623,83 @@
     "mp": -0.23270246997539404
    },
    "by_cathode_class": {
-    "LCO": {
-     "E_cell_max_V": {
-      "max": 4.2,
-      "min": 4.2
-     },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-041"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LCO, high-voltage": {
+    "LiCoO2": {
      "E_cell_max_V": {
       "max": 4.6,
-      "min": 4.6
+      "min": 4.2,
+      "value": 4.5
      },
-     "lower_bound": true,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TJ-042"
-     ],
-     "verdict": "inconclusive"
-    },
-    "LFP": {
-     "E_cell_max_V": {
-      "max": 3.6,
-      "min": 3.6
-     },
+     "key": "e_cell_max_lco",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
-      "TJ-038"
+      "TJ-041",
+      "TJ-042",
+      "TK-044",
+      "TK-046",
+      "TK-047",
+      "TK-048",
+      "TK-049"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "LNMO": {
+    "LiFePO4": {
+     "E_cell_max_V": {
+      "max": 4.2,
+      "min": 3.6,
+      "value": 4.0
+     },
+     "key": "e_cell_max_lfp",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TJ-038",
+      "TK-041",
+      "TK-042"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiMn2O4": {
+     "E_cell_max_V": {
+      "max": 4.5,
+      "min": 4.3,
+      "value": 4.5
+     },
+     "key": "e_cell_max_lmo",
+     "lower_bound": false,
+     "margin_to_flip_V": null,
+     "oxidation_verdict": "inconclusive",
+     "rows": [
+      "TA-052",
+      "TK-056",
+      "TK-057"
+     ],
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
+    },
+    "LiNi0.5Mn1.5O4": {
      "E_cell_max_V": {
       "max": 5.0,
-      "min": 4.9
+      "min": 4.9,
+      "value": 4.9
      },
+     "key": "e_cell_max_lnmo",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
@@ -2003,38 +2709,44 @@
       "TA-049",
       "TJ-040"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     },
-    "NCA": {
+    "layered NMC/NCA": {
      "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.3
+      "max": 4.5,
+      "min": 4.25,
+      "value": 4.3
      },
-     "lower_bound": false,
-     "margin_to_flip_V": null,
-     "oxidation_verdict": "inconclusive",
-     "rows": [
-      "TA-052",
-      "TJ-036"
-     ],
-     "verdict": "inconclusive"
-    },
-    "NMC": {
-     "E_cell_max_V": {
-      "max": 4.3,
-      "min": 4.25
-     },
+     "key": "e_cell_max_layered",
      "lower_bound": false,
      "margin_to_flip_V": null,
      "oxidation_verdict": "inconclusive",
      "rows": [
       "TA-050",
       "TA-051",
+      "TA-052",
       "TJ-036",
       "TJ-037",
-      "TJ-039"
+      "TJ-039",
+      "TK-043",
+      "TK-050",
+      "TK-051",
+      "TK-052",
+      "TK-053",
+      "TK-054",
+      "TK-055"
      ],
-     "verdict": "inconclusive"
+     "verdict": "inconclusive",
+     "verdict_at": {
+      "max": "inconclusive",
+      "min": "inconclusive",
+      "value": "inconclusive"
+     }
     }
    },
    "cutoff_dependence": {
@@ -2047,6 +2759,8 @@
    "janaf_corrected_V": null,
    "m_expt_provisional_V": null,
    "m_expt_unbudgeted_species": [],
+   "margin_V": 0.0,
+   "margin_key": [],
    "mp_V": null,
    "mp_corrected_V": null,
    "phase": "CaCO3",

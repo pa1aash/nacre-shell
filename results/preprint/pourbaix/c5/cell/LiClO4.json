@@ -3,12 +3,11 @@
   "p0-w5": {
    "F5": {
     "Al2O3": {
-     "m_E_status": "gap",
+     "m_E_status": "computed",
      "m_E_that_turns_a_falsification_inconclusive_V": null,
-     "m_E_used": 0.0,
+     "m_E_used": 0.12375,
      "over_E_cell_max_range": {
       "3.6": "inconclusive",
-      "4.3": "inconclusive",
       "5.0": "inconclusive"
      },
      "oxidation_verdict": "inconclusive",
@@ -23,22 +22,21 @@
      }
     },
     "CaCO3": {
-     "m_E_status": "gap",
-     "m_E_that_turns_a_falsification_inconclusive_V": null,
-     "m_E_used": 0.0,
+     "m_E_status": "computed",
+     "m_E_that_turns_a_falsification_inconclusive_V": 0.6799267684564656,
+     "m_E_used": 0.12375,
      "over_E_cell_max_range": {
       "3.6": "inconclusive",
-      "4.3": "inconclusive",
       "5.0": "falsified"
      },
-     "oxidation_verdict": "inconclusive",
-     "reason": "the schemes straddle E_cell_max (4.300 V, margin 0.000 V): onsets 3.705 to 4.320 V",
+     "oxidation_verdict": "falsified",
+     "reason": "E_ox < E_cell_max - m_E under every scheme (highest 4.320 V < 4.876 V); solid-salt limit is an upper bound on the onset, so the falsification stands",
      "reduction_verdict": "feasible",
-     "two_scheme_set": "inconclusive",
-     "verdict": "inconclusive",
+     "two_scheme_set": "falsified",
+     "verdict": "falsified",
      "verdict_at_provisional_m_E": {
       "m_E_V": 0.6929999999994413,
-      "reason": "the schemes straddle E_cell_max (4.300 V, margin 0.693 V): onsets 3.705 to 4.320 V",
+      "reason": "the schemes straddle E_cell_max (5.000 V, margin 0.693 V): onsets 3.705 to 4.320 V",
       "verdict": "inconclusive"
      }
     }
@@ -57,8 +55,8 @@
      "scipy": "1.18.1"
     },
     "mp_database_version": "2026.04.13",
-    "params_blob": "48cfe2145f234b57712a9ce9a510cc85a300a72e",
-    "params_snapshot": "results/preprint/pourbaix/inputs/params_680a44b.json",
+    "params_blob": "cc68303ff6cad6d45b77bfc776e28e210f8c2553",
+    "params_snapshot": "results/preprint/pourbaix/inputs/params_8bc15c8.json",
     "thresholds": {
      "path": "theory/thresholds.md",
      "rev": "800d5ea"
@@ -70,16 +68,16 @@
    "sink": "LiClO4"
   }
  },
- "generated_utc": "2026-10-17T10:40:25Z",
+ "generated_utc": "2026-10-17T12:45:23Z",
  "mock": false,
  "provenance": {
   "config_file": "results/preprint/pourbaix/config/c5.yaml",
-  "config_file_hash": "sha256:af9ec33bba2b29e938d2542e6d00df5aaaf5788f4c9b51bcf98b1e5c9c84c703",
-  "config_hash": "sha256:8a3db045a0275d3dd7ff6d5c7f5a814ec7e75661b0223edb4f8e54cd679cb2cf",
+  "config_file_hash": "sha256:528b4d581ce7e61e2fca654ddbd1cd00def1eeb746f2b14224a59e9621926a6d",
+  "config_hash": "sha256:be377fc2efffbdb3cd623e06f65002bf6e853f48ba54d4ed58047bc6d634cfcd",
   "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
   "git_dirty": true,
-  "git_sha": "69088a27a975c78746d35350117753a93bdba441",
-  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "git_sha": "a8ee100d29fe17a4af57103bd93884db94aaf60d",
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
   "schema_sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
   "thresholds_file": null,
   "thresholds_hash": null

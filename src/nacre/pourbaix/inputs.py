@@ -50,6 +50,13 @@ KEYS = [
     "log10_k_ca_carboxylate", "water_density",
 ]
 
+# Keys W1 added at P0-W1.3 (cp3 R2 and R10): read when present, so that snapshots of earlier params
+# shas still build.
+OPTIONAL_KEYS = [
+    "window_margin_expt", "e_cell_max_lfp", "e_cell_max_layered", "e_cell_max_lco", "e_cell_max_lmo",
+    "e_cell_max_lnmo", "solvation_ca_vs_li_water_analog", "solvation_al_vs_li_water_analog",
+]
+
 # Evidence rows read beyond the sources of KEYS: the DFT protocol benchmarks (task D) and the
 # comparators named in the keys used here.
 EXTRA_ROWS = ["TE-061", "TE-062", "TE-063", "TE-064", "TE-065", "TE-066", "TE-067", "TE-068",
@@ -90,6 +97,7 @@ def build_snapshot(params_sha):
     if missing:
         raise SnapshotError("params at %s lacks keys %s" % (params_sha, missing))
     entries = {k: doc["params"][k] for k in KEYS}
+    entries.update({k: doc["params"][k] for k in OPTIONAL_KEYS if k in doc["params"]})
     want = set(EXTRA_ROWS)
     for e in entries.values():
         want |= set(e.get("sources") or [])

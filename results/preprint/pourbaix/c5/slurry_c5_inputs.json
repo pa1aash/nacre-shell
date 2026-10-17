@@ -20585,7 +20585,7 @@
    "rule": "thresholds.md C5: tau = n_at e_f / n_M per non-O, non-H atom, plus Delta_ACC / n_M for ACC; written here per atom (n_at = 5 for CaCO3)",
    "source": {
     "key": "formation_energy_mae",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [
      "TI-080",
      "TI-082",
@@ -20734,17 +20734,17 @@
    "status": "provisional"
   }
  },
- "generated_utc": "2026-10-17T10:39:44Z",
+ "generated_utc": "2026-10-17T12:45:10Z",
  "omega_control_fixture": "results/preprint/pourbaix/omega_control.json",
- "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+ "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
  "provenance": {
   "config_file": "results/preprint/pourbaix/config/c5.yaml",
-  "config_file_hash": "sha256:af9ec33bba2b29e938d2542e6d00df5aaaf5788f4c9b51bcf98b1e5c9c84c703",
-  "config_hash": "sha256:8a3db045a0275d3dd7ff6d5c7f5a814ec7e75661b0223edb4f8e54cd679cb2cf",
+  "config_file_hash": "sha256:528b4d581ce7e61e2fca654ddbd1cd00def1eeb746f2b14224a59e9621926a6d",
+  "config_hash": "sha256:be377fc2efffbdb3cd623e06f65002bf6e853f48ba54d4ed58047bc6d634cfcd",
   "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
   "git_dirty": true,
-  "git_sha": "69088a27a975c78746d35350117753a93bdba441",
-  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "git_sha": "a8ee100d29fe17a4af57103bd93884db94aaf60d",
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
   "schema_sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
   "thresholds_file": null,
   "thresholds_hash": null

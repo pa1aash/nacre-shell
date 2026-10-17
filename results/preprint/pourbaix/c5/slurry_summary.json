@@ -24,7 +24,7 @@
     "a_w": null,
     "source": {
      "key": "a_w_slurry",
-     "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
      "sources": [],
      "status": "gap"
     },
@@ -42,7 +42,7 @@
   "E_V_SHE": {
    "from": {
     "key": "e_she_slurry",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [
      "TJ-023",
      "TJ-024",
@@ -59,7 +59,7 @@
   "pH": {
    "from": {
     "key": "ph_slurry",
-    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
     "sources": [
      "TA-001",
      "TA-002",
@@ -154,7 +154,7 @@
   "calcite_eV_per_atom": 0.049499999999960145,
   "e_form": {
    "key": "formation_energy_mae",
-   "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+   "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
    "sources": [
     "TI-080",
     "TI-082",
@@ -181,8 +181,8 @@
     "scipy": "1.18.1"
    },
    "mp_database_version": "2026.04.13",
-   "params_blob": "48cfe2145f234b57712a9ce9a510cc85a300a72e",
-   "params_snapshot": "results/preprint/pourbaix/inputs/params_680a44b.json",
+   "params_blob": "cc68303ff6cad6d45b77bfc776e28e210f8c2553",
+   "params_snapshot": "results/preprint/pourbaix/inputs/params_8bc15c8.json",
    "thresholds": {
     "path": "theory/thresholds.md",
     "rev": "800d5ea"
@@ -209,7 +209,7 @@
     "C_T_mol_kg": 0.0037,
     "C_T_source": {
      "key": "dic_slurry",
-     "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
      "sources": [
       "TA-019",
       "TF-032"
@@ -220,7 +220,7 @@
     "pH": 6.3,
     "pH_source": {
      "key": "ph_slurry_modified",
-     "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
      "sources": [
       "TA-003",
       "TA-007",
@@ -239,8 +239,8 @@
    "experimental_log10_omega": -4.308595568195513,
    "fails_where_it_must": false,
    "must_report": "instability",
-   "proxy_max_dec_eV_per_atom": 0.021951727160675106,
-   "proxy_min_dec_eV_per_atom": 0.021951727160673996,
+   "proxy_max_dec_eV_per_atom": 0.021951727160676303,
+   "proxy_min_dec_eV_per_atom": 0.021951727160675994,
    "proxy_reports_instability": false,
    "reading": "The proxy reports calcite above its edge only where the sourced log10 Omega is below detection_threshold_log10_omega: the edge (n_at e_f per formula unit) and the proxy's calcite solubility bias shift the dissolution boundary by that many log units."
   },
@@ -250,7 +250,7 @@
    "condition": {
     "E_source": {
      "key": "e_she_slurry",
-     "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
      "sources": [
       "TJ-023",
       "TJ-024",
@@ -265,7 +265,7 @@
     "pH": 13.0,
     "pH_source": {
      "key": "ph_slurry",
-     "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
      "sources": [
       "TA-001",
       "TA-002",
@@ -293,7 +293,7 @@
    "proxy_reports_instability": true
   }
  },
- "generated_utc": "2026-10-17T10:39:44Z",
+ "generated_utc": "2026-10-17T12:45:10Z",
  "implied_constants": {
   "calcite_solubility_bias_log10": -2.4808427010841285,
   "from_cached_ion_energies": {
@@ -313,7 +313,7 @@
    "sources": [
     {
      "key": "pk1_carbonic",
-     "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
      "sources": [
       "TF-039",
       "TF-041"
@@ -322,7 +322,7 @@
     },
     {
      "key": "pk2_carbonic",
-     "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
      "sources": [
       "TF-040",
       "TF-042"
@@ -331,7 +331,7 @@
     },
     {
      "key": "log10_ksp_calcite",
-     "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
      "sources": [
       "TC-033"
      ],
@@ -339,7 +339,7 @@
     },
     {
      "key": "log10_ksp_acc",
-     "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
      "sources": [
       "TC-037",
       "TC-041",
@@ -20998,7 +20998,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5436399494394561,
+    "calcite_max_dec_eV_per_atom": 1.5436399494394564,
     "fraction_above_edge": 0.8253343823760818
    },
    "cross_compounds_stable": [],
@@ -21114,7 +21114,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5199999494394565,
+    "calcite_max_dec_eV_per_atom": 1.519999949439456,
     "fraction_above_edge": 0.8111723052714398
    },
    "cross_compounds_stable": [],
@@ -21230,7 +21230,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.561804845770474,
+    "calcite_max_dec_eV_per_atom": 1.5618048457704738,
     "fraction_above_edge": 0.8379228953579858
    },
    "cross_compounds_stable": [],
@@ -21404,7 +21404,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.526344845770474,
+    "calcite_max_dec_eV_per_atom": 1.5263448457704738,
     "fraction_above_edge": 0.8158929976396538
    },
    "cross_compounds_stable": [],
@@ -21462,7 +21462,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5145248457704743,
+    "calcite_max_dec_eV_per_atom": 1.5145248457704739,
     "fraction_above_edge": 0.8088119590873328
    },
    "cross_compounds_stable": [],
@@ -21520,7 +21520,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5708939219373144,
+    "calcite_max_dec_eV_per_atom": 1.5708939219373146,
     "fraction_above_edge": 0.8426435877261998
    },
    "cross_compounds_stable": [],
@@ -21578,7 +21578,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5590739219373149,
+    "calcite_max_dec_eV_per_atom": 1.5590739219373142,
     "fraction_above_edge": 0.8355625491738788
    },
    "cross_compounds_stable": [],
@@ -21636,7 +21636,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5472539219373147,
+    "calcite_max_dec_eV_per_atom": 1.5472539219373143,
     "fraction_above_edge": 0.8276947285601888
    },
    "cross_compounds_stable": [],
@@ -21694,7 +21694,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5354339219373143,
+    "calcite_max_dec_eV_per_atom": 1.5354339219373148,
     "fraction_above_edge": 0.8206136900078678
    },
    "cross_compounds_stable": [],
@@ -21752,7 +21752,7 @@
     "within_edge_everywhere": true
    },
    "carbon_redox_sensitivity": {
-    "calcite_max_dec_eV_per_atom": 1.5236139219373146,
+    "calcite_max_dec_eV_per_atom": 1.5236139219373144,
     "fraction_above_edge": 0.8135326514555468
    },
    "cross_compounds_stable": [],
@@ -21834,12 +21834,12 @@
  ],
  "provenance": {
   "config_file": "results/preprint/pourbaix/config/c5.yaml",
-  "config_file_hash": "sha256:af9ec33bba2b29e938d2542e6d00df5aaaf5788f4c9b51bcf98b1e5c9c84c703",
-  "config_hash": "sha256:8a3db045a0275d3dd7ff6d5c7f5a814ec7e75661b0223edb4f8e54cd679cb2cf",
+  "config_file_hash": "sha256:528b4d581ce7e61e2fca654ddbd1cd00def1eeb746f2b14224a59e9621926a6d",
+  "config_hash": "sha256:be377fc2efffbdb3cd623e06f65002bf6e853f48ba54d4ed58047bc6d634cfcd",
   "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
   "git_dirty": true,
-  "git_sha": "69088a27a975c78746d35350117753a93bdba441",
-  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "git_sha": "a8ee100d29fe17a4af57103bd93884db94aaf60d",
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
   "schema_sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
   "thresholds_file": null,
   "thresholds_hash": null

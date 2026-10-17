@@ -6,7 +6,8 @@ import pytest
 from nacre.pourbaix import c5, inputs, omega_control
 from nacre.pourbaix.paths import POURBAIX_RESULTS
 
-PARAMS_SHA = "680a44b2efdb94694b25f5317ddc3d73db2f117c"
+PARAMS_SHA = "8bc15c88f5f4a28e64d394186729836bac01cfec"
+PARAMS_SHA_P0_W1_2 = "680a44b2efdb94694b25f5317ddc3d73db2f117c"
 
 
 @pytest.fixture(scope="module")
@@ -68,8 +69,26 @@ def test_verdict_rules():
     assert c5.verdict({"values_V": {}}, 3.6, 0.0, False, "feasible")[0] == "inconclusive"
 
 
-def test_every_e_cell_max_row_has_a_cathode_class(params):
+def test_cathode_classes_are_w1_design_axis_options(params):
     classes = c5.cathode_classes(params)
+    opts = params.entry("e_cell_max")["prior"]["options"]
+    assert set(classes) == {o["label"] for o in opts}
+    for o in opts:
+        c = classes[o["label"]]
+        assert c["E_cell_max_V"]["value"] == o["value"]
+        assert c["E_cell_max_V"]["min"] == o["range"]["min"] and c["E_cell_max_V"]["max"] == o["range"]["max"]
+
+
+def test_earlier_params_read_classes_from_e_cell_max_rows():
+    old = inputs.Params(inputs.load_snapshot(PARAMS_SHA_P0_W1_2))
+    classes = c5.cathode_classes(old)
     rows = {r for c in classes.values() for r in c["rows"]}
-    assert rows == set(params.entry("e_cell_max")["sources"])
+    assert rows == set(old.entry("e_cell_max")["sources"])
     assert "other" not in classes
+
+
+def test_margin_follows_the_governing_route():
+    doc = json.loads((POURBAIX_RESULTS / "c5" / "cell_scheme_table.json").read_text(encoding="utf-8"))
+    for r in doc["table"]:
+        want = {"expt": doc["m_expt"]["value_used_V"], "benchmark-corrected DFT": doc["m_dft"]["value_used_V"]}
+        assert r["margin_V"] == want.get(r["governing_route"], 0.0)

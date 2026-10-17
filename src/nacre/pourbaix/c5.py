@@ -15,8 +15,11 @@ R-cell (decision 3). Where an all-experimental thermochemical route exists for a
 governs; DFT-based schemes, corrected by their benchmark error, apply only where experimental data
 are missing; the uncorrected janaf and mp schemes are comparators. Every scheme goes in one table,
 and the verdict per phase is given as a function of E_cell_max over W1's cathode classes (the
-evidence rows of e_cell_max). The uncertainty budget m_expt comes from W1's keys; while they are
-gaps it is 0 and the margin that would flip each verdict is reported instead.
+per-class keys of the e_cell_max design axis from P0-W1.3; the evidence rows of e_cell_max at earlier
+params shas). The margin follows the governing route: m_expt (W1 key window_margin_expt) for the
+all-experimental route, m_E (window_margin) for the benchmark-corrected DFT schemes and the DFT
+reduction limit. While a margin key is a gap it is 0 and the margin that would flip each verdict is
+reported instead.
 
     uv run python -m nacre.pourbaix.c5 --config results/preprint/pourbaix/config/c5.yaml
 """
@@ -79,7 +82,19 @@ def slurry_inputs(raw, meta, params):
 
 # ================================================================================= R-cell
 def cathode_classes(params):
-    """E_cell_max per cathode class from the evidence rows of e_cell_max (row ids carried)."""
+    """E_cell_max per cathode class: the per-class keys of the e_cell_max design axis (W1 rule G1) when
+    W1 registers them, otherwise read from the evidence rows of e_cell_max (row ids carried)."""
+    opts = (params.entry("e_cell_max").get("prior") or {}).get("options") or []
+    if opts:
+        classes = {}
+        for o in opts:
+            e = params.entry(o["key"])
+            classes[o["label"]] = {"key": o["key"], "rows": list(e.get("sources") or []), "status": e["status"],
+                                   "lower_bound": False, "E_cell_max_V": {"min": float(e["range"]["min"]),
+                                                                          "value": float(e["value"]),
+                                                                          "max": float(e["range"]["max"])}}
+        return dict(sorted(classes.items(), key=lambda kv: (kv[1]["E_cell_max_V"]["min"],
+                                                            kv[1]["E_cell_max_V"]["max"])))
     classes = {}
     for rid in params.entry("e_cell_max")["sources"]:
         row = params.row(rid)
@@ -167,13 +182,17 @@ def cell_inputs(raw, meta, params):
     m_entries = {k: params.entry(k) for k in m_key}
     gaps = [k for k, e in m_entries.items() if e.get("value") is None]
     m_expt = 0.0 if gaps else sum(float(e["value"]) for e in m_entries.values())
+    md_key = raw["R-cell"]["m_dft"]["key"]
+    m_dft = float(params.value(md_key)) if params.value(md_key) is not None else 0.0
+    m_route = {"expt": m_expt, "benchmark-corrected DFT": m_dft, None: 0.0}
     classes = cathode_classes(params)
+    sides = [s for s in ("min", "value", "max") if all(s in c["E_cell_max_V"] for c in classes.values())]
     e_min = float(params.value("e_cell_min"))
     table, by_phase = [], {}
     for phase, po in summ["phases"].items():
         red = po["reduction"]
-        red_verdict = ("feasible" if red["status"] == "ok" and red["value_V"] <= e_min - m_expt else
-                       "falsified" if red["status"] == "ok" and red["value_V"] > e_min + m_expt else "inconclusive")
+        red_verdict = ("feasible" if red["status"] == "ok" and red["value_V"] <= e_min - m_dft else
+                       "falsified" if red["status"] == "ok" and red["value_V"] > e_min + m_dft else "inconclusive")
         per_sink = {}
         for sink, rec in po["by_sink"].items():
             if rec["group"] != "registered":
@@ -194,17 +213,23 @@ def cell_inputs(raw, meta, params):
                    "reason": gov.get("reason", "")}
             m_prov, unbudgeted = (m_expt_provisional(rec["candidates"]["expt"], gov["reaction"], params)
                                   if gov["route"] == "expt" else (None, []))
+            m = m_route[gov["route"]]
+            row["margin_V"] = m
+            row["margin_key"] = {"expt": m_key, "benchmark-corrected DFT": [md_key]}.get(gov["route"], [])
             row["m_expt_provisional_V"] = m_prov
             row["m_expt_unbudgeted_species"] = unbudgeted
             per_class = {}
             for cname, c in classes.items():
-                v_lo, ox_lo = verdict(gov, c["E_cell_max_V"]["min"], m_expt, not solvated, red_verdict)
-                v_hi, ox_hi = verdict(gov, c["E_cell_max_V"]["max"], m_expt, not solvated, red_verdict)
+                at = {s: verdict(gov, c["E_cell_max_V"][s], m, not solvated, red_verdict) for s in sides}
+                v_lo, ox_lo = at["min"]
+                v_hi, ox_hi = at["max"]
                 vals = list(gov["values_V"].values())
                 per_class[cname] = {
-                    "E_cell_max_V": c["E_cell_max_V"], "rows": c["rows"], "lower_bound": c["lower_bound"],
+                    "E_cell_max_V": c["E_cell_max_V"], "key": c.get("key"), "rows": c["rows"],
+                    "lower_bound": c["lower_bound"],
                     "verdict": max([v_lo, v_hi], key=ORDER.index) if v_lo == v_hi else "%s to %s" % (v_lo, v_hi),
                     "oxidation_verdict": ox_lo if ox_lo == ox_hi else "%s to %s" % (ox_lo, ox_hi),
+                    "verdict_at": {s: at[s][0] for s in sides},
                     "margin_to_flip_V": (min(abs(c["E_cell_max_V"][s] - v) for s in ("min", "max") for v in vals)
                                          if vals else None)}
                 if m_prov is not None:
@@ -213,8 +238,9 @@ def cell_inputs(raw, meta, params):
             row["by_cathode_class"] = per_class
             vals = list(gov["values_V"].values())
             row["cutoff_dependence"] = (
-                {"falsified_for_E_cell_max_above_V": max(vals) + m_expt,
-                 "solid_salt_pass_inconclusive_for_E_cell_max_at_or_below_V": min(vals) - m_expt}
+                {"falsified_for_E_cell_max_above_V": max(vals) + m,
+                 "inconclusive_between_V": [min(vals) - m, max(vals) + m],
+                 "solid_salt_pass_inconclusive_for_E_cell_max_at_or_below_V": min(vals) - m}
                 if vals else {"undetermined": True})
             per_sink[sink] = row
             table.append(row)
@@ -239,13 +265,23 @@ def cell_inputs(raw, meta, params):
                                                "proposed; the rule is therefore not independent of them (cp3 packet).",
            "m_expt": {"keys": [params.cite(k) for k in m_key], "value_used_V": m_expt, "gaps": gaps,
                       "status": "gap" if gaps else "sourced",
-                      "reading": "while any key is a gap m_expt = 0 is used and margin_to_flip_V says how large m_expt "
-                                 "would have to be to change each class verdict"},
+                      "reading": "the margin of rows governed by the all-experimental route; while any key is a gap "
+                                 "m_expt = 0 is used and margin_to_flip_V says how large it would have to be to change "
+                                 "each class verdict"},
+           "m_dft": {**params.cite(md_key), "value_used_V": m_dft,
+                     "reading": "the margin of rows governed by the benchmark-corrected DFT schemes and of the DFT "
+                                "reduction limit; W1 states it for the registered reaction (other reactions scale by "
+                                "their uncancelled atoms per electron)"},
            "solvated_sink": {"status": "gap" if any(params.entry(k).get("value") is None for k in
                                                     raw["R-cell"]["solvated"]["keys"]) else "available",
                              "keys": [params.cite(k) for k in raw["R-cell"]["solvated"]["keys"]],
                              "reading": "no solvated-sink onset is computed while the Ca2+ and Al3+ transfer free "
-                                        "energies relative to Li+ are gaps; no R-cell pass can count"},
+                                        "energies relative to Li+ are gaps; no R-cell pass can count",
+                             "water_analogs": {
+                                 "keys": [params.cite(k) for k in raw["R-cell"]["solvated"].get("analog_keys", [])
+                                          if k in params.snap["entries"]],
+                                 "status": "not converted",
+                                 "reason": raw["R-cell"]["solvated"].get("analog_reason", "")}},
            "cathode_classes": classes, "E_cell_min": params.cite("e_cell_min"),
            "table": table, "phases": by_phase,
            "undetermined_sinks": sorted({"%s/%s" % (r["phase"], r["sink"]) for r in table if r["status"] != "ok"})}

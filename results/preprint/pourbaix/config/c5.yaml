@@ -8,11 +8,16 @@
 # marked provisional (gap policy (ii)). Rule R7: if lit/params.yaml changes after tag p0-cp3, rerun
 # with a dated note.
 #
+# 2026-10-17: rerun at W1's P0-W1.3 params (8bc15c8, was 680a44b). Every R-slurry and Omega-fixture key
+# is unchanged between the two shas; the R-cell inputs changed: e_cell_max became a design axis by
+# cathode class (cp3 R2), window_margin and window_margin_expt are computed, the solvation keys stay
+# gaps with flagged water analogs (cp3 R10).
+#
 # Run: uv run python -m nacre.pourbaix.c5 --config results/preprint/pourbaix/config/c5.yaml
 mock: false
 run: c5
 session: P0-W5.3
-params_sha: 680a44b2efdb94694b25f5317ddc3d73db2f117c
+params_sha: 8bc15c88f5f4a28e64d394186729836bac01cfec
 
 R-slurry:
   question: >-
@@ -133,12 +138,17 @@ R-cell:
   E_max: {key: e_cell_max}
   window_margin: {key: window_margin}
   m_expt:
-    keys: [window_margin]
+    keys: [window_margin_expt]
     reason: >-
-      The uncertainty budget of the governing experimental route. W1 supplies it (P0-W1.3); at this
-      params sha the only registered margin key is window_margin, a gap, so m_expt = 0 is used and the
-      margin that would flip each verdict is reported, with a provisional budget from the sourced
-      ranges of the W1 keys in each reaction beside it.
+      The uncertainty budget of the governing all-experimental route (cp3 R2), supplied by W1 at
+      P0-W1.3 for the registered reaction CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 1/2 O2 + 2 Li. The
+      provisional budget of P0-W5.3 (sourced ranges of the W1 keys in each reaction) stays beside it
+      as a comparator.
+  m_dft:
+    key: window_margin
+    reason: >-
+      The margin of the DFT-based schemes; it applies where the benchmark-corrected DFT schemes govern
+      and to the DFT reduction limit.
   phases:
     CaCO3: {material_id: mp-3953, cation: Ca, gases: [O2, CO2], lithiation_chemsys: Li-Ca-C-O}
     Al2O3: {material_id: mp-1143, cation: Al, gases: [O2], lithiation_chemsys: Li-Al-O,
@@ -157,6 +167,12 @@ R-cell:
     reason: >-
       The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte
       solvent; both keys are gaps at this params sha, so it is undetermined.
+    analog_keys: [solvation_ca_vs_li_water_analog, solvation_al_vs_li_water_analog]
+    analog_reason: >-
+      The flagged water analogs are differences of absolute single-ion hydration free energies
+      (Delta_G_hyd(M) - z Delta_G_hyd(Li+)). An onset from them needs the gas-phase ion formation free
+      energies of Ca2+, Al3+ and Li+, which are not params keys, so no analog onset is computed here;
+      it is logged as an outstanding input.
   exchange:
     reason: >-
       Where a sink salt has a tabulated enthalpy of formation but no free energy and no DFT entry,

@@ -139,7 +139,7 @@ def build(params):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="python -m nacre.pourbaix.omega_control")
-    ap.add_argument("--params-sha", default="680a44b2efdb94694b25f5317ddc3d73db2f117c")
+    ap.add_argument("--params-sha", default="8bc15c88f5f4a28e64d394186729836bac01cfec")
     ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args(argv)
     params = inputs.Params(inputs.load_snapshot(args.params_sha))

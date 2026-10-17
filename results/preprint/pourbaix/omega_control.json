@@ -133,7 +133,7 @@
   }
  ],
  "for": "lane p0-w4, the C5 R-slurry Omega evaluator (cp3 decision 2)",
- "generated_utc": "2026-10-17T10:39:44Z",
+ "generated_utc": "2026-10-17T12:45:10Z",
  "ion_pair_keys": [
   {
    "from": "value",
@@ -157,8 +157,8 @@
   }
  ],
  "kind": "omega-test-fixture",
- "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
- "params_snapshot": "results/preprint/pourbaix/inputs/params_680a44b.json",
+ "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+ "params_snapshot": "results/preprint/pourbaix/inputs/params_8bc15c8.json",
  "question": "Does the C5 R-slurry Omega test (measured Ksp, contract carbonate speciation) report calcite unstable at a sourced condition where it dissolves, and stable where it is supersaturated? (thermodynamic proxy; no rates)",
  "reference_state": {
   "C_T": {

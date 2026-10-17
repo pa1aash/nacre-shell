@@ -199,6 +199,19 @@ def f5_verdict(ox_by_scheme, e_max, m_e, solid_salt):
 ORDER = ["feasible", "inconclusive", "falsified"]
 
 
+def regime_e_max(params, key):
+    """E_cell_max (V), its range and the basis. A design axis keyed to cathode class (W1 rule G1, from
+    P0-W1.3) has no single value: the range is the envelope of the class ranges and the single verdict
+    is taken at its upper end; the per-class verdicts are in c5/cell_scheme_table.json."""
+    e = params.entry(key)
+    opts = (e.get("prior") or {}).get("options") or []
+    if e.get("value") is not None or not opts:
+        return float(e["value"]), e["range"], "value of %s" % key
+    rng = {"min": min(float(o["range"]["min"]) for o in opts), "max": max(float(o["range"]["max"]) for o in opts)}
+    return rng["max"], rng, ("%s is a design axis by cathode class (%s); single verdict at the upper end of the "
+                             "envelope of the class ranges" % (key, ", ".join(o["key"] for o in opts)))
+
+
 def worst(vs):
     return max(vs, key=ORDER.index)
 
@@ -214,8 +227,7 @@ def run_cell(raw, meta, params, prov, ext, out=None, session="P0-W5.2"):
     cfg = raw["R-cell"]
     T = float(cfg["temperature_K"]["value"])
     e_min = float(params.value(cfg["E_min"]["key"]))
-    e_max = float(params.value(cfg["E_max"]["key"]))
-    e_max_rng = params.range(cfg["E_max"]["key"])
+    e_max, e_max_rng, e_max_basis = regime_e_max(params, cfg["E_max"]["key"])
     e_min_rng = params.range(cfg["E_min"]["key"])
     m_e_entry = params.entry(cfg["window_margin"]["key"])
     m_e = 0.0 if m_e_entry["value"] is None else float(m_e_entry["value"])
@@ -336,7 +348,8 @@ def run_cell(raw, meta, params, prov, ext, out=None, session="P0-W5.2"):
         "session": session, "generated_utc": R.provenance.utc_now(), "provenance": prov, "extensions": ext,
         "question": cfg["question"], "scope": R.SCOPE, "temperature": cfg["temperature_K"],
         "regime_range": {"E_cell_min": {"value": e_min, "range": e_min_rng, "source": params.cite(cfg["E_min"]["key"])},
-                         "E_cell_max": {"value": e_max, "range": e_max_rng, "source": params.cite(cfg["E_max"]["key"])}},
+                         "E_cell_max": {"value": e_max, "range": e_max_rng, "basis": e_max_basis,
+                                        "source": params.cite(cfg["E_max"]["key"])}},
         "m_E": {"value_used": m_e, "status": m_e_entry["status"], "reason": m_e_entry.get("range_reason"),
                 "provisional_recipe": margin_provisional.__doc__.strip()},
         "schemes": {s: (gasref.SCHEME_TEXT.get(s) or "all-experimental: W1 dfg keys, NIST-JANAF condensed tables, "
