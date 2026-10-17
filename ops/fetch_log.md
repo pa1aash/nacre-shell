@@ -37,6 +37,7 @@ Third-party canonical texts are downloaded, never typed. One row per fetch.
 | Creative Commons licence URL checks for the Materials Project NOTICE (P0-W5.3) | CC licence pages (URLs not stated in P0-W5.3) | not stated in P0-W5.3 | not stated in P0-W5.3 | not stated in P0-W5.3 |
 | FAILED: Materials Project terms pages, headless (P0-W5.3) | Materials Project terms pages (URLs not stated in P0-W5.3) | 2026-10-17 (P0-W5.3) | none | 403 |
 | Live licence query of the 1280 cached material ids, `materials.thermo.search` via mp-api, database 2026.04.13: every entry `builder_meta.license = BY-C` (P0-W5.3); raw response local-only at `.local/w5/mp_license_recheck/997b3919d9dfede1.json` | Materials Project API via mp-api | 2026-10-17 (P0-W5.3) | 997b3919d9dfede1d85f593123603dc8dc5b352affaef41aca047cf78e53e434 | not stated in P0-W5.3 |
+| MP terms of use: operator-reviewed 2026-10-17; content summarised in the cp3 ruling (CC BY 4.0 data; GNoME CC BY-NC excluded; attribution and change statement required; contact MP before public redistribution); page text not archived | https://materialsproject.org/about/terms | 2026-10-17 (operator, in a browser) | none (page text not archived) | n/a |
 
 The sha256 values are of the bytes written to the repository file.
 
