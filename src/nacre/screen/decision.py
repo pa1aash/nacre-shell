@@ -150,6 +150,26 @@ class Resolver:
                 walk(doc[root], [root])
         return cls(vals)
 
+    def override(self, values):
+        """A copy with some keys set to other values (a sweep of registered conventions; labelled)."""
+        new = Resolver({})
+        new._values, new._priors = dict(self._values), dict(self._priors)
+        for k, v in values.items():
+            unit = self._values[k][1] if k in self._values else ""
+            new._values[k] = (v, unit, None)
+            new._priors.pop(k, None)
+        return new
+
+    def alias(self, names):
+        """A copy in which each key of names also answers for the table key it maps to (gap table key_aliases)."""
+        new = self.override({})
+        for k, src in (names or {}).items():
+            if src in self._values and k not in self._values:
+                new._values[k] = self._values[src]
+                if src in self._priors:
+                    new._priors[k] = self._priors[src]
+        return new
+
     def has(self, key):
         return key in self._values and self._values[key][0] is not None
 
@@ -303,27 +323,40 @@ def _forbidden(rule, quantity):
         raise RuleError("%s is forbidden in verdicts (thresholds decision.forbidden_in_verdicts)" % quantity)
 
 
-def mixture_record(test, per, p, rng):
-    """C1 over the populated terminations (thresholds block v2, cp3 R8).
+def mixture_record(test, per, p, rng, values=None, edge=None):
+    """C1 over the registered terminations (thresholds block v3, cp3b A2).
 
-    The weights are drawn uniformly on the simplex (a flat Dirichlet) alongside every other
-    input, one weight vector per draw; a draw's mixture indicator is the weighted share of the
-    terminations that are good on it, and the band masses are those of the mixture. A point
-    weight is never used. The per-termination verdicts are reported, and a termination that is
-    falsified on its own is named; the band-mass range over the simplex is printed beside.
+    The weights w ~ Dirichlet(1, ..., 1) (flat: uniform on the simplex) are drawn once per draw,
+    independently of every other input, and the mixture quantity is the area-weighted work
+    W_mix = sum_k w_k W_k, to which the C1 edge applies. A point weight is never used. The
+    per-termination verdicts are reported beside, a termination falsified on its own is named,
+    and the weight-free masses P(min_k W_k > edge) <= P_good(mix) <= P(max_k W_k > edge) are
+    printed: if the lower is at least p the verdict holds for every weighting (feasible), if the
+    upper is at most 1 - p it is falsified for every weighting; otherwise the mixture verdict is
+    conditional on the termination ignorance mixture (never a finding).
+    values: {termination: per-draw W_k}; edge: the C1 edge (scalar or per draw).
     """
-    goods = [np.asarray(r["_good"], float) for r in per.values()]
-    if len({g.shape for g in goods}) != 1:
+    if values is None:
+        raise RuleError("the cp3b A2 mixture needs the per-termination values")
+    ws = [np.asarray(v, float) for v in values.values()]
+    if len({v.shape for v in ws}) != 1:
         raise RuleError("the terminations must share their draws")
-    w = rng.dirichlet(np.ones(len(goods)), size=goods[0].shape[0]).T
-    g = np.vstack(goods)
+    w = rng.dirichlet(np.ones(len(ws)), size=ws[0].shape[0]).T
+    g = np.vstack(ws)
     ok = np.all(np.isfinite(g), axis=0)
-    mix = np.full(goods[0].shape, np.nan)
+    mix = np.full(ws[0].shape, np.nan)
     mix[ok] = np.sum(w[:, ok] * g[:, ok], axis=0)
-    rec = _record(test, mix, _edge_value(per), p, ["ignorance mixture over the termination weights: flat Dirichlet, "
-                                                   "drawn with the other inputs; never a point weight"])
-    pg = [r["P_good"] for r in per.values() if r.get("P_good") is not None]
-    rec.update({"by_termination": per, "P_good_range": [min(pg), max(pg)] if len(pg) == len(per) else None,
+    rec = _record(test, indicator(mix, test["comparator"], edge), edge, p,
+                  ["W_mix = sum_k w_k W_k, w ~ Dirichlet(1, ..., 1) drawn with the other inputs; never a point weight"])
+    lo = mass_of(indicator(np.where(ok, g.min(axis=0), np.nan), test["comparator"], edge))["P_good"]
+    hi = mass_of(indicator(np.where(ok, g.max(axis=0), np.nan), test["comparator"], edge))["P_good"]
+    if lo is not None and lo >= p:
+        weighting = "feasible for every weighting"
+    elif hi is not None and hi <= 1.0 - p:
+        weighting = "falsified for every weighting"
+    else:
+        weighting = "conditional on the termination ignorance mixture (not a finding)"
+    rec.update({"by_termination": per, "weight_free": {"P_min_good": lo, "P_max_good": hi, "reading": weighting},
                 "falsified_alone": sorted(t for t, r in per.items() if r["verdict"] == "falsified")})
     return rec
 
@@ -354,8 +387,10 @@ def evaluate_test(rule, test, samples, resolver, p=None, mixture=None, extra=Non
         for t, s in mixture.items():
             ex = dict(extra, **({"theta": theta_of(s)} if "theta" in str(test["edge"]) else {}))
             edge = _edge(test["edge"], params, resolver, ex, rule)
-            per[t] = _record(test, indicator(s[test["quantity"]], test["comparator"], edge), edge, p)
-        return mixture_record(test, per, p, rng if rng is not None else np.random.default_rng(0))
+            per[t] = {k: v for k, v in _record(test, indicator(s[test["quantity"]], test["comparator"], edge), edge,
+                                               p).items() if k != "_good"}
+        return mixture_record(test, per, p, rng if rng is not None else np.random.default_rng(0),
+                              {t: s[test["quantity"]] for t, s in mixture.items()}, edge)
     if "theta" in str(test["edge"]):
         extra["theta"] = theta_of(samples)
     edge = _edge(test["edge"], params, resolver, extra, rule)
@@ -843,8 +878,16 @@ def _dft_decided(rows, kind, bound, m_e, side):
     return ("feasible", "DFT-decided (F5): passes under the lowest-onset scheme") if v == "feasible" else         ("inconclusive", "DFT-decided (F5): " + n)
 
 
+def _route_applies(routes, route, phase, sink, side):
+    """cp3b A1: whether a route's margin is registered for (phase, sink, side); routes None = everywhere."""
+    if routes is None:
+        return True
+    return any(r.get("phase") == phase and r.get("sink") == sink and r.get("side") == side
+               for r in ((routes.get(route) or {}).get("applies_to") or []))
+
+
 def evaluate_c5_cell(cells, resolver, gated_phases, side, cutoffs, margin_key, never_pass_sinks=(),
-                     dft_margin_key="thresholds.C5.window_margin"):
+                     dft_margin_key="thresholds.C5.window_margin", margin_routes=None):
     """C5c_ox or C5c_red (block v2, cp3 R2) for the gated phases over the cutoff design axis.
 
     cells: {sink: stability R-cell section}; cutoffs: {cathode class or label: V}. The expt route
@@ -852,7 +895,9 @@ def evaluate_c5_cell(cells, resolver, gated_phases, side, cutoffs, margin_key, n
     A phase falsifies a cutoff if any sink falsifies it; it passes only if the solvated sink
     passes and no sink falsifies. Sinks in never_pass_sinks are undetermined (never a pass).
     The crossover cutoffs E_ox - m_expt (feasible at or below, solvated sink) and E_ox + m_expt
-    (falsified above) are printed per phase and sink.
+    (falsified above) are printed per phase and sink. margin_routes (cp3b A1, screen.yaml
+    R-cell.margin_by_route): one margin per reaction and sink; a limit whose route has no
+    registered margin for its (phase, sink, side) is undetermined (never passes, never falsifies).
     """
     def margin(key):
         try:
@@ -863,7 +908,8 @@ def evaluate_c5_cell(cells, resolver, gated_phases, side, cutoffs, margin_key, n
     table = scheme_table(cells, gated_phases, side)
     crossovers = {}
     for r in table:
-        if r["role"] == "governing" and r["status"] == "ok" and m_expt is not None:
+        if r["role"] == "governing" and r["status"] == "ok" and m_expt is not None \
+                and _route_applies(margin_routes, "expt", r["phase"], r["sink"], side):
             lo, hi = (r["value_V"] - m_expt, r["value_V"] + m_expt)
             crossovers.setdefault(r["phase"], {})[r["sink"]] = (
                 {"feasible_at_or_below_V": lo if r["sink_kind"] == "solvated" else None, "falsified_above_V": hi}
@@ -879,10 +925,13 @@ def evaluate_c5_cell(cells, resolver, gated_phases, side, cutoffs, margin_key, n
                 kind = (cell.get("sink_assumption") or {}).get("kind", "other")
                 st, val = (gov[0]["status"], gov[0]["value_V"]) if gov else ("absent", None)
                 if st == "ok":
-                    v, n = cell_verdict(val, st, kind, bound, m_expt, side)
-                    n = "expt: " + n
+                    m = m_expt if _route_applies(margin_routes, "expt", phase, sink, side) else None
+                    v, n = cell_verdict(val, st, kind, bound, m, side)
+                    n = "expt: " + (n if m is not None else "undetermined: no budget key for this reaction and sink "
+                                    "(cp3b A1); never a pass, never a falsification")
                 else:
-                    v, n = _dft_decided(rows, kind, bound, m_e, side)
+                    m = m_e if _route_applies(margin_routes, "dft_where_expt_missing", phase, sink, side) else None
+                    v, n = _dft_decided(rows, kind, bound, m, side)
                 if sink in never_pass_sinks and v == "feasible":
                     v, n = "inconclusive", "sink thermochemistry undetermined: never a pass"
                 sinks[sink] = (v, n, kind)
@@ -908,7 +957,7 @@ def evaluate_c5_cell(cells, resolver, gated_phases, side, cutoffs, margin_key, n
 
 
 def evaluate_c5(rule, resolver, omega=None, pourbaix=None, cells=None, framing="calcite", cutoffs=None,
-                never_pass_sinks=()):
+                never_pass_sinks=(), margin_routes=None):
     """C5 = C5s (Omega dissolution) and C5s_phase and C5c_ox and C5c_red (block v2).
 
     omega: the C5s record (omega_window); pourbaix: the stability R-slurry section; cells:
@@ -941,7 +990,7 @@ def evaluate_c5(rule, resolver, omega=None, pourbaix=None, cells=None, framing="
                 recs[tid] = {"verdict": "inconclusive", "P_good": None, "P_bad": None, "gap": str(exc)}
                 continue
         recs[tid] = evaluate_c5_cell(cells, resolver, gated, side, cuts, t["params"]["m_expt"], never_pass_sinks,
-                                     t["params"].get("m_E", "thresholds.C5.window_margin"))
+                                     t["params"].get("m_E", "thresholds.C5.window_margin"), margin_routes)
     vs = [recs[t]["verdict"] for t in [c.strip() for c in str(link["combine"]).split(" and ")]]
     verdict = "falsified" if "falsified" in vs else ("feasible" if all(v == "feasible" for v in vs) else "inconclusive")
     mass = 1.0 if verdict == "falsified" else (0.0 if verdict == "feasible" else None)
@@ -963,6 +1012,9 @@ def deletion_test(rule, template_claims, control_claims, resolver):
         claims = control_claims.get(control)
         if claims is None:
             per[control] = {"degraded": [], "holds": False, "note": "control not run"}
+            continue
+        if claims.get("_gap"):
+            per[control] = {"degraded": [], "holds": False, "note": "control not evaluable: %s" % claims["_gap"]}
             continue
         degraded = []
         for link in dt["links"]:

@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from nacre.screen import chain, decision, params_adapter, propagate, shapley, sobol, study, summary
+from nacre.screen import chain, decision, gaps, params_adapter, propagate, shapley, sobol, study, summary
 from nacre.screen import thresholds as thr
 
 CONFIG = Path("configs") / "preprint" / "screen.yaml"
@@ -33,6 +33,8 @@ SCREEN_DIR = Path("results") / "preprint" / "screen"
 DRYRUN_DIR = SCREEN_DIR / "dryrun"
 LEDGER = Path("jobs") / "ledger" / "p0-w4.jsonl"
 CHECKPOINT_TAG = "p0-cp3"
+#: Mass groups that count refused draws (activity model, geometric bounds), not clipped boundaries.
+REFUSAL_GROUPS = ("speciation", "geometry")
 
 
 class ProductionRefused(RuntimeError):
@@ -70,10 +72,17 @@ def _sampled(names, s):
             out.append(k)
         elif k in ("a_Ca", "a_CO3", "c_bulk") and s >= set(chain.SPECIATION_INPUTS):
             out.extend(chain.SPECIATION_INPUTS)
-        elif k in chain.IGNORANCE and chain.IGNORANCE[k][0] in s:
-            out.extend([chain.IGNORANCE[k][0], *chain.IGNORANCE[k][1]])
+        elif k in chain.ignorance_pairs(s):
+            u, pair = chain.ignorance_pairs(s)[k]
+            out.extend([u, *pair])
         elif k == "Delta_gamma_w" and chain.IGNORANCE["gamma_sn0"][0] in s:
             continue
+        elif k == "delta_s" and chain.GEOMETRY[0] in s:
+            out.extend([chain.GEOMETRY[0], *chain.GEOMETRY[1]])
+        elif k == "Delta_G_site" and chain.SITE_ANALOG[0] in s:
+            out.extend([chain.SITE_ANALOG[0], *chain.SITE_ANALOG[1], chain.GEOMETRY[0], *chain.GEOMETRY[1]])
+        elif k == "gamma_pw" and "gamma_sl0" in s:
+            out.append("gamma_sl0")
         else:
             out.append(k)
     return list(dict.fromkeys(out))
@@ -86,9 +95,10 @@ def link_inputs(link, symbols):
     seq = list(chain.SEQ_CYCLE_INPUTS) if d >= set(chain.SEQ_CYCLE_INPUTS) else ["Delta_G_seq"]
     seq = [k for k in dict.fromkeys(seq + list(chain.SEQ_LOCAL_INPUTS))]
     if link == "anchor":
-        return _sampled(list(chain.PMF_INPUTS) if d >= set(chain.PMF_INPUTS) else list(chain.ANCHOR_INPUTS), s)
+        base = list(chain.PMF_INPUTS) if d >= set(chain.PMF_INPUTS) else list(chain.ANCHOR_INPUTS)
+        return _sampled(base + (["W_adh_wet"] if "W_adh_wet" in s else []), s)
     if link == "speciation":
-        return list(chain.SPECIATION_INPUTS)
+        return list(chain.SPECIATION_INPUTS) + (["K_sp"] if "K_sp" in s else [])
     if link == "sequester":
         return _sampled(seq, s)
     if link == "nucleate":
@@ -148,7 +158,8 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
         idx, design, conv = sobol.size_and_verify(
             link_model(link), sub, names, sc["target_ci_half_width"], int(s_seq.generate_state(1)[0]),
             pilot=sc["pilot_base"], n_bootstrap=sc["bootstrap"], confidence=sc["confidence"], key="symbol",
-            chunk=pc["chunk"], max_base=sc["max_base"], on_cap="cap")
+            chunk=pc["chunk"], max_base=sc["max_base"], on_cap="cap", scope=sc.get("target_scope", "all"),
+            top_k=int(sc.get("top_k", 3)))
         players = sum(not p.is_fixed for p in sub.priors)
         kw = dict(n_var=hc["n_var"], n_outer=hc["n_outer"], n_inner=hc["n_inner"], key="symbol",
                   n_bootstrap=hc["bootstrap"], confidence=hc["confidence"], chunk=pc["chunk"],
@@ -172,8 +183,9 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
                          "bootstrap_resamples": int(sc["bootstrap"]), "confidence_level": float(sc["confidence"])},
         "parameters": joint.names, "links": out_links,
         "boundary_mass": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items()
-                          if lk in out_links and lk != "speciation"},
-        "refused": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items() if lk == "speciation"} or None,
+                          if lk in out_links and lk not in REFUSAL_GROUPS},
+        "refused": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items()
+                    if lk in REFUSAL_GROUPS} or None,
         "dependence": joint.dependence_record(),
         "dependence_check": {"alternative": "independent", "rank_agreement": agreement} if agreement else None,
         "convergence": {
@@ -183,7 +195,8 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
             "max_ci_half_width": max(c["max_ci_half_width"] for c in convergences),
             "max_estimate_shift": max(c["max_estimate_shift"] for c in convergences),
             "converged": all(c["converged"] for c in convergences),
-            "capped": any(c["capped"] for c in convergences)},
+            "capped": any(c["capped"] for c in convergences),
+            "target_scope": convergences[0].get("target_scope", "all")},
     }
     return (regime, outputs) if return_outputs else regime
 
@@ -274,7 +287,9 @@ def run_states(states, cfg, seed, dependence_check, thresholds, independence, fu
                                         **propagate.describe(v, levels)}
                                     for q, v in d.items() if np.any(np.isfinite(v))} for lk, d in o.items()},
                 "boundary_mass": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items()
-                                  if lk != "speciation"},
+                                  if lk not in REFUSAL_GROUPS},
+                "refused": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items()
+                            if lk in REFUSAL_GROUPS} or None,
                 "unsampled": dict(rp.unsampled)}
     return entry, outs
 
@@ -291,6 +306,7 @@ def _provenance(root, cfg, cfg_path, rp_list, thresholds_path, dry):
     contract = json.loads(check.read_text(encoding="utf-8")).get("contract_sha") if check.exists() else None
     th = Path(root) / thresholds_path
     th_source = thr.split_copy(th.read_text(encoding="utf-8"))[0] if th.exists() else None
+    gt = Path(root) / gaps.GAP_TABLE
     return {"git_sha": sha, "git_dirty": dirty,
             "config_hash": summary.config_hash({"screen": cfg, "regimes": [r.regime for r in rp_list]}),
             "config_file": _rel(root, cfg_path), "config_file_hash": _sha256_file(cfg_path),
@@ -300,7 +316,14 @@ def _provenance(root, cfg, cfg_path, rp_list, thresholds_path, dry):
             "thresholds_hash": _sha256_file(th) if th.exists() else None,
             "thresholds_source_sha": th_source,
             "contract_sha": contract,
-            "schema_sha": _git(root, "log", "-1", "--format=%H", "--", "configs/preprint/results_schema.json") or None}
+            "schema_sha": _git(root, "log", "-1", "--format=%H", "--", "configs/preprint/results_schema.json") or None,
+            "gap_table_file": gaps.GAP_TABLE.as_posix() if gt.exists() else None,
+            "gap_table_sha": _git(root, "log", "-1", "--format=%H", "--", gaps.GAP_TABLE.as_posix()) or None,
+            "gap_table_hash": _sha256_file(gt) if gt.exists() else None,
+            "params_tag": CHECKPOINT_TAG if _git(root, "tag", "-l", CHECKPOINT_TAG) else None,
+            "params_sha_at_tag": _git(root, "log", "-1", "--format=%H", CHECKPOINT_TAG, "--",
+                                      params_adapter.PRODUCTION_PARAMS.as_posix()) or None
+            if _git(root, "tag", "-l", CHECKPOINT_TAG) else None}
 
 
 def _inputs_frozen(root, thresholds_path=THRESHOLDS):
@@ -330,7 +353,8 @@ def production_guard(root, rp_list, out_path, thresholds_path=THRESHOLDS):
 def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_run=True, allow_mock=False,
         config_path=CONFIG, independence=False, dependence_check=None, overrides=None, stability_path=None,
         cell_paths=None, controls=None, framing=None, prior_set="table", truncation=True, decide=True,
-        decision_draws=None, truncation_sensitivity=False):
+        decision_draws=None, truncation_sensitivity=False, conventions=None, bind=None, sensitivity=True,
+        run_label=None):
     """Run the screen and write the results document; returns (path, doc).
 
     The sensitivity analysis runs at the primary framing and the central design point. The
@@ -342,7 +366,14 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
     untruncated gamma_sl0 sensitivity; truncation_sensitivity reruns the decisions untruncated and
     lists the verdicts that change (block v2, decision.priors). stability_path: a W5 document with the R-slurry
     Pourbaix section; cell_paths: W5's per-sink R-cell documents; controls: {control: table}
-    for the deletion test (bare_oxide, PVDF).
+    for the deletion test (bare_oxide, PVDF): names of screen.yaml ``controls`` (a mapping is
+    read as its keys). stability_path may be a directory of W5's per-point R-slurry documents.
+
+    conventions: {table key: value} overrides of registered conventions for a sweep (p_cred,
+    m_cos), labelled in the provenance; bind: {symbol: table key} overrides of the R-slurry
+    bindings (a labelled sensitivity). sensitivity: False skips the Sobol and Shapley analysis
+    (sweep runs). The decision layer runs under the sizing rule (study.evaluate_sized); the
+    sensitivity propagation then uses the sized draws per state.
     """
     root = Path(root)
     out_path = Path(out_path)
@@ -350,6 +381,8 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
     cfg = load_config(root, config_path)
     for section, values in (overrides or {}).items():
         cfg[section] = {**(cfg.get(section) or {}), **values}
+    if bind:
+        cfg["bindings"]["R-slurry"]["common"] = {**cfg["bindings"]["R-slurry"]["common"], **bind}
     params_path = Path(params_path) if params_path else root / params_adapter.PRODUCTION_PARAMS
     if not dry_run:
         _inputs_frozen(root)
@@ -366,8 +399,38 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
     thresholds = thr.load_thresholds(root / THRESHOLDS) if (root / THRESHOLDS).exists() else None
     seeds = np.random.SeedSequence(cfg["propagation"]["seed"]).spawn(len(params_adapter.REGIMES) + 1)
     seed_of = {r: int(s.generate_state(1)[0]) for r, s in zip(params_adapter.REGIMES, seeds)}
+    claims = study_doc = None
+    if thresholds is not None and decide and "R-slurry" in regimes:
+        rule = thresholds["rule"]
+        resolver = decision.Resolver.from_table(yaml.safe_load(Path(params_path).read_text(encoding="utf-8")))
+        gt = root / gaps.GAP_TABLE
+        if gt.exists():
+            resolver = resolver.alias(gaps.load(gt).get("key_aliases"))
+        if conventions:
+            resolver = resolver.override(conventions)
+        stability = _stability(stability_path)
+        creg = (cfg.get("registrations") or {}).get("R-cell") or {}
+        cells = study.load_cells(cell_paths, creg.get("phase_windows"),
+                                 (root / creg["benchmark_errors"]) if creg.get("benchmark_errors") else None)
+        frs = [framing] if framing else None
+        kw = dict(draws=decision_draws, seed=int(seeds[-1].generate_state(1)[0]), framings=frs, stability=stability,
+                  cells=cells, controls=list(controls or ()), independence=independence)
+        claims, study_doc, extra = study.evaluate_sized(rule, resolver, params_path, cfg, allow_mock, prior_set,
+                                                        truncation, **kw)
+        kw["draws"] = study_doc["sizing"]["draws_per_state"]
+        cfg["propagation"] = {**cfg["propagation"], "draws_per_regime": kw["draws"]}
+        trunc = truncation_report(loaded.get("R-slurry") or [], cfg)
+        if trunc and truncation and truncation_sensitivity:
+            c2, s2, _ = study.evaluate(rule, resolver, params_path, cfg, allow_mock, prior_set, False, **kw)
+            trunc["untruncated_sensitivity"] = changed_verdicts(claims, study_doc, c2, s2)
+        study_doc["truncation"] = trunc or None
+        study_doc["gaps"] = _gaps(claims, extra)
+        study_doc["overrides"] = {"conventions": conventions, "bind": bind, "independence": bool(independence)} \
+            if (conventions or bind or independence) else None
+        study_doc["controls_registered"] = {c: ("gap: " + s["gap"]) if s.get("gap") else "evaluable"
+                                            for c, s in (cfg.get("controls") or {}).items()} or None
     regimes_out, not_evaluable = {}, {}
-    for regime, states in loaded.items():
+    for regime, states in (loaded.items() if sensitivity else ()):
         entry, _ = run_states(states, cfg, seed_of[regime], dependence_check, thresholds, independence)
         if entry is None:
             not_evaluable[regime] = {sid: dict(rp.unsampled) for sid, rp in states}
@@ -375,29 +438,16 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
         entry["prior_set"] = prior_set
         entry["barrier_prefactor"] = barrier_prefactor(states)
         regimes_out[regime] = entry
-    claims = study_doc = None
-    if thresholds is not None and decide and "R-slurry" in regimes:
-        rule = thresholds["rule"]
-        resolver = decision.Resolver.from_table(yaml.safe_load(Path(params_path).read_text(encoding="utf-8")))
-        stability = (json.loads(Path(stability_path).read_text(encoding="utf-8")).get("stability")
-                     if stability_path else None)
-        cells = study.load_cells(cell_paths)
-        frs = [framing] if framing else None
-        kw = dict(draws=decision_draws, seed=int(seeds[-1].generate_state(1)[0]), framings=frs, stability=stability,
-                  cells=cells, controls=controls)
-        claims, study_doc, extra = study.evaluate(rule, resolver, params_path, cfg, allow_mock, prior_set, truncation, **kw)
+    if claims is not None:
         _attach_link_records(regimes_out, claims)
-        trunc = truncation_report(loaded.get("R-slurry") or [], cfg)
-        if trunc and truncation and truncation_sensitivity:
-            c2, s2, _ = study.evaluate(rule, resolver, params_path, cfg, allow_mock, prior_set, False, **kw)
-            trunc["untruncated_sensitivity"] = changed_verdicts(claims, study_doc, c2, s2)
-        study_doc["truncation"] = trunc or None
-        study_doc["gaps"] = _gaps(claims, extra)
         study_doc["not_evaluable"] = not_evaluable or None
     if not regimes_out and claims is None:
         raise params_adapter.PriorFileError(
             "no link of the chain is evaluable from %s; unsampled inputs: %s" % (params_path, not_evaluable))
     prov = _provenance(root, cfg, cfg_path, rp_list, THRESHOLDS, dry_run)
+    prov["overrides"] = {"conventions": conventions, "bind": bind, "independence": bool(independence),
+                         "truncation": bool(truncation)} if (conventions or bind or independence or not truncation) else None
+    prov["run_label"] = run_label
     doc = summary.build(regimes_out or None, prov, mock=dry_run or any(rp.mock for rp in rp_list), claims=claims,
                         study=study_doc)
     path = summary.write(doc, out_path)
@@ -412,6 +462,16 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
         with ledger.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(line, sort_keys=True) + "\n")
     return path, doc
+
+
+def _stability(path):
+    """W5's R-slurry stability input: one document (its stability mapping) or a directory of per-point documents."""
+    if not path:
+        return None
+    path = Path(path)
+    if path.is_dir():
+        return study.load_slurry_stability(path)
+    return json.loads(path.read_text(encoding="utf-8")).get("stability")
 
 
 def truncation_report(states, cfg):

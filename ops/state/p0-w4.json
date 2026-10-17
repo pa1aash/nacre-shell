@@ -1,5 +1,5 @@
 {
-  "last_session": "P0-W4.3a",
+  "last_session": "P0-W4.3",
   "status": "DONE",
   "day": 3,
   "contract_sha": "db872ae9190c3b729bc2b13898919fbfbe56815b",
@@ -13,7 +13,7 @@
     "mock_priors": "configs/preprint/mock_priors.yaml",
     "mock_summary": "results/preprint/screen/mock/summary.json",
     "screen_scaffold": "src/nacre/screen/",
-    "report": "ops/reports/P0-W4.3a.md",
+    "report": "ops/reports/P0-W4.3.md",
     "screen_config": "configs/preprint/screen.yaml",
     "thresholds_copy": "configs/preprint/thresholds.yaml",
     "precision_method": "configs/preprint/precision_method.md",
@@ -26,30 +26,62 @@
     "units": "src/nacre/screen/units.py",
     "decision_layer": "src/nacre/screen/study.py",
     "retrodiction_entry": "src/nacre/screen/retro.py",
-    "mock_params_cp3": "configs/preprint/mock_params_cp3.yaml"
+    "mock_params_cp3": "configs/preprint/mock_params_cp3.yaml",
+    "gap_table": "configs/preprint/gap_resolution.yaml",
+    "gap_table_loader": "src/nacre/screen/gaps.py",
+    "production_dir": "results/preprint/screen/",
+    "ledger": "jobs/ledger/p0-w4.jsonl"
   },
   "notes": [
-    "Contract v3 implemented (53 functions + composite); equivalence PASS at rtol 1e-12 against W3 d27552a (contract db872ae), max rel err 4.2e-12 (W_adh_dry_fn); D11 xfails removed.",
-    "Thresholds copy regenerated from W3's cp3 block (74ac69c, version 2); equality EQUAL; the equality test checks the copy against its authority at the recorded source commit; D13/D18 xfail removed.",
-    "cp3 rulings R1-R8 implemented and reconciled with W3's block, which governs (joint-mass verdicts per state, Dirichlet termination mixture, two Omega controls, expt-governed R-cell with F5 fallback, truncation report); differences listed in the report.",
-    "Schema v3: barrier prefactor, water lines, dose window, scheme table and cutoff axis, per-termination verdicts, design and framing records, prior set labels.",
-    "Retrodiction entry point nacre.screen.retro.run_cases for W2.3 (interfaces, 90% intervals, swap check, permutation null); never run on the frozen cases.",
-    "Dry runs only (not reported): real table 35 s / 133 MiB, all links explicit gaps; bound mock 991 s / 1.50 GB, full path at 2^20 draws per state.",
-    "No production output exists; production still refused before tag p0-cp3.",
-    ".venv is a symlink to ~/.nacre-venvs/p-w4.",
-    "fix-up: hermetic guard test"
+    "14 production runs, 0 capped, 1.9 h total, peak 1.72 GB; sizing met at 2^14 draws per state in every run.",
+    "Study (registered, PMF route): C1 gap, cannot be feasible in P0; sourced-only set inconclusive.",
+    "Ignorance set with flagged analogs (not a finding): falsified via C3a under both framings at every design point; deletion test fails (PVDF control a gap, bare_oxide not degraded).",
+    "C5s dose window (sourced): feasible for Ca_T >= 1e-4 mol dm^-3, falsified at 1e-6 and at 1e-5 with C_T min; controls pass.",
+    "R-cell: CaCO3/LiClO4 falsified above 4.025 V; LFP inconclusive at min/value, falsified at max; other classes falsified.",
+    "track check refuses after the session: thresholds copy changed after p0-cp3 needs an integrator deviation entry.",
+    ".venv is a symlink to ~/.nacre-venvs/p-w4."
   ],
   "schema": {
     "version": "3",
     "sha": "fd35ae57823e219a4f91c18f811e975ce01e990a",
     "path": "configs/preprint/results_schema.json"
   },
-  "thresholds_sha": "74ac69c2586c017e2bc08efecbfbc918b94f48ee",
-  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "thresholds_sha": "22ef46446205f63fab6074ba971ee89e18d99489",
+  "params_sha": "fbe252b23a5a80e9fff25db72d1d3b85e8454ce8",
   "thresholds_cp3": {
     "source_sha": "74ac69c2586c017e2bc08efecbfbc918b94f48ee",
     "block_version": 2,
     "equality": "EQUAL",
     "poll": "ready at 10:42 UTC (third poll)"
+  },
+  "gap_table_sha": "96797a9c1711e6664bc591dee324f3ab7443719d",
+  "gap_table_history": {
+    "initial": "185b8b8ccdbc69bef1edc2ecb776dd252d3f6114",
+    "AM1": "e22fedbb45b617705c06dc00f079b0d861513c23",
+    "AM2": "96797a9c1711e6664bc591dee324f3ab7443719d"
+  },
+  "thresholds_cp3b": {
+    "source_sha": "22ef46446205f63fab6074ba971ee89e18d99489",
+    "w3_state_commit": "c4bb9d7",
+    "block_version": 3,
+    "equality": "EQUAL",
+    "copy_commit": "4ed8fcfc3f560ee8dabbfa25a6df3185e6f89e51",
+    "poll": "ready at 18:11 UTC (fourth poll)"
+  },
+  "runs": {
+    "table": "results/preprint/screen/table/summary.json",
+    "table_r2": "results/preprint/screen/table_r2/summary.json",
+    "ignorance": "results/preprint/screen/ignorance/summary.json",
+    "sweep_pcred_0.6": "results/preprint/screen/sweep_pcred_0.6/summary.json",
+    "sweep_pcred_0.99": "results/preprint/screen/sweep_pcred_0.99/summary.json",
+    "sweep_mcos_0.1": "results/preprint/screen/sweep_mcos_0.1/summary.json",
+    "sweep_mcos_0.2": "results/preprint/screen/sweep_mcos_0.2/summary.json",
+    "sweep_untruncated": "results/preprint/screen/sweep_untruncated/summary.json",
+    "sweep_independent": "results/preprint/screen/sweep_independent/summary.json",
+    "sens_rca_analog": "results/preprint/screen/sens_rca_analog/summary.json",
+    "sens_ph_modified": "results/preprint/screen/sens_ph_modified/summary.json",
+    "sens_acc_omega": "results/preprint/screen/sens_acc_omega/summary.json",
+    "sens_gamma_sl0_untruncated": "results/preprint/screen/sens_gamma_sl0_untruncated/summary.json",
+    "sens_gamma_sl0_untruncated_r2": "results/preprint/screen/sens_gamma_sl0_untruncated_r2/summary.json"
   }
 }

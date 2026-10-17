@@ -58,8 +58,9 @@ def test_c1_per_termination_verdicts_and_the_ignorance_mixture():
     # flat-Dirichlet weights drawn per draw, never the table's point weights 3 : 1
     assert rec["by_termination"]["t1"]["verdict"] == "feasible"
     assert rec["by_termination"]["t2"]["verdict"] == "falsified" and rec["falsified_alone"] == ["t2"]
-    assert rec["P_good"] == pytest.approx(0.5, abs=0.02) and rec["verdict"] == "inconclusive"
-    assert rec["P_good_range"] == [0.0, 1.0]
+    # W_mix = 2 w_1 - 1 > 0.1 iff w_1 > 0.55 (cp3b A2: the works mix, not the indicators)
+    assert rec["P_good"] == pytest.approx(0.45, abs=0.02) and rec["verdict"] == "inconclusive"
+    assert rec["weight_free"]["P_min_good"] == 0.0 and rec["weight_free"]["P_max_good"] == 1.0   # cp3b A2
     assert dc.evaluate_test(RULE, t, None, r, mixture={"t1": good, "t2": good}, rng=rng)["verdict"] == "feasible"
     assert dc.evaluate_test(RULE, t, None, r, mixture={"t1": bad, "t2": bad}, rng=rng)["verdict"] == "falsified"
 
@@ -272,7 +273,7 @@ def _cell(kind, ox_by_scheme, red=1.0, phases=("CaCO3",)):
 
 
 def _cell_eval(cells, cuts, **kw):
-    return dc.evaluate_c5_cell(cells, _resolver(), ["CaCO3"], "oxidation", cuts, "thresholds.C5.expt_margin", **kw)
+    return dc.evaluate_c5_cell(cells, _resolver(), ["CaCO3"], "oxidation", cuts, "thresholds.C5.window_margin_expt", **kw)
 
 
 def test_c5_cell_expt_governs_and_dft_schemes_are_comparators():
@@ -310,7 +311,7 @@ def test_c5_cell_cutoff_axis_margin_and_undetermined_limits():
     assert rec["cutoff_axis"]["x"]["phases"]["CaCO3"]["sinks"]["LiBOB"]["verdict"] == "inconclusive"
     r = dc.Resolver({"thresholds.decision.credible_level": P})
     rec = dc.evaluate_c5_cell({"solvated": _cell("solvated", {"expt": 9.0})}, r, ["CaCO3"], "oxidation", {"x": 4.3},
-                              "thresholds.C5.expt_margin")
+                              "thresholds.C5.window_margin_expt")
     assert rec["verdict"] == "inconclusive" and rec["margin_V"] is None   # m_expt not registered
 
 

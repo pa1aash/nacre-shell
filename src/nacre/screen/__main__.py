@@ -3,7 +3,9 @@
     python -m nacre.screen smoke --mock                       Day 1 smoke path (v1 links)
     python -m nacre.screen dryrun --mock [--params P] [--out O] [--independence]
                                                               dry run, output under results/preprint/screen/dryrun/
-    python -m nacre.screen production --out O                 P0-W4.3 only: refused before cp3
+    python -m nacre.screen production --out O [--prior-set S] [--control C ...] [--convention K=V ...]
+                                     [--bind SYM=KEY ...] [--independence] [--no-sensitivity]
+                                                              P0-W4.3 only: refused before cp3
     python -m nacre.screen thresholds copy|check --ref R      copy or check the thresholds block of
                                                               theory/thresholds.md at a git ref
 """
@@ -49,6 +51,15 @@ def main(argv=None):
         p.add_argument("--cell", action="append", default=[], help="W5 R-cell document (one per sink; repeatable)")
         p.add_argument("--decision-draws", type=int, help="draws per state of the decision layer")
         p.add_argument("--draws", type=int, help="draws per state of the sensitivity propagation")
+        p.add_argument("--control", action="append", default=[],
+                       help="deletion-test control of screen.yaml controls (repeatable): bare_oxide, PVDF")
+        p.add_argument("--convention", action="append", default=[], metavar="KEY=VALUE",
+                       help="sweep override of a registered convention (table key), labelled in the output")
+        p.add_argument("--bind", action="append", default=[], metavar="SYMBOL=KEY",
+                       help="override an R-slurry binding (a labelled sensitivity)")
+        p.add_argument("--no-sensitivity", action="store_true", help="skip the Sobol and Shapley analysis (sweeps)")
+        p.add_argument("--label", help="run label recorded in the provenance")
+    pr.add_argument("--independence", action="store_true", help="drop the stated correlations (dependence sweep)")
     th = sub.add_parser("thresholds", help="copy or check configs/preprint/thresholds.yaml")
     th.add_argument("action", choices=("copy", "check"))
     th.add_argument("--ref", default="origin/preprint/p0-w3", help="git ref holding theory/thresholds.md")
@@ -74,7 +85,10 @@ def main(argv=None):
         return 0
     if args.cmd in ("dryrun", "production"):
         try:
-            kw = dict(prior_set=args.prior_set, truncation=not args.untruncated,
+            kw = dict(prior_set=args.prior_set, truncation=not args.untruncated, controls=args.control,
+                      conventions={k: float(v) for k, v in (c.split("=", 1) for c in args.convention)} or None,
+                      bind=dict(b.split("=", 1) for b in args.bind) or None, sensitivity=not args.no_sensitivity,
+                      run_label=args.label,
                       truncation_sensitivity=args.truncation_sensitivity,
                       stability_path=(root / args.stability) if args.stability else None,
                       cell_paths=[root / c for c in args.cell], decision_draws=args.decision_draws,
@@ -83,7 +97,7 @@ def main(argv=None):
                 path, _ = run.run(root, root / args.out, params_path=root / args.params, dry_run=True,
                                   allow_mock=args.mock, independence=args.independence, framing=args.framing, **kw)
             else:
-                path, _ = run.run(root, root / args.out, dry_run=False, **kw)
+                path, _ = run.run(root, root / args.out, dry_run=False, independence=args.independence, **kw)
         except (MockPriorsRefused, run.ProductionRefused, run.params_adapter.PriorFileError) as exc:
             print("refused: %s" % exc, file=sys.stderr)
             return 2
