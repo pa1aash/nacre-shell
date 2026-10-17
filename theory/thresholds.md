@@ -191,7 +191,8 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
 - **Decision.** feasible if `P(f <= f_e) >= p`; falsified if `P(f > f_e) >= p`; inconclusive
   otherwise. The mass at the clipped boundaries (N2) is reported.
 - **Framing consistency (Q12).** K_sp, V_m and gamma_nl come from one framing (ACC or calcite),
-  keyed by `regimes.R-slurry.parameters.framing`. A draw that mixes framings is refused.
+  keyed by `regimes.R-slurry.parameters.framing`. A draw that mixes framings is refused. Both
+  framings are registered (cp3 R6), and each is run as a whole chain (Section 3, "Framings").
 
 **(b) Accessibility part: absolute barrier in k_B T.**
 
@@ -482,6 +483,21 @@ inconclusive otherwise.
   the axes. C5 R-slurry reports its feasible set as the dose window.
 - **Sequestration premise.** The C2 finding of Section 2 is reported with the study verdict. If
   the premise fails, the report says so as a finding, whatever the verdict.
+- **Framings (cp3 R6).** Calcite and ACC are both registered framings
+  (`regimes.R-slurry.parameters.framing`). The screen runs the whole chain once per framing, with
+  K_sp, V_m and gamma_nl of that framing in every link (Q12), and forms a study verdict per framing
+  (including its deletion test). The registered study verdict combines them:
+  - **falsified** only if the study is falsified under every registered framing;
+  - **feasible** if it is feasible under at least one framing. The report names that framing and
+    prints the verdict under the other framing beside it;
+  - **inconclusive** otherwise.
+
+  Framings are never mixed across links: a chain that is feasible under ACC in C3 and under
+  calcite in C4 is not feasible. The C5 dissolution test uses the calcite K_sp under both framings
+  (Section 2, C5).
+  - **Disclosure.** A calcite-framing estimate near one half was available when the project was
+    designed (lane note N5). Registering both framings, with the rule above, keeps the verdict
+    from depending on a framing chosen after that estimate; the paper states the sequence.
 - **Deletion test (`charter/deletion_register.yaml`, F1).** Only the controls that remove the
   mechanism gate it: `bare_oxide` and `PVDF`.
   - For each of the two, the screen is rerun with the control in place of the template, at the
@@ -514,7 +530,7 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `regimes.R-slurry.parameters.termination_weights` | weights | literature | C1 |
 | `thresholds.C2.margin_DG_seq` | m_seq | literature (method error) | C2 labelled sensitivity (not gating) |
 | `thresholds.C3.margin_cos_theta` | m_cos | registration (cp2; proposed zero) | C3 (a) |
-| `regimes.R-slurry.parameters.framing` | framing | registration (cp3, N5) | C3, C5 |
+| `regimes.R-slurry.parameters.framing` | framing | registration (cp3 R6: calcite and ACC both registered) | C3, C4, C5 sensitivity; study combination |
 | `regimes.R-slurry.parameters.J0_het` | J0_het | literature | C3 (b), C4 |
 | `regimes.R-slurry.parameters.t_proc` | t_proc | literature or process input | C3 (b), C4 |
 | `regimes.R-slurry.parameters.patch_area` | A_patch | literature (process input; N_req = ln(1/(1 - p_cred))/A_patch, cp3 R5) | C3 (b) |
@@ -781,6 +797,15 @@ links:
     gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, regimes.R-cell.parameters.al_phases]}
     combine: 'C5s and C5s_phase and C5c_ox and C5c_red'
 study:
+  framings:
+    registered: [calcite, ACC]
+    params: {framing: regimes.R-slurry.parameters.framing}
+    run: whole chain per framing (K_sp, V_m, gamma_nl of one framing; never mixed across links)
+    falsified: falsified under every registered framing
+    feasible: feasible under at least one framing; name it and report the other beside it
+    inconclusive: otherwise
+    c5_dissolution: calcite K_sp under both framings
+    disclosure: a calcite-framing estimate near one half was available when the project was designed (N5)
   gating_links: [C1, C3, C4, C5]
   descriptor_links: [C2]
   falsified: 'any of C1, C3, C4, C5 falsified'

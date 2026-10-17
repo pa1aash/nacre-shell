@@ -195,7 +195,7 @@ mean electrostatic potential.
 \begin{equation}\label{th:eq:omega}
 \Om=\frac{\mathrm{IAP}}{\Ksp}=\frac{\aCa\,\aCO}{\Ksp} \un{1},\qquad \Dmu=\kB T\ln\Om \un{J},
 \end{equation}
-with $\Ksp$ the solubility product of the registered framing (ACC or calcite), $\Dmu$ the
+with $\Ksp$ the solubility product of the framing (calcite and ACC are both registered, and each is run as a whole chain with its own $\Ksp$, $\Vm$ and $\gnl$), $\Dmu$ the
 chemical-potential drop per CaCO$_3$ formula unit on crystallisation, and $\Vm$ the molar volume per
 CaCO$_3$ formula unit. Units: activities and $\Ksp$ are pure numbers on the molal scale; $\kB T$ is
 in J. Nucleation requires $\Om>1$. This is the charter's convention (F3): its $S$ is this $\Om$.
@@ -982,7 +982,7 @@ Super\-saturation & \Rs & \texttt{Omega\_bulk}, \texttt{Delta\_mu}; demonstratio
 W1 (activities from speciation at the regime pH and ionic strength)\\
 C3 nucleation & \Rs & \texttt{r\_star}, \texttt{DG\_hom}, \texttt{f\_theta}, \texttt{DG\_het}, \texttt{cos\_theta\_young}, \texttt{cos\_theta\_template}, \texttt{gamma\_sl\_insitu}, \texttt{theta\_young}, \texttt{B\_acc}, \texttt{N\_nuc}; audit: \texttt{gamma\_eff\_deck}, \texttt{cos\_theta\_deck} &
 \texttt{gamma\_nl}, \texttt{gamma\_sl0} (or \texttt{gamma\_sl} in situ), \texttt{gamma\_sn0}, \texttt{Delta\_gamma\_w}, \texttt{V\_m}, \texttt{T}, \texttt{J0\_het}, \texttt{t\_proc}, \texttt{N\_req}, with $\Omb$ and \texttt{Delta\_gamma\_ads} &
-W1 priors and computed slabs; framing at G2\\
+W1 priors and computed slabs; both framings registered (cp3)\\
 C4 conformality & \Rs & \texttt{S\_spread}, \texttt{h\_c}, \texttt{h\_cl}, \texttt{N\_s\_closure} &
 C3 energies, \texttt{N\_s}, \texttt{d\_max} &
 nucleation-and-growth model (item 17); \texttt{N\_nuc} as an upper estimate\\
