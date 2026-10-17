@@ -106,7 +106,8 @@ class LocalTransport(Transport):
         return p.returncode, p.stdout, p.stderr
 
     def describe(self):
-        return {"transport": self.name, "root": str(self.root), "host": os.uname().nodename}
+        root = self.root.relative_to(REPO).as_posix() if self.root.is_relative_to(REPO) else self.root.name
+        return {"transport": self.name, "root": root}
 
 
 class SSHTransport(Transport):
