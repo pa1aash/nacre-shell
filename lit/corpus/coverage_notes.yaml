@@ -4,25 +4,22 @@
 # Merged into coverage.yaml by `python -m nacre.lit merge`.
 gamma_nuc_water_acc:
   independent_originals: 2
-  caveat: >-
-    One CNT fit to a literature nucleation data set (TC-024, grade C) and one simulation range
-    (TC-025); no direct measurement.
+  caveat: One CNT fit (TC-024, grade C) and one simulation range (TC-025); TG-018 (about 0.33 J m^-2 from size-dependent
+    solubility) is abstract only (grade D). No direct measurement.
 gamma_sub_nuc_or_contact_angle:
   independent_originals: 6
-  caveat: >-
-    All numeric rows are effective (net) interfacial energies from CNT fits of heterogeneous
-    nucleation rates or MD, plus one compiled bound theta < 90 deg (TC-088). No separately
-    determined gamma_sub,nuc and no measured contact angle on an organic surface.
+  caveat: All numeric rows are effective (net) interfacial energies from CNT fits of heterogeneous nucleation rates
+    or MD, plus one compiled bound theta < 90 deg (TC-088). No separately determined gamma_sub,nuc and no measured
+    contact angle on an organic surface.
 gamma_sub_water_oxide:
   independent_originals: 2
-  caveat: >-
-    Proxies only: calorimetric surface enthalpies of hydrated or anhydrous-water-exposed boehmite
-    and alpha-Al2O3 (TB-052, TB-053 same group; TB-056), not interfacial free energies against
-    liquid water. Treated as a gap for prior construction.
+  caveat: 'Proxies only: calorimetric surface enthalpies of hydrated or anhydrous-water-exposed boehmite and alpha-Al2O3
+    (TB-052, TB-053 same group; TB-056), not interfacial free energies against liquid water. Treated as a gap for
+    prior construction.'
 ksp_calcite:
   independent_originals: 1
-  caveat: >-
-    Both DOIs cite Plummer and Busenberg 1982 (paywalled, not read); compilations only.
+  caveat: All rows cite Plummer and Busenberg 1982 (paywalled, not read); compilations only. Day 2 found no other
+    primary determination.
 ksp_vaterite:
   independent_originals: 1
   caveat: Both DOIs cite Plummer and Busenberg 1982 via compilations.
@@ -30,35 +27,66 @@ ksp_aragonite:
   independent_originals: 1
   caveat: Both rows are secondary or tertiary citations of the same literature value.
 ksp_acc:
-  independent_originals: 3
-  caveat: >-
-    Compilations of Brecevic and Nielsen 1989, Clarkson et al. 1992 and Gebauer-group values, plus
-    one CNT-inferred range for a second ACC form; originals paywalled.
+  independent_originals: 5
+  caveat: 'Day 2 (T-G) added direct measurements: titration-onset products (Gebauer 2008, Kellermeier 2014; grade
+    B) and Mg-free dissolution intercept (Purgstaller 2019); they differ from the compiled dissolution values by
+    1.1 to 1.5 log units (polyamorphism; lit/conflicts.md). TG-003/TG-004 are printed in a column scaled by 1e-8
+    and are untraced by the local audit.'
 acc_excess_free_energy:
-  independent_originals: 1
-  caveat: >-
-    Both rows are derived by this session from compiled Ksp values (ACC versus calcite); no
-    calorimetric free energy. Calorimetric enthalpies are separate rows (TC-026 to TC-029).
+  independent_originals: 3
+  caveat: All rows derived from solubility products (Brecevic-Nielsen via TC-030/TC-031, Kellermeier via TG-011,
+    Purgstaller via TG-012); no calorimetric free energy. Range 5.4 to 13.0 kJ/mol.
 slurry_ionic_strength:
   independent_originals: 2
-  caveat: >-
-    Both derived (grade C): a Li-leaching washing solution and a processing-solution molality; no
-    ionic strength measured in a cathode slurry.
+  caveat: All derived (grade C) from Li and carbonate contents of washing solutions and filtrates (TA-021, TJ-104,
+    TJ-105); no ionic strength measured in a slurry. TA-022 is an added-salt processing solution.
 hydration_free_energy_ca:
   independent_originals: 1
-  caveat: >-
-    All experimental rows trace to Marcus 1991 (proton reference -1056 kJ/mol); computed rows were
-    fitted to it. No value on the cluster-pair (Tissandier) scale was read.
+  caveat: All values trace to Marcus 1991; TF-051 rescales it to the cluster-pair proton scale and TF-050 gives
+    that proton value. No independent Tissandier-scale Ca2+ value was read (paywalled).
 pka_catechol:
-  independent_originals: 2
-  caveat: Dopamine and L-DOPA values only; no pKa of catechol itself was read.
+  independent_originals: 3
+  caveat: Day 2 (T-F) added catechol itself (TF-021, 8.83, ionic strength not stated) and a compiled literature
+    range (TF-025, 9.14 to 9.43); dopamine and L-DOPA rows remain comparators.
 w_adh_catechol_alumina_wet:
   independent_originals: 2
-  caveat: >-
-    Surface-forces data for DOPA-containing proteins on mica or SiO2 and a compiled range; no wet
-    work of adhesion on alumina or an oxyhydroxide. Treated as a gap for the alumina substrate.
+  caveat: Surface-forces data for DOPA-containing proteins on mica or SiO2 and a compiled range; no wet work of
+    adhesion on alumina or an oxyhydroxide. Treated as a gap for the alumina substrate.
 incell_potential_range:
   independent_originals: 10
-  caveat: >-
-    Mixes upper cut-off potentials of cells (T-A) with Al onset potentials in LiBOB and LiClO4
-    (T-B); distinguish by symbol before use.
+  caveat: Mixes upper cut-off potentials of cells (T-A) with Al onset potentials in LiBOB and LiClO4 (T-B); distinguish
+    by symbol before use.
+gamma_sub_water_organic:
+  independent_originals: 2
+  caveat: 'Day 2 (T-H): derived (grade C) from contact-angle surface-energy components of polydopamine only (van
+    Oss TH-049, Owens-Wendt TH-052 to TH-056); the sign depends on the model. No COOH, chitosan or alginate value.
+    These are Ca-free values (gamma_sl0).'
+molar_volume_calcite:
+  independent_originals: 3
+  caveat: 'Day 2 (T-F): NBS Circular 539 (TC-048), Graf 1961 via USGS Bulletin 1248 (TF-001) and a neutron refinement
+    of biogenic calcite (TF-008); all derived or compiled (grade C).'
+molar_volume_acc:
+  independent_originals: 1
+  caveat: 'Day 2 (T-G): derived from pycnometric densities of dried ACC at two hydration states in one paper (Jensen
+    2018; TG-015, TG-016); structural water included. In situ SAXS density 1.62 g cm^-3 (TC-054, TC-055) is not
+    a phase molar volume.'
+dg_ca_catecholate:
+  independent_originals: 1
+  caveat: Gigliuto 2021 (dopamine, two ionic strengths) is the only catecholate constant; Tiron rows (TF-014 to
+    TF-016) are a sulfonated catecholate (different ligand).
+dg_ca_carboxylate:
+  independent_originals: 4
+  caveat: Day 2 added acetate and succinate (Martell-Smith via a compilation), poly(acrylic acid) by ITC, and acetate/aspartate/citrate
+    free energies (simulation and compiled experiment, one paper). Ligand denticity differs between rows.
+slurry_dic:
+  independent_originals: 2
+  caveat: Both are cathode-powder washing solutions, not slurries (TA-019 measured; TF-032 derived from Li2CO3 content);
+    they differ by a factor of four (lit/conflicts.md).
+slurry_ca:
+  independent_originals: 0
+  caveat: Day 2 (T-F) found no Ca in aqueous cathode slurries; Ca is a design input of the main study (params keys
+    a_ca_slurry, c_bulk_slurry).
+site_density_organic:
+  independent_originals: 2
+  caveat: Carboxyl-terminated SAMs on gold only (ordered-SAM estimate TC-067, MHA TF-036, 4-mercaptobenzoic acid
+    TF-038); no polydopamine, alginate or chitosan group density.

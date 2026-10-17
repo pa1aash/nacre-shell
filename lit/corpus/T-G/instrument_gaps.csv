@@ -1,0 +1,86 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-16T19:48:43Z,europepmc,10.1126/science.1161566,http_error,HTTP 403 https://europepmc.org/articles/PMC2652400?pdf=render
+2026-10-16T19:48:47Z,europepmc+wayback,10.1126/science.1161566,http_error,HTTP 403 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC2652400?pdf=render
+2026-10-16T19:49:23Z,europepmc,PMC2652400,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC2652400/fullTextXML)
+2026-10-16T19:49:23Z,fulltext,10.1126/science.1161566,not_indexed,"2 candidate location(s), none retrieved"
+2026-10-16T19:49:23Z,unpaywall,10.1002/anie.201003220,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:49:23Z,unpaywall,10.1016/0022-0248(89)90168-1,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:49:39Z,unpaywall,10.1126/science.1164271,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:49:43Z,unpaywall,10.1002/ange.201003220,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:51:03Z,unpaywall,10.1002/cphc.201600653,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:51:50Z,unpaywall,10.1039/c8ce01596a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2019/ce/c8ce01596a
+2026-10-16T19:51:51Z,europepmc,10.1039/c8ce01596a,http_error,HTTP 403 https://europepmc.org/articles/PMC6336086?pdf=render
+2026-10-16T19:52:14Z,fulltext,10.1016/j.gca.2016.09.004,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T19:52:18Z,fulltext,10.1016/j.gca.2014.08.003,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T19:52:25Z,abstracts,10.1016/j.gca.2016.09.004,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T19:53:13Z,unpaywall,10.1016/j.gca.2012.04.056,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:53:16Z,unpaywall,10.1023/a:1011991124181,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:53:20Z,unpaywall,10.1021/acs.chemmater.9b02346,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:53:23Z,unpaywall,10.1021/acs.jpcc.3c05985,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:53:33Z,abstracts,10.1016/j.gca.2012.04.056,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T19:53:39Z,abstracts,10.1023/a:1011991124181,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T19:55:59Z,direct,10.1016/j.gca.2012.04.056,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1043736 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10ac3c800>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1043736)"
+2026-10-16T19:56:03Z,direct+wayback,10.1016/j.gca.2012.04.056,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.osti.gov/servlets/purl/1043736
+2026-10-16T19:57:22Z,unpaywall,10.1021/acs.jpcc.3c08311,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:57:50Z,unpaywall,10.1021/la025918d,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:57:52Z,unpaywall,10.1002/adma.200306030,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.1002/adma.200306030
+2026-10-16T19:57:52Z,openalex,10.1002/adma.200306030,not_indexed,HTTP 404 https://api.openalex.org/works/doi:10.1002/adma.200306030
+2026-10-16T19:57:54Z,fulltext,10.1002/adma.200306030,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T19:57:56Z,unpaywall,10.1021/cm800403u,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.1021/cm800403u
+2026-10-16T19:57:56Z,openalex,10.1021/cm800403u,not_indexed,HTTP 404 https://api.openalex.org/works/doi:10.1021/cm800403u
+2026-10-16T19:57:58Z,fulltext,10.1021/cm800403u,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T19:58:00Z,unpaywall,10.1002/adma.201000562,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.1002/adma.201000562
+2026-10-16T19:58:01Z,openalex,10.1002/adma.201000562,not_indexed,HTTP 404 https://api.openalex.org/works/doi:10.1002/adma.201000562
+2026-10-16T19:58:02Z,fulltext,10.1002/adma.201000562,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T19:58:03Z,europepmc,10.1073/pnas.1009959107,http_error,HTTP 403 https://europepmc.org/articles/PMC2944757?pdf=render
+2026-10-16T19:59:06Z,unpaywall,10.1021/acs.jpcc.7b10459,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:00:36Z,unpaywall,10.1021/acs.cgd.7b00874,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.cgd.7b00874
+2026-10-16T20:00:47Z,unpaywall,10.1021/acs.jpclett.5c00629,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:01:12Z,unpaywall,10.1039/c2fd20052j,http_error,HTTP 403 https://espace.curtin.edu.au/bitstream/20.500.11937/49323/3/249417_67161_FaradayDiscussions_DOLLOP_2012_revised.pdf
+2026-10-16T20:03:22Z,unpaywall,10.1021/acs.est.1c02865,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1840567 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x1040436e0>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1840567)"
+2026-10-16T20:03:52Z,unpaywall,10.1021/es3014826,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:05:53Z,unpaywall,10.1021/acs.est.0c03160,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1775108 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x107646d50>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1775108)"
+2026-10-16T20:06:28Z,unpaywall,10.1126/science.1230915,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:06:34Z,unpaywall,10.1088/0953-8984/21/42/425102,parse_error,not a PDF: https://iopscience.iop.org/article/10.1088/0953-8984/21/42/425102/pdf
+2026-10-16T20:06:38Z,unpaywall+wayback,10.1088/0953-8984/21/42/425102,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1088/0953-8984/21/42/425102/pdf
+2026-10-16T20:06:38Z,fulltext,10.1088/0953-8984/21/42/425102,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-16T20:06:39Z,unpaywall,10.1039/c2fd20080e,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:07:02Z,unpaywall,10.1073/pnas.1700342114,http_error,HTTP 403 https://www.pnas.org/content/pnas/114/38/E7882.full.pdf
+2026-10-16T20:07:03Z,europepmc,10.1073/pnas.1700342114,http_error,HTTP 403 https://europepmc.org/articles/PMC5617248?pdf=render
+2026-10-16T20:07:22Z,unpaywall,10.1021/ja108508k,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:07:45Z,unpaywall,10.1039/c8sc05634j,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2019/sc/c8sc05634j
+2026-10-16T20:09:46Z,unpaywall,10.1039/c8sc05634j,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /biblio/1559215 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10aaf2f60>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/biblio/1559215)"
+2026-10-16T20:09:46Z,europepmc,10.1039/c8sc05634j,http_error,HTTP 403 https://europepmc.org/articles/PMC6530533?pdf=render
+2026-10-16T20:10:02Z,unpaywall,10.1021/acs.chemmater.5b00145,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:10:45Z,unpaywall,10.1007/s00269-012-0530-z,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:11:11Z,unpaywall,10.1088/0022-3727/40/18/036,parse_error,not a PDF: https://iopscience.iop.org/article/10.1088/0022-3727/40/18/036/pdf
+2026-10-16T20:11:47Z,unpaywall+wayback,10.1088/0022-3727/40/18/036,http_error,HTTP 503 (https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1088/0022-3727/40/18/036/pdf)
+2026-10-16T20:11:47Z,fulltext,10.1088/0022-3727/40/18/036,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-16T20:11:52Z,unpaywall,10.1016/j.ssc.2009.04.026,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:11:56Z,unpaywall,10.1093/mam/ozae044.576,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:12:04Z,unpaywall,10.1016/j.ssc.2025.116092,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:12:11Z,abstracts,10.1007/s00269-012-0530-z,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:12:15Z,abstracts,10.1016/j.ssc.2009.04.026,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:12:19Z,abstracts,10.1016/j.ssc.2025.116092,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:12:41Z,unpaywall,10.1016/0169-4332(93)90365-i,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:12:44Z,abstracts,10.1016/0169-4332(93)90365-i,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:13:10Z,unpaywall,10.1039/d4tc04921g,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2025/tc/d4tc04921g
+2026-10-16T20:13:12Z,unpaywall+wayback,10.1039/d4tc04921g,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.rsc.org/en/content/articlepdf/2025/tc/d4tc04921g
+2026-10-16T20:13:12Z,fulltext,10.1039/d4tc04921g,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-16T20:13:20Z,direct,10.1039/d4tc04921g,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2025/tc/d4tc04921g
+2026-10-16T20:13:23Z,direct+wayback,10.1039/d4tc04921g,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.rsc.org/en/content/articlepdf/2025/tc/d4tc04921g
+2026-10-16T20:15:14Z,arxiv,calcite optical excitonic properties band gap,rate_limited,HTTP 429 after 6 attempts (http://export.arxiv.org/api/query)
+2026-10-16T20:17:11Z,arxiv,CaCO3 band gap electronic structure,http_error,"ReadTimeout: HTTPSConnectionPool(host='export.arxiv.org', port=443): Read timed out. (read timeout=60.0) after 6 attempts (http://export.arxiv.org/api/query)"
+2026-10-16T20:18:25Z,fulltext,10.1073/pnas.2607260123,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T20:18:55Z,direct,10.1039/d4tc04921g,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlehtml/2025/tc/d4tc04921g
+2026-10-16T20:19:00Z,direct+wayback,10.1039/d4tc04921g,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://pubs.rsc.org/en/content/articlehtml/2025/tc/d4tc04921g
+2026-10-16T20:19:21Z,openalex,electrical conductivity of calcite high temperature,rate_limited,"HTTP 429 after 1 attempts, retry time cap 120 s (https://api.openalex.org/works)"
+2026-10-16T20:19:22Z,openalex,dc conductivity calcium carbonate pellet impedance spectroscopy,rate_limited,"HTTP 429 after 1 attempts, retry time cap 120 s (https://api.openalex.org/works)"
+2026-10-16T20:19:23Z,openalex,calcium carbonate thin film dielectric insulating layer electrical,rate_limited,"HTTP 429 after 1 attempts, retry time cap 120 s (https://api.openalex.org/works)"
+2026-10-16T20:20:13Z,unpaywall,10.1007/bf00241910,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:20:16Z,unpaywall,10.1016/s0013-4686(96)00289-7,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:21:05Z,abstracts,10.1130/abs/2017am-304317,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:21:07Z,unpaywall,10.1130/abs/2017am-304317,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:21:25Z,fulltext,10.1016/j.gca.2020.06.030,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T20:23:40Z,direct,10.1016/j.gca.2020.06.030,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1772343 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10b20da90>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1772343)"
+2026-10-16T20:23:42Z,direct+wayback,10.1016/j.gca.2020.06.030,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.osti.gov/servlets/purl/1772343

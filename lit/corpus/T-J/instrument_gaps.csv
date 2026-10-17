@@ -1,0 +1,120 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-16T19:49:26Z,unpaywall,10.1073/pnas.1312369111,http_error,HTTP 403 https://www.pnas.org/content/pnas/111/4/1304.full.pdf
+2026-10-16T19:49:27Z,europepmc,10.1073/pnas.1312369111,http_error,HTTP 403 https://europepmc.org/articles/PMC3910584?pdf=render
+2026-10-16T19:49:31Z,unpaywall+wayback,10.1073/pnas.1312369111,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.pnas.org/content/pnas/111/4/1304.full.pdf
+2026-10-16T19:49:51Z,europepmc,10.1073/pnas.1222162110,http_error,HTTP 403 https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:49:54Z,europepmc+wayback,10.1073/pnas.1222162110,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:50:28Z,europepmc,PMC3677451,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3677451/fullTextXML)
+2026-10-16T19:50:28Z,fulltext,10.1073/pnas.1222162110,not_indexed,"2 candidate location(s), none retrieved"
+2026-10-16T19:50:33Z,unpaywall,10.1126/science.1254051,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:50:37Z,direct,10.1073/pnas.1222162110,http_error,HTTP 403 https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:50:39Z,direct+wayback,10.1073/pnas.1222162110,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:50:44Z,direct,10.1073/pnas.1222162110,http_error,HTTP 403 https://www.pnas.org/doi/pdf/10.1073/pnas.1222162110
+2026-10-16T19:53:06Z,direct+wayback,10.1073/pnas.1222162110,http_error,TooManyRedirects: Exceeded 30 redirects. (https://web.archive.org/web/2026id_/https://www.pnas.org/doi/pdf/10.1073/pnas.1222162110)
+2026-10-16T19:53:07Z,direct,10.1073/pnas.1222162110,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC3677451/pdf/pnas.201222162.pdf
+2026-10-16T19:53:10Z,direct+wayback,10.1073/pnas.1222162110,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://pmc.ncbi.nlm.nih.gov/articles/PMC3677451/pdf/pnas.201222162.pdf
+2026-10-16T19:53:29Z,unpaywall,10.1021/es405141j,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:53:30Z,unpaywall,10.1021/es3014826,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:54:15Z,unpaywall,10.1002/crat.200310070,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:54:20Z,unpaywall,10.1016/0022-0248(92)90089-2,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:54:21Z,unpaywall,10.1016/0022-0248(82)90095-1,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T19:54:28Z,abstracts,10.1016/0022-0248(92)90089-2,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T19:54:29Z,abstracts,10.1016/0022-0248(82)90095-1,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T19:55:21Z,unpaywall,10.1073/pnas.1423898112,http_error,HTTP 403 https://www.pnas.org/content/pnas/112/11/3199.full.pdf
+2026-10-16T19:55:25Z,europepmc,10.1073/pnas.1423898112,http_error,HTTP 403 https://europepmc.org/articles/PMC4371997?pdf=render
+2026-10-16T19:57:33Z,unpaywall+wayback,10.1073/pnas.1423898112,http_error,TooManyRedirects: Exceeded 30 redirects. (https://web.archive.org/web/2026id_/https://www.pnas.org/content/pnas/112/11/3199.full.pdf)
+2026-10-16T19:59:57Z,unpaywall,10.1021/acs.chemmater.9b00417,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1526694 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x108f7a810>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1526694)"
+2026-10-16T20:01:58Z,openalex,10.1021/acs.chemmater.9b00417,http_error,"ConnectTimeout: HTTPSConnectionPool(host='eprints.ucm.es', port=443): Max retries exceeded with url: /59288/1/Surface%20Wetting%20Controls%20Calcium%20Carbonate%20Crystallization%20Kinetics.pdf (Caused by ConnectTimeoutError(<HTTPSConnection(host='eprints.ucm.es', port=443) at 0x108f9f140>, 'Connection to eprints.ucm.es timed out. (connect timeout=60.0)')) (https://eprints.ucm.es/59288/1/Surface%20Wetting%20Controls%20Calcium%20Carbonate%20Crystallization%20Kinetics.pdf)"
+2026-10-16T20:02:03Z,unpaywall,10.1021/acs.jpcc.9b00378,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:02:04Z,unpaywall,10.1021/acs.cgd.0c00029,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.cgd.0c00029
+2026-10-16T20:02:05Z,europepmc,10.1021/acs.cgd.0c00029,http_error,HTTP 403 https://europepmc.org/articles/PMC7660692?pdf=render
+2026-10-16T20:02:11Z,unpaywall,10.3390/cryst11111318,http_error,HTTP 403 https://www.mdpi.com/2073-4352/11/11/1318/pdf?version=1635497732
+2026-10-16T20:04:06Z,unpaywall,10.1039/d1fd00101a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2022/fd/d1fd00101a
+2026-10-16T20:04:16Z,unpaywall,10.3390/cryst11101236,http_error,HTTP 403 https://www.mdpi.com/2073-4352/11/10/1236/pdf?version=1634289631
+2026-10-16T20:05:06Z,direct,10.1073/pnas.1222162110,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC3677451/
+2026-10-16T20:05:09Z,direct+wayback,10.1073/pnas.1222162110,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://pmc.ncbi.nlm.nih.gov/articles/PMC3677451/
+2026-10-16T20:06:17Z,openalex,calcite crystals nucleation density carboxylate-terminated self-assembled monolayer crystals per mm2 supersaturation,not_indexed,no results
+2026-10-16T20:07:51Z,unpaywall,10.3390/molecules28104193,http_error,HTTP 403 https://www.mdpi.com/1420-3049/28/10/4193/pdf?version=1684808896
+2026-10-16T20:07:53Z,unpaywall,10.3390/molecules28104193,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC10222700/pdf/molecules-28-04193.pdf
+2026-10-16T20:07:53Z,europepmc,10.3390/molecules28104193,http_error,HTTP 403 https://europepmc.org/articles/PMC10222700?pdf=render
+2026-10-16T20:08:10Z,unpaywall,10.34726/hss.2020.53420,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.34726/hss.2020.53420
+2026-10-16T20:08:16Z,openalex,10.34726/hss.2020.53420,parse_error,not a PDF: http://hdl.handle.net/20.500.12708/1094
+2026-10-16T20:08:17Z,openalex+wayback,10.34726/hss.2020.53420,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/http://hdl.handle.net/20.500.12708/1094
+2026-10-16T20:08:17Z,fulltext,10.34726/hss.2020.53420,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-16T20:09:16Z,fulltext,10.1016/j.electacta.2019.05.141,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T20:09:17Z,unpaywall,10.1002/maco.201608843,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:09:22Z,unpaywall,10.1049/pbpo227e_ch10,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:09:26Z,unpaywall,10.1007/s10800-017-1081-2,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:11:34Z,direct,10.1016/j.electacta.2019.05.141,http_error,"ConnectTimeout: HTTPSConnectionPool(host='publikationen.bibliothek.kit.edu', port=443): Max retries exceeded with url: /1000095748/157978405 (Caused by ConnectTimeoutError(<HTTPSConnection(host='publikationen.bibliothek.kit.edu', port=443) at 0x10230dc70>, 'Connection to publikationen.bibliothek.kit.edu timed out. (connect timeout=60.0)')) (https://publikationen.bibliothek.kit.edu/1000095748/157978405)"
+2026-10-16T20:11:36Z,direct+wayback,10.1016/j.electacta.2019.05.141,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://publikationen.bibliothek.kit.edu/1000095748/157978405
+2026-10-16T20:13:37Z,direct,10.1002/maco.201608843,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1537415 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x108c61c70>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1537415)"
+2026-10-16T20:13:39Z,direct+wayback,10.1002/maco.201608843,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.osti.gov/servlets/purl/1537415
+2026-10-16T20:15:48Z,direct,10.1016/j.electacta.2019.05.141,http_error,"ConnectTimeout: HTTPSConnectionPool(host='publikationen.bibliothek.kit.edu', port=443): Max retries exceeded with url: /1000095748/157978405 (Caused by ConnectTimeoutError(<HTTPSConnection(host='publikationen.bibliothek.kit.edu', port=443) at 0x10a9a1f40>, 'Connection to publikationen.bibliothek.kit.edu timed out. (connect timeout=60.0)')) (https://publikationen.bibliothek.kit.edu/1000095748/157978405)"
+2026-10-16T20:15:49Z,direct+wayback,10.1016/j.electacta.2019.05.141,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://publikationen.bibliothek.kit.edu/1000095748/157978405
+2026-10-16T20:15:57Z,openalex,pure aluminium open circuit potential pH dependence alkaline solutions passive film dissolution,rate_limited,"HTTP 429 after 1 attempts, retry time cap 120 s (https://api.openalex.org/works)"
+2026-10-16T20:16:07Z,europepmc,10.3390/ma19132898,http_error,HTTP 403 https://europepmc.org/articles/PMC13363374?pdf=render
+2026-10-16T20:16:10Z,europepmc+wayback,10.3390/ma19132898,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC13363374?pdf=render
+2026-10-16T20:16:58Z,unpaywall,10.1021/acscatal.2c05655,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acscatal.2c05655
+2026-10-16T20:17:00Z,unpaywall+wayback,10.1021/acscatal.2c05655,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/acscatal.2c05655
+2026-10-16T20:17:00Z,fulltext,10.1021/acscatal.2c05655,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-16T20:17:03Z,unpaywall,10.1002/advs.202402095,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/advs.202402095
+2026-10-16T20:17:05Z,unpaywall,10.1002/advs.202402095,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC11348192/pdf/ADVS-11-2402095.pdf
+2026-10-16T20:17:05Z,europepmc,10.1002/advs.202402095,http_error,HTTP 403 https://europepmc.org/articles/PMC11348192?pdf=render
+2026-10-16T20:17:08Z,unpaywall+wayback,10.1002/advs.202402095,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/advs.202402095
+2026-10-16T20:17:09Z,unpaywall+wayback,10.1002/advs.202402095,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pmc.ncbi.nlm.nih.gov/articles/PMC11348192/pdf/ADVS-11-2402095.pdf
+2026-10-16T20:17:10Z,europepmc+wayback,10.1002/advs.202402095,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC11348192?pdf=render
+2026-10-16T20:19:33Z,direct,10.1021/acscatal.2c05655,http_error,"ConnectTimeout: HTTPSConnectionPool(host='par.nsf.gov', port=443): Max retries exceeded with url: /servlets/purl/10477916 (Caused by ConnectTimeoutError(<HTTPSConnection(host='par.nsf.gov', port=443) at 0x10411a9f0>, 'Connection to par.nsf.gov timed out. (connect timeout=60.0)')) (https://par.nsf.gov/servlets/purl/10477916)"
+2026-10-16T20:20:22Z,europepmc,10.1038/s41598-025-93813-9,http_error,HTTP 403 https://europepmc.org/articles/PMC11930974?pdf=render
+2026-10-16T20:20:26Z,europepmc+wayback,10.1038/s41598-025-93813-9,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC11930974?pdf=render
+2026-10-16T20:20:42Z,unpaywall,10.1002/ente.201900245,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:20:43Z,unpaywall,10.1039/d2ma00850e,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2023/ma/d2ma00850e
+2026-10-16T20:20:50Z,unpaywall,10.3390/batteries10030100,http_error,HTTP 403 https://www.mdpi.com/2313-0105/10/3/100/pdf?version=1710311803
+2026-10-16T20:20:58Z,unpaywall,10.3390/nano12030317,http_error,HTTP 403 https://www.mdpi.com/2079-4991/12/3/317/pdf?version=1642596052
+2026-10-16T20:20:59Z,europepmc,10.3390/nano12030317,http_error,HTTP 403 https://europepmc.org/articles/PMC8838743?pdf=render
+2026-10-16T20:21:07Z,unpaywall,10.1021/acsaem.3c01662,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acsaem.3c01662
+2026-10-16T20:21:09Z,unpaywall,10.1021/acsaem.3c01662,not_indexed,HTTP 404 http://addi.ehu.es/bitstream/10810/63503/1/rolandi-et-al-2023-carrageenans-as-sustainable-water-processable-binders-for-high-voltage-nmc811-cathodes.pdf
+2026-10-16T20:21:10Z,unpaywall,10.1021/acsaem.3c01662,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC10466266/pdf/ae3c01662.pdf
+2026-10-16T20:21:10Z,europepmc,10.1021/acsaem.3c01662,http_error,HTTP 403 https://europepmc.org/articles/PMC10466266?pdf=render
+2026-10-16T20:21:12Z,unpaywall+wayback,10.1021/acsaem.3c01662,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/acsaem.3c01662
+2026-10-16T20:21:20Z,unpaywall,10.1021/acsapm.3c02167,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC10825816/pdf/ap3c02167.pdf
+2026-10-16T20:21:21Z,europepmc,10.1021/acsapm.3c02167,http_error,HTTP 403 https://europepmc.org/articles/PMC10825816?pdf=render
+2026-10-16T20:21:23Z,unpaywall+wayback,10.1021/acsapm.3c02167,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pmc.ncbi.nlm.nih.gov/articles/PMC10825816/pdf/ap3c02167.pdf
+2026-10-16T20:21:24Z,europepmc+wayback,10.1021/acsapm.3c02167,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC10825816?pdf=render
+2026-10-16T20:21:24Z,unpaywall,10.3390/polym8080276,http_error,HTTP 403 https://www.mdpi.com/2073-4360/8/8/276/pdf?version=1470134470
+2026-10-16T20:21:25Z,europepmc,10.3390/polym8080276,http_error,HTTP 403 https://europepmc.org/articles/PMC6431947?pdf=render
+2026-10-16T20:21:34Z,europepmc,10.1002/cssc.202200401,http_error,HTTP 403 https://europepmc.org/articles/PMC9321708?pdf=render
+2026-10-16T20:21:36Z,europepmc+wayback,10.1002/cssc.202200401,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC9321708?pdf=render
+2026-10-16T20:21:39Z,unpaywall,10.1149/1945-7111/ac682d,parse_error,not a PDF: https://iopscience.iop.org/article/10.1149/1945-7111/ac682d/pdf
+2026-10-16T20:23:39Z,unpaywall,10.1149/1945-7111/ac682d,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1866693 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x108e14710>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1866693)"
+2026-10-16T20:23:43Z,unpaywall+wayback,10.1149/1945-7111/ac682d,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1149/1945-7111/ac682d/pdf
+2026-10-16T20:25:00Z,unpaywall,10.1002/cssc.201600353,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:25:06Z,unpaywall,10.1007/s12034-014-0733-7,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:25:11Z,unpaywall,10.3390/appliedchem5040033,http_error,HTTP 403 https://www.mdpi.com/2673-9623/5/4/33/pdf?version=1762335143
+2026-10-16T20:25:14Z,unpaywall+wayback,10.3390/appliedchem5040033,http_error,HTTP 403 https://web.archive.org/web/2026id_/https://www.mdpi.com/2673-9623/5/4/33/pdf?version=1762335143
+2026-10-16T20:25:14Z,fulltext,10.3390/appliedchem5040033,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-16T20:25:21Z,direct,10.3390/appliedchem5040033,http_error,HTTP 403 https://www.mdpi.com/2673-9623/5/4/33/pdf
+2026-10-16T20:25:32Z,abstracts,10.1007/s12034-014-0733-7,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:25:59Z,unpaywall,10.1039/d3su00031a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2023/su/d3su00031a
+2026-10-16T20:26:28Z,unpaywall,10.1021/acsami.9b00999,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:26:36Z,unpaywall,10.1149/1945-7111/abc033,parse_error,not a PDF: https://iopscience.iop.org/article/10.1149/1945-7111/abc033/pdf
+2026-10-16T20:28:51Z,unpaywall,10.1149/osf.io/jwymp,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1763449 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10ab9d340>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1763449)"
+2026-10-16T20:29:59Z,fulltext,10.1149/1945-7111/ada641,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T20:30:13Z,abstracts,10.1149/ma2013-02/5/310,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:30:41Z,unpaywall,10.1016/s0013-4686(02)00164-0,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:30:46Z,unpaywall,10.1016/s0378-7753(99)00141-x,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:30:49Z,unpaywall,10.1149/2.081302jes,parse_error,not a PDF: https://iopscience.iop.org/article/10.1149/2.081302jes/pdf
+2026-10-16T20:30:52Z,unpaywall+wayback,10.1149/2.081302jes,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1149/2.081302jes/pdf
+2026-10-16T20:30:52Z,fulltext,10.1149/2.081302jes,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-16T20:30:52Z,unpaywall,10.1016/s0378-7753(03)00253-2,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:31:00Z,abstracts,10.1016/s0013-4686(02)00164-0,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:31:05Z,abstracts,10.1016/s0378-7753(99)00141-x,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:31:31Z,unpaywall,10.1039/d3ya00233k,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2023/ya/d3ya00233k
+2026-10-16T20:32:12Z,openalex,10.1016/s0378-7753(02)00166-0,http_error,HTTP 403 http://eprints.iisc.ac.in/18356/1/Journal_of_Power_Sources.pdf
+2026-10-16T20:32:18Z,abstracts,10.1016/s0378-7753(02)00166-0,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:33:08Z,europepmc,10.1002/adma.202523570,http_error,HTTP 403 https://europepmc.org/articles/PMC13014030?pdf=render
+2026-10-16T20:33:11Z,europepmc+wayback,10.1002/adma.202523570,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC13014030?pdf=render
+2026-10-16T20:34:17Z,unpaywall,10.1016/0013-4686(84)87167-4,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:34:19Z,abstracts,10.1016/0013-4686(84)87167-4,not_indexed,HTTP 404 https://api.semanticscholar.org/graph/v1/paper/DOI:10.1016/0013-4686%2884%2987167-4
+2026-10-16T20:34:19Z,abstracts,10.1016/0013-4686(84)87167-4,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:38:21Z,direct,10.1021/acs.cgd.4c00602,http_error,HTTP 403 https://pubs.acs.org/doi/suppl/10.1021/acs.cgd.4c00602/suppl_file/cg4c00602_si_001.pdf
+2026-10-16T20:38:24Z,direct+wayback,10.1021/acs.cgd.4c00602,http_error,HTTP 403 https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/suppl/10.1021/acs.cgd.4c00602/suppl_file/cg4c00602_si_001.pdf

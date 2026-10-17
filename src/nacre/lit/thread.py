@@ -1,4 +1,4 @@
-"""Thread-scoped retrieval for the evidence threads (T-A to T-E).
+"""Thread-scoped retrieval for the evidence threads (T-A to T-J).
 
 A thread session wraps nacre.retrieval with paths of its own, so parallel threads never share a
 writable file:
@@ -29,9 +29,10 @@ from nacre.retrieval.semanticscholar import SemanticScholar
 from nacre.retrieval.store import Store, sha256_file
 from nacre.retrieval.unpaywall import Unpaywall
 from nacre.retrieval.zenodo import Zenodo
+from nacre.lit import evidence as E
 from nacre.lit import routes
 
-THREADS = ("T-A", "T-B", "T-C", "T-D", "T-E")
+THREADS = E.THREADS
 SEARCH_ROUTES = ("crossref", "openalex", "europepmc", "pubmed", "semanticscholar", "arxiv", "openaire", "zenodo")
 PAGE_MARK = "=== pdf page %d (label %s) ==="
 WAYBACK_RAW = "https://web.archive.org/web/2026id_/"

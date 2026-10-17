@@ -1,0 +1,95 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-16T19:48:45Z,unpaywall,10.1073/pnas.1312369111,http_error,HTTP 403 https://www.pnas.org/content/pnas/111/4/1304.full.pdf
+2026-10-16T19:48:46Z,europepmc,10.1073/pnas.1312369111,http_error,HTTP 403 https://europepmc.org/articles/PMC3910584?pdf=render
+2026-10-16T19:48:51Z,unpaywall+wayback,10.1073/pnas.1312369111,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.pnas.org/content/pnas/111/4/1304.full.pdf
+2026-10-16T19:48:56Z,europepmc,10.1073/pnas.1222162110,http_error,HTTP 403 https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:48:57Z,europepmc+wayback,10.1073/pnas.1222162110,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:49:35Z,europepmc,PMC3677451,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3677451/fullTextXML)
+2026-10-16T19:49:35Z,fulltext,10.1073/pnas.1222162110,not_indexed,"2 candidate location(s), none retrieved"
+2026-10-16T19:49:35Z,unpaywall,10.1021/acs.cgd.0c00029,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.cgd.0c00029
+2026-10-16T19:49:36Z,europepmc,10.1021/acs.cgd.0c00029,http_error,HTTP 403 https://europepmc.org/articles/PMC7660692?pdf=render
+2026-10-16T19:49:50Z,direct,10.1073/pnas.1222162110,http_error,HTTP 403 https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:49:52Z,direct+wayback,10.1073/pnas.1222162110,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:49:53Z,direct,10.1073/pnas.1222162110,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC3677451/pdf/
+2026-10-16T19:49:55Z,direct+wayback,10.1073/pnas.1222162110,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pmc.ncbi.nlm.nih.gov/articles/PMC3677451/pdf/
+2026-10-16T19:49:55Z,direct,10.1073/pnas.1222162110,http_error,HTTP 403 https://www.pnas.org/doi/pdf/10.1073/pnas.1222162110
+2026-10-16T19:52:07Z,direct+wayback,10.1073/pnas.1222162110,http_error,TooManyRedirects: Exceeded 30 redirects. (https://web.archive.org/web/2026id_/https://www.pnas.org/doi/pdf/10.1073/pnas.1222162110)
+2026-10-16T19:52:58Z,europepmc,10.1073/pnas.1222162110,http_error,HTTP 403 https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:53:01Z,europepmc+wayback,10.1073/pnas.1222162110,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:53:34Z,europepmc,PMC3677451,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3677451/fullTextXML)
+2026-10-16T19:53:34Z,fulltext,10.1073/pnas.1222162110,not_indexed,"2 candidate location(s), none retrieved"
+2026-10-16T19:54:12Z,direct,10.1073/pnas.1222162110,parse_error,not a PDF: https://hdl.handle.net/10919/51821
+2026-10-16T19:54:58Z,direct+wayback,10.1073/pnas.1222162110,http_error,HTTP 503 (https://web.archive.org/web/2026id_/https://hdl.handle.net/10919/51821)
+2026-10-16T19:55:01Z,direct,10.1073/pnas.1222162110,parse_error,not a PDF: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3677451/supplementaryFiles
+2026-10-16T19:55:03Z,direct+wayback,10.1073/pnas.1222162110,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3677451/supplementaryFiles
+2026-10-16T19:55:39Z,europepmc,10.1073/pnas.1222162110,http_error,HTTP 403 https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:55:42Z,europepmc+wayback,10.1073/pnas.1222162110,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T19:56:31Z,europepmc,PMC3677451,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3677451/fullTextXML)
+2026-10-16T19:56:31Z,fulltext,10.1073/pnas.1222162110,not_indexed,"2 candidate location(s), none retrieved"
+2026-10-16T19:57:48Z,unpaywall,10.1073/pnas.1700342114,http_error,HTTP 403 https://www.pnas.org/content/pnas/114/38/E7882.full.pdf
+2026-10-16T19:57:49Z,europepmc,10.1073/pnas.1700342114,http_error,HTTP 403 https://europepmc.org/articles/PMC5617248?pdf=render
+2026-10-16T19:58:09Z,unpaywall,10.1039/d1fd00101a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2022/fd/d1fd00101a
+2026-10-16T19:58:18Z,unpaywall,10.1038/nmat4193,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:00:26Z,unpaywall,10.1073/pnas.1815654116,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1776573 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x109223560>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1776573)"
+2026-10-16T20:00:26Z,europepmc,10.1073/pnas.1815654116,http_error,HTTP 403 https://europepmc.org/articles/PMC6628643?pdf=render
+2026-10-16T20:01:00Z,unpaywall+wayback,10.1073/pnas.1815654116,http_error,HTTP 503 (https://web.archive.org/web/2026id_/https://www.osti.gov/servlets/purl/1776573)
+2026-10-16T20:01:02Z,europepmc+wayback,10.1073/pnas.1815654116,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC6628643?pdf=render
+2026-10-16T20:01:30Z,europepmc,PMC6628643,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6628643/fullTextXML)
+2026-10-16T20:01:30Z,fulltext,10.1073/pnas.1815654116,not_indexed,"3 candidate location(s), none retrieved"
+2026-10-16T20:02:25Z,unpaywall,10.1039/c3ce41677a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2014/ce/c3ce41677a
+2026-10-16T20:02:38Z,unpaywall,10.1021/acs.langmuir.5c04163,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.langmuir.5c04163?ref=article_openPDF
+2026-10-16T20:02:39Z,europepmc,10.1021/acs.langmuir.5c04163,http_error,HTTP 403 https://europepmc.org/articles/PMC12810369?pdf=render
+2026-10-16T20:02:41Z,unpaywall+wayback,10.1021/acs.langmuir.5c04163,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/acs.langmuir.5c04163?ref=article_openPDF
+2026-10-16T20:02:43Z,europepmc+wayback,10.1021/acs.langmuir.5c04163,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC12810369?pdf=render
+2026-10-16T20:02:48Z,unpaywall,10.1039/c2fd20052j,http_error,HTTP 403 https://espace.curtin.edu.au/bitstream/20.500.11937/49323/3/249417_67161_FaradayDiscussions_DOLLOP_2012_revised.pdf
+2026-10-16T20:04:12Z,unpaywall,10.1021/la800389g,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:04:37Z,unpaywall,10.1016/j.susc.2005.08.006,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:04:41Z,unpaywall,10.1021/jp044594u,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:04:45Z,unpaywall,10.1021/la049551j,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:04:50Z,unpaywall,10.1126/science.1169434,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:04:50Z,unpaywall,10.1038/19047,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:04:51Z,unpaywall,10.1021/ja984254k,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:05:03Z,abstracts,10.1016/j.susc.2005.08.006,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-16T20:08:11Z,unpaywall,10.1021/acs.chemmater.9b00417,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1526694 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10ad5f7d0>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1526694)"
+2026-10-16T20:10:12Z,openalex,10.1021/acs.chemmater.9b00417,http_error,"ConnectTimeout: HTTPSConnectionPool(host='eprints.ucm.es', port=443): Max retries exceeded with url: /59288/1/Surface%20Wetting%20Controls%20Calcium%20Carbonate%20Crystallization%20Kinetics.pdf (Caused by ConnectTimeoutError(<HTTPSConnection(host='eprints.ucm.es', port=443) at 0x10ad5ef60>, 'Connection to eprints.ucm.es timed out. (connect timeout=60.0)')) (https://eprints.ucm.es/59288/1/Surface%20Wetting%20Controls%20Calcium%20Carbonate%20Crystallization%20Kinetics.pdf)"
+2026-10-16T20:11:39Z,unpaywall,10.1021/acsomega.0c00439,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acsomega.0c00439
+2026-10-16T20:11:40Z,europepmc,10.1021/acsomega.0c00439,http_error,HTTP 403 https://europepmc.org/articles/PMC7161049?pdf=render
+2026-10-16T20:11:48Z,unpaywall+wayback,10.1021/acsomega.0c00439,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/acsomega.0c00439
+2026-10-16T20:11:48Z,europepmc+wayback,10.1021/acsomega.0c00439,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC7161049?pdf=render
+2026-10-16T20:11:54Z,unpaywall,10.3390/molecules28052375,http_error,HTTP 403 https://www.mdpi.com/1420-3049/28/5/2375/pdf?version=1678154789
+2026-10-16T20:11:56Z,unpaywall,10.3390/molecules28052375,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC10005435/pdf/molecules-28-02375.pdf
+2026-10-16T20:11:57Z,europepmc,10.3390/molecules28052375,http_error,HTTP 403 https://europepmc.org/articles/PMC10005435?pdf=render
+2026-10-16T20:12:11Z,unpaywall,10.3390/colloids6010006,http_error,HTTP 403 https://www.mdpi.com/2504-5377/6/1/6/pdf?version=1642402707
+2026-10-16T20:12:25Z,unpaywall,10.3390/ma13225137,http_error,HTTP 403 https://www.mdpi.com/1996-1944/13/22/5137/pdf?version=1605856110
+2026-10-16T20:12:25Z,europepmc,10.3390/ma13225137,http_error,HTTP 403 https://europepmc.org/articles/PMC7698310?pdf=render
+2026-10-16T20:12:37Z,unpaywall,10.1039/d2ra03911g,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2022/ra/d2ra03911g
+2026-10-16T20:12:39Z,europepmc,10.1039/d2ra03911g,http_error,HTTP 403 https://europepmc.org/articles/PMC9493467?pdf=render
+2026-10-16T20:12:48Z,fulltext,10.1002/app.52066,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T20:12:57Z,unpaywall,10.3390/jfb14040232,http_error,HTTP 403 https://www.mdpi.com/2079-4983/14/4/232/pdf?version=1681978668
+2026-10-16T20:12:58Z,unpaywall,10.3390/jfb14040232,http_error,"TLS failure, not retried: HTTPSConnectionPool(host='dk.um.si', port=443): Max retries exceeded with url: /Dokument.php?lang=slv&id=166931&dn= (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"
+2026-10-16T20:12:59Z,unpaywall,10.3390/jfb14040232,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC10144987/pdf/jfb-14-00232.pdf
+2026-10-16T20:12:59Z,europepmc,10.3390/jfb14040232,http_error,HTTP 403 https://europepmc.org/articles/PMC10144987?pdf=render
+2026-10-16T20:14:18Z,openalex,chitosan membrane surface free energy electron donor acceptor contact angle water formamide diiodomethane,rate_limited,"HTTP 429 after 1 attempts, retry time cap 120 s (https://api.openalex.org/works)"
+2026-10-16T20:14:21Z,openalex,polydopamine film surface free energy electron donor component,rate_limited,"HTTP 429 after 1 attempts, retry time cap 120 s (https://api.openalex.org/works)"
+2026-10-16T20:15:01Z,unpaywall,10.1016/j.jcis.2022.07.164,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60cc22a2b912f8aca35a406e/original/superhydrophilicity-of-alpha-alumina-surfaces-results-from-tight-binding-of-interfacial-waters-to-specific-aluminols.pdf
+2026-10-16T20:15:02Z,unpaywall,10.1016/j.jcis.2022.07.164,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/624271b8ab0051f5729d7a6d/original/superhydrophilicity-of-a-alumina-surfaces-results-from-tight-binding-of-interfacial-waters-to-specific-aluminols.pdf
+2026-10-16T20:17:03Z,unpaywall,10.1016/j.jcis.2022.07.164,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/2420227 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x1077465d0>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/2420227)"
+2026-10-16T20:17:04Z,europepmc,10.1016/j.jcis.2022.07.164,http_error,HTTP 403 https://europepmc.org/articles/PMC9683471?pdf=render
+2026-10-16T20:17:15Z,unpaywall,10.26434/chemrxiv-2021-rg4wj-v2,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/624271b8ab0051f5729d7a6d/original/superhydrophilicity-of-a-alumina-surfaces-results-from-tight-binding-of-interfacial-waters-to-specific-aluminols.pdf
+2026-10-16T20:17:16Z,openalex,10.26434/chemrxiv-2021-rg4wj-v2,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60cc22a2b912f8aca35a406e/original/superhydrophilicity-of-alpha-alumina-surfaces-results-from-tight-binding-of-interfacial-waters-to-specific-aluminols.pdf
+2026-10-16T20:19:18Z,openalex,10.26434/chemrxiv-2021-rg4wj-v2,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/2420227 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x1097d7d40>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/2420227)"
+2026-10-16T20:19:58Z,unpaywall,10.1021/la00038a067,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:21:14Z,unpaywall,10.3390/ma12050695,http_error,HTTP 403 https://www.mdpi.com/1996-1944/12/5/695/pdf?version=1551246141
+2026-10-16T20:21:15Z,europepmc,10.3390/ma12050695,http_error,HTTP 403 https://europepmc.org/articles/PMC6427806?pdf=render
+2026-10-16T20:21:25Z,unpaywall,10.3390/coatings10070681,http_error,HTTP 403 https://www.mdpi.com/2079-6412/10/7/681/pdf?version=1594821296
+2026-10-16T20:21:57Z,unpaywall,10.1021/acs.jpcc.8b00278,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:22:18Z,direct,10.1021/acs.cgd.0c00029,http_error,HTTP 403 https://pubs.acs.org/doi/suppl/10.1021/acs.cgd.0c00029/suppl_file/cg0c00029_si_001.pdf
+2026-10-16T20:22:24Z,direct+wayback,10.1021/acs.cgd.0c00029,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/suppl/10.1021/acs.cgd.0c00029/suppl_file/cg0c00029_si_001.pdf
+2026-10-16T20:22:39Z,fulltext,10.26434/chemrxiv.11365025,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-16T20:22:42Z,openalex,10.26434/chemrxiv.11365025.v1,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.cgd.0c00029
+2026-10-16T20:23:29Z,unpaywall,10.1021/jp503807v,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-16T20:25:40Z,unpaywall,10.1021/acs.est.1c02865,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1840567 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10b7d3650>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1840567)"
+2026-10-16T20:26:11Z,europepmc,10.1073/pnas.1222162110,http_error,HTTP 403 https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T20:26:13Z,europepmc+wayback,10.1073/pnas.1222162110,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC3677451?pdf=render
+2026-10-16T20:26:50Z,europepmc,PMC3677451,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3677451/fullTextXML)
+2026-10-16T20:26:50Z,fulltext,10.1073/pnas.1222162110,not_indexed,"2 candidate location(s), none retrieved"
