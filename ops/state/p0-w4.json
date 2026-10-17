@@ -36,7 +36,8 @@
     "Retrodiction entry point nacre.screen.retro.run_cases for W2.3 (interfaces, 90% intervals, swap check, permutation null); never run on the frozen cases.",
     "Dry runs only (not reported): real table 35 s / 133 MiB, all links explicit gaps; bound mock 991 s / 1.50 GB, full path at 2^20 draws per state.",
     "No production output exists; production still refused before tag p0-cp3.",
-    ".venv is a symlink to ~/.nacre-venvs/p-w4."
+    ".venv is a symlink to ~/.nacre-venvs/p-w4.",
+    "fix-up: hermetic guard test"
   ],
   "schema": {
     "version": "3",
