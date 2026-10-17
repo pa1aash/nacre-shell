@@ -573,9 +573,10 @@ $\Gs$ and $\ds$ only. Its properties:
 \item $\partial\dga/\partial\DGseq=\Gs\Theta>0$: each site contributes its occupancy, so deeper
 binding lowers $\gsl$;
 \item $\partial\dga/\partial\mu_\mathrm{Ca}=-\GCa$: the Gibbs equation itself;
-\item at strong binding ($x\gg1$), $\dga\to\Gs\DGseq+\Rg T\Gs\ln(\cmax/\cb)$ plus terms that
-vanish: each site gives its binding free energy, less the free energy of concentrating the ion
-from the bulk concentration to that of a filled site;
+\item at strong binding ($x\gg1$), $\dga\to\Gs\DGseq+\Rg T\Gs\ln(\cmax/\cb)+\Rg T\ds\cb+O(1/x)$:
+each site gives its binding free energy, less the free energy of concentrating the ion from the
+bulk concentration to that of a filled site, plus the bulk-depletion term $\Rg T\ds\cb$, which does
+not vanish with $x$ but is small when $\ds\cb\ll\Gs$;
 \item a template that repels Ca$^{2+}$ ($\DGseq\to+\infty$) has $\dga\to+\Rg T\ds\cb>0$: negative
 adsorption raises $\gsl$;
 \item with no specific interaction ($\DGseq=0$) $\dga=\Rg T\Gs[y-\ln(1+y)]$ with $y=\cb\ds/\Gs$,
@@ -603,7 +604,10 @@ the stoichiometric crystal on one side and the bare template on the other. Ca$^{
 excess at the contact, for example as an ion bridge between a carboxylate and the crystal surface
 (carboxylate--Ca--calcite). With the dividing surface at the template and the excess counted
 relative to the stoichiometric nucleus, such a Ca$^{2+}$ excess $\GCasn$ is inside $\gsn$, and the
-Gibbs equation applies to it as it does to $\gsl$. With $\GCasl\equiv\GCa$ of
+Gibbs equation applies to it as it does to $\gsl$. This assumes that the contact is in
+exchange equilibrium with the reservoir, so that its Ca$^{2+}$ carries the bulk chemical potential;
+a buried contact sealed from the solution would hold a fixed amount instead, and the relation below
+would not apply to it. With $\GCasl\equiv\GCa$ of
 Eq.~\eqref{th:eq:excess} the template--liquid excess,
 \begin{equation}\label{th:eq:gibbs-sn}
 \frac{\partial\gsn}{\partial\mu_\mathrm{Ca}}=-\GCasn,\qquad
@@ -784,7 +788,10 @@ so complete wetting, $\Ssp\ge0$, needs $\gsl\ge\gnl$: the template--water interf
 least as much per area as the mineral--water interface. A hydrophilic template is one that water
 wets at least as favourably as it wets the mineral, $\gsl\le\gnl$; for it $\Ssp\le-\gsn<0$ for
 every admissible $\gsn>0$ (equality only on the boundary $\gsn=0$, $\gsl=\gnl$), whatever the
-template--nucleus contact is. Complete wetting is excluded, and a continuous film on such a
+template--nucleus contact is. ``Hydrophilic'' is meant here relative to the mineral; the usual
+criterion, a small water contact angle in air, constrains $\gp-\gsl$ and does not by itself place
+$\gsl$ below $\gnl$, so whether a template meets the condition is a question for the inputs, which
+is why $P(\gsl>\gnl)$ is reported. Under the condition, complete wetting is excluded, and a continuous film on such a
 template can form only by coalescence of islands, condition~\eqref{th:eq:nclosure}. The
 mechanism's own premise pushes the same way: Ca$^{2+}$ binding lowers $\gsl$ ($\dga<0$ for a
 binding template, Section~\ref{th:sec:template}). The screen reports $P(\gsl>\gnl)$, the largest
