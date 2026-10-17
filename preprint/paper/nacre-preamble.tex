@@ -23,3 +23,7 @@
 \newcommand{\nacreNum}[2]{\ensuremath{#1\if\relax\detokenize{#2}\relax\else\,#2\fi}}
 \newcommand{\nacreMockNum}[3]{\ifnacrerelease\errmessage{NACRE release guard: mock macro #1 used}\fi
   \textcolor{magenta}{\nacreNum{#2}{#3}\textsuperscript{\textsf{mock}}}}
+% text values from ../generated/numbers.tex (dates, versions, names read from a record)
+\newcommand{\nacreText}[1]{#1}
+\newcommand{\nacreMockText}[2]{\ifnacrerelease\errmessage{NACRE release guard: mock macro #1 used}\fi
+  \textcolor{magenta}{#2\textsuperscript{\textsf{mock}}}}

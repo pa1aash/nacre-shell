@@ -5,7 +5,7 @@ and keeps every entry exactly as fetched. Three problems are handled here:
 
   - a \\cite key in the manuscript that has no entry in refs.bib (a key that was typed, not
     fetched). It fails prepare in both modes.
-  - an entry with no `pages` field. Crossref omits pages for article-number journals, and the
+  - an article with no `pages` field. Crossref omits pages for article-number journals, and the
     publisher style stops bibtex on such an entry when it has a volume. The build reads a copy,
     build/bib/refs_build.bib (a distinct name, so bibtex cannot pick up the source instead),
     in which each such entry carries `pages={\\nacreMissing{article number}}`: a draft renders
@@ -32,7 +32,8 @@ BIB = "refs.bib"
 BUILD_BIB = "refs_build.bib"
 MISSING_PAGES = r"\nacreMissing{article number}"
 _BARE_AMP = re.compile(r"(?<!\\)&")
-TEX_MAP = {"\u2010": "-", "\u2011": "-", "\u03b3": r"$\gamma$"}
+# U+2500 is how Crossref writes the em dash of some ACS titles ("GFN2-xTB\u2500An ...").
+TEX_MAP = {"\u2010": "-", "\u2011": "-", "\u03b3": r"$\gamma$", "\u2500": "---", "\u0107": r"\'{c}"}
 _TEX_KNOWN = set("\u2013\u2014\u2018\u2019\u201c\u201d")
 
 _CITE = re.compile(r"\\(?:cite|citep|citet|citealp|nocite)\*?(?:\[[^\]]*\]){0,2}\{([^}]*)\}")
@@ -85,10 +86,16 @@ def unresolved(root):
     return problems
 
 
+def needs_pages(entry):
+    """An article without a pages field. Books and reports carry no pages and need none."""
+    kind, _, _ = bibmod.parse_head(entry)
+    return kind.lower() == "article" and bibmod.field(entry, "pages") is None
+
+
 def without_pages(root, only_cited=True):
-    """Keys of entries that have no pages field (cited ones only, by default)."""
+    """Keys of articles that have no pages field (cited ones only, by default)."""
     keys = set(cited(root)) if only_cited else None
-    return [k for k, e in entries(root) if bibmod.field(e, "pages") is None and (keys is None or k in keys)]
+    return [k for k, e in entries(root) if needs_pages(e) and (keys is None or k in keys)]
 
 
 def _with_marker(entry):
@@ -116,11 +123,11 @@ def tex_safe(entry):
 
 def write_build_copy(root):
     """Write the build copy: refs.bib with bare ampersands escaped and a marker in the pages
-    field of each entry that has none. Returns (path, keys marked)."""
+    field of each article that has none. Returns (path, keys marked)."""
     out, marked = [], []
     for key, e in entries(root):
         e = tex_safe(e)
-        if bibmod.field(e, "pages") is None:
+        if needs_pages(e):
             out.append(_with_marker(e))
             marked.append(key)
         else:

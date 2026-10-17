@@ -23,10 +23,22 @@ def copy_tree(tmp):
                 "ops/tracks/p0.yaml", "ops/tracks/p0_authors.yaml"):
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(REPO / rel, root / rel)
+    copy_macro_sources(root)
     subprocess.run(["git", "init", "-q", str(root)], check=True)
     from nacre.preprint import build
     build.generate(root)
     return root
+
+
+def copy_macro_sources(root):
+    """Copy every source file sources.yaml names outside preprint/ (method conventions, records)."""
+    import yaml
+    spec = yaml.safe_load((REPO / "preprint" / "generated" / "sources.yaml").read_text(encoding="utf-8"))
+    for entry in (spec.get("macros") or {}).values():
+        rel = entry["source"]
+        if not rel.startswith("preprint/") and (REPO / rel).is_file():
+            (root / rel).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(REPO / rel, root / rel)
 
 
 def write(path, text):
