@@ -168,3 +168,60 @@ def test_cli_accepts_bib_option():
     ns = build_parser().parse_args(["bib", "add", "--bib", "preprint/paper/refs.bib", "10.1/x"])
     assert ns.bib == "preprint/paper/refs.bib" and ns.doi == "10.1/x"
     assert build_parser().parse_args(["bib", "check"]).bib is None
+
+
+def _serve_works(doi, message):
+    _H.routes["/works/" + doi] = (200, "application/json", json.dumps({"message": message}).encode())
+
+
+def test_article_number_becomes_pages_when_pages_are_absent(env):
+    root, kw = env
+    _serve_doi("10.0000/nacre.test")
+    _serve_works("10.0000/nacre.test", {"article-number": "e1234"})
+    bib.add(root, "10.0000/nacre.test", **kw)
+    text = (root / "paper" / "refs.bib").read_text(encoding="utf-8")
+    assert "pages={e1234}" in text and text.rstrip().endswith("}")
+    rec = json.loads((root / "paper" / "bib" / "provenance.jsonl").read_text().splitlines()[0])
+    assert rec["pages_from"] == "crossref article-number"
+    assert bib.check(root, out=lambda *a: None) == 0
+
+
+def test_printed_pages_are_kept_over_the_article_number(env):
+    root, kw = env
+    _serve_doi("10.0000/nacre.test", SYNTH.replace("  year", "  pages={10--20},\n  year"))
+    _serve_works("10.0000/nacre.test", {"article-number": "e1234"})
+    bib.add(root, "10.0000/nacre.test", **kw)
+    text = (root / "paper" / "refs.bib").read_text(encoding="utf-8")
+    assert "pages={10--20}" in text and "e1234" not in text
+
+
+def test_missing_works_record_leaves_the_entry_as_fetched(env):
+    root, kw = env
+    _serve_doi("10.0000/nacre.test")
+    bib.add(root, "10.0000/nacre.test", **kw)
+    assert "pages" not in (root / "paper" / "refs.bib").read_text(encoding="utf-8")
+
+
+def test_refresh_replaces_the_entry_and_keeps_its_key(env):
+    root, kw = env
+    _serve_doi("10.0000/nacre.test")
+    _serve_doi("10.0000/nacre.test2", SYNTH2)
+    bib.add(root, "10.0000/nacre.test", **kw)
+    bib.add(root, "10.0000/nacre.test2", **kw)
+    _serve_works("10.0000/nacre.test", {"article-number": "e99"})
+    assert bib.refresh(root, "testauthor2000synthetic", **kw) == 0
+    text = (root / "paper" / "refs.bib").read_text(encoding="utf-8")
+    assert text.count("@article") == 2 and "pages={e99}" in text
+    assert "@article{testauthor2000synthetic," in text and "@article{testauthor2000syntheticb," not in text
+    rows = [json.loads(x) for x in (root / "paper" / "bib" / "provenance.jsonl").read_text().splitlines()]
+    assert [r["key"] for r in rows] == ["testauthor2000synthetic", "testauthor2000synthetica"]
+    assert rows[0]["original_key"] == "Synthetic_2000" and rows[0]["pages_from"]
+    assert bib.check(root, out=lambda *a: None) == 0
+
+
+def test_refresh_of_an_unknown_key_is_an_error(env):
+    root, kw = env
+    _serve_doi("10.0000/nacre.test")
+    bib.add(root, "10.0000/nacre.test", **kw)
+    with pytest.raises(bib.BibError):
+        bib.refresh(root, "nobody2000nothing", **kw)

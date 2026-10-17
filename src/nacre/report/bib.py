@@ -154,6 +154,44 @@ def _obtain(fetcher, doi, doi_base, crossref_base):
     raise BibError("could not fetch BibTeX for %s:\n  %s" % (doi, "\n  ".join(attempts)))
 
 
+def _article_number(fetcher, doi, crossref_base):
+    """Crossref's article number for the DOI, or None when it has none or the lookup fails."""
+    res = fetcher.get(crossref_base + quote(doi, safe=""), accept="application/json", wayback=False)
+    if not res.ok:
+        return None
+    try:
+        number = json.loads(res.text())["message"].get("article-number")
+    except (ValueError, KeyError, AttributeError):
+        return None
+    return str(number).strip() if number else None
+
+
+def _with_pages(entry, number):
+    """The entry with `pages` set to the article number when it has no pages field."""
+    if not number or field(entry, "pages"):
+        return entry, False
+    body = entry.rstrip()
+    if not body.endswith("}"):
+        return entry, False
+    head = body[:-1].rstrip()
+    head += "" if head.endswith(",") else ","
+    return head + "\n  pages={%s}\n}\n" % number, True
+
+
+def _retrieve(fetcher, doi, doi_base, crossref_base, key):
+    """(entry text under `key`, provenance record) for a DOI. `key` is a string or a function of the fetched text."""
+    res, text = _obtain(fetcher, doi, doi_base, crossref_base)
+    _, original_key, m = parse_head(text)
+    key = key(text) if callable(key) else key
+    entry = (text[:m.start(2)] + key + text[m.end(2):]).strip() + "\n"
+    entry, filled = _with_pages(entry, _article_number(fetcher, doi, crossref_base))
+    record = {"doi": doi, "key": key, "original_key": original_key, "url": res.final_url or res.url,
+              "retrieved_utc": res.retrieved_utc, "sha256": res.sha256}
+    if filled:
+        record["pages_from"] = "crossref article-number"
+    return entry, record, text
+
+
 def add(root, doi_in, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE, crossref_base=CROSSREF_BASE, out=print):
     root = Path(root)
     doi = normalise_doi(doi_in)
@@ -164,14 +202,8 @@ def add(root, doi_in, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE, 
         out("already present: %s" % doi)
         return 0
     fetcher = fetcher or Fetcher(venue_dir=p["fetch"])
-    res, text = _obtain(fetcher, doi, doi_base, crossref_base)
-    typ, original_key, m = parse_head(text)
     taken = set(index) | {r["key"] for r in prov}
-    key = make_key(text, taken)
-    entry = text[:m.start(2)] + key + text[m.end(2):]
-    entry = entry.strip() + "\n"
-    record = {"doi": doi, "key": key, "original_key": original_key, "url": res.final_url or res.url,
-              "retrieved_utc": res.retrieved_utc, "sha256": res.sha256}
+    entry, record, _ = _retrieve(fetcher, doi, doi_base, crossref_base, lambda text: make_key(text, taken))
     if dry_run:
         out(entry)
         out(json.dumps(record, sort_keys=True))
@@ -185,7 +217,44 @@ def add(root, doi_in, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE, 
     p["prov"].parent.mkdir(parents=True, exist_ok=True)
     with open(p["prov"], "a", encoding="utf-8", newline="\n") as fh:
         fh.write(json.dumps(record, sort_keys=True) + "\n")
-    out("added %s as %s" % (doi, key))
+    out("added %s as %s" % (doi, record["key"]))
+    return 0
+
+
+def refresh(root, key, dry_run=False, bib=None, fetcher=None, doi_base=DOI_BASE, crossref_base=CROSSREF_BASE,
+            out=print):
+    """Re-fetch the entry `key` by its DOI. The key is kept; the entry and its provenance record are replaced."""
+    root = Path(root)
+    p = paths(root, bib)
+    text = _read_bib(p["bib"])
+    entries = split_entries(text)
+    hits = [e for e in entries if parse_head(e)[1] == key]
+    prov = read_provenance(root, bib)
+    if len(hits) != 1:
+        raise BibError("no single entry with key %s in %s" % (key, p["bib"]))
+    raw = field(hits[0], "doi")
+    if not raw:
+        raise BibError("entry %s has no doi to refresh from" % key)
+    doi = normalise_doi(raw)
+    fetcher = fetcher or Fetcher(venue_dir=p["fetch"])
+    entry, record, _ = _retrieve(fetcher, doi, doi_base, crossref_base, key)
+    old = next((r for r in prov if r["key"] == key), None)
+    if old and "original_key" in old:
+        record["original_key"] = old["original_key"]
+    if dry_run:
+        out(entry)
+        out(json.dumps(record, sort_keys=True))
+        out("dry run: nothing written")
+        return 0
+    old_text = hits[0]
+    trailing = old_text[len(old_text.rstrip()):]
+    p["bib"].write_text(text.replace(old_text, entry.rstrip() + (trailing or "\n"), 1), encoding="utf-8", newline="\n")
+    rows = [record if r["key"] == key else r for r in prov]
+    if old is None:
+        rows.append(record)
+    p["prov"].parent.mkdir(parents=True, exist_ok=True)
+    p["prov"].write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8", newline="\n")
+    out("refreshed %s (%s)" % (key, doi))
     return 0
 
 

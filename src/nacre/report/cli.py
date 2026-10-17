@@ -56,6 +56,14 @@ def _paper_build(args):
 def _bib_add(args):
     from nacre.report import bib
     try:
+        if args.refresh:
+            if args.doi:
+                print("bib add: give a DOI or --refresh <key>, not both")
+                return 1
+            return bib.refresh(_util.repo_root(), args.refresh, dry_run=args.dry_run, bib=args.bib)
+        if not args.doi:
+            print("bib add: a DOI is required unless --refresh <key> is given")
+            return 1
         return bib.add(_util.repo_root(), args.doi, dry_run=args.dry_run, bib=args.bib)
     except bib.BibError as exc:
         print("bib add: " + str(exc))
@@ -83,7 +91,8 @@ def register(subparsers):
     bsub = bib.add_subparsers(dest="bib_command", metavar="<action>")
     bsub.required = True
     p = bsub.add_parser("add", help="fetch a BibTeX entry by DOI")
-    p.add_argument("doi")
+    p.add_argument("doi", nargs="?", default=None)
+    p.add_argument("--refresh", metavar="KEY", default=None, help="re-fetch the existing entry KEY by its DOI")
     p.add_argument("--dry-run", action="store_true", help="print the entry; write nothing")
     p.add_argument("--bib", default=None, help="target .bib file (default paper/refs.bib); provenance is kept beside it")
     p.set_defaults(func=_bib_add)
