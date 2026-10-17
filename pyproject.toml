@@ -41,6 +41,7 @@ p0-w5 = [
 p0-w6 = [
     "cmcrameri==1.10",
     "colorspacious>=1.1.2",
+    "contourpy>=1.4.0",
     "jsonschema>=4.26.0",
     "matplotlib>=3.11.2",
     "pymupdf>=1.28.2",
