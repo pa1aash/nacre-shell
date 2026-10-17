@@ -209,6 +209,46 @@ and the running half-widths, and no full draw table is held in memory.
       is never a finding.
 - **Regime.** R-slurry only. Retention in the cell is not judged (layer persistence is a stated
   limitation).
+- **C1 inputs in P0 (cp3b A4).** No potential of mean force exists for P0, so the route that
+  decides C1, W = Delta_F_PMF / A_c (`delta_f_pmf`, `a_c`), is absent. Two estimates of W_adh_wet
+  are run side by side, and both are reported.
+  - **(i) The flagged analog.** W is drawn from `params.w_adh_wet_catechol_oxide_analog`: measured
+    works of adhesion in water of catechol-bearing films on oxide surfaces. Two differences limit
+    what it can show.
+    - **Not the P0 system.** The analog is a different film on different oxides (mica, silica,
+      copper oxide), measured at pH 3 to 7.5. The direction of the bias this introduces is not
+      established.
+    - **No negative values.** The prior is loguniform on positive values, because a pull-off
+      measurement records a work only for contacts that adhere. A contact that water displaces
+      gives no measured work. The analog therefore cannot represent W <= 0, and it falsifies C1
+      only if m_W lies above its range. It leans toward anchoring.
+  - **(ii) A Dupre estimate from the ignorance-bounded interfacial energies.**
+    W = gamma_ow + gamma_pw - gamma_op, Eq. (1) [th:eq:dupre], with:
+    - gamma_ow ~ U[0, gamma_o + gamma_w] and gamma_op ~ U[0, gamma_o + gamma_p], independent
+      (`theory/ignorance_priors.md`, 1c);
+    - gamma_pw = gamma_sl0, the sourced prior truncated at zero (1d).
+
+    The bounds put W in [gamma_pw - gamma_o - gamma_p, gamma_pw + gamma_o + gamma_w]. Because
+    gamma_pw <= gamma_p + gamma_w (1d), the lower end is at most gamma_w - gamma_o. That is
+    negative whenever the dry oxide's surface energy exceeds water's; the upper end is positive.
+    So the thermodynamic bounds admit both signs of W. Its band masses measure where the edge sits
+    inside that range, not evidence about the contact.
+  - **The link verdict uses the rule already registered.**
+    - The C1 verdict is decided by the PMF route. With that route absent, the registered C1
+      verdict is "gap", counted as inconclusive (lane note N21). C1 therefore cannot be feasible
+      in P0, and the study cannot be feasible either.
+    - Each estimate is judged by the same C1 rule beside it (P(W > m_W) against p, edge m_W,
+      `thresholds.C1.margin_W_adh_wet`). The analog verdict is reported as conditional on the
+      analog (`theory/ignorance_priors.md`, Section 3, item 4). The Dupre-ignorance band masses
+      are properties of the prior, never a finding (Section 3, item 1).
+    - With the Dupre estimate the report gives the flip value gamma_op* = gamma_ow + gamma_pw - m_W
+      (1c) and the flip line in the (gamma_ow, gamma_op) plane. A study verdict formed with either
+      estimate in place of the PMF route carries the same label.
+  - **Terminations and contact area.** Neither estimate resolves terminations. The per-termination
+    values are therefore identical, the mixture of A2 reduces to that value, and the report says so.
+    Both estimates are per area already, so neither needs the contact-area definition
+    (`thresholds.C1.contact_area_definition`, still pending for cp4), which only the PMF route
+    uses.
 
 ### C2, sequestration (R-slurry): a binding descriptor, not a gate
 
@@ -642,7 +682,11 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `thresholds.decision.degrade_mass_min` | p_deg | registration (cp2) | deletion test |
 | `thresholds.C1.margin_W_adh_wet` | m_W | literature (method error) | C1 |
 | `thresholds.C1.contact_area_definition` | A_c rule | registration (cp2) | C1 |
-| `regimes.R-slurry.parameters.termination_weights` | weights | literature | C1 |
+| `regimes.R-slurry.parameters.termination_weights` | weights | literature (gap; flat Dirichlet ignorance mixture, cp3b A2) | C1 |
+| `params.w_adh_wet_catechol_oxide_analog` | W_adh_wet (analog) | literature (flagged analog) | C1 side by side, conditional on the analog (cp3b A4) |
+| `params.gamma_sl0_template` (as gamma_pw) | gamma_pw | literature, truncated at 0 | C1 Dupre-ignorance estimate (cp3b A4) |
+| `params.asperity_contact_area` | a_asp | literature (new key; gap) | lower bound on A_patch (cp3b A3) |
+| `params.cathode_particle_diameter` | d_p | literature (new key; gap) | upper bound on A_patch (cp3b A3) |
 | `thresholds.C2.margin_DG_seq` | m_seq | literature (method error) | C2 labelled sensitivity (not gating) |
 | `thresholds.C3.margin_cos_theta` | m_cos | registration (cp2; proposed zero) | C3 (a) |
 | `regimes.R-slurry.parameters.framing` | framing | registration (cp3 R6: calcite and ACC both registered) | C3, C4, C5 sensitivity; study combination |
@@ -705,7 +749,7 @@ revised: {session: P0-W3.2 cp2 fix-up, base_commit: 800d5ea3de41a0fb16084519d5c2
 revised_cp3: {session: P0-W3.3, ruling: planning chat 2026-10-17 (cp3), base_commit: ac5cdfb, items: [R1, R2, R3, R5, R6, R7, R8],
               log: theory/cp2_fixes.md (cp3 section), disclosures: [R1, R2, R6]}
 revised_cp3b: {session: P0-W3.4, rule: cp3-mandated registrations for production (lane note N22), base_commit: 227d997,
-               items: [A1, A2, A3], log: theory/cp2_fixes.md (cp3 section, cp3b registrations), screen_output_consulted: false}
+               items: [A1, A2, A3, A4], log: theory/cp2_fixes.md (cp3 section, cp3b registrations), screen_output_consulted: false}
 contract_version: 3
 decision:
   statistic: band_mass
@@ -782,6 +826,21 @@ links:
                                        falsified_for_every_weighting: 'P(max_k W_k > m_W) <= 1 - p_cred',
                                        otherwise: label conditional on the termination ignorance mixture (not a finding)}}
     combine: C1
+    p0_inputs:
+      registered_route: {quantity: W_adh_wet_from_pmf, inputs: [Delta_F_pmf, A_c], status: absent in P0 (no PMF),
+                          verdict: gap, counted: inconclusive (lane note N21)}
+      side_by_side:
+        analog: {quantity: W_adh_wet, params: params.w_adh_wet_catechol_oxide_analog, rule: C1 rule (edge m_W),
+                 label: conditional on the analog, support: positive only (adhering contacts measured; cannot represent W <= 0)}
+        dupre_ignorance: {quantity: W_adh_wet, function: W_adh_wet,
+                          inputs: {gamma_ow: 'U[0, gamma_o + gamma_w]', gamma_op: 'U[0, gamma_o + gamma_p]', gamma_pw: params.gamma_sl0_template (truncated at 0)},
+                          support: {low: gamma_pw - gamma_o - gamma_p, high: gamma_pw + gamma_o + gamma_w},
+                          rule: C1 rule (edge m_W), label: ignorance prior; band masses never a finding,
+                          report: [flip value gamma_op* = gamma_ow + gamma_pw - m_W, flip line in the (gamma_ow, gamma_op) plane]}
+      both_reported: true
+      terminations: not resolved by either estimate; per-termination values identical; the mixture reduces to that value
+      contact_area_definition: not needed by either estimate (PMF route only)
+      study: a study verdict formed with either estimate carries its label; the registered study verdict has C1 = gap
   C2:
     role: descriptor
     gating: false
