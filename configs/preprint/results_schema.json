@@ -301,8 +301,7 @@
         },
         "boundary_mass": {
           "type": "object",
-          "minProperties": 1,
-          "description": "cos(theta) boundary mass (lane note N2), keyed by link then by the quantity whose Young ratio was clipped (for example nucleate.cos_theta). Draws with a Young ratio above 1 are placed at theta = 0 (f = 0), below -1 at theta = 180 deg (f = 1); the counts make a verdict carried by clipped mass visible. Empty object per link when no Young ratio is evaluated.",
+          "description": "cos(theta) boundary mass (lane note N2), keyed by link then by the quantity whose Young ratio was clipped (for example nucleate.cos_theta). Draws with a Young ratio above 1 are placed at theta = 0 (f = 0), below -1 at theta = 180 deg (f = 1); the counts make a verdict carried by clipped mass visible. Empty object per link when no Young ratio is evaluated. An empty object when no link of the regime evaluates a Young ratio (the table prior set, P0-W4.3).",
           "propertyNames": {
             "enum": [
               "anchor",

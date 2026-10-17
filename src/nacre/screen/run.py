@@ -198,8 +198,6 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
             "capped": any(c["capped"] for c in convergences),
             "target_scope": convergences[0].get("target_scope", "all")},
     }
-    if not regime["boundary_mass"]:
-        del regime["boundary_mass"]                  # no link evaluates a Young ratio (the schema needs one entry)
     return (regime, outputs) if return_outputs else regime
 
 
