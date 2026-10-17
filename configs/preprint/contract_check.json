@@ -1,9 +1,17 @@
 {
-  "checked_utc": "2026-10-16T20:32:21Z",
-  "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
-  "contract_version": 2,
+  "checked_utc": "2026-10-17T10:58:39Z",
+  "contract_sha": "db872ae9190c3b729bc2b13898919fbfbe56815b",
+  "contract_version": 3,
   "coverage": [],
   "functions": {
+    "A_carb_fn": {
+      "limit_cases": 1,
+      "max_rel_err": 1.2915944243077878e-14,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "B_acc": {
       "limit_cases": 1,
       "max_rel_err": 2.78630973734022e-15,
@@ -32,6 +40,14 @@
       "limit_cases": 2,
       "max_rel_err": 7.827574648083938e-16,
       "monotonicity_samples": 256,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "D_Ca_fn": {
+      "limit_cases": 1,
+      "max_rel_err": 3.5954287087579965e-15,
+      "monotonicity_samples": 64,
       "notes": [],
       "points": 256,
       "status": "PASS"
@@ -137,9 +153,25 @@
       "points": 256,
       "status": "PASS"
     },
+    "Omega_bulk_hydrated": {
+      "limit_cases": 2,
+      "max_rel_err": 4.720664590731383e-15,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "Omega_local_ideal": {
       "limit_cases": 1,
       "max_rel_err": 2.8430917102420023e-16,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "P_pair_fn": {
+      "limit_cases": 1,
+      "max_rel_err": 8.009727570427667e-15,
       "monotonicity_samples": 0,
       "notes": [],
       "points": 256,
@@ -210,6 +242,30 @@
       "limit_cases": 1,
       "max_rel_err": 0.0,
       "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "a_CO3_speciation": {
+      "limit_cases": 3,
+      "max_rel_err": 3.834213996194225e-16,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "a_Ca_speciation": {
+      "limit_cases": 2,
+      "max_rel_err": 2.2188092522363383e-16,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "c_Ca_free": {
+      "limit_cases": 1,
+      "max_rel_err": 2.1697863814124356e-16,
+      "monotonicity_samples": 0,
       "notes": [],
       "points": 256,
       "status": "PASS"
@@ -288,6 +344,22 @@
       "points": 256,
       "status": "PASS"
     },
+    "gamma_act_1": {
+      "limit_cases": 2,
+      "max_rel_err": 7.394171120905383e-14,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 230,
+      "status": "PASS"
+    },
+    "gamma_act_2": {
+      "limit_cases": 1,
+      "max_rel_err": 1.424431728451551e-13,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 224,
+      "status": "PASS"
+    },
     "gamma_eff_deck": {
       "limit_cases": 0,
       "max_rel_err": 0.0,
@@ -328,6 +400,22 @@
       "points": 256,
       "status": "PASS"
     },
+    "m_CT_fn": {
+      "limit_cases": 0,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "m_CaT_fn": {
+      "limit_cases": 0,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "mu_Li": {
       "limit_cases": 1,
       "max_rel_err": 2.217696551603579e-16,
@@ -361,10 +449,10 @@
       "status": "PASS"
     }
   },
-  "implementation_sha": "74f437ef406d9fd787d30ce39f91e9fd6754e607",
+  "implementation_sha": "3da2a16a7c984dcef3fba037c9c09a1c227c15d7",
   "points": 256,
   "ref": "origin/preprint/p0-w3",
-  "ref_sha": "e95c7840d00ab39e7669a8893798657bdac38710",
+  "ref_sha": "d27552a4f01a0f26710a884e275d14ddffc5e19a",
   "reference": "40-digit evaluation of the contract expression; a point beyond rtol passes only where the implementation is at least as accurate as the direct floating-point evaluation of the contract expression (ill-conditioned points, listed in notes)",
   "rtol": 1e-12,
   "seed": 0,

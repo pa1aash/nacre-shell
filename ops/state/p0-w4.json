@@ -1,19 +1,19 @@
 {
-  "last_session": "P0-W4.2",
+  "last_session": "P0-W4.3a",
   "status": "DONE",
-  "day": 2,
-  "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
-  "contract_checked_ref": "origin/preprint/p0-w3@e95c7840d00ab39e7669a8893798657bdac38710",
+  "day": 3,
+  "contract_sha": "db872ae9190c3b729bc2b13898919fbfbe56815b",
+  "contract_checked_ref": "origin/preprint/p0-w3@d27552a4f01a0f26710a884e275d14ddffc5e19a",
   "artifacts": {
     "physics_core": "src/nacre/physics/",
     "contract_registry": "src/nacre/physics/contract.py",
     "contract_check_script": "src/nacre/physics/devtools/check_contract_equivalence.py",
     "contract_check_record": "configs/preprint/contract_check.json",
-    "results_schema": "configs/preprint/results_schema.json@16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
+    "results_schema": "configs/preprint/results_schema.json@fd35ae57823e219a4f91c18f811e975ce01e990a",
     "mock_priors": "configs/preprint/mock_priors.yaml",
     "mock_summary": "results/preprint/screen/mock/summary.json",
     "screen_scaffold": "src/nacre/screen/",
-    "report": "ops/reports/P0-W4.2.md",
+    "report": "ops/reports/P0-W4.3a.md",
     "screen_config": "configs/preprint/screen.yaml",
     "thresholds_copy": "configs/preprint/thresholds.yaml",
     "precision_method": "configs/preprint/precision_method.md",
@@ -21,23 +21,34 @@
     "decision_rule": "src/nacre/screen/decision.py",
     "sampler": "src/nacre/screen/sampling.py",
     "shapley": "src/nacre/screen/shapley.py",
-    "runner": "src/nacre/screen/run.py"
+    "runner": "src/nacre/screen/run.py",
+    "speciation": "src/nacre/physics/speciation.py",
+    "units": "src/nacre/screen/units.py",
+    "decision_layer": "src/nacre/screen/study.py",
+    "retrodiction_entry": "src/nacre/screen/retro.py",
+    "mock_params_cp3": "configs/preprint/mock_params_cp3.yaml"
   },
   "notes": [
-    "test_sf1 rebuilt with an in-domain generator; seed-19 regression tests; D9 suppression removed; seeds 1-100 pass.",
-    "Contract v2 implemented; equivalence PASS at rtol 1e-12 (40-digit reference) against W3 e95c784, contract 5811a6b; 42 functions plus composite.",
-    "Contract tests on this branch skip until integration brings contract v2 (tree has v1).",
-    "Thresholds copied verbatim from theory/thresholds.md@3c9568b; equality EQUAL; evaluators and study rule implemented and tested.",
-    "Params: adapter cross-checked equal to W1 loader on lit/params.yaml@680a44b for all bound sampled keys; bindings in screen.yaml are draft (cp3).",
-    "No chain link is evaluable from lit/params.yaml@680a44b: gaps and registrations pending (see report); a_CO3 speciation needs a W3 contract entry.",
-    "Production screen refused before tag p0-cp3; no production output exists.",
+    "Contract v3 implemented (53 functions + composite); equivalence PASS at rtol 1e-12 against W3 d27552a (contract db872ae), max rel err 4.2e-12 (W_adh_dry_fn); D11 xfails removed.",
+    "Thresholds copy regenerated from W3's cp3 block (74ac69c, version 2); equality EQUAL; the equality test checks the copy against its authority at the recorded source commit; D13/D18 xfail removed.",
+    "cp3 rulings R1-R8 implemented and reconciled with W3's block, which governs (joint-mass verdicts per state, Dirichlet termination mixture, two Omega controls, expt-governed R-cell with F5 fallback, truncation report); differences listed in the report.",
+    "Schema v3: barrier prefactor, water lines, dose window, scheme table and cutoff axis, per-termination verdicts, design and framing records, prior set labels.",
+    "Retrodiction entry point nacre.screen.retro.run_cases for W2.3 (interfaces, 90% intervals, swap check, permutation null); never run on the frozen cases.",
+    "Dry runs only (not reported): real table 35 s / 133 MiB, all links explicit gaps; bound mock 991 s / 1.50 GB, full path at 2^20 draws per state.",
+    "No production output exists; production still refused before tag p0-cp3.",
     ".venv is a symlink to ~/.nacre-venvs/p-w4."
   ],
   "schema": {
-    "version": "2",
-    "sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
+    "version": "3",
+    "sha": "fd35ae57823e219a4f91c18f811e975ce01e990a",
     "path": "configs/preprint/results_schema.json"
   },
-  "thresholds_sha": "3c9568b3cceea3733e412aa09ac70db97365735b",
-  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c"
+  "thresholds_sha": "74ac69c2586c017e2bc08efecbfbc918b94f48ee",
+  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "thresholds_cp3": {
+    "source_sha": "74ac69c2586c017e2bc08efecbfbc918b94f48ee",
+    "block_version": 2,
+    "equality": "EQUAL",
+    "poll": "ready at 10:42 UTC (third poll)"
+  }
 }

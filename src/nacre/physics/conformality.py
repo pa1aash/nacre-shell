@@ -21,7 +21,9 @@ def coalescence_thickness(theta, N_s):
     """Geometric coalescence thickness h_c = tan(theta / 2) / (2 sqrt(N_s)), in m.
 
     Cap height of equal spherical-cap islands of contact angle theta (rad, in (0, pi)) on a
-    square lattice of areal density N_s (m^-2) when neighbouring bases first touch.
+    square lattice of areal density N_s (m^-2) when neighbouring bases first touch. Geometric
+    only: the charter's kinetic critical coalescence thickness is h_coal (cp2 fix F9), which
+    needs a nucleation-and-growth model and is not computed in P0.
     """
     t = open_interval("theta (contact angle)", theta, 0.0, np.pi)
     n = positive("N_s (island density)", N_s)

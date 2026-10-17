@@ -34,11 +34,11 @@ def provenance(root, config, prior_set, contract_sha=None):
             "prior_file": rel, "prior_file_hash": prior_set.sha256, "contract_sha": contract_sha}
 
 
-SCHEMA_VERSION = "2"
+SCHEMA_VERSION = "3"
 
 
 def build(regimes, prov, mock, stability=None, required_precision=None, claims=None, study=None):
-    """Assemble a results document (schema v2); regimes and/or stability must be given."""
+    """Assemble a results document (schema v3); regimes and/or stability must be given."""
     doc = {"schema_version": SCHEMA_VERSION, "mock": bool(mock),
            "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "provenance": prov}
     if regimes is not None:

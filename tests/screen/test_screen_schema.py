@@ -157,3 +157,56 @@ def test_malformed_stability_documents_are_rejected(schema, mutate):
     mutate(doc)
     with pytest.raises(jsonschema.ValidationError):
         jsonschema.validate(doc, schema)
+
+
+# ------------------------------------------------------------------ schema v3 (P0-W4.3a)
+
+def _v3():
+    doc = _v2_screen()
+    doc["schema_version"] = "3"
+    reg = doc["regimes"]["R-slurry"]
+    reg["prior_set"] = "ignorance"
+    reg["barrier_prefactor"] = {"reference_gamma_nl": 0.1, "V_m": 3.7e-5, "T": 298.0, "B_kT": 1.0e4}
+    reg["refused"] = {"speciation": {"activity_model": {"n_evaluated": 10, "n_refused": 1, "fraction_refused": 0.1}}}
+    pt = {"axes": {"Ca_T": "1e-3 mol dm^-3"}, "P_good": 0.95, "P_bad": 0.05, "verdict": "feasible", "a_Ca_median": 1e-4}
+    doc["claims"] = {
+        "C1": {"verdict": "inconclusive", "tests": {"C1": {"verdict": "inconclusive", "gap": "key m_W unset",
+                                                           "by_termination": {"t1": {"verdict": "feasible"}}}},
+               "falsified_mass": None, "prior_set": "ignorance", "finding_eligible": True},
+        "C2": {"verdict": "descriptor", "tests": {}, "falsified_mass": None, "role": "descriptor",
+               "finding": {"statement": "the sequestration premise holds"}},
+        "C5": {"verdict": "inconclusive", "tests": {"C5c_ox": {"verdict": "inconclusive", "scheme_table": [
+            {"phase": "CaCO3", "sink": "LiClO4", "scheme": "expt", "role": "governing", "status": "ok", "value_V": 3.9}],
+            "cutoff_axis": {"LFP": {"bound_V": 3.6, "verdict": "feasible"}}}},
+               "dose_window": {"feasible_points": ["p"], "falsified_points": [], "inconclusive_points": [],
+                               "points": {"p": pt}},
+               "omega_controls": {"undersaturated": dict(pt, verdict="falsified", must="falsified")},
+               "falsified_mass": None, "design_dependent": True}}
+    doc["study"] = {"verdict": "inconclusive", "links": {"C1": "inconclusive"}, "deletion_test": None,
+                    "gating_links": ["C1", "C3", "C4", "C5"], "framings": ["calcite", "ACC"], "prior_set": "ignorance",
+                    "finding_eligible": False, "gaps": {"C1": ["m_W"]}, "truncation": None}
+    return doc
+
+
+def test_v3_documents_with_the_cp3_records_validate(schema):
+    jsonschema.validate(_v3(), schema)
+    st = _v2_stability()
+    st["schema_version"] = "3"
+    st["stability"]["R-slurry"]["water_lines"] = {"hydrogen": {"E_V": [-0.6, -0.7]}, "oxygen": {"E_V": [0.6, 0.5]},
+                                                  "source": "params key"}
+    jsonschema.validate(st, schema)
+
+
+@pytest.mark.parametrize("mutate", [
+    lambda d: d["claims"]["C1"].update({"verdict": "descriptor-ish"}),
+    lambda d: d["regimes"]["R-slurry"].update({"prior_set": "guess"}),
+    lambda d: d["regimes"]["R-slurry"]["barrier_prefactor"].pop("B_kT"),
+    lambda d: d["claims"]["C5"]["tests"]["C5c_ox"]["scheme_table"][0].update({"role": "decisive"}),
+    lambda d: d["claims"]["C5"]["dose_window"].pop("points"),
+    lambda d: d["study"].update({"gating_links": ["C2"]}),
+])
+def test_malformed_v3_documents_are_rejected(schema, mutate):
+    doc = _v3()
+    mutate(doc)
+    with pytest.raises(jsonschema.ValidationError):
+        jsonschema.validate(doc, schema)

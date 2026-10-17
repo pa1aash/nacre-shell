@@ -106,3 +106,56 @@ def test_chunked_propagation_is_reproducible_and_counts_boundary_mass_over_chunk
     assert np.array_equal(a["nucleate"]["f_theta"], b["nucleate"]["f_theta"])
     assert ma["nucleate"]["cos_theta"].n_finite == 5000
     assert ma["nucleate"]["cos_theta"] == mb["nucleate"]["cos_theta"]
+
+
+# ------------------------------------------------------------------ contract v3 and cp3 additions (synthetic)
+SPEC = dict(pH=11.0, C_T=10.0, Ca_T=2.0, I_ionic=0.05, rho_water=1000.0, pK1_carbonic=6.0, pK2_carbonic=10.0,
+            K_CaCO3_aq=1e3, K_CaHCO3=1e1, K_CaOH=1e-13, a_w=1.0, A_DH=0.5, b_D=0.3, I_val=0.5)
+
+
+def test_speciation_step_supplies_the_free_ion_activities_and_counts_refusals():
+    from nacre.physics import speciation
+    n = 100
+    x = {k: np.full(n, v) for k, v in SPEC.items()}
+    x["I_ionic"] = np.where(np.arange(n) < 10, 0.6, 0.05)                 # ten draws beyond I_val
+    assert "speciation" in chain.evaluable_links(x)
+    out, masses = chain.evaluate(x, ["speciation"])
+    want = speciation.speciate(**SPEC)
+    assert np.all(np.isnan(out["speciation"]["a_CO3"][:10]))
+    assert np.allclose(out["speciation"]["a_CO3"][10:], want["a_CO3"], rtol=1e-14)
+    assert np.allclose(out["speciation"]["c_Ca_free"][10:], want["c_Ca_free"], rtol=1e-14)
+    m = masses["speciation"]["activity_model"].as_dict()
+    assert (m["n_evaluated"], m["n_refused"]) == (100, 10)
+
+
+def test_ignorance_priors_are_bounded_by_their_dry_energies():
+    rng = np.random.default_rng(5)
+    n = 5000
+    x = {"u_gamma_sn": rng.random(n), "gamma_p": np.full(n, 0.05), "gamma_nv": np.full(n, 0.10),
+         "u_gamma_ow": rng.random(n), "gamma_o": np.full(n, 0.6), "gamma_w": np.full(n, 0.07)}
+    d, _, _ = chain.derive(x)
+    assert np.all((d["gamma_sn0"] >= 0) & (d["gamma_sn0"] <= 0.15)) and np.all(d["Delta_gamma_w"] == 0)
+    assert np.all((d["gamma_ow"] >= 0) & (d["gamma_ow"] <= 0.67)) and "gamma_op" not in d
+
+
+def test_branch_masses_are_the_conditional_masses_of_the_gamma_sn_prior():
+    n = 4
+    base = {"a_Ca": 1e-3, "a_CO3": 1e-4, "K_sp": 1e-9, "Delta_gamma_w": 0.0, "V_m": 3.7e-5, "T": 298.0,
+            "gamma_sl": 0.10, "gamma_nl": 0.02, "gamma_p": 0.05, "gamma_nv": 0.15, "u_gamma_sn": 0.5}
+    x = {k: np.full(n, v) for k, v in base.items()}
+    out, _ = chain.evaluate(x, ["nucleate"])
+    nuc = out["nucleate"]
+    assert nuc["branch_complete"][0] == pytest.approx(0.08 / 0.2)                 # (sl - nl) / G
+    assert nuc["branch_non"][0] == pytest.approx(1 - 0.12 / 0.2)
+    assert nuc["branch_partial"][0] == pytest.approx(2 * 0.02 / 0.2)
+    assert nuc["gamma_sl_minus_nl"][0] == pytest.approx(0.08)
+
+
+def test_c1_is_decided_by_the_pmf_route_with_the_comparator_beside_it():
+    x = {"Delta_F_pmf": np.array([2e-19]), "A_c": np.array([1e-18]), "gamma_ow": np.array([0.1]),
+         "gamma_pw": np.array([0.02]), "gamma_op": np.array([0.05])}
+    out, _ = chain.evaluate(x, ["anchor"])
+    assert out["anchor"]["W_adh_wet"][0] == pytest.approx(0.2)
+    assert out["anchor"]["W_adh_wet_comparator"][0] == pytest.approx(0.07)
+    out, _ = chain.evaluate({k: v for k, v in x.items() if k not in chain.PMF_INPUTS}, ["anchor"])
+    assert np.isnan(out["anchor"]["W_adh_wet"][0])

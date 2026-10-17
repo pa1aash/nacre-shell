@@ -6,9 +6,19 @@ a quantity's physical domain yields NaN for that quantity (the summary counts va
 instead of aborting the run. The one screen-layer intervention is the clip of Young's ratio
 to [-1, 1] (lane note N2, nacre.screen.boundary), which is always counted.
 
+Before the links (derived inputs, contract v3 and the cp3 gap policy)
+  speciation free-ion activities a_Ca, a_CO3 and the free Ca2+ concentration c_bulk from pH,
+             C_T, Ca_T and the ionic strength (nacre.physics.speciation), when the table
+             supplies the totals instead of the activities; a draw with I_ionic > I_val is
+             refused (NaN) and counted, never extrapolated.
+  ignorance  the ignorance priors of theory/ignorance_priors.md: gamma_sn0 = u (gamma_p +
+             gamma_nv) with Delta_gamma_w = 0, gamma_ow = u (gamma_o + gamma_w) and gamma_op =
+             u (gamma_o + gamma_p), each u uniform on [0, 1] (the bound moves with its inputs).
+
 Links
-  anchor     C1: wet work of adhesion of the anchoring group on the oxide (Dupre),
-             W_adh,wet = gamma_ow + gamma_pw - gamma_op.
+  anchor     C1: wet work of adhesion of the anchoring group on the oxide. The decisive
+             W_adh,wet is the PMF route, Delta_F_pmf / A_c; the interfacial-energy route
+             gamma_ow + gamma_pw - gamma_op is the comparator (W_adh_wet_comparator).
   sequester  C2: Ca2+ transfer free energy bulk -> binding layer Delta_G_seq (from the
              site free energy and the protonation correction, or sampled directly), the
              enrichment factor E_enr and the Langmuir local concentration c_local (C2
@@ -29,10 +39,10 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from nacre.physics import adhesion, conformality, nucleation, sequestration, template, wetting
+from nacre.physics import adhesion, conformality, nucleation, sequestration, speciation, template, wetting
 from nacre.physics import supersaturation as sat
 from nacre.physics.constants import BOLTZMANN, GAS_CONSTANT
-from nacre.screen.boundary import EMPTY, clip_cos_theta
+from nacre.screen.boundary import EMPTY, RefusedMass, clip_cos_theta
 
 
 @dataclass(frozen=True)
@@ -52,7 +62,13 @@ class Output:
 
 OUTPUTS = {
     "anchor": {
-        "W_adh_wet": Output("W_adh,wet", "J m^-2"),
+        "W_adh_wet": Output("W_adh,wet (PMF route)", "J m^-2"),
+        "W_adh_wet_comparator": Output("gamma_ow + gamma_pw - gamma_op (comparator)", "J m^-2"),
+    },
+    "speciation": {
+        "a_Ca": Output("a_Ca (free Ca2+ activity)", "1", "log10"),
+        "a_CO3": Output("a_CO3 (free carbonate activity)", "1", "log10"),
+        "c_Ca_free": Output("c_Ca_free (free Ca2+ concentration, c_bulk)", "mol m^-3", "log10"),
     },
     "sequester": {
         "Delta_G_seq": Output("Delta_G_seq", "J mol^-1"),
@@ -78,14 +94,26 @@ OUTPUTS = {
         # takes both signs, so no scale gives it a finite variance; C3b is analysed through N_nuc
         "accessibility_margin_kT": Output("(B_acc - Delta_G*_het) / k_B T", "k_B T", "none"),
         "N_nuc": Output("N_nuc", "m^-2", "log10"),
+        "gamma_sl_minus_nl": Output("gamma_sl - gamma_nl (complete wetting needs > 0)", "J m^-2", "none"),
+        "branch_complete": Output("complete-wetting mass of the gamma_sn ignorance prior", "1", "none"),
+        "branch_partial": Output("partial-wetting mass of the gamma_sn ignorance prior", "1", "none"),
+        "branch_non": Output("non-wetting mass of the gamma_sn ignorance prior", "1", "none"),
     },
 }
 
 ANCHOR_INPUTS = ("gamma_ow", "gamma_pw", "gamma_op")
+PMF_INPUTS = ("Delta_F_pmf", "A_c")
+SPECIATION_INPUTS = ("pH", "C_T", "Ca_T", "I_ionic", "rho_water", "pK1_carbonic", "pK2_carbonic", "K_CaCO3_aq",
+                     "K_CaHCO3", "K_CaOH", "a_w", "A_DH", "b_D", "I_val")
+#: Ignorance priors: target symbol -> (auxiliary uniform, the two energies whose sum bounds it).
+IGNORANCE = {"gamma_sn0": ("u_gamma_sn", ("gamma_p", "gamma_nv")),
+             "gamma_ow": ("u_gamma_ow", ("gamma_o", "gamma_w")),
+             "gamma_op": ("u_gamma_op", ("gamma_o", "gamma_p"))}
 SEQ_CYCLE_INPUTS = ("Delta_G_site", "pKa", "pH", "T")
 SEQ_LOCAL_INPUTS = ("T", "c_bulk", "Gamma_s", "delta_s")
 NUC_BASE = ("a_Ca", "a_CO3", "K_sp", "gamma_sn0", "Delta_gamma_w", "gamma_nl", "V_m", "T")
 ACCESS_INPUTS = ("J0_het", "t_proc", "N_req")
+NUCLEI_INPUTS = ("J0_het", "t_proc")
 
 
 class AmbiguousTemplateEnergy(ValueError):
@@ -128,12 +156,53 @@ def has(x, keys):
     return all(k in x for k in keys)
 
 
-def evaluable_links(symbols):
-    """Links whose inputs are all available from the given symbols."""
+def derived_symbols(symbols):
+    """The symbols available after the speciation and ignorance steps."""
     s = set(symbols)
+    for target, (u, pair) in IGNORANCE.items():
+        if u in s and s >= set(pair):
+            s.add(target)
+            if target == "gamma_sn0":
+                s.add("Delta_gamma_w")
+    if s >= set(SPECIATION_INPUTS):
+        s |= {"a_Ca", "a_CO3", "c_bulk"}
+    return s
+
+
+def derive(x):
+    """Inputs with the speciation and ignorance steps applied; also the speciation outputs and
+    the boundary mass of the activity model (draws refused above I_val)."""
+    x = dict(x)
+    n = _shape(x)
+    for target, (u, (a, b)) in IGNORANCE.items():
+        if u in x and a in x and b in x:
+            x[target] = _arr(x, u, n) * (_arr(x, a, n) + _arr(x, b, n))
+            if target == "gamma_sn0":
+                x["Delta_gamma_w"] = np.zeros(n)
+    spec, mass = None, None
+    if has(x, SPECIATION_INPUTS) and not ("a_Ca" in x and "a_CO3" in x):
+        v = {k: _arr(x, k, n) for k in SPECIATION_INPUTS}
+        ok = _finite(*v.values()) & (v["I_ionic"] <= v["I_val"]) & (v["C_T"] > 0) & (v["Ca_T"] > 0)
+        out = {k: np.full(n, np.nan) for k in ("a_Ca", "a_CO3", "c_Ca_free")}
+        if np.any(ok):
+            r = speciation.speciate(**{k: a[ok] for k, a in v.items()})
+            for k in out:
+                out[k][ok] = r[k]
+        x["a_Ca"], x["a_CO3"], x["c_bulk"] = out["a_Ca"], out["a_CO3"], out["c_Ca_free"]
+        refused = int((_finite(*v.values()) & (v["I_ionic"] > v["I_val"])).sum())
+        spec = out
+        mass = RefusedMass(int(_finite(*v.values()).sum()), refused, "I_ionic above I_val (Davies validity)")
+    return x, spec, mass
+
+
+def evaluable_links(symbols):
+    """Links whose inputs are all available from the given symbols (after derive)."""
+    s = derived_symbols(symbols)
     links = []
-    if s >= set(ANCHOR_INPUTS):
+    if s >= set(ANCHOR_INPUTS) or s >= set(PMF_INPUTS):
         links.append("anchor")
+    if s >= set(SPECIATION_INPUTS):
+        links.append("speciation")
     seq = (s >= set(SEQ_CYCLE_INPUTS) or "Delta_G_seq" in s) and s >= set(SEQ_LOCAL_INPUTS)
     if seq:
         links.append("sequester")
@@ -145,9 +214,14 @@ def evaluable_links(symbols):
 
 def anchor(x):
     n = _shape(x)
-    ow, pw, op = (_arr(x, k, n) for k in ANCHOR_INPUTS)
-    ok = _finite(ow, pw, op)
-    return {"W_adh_wet": _apply(adhesion.work_of_adhesion_wet, ok, n, ow, pw, op)}
+    out = {"W_adh_wet": np.full(n, np.nan), "W_adh_wet_comparator": np.full(n, np.nan)}
+    if has(x, ANCHOR_INPUTS):
+        ow, pw, op = (_arr(x, k, n) for k in ANCHOR_INPUTS)
+        out["W_adh_wet_comparator"] = _apply(adhesion.work_of_adhesion_wet, _finite(ow, pw, op), n, ow, pw, op)
+    if has(x, PMF_INPUTS):
+        df, ac = (_arr(x, k, n) for k in PMF_INPUTS)
+        out["W_adh_wet"] = _apply(adhesion.work_of_adhesion_from_pmf, _finite(df, ac) & (ac > 0), n, df, ac)
+    return out
 
 
 def sequester(x):
@@ -197,16 +271,29 @@ def nucleate(x, seq=None):
     spread = _apply(conformality.spreading_coefficient, ok_y, n, sl, sn0, dw, nl)
     out = {"Omega_bulk": om, "gamma_sl_insitu": sl, "cos_theta": cos_t, "f_theta": f,
            "barrier_hom_bulk_kT": hom_kt, "barrier_het_template_kT": het_kt, "r_star": r, "S_spread": spread,
-           "B_acc_kT": np.full(n, np.nan), "accessibility_margin_kT": np.full(n, np.nan), "N_nuc": np.full(n, np.nan)}
+           "B_acc_kT": np.full(n, np.nan), "accessibility_margin_kT": np.full(n, np.nan), "N_nuc": np.full(n, np.nan),
+           "gamma_sl_minus_nl": sl - nl}
+    for b in ("branch_complete", "branch_partial", "branch_non"):
+        out[b] = np.full(n, np.nan)
+    if has(x, ("gamma_p", "gamma_nv")) and "u_gamma_sn" in x:
+        # conditional branch masses of gamma_sn ~ U[0, G], G = gamma_p + gamma_nv (properties of the prior)
+        g = _arr(x, "gamma_p", n) + _arr(x, "gamma_nv", n)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            out["branch_complete"] = np.clip((sl - nl) / g, 0.0, 1.0)
+            out["branch_non"] = np.clip(1.0 - (sl + nl) / g, 0.0, 1.0)
+        out["branch_partial"] = 1.0 - out["branch_complete"] - out["branch_non"]
+    if has(x, NUCLEI_INPUTS):
+        j0, tp = (_arr(x, k, n) for k in NUCLEI_INPUTS)
+        ok_n = _finite(j0, tp, t) & (j0 > 0) & (tp > 0) & (t > 0)
+        out["N_nuc"] = _apply(nucleation.nucleus_areal_density, ok_n & np.isfinite(het), n, j0, tp, het, t)
+        # a state with Omega_bulk <= 1 forms no nuclei (thresholds, C3 accessibility)
+        out["N_nuc"][ok_n & np.isfinite(om) & (om <= 1)] = 0.0
     if has(x, ACCESS_INPUTS):
         j0, tp, nr = (_arr(x, k, n) for k in ACCESS_INPUTS)
         ok_a = _finite(j0, tp, nr, t) & (j0 > 0) & (tp > 0) & (nr > 0) & (t > 0)
         b_acc = _apply(nucleation.accessible_barrier, ok_a, n, j0, tp, nr, t)
         out["B_acc_kT"] = b_acc / (BOLTZMANN * t)          # negative when J0 t_proc < N_req
         out["accessibility_margin_kT"] = out["B_acc_kT"] - het_kt
-        out["N_nuc"] = _apply(nucleation.nucleus_areal_density, ok_a & np.isfinite(het), n, j0, tp, het, t)
-        # a state with Omega_bulk <= 1 forms no nuclei (thresholds, C3 accessibility)
-        out["N_nuc"][ok_a & np.isfinite(om) & (om <= 1)] = 0.0
     return out, {"cos_theta": mass}
 
 
@@ -217,7 +304,10 @@ def evaluate(x, links=None):
     (or the requested subset), masses {link: {quantity: BoundaryMass}}.
     """
     links = evaluable_links(x) if links is None else list(links)
+    x, spec, spec_mass = derive(x)
     out, masses = {}, {}
+    if "speciation" in links and spec is not None:
+        out["speciation"], masses["speciation"] = spec, {"activity_model": spec_mass}
     if "anchor" in links:
         out["anchor"], masses["anchor"] = anchor(x), {}
     need_seq = "sequester" in links or ("nucleate" in links and template_energy_mode(x) == "ca_free")

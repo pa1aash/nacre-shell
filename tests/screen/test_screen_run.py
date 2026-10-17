@@ -55,7 +55,7 @@ def test_tiny_dry_run_writes_a_schema_conforming_mock_document():
     out = ROOT / "results" / "preprint" / "screen" / "dryrun" / "test" / "summary.json"
     path, doc = run.run(ROOT, out, params_path=MOCK, regimes=("R-slurry",), allow_mock=True, overrides=TINY)
     jsonschema.validate(json.loads(path.read_text(encoding="utf-8")), summary.load_schema())
-    assert doc["mock"] is True and doc["schema_version"] == "2"
+    assert doc["mock"] is True and doc["schema_version"] == "3"
     reg = doc["regimes"]["R-slurry"]
     assert set(reg["links"]) == {"anchor", "sequester", "nucleate"}
     assert reg["dependence"]["method"] == "gaussian_copula"
@@ -76,27 +76,48 @@ def test_independence_option_samples_without_correlations():
     reg = run.run_regime(rp, cfg, seed=1, links=["anchor"], dependence_check=False, independence=True)
     assert reg["dependence"] == {"method": "independent"}
     assert reg["dependence_check"] is None
-    assert np.isfinite(reg["links"]["anchor"]["quantities"]["W_adh_wet"]["mean"])
+    assert np.isfinite(reg["links"]["anchor"]["quantities"]["W_adh_wet_comparator"]["mean"])
 
 
-def test_claims_and_study_from_screen_outputs_conform_to_the_schema():
-    from nacre.screen import decision, thresholds as thr
-    from screen_helpers import synthetic_resolver as _resolver
-    rule = thr.load_thresholds(ROOT / thr.COPY)["rule"]
-    rp = params_adapter.regime_priors(MOCK, "R-slurry", allow_mock=True)
-    cfg = run.load_config(ROOT)
-    for k, v in TINY.items():
-        cfg[k] = {**cfg[k], **v}
-    reg, outputs = run.run_regime(rp, cfg, seed=2, dependence_check=False, return_outputs=True)
-    claims = run.evaluate_claims(rule, {"slurry": outputs}, _resolver())
+MOCK_CP3 = ROOT / "configs" / "preprint" / "mock_params_cp3.yaml"
+SMALL = dict(TINY, propagation={"draws_per_regime": 2048, "chunk": 1024},
+             design_axes={"Ca_T": {"unit": "mol dm^-3", "values": [1.0e-6, 1.0e-2]}, "C_T": {"params": "dic_slurry", "at": ["value"]}})
+
+
+def test_bound_dry_run_evaluates_every_link_or_names_its_gap():
+    out = ROOT / "results" / "preprint" / "screen" / "dryrun" / "test" / "cp3.json"
+    path, doc = run.run(ROOT, out, params_path=MOCK_CP3, regimes=("R-slurry",), allow_mock=True, overrides=SMALL,
+                        prior_set="ignorance", decision_draws=2048)
+    jsonschema.validate(json.loads(path.read_text(encoding="utf-8")), summary.load_schema())
+    claims, study = doc["claims"], doc["study"]
     assert set(claims) == {"C1", "C2", "C3", "C4", "C5"}
-    assert claims["C5"]["verdict"] == "inconclusive"               # no stability section given
-    regimes = {"R-slurry": reg}
-    run._attach_link_records(regimes, claims)
-    assert "C3.C3a" in reg["links"]["nucleate"]["threshold_evaluation"]
-    study = decision.study_verdict(rule, claims, None)
-    doc = summary.build(regimes, {"git_sha": "0" * 40, "git_dirty": False, "config_hash": "sha256:" + "a" * 64,
-                                  "prior_file": "p", "prior_file_hash": "sha256:" + "b" * 64},
-                        mock=True, claims={c: {k: v for k, v in r.items()} for c, r in claims.items()}, study=study)
-    jsonschema.validate(json.loads(json.dumps(doc, default=float)), summary.load_schema())
-    assert study["verdict"] in ("inconclusive", "falsified")       # no deletion test: never feasible
+    assert study["framings"] == ["calcite", "ACC"] and len(study["by_design"]) == 2
+    assert study["prior_set"] == "ignorance" and study["finding_eligible"] is False
+    assert claims["C3"]["finding_eligible"] is False and claims["C1"]["finding_eligible"] is True
+    # C1 is decided by the PMF route, which the table does not supply: an explicit gap
+    assert "W_adh_wet" in claims["C1"]["gap"]
+    # the drying state is propagated (a_w sampled), so C3b is evaluated over both states
+    c3b = claims["C3"]["tests"]["C3b"]
+    assert c3b["states_missing"] == [] and "path_sum over 2" in c3b["aggregation"]
+    assert set(claims["C4"]["P_gamma_sl_gt_gamma_nl"]) == {"slurry", "drying"}
+    assert study["truncation"]["gamma_sl0"]["removed_mass"] > 0
+    # the dose window and its falsifiability control (pH at the modified-slurry minimum)
+    dw = claims["C5"]["dose_window"]
+    assert set(dw["points"]) == set(study["by_design"])
+    ctl = claims["C5"]["omega_controls"]
+    assert set(ctl) == {"undersaturated", "supersaturated"}
+    assert ctl["undersaturated"]["must"] == "falsified" and ctl["supersaturated"]["must"] == "feasible"
+    assert all(dw["points"][p]["a_Ca_median"] > 0 for p in dw["points"])   # grid in total Ca: a_Ca printed
+    assert "C5" in study["gaps"]                         # no W5 stability documents given
+    reg = doc["regimes"]["R-slurry"]
+    assert "speciation" in reg["links"] and reg["prior_set"] == "ignorance"
+    assert reg["barrier_prefactor"]["B_kT"] > 0
+    assert reg["refused"]["speciation"]["activity_model"]["n_refused"] == 0
+
+
+def test_sizing_caps_are_enforced():
+    cfg = run.load_config(ROOT)
+    cfg["propagation"]["draws_per_regime"] = 2 ** 20 + 1
+    with pytest.raises(run.ProductionRefused, match="2\\^20"):
+        run._sizing_caps(cfg)
+    run._sizing_caps(run.load_config(ROOT))
