@@ -1,5 +1,6 @@
 """nacre track: check, open-day and status against a scratch repo with an origin."""
 import json
+import re
 
 import pytest
 import yaml
@@ -316,10 +317,14 @@ def test_freeze_rule_needs_the_path_the_date_and_the_reaudit_line(frozen_repo):
     assert track.freeze_problems(frozen_repo, "p0") == []
 
 
-def test_repo_deviations_file_exists_with_header_only():
+def test_repo_deviations_file_has_header_and_well_formed_entries():
     from pathlib import Path
     text = (Path(__file__).resolve().parent.parent / "ops" / "tracks" / "p0_deviations.md").read_text()
-    assert text.startswith("# Deviations of track p0") and track._ENTRY.search(text) is None
+    assert text.startswith("# Deviations of track p0")
+    marks = list(track._ENTRY.finditer(text))
+    for i, m in enumerate(marks):
+        body = text[m.end():marks[i + 1].start() if i + 1 < len(marks) else len(text)]
+        assert re.search(r"(?m)^Re-audit:\s*\S", body), m.group(0)
 
 
 # --- freeze rule reads commits since the tag, not the tag's tree -------------------------------
