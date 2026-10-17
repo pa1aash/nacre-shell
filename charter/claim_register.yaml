@@ -140,17 +140,26 @@ claims:
       definition: >-
         Free energy of moving one Ca2+ from the hydrated bulk reference (Ca2+(aq) at the
         regime activity) to a template binding site, built as a thermodynamic cycle with
-        protonation-state and ionic-strength corrections at the regime pH; mapped to a local
-        enrichment factor c_local/c_bulk = exp(-Delta_G_seq / RT) and hence to the local
-        supersaturation S consumed by C3.
+        protonation-state and ionic-strength corrections at the regime pH. It sets the site
+        occupancy and the Ca2+ surface excess at the regime activity (Langmuir) and, through
+        the Gibbs adsorption equation, the change Delta_gamma_ads of the template-liquid
+        interfacial energy consumed by C3. The enrichment factor c_local/c_bulk =
+        exp(-Delta_G_seq / RT) is a concentration ratio and is reported; it does not change
+        the supersaturation, which at equilibrium is the bulk S = IAP/K_sp at the template.
       units: kJ mol^-1 (also reported in k_B T at the regime temperature)
     physics: >-
-      The template can only raise the local supersaturation if it holds Ca2+ more strongly
-      than water does. Delta_G_seq measures precisely that competition, with the hydration
-      free energy of Ca2+ on the reference side of the cycle, so a negative value means net
-      enrichment at the interface and a positive one means the polymer is a worse ligand
-      than bulk water. The enrichment factor is the physical bridge to nucleation: it sets
-      the Ca2+ activity, and therefore S, in the volume where the nucleus forms.
+      The template sequesters Ca2+ only if it holds Ca2+ more strongly than water does.
+      Delta_G_seq measures precisely that competition, with the hydration free energy of
+      Ca2+ on the reference side of the cycle, so a negative value means net binding at the
+      interface and a positive one means the polymer is a worse ligand than bulk water. At
+      equilibrium the electrochemical potential of Ca2+ is the same at the site as in the
+      bulk, so binding raises the local concentration but not the driving force for
+      nucleation. Its effect on nucleation runs through the interfacial energies: bound Ca2+
+      lowers the template-liquid energy, which at a fixed template-nucleus energy raises the
+      heterogeneous barrier, and binding favours nucleation only if the template-nucleus
+      energy falls by more. C2 establishes the binding link; C3 judges its consequence. C2
+      is a binding descriptor. It enters C3 only through Delta_gamma_ads and is not an
+      independent kill criterion.
     computation:
       method: >-
         Enhanced-sampling free energy of Ca2+ approach to each site (free and
@@ -235,15 +244,17 @@ claims:
         cos theta = (gamma_sub,liq - gamma_sub,nuc) / gamma_nuc,liq for a spherical-cap
         nucleus of the registered CaCO3 polymorph framing on the templated substrate.
         Secondary observables: Delta_G*_het and Delta_G*_hom in k_B T at the regime
-        temperature, with and without the template, using the local S from C2.
+        temperature, with and without the template, at the bulk S of the regime state, with
+        the C2 adsorption term inside gamma_sub,liq.
       units: dimensionless (f); k_B T (barriers); degrees (theta)
     physics: >-
       The template matters only if it lowers the barrier to forming CaCO3 at the interface
       relative to the bulk. f(theta) is the fraction of the homogeneous barrier that
       survives on the substrate; it depends only on the balance of the three interfacial
       energies through Young, so it isolates the template's wetting action. The absolute
-      barrier in k_B T then folds in the template's second action, the local
-      supersaturation S from C2, and decides whether nucleation is kinetically accessible.
+      barrier in k_B T then folds in the template's second action, the bulk supersaturation
+      of the regime state; the template's Ca2+ binding enters through gamma_sub,liq (C2), not
+      through S, and decides whether nucleation is kinetically accessible.
       Both are needed: a small f(theta) at negligible S still forbids nucleation.
     computation:
       method: >-
@@ -296,13 +307,13 @@ claims:
         Killed if the nucleation barrier on the template stays too high: the template does
         not lower the heterogeneous barrier enough relative to the homogeneous one
         (f(theta) in the registered falsified band) or the absolute template-lowered
-        barrier in k_B T at the C2 local supersaturation stays above the registered
+        barrier in k_B T at the regime bulk supersaturation stays above the registered
         accessibility bound.
       numeric_form: pending-G2
     depends_on: [C1, C2]
     depends_on_rationale: >-
       gamma_sub,liq and gamma_sub,nuc are energies of the anchored template from C1; the
-      local supersaturation S comes from the C2 enrichment factor.
+      C2 binding enters gamma_sub,liq through the Gibbs adsorption term.
     controls:
       - "bare oxide: f(theta) and barrier for CaCO3 on the bare hydroxylated oxide (incidental scaling)"
       - "homogeneous reference: Delta_G*_hom in bulk water at the bulk (unenriched) S"
@@ -319,6 +330,9 @@ claims:
         gamma_eff or the bare gamma_nuc,liq. As written in the deck, a positive
         displacement cost lowers gamma_eff, the opposite of what a cost should do. Owned by
         the Phase 2 derivation (S20/S21); not resolved in Phase 0.
+        Registered convention (cp2, theory/cp2_brief.md item 1): theta is measured through the
+        nucleus, with cos(theta) = (gamma_sl - gamma_sn)/gamma_nl and the bare gamma_nl;
+        Delta_gamma_w = gamma_sn - gamma_sn0 > 0 is a cost on the substrate side.
       - >-
         Primary polymorph framing (ACC or calcite) and the secondary sensitivity framing:
         registered at G2 (design flag 1).
@@ -471,17 +485,18 @@ claims:
       and Al phases are stable at the anodic potential against the Li reservoir. These
       are different chemistries (design flag 7) and need different observables. Both are
       screening quantities: necessary, not sufficient, and blind to morphology.
-      In R-slurry, stability against dissolution is the same question as S > 1: if the bulk
-      S is below 1, CaCO3 is unstable in the bulk and survives only where the C2 enrichment
-      holds the local S above 1. C5 therefore reports both the bulk state and the
-      C2-enriched state.
+      If the bulk S is below 1, CaCO3 is unstable against dissolution at the template as
+      well, because at equilibrium enrichment does not raise the driving force. C5 is
+      decided at the bulk state; an evaluation at the C2-enriched concentrations is reported
+      only as a labelled non-equilibrium sensitivity.
     computation:
       method: >-
         Aqueous Pourbaix analysis (pymatgen) of Al-Ca-C-O-H with a fetched ACC offset,
         reported as screening only. The R-slurry screen is evaluated at the regime's Ca2+
         and carbonate activities, the same a_Ca2+ and a_CO3 used for S in C3, not at the
         default dissolved-species concentrations; it is reported for both the bulk state
-        and the C2-enriched state. Li-referenced grand-potential phase stability for the
+        and the C2-enriched state, the latter as a labelled non-equilibrium sensitivity that
+        never decides the verdict. Li-referenced grand-potential phase stability for the
         in-cell regime: the R-cell window is bounded below by reduction (reaction with
         lithium) and above by anodic oxidation, where the oxidation products and the cation
         sink are tied to the R-cell electrolyte_composition input. A limit that cannot be
