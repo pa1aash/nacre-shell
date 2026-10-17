@@ -1510,6 +1510,13 @@
             "null"
           ],
           "description": "Termination registration of C1 (cp3 R8) and whether the inputs resolve it."
+        },
+        "omega_sensitivities": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Labelled Omega sensitivities of C5s by design point (C5s_ACC: Omega_bulk with the ACC K_sp); never gating."
         }
       },
       "additionalProperties": false

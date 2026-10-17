@@ -652,6 +652,7 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
         if c == "C5" and omega is not None:
             claims[c]["dose_window"] = omega["dose_window"]
             claims[c]["omega_controls"] = omega.get("controls")
+            claims[c]["omega_sensitivities"] = omega.get("sensitivities")      # C5s_ACC, labelled, never gating
     head = decision.over_design({pid: r["verdict"] for pid, r in study_by_point.items()})
     gating = rule["study"].get("gating_links") or ["C1", "C3", "C4", "C5"]
     deletions = [d for r in study_by_point.values() for d in r["deletion_by_framing"].values()]

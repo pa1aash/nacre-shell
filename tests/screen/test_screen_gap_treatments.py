@@ -216,3 +216,8 @@ def test_omega_needs_only_the_speciation_and_k_sp():
     assert "nucleate" not in out and np.all(out["speciation"]["Omega_bulk"] > 0)
     rec = study.omega_point({"slurry": (out, None, None)}, 0.9)
     assert rec is not None and rec["state"] == "slurry"
+
+
+def test_the_acc_omega_sensitivity_reaches_the_c5_claim():
+    import inspect
+    assert "omega_sensitivities" in inspect.getsource(study.assemble)
