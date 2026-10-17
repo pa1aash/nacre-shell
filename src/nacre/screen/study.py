@@ -233,7 +233,7 @@ def link_gaps(states, claim):
     return out
 
 
-def claims_at(rule, resolver, outs, registered, d_max=None, rng=None, states=None):
+def claims_at(rule, resolver, outs, registered, d_max=None, rng=None, loaded=None):
     """C1 to C4 at one design point and framing ({state: (outputs, masses, rp)})."""
     states = {sid: state_samples(o) for sid, (o, _, _) in outs.items()}
     claims = {}
@@ -244,14 +244,14 @@ def claims_at(rule, resolver, outs, registered, d_max=None, rng=None, states=Non
             missing = sorted(q - set().union(*[set(s) for s in states.values()])) if states else sorted(q)
             claims[claim] = {"verdict": "inconclusive", "tests": {}, "falsified_mass": None, "role": "gating",
                              "gap": "not evaluable: no registered state supplies %s; missing inputs %s"
-                                    % (missing, link_gaps(states or [], claim))}
+                                    % (missing, link_gaps(loaded or [], claim))}
             continue
         claims[claim] = decision.evaluate_link(rule, claim, have, resolver, registered_states=registered,
                                                d_max=d_max if claim == "C4" else None, rng=rng)
     seq = {sid: s for sid, s in states.items() if "Delta_G_seq" in s}
     claims["C2"] = decision.evaluate_c2(rule, seq, resolver) if seq else \
         {"verdict": "descriptor", "role": "descriptor", "tests": {}, "falsified_mass": None,
-         "gap": "not evaluable: Delta_G_seq is not supplied; missing inputs %s" % link_gaps(states or [], "C2")}
+         "gap": "not evaluable: Delta_G_seq is not supplied; missing inputs %s" % link_gaps(loaded or [], "C2")}
     return claims
 
 
