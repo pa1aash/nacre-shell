@@ -73,7 +73,7 @@ def test_real_input_marked_mock_is_refused(tmp_path, monkeypatch):
 
 
 def test_missing_real_input_is_skipped_not_built():
-    mod = _mod("fig5")
+    mod = _mod("fig6")  # waits for P0-W4.4
     data, path = build.load_input(REPO, mod, mock=False)
     if path.exists():
         pytest.skip("real input present")
