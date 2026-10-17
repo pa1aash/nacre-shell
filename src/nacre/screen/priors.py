@@ -9,14 +9,15 @@ Prior-file format (YAML), the contract between the parameter table and the scree
           <name>:
             symbol: <str>
             units: <str>
-            distribution: uniform | loguniform | normal
+            distribution: uniform | loguniform | normal | fixed
             # uniform, loguniform: low, high (loguniform needs 0 < low < high)
-            # normal: mean, sd (sd > 0)
+            # normal: mean, sd (sd > 0); fixed: value
+            transform: none | log10   # optional; log10: the distribution is of log10 of the quantity
             source: <str>          # provenance of the prior (evidence-table key)
 
-Production priors are read from lit/params.yaml, written by the parameter-table lane.
-Where that file's layout differs from the one above, an adapter is added in P0-W4.2;
-this loader never invents a value.
+Production priors are read from lit/params.yaml, written by the parameter-table lane, in
+its own layout (lit/corpus/params_README.md); nacre.screen.params_adapter reads that layout
+into the same Prior objects. Neither loader invents a value.
 
 Mock files (``mock: true``) carry synthetic numbers for exercising the code. They are
 refused unless the caller passes ``allow_mock=True`` (the ``--mock`` flag of the CLI).
@@ -27,10 +28,13 @@ from pathlib import Path
 
 import numpy as np
 import yaml
+from scipy import special
 
 PRODUCTION_PRIORS = Path("lit") / "params.yaml"
 REGIMES = ("R-slurry", "R-cell")
-_PARAMS = {"uniform": ("low", "high"), "loguniform": ("low", "high"), "normal": ("mean", "sd")}
+_PARAMS = {"uniform": ("low", "high"), "loguniform": ("low", "high"), "normal": ("mean", "sd"),
+           "fixed": ("value",)}
+TRANSFORMS = ("none", "log10")
 
 
 class MockPriorsRefused(RuntimeError):
@@ -43,24 +47,44 @@ class PriorFileError(ValueError):
 
 @dataclass(frozen=True)
 class Prior:
-    """Prior distribution of one physical input of the screen."""
+    """Prior distribution of one physical input of the screen.
+
+    ``distribution`` and ``params`` describe the stated variable; with ``transform: log10``
+    that variable is log10 of the physical quantity (solubility products, binding
+    constants), and sample() and ppf() return the physical quantity 10**y.
+    """
     name: str
     symbol: str
     units: str
     distribution: str
     params: dict
     source: str = ""
+    transform: str = "none"
 
-    def sample(self, rng, n):
-        """Draw n independent samples (SI units, as stated in ``units``)."""
+    @property
+    def is_fixed(self):
+        return self.distribution == "fixed"
+
+    def _stated_ppf(self, u):
         p = self.params
         if self.distribution == "uniform":
-            return rng.uniform(p["low"], p["high"], n)
+            return p["low"] + u * (p["high"] - p["low"])
         if self.distribution == "loguniform":
-            return np.exp(rng.uniform(np.log(p["low"]), np.log(p["high"]), n))
+            return np.exp(np.log(p["low"]) + u * (np.log(p["high"]) - np.log(p["low"])))
         if self.distribution == "normal":
-            return rng.normal(p["mean"], p["sd"], n)
+            return p["mean"] + p["sd"] * special.ndtri(u)
+        if self.distribution == "fixed":
+            return np.full(np.shape(u), p["value"], dtype=float)
         raise PriorFileError("unknown distribution %r" % self.distribution)
+
+    def ppf(self, u):
+        """Physical value at cumulative probability u in (0, 1) (inverse CDF, SI units)."""
+        y = self._stated_ppf(np.asarray(u, dtype=float))
+        return 10.0 ** y if self.transform == "log10" else y
+
+    def sample(self, rng, n):
+        """Draw n independent samples of the physical quantity (SI units, as in ``units``)."""
+        return self.ppf(rng.random(n))
 
 
 @dataclass(frozen=True)
@@ -101,7 +125,11 @@ def _prior(name, spec, where):
     for key in ("symbol", "units"):
         if not isinstance(spec.get(key), str):
             raise PriorFileError("%s: %r is required" % (where, key))
-    return Prior(name, spec["symbol"], spec["units"], dist, params, str(spec.get("source", "")))
+    transform = spec.get("transform", "none")
+    if transform not in TRANSFORMS:
+        raise PriorFileError("%s: transform must be one of %s" % (where, TRANSFORMS))
+    return Prior(name, spec["symbol"], spec["units"], dist, params, str(spec.get("source", "")),
+                 transform)
 
 
 def load_priors(path, allow_mock=False):

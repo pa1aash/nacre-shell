@@ -915,6 +915,7 @@ p0-w4 = [
     { name = "hypothesis" },
     { name = "jsonschema" },
     { name = "numpy" },
+    { name = "scipy" },
 ]
 p0-w5 = [
     { name = "pymatgen" },
@@ -947,6 +948,7 @@ p0-w4 = [
     { name = "hypothesis", specifier = ">=6.170.0" },
     { name = "jsonschema", specifier = ">=4.26.0" },
     { name = "numpy", specifier = ">=2.5.4" },
+    { name = "scipy", specifier = ">=1.18.1" },
 ]
 p0-w5 = [{ name = "pymatgen", specifier = ">=2026.9.24" }]
 p0-w6 = [

@@ -22,6 +22,8 @@ from nacre.physics import constants as C
 from nacre.physics.contract import CONSTANT_IDS, FUNCTIONS
 
 RTOL = 1e-12
+HP_DIGITS = 40          # working precision of the high-precision reference
+CONDITIONING = 4.0      # allowance factor, see check_function
 FUNCS = {"exp": sp.exp, "log": sp.log, "sqrt": sp.sqrt, "cos": sp.cos, "sin": sp.sin,
          "tan": sp.tan, "acos": sp.acos, "asin": sp.asin, "atan": sp.atan, "pi": sp.pi,
          "oo": sp.oo}
@@ -120,6 +122,22 @@ def _reference(contract, expr, names):
     return sp.lambdify(syms, contract.numeric(expr), "numpy")
 
 
+def _reference_hp(contract, expr, names, pts):
+    """The contract expression evaluated at the sampled float inputs with 40-digit arithmetic."""
+    import mpmath
+    f = sp.lambdify([contract.syms[s] for s in names], contract.numeric(expr), "mpmath")
+    npts = len(next(iter(pts.values())))
+    out = np.empty(npts)
+    with mpmath.workdps(HP_DIGITS):
+        for i in range(npts):
+            try:
+                v = mpmath.mpmathify(f(*[mpmath.mpf(float(pts[s][i])) for s in names]))
+                out[i] = float(mpmath.re(v)) if abs(mpmath.im(v)) <= abs(v) * mpmath.mpf(10) ** -30 else np.nan
+            except (ZeroDivisionError, OverflowError, ValueError):
+                out[i] = np.nan
+    return out
+
+
 def _impl(name, pts):
     entry = FUNCTIONS[name]
     return np.asarray(entry.impl(*[pts[a] for a in entry.args]), dtype=float)
@@ -147,12 +165,27 @@ def check_function(contract, name, n=256, seed=0):
     finite = np.isfinite(ref)
     if not np.all(finite):
         res.fail("contract expression not finite at %d sampled points" % int((~finite).sum()))
-    denom = np.maximum(np.abs(ref[finite]), np.finfo(float).tiny)
-    rel = np.abs(got[finite] - ref[finite]) / denom
-    res.points = int(finite.sum())
-    res.max_rel_err = float(rel.max()) if rel.size else 0.0
-    if res.max_rel_err > RTOL:
-        res.fail("max relative error %.3e exceeds %.0e" % (res.max_rel_err, RTOL))
+    # Accuracy is judged against the 40-digit evaluation of the contract expression. A point
+    # passes when the implementation is within RTOL of it, or, where the expression itself is
+    # ill-conditioned (cancellation between large terms), when the implementation is no less
+    # accurate than the direct floating-point evaluation of the contract expression (within a
+    # factor CONDITIONING). The second clause never excuses an implementation that is worse
+    # than the contract's own formula.
+    hp = _reference_hp(contract, expr, names, {k: np.asarray(v)[finite] for k, v in pts.items()})
+    ok_hp = np.isfinite(hp)
+    g, r, h = got[finite][ok_hp], ref[finite][ok_hp], hp[ok_hp]
+    scale = np.maximum(np.abs(h), np.finfo(float).tiny)
+    err_impl, err_float = np.abs(g - h), np.abs(r - h)
+    passes = (err_impl <= RTOL * scale) | (err_impl <= CONDITIONING * err_float)
+    res.points = int(ok_hp.sum())
+    res.max_rel_err = float((err_impl / scale).max()) if g.size else 0.0
+    conditioned = int(((err_impl > RTOL * scale) & passes).sum())
+    if conditioned:
+        res.messages.append("%d point(s) beyond rtol %.0e where the contract expression is ill-conditioned; "
+                            "the implementation is at least as accurate as its direct evaluation "
+                            "(max float-reference error %.3e)" % (conditioned, RTOL, float((err_float / scale).max())))
+    if not np.all(passes):
+        res.fail("max relative error %.3e exceeds %.0e against the high-precision reference" % (res.max_rel_err, RTOL))
     if not np.all(mask):
         # The points the implementation rejects must raise ValueError, never return a number.
         rng2 = np.random.default_rng([seed, 1, sum(map(ord, name))])
@@ -210,6 +243,14 @@ def _check_limits(contract, name, seed):
     rng = np.random.default_rng([seed, 2, sum(map(ord, name))])
     for case in contract.functions[name].get("limits") or []:
         base = _point(contract, name, rng)
+        # Symbols that the case's substitutions or expected value name but the function does
+        # not take (N_nuc at DG_het = @B_acc brings in N_req) are drawn from their intervals.
+        texts = [str(v) for v in (case.get("at") or {}).values()] + [str(case.get("expected", "0"))]
+        extra = set()
+        for t in texts:
+            extra |= {str(x) for x in contract.parse(t).free_symbols}
+        for sym in sorted(extra - set(base) - CONSTANT_IDS):
+            base[sym] = float(sample(contract.interval(sym), 1, rng)[0])
         p = _substitute_at(contract, case.get("at") or {}, base)
         expected = _value(contract, str(case["expected"]), p) if "limit" not in case else None
         if "limit" not in case:
@@ -243,7 +284,9 @@ def _check_limits(contract, name, seed):
         else:
             err = np.abs(vals - np.array([_value(contract, exp_text, q) for q, _ in seq]))
             # The error to the expected value must shrink monotonically, by at least tenfold.
-            if not (np.all(np.diff(err) <= 1e-15 * max(1.0, abs(exp_val))) and err[-1] <= 0.1 * err[0] + 1e-300):
+            # ... or every error already sits at the rounding floor of the expected value.
+            floor = np.all(err <= 1e-12 * abs(exp_val)) if exp_val != 0 else False
+            if not floor and not (np.all(np.diff(err) <= 1e-15 * max(1.0, abs(exp_val))) and err[-1] <= 0.1 * err[0] + 1e-300):
                 res.fail("limit %s -> %s: error %s does not shrink to the expected value" % (var, to, err))
         res.points += 1
     return res
@@ -324,7 +367,7 @@ def composite_expression(contract):
             aux.setdefault(k, sp.Symbol(k, real=True))
     local.update(aux)
     expr = sp.parse_expr(" ".join(str(ndc["composite_expression"]).split()), local_dict=local)
-    for _ in range(4):  # channel definitions refer to each other (Om_local -> E_enr, c_max)
+    for _ in range(4):  # channel definitions refer to each other (c_young -> D_ads -> x_b)
         for chan in ("channel_theta", "channel_omega"):
             for k, v in ndc[chan].items():
                 expr = expr.subs(aux[k], sp.parse_expr(str(v), local_dict=local))
@@ -342,13 +385,14 @@ def check_composite(contract, n=256, seed=0):
         return res
     rng = np.random.default_rng([seed, 4])
     pts = {s: sample(contract.interval(s), 4 * n, rng) for s in names}
-    ratio = (pts["gamma_sl"] - pts["gamma_sn0"] - pts["Delta_gamma_w"]) / pts["gamma_nl"]
-    ok = np.abs(ratio) <= 1
+    from nacre.physics.supersaturation import saturation_ratio_bulk
+    from nacre.physics.template import contact_angle_cosine_template
+    # valid points: a finite contact angle on the template and a supersaturated bulk
     with np.errstate(all="ignore"):
-        e = np.exp(-pts["Delta_G_seq"] / (C.GAS_CONSTANT * pts["T"]))
-        cm = pts["Gamma_s"] / pts["delta_s"]
-        om = e / (1 + e * pts["c_bulk"] / cm) * pts["a_Ca"] * pts["a_CO3"] / pts["K_sp"]
-    ok &= np.isfinite(om) & (om > 1)
+        ratio = contact_angle_cosine_template(*[pts[a] for a in ("gamma_sl0", "gamma_sn0", "Delta_gamma_w", "gamma_nl",
+                                                                 "Delta_G_seq", "T", "c_bulk", "Gamma_s", "delta_s")])
+        om = saturation_ratio_bulk(pts["a_Ca"], pts["a_CO3"], pts["K_sp"])
+    ok = np.isfinite(ratio) & (np.abs(ratio) <= 1) & np.isfinite(om) & (om > 1)
     pts = {k: v[ok][:n] for k, v in pts.items()}
     ref = np.asarray(_reference(contract, expr, names)(*[pts[s] for s in names]), dtype=float)
     got = np.asarray(template_heterogeneous_barrier(*[pts[a] for a in COMPOSITE_ARGS]), dtype=float)

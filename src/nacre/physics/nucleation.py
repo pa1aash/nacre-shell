@@ -92,3 +92,32 @@ def heterogeneous_barrier_from_saturation(theta, gamma, molar_volume, omega, tem
     """
     hom = homogeneous_barrier_from_saturation(gamma, molar_volume, omega, temperature)
     return heterogeneous_barrier(shape_factor(theta), hom)
+
+
+def accessible_barrier(J0_het, t_proc, N_req, temperature):
+    """Largest heterogeneous barrier that still gives N_req nuclei per area within t_proc, J.
+
+    B_acc = k_B T ln(J_0 t_proc / N_req), from the nucleation rate per area
+    J = J_0 exp(-Delta_G*_het / k_B T) and N = J t_proc. Negative when even a vanishing
+    barrier cannot produce N_req nuclei in the time available (J_0 t_proc < N_req).
+    """
+    j0 = positive("J0_het (heterogeneous nucleation prefactor per area)", J0_het)
+    tp = positive("t_proc (time available for nucleation)", t_proc)
+    nr = positive("N_req (required areal density of nuclei)", N_req)
+    t = positive("temperature", temperature)
+    return scalar_or_array(BOLTZMANN * t * np.log(j0 * tp / nr))
+
+
+def nucleus_areal_density(J0_het, t_proc, DG_het, temperature):
+    """Expected areal density of nuclei formed within t_proc, m^-2.
+
+    N_nuc = J_0 t_proc exp(-Delta_G*_het / k_B T), with no exclusion zones around existing
+    nuclei, so an upper estimate.
+    """
+    j0 = positive("J0_het (heterogeneous nucleation prefactor per area)", J0_het)
+    tp = positive("t_proc (time available for nucleation)", t_proc)
+    g = np.asarray(DG_het, dtype=float)
+    if np.any(~np.isfinite(g)) or np.any(g < 0):
+        raise ValueError("DG_het (heterogeneous barrier) must be finite and non-negative")
+    t = positive("temperature", temperature)
+    return scalar_or_array(j0 * tp * np.exp(-g / (BOLTZMANN * t)))

@@ -1,26 +1,43 @@
 {
-  "last_session": "P0-W4.1",
+  "last_session": "P0-W4.2",
   "status": "DONE",
-  "day": 1,
-  "contract_sha": "b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3",
-  "contract_checked_ref": "origin/preprint/p0-w3@98523a933ecd9cad74945bfff274ed253111547c",
+  "day": 2,
+  "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
+  "contract_checked_ref": "origin/preprint/p0-w3@e95c7840d00ab39e7669a8893798657bdac38710",
   "artifacts": {
     "physics_core": "src/nacre/physics/",
     "contract_registry": "src/nacre/physics/contract.py",
     "contract_check_script": "src/nacre/physics/devtools/check_contract_equivalence.py",
     "contract_check_record": "configs/preprint/contract_check.json",
-    "results_schema": "configs/preprint/results_schema.json@cc50fc0b781cc6ea3a723c5f08a16d9f048fdc9b",
+    "results_schema": "configs/preprint/results_schema.json@16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
     "mock_priors": "configs/preprint/mock_priors.yaml",
     "mock_summary": "results/preprint/screen/mock/summary.json",
     "screen_scaffold": "src/nacre/screen/",
-    "report": "ops/reports/P0-W4.1.md"
+    "report": "ops/reports/P0-W4.2.md",
+    "screen_config": "configs/preprint/screen.yaml",
+    "thresholds_copy": "configs/preprint/thresholds.yaml",
+    "precision_method": "configs/preprint/precision_method.md",
+    "mock_params": "configs/preprint/mock_params.yaml",
+    "decision_rule": "src/nacre/screen/decision.py",
+    "sampler": "src/nacre/screen/sampling.py",
+    "shapley": "src/nacre/screen/shapley.py",
+    "runner": "src/nacre/screen/run.py"
   },
   "notes": [
-    "All 32 contract functions and the DG_het_template composite match the contract at rtol 1e-12 (max 4.3e-14).",
-    "Contract tests read theory/contract.yaml from the working tree and skip until integration brings it to this branch.",
-    "Double counting via gamma_sn lowers the barrier (overstates the template); via gamma_sl raises it; sign depends on P0-W3.2.",
-    "Screen nucleation link still takes cos_theta directly; W4.2 wires Young and Omega_local, adapts to lit/params.yaml, freezes thresholds.",
-    ".venv is a symlink to ~/.nacre-venvs/p-w4.",
-    "fix-up: tolerance"
-  ]
+    "test_sf1 rebuilt with an in-domain generator; seed-19 regression tests; D9 suppression removed; seeds 1-100 pass.",
+    "Contract v2 implemented; equivalence PASS at rtol 1e-12 (40-digit reference) against W3 e95c784, contract 5811a6b; 42 functions plus composite.",
+    "Contract tests on this branch skip until integration brings contract v2 (tree has v1).",
+    "Thresholds copied verbatim from theory/thresholds.md@3c9568b; equality EQUAL; evaluators and study rule implemented and tested.",
+    "Params: adapter cross-checked equal to W1 loader on lit/params.yaml@680a44b for all bound sampled keys; bindings in screen.yaml are draft (cp3).",
+    "No chain link is evaluable from lit/params.yaml@680a44b: gaps and registrations pending (see report); a_CO3 speciation needs a W3 contract entry.",
+    "Production screen refused before tag p0-cp3; no production output exists.",
+    ".venv is a symlink to ~/.nacre-venvs/p-w4."
+  ],
+  "schema": {
+    "version": "2",
+    "sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
+    "path": "configs/preprint/results_schema.json"
+  },
+  "thresholds_sha": "3c9568b3cceea3733e412aa09ac70db97365735b",
+  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c"
 }

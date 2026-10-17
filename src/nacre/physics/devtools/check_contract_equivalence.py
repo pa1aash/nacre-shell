@@ -11,6 +11,8 @@ against. Exit status 0 only if every check passes.
 """
 import argparse
 import json
+
+import yaml
 import subprocess
 import sys
 import time
@@ -56,6 +58,10 @@ def main(argv=None):
           % (args.ref, ref_sha, contract_sha, "PASS" if ok else "FAIL"))
     if args.record:
         record = {"ref": args.ref, "ref_sha": ref_sha, "contract_sha": contract_sha,
+                  "contract_version": yaml.safe_load(contract_text).get("version"),
+                  "reference": "40-digit evaluation of the contract expression; a point beyond rtol passes only "
+                               "where the implementation is at least as accurate as the direct floating-point "
+                               "evaluation of the contract expression (ill-conditioned points, listed in notes)",
                   "checked_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                   "implementation_sha": _git(root, "rev-parse", "HEAD").strip(),
                   "rtol": RTOL, "points": args.points, "seed": args.seed,

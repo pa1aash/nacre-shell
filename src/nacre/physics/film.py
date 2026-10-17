@@ -20,9 +20,14 @@ def ohmic_thickness_bound(R_A_max, rho_e):
     return scalar_or_array(positive("R_A_max", R_A_max) / positive("rho_e (resistivity)", rho_e))
 
 
-def tunnelling_decay_constant(phi_B):
-    """Decay constant of the electron wavefunction in the film, sqrt(2 m_e phi_B) / hbar (m^-1)."""
-    return scalar_or_array(np.sqrt(2.0 * ELECTRON_MASS * positive("phi_B (barrier height)", phi_B)) / HBAR)
+def tunnelling_decay_constant(phi_B, effective_mass=None):
+    """Decay constant of the electron wavefunction in the film, sqrt(2 m phi_B) / hbar (m^-1).
+
+    m is the free-electron mass unless an effective mass in the film is given (kg); the
+    thresholds take it from the parameter table (regimes.R-cell.parameters.m_eff).
+    """
+    m = ELECTRON_MASS if effective_mass is None else positive("effective_mass (electron, in the film)", effective_mass)
+    return scalar_or_array(np.sqrt(2.0 * m * positive("phi_B (barrier height)", phi_B)) / HBAR)
 
 
 def tunnelling_thickness_bound(j_0, j_req, kappa):

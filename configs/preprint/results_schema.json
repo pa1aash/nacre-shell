@@ -1,112 +1,516 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "nacre-shell/preprint/screen/results/v1",
-  "title": "Screen results summary",
-  "description": "Output of the preprint parameter screen: per regime, the Monte Carlo propagation of the priors through each link of the chain (anchor, sequester, nucleate), quantiles of every propagated quantity, Sobol first- and total-order indices with confidence intervals, and the provenance needed to reproduce the run. Threshold evaluation is filled by the per-link evaluator once thresholds are frozen; until then it is null.",
+  "$id": "nacre-shell/preprint/screen/results/v2",
+  "title": "Screen and stability results summary",
+  "description": "Results document of the preprint. Two sections, either or both present. 'regimes' (the parameter screen): per regime, the Monte Carlo propagation of the priors through each link of the chain (anchor, sequester, nucleate), quantiles of every propagated quantity, Sobol first- and total-order indices with confidence intervals, optional dependent-input (Shapley) indices, the cos(theta) boundary mass (lane note N2) and the threshold evaluation (null until thresholds are frozen). 'stability' (C5, deterministic, decision D4): R-slurry Pourbaix domains on a (pH, E vs SHE) grid with phase identities and per-phase decomposition energies, for the bulk and the enriched state (G0 fix F2); R-cell a one-dimensional window vs Li+/Li with reduction and oxidation limits per phase, each limit carrying status ok or undetermined, and the oxidation-sink assumption. An undetermined limit is never a pass. Version history: v1 (P0-W4.1) screen only; v2 (P0-W4.2) adds 'stability', 'boundary_mass' (required in v2 screen regimes), dependence metadata, Shapley indices, 'required_precision' and 'extensions'. A v1 document remains valid under this schema.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "mock", "generated_utc", "provenance", "regimes"],
+  "required": [
+    "schema_version",
+    "mock",
+    "generated_utc",
+    "provenance"
+  ],
   "properties": {
-    "schema_version": {"const": "1"},
+    "schema_version": {
+      "enum": [
+        "1",
+        "2"
+      ],
+      "description": "'2' for documents written since P0-W4.2; '1' documents keep the v1 rules (no stability section, no boundary mass)."
+    },
     "mock": {
       "type": "boolean",
       "description": "True when the run used mock priors. A mock summary is never an input to the paper."
     },
-    "generated_utc": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"},
-    "provenance": {"$ref": "#/$defs/provenance"},
+    "generated_utc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
     "regimes": {
       "type": "object",
       "minProperties": 1,
-      "propertyNames": {"enum": ["R-slurry", "R-cell"]},
-      "additionalProperties": {"$ref": "#/$defs/regime"}
+      "propertyNames": {
+        "enum": [
+          "R-slurry",
+          "R-cell"
+        ]
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/regime"
+      },
+      "description": "Parameter screen, per regime."
+    },
+    "stability": {
+      "$ref": "#/$defs/stability"
+    },
+    "required_precision": {
+      "$ref": "#/$defs/required_precision"
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^p0-(w[1-8]|int)$"
+      },
+      "additionalProperties": {
+        "type": "object"
+      },
+      "description": "Lane-specific metadata that is not part of the shared contract (for example W5's provenance_pourbaix, resolved inputs and session id), keyed by lane id. Nothing in it is read by another lane."
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/claim"
+      },
+      "description": "Link verdicts under the frozen thresholds (configs/preprint/thresholds.yaml), C1 to C5.",
+      "propertyNames": {
+        "enum": [
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "C5"
+        ]
+      }
+    },
+    "study": {
+      "$ref": "#/$defs/study"
     }
   },
   "$defs": {
-    "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
     "provenance": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["git_sha", "git_dirty", "config_hash", "prior_file", "prior_file_hash"],
+      "required": [
+        "git_sha",
+        "git_dirty",
+        "config_hash"
+      ],
       "properties": {
-        "git_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$", "description": "HEAD of the repository when the run started."},
-        "git_dirty": {"type": "boolean", "description": "True when the working tree had uncommitted changes at run time."},
-        "config_hash": {"$ref": "#/$defs/sha256", "description": "sha256 of the canonical JSON of the run configuration (sorted keys, no whitespace)."},
-        "prior_file": {"type": "string", "description": "Repository-relative path of the prior file."},
-        "prior_file_hash": {"$ref": "#/$defs/sha256", "description": "sha256 of the raw bytes of the prior file."},
-        "contract_sha": {"type": ["string", "null"], "pattern": "^[0-9a-f]{40}$", "description": "Commit of the theory contract the physics was checked against, or null."}
-      }
+        "git_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$",
+          "description": "HEAD of the repository when the run started."
+        },
+        "git_dirty": {
+          "type": "boolean",
+          "description": "True when the working tree had uncommitted changes at run time."
+        },
+        "config_hash": {
+          "$ref": "#/$defs/sha256",
+          "description": "sha256 of the canonical JSON of the run configuration (sorted keys, no whitespace)."
+        },
+        "prior_file": {
+          "type": "string",
+          "description": "Repository-relative path of the prior file (screen documents)."
+        },
+        "prior_file_hash": {
+          "$ref": "#/$defs/sha256",
+          "description": "sha256 of the raw bytes of the prior file."
+        },
+        "contract_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40}$",
+          "description": "Commit of the theory contract the physics was checked against, or null."
+        },
+        "config_file": {
+          "type": "string",
+          "description": "Repository-relative path of the run configuration file, when there is one."
+        },
+        "config_file_hash": {
+          "$ref": "#/$defs/sha256",
+          "description": "sha256 of the raw bytes of the run configuration file."
+        },
+        "params_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40}$",
+          "description": "Commit of lit/params.yaml the priors were read from, or null for mock priors."
+        },
+        "thresholds_file": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Repository-relative path of the thresholds file, or null before the freeze."
+        },
+        "thresholds_hash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "sha256 of the raw bytes of configs/preprint/thresholds.yaml, or null before the freeze."
+        },
+        "thresholds_source_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40}$",
+          "description": "Commit of theory/thresholds.md the thresholds were copied from."
+        },
+        "schema_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40}$",
+          "description": "Commit of this schema the document was written against."
+        }
+      },
+      "description": "Run provenance. A screen document also requires prior_file and prior_file_hash."
     },
     "regime": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["draws", "seed", "sobol_design", "links"],
+      "required": [
+        "draws",
+        "seed",
+        "sobol_design",
+        "links"
+      ],
       "properties": {
-        "draws": {"type": "integer", "minimum": 1, "description": "Monte Carlo draws used for the quantiles."},
-        "seed": {"type": "integer", "minimum": 0, "description": "Root seed of the regime's random stream."},
+        "draws": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Monte Carlo draws used for the quantiles."
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Root seed of the regime's random stream."
+        },
         "sobol_design": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["method", "base_samples", "evaluations", "bootstrap_resamples", "confidence_level"],
+          "required": [
+            "method",
+            "base_samples",
+            "evaluations",
+            "bootstrap_resamples",
+            "confidence_level"
+          ],
           "properties": {
-            "method": {"type": "string"},
-            "base_samples": {"type": "integer", "minimum": 1},
-            "evaluations": {"type": "integer", "minimum": 1},
-            "bootstrap_resamples": {"type": "integer", "minimum": 0},
-            "confidence_level": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1}
+            "method": {
+              "type": "string"
+            },
+            "base_samples": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "evaluations": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "bootstrap_resamples": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "confidence_level": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "exclusiveMaximum": 1
+            }
           }
         },
         "parameters": {
           "type": "array",
-          "items": {"type": "string"},
+          "items": {
+            "type": "string"
+          },
           "description": "Names of the sampled inputs, in the order used by the Sobol design."
         },
         "links": {
           "type": "object",
           "minProperties": 1,
-          "propertyNames": {"enum": ["anchor", "sequester", "nucleate"]},
-          "additionalProperties": {"$ref": "#/$defs/link"}
+          "propertyNames": {
+            "enum": [
+              "anchor",
+              "sequester",
+              "nucleate"
+            ]
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/link"
+          }
+        },
+        "boundary_mass": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "cos(theta) boundary mass (lane note N2), keyed by link then by the quantity whose Young ratio was clipped (for example nucleate.cos_theta). Draws with a Young ratio above 1 are placed at theta = 0 (f = 0), below -1 at theta = 180 deg (f = 1); the counts make a verdict carried by clipped mass visible. Empty object per link when no Young ratio is evaluated.",
+          "propertyNames": {
+            "enum": [
+              "anchor",
+              "sequester",
+              "nucleate"
+            ]
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/$defs/boundary_mass"
+            }
+          }
+        },
+        "dependence": {
+          "$ref": "#/$defs/dependence"
+        },
+        "dependence_check": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Robustness of the ranking to the correlation assumption: the same indices recomputed under independence, with the rank agreement. Reported as a check in production; null when not run.",
+          "additionalProperties": false,
+          "required": [
+            "alternative",
+            "rank_agreement"
+          ],
+          "properties": {
+            "alternative": {
+              "enum": [
+                "independent",
+                "stated_correlations"
+              ]
+            },
+            "rank_agreement": {
+              "type": "object",
+              "description": "Keyed by link then quantity: Kendall tau between the two rankings of the parameters, and whether the top-ranked parameter is the same.",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "kendall_tau",
+                    "same_top"
+                  ],
+                  "properties": {
+                    "kendall_tau": {
+                      "type": "number",
+                      "minimum": -1,
+                      "maximum": 1
+                    },
+                    "same_top": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "convergence": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "required": [
+            "target_ci_half_width",
+            "base_samples",
+            "base_samples_doubled",
+            "max_ci_half_width",
+            "max_estimate_shift",
+            "converged"
+          ],
+          "description": "Sobol convergence: the target CI half-width stated before sizing, the achieved maximum half-width, and the largest change of any index when the base sample size is doubled.",
+          "properties": {
+            "target_ci_half_width": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "base_samples": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "base_samples_doubled": {
+              "type": "integer",
+              "minimum": 2
+            },
+            "max_ci_half_width": {
+              "type": "number",
+              "minimum": 0
+            },
+            "max_estimate_shift": {
+              "type": "number",
+              "minimum": 0
+            },
+            "converged": {
+              "type": "boolean"
+            },
+            "capped": {
+              "type": "boolean",
+              "description": "True when the size the target needs exceeded the configured maximum and the run used the maximum instead; the shortfall shows in max_ci_half_width."
+            }
+          }
+        },
+        "primary_state": {
+          "type": "string",
+          "description": "Registered state that received the full sensitivity analysis."
+        },
+        "unsampled": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Inputs of the primary state without a samplable prior, with the table's reason."
+        },
+        "states": {
+          "type": "object",
+          "description": "Other registered states of the regime: propagated quantities, boundary mass and unsampled inputs (they enter the decision rule; worst_state and path_sum).",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "quantities",
+              "boundary_mass"
+            ],
+            "properties": {
+              "quantities": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/quantity"
+                  }
+                }
+              },
+              "boundary_mass": {
+                "type": "object"
+              },
+              "unsampled": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       }
     },
     "link": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["quantities", "sobol", "threshold_evaluation"],
+      "required": [
+        "quantities",
+        "sobol",
+        "threshold_evaluation"
+      ],
       "properties": {
         "quantities": {
           "type": "object",
           "minProperties": 1,
-          "additionalProperties": {"$ref": "#/$defs/quantity"}
+          "additionalProperties": {
+            "$ref": "#/$defs/quantity"
+          }
         },
         "sobol": {
           "type": "object",
           "description": "Keyed by quantity name, then by parameter name.",
           "additionalProperties": {
             "type": "object",
-            "additionalProperties": {"$ref": "#/$defs/sobol_indices"}
+            "additionalProperties": {
+              "$ref": "#/$defs/sobol_indices"
+            }
           }
         },
         "threshold_evaluation": {
-          "type": ["object", "null"],
+          "type": [
+            "object",
+            "null"
+          ],
           "description": "Per-link verdict-band evaluation against the frozen thresholds; null until they are frozen."
+        },
+        "shapley": {
+          "type": "object",
+          "description": "Shapley effects (valid for dependent inputs), keyed by quantity then parameter; each normalised by Var(Y), summing to one over the parameters.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/$defs/estimate_ci"
+            }
+          }
+        },
+        "sensitivity_scale": {
+          "type": "object",
+          "description": "Per quantity, the scale its Sobol and Shapley indices are computed on: log10 for positive multiplicative quantities (saturation ratios, enrichment, concentrations, barriers, radii), linear otherwise. Quantities without an entry are reported (quantiles) without sensitivity indices.",
+          "additionalProperties": {
+            "enum": [
+              "linear",
+              "log10"
+            ]
+          }
+        },
+        "sobol_design": {
+          "$ref": "#/$defs/regime/properties/sobol_design"
+        },
+        "convergence": {
+          "$ref": "#/$defs/regime/properties/convergence"
+        },
+        "shapley_design": {
+          "type": "object",
+          "description": "Sample sizes of the Shapley estimation (n_var, n_outer, n_inner, costs estimated, evaluations, bootstrap).",
+          "additionalProperties": true
         }
       }
     },
     "quantity": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["symbol", "units", "n_valid", "mean", "sd", "quantiles"],
+      "required": [
+        "symbol",
+        "units",
+        "n_valid",
+        "mean",
+        "sd",
+        "quantiles"
+      ],
       "properties": {
-        "symbol": {"type": "string"},
-        "units": {"type": "string"},
-        "n_valid": {"type": "integer", "minimum": 0, "description": "Draws inside the physical domain (finite results)."},
-        "mean": {"type": "number"},
-        "sd": {"type": "number", "minimum": 0},
+        "symbol": {
+          "type": "string"
+        },
+        "units": {
+          "type": "string"
+        },
+        "n_valid": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Draws inside the physical domain (finite results)."
+        },
+        "mean": {
+          "type": "number"
+        },
+        "sd": {
+          "type": "number",
+          "minimum": 0
+        },
         "quantiles": {
           "type": "object",
           "minProperties": 1,
-          "propertyNames": {"pattern": "^(0(\\.[0-9]+)?|1(\\.0+)?)$"},
-          "additionalProperties": {"type": "number"},
+          "propertyNames": {
+            "pattern": "^(0(\\.[0-9]+)?|1(\\.0+)?)$"
+          },
+          "additionalProperties": {
+            "type": "number"
+          },
           "description": "Keyed by probability level written as a decimal string, e.g. \"0.5\"."
         }
       }
@@ -114,21 +518,826 @@
     "estimate_ci": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["estimate", "ci_low", "ci_high"],
+      "required": [
+        "estimate",
+        "ci_low",
+        "ci_high"
+      ],
       "properties": {
-        "estimate": {"type": "number"},
-        "ci_low": {"type": "number"},
-        "ci_high": {"type": "number"}
+        "estimate": {
+          "type": "number"
+        },
+        "ci_low": {
+          "type": "number"
+        },
+        "ci_high": {
+          "type": "number"
+        }
       }
     },
     "sobol_indices": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["first_order", "total_order"],
+      "required": [
+        "first_order",
+        "total_order"
+      ],
       "properties": {
-        "first_order": {"$ref": "#/$defs/estimate_ci"},
-        "total_order": {"$ref": "#/$defs/estimate_ci"}
+        "first_order": {
+          "$ref": "#/$defs/estimate_ci"
+        },
+        "total_order": {
+          "$ref": "#/$defs/estimate_ci"
+        }
+      }
+    },
+    "boundary_mass": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_finite",
+        "n_clipped_theta_0",
+        "n_clipped_theta_180",
+        "fraction_theta_0",
+        "fraction_theta_180",
+        "fraction_total"
+      ],
+      "properties": {
+        "n_finite": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Draws with a finite Young ratio."
+        },
+        "n_clipped_theta_0": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Draws with ratio > 1, set to theta = 0 (complete spreading, f = 0)."
+        },
+        "n_clipped_theta_180": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Draws with ratio < -1, set to theta = 180 deg (no wetting, f = 1)."
+        },
+        "fraction_theta_0": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "fraction_theta_180": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "fraction_total": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "dependence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method"
+      ],
+      "description": "How the inputs were sampled jointly.",
+      "properties": {
+        "method": {
+          "enum": [
+            "independent",
+            "gaussian_copula"
+          ]
+        },
+        "rank_correlations": {
+          "type": "array",
+          "description": "Stated Spearman rank correlations between pairs of parameters, with their source.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "a",
+              "b",
+              "spearman_rho"
+            ],
+            "properties": {
+              "a": {
+                "type": "string"
+              },
+              "b": {
+                "type": "string"
+              },
+              "spearman_rho": {
+                "type": "number",
+                "minimum": -1,
+                "maximum": 1
+              },
+              "source": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "stability": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "description": "C5 deterministic outputs (decision D4). Thermodynamic proxies only: which state is at equilibrium, not how fast anything corrodes, dissolves or decomposes.",
+      "properties": {
+        "R-slurry": {
+          "$ref": "#/$defs/pourbaix_regime"
+        },
+        "R-cell": {
+          "$ref": "#/$defs/window_regime"
+        }
+      }
+    },
+    "pourbaix_regime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reference_electrode",
+        "temperature_K",
+        "axes",
+        "states"
+      ],
+      "properties": {
+        "kind": {
+          "const": "pourbaix"
+        },
+        "reference_electrode": {
+          "const": "SHE",
+          "description": "Potentials are in V vs SHE."
+        },
+        "temperature_K": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "axes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pH",
+            "E_V"
+          ],
+          "description": "Grid axes. Every grid in this regime is indexed [i][j] at E_V[i] and pH[j].",
+          "properties": {
+            "pH": {
+              "$ref": "#/$defs/axis"
+            },
+            "E_V": {
+              "$ref": "#/$defs/axis"
+            }
+          }
+        },
+        "states": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "bulk",
+            "enriched"
+          ],
+          "description": "The bulk state (regime a_Ca, a_CO3) and the enriched state at the template (G0 fix F2).",
+          "properties": {
+            "bulk": {
+              "$ref": "#/$defs/pourbaix_state"
+            },
+            "enriched": {
+              "$ref": "#/$defs/pourbaix_state"
+            }
+          }
+        }
+      }
+    },
+    "axis": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "number"
+      },
+      "description": "Strictly increasing grid values."
+    },
+    "pourbaix_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conditions",
+        "phases",
+        "domains",
+        "decomposition_energy"
+      ],
+      "properties": {
+        "conditions": {
+          "type": "object",
+          "description": "Ion activities or concentrations, carbonate system and other inputs that define the state, each with its source.",
+          "required": [
+            "a_Ca",
+            "a_CO3"
+          ],
+          "properties": {
+            "a_Ca": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "a_CO3": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            }
+          }
+        },
+        "phases": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Identity of each stability domain; a domain's index in index_grid is its position here.",
+          "items": {
+            "$ref": "#/$defs/domain_identity"
+          }
+        },
+        "domains": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "index_grid"
+          ],
+          "properties": {
+            "index_grid": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "integer",
+                  "minimum": -1
+                }
+              },
+              "description": "Domain index at (E_V[i], pH[j]); -1 where no domain is defined."
+            }
+          }
+        },
+        "decomposition_energy": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Per phase (keyed by phase name, for example calcite, ACC, corundum): energy above the Pourbaix equilibrium on the grid.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "units",
+              "grid"
+            ],
+            "properties": {
+              "units": {
+                "const": "eV/atom"
+              },
+              "material_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "grid": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  }
+                }
+              },
+              "formula": {
+                "type": "string",
+                "description": "Formula of the phase (for the per non-O, non-H atom normalisation of the C5 edge)."
+              }
+            }
+          }
+        }
+      }
+    },
+    "domain_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "index",
+        "label",
+        "kind",
+        "components"
+      ],
+      "properties": {
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "solid",
+            "aqueous",
+            "gas",
+            "mixed"
+          ],
+          "description": "mixed: the domain combines components of different kinds."
+        },
+        "components": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "species",
+              "kind"
+            ],
+            "properties": {
+              "species": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "solid",
+                  "aqueous",
+                  "gas"
+                ]
+              },
+              "material_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "window_regime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "reference_electrode",
+        "temperature_K",
+        "sink_assumption",
+        "windows"
+      ],
+      "properties": {
+        "kind": {
+          "const": "window"
+        },
+        "reference_electrode": {
+          "const": "Li+/Li",
+          "description": "Potentials are in V vs Li+/Li."
+        },
+        "temperature_K": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "convention": {
+          "type": "string",
+          "description": "Sign convention of the limit potential (theory contract E_window)."
+        },
+        "sink_assumption": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "active",
+            "statement"
+          ],
+          "description": "Where the cation goes on oxidation. The Li-open window of a Li-free phase is unbounded anodically (open question Q9), so every oxidation limit is conditional on this assumption.",
+          "properties": {
+            "active": {
+              "type": "string",
+              "minLength": 1
+            },
+            "statement": {
+              "type": "string",
+              "minLength": 1
+            },
+            "switch": {
+              "type": "string"
+            },
+            "kind": {
+              "enum": [
+                "solid_salt",
+                "solvated",
+                "other"
+              ],
+              "description": "solid_salt: the cation leaves as the solid salt of the electrolyte anion; a pass under it is conditional on cp2 decision 5."
+            }
+          }
+        },
+        "windows": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Keyed by phase name.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "reduction",
+              "oxidation"
+            ],
+            "properties": {
+              "material_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "reduction": {
+                "$ref": "#/$defs/window_limit"
+              },
+              "oxidation": {
+                "$ref": "#/$defs/window_limit"
+              },
+              "notes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "oxidation_by_scheme": {
+                "type": "object",
+                "description": "Oxidation limit per registered gas reference scheme; the limit used is the lowest.",
+                "additionalProperties": {
+                  "$ref": "#/$defs/window_limit"
+                }
+              },
+              "reduction_by_scheme": {
+                "type": "object",
+                "description": "Reduction limit per registered gas reference scheme; the limit used is the highest.",
+                "additionalProperties": {
+                  "$ref": "#/$defs/window_limit"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "window_limit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "value_V",
+        "reaction",
+        "reason"
+      ],
+      "description": "One limit of a window. status ok carries a finite value; status undetermined carries a null value and a non-empty reason, and is never read as a pass.",
+      "properties": {
+        "status": {
+          "enum": [
+            "ok",
+            "undetermined"
+          ]
+        },
+        "value_V": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "reaction": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "delta_g_ev": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "delta_n_li": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "ok"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value_V": {
+                "type": "number"
+              },
+              "reaction": {
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "undetermined"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value_V": {
+                "type": "null"
+              },
+              "reason": {
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "required_precision": {
+      "type": "object",
+      "description": "Required precision of each governing parameter (configs/preprint/precision_method.md), keyed by regime then parameter.",
+      "propertyNames": {
+        "enum": [
+          "R-slurry",
+          "R-cell"
+        ]
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "units",
+            "prior_width",
+            "required_width",
+            "width_ratio",
+            "nearest_threshold",
+            "method"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "ok",
+                "already_clears",
+                "unreachable"
+              ]
+            },
+            "units": {
+              "type": "string"
+            },
+            "prior_width": {
+              "type": "number",
+              "minimum": 0
+            },
+            "required_width": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "width_ratio": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            },
+            "nearest_threshold": {
+              "type": "string"
+            },
+            "method": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "verdict",
+        "tests"
+      ],
+      "properties": {
+        "verdict": {
+          "enum": [
+            "feasible",
+            "inconclusive",
+            "falsified"
+          ]
+        },
+        "tests": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "verdict"
+            ],
+            "properties": {
+              "verdict": {
+                "enum": [
+                  "feasible",
+                  "inconclusive",
+                  "falsified"
+                ]
+              },
+              "P_good": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "P_bad": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        "falsified_mass": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "study": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict",
+        "links",
+        "deletion_test"
+      ],
+      "properties": {
+        "verdict": {
+          "enum": [
+            "feasible",
+            "inconclusive",
+            "falsified"
+          ]
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "feasible",
+              "inconclusive",
+              "falsified"
+            ]
+          }
+        },
+        "deletion_test": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "framing": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "anyOf": [
+        {
+          "required": [
+            "regimes"
+          ]
+        },
+        {
+          "required": [
+            "stability"
+          ]
+        }
+      ]
+    },
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "1"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "regimes"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "stability"
+              ]
+            },
+            {
+              "required": [
+                "required_precision"
+              ]
+            },
+            {
+              "required": [
+                "extensions"
+              ]
+            },
+            {
+              "required": [
+                "claims"
+              ]
+            },
+            {
+              "required": [
+                "study"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "2"
+          }
+        },
+        "required": [
+          "regimes"
+        ]
+      },
+      "then": {
+        "properties": {
+          "regimes": {
+            "additionalProperties": {
+              "required": [
+                "boundary_mass"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "regimes"
+        ]
+      },
+      "then": {
+        "properties": {
+          "provenance": {
+            "required": [
+              "prior_file",
+              "prior_file_hash"
+            ]
+          }
+        }
+      }
+    }
+  ]
 }

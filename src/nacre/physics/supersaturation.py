@@ -1,14 +1,15 @@
 """Saturation state and the chemical-potential driving force for precipitation.
 
-Convention (theory contract, P0-W3.1): one definition of the saturation ratio,
+Convention (theory contract v2, P0-W3.2): one definition of the saturation ratio,
 
     Omega = IAP / K_sp = a_Ca a_CO3 / K_sp,
 
 and the driving force per formula unit Delta_mu = k_B T ln Omega (molar form
-R T ln Omega). Delta_mu > 0 means a supersaturated solution. The template enriches Ca2+
-alone; carbonate stays at its bulk activity, so the local saturation ratio is
-
-    Omega_local = (c_local / c_bulk) a_Ca a_CO3 / K_sp.
+R T ln Omega). Delta_mu > 0 means a supersaturated solution. At equilibrium the ion
+chemical potentials are uniform, so the driving force at the template is the bulk one,
+Omega = Omega_bulk. The local-ideal Omega_local = (c_local / c_bulk) Omega_bulk of
+contract v1 credits the binding free energy to the driving force; it survives only in the
+double-counting demonstration (nacre.physics.devtools.wrong_variants).
 """
 import numpy as np
 
@@ -22,17 +23,6 @@ def saturation_ratio_bulk(a_Ca, a_CO3, K_sp):
     b = positive("a_CO3 (carbonate activity)", a_CO3)
     k = positive("K_sp (solubility product)", K_sp)
     return scalar_or_array(a * b / k)
-
-
-def saturation_ratio_local(c_local, c_bulk, a_Ca, a_CO3, K_sp):
-    """Saturation ratio in the template binding layer, (c_local / c_bulk) Omega_bulk.
-
-    Only Ca2+ is enriched; the carbonate activity and the Ca2+ activity coefficient are
-    taken at their bulk values (theory open questions Q2, Q3).
-    """
-    cl = positive("c_local (layer Ca2+ concentration)", c_local)
-    cb = positive("c_bulk (bulk Ca2+ concentration)", c_bulk)
-    return scalar_or_array(cl / cb * saturation_ratio_bulk(a_Ca, a_CO3, K_sp))
 
 
 def driving_force_per_formula_unit(omega, temperature):

@@ -104,11 +104,9 @@ def test_nucleation_link_marks_undersaturated_draws_invalid():
     assert y["barrier_het_kT"][1] == pytest.approx(0.5 * y["barrier_hom_kT"][1], rel=1e-12)
 
 
-def test_threshold_evaluator_refuses_until_frozen():
+def test_threshold_loader_refuses_a_missing_copy(tmp_path):
     with pytest.raises(thresholds.ThresholdsNotFrozen):
-        thresholds.load_thresholds("configs/preprint/thresholds.yaml")
-    with pytest.raises(thresholds.ThresholdsNotFrozen):
-        thresholds.evaluate_link("nucleate", {}, {})
+        thresholds.load_thresholds(tmp_path / "thresholds.yaml")
 
 
 def test_smoke_run_writes_a_schema_conforming_summary(tmp_path):

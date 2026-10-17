@@ -1,0 +1,54 @@
+# Screen run configuration (P0-W4.2). Methodological settings of the Monte Carlo and the
+# sensitivity analysis only: no prior and no threshold lives here (priors come from
+# lit/params.yaml, thresholds from configs/preprint/thresholds.yaml, the copy of
+# theory/thresholds.md). Written before any production output exists (rule R7); P0-W4.3
+# runs the production screens with this file as committed.
+propagation:
+  draws_per_regime: 1048576     # 2^20 >= 10^6 draws per regime (Task 4a)
+  chunk: 131072                 # rows per chunk; the largest input array is chunk x k floats
+  seed: 20261017                # root seed; each regime and each chunk draws from its own child
+  quantiles: [0.005, 0.025, 0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.975, 0.995]
+sobol:                           # independent marginals (Task 4b)
+  target_ci_half_width: 0.01    # stated before sizing: the largest 95% CI half-width allowed
+  confidence: 0.95
+  pilot_base: 1024
+  bootstrap: 500
+  max_base: 131072              # the doubled run may not exceed this many base rows
+shapley:                         # dependent inputs under the stated correlations (Task 4c)
+  max_players_for_subsets: 14   # all-subset design up to this many inputs, else permutations
+  n_var: 100000
+  n_outer: 1000
+  n_inner: 3
+  n_perm: 500
+  bootstrap: 500
+  confidence: 0.95
+dependence_check: true          # Task 4e: rerun the Shapley ranking under independence
+# Which parameter-table key supplies each chain input (theory symbol -> lit/params.yaml key).
+# The table holds alternatives under one symbol (framings, registered states, competing
+# sources); the screen reads exactly the bound keys. DRAFT, written against lit/params.yaml at
+# 680a44b (P0-W1.2): the choices marked "cp3" are confirmed or replaced at cp3, before W4.3.
+# The framing itself is registered in the table (regimes.R-slurry.parameters.framing).
+bindings:
+  R-slurry:
+    common:
+      gamma_sl0: gamma_sl0_template
+      gamma_sn0: gamma_sn0_template
+      Delta_gamma_w: delta_gamma_w
+      pH: ph_slurry                   # cp3: ph_slurry against ph_slurry_modified
+      pKa: pka_catechol               # cp3: the anchoring template group (catechol); carboxyl is a comparator
+      Delta_G_site: delta_g_site
+      c_bulk: c_bulk_slurry
+      Gamma_s: gamma_s_site_density
+      delta_s: delta_s
+      a_Ca: a_ca_slurry
+      a_CO3: a_co3_slurry
+      J0_het: j0_het
+      N_req: n_req
+      gamma_ow: gamma_ow_alumina
+      gamma_op: gamma_op
+    by_framing:
+      calcite: {gamma_nl: gamma_nl_calcite, V_m: v_m_calcite, K_sp: log10_ksp_calcite}
+      ACC: {gamma_nl: gamma_nl_acc, V_m: v_m_acc, K_sp: log10_ksp_acc}
+    states:                           # registered R-slurry path (thresholds: worst_state, path_sum)
+      slurry: {T: t_slurry, t_proc: t_proc_slurry}
+      drying: {T: t_drying_primary, t_proc: t_drying_secondary}

@@ -9,7 +9,7 @@ from pathlib import Path
 
 import numpy as np
 
-from nacre.screen import links, priors, propagate, sobol, summary
+from nacre.screen import boundary, links, priors, propagate, sobol, summary
 
 MAX_DRAWS = 10_000
 
@@ -36,10 +36,13 @@ def run(root, prior_path, out_path, draws=4096, sobol_base=512, bootstrap=200, s
         out_links = {}
         total = draws
         design = None
+        masses = {}
         for link, (model, inputs, outputs) in links.LINKS.items():
             if not set(inputs) <= set(names):
                 continue
-            _, y = propagate.monte_carlo(model, pri, draws, np.random.default_rng(mc_seq))
+            x, y = propagate.monte_carlo(model, pri, draws, np.random.default_rng(mc_seq))
+            masses[link] = ({"cos_theta": boundary.clip_cos_theta(x["cos_theta"])[1].as_dict()}
+                            if "cos_theta" in x else {})
             quantities = {}
             for name, meta in outputs.items():
                 d = propagate.describe(y[name])
@@ -54,6 +57,6 @@ def run(root, prior_path, out_path, draws=4096, sobol_base=512, bootstrap=200, s
         if total > MAX_DRAWS:
             raise ValueError("smoke run exceeds %d model evaluations (%d)" % (MAX_DRAWS, total))
         regimes[regime] = {"draws": draws, "seed": regime_seed, "sobol_design": design,
-                           "parameters": names, "links": out_links}
+                           "parameters": names, "links": out_links, "boundary_mass": masses}
     doc = summary.build(regimes, summary.provenance(root, config, ps), mock=True)
     return summary.write(doc, out_path), doc
