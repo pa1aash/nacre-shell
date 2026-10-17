@@ -48,10 +48,34 @@ With p > 1/2, feasible and falsified cannot both hold.
 with cos(theta) <= -1 count as theta = pi (f = 1). The boundary mass is reported for every link
 that uses theta.
 
-**States.** C1, the C3 wetting part, C4 and C5 are necessary at every registered state at
-which they apply. A link's verdict is therefore the worst over those states, ordered feasible <
-inconclusive < falsified. The C3 accessibility part is cumulative: nuclei may form at any state
-along the registered R-slurry path, so it uses the path sum of Eq. (26) [th:eq:access].
+**Link masses are joint, draw by draw (cp3 R7 (1)).** A link with several tests has one good
+indicator per Monte Carlo draw, and its band masses are the masses of that indicator, computed on
+the same draws:
+- an "A and B" link (C3: (a) and (b); C5: its tests) is good on a draw only if every test is good,
+  so its falsified-side mass is P(A bad **or** B bad);
+- C4 is good on a draw if either route is good, so its falsified-side mass is
+  P(S_spread route bad **and** closure route bad) (Section 2, C4).
+
+The verdict applies the shared rule to these joint masses (P_good = 1 - P_bad of the link), and
+the deletion test compares the same joint falsified-side masses. The single-test masses are
+reported beside them. This replaces the per-test maximum or minimum (W4's interpretation (i)).
+
+**States (cp3 R7 (4)).** Every registered state of a regime is propagated (for R-slurry: slurry
+contact and every drying state); no link is run at one representative state.
+- C1, the C3 wetting part, C4's spreading route and C5 are necessary at every registered state at
+  which they apply. A link's verdict is therefore the worst over those states, ordered feasible <
+  inconclusive < falsified, with the joint link mass formed within each state.
+- The C3 accessibility part is cumulative: nuclei may form at any state along the registered
+  R-slurry path, so it uses the path sum of Eq. (26) [th:eq:access]. The path sum only grows as
+  states are added.
+- **A missing state.** If a registered state cannot be evaluated (for example a drying state whose
+  water activity is a gap), the verdicts are bounded by what was evaluated:
+  - C3 (b) (and C4's closure route, which uses the same N_nuc) cannot be falsified unless every
+    registered state, drying included, has been evaluated. With a state missing, a shortfall is
+    inconclusive and a pass stands, because the missing terms can only add nuclei;
+  - for a worst-state link the mirror holds: a falsification at an evaluated state stands, and a
+    pass needs every registered state, so with a state missing a pass is inconclusive.
+  The report lists every missing state and the links it bounds.
 
 **Water activity at drying states (cp2 fix F7, Q13).** The ion activity product stays
 IAP = a_Ca a_CO3. For a hydrated ACC framing CaCO3.nH2O the full product carries a_w^n, and
@@ -237,8 +261,9 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
 - **Reported, not gating.** DG_het / k_B T and the homogeneous reference DG_hom / k_B T at the
   same state.
 
-**C3 verdict.** feasible if (a) and (b) are both feasible; falsified if either is falsified;
-inconclusive otherwise.
+**C3 verdict (joint mass, cp3 R7).** Per draw C3 is good only if (a) and (b) are both good.
+feasible if P((a) good and (b) good) >= p; falsified if P((a) bad or (b) bad) >= p; inconclusive
+otherwise. Either part falsified on its own is sufficient for a falsified C3.
 
 ### C4, conformality (R-slurry for wetting, R-cell for the thickness bound)
 
@@ -503,8 +528,9 @@ inconclusive otherwise.
   - For each of the two, the screen is rerun with the control in place of the template, at the
     same states and with the same rules.
   - The test holds if, for each control, at least one of C3 or C4 degrades. A link degrades
-    when its verdict is strictly worse (feasible < inconclusive < falsified), or when its
-    falsified-side mass rises by at least p_deg (`thresholds.decision.degrade_mass_min`).
+    when its verdict is strictly worse (feasible < inconclusive < falsified), or when its joint
+    falsified-side mass (Section 1, cp3 R7) rises by at least p_deg
+    (`thresholds.decision.degrade_mass_min`).
   - A degradation of C1 alone does not count. C2 is not a deletion link: the control's binding
     descriptors are reported beside the template's, and the binding reaches the test through C3.
   - If the test fails for either control, the study is reported as a generic adhesion study, and
@@ -611,6 +637,17 @@ decision:
     wall_clock_cap: 6 h per run
     chunk: 2**14 draws, streamed
     on_cap: report as capped with the half-widths reached
+  link_mass:
+    rule: joint, draw by draw, on the same draws (cp3 R7 (1))
+    and_links: 'falsified side = P(any test bad)'
+    C4: 'falsified side = P(S_spread route bad and closure route bad)'
+    verdict: shared rule on the joint masses; single-test masses reported
+    deletion_test: joint falsified-side mass
+  states:
+    propagate: every registered state of the regime (cp3 R7 (4))
+    worst_state_links: falsification at an evaluated state stands; a pass needs every registered state
+    path_sum: 'C3b (and the C4 closure route) cannot be falsified unless every registered state, drying included, is evaluated; with a state missing a shortfall is inconclusive and a pass stands'
+    report: missing states and the links they bound
   omega: Omega_bulk
   forbidden_in_verdicts: [Omega_local_ideal, Delta_mu_local_ideal, DG_het_local_ideal, DG_het_double, E_enr, c_local,
                           Omega_bulk_hydrated]
@@ -675,6 +712,7 @@ links:
                  A_patch: regimes.R-slurry.parameters.patch_area, p_cred: thresholds.decision.credible_level}
         report: [DG_het/(k_B*T), DG_hom/(k_B*T)]
     combine: 'C3a and C3b'
+    joint_mass: 'falsified side P(C3a bad or C3b bad), draw by draw (cp3 R7)'
   C4:
     regimes: [R-slurry, R-cell]
     aggregation: worst_state
