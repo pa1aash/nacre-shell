@@ -1,7 +1,8 @@
 """Loader and validator of the parameter table lit/params.yaml.
 
 The format and the prior-construction rule are in lit/corpus/params_README.md; the clause ids used
-here (X1, X2, X3, N1, N2, N3, U1, L1, P1, C4) are the ones defined there.
+here (X1, X2, X3, N1, N2, N3, U1, L1, P1, C4, and from rule version 2 T1, W1, A1, I1, D1, R1, G1, M0)
+are the ones defined there.
 
 Sampling API, matching the screen's prior-file interface (nacre.screen.priors):
 
@@ -9,7 +10,8 @@ Sampling API, matching the screen's prior-file interface (nacre.screen.priors):
                              correlation group
     priors(keys)          -> PriorTuple, a tuple of ParamPrior with `.correlation` (Spearman matrix over
                              the keys) and `.groups`
-    prior_set(regime)     -> nacre.screen.priors.PriorSet of every sampled key of one regime
+    prior_set(regime)     -> nacre.screen.priors.PriorSet of every sampled primary key of one regime
+                             (sensitivity and analog keys are read by name, README 7.1)
     sample_correlated(ps, n, rng) -> {key: array}, draws with the rank correlation of `ps`
 
 Nothing here invents a value: a key without a prior (family none or categorical) raises instead of
@@ -34,8 +36,11 @@ SYMBOLS = Path("theory") / "symbols.yaml"
 FAMILIES = {"normal": ("mean", "sd"), "uniform": ("low", "high"), "loguniform": ("low", "high"),
             "fixed": ("value",), "categorical": ("options",), "none": ()}
 SAMPLED = ("normal", "uniform", "loguniform", "fixed")
-RULES = {"normal": ("N1", "N2"), "uniform": ("U1", "N3"), "loguniform": ("L1",), "fixed": ("X3", "P1"),
-         "categorical": ("X3",), "none": ("X1", "X2")}
+RULES = {"normal": ("N1", "N2"), "uniform": ("U1", "N3", "T1", "W1"), "loguniform": ("L1", "T1"),
+         "fixed": ("X3", "P1", "R1", "D1", "M0"), "categorical": ("X3", "G1"), "none": ("X1", "X2", "I1", "D1")}
+ROLES = ("primary", "sensitivity", "analog", "design-axis")
+FLAGS = ("single_source", "analog", "truncated", "widened", "ionic_strength", "registered")
+RULE_FIELD = {"T1": "truncation", "W1": "widening", "I1": "ignorance", "D1": "derived", "R1": "registered"}
 STATUSES = ("sourced", "single-source", "gap", "computed", "registered", "design-input", "definitional")
 REGIMES = ("R-slurry", "R-cell", "shared")
 TRANSFORMS = ("none", "log10")
@@ -231,8 +236,27 @@ def _check_prior(key, e, grades, symbols, bad):
                     if s not in grades:
                         bad("option source %s not in the evidence table" % s)
     elif fam == "none":
-        if rule == "X1" and rng is not None:
-            bad("rule X1 (no admitted row) needs range null")
+        if rule in ("X1", "X2") and rng is not None:
+            bad("rule %s (no admitted row) needs range null" % rule)
+    if rule in RULE_FIELD and not isinstance(e.get(RULE_FIELD[rule]), dict):
+        bad("rule %s needs the field %r (README 7.2)" % (rule, RULE_FIELD[rule]))
+    if rule == "G1":
+        for o in pr.get("options") or []:
+            if not isinstance(o, dict) or not o.get("key"):
+                bad("rule G1 options name their per-class key")
+    if rule == "M0" and not (e.get("margin_case") == "zero" and value == 0 and str(e.get("margin_reason") or "").strip()):
+        bad("rule M0 needs value 0, margin_case zero and margin_reason")
+    if rule == "W1" and isinstance(e.get("widening"), dict):
+        u = e["widening"].get("unwidened") or {}
+        if not (_num(u.get("min")) and _num(u.get("max")) and pr["low"] <= u["min"] <= u["max"] <= pr["high"]):
+            bad("rule W1: the widened prior must contain the unwidened span")
+        if "single_source" not in (e.get("flags") or []):
+            bad("rule W1 needs the flag single_source")
+    if rule == "T1" and isinstance(e.get("truncation"), dict):
+        t = e["truncation"]
+        edge = pr.get("low") if t.get("side") == "min" else pr.get("high")
+        if not (_num(edge) and _num(t.get("bound")) and _close(edge, t["bound"])):
+            bad("rule T1: the prior must end at the truncation bound")
 
 
 def validate(params, root=None):
@@ -293,6 +317,30 @@ def validate(params, root=None):
         if (known[0] if known else None) != e["best_grade"]:
             bad("best_grade %r is not the best grade of the sources (%r)" % (e["best_grade"], known[0] if known else None))
         _check_prior(key, e, grades, symbols, bad)
+        role = e.get("role", "primary")
+        if role not in ROLES:
+            bad("role %r not in %s" % (role, ROLES))
+        if role in ("sensitivity", "analog") and e.get("of") not in entries:
+            bad("a %s key names an existing key in 'of'" % role)
+        unknown_flags = [f for f in (e.get("flags") or []) if f not in FLAGS]
+        if unknown_flags:
+            bad("unknown flags %s" % unknown_flags)
+        if role == "analog" and "analog" not in (e.get("flags") or []):
+            bad("an analog key carries the flag analog (A1)")
+        if e.get("rule") == "T1" and isinstance(e.get("truncation"), dict):
+            sk = e["truncation"].get("sensitivity_key")
+            if sk not in entries or entries[sk].get("role") != "sensitivity" or entries[sk].get("of") != key:
+                bad("rule T1: the uncut prior is kept as a sensitivity key of this key")
+        if e.get("rule") == "R1" and isinstance(e.get("registered"), dict):
+            _check_registered(root, e, bad)
+        if e.get("rule") == "D1" and isinstance(e.get("derived"), dict):
+            _check_derived(e, entries, bad)
+        if e.get("rule") == "G1":
+            for o in e["prior"].get("options") or []:
+                k = o.get("key") if isinstance(o, dict) else None
+                if k and (k not in entries or entries[k].get("value") != o.get("value")
+                          or entries[k].get("range") != o.get("range")):
+                    bad("rule G1: option %s differs from params.%s" % (o.get("label"), k))
         g = e["correlation_group"]
         if g is not None and g not in (doc.get("correlation_groups") or {}):
             bad("correlation_group %r is not defined" % g)
@@ -330,6 +378,33 @@ def validate(params, root=None):
         elif {f: v for f, v in leaf.items() if f != "key"} != entries[k]:
             errs.append("alias %s: differs from params.%s" % (path, k))
     return errs
+
+
+def _check_registered(root, e, bad):
+    from nacre.lit import build_params as B
+
+    r = e["registered"]
+    try:
+        node = B.registered_node(root, r)
+    except Exception as exc:  # the authority file is absent or unreadable
+        bad("rule R1: %s" % exc)
+        return
+    if node is None or not _close(float(node.get("primary")), float(e["value"])):
+        bad("rule R1: value differs from %s %s" % (r.get("file"), r.get("path")))
+
+
+def _check_derived(e, entries, bad):
+    from nacre.lit import build_params as B
+
+    d = e["derived"]
+    try:
+        params = {k.partition(".")[0]: entries[k.partition(".")[0]] for k in d["inputs"].values()}
+        value, _, _ = B.envelope(d["expr"], d["inputs"], params)
+    except Exception as exc:
+        bad("rule D1: cannot evaluate %r: %s" % (d.get("expr"), exc))
+        return
+    if (value is None) != (e["value"] is None) or (value is not None and not _close(value, e["value"], 1e-9)):
+        bad("rule D1: value differs from the formula at the input values")
 
 
 def _view_leaves(doc, roots=VIEW_ROOTS):
@@ -441,7 +516,8 @@ def prior_set(regime, params=None):
         raise ValueError("regime must be R-slurry or R-cell")
     p = _params(params)
     keys = [k for k, e in p.entries.items()
-            if e["prior"]["family"] in SAMPLED and (regime in e["regimes"] or "shared" in e["regimes"])]
+            if e["prior"]["family"] in SAMPLED and e.get("role", "primary") == "primary"
+            and (regime in e["regimes"] or "shared" in e["regimes"])]
     return PriorSet(p.path, p.sha256, False, {regime: tuple(prior(k, p) for k in keys)})
 
 

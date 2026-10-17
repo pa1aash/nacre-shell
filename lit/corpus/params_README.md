@@ -175,3 +175,81 @@ C4. Each key belongs to at most one group; a key in no group has `correlation_gr
 extended with the key's grade, sources and correlation group; `priors(keys)` returns them as a tuple
 with the rank-correlation matrix over the requested keys, and `prior_set(regime)` returns a
 `nacre.screen.priors.PriorSet` for one regime.
+
+## 7. Additions at cp3 (rule version 2, P0-W1.3, 2026-10-17)
+
+Sections 1 to 6 are unchanged. The clauses below were added on day 3 to apply the cp2 and cp3
+rulings: the cp2 gap policy (decision D15), the cp2 conventions (D14), and the cp3 rulings R2, R8
+and R10 of 2026-10-17. Some values already existed when they were written; each clause therefore
+names the ruling it applies, and none of them selects or moves a value by judgement. The builder
+(`src/nacre/lit/build_params.py`) applies them from the specification, and the loader checks them.
+
+### 7.1 Roles
+
+Every entry has a `role`:
+
+- `primary`: the key the screen samples;
+- `sensitivity`: a labelled alternative to the primary key named in `of`, which is reported beside it
+  and never decides a verdict;
+- `analog`: a flagged analog prior for the key named in `of` (below);
+- `design-axis`: an input the study varies over named classes, not a quantity with one prior.
+
+`prior_set(regime)` returns primary keys only. Sensitivity and analog keys are read by name.
+
+Entries may also carry `flags`, a list of `single_source`, `analog`, `truncated`, `widened`,
+`ionic_strength` and `registered`, which the SI table prints.
+
+### 7.2 Clauses
+
+**T1 (truncation by ruling).** A ruling that requires a physical bound the sourced span crosses
+cuts the span at that bound: the prior is U1 (or L1) on the cut span, and `truncation` names the
+bound, the side, the ruling and the key that keeps the uncut prior as a `sensitivity`. The value
+is the median of the admitted points inside the cut span. Applied to `gamma_sl0_template` (cp3 R8:
+gamma >= 0; a negative template-water energy is a van Oss artifact).
+
+**W1 (single-source widening).** This applies to a Ca2+ binding or transfer free energy, or to a
+log10 binding constant, whose status is `single-source` (gap policy (iii); `theory/ignorance_priors.md`
+Section 4). The sourced span is widened symmetrically about its midpoint until its half-width is at
+least the method error m, where m is the value of `m_seq_method_error`. For a log10 constant, m is
+divided by R T ln 10 at the standard temperature 298.15 K, with R = N_A k_B taken from the exact SI
+constants. The prior is uniform over the widened span. `widening` records m, the key that supplies
+it and the unwidened span, and the entry carries the flags `single_source` and `widened`. A verdict
+whose band would change under the unwidened span is marked as resting on a single source. The flag
+`single_source` is carried even when the sourced span already exceeds m and nothing is widened.
+
+**A1 (analog prior).** Rows that measure a different but physically analogous quantity (E2 proxies)
+are admitted to a separate key with role `analog`, `of` naming the unmeasured key, and the flag
+`analog`. Clauses N1 to L1 then apply to them unchanged. An analog prior runs side by side with the
+ignorance prior of its key. It never replaces that prior, and its verdict is reported as
+conditional on the analog (`theory/ignorance_priors.md` Section 3, item 4).
+
+**I1 (ignorance prior).** An unmeasured interfacial or geometric quantity whose admissible range
+follows from physics (`theory/ignorance_priors.md`) carries `ignorance`. This records the lower and
+upper bounds as expressions in other keys, the input keys, and the section of the authority. The
+family is `none`, because the bounds move with the draws of their inputs, and the screen draws
+from the expressions. `range` is the envelope of the bounds over the input ranges (below), shown
+for information.
+
+**D1 (derived key).** A key fixed by a stated formula from other keys (a margin, a derived physical
+quantity) carries `derived`, which records the formula, the input keys and their roles. The value
+is the formula at the input values. The range is the envelope over the input ranges: the formula
+is evaluated at every corner of the input box, which is exact for formulas monotone in each input,
+and every formula used here is. A margin used as a fixed edge has family `fixed`. A derived
+quantity that moves with sampled inputs has family `none`, and the screen computes it per draw.
+
+**R1 (registered convention).** A convention set at a gate is read, not typed, from the
+machine-readable block of its authority (`theory/thresholds.md`, block `thresholds`). `registered`
+names the file, the block path and the ruling. The value is the registered primary value, and any
+registered sweep is copied beside it. The family is `fixed`, and the status is `registered`. A
+registration whose ruling has not been recorded keeps rule X2 and says so in `range_reason`.
+
+**G1 (design axis by class).** An input that a ruling makes a design axis keyed to named classes
+(cp3 R2: `E_cell_max` by cathode class) is a categorical entry. Each option names its class and
+the per-class key, which is built from that class's rows by clauses N1 to P1. The screen reports
+one verdict per class, and no class is preferred.
+
+### 7.3 Margins of the thresholds (theory/thresholds.md, conventions m_W, m_S, m_E)
+
+For each of m_W, m_S and m_E, the entry states one of two cases in `notes` and in `margin_case`:
+`evidence`, a value derived (D1) from fetched method-error rows; or `zero`, because the prior
+already carries the method error, with the reason.
