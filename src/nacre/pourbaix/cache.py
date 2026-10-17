@@ -364,11 +364,25 @@ def load(name, cache_dir=CACHE_DIR):
     return json.loads((Path(cache_dir) / name).read_text(encoding="utf-8"))
 
 
+# Materials Project licence tags admitted into any computation. GNoME-derived entries are tagged
+# BY-NC (CC BY-NC 4.0) and are excluded (standing rule on the Materials Project terms; NOTICE.md).
+ADMITTED_LICENCES = ("BY-C",)
+
+
+def excluded_entries(name, cache_dir=CACHE_DIR):
+    """(entry id, licence) of every cached entry in `name` that is not admitted."""
+    return [(str(d.get("entry_id")), (d.get("data") or {}).get("license"))
+            for d in load(name, cache_dir)["response"]
+            if (d.get("data") or {}).get("license") not in ADMITTED_LICENCES]
+
+
 def load_entries(name, cache_dir=CACHE_DIR):
-    """ComputedStructureEntry objects from one cached entries file."""
+    """ComputedStructureEntry objects from one cached entries file; entries without an admitted
+    licence tag (BY-NC, or none) are left out."""
     from pymatgen.entries.computed_entries import ComputedStructureEntry
 
-    return [ComputedStructureEntry.from_dict(d) for d in load(name, cache_dir)["response"]]
+    return [ComputedStructureEntry.from_dict(d) for d in load(name, cache_dir)["response"]
+            if (d.get("data") or {}).get("license") in ADMITTED_LICENCES]
 
 
 def files_of_kind(kind, cache_dir=CACHE_DIR):

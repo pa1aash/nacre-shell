@@ -30,20 +30,23 @@ the diagram, exactly as in the client.
 
 ## Licence and attribution
 
-- **Materials Project data.** Used under the Materials Project terms of use. Every cached entry
-  carries the licence tag `BY-C` in its `data.license` field, as returned by the API. A headless fetch of
-  the terms page (`https://materialsproject.org/about/terms`) returned HTTP 403 on 2026-10-16,
-  and the documentation export does not state the licence. The licence text and the canonical
-  citation request are therefore an outstanding action (see `ops/reports/P0-W5.1.md`); no
-  licence text is reconstructed here. Work using these data must cite the Materials Project as
-  the project requests. Retried on 2026-10-17 (P0-W5.2): the terms and cite pages
-  (`materialsproject.org/about/terms`, `/about/cite`, and the `next-gen` host) return HTTP 403 to
-  a headless client; the Wayback Machine availability API returned HTTP 429 and its CDX search was
-  "Temporarily Offline"; archive.ph timed out; the public documentation repository
-  (`github.com/materialsproject/public-docs`: README, FAQ, database versions, documentation
-  credit) states no licence and links the cite page. The licence text stays outstanding.
-- **Aqueous ion reference data.** The MPContribs project `ion_ref_data` reports its licence as
-  `CCA4` and its authors as "Various Authors, MP Team." (both as returned by the API and stored in
+- **Materials Project data.** Materials Project, database version 2026.04.13, credited as Jain et al.,
+  APL Materials 1, 011002 (2013), https://doi.org/10.1063/1.4812323, and used under the Creative Commons
+  Attribution 4.0 International licence (CC BY 4.0, https://creativecommons.org/licenses/by/4.0/), as
+  supplied by Palaash Gang and ruled on by the planning chat (P0-W5.3). Data derived from GNoME (CC BY-NC
+  4.0) are excluded: all 3715 cached entries carry the tag `BY-C` in `data.license`, a live query of the
+  1280 material ids on 2026-10-17 confirmed `BY-C` for each, and `cache.load_entries` admits `BY-C` only.
+  The changes made to the data (MP2020 compatibility corrections, aqueous-compatible adjustments, Pourbaix
+  entries rebuilt offline, the ACC offset, experimental-route corrections) and the statement that no
+  Materials Project endorsement is implied are in `NOTICE.md`; the wording for the SI and the
+  data-availability statement is in `attribution_for_paper.md`. No further raw Materials Project entries
+  are pushed to public branches; later retrievals stay local-only under `.local/`, recorded by sha256.
+  History: the terms and cite pages returned HTTP 403 to a headless client on 2026-10-16 and 2026-10-17,
+  the Wayback Machine returned HTTP 429 and "Temporarily Offline", archive.ph timed out, and the public
+  documentation repository states no licence; the terms above were therefore supplied rather than
+  fetched, and no licence text is reproduced here.
+- **Aqueous ion reference data.** Contributed data owned by its contributors. The MPContribs project
+  `ion_ref_data` reports its licence as `CCA4` (CC BY 4.0) and its authors as "Various Authors, MP Team." (both as returned by the API and stored in
   `mp_ion_reference_data.json` under `project`). The project's references are Persson et al.
   2012 (https://doi.org/10.1103/PhysRevB.85.235438), NBS Technical Note 270-1 to 270-8, and
   Pourbaix's *Atlas of Electrochemical Equilibria in Aqueous Solutions*. Each ion record names
