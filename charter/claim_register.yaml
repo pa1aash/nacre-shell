@@ -162,11 +162,16 @@ claims:
       independent kill criterion.
     computation:
       method: >-
-        Enhanced-sampling free energy of Ca2+ approach to each site (free and
-        surface-bound template), closed into a cycle against hydrated Ca2+; protonation
-        correction from Phase 1 pKa values at the regime pH; ionic-strength correction;
-        charge-neutral cells or explicit finite-size correction; conversion to the
-        enrichment factor and to local S for C3.
+        Binding free energy of Ca2+ at each template site type, closed into a thermodynamic
+        cycle against hydrated Ca2+ at the regime activity, with the protonation correction
+        at the regime pH and an ionic-strength correction. From ΔG_seq, a Langmuir isotherm
+        at the regime Ca2+ activity gives the site occupancy Θ_occ and the surface excess
+        Γ_Ca, and the Gibbs–Langmuir term (neutral-solute approximation) gives Δγ_ads, the
+        change in the template–liquid interfacial energy passed to C3. In P0, ΔG_seq comes
+        from literature binding free energies (single-source values flagged, with inflated
+        uncertainty); in the main study it comes from enhanced-sampling free energies with
+        charge-neutral cells. C2 reports these descriptors; it computes no local
+        supersaturation and is not a kill criterion.
       phase: 7
       items: [5, 6, 7, 8]
       produced_by: Phase 7 (production, frozen model after G6)
@@ -210,17 +215,12 @@ claims:
       - "carboxylate-substituted: aspartate-like motifs, alginate G-blocks, carboxymethyl-chitosan (design flag 4)"
       - "PVDF: fluoropolymer fragment with no anionic coordinating groups"
       - "competitor ions Li+ and Al3+ at the same sites (selectivity, Phase 7 item 7)"
+      - "Each control is reported through the same descriptors (ΔG_seq, Θ_occ, Γ_Ca, Δγ_ads); its effect on nucleation is judged in C3, and only C3 and C4 carry the deletion test (cp2 F3)."
     open_items:
-      - >-
-        Activity versus concentration in the enrichment factor, the site-volume definition
-        that converts a site free energy into a local concentration, and how enrichment of
-        Ca2+ alone enters S (carbonate is not assumed enriched): Phase 2 derivation freeze.
-      - >-
-        Proof that the template's action through enrichment (C2 -> S) and through wetting
-        (C3 -> f(theta)) is not double counted: Phase 2 derivation freeze (S20/S21).
-      - >-
-        Numeric margin, and whether the test is on the best site or on a site-population
-        average: registered at G2.
+      - "Site density Γ_s and interfacial layer thickness δ_s are bounded by geometry (theory/ignorance_priors.md); site types are reported per termination, with an ignorance mixture."
+      - "The double-layer (electrocapillary) contribution to γ_sl is neglected (neutral-solute approximation); ionic strength screens it; stated as a limitation."
+      - "Any Ca2+ excess at the template–crystal contact belongs inside γ_sn (cp2 F1); γ_sn is supplied from contact data at the regime state, never by adding ΔG_seq."
+      - "If ΔG_seq is not negative under the registered decision rule, the result is reported as 'the sequestration premise fails'."
     verdict_bands:
       feasible: >-
         Delta_G_seq is negative beyond the registered margin under the registered decision
