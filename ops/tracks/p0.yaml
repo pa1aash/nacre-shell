@@ -549,6 +549,7 @@ decisions:
     prediction counts as a miss; the paper states that 11 of the 12 sources already report the input-outcome
     link.', reason: 'Planning ruling. A pass that a constant predictor can reach, or that survives a swapped
     label, would not test the physics, and the source count limits what a retrodiction can show.'}
+- {id: D18, date: '2026-10-17', decision: 'D13 is accepted as a temporary marker. P0-W4.3a removes it, together with the D11 markers, before any production screen.', reason: 'The strict marker on the threshold-copy equality test is the cheapest way to force the handshake to close; regenerating the copy earlier would break ten W4 decision tests.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -677,6 +678,31 @@ lane_notes:
   note: Resolve the gamma_sl0 range extending below zero (gamma >= 0); add the keys listed in W3's cp2
     fix-up report; state whether m_seq includes the implicit-solvation error; source the ACC density and
     the C-O length for W7.
+- id: N17
+  date: '2026-10-17'
+  day: 3
+  lanes: [p0-w1, p0-w2, p0-w3, p0-w4, p0-w5, p0-w6, p0-w7, p0-w8]
+  note: '`nacre verify --strict` may fail on exactly one known item until P0-W5.3 lands: provenance, for W5 ledger
+    entries that list git-ignored *.log files. CI may fail on exactly two known items: W5''s anchor builder
+    determinism on Linux, and W6''s RDKit drawing tests needing Arial, until P0-W5.3, P0-W6.3 and the CI font
+    step (installed in .github/workflows/ci.yml) land. Lanes record these and do not chase them. Any other
+    failure counts as normal.'
+- id: N18
+  date: '2026-10-17'
+  day: 3
+  lanes: [p0-w6]
+  note: Make figure font selection fall back explicitly (Arial, then Helvetica, then the metric-compatible
+    substitute, Liberation Sans), and make the RDKit drawing tests independent of which of these is installed.
+    Release figures remain Arial, built on the Mac. CI installs fonts-liberation (RUNBOOK section 14).
+- id: N19
+  date: '2026-10-17'
+  day: 3
+  lanes: [p0-w5]
+  note: 'First, before the pod run. (a) Provenance: the ledger lists only committed artefacts; logs are either
+    committed deliberately (git add -f under results/preprint/anchor/ with a size limit) or recorded by sha256
+    with a local_only flag, matching what `nacre verify`''s provenance check accepts (read its code). (b) Anchor
+    builder determinism on Linux: canonical atom ordering and a stored conformer read back, as W7 did, so the
+    regeneration test passes on Linux at a tolerance of 1e-2 Angstrom or tighter.'
 - id: N20
   date: '2026-10-17'
   day: 3
