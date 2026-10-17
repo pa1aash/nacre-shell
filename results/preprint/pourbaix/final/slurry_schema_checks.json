@@ -1,0 +1,128 @@
+{
+ "results/preprint/pourbaix/final/slurry/aCa1e-01_CTmax.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-01_CTmin.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-01_CTvalue.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-02_CTmax.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-02_CTmin.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-02_CTvalue.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-03_CTmax.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-03_CTmin.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-03_CTvalue.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-04_CTmax.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-04_CTmin.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-04_CTvalue.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-05_CTmax.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-05_CTmin.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-05_CTvalue.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-06_CTmax.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-06_CTmin.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/slurry/aCa1e-06_CTvalue.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ }
+}

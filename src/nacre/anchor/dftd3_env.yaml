@@ -1,0 +1,10 @@
+# D3 dispersion for the anchor protocol test (session P0-W5.2), separate from the pinned xtb env.
+# The PyPI dispersion add-on of the DFT library ships Linux wheels only, so on the osx-arm64
+# laptops the D3(BJ) energy (additive, geometry-only) comes from this command-line program.
+# On the Linux pod the library's own dispersion add-on is used instead.
+#   MAMBA_ROOT_PREFIX=~/.nacre-envs/mamba-root micromamba create -y -p ~/.nacre-envs/dftd3 -f src/nacre/anchor/dftd3_env.yaml
+name: nacre-dftd3
+channels:
+  - conda-forge
+dependencies:
+  - simple-dftd3=1.5.0

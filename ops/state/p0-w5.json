@@ -1,38 +1,46 @@
 {
-  "last_session": "P0-W5.1",
+  "last_session": "P0-W5.2",
   "status": "DONE",
-  "day": 1,
+  "day": 2,
   "mp_db_version": "2026.04.13",
-  "contract_sha": "b5a944cd335eb0a8d2e708b4391c9ad82ad31dc3",
   "artifacts": {
+    "params_snapshot": "results/preprint/pourbaix/inputs/params_680a44b.json",
     "cache": "results/preprint/pourbaix/cache/",
-    "cache_hash": "sha256:a0d055c72668051fd7568d7d0e689742a0b1a6aa8d4f9d772be8c6a210dbebb4",
-    "configs": [
-      "results/preprint/pourbaix/config/mock.yaml",
-      "results/preprint/pourbaix/config/smoke.yaml"
+    "gas_reference": [
+      "results/preprint/pourbaix/gas_reference.md",
+      "results/preprint/pourbaix/gas_reference.json"
     ],
-    "runs": [
-      "results/preprint/pourbaix/mock/",
-      "results/preprint/pourbaix/smoke/"
-    ],
+    "config": "results/preprint/pourbaix/config/final.yaml",
+    "r_slurry": {
+      "summary": "results/preprint/pourbaix/final/slurry_summary.json",
+      "documents": "results/preprint/pourbaix/final/slurry/",
+      "fig7": "results/preprint/pourbaix/final/fig7_pourbaix_input.json"
+    },
+    "r_cell": {
+      "summary": "results/preprint/pourbaix/final/cell_summary.json",
+      "documents": "results/preprint/pourbaix/final/cell/"
+    },
+    "schema_v2": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
+    "dft_protocol": "src/nacre/anchor/PROTOCOL.md",
+    "dft_test": "results/preprint/anchor/protocol_test/summary.json",
+    "dispatch": "jobs/preprint/",
+    "dispatch_dry_run": "results/preprint/anchor/dispatch/dryrun-probe-d7e407c/",
     "ledger": "jobs/ledger/p0-w5.jsonl",
+    "report": "ops/reports/P0-W5.2.md",
     "code": [
       "src/nacre/pourbaix/",
-      "src/nacre/anchor/"
-    ],
-    "anchor_structures": "results/preprint/anchor/structures/",
-    "xtb_smoke": "results/preprint/anchor/xtb_smoke/summary.json",
-    "xtb_env_spec": "src/nacre/anchor/xtb_env.yaml",
-    "report": "ops/reports/P0-W5.1.md"
+      "src/nacre/anchor/",
+      "jobs/preprint/"
+    ]
   },
   "notes": [
-    "All Pourbaix runs are mock or smoke; final runs are P0-W5.2.",
-    "R-cell active sink is a mock choice (nitrate); the cp2 Q9 ruling switches it in the run configuration.",
-    "Al2O3 oxidation limit is undetermined under the nitrate sink (Al(NO3)3 not in MP); finite under sulfate and chloride.",
-    "CO2 enthalpy reference moves the CaCO3 oxidation onset by 0.61 V; benchmark needed in P0-W5.2.",
-    "ACC offset awaits lit/params.yaml from P0-W1.2.",
-    "Schema differences with W4 and W6 are listed in the report for Day 2.",
-    "xtb 6.6.1 and CREST 2.12 run on osx-arm64 only with libgfortran5 13.4.0 pinned.",
-    "fix-up: pH axis"
-  ]
+    "Gas-reference benchmark committed before any window result; schemes janaf and mp bracket experiment (+0.38 and -0.23 V per electron on CaCO3 -> Ca + CO2 + 1/2 O2); all carried, plus the all-experimental route expt.",
+    "R-slurry: Al(OH)4- + CaCO3 over the whole region at all 18 design points; calcite on the hull; proxy calcite Ksp 2.5 log units too low; calcite falsifiability control does not fail where it must (detection at log10 Omega < -6.67), so C5s is at best inconclusive.",
+    "R-cell F5: CaCO3 inconclusive (LiClO4 onsets janaf 4.320, mp 3.705, expt 3.938 V straddle 4.3 V; LiBOB, LiPCP undetermined); Al2O3 inconclusive (Al(ClO4)3, Al(BOB)3, Al(PCP)3 undetermined); solvation gap; benchmark-corrected schemes converge at 3.94 V.",
+    "DFT protocol HSE06/def2-TZVP/D3(BJ)/SMD (SMD CDS missing locally; IEF-PCM with SMD radii run); test ran, deterministic; dG_bind acetate -16.4 kJ/mol vs comparators -9.5 and -10.4.",
+    "Dispatch dry run passed on the local transport; the pod run (P0-W5.3) needs the SSH string and a >=32 vCPU/128 GB pod.",
+    "MP licence text still outstanding."
+  ],
+  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e"
 }

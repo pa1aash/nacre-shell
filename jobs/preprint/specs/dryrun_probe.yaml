@@ -1,0 +1,11 @@
+# Full dry run of the dispatch on the local transport (P0-W5.2). No physics: see probe.py.
+id: dryrun-probe
+mock: true
+command: python3 jobs/preprint/probe.py 7
+outputs_dir: outputs
+heartbeat_s: 2
+stale_after_s: 60
+launcher: tmux
+# exercised at job start: a job-local virtual environment with one pinned package, logged
+packages: ["six==1.16.0"]
+install_command: "python3 -m venv .jobenv && .jobenv/bin/python -m pip install --quiet --disable-pip-version-check {packages}"

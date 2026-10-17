@@ -1,0 +1,30 @@
+{
+ "results/preprint/pourbaix/final/cell/LiBOB.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/cell/LiClO4.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/cell/LiPCP.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ },
+ "results/preprint/pourbaix/final/cell/solvated.json": {
+  "checked": true,
+  "errors": [],
+  "schema": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88:configs/preprint/results_schema.json",
+  "subschema": null,
+  "valid": true
+ }
+}

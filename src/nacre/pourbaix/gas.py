@@ -55,6 +55,18 @@ def formation_enthalpy_ev(species, T, cache_dir=cache.CACHE_DIR):
     return _interp(table(species, cache_dir), "dfH", T) / KJ_PER_MOL_PER_EV
 
 
+def formation_free_energy_ev(species, T, cache_dir=cache.CACHE_DIR):
+    """Standard Gibbs energy of formation dfG(T), eV per formula unit (gas or condensed table)."""
+    return _interp(table(species, cache_dir), "dfG", T) / KJ_PER_MOL_PER_EV
+
+
+def row_kj(species, T, cache_dir=cache.CACHE_DIR):
+    """The table's dfH, dfG (kJ mol^-1) and S (J K^-1 mol^-1) at T, as printed (interpolated)."""
+    t = table(species, cache_dir)
+    return {"dfH_kJ_per_mol": _interp(t, "dfH", T), "dfG_kJ_per_mol": _interp(t, "dfG", T),
+            "S_J_per_K_mol": _interp(t, "S", T), "table": t["url"]}
+
+
 def locator(species, T, cache_dir=cache.CACHE_DIR):
     t = table(species, cache_dir)
     return "%s, row(s) bracketing T = %s K" % (t["url"], T)

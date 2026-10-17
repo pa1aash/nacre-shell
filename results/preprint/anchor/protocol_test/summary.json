@@ -1,0 +1,613 @@
+{
+ "crest": {
+  "best": "/var/folders/jl/pg3w88vj2712qg1pkv2y92840000gn/T/w52-dq_x3q98/crest/crest_best.xyz",
+  "command": "crest in.xyz --gfn2 --alpb water --chrg 1 --uhf 0 -T 1 --quick",
+  "n_conformers": 8,
+  "normal_termination": true,
+  "returncode": 0,
+  "species": "Ca_acetate_bidentate_w4",
+  "status": "ok",
+  "threads": 1,
+  "wall_s": 294.3
+ },
+ "cycle": {
+  "T_K": 298.15,
+  "comparators": {
+   "dg_bind_ca_acetate": {
+    "key": "dg_bind_ca_acetate",
+    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "sources": [
+     "TH-026",
+     "TH-029"
+    ],
+    "status": "single-source",
+    "value_J_per_mol": -9500.0
+   },
+   "log10_k_ca_carboxylate": {
+    "as_dG_J_per_mol": -10417.117342126847,
+    "key": "log10_k_ca_carboxylate",
+    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "sources": [
+     "TF-019",
+     "TF-020",
+     "TD-051",
+     "TF-018"
+    ],
+    "status": "sourced",
+    "value": 1.825
+   }
+  },
+  "dG_bind_J_per_mol": -16403.710970163345,
+  "error_budget": {
+   "electronic": {
+    "key": "m_seq_method_error",
+    "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+    "sources": [
+     "TE-061",
+     "TE-062",
+     "TE-063"
+    ],
+    "status": "single-source"
+   },
+   "electronic_J_per_mol": 7196.48,
+   "solvation_rows": [
+    "TE-067",
+    "TE-081"
+   ]
+  },
+  "net_standard_state_check": 0.0,
+  "reaction": "[Ca(H2O)6]2+ + OAc- -> [Ca(OAc)(H2O)4]+ + (H2O)2",
+  "status": "ok",
+  "status_note": "pipeline test at a reduced protocol (SMD without CDS, xtb thermal terms); never a parameter",
+  "stoichiometry": {
+   "products": 2,
+   "reactants": 2,
+   "released_waters": 2
+  },
+  "terms_J_per_mol": {
+   "E_disp": 1295.8193912384922,
+   "E_el": -796130.7214559317,
+   "G_RRHO": -13526.531984948931,
+   "RT_ln_H2O_over_k": 8231.194442844673,
+   "dG_1atm_to_1M": 0.0,
+   "dG_solv": 783726.5286370562
+  },
+  "water_concentration_mol_per_L": 55.344296619314264,
+  "water_density_source": {
+   "key": "water_density",
+   "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+   "sources": [
+    "TF-049"
+   ],
+   "status": "single-source"
+  },
+  "water_mode": "cluster"
+ },
+ "determinism": {
+  "abs_diff_Eh": 0.0,
+  "deterministic": true,
+  "first_Eh": -1135.391450482573,
+  "phase": "gas",
+  "rerun_wall_s": 47.47,
+  "second_Eh": -1135.391450482573,
+  "species": "Ca_aqua_w6",
+  "tolerance_Eh": 1e-08
+ },
+ "generated_utc": "2026-10-17T00:13:13Z",
+ "git_dirty": false,
+ "git_sha": "0e792ce0a4f6ff93e2959688f8aa0ec5debc864f",
+ "level": {
+  "basis": "def2-TZVP",
+  "density_fitting": "def2-universal-jkfit",
+  "dispersion": "D3(BJ)",
+  "ecp_ca": null,
+  "functional": "HSE06",
+  "geometries": "GFN2-xTB/ALPB(water) optimisation; CREST conformer search for complexes",
+  "solvent_run_locally": "IEF-PCM with the SMD intrinsic radii (SMD electrostatics); the SMD CDS term omitted",
+  "solvent_target": "SMD (water)",
+  "standard_state": "1 atm -> 1 M for every solute (nacre.anchor.cycle); water as one cluster with RT ln([H2O]/k)",
+  "thermal": "GFN2-xTB/ALPB(water) harmonic frequencies, xtb's modified rigid-rotor harmonic-oscillator free energy at 298.15 K"
+ },
+ "memory_log": [
+  {
+   "free_percent": 71,
+   "step": "crest",
+   "utc": "2026-10-16T23:39:26Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 68,
+   "step": "xtb Ca_aqua_w6",
+   "utc": "2026-10-16T23:44:20Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 68,
+   "step": "xtb ligand_acetate",
+   "utc": "2026-10-16T23:44:21Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 68,
+   "step": "xtb Ca_acetate_bidentate_w4",
+   "utc": "2026-10-16T23:44:21Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 68,
+   "step": "xtb water_w2",
+   "utc": "2026-10-16T23:44:23Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 69,
+   "step": "dft gas Ca_aqua_w6",
+   "utc": "2026-10-16T23:44:23Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 65,
+   "step": "dft solvent Ca_aqua_w6",
+   "utc": "2026-10-16T23:44:55Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 69,
+   "step": "dft gas ligand_acetate",
+   "utc": "2026-10-16T23:52:03Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 69,
+   "step": "dft solvent ligand_acetate",
+   "utc": "2026-10-16T23:52:09Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 71,
+   "step": "dft gas Ca_acetate_bidentate_w4",
+   "utc": "2026-10-16T23:52:41Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 73,
+   "step": "dft solvent Ca_acetate_bidentate_w4",
+   "utc": "2026-10-16T23:53:34Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 71,
+   "step": "dft gas water_w2",
+   "utc": "2026-10-17T00:11:59Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 72,
+   "step": "dft solvent water_w2",
+   "utc": "2026-10-17T00:12:03Z",
+   "waited_s": 0
+  },
+  {
+   "free_percent": 73,
+   "step": "dft gas rerun Ca_aqua_w6",
+   "utc": "2026-10-17T00:12:25Z",
+   "waited_s": 0
+  }
+ ],
+ "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+ "question": "binding free energy of acetate to hydrated Ca2+ by the protocol of PROTOCOL.md, timings, determinism and a production estimate (pipeline test, not a parameter)",
+ "scaling": {
+  "excluded": "DFT geometry optimisations and DFT frequencies (the test uses GFN2-xTB for both); if production adds them, multiply by the number of gradient and Hessian steps",
+  "fits": {
+   "sp_gas": {
+    "exponent": 2.186229028986778,
+    "n_points": 4,
+    "prefactor_s": 0.0001267998995735277
+   },
+   "sp_solv": {
+    "exponent": 2.8921715290511067,
+    "n_points": 4,
+    "prefactor_s": 3.4978915140989155e-05
+   }
+  },
+  "laptop_total_s": 32714.754823646785,
+  "per_species": {
+   "Ca_acetate_bidentate_w4": {
+    "laptop_s": 4218.312249033861,
+    "nao": 350,
+    "structures": 5
+   },
+   "Ca_acetate_monodentate_w5": {
+    "laptop_s": 5872.352122444136,
+    "nao": 393,
+    "structures": 5
+   },
+   "Ca_aqua_w6": {
+    "laptop_s": 513.1899088511252,
+    "nao": 294,
+    "structures": 1
+   },
+   "Ca_catecholate_dianion_bidentate_w4": {
+    "laptop_s": 10401.196608036647,
+    "nao": 480,
+    "structures": 5
+   },
+   "Ca_catecholate_monoanion_bidentate_w4": {
+    "laptop_s": 10777.511372618159,
+    "nao": 486,
+    "structures": 5
+   },
+   "ligand_acetate": {
+    "laptop_s": 65.12845000681426,
+    "nao": 142,
+    "structures": 1
+   },
+   "ligand_catecholate_dianion": {
+    "laptop_s": 411.23604969758577,
+    "nao": 272,
+    "structures": 1
+   },
+   "ligand_catecholate_monoanion": {
+    "laptop_s": 437.5893443964111,
+    "nao": 278,
+    "structures": 1
+   },
+   "water_w1": {
+    "laptop_s": 2.3262019180302955,
+    "nao": 43,
+    "structures": 1
+   },
+   "water_w2": {
+    "laptop_s": 15.912516644015826,
+    "nao": 86,
+    "structures": 1
+   }
+  },
+  "pod": {
+   "conformers_per_complex_assumed": 5,
+   "jobs_in_parallel": 4,
+   "memory_note": "measured laptop peak RSS doubled for headroom; well below 128 GB / jobs",
+   "memory_per_job_GB_needed": 6.2,
+   "parallel_efficiency_assumed": 0.6,
+   "ram_GB": 128,
+   "threads_per_job": 8,
+   "vcpu": 32,
+   "wall_s_estimate": 1703.8934803982702
+  }
+ },
+ "session": "P0-W5.2",
+ "species": {
+  "Ca_acetate_bidentate_w4": {
+   "charge": 1,
+   "d3": {
+    "E_disp_Eh": -0.011668887764691842,
+    "damping": {
+     "a1": 0.383,
+     "a2": 5.685,
+     "alp": 14.0,
+     "damping": "rational",
+     "s6": 1.0,
+     "s8": 2.31,
+     "s9": 0.0
+    },
+    "program": "s-dftd3 version 1.5.0"
+   },
+   "geometry": "results/preprint/anchor/protocol_test/geometries/Ca_acetate_bidentate_w4.xyz",
+   "role": "complex (n = 4, bidentate)",
+   "sp_gas": {
+    "E_Eh": -1211.305364310465,
+    "auxbasis": "def2-universal-jkfit",
+    "basis": "def2-TZVP",
+    "converged": true,
+    "n_electrons": 90,
+    "nao": 350,
+    "peak_rss_MB": 2236.5,
+    "process_wall_s": 53.05,
+    "pyscf": "2.14.0",
+    "solvent": false,
+    "solvent_note": null,
+    "status": "ok",
+    "threads": 1,
+    "threads_requested": 2,
+    "wall_s": 52.52,
+    "xc": "HSE06"
+   },
+   "sp_solv": {
+    "E_Eh": -1211.4267214669565,
+    "auxbasis": "def2-universal-jkfit",
+    "basis": "def2-TZVP",
+    "converged": true,
+    "n_electrons": 90,
+    "nao": 350,
+    "peak_rss_MB": 3099.0,
+    "process_wall_s": 1105.03,
+    "pyscf": "2.14.0",
+    "solvent": true,
+    "solvent_note": "SMD electrostatics only (IEF-PCM with SMD radii); CDS term set to zero",
+    "status": "ok",
+    "threads": 1,
+    "threads_requested": 2,
+    "wall_s": 1103.75,
+    "xc": "HSE06"
+   },
+   "xtb": {
+    "E_xtb_Eh": -34.642330171303,
+    "G_RRHO_Eh": 0.093540145787,
+    "attempts": [
+     {
+      "E_xtb_Eh": -34.642272566655,
+      "G_RRHO_Eh": 0.091102151077,
+      "command": "xtb in.xyz --ohess normal --gfn 2 --chrg 1 --uhf 0 --alpb water -P 1",
+      "n_imaginary": 2,
+      "returncode": 0,
+      "wall_s": 0.8
+     },
+     {
+      "E_xtb_Eh": -34.642330171303,
+      "G_RRHO_Eh": 0.093540145787,
+      "command": "xtb in.xyz --ohess tight --gfn 2 --chrg 1 --uhf 0 --alpb water -P 1",
+      "n_imaginary": 0,
+      "returncode": 0,
+      "wall_s": 0.9
+     }
+    ],
+    "command": "xtb in.xyz --ohess tight --gfn 2 --chrg 1 --uhf 0 --alpb water -P 1",
+    "n_imaginary": 0,
+    "restarts": 1,
+    "status": "ok",
+    "wall_s": 1.7
+   }
+  },
+  "Ca_aqua_w6": {
+   "charge": 2,
+   "d3": {
+    "E_disp_Eh": -0.010475232557654987,
+    "damping": {
+     "a1": 0.383,
+     "a2": 5.685,
+     "alp": 14.0,
+     "damping": "rational",
+     "s6": 1.0,
+     "s8": 2.31,
+     "s9": 0.0
+    },
+    "program": "s-dftd3 version 1.5.0"
+   },
+   "geometry": "results/preprint/anchor/protocol_test/geometries/Ca_aqua_w6.xyz",
+   "role": "aqua ion (m = 6)",
+   "sp_gas": {
+    "E_Eh": -1135.391450482573,
+    "auxbasis": "def2-universal-jkfit",
+    "basis": "def2-TZVP",
+    "converged": true,
+    "n_electrons": 78,
+    "nao": 294,
+    "peak_rss_MB": 1610.4,
+    "process_wall_s": 31.92,
+    "pyscf": "2.14.0",
+    "solvent": false,
+    "solvent_note": null,
+    "status": "ok",
+    "threads": 1,
+    "threads_requested": 2,
+    "wall_s": 31.32,
+    "xc": "HSE06"
+   },
+   "sp_solv": {
+    "E_Eh": -1135.7179122902958,
+    "auxbasis": "def2-universal-jkfit",
+    "basis": "def2-TZVP",
+    "converged": true,
+    "n_electrons": 78,
+    "nao": 294,
+    "peak_rss_MB": 3172.1,
+    "process_wall_s": 428.53,
+    "pyscf": "2.14.0",
+    "solvent": true,
+    "solvent_note": "SMD electrostatics only (IEF-PCM with SMD radii); CDS term set to zero",
+    "status": "ok",
+    "threads": 1,
+    "threads_requested": 2,
+    "wall_s": 427.69,
+    "xc": "HSE06"
+   },
+   "xtb": {
+    "E_xtb_Eh": -30.536264940197,
+    "G_RRHO_Eh": 0.090797366458,
+    "attempts": [
+     {
+      "E_xtb_Eh": -30.536264940197,
+      "G_RRHO_Eh": 0.090797366458,
+      "command": "xtb in.xyz --ohess normal --gfn 2 --chrg 2 --uhf 0 --alpb water -P 1",
+      "n_imaginary": 0,
+      "returncode": 0,
+      "wall_s": 1.1
+     }
+    ],
+    "command": "xtb in.xyz --ohess normal --gfn 2 --chrg 2 --uhf 0 --alpb water -P 1",
+    "n_imaginary": 0,
+    "restarts": 0,
+    "status": "ok",
+    "wall_s": 1.1
+   }
+  },
+  "ligand_acetate": {
+   "charge": -1,
+   "d3": {
+    "E_disp_Eh": -0.0020930350677008077,
+    "damping": {
+     "a1": 0.383,
+     "a2": 5.685,
+     "alp": 14.0,
+     "damping": "rational",
+     "s6": 1.0,
+     "s8": 2.31,
+     "s9": 0.0
+    },
+    "program": "s-dftd3 version 1.5.0"
+   },
+   "geometry": "results/preprint/anchor/protocol_test/geometries/ligand_acetate.xyz",
+   "role": "free ligand",
+   "sp_gas": {
+    "E_Eh": -228.38034562541986,
+    "auxbasis": "def2-universal-jkfit",
+    "basis": "def2-TZVP",
+    "converged": true,
+    "n_electrons": 32,
+    "nao": 142,
+    "peak_rss_MB": 585.7,
+    "process_wall_s": 5.2,
+    "pyscf": "2.14.0",
+    "solvent": false,
+    "solvent_note": null,
+    "status": "ok",
+    "threads": 1,
+    "threads_requested": 2,
+    "wall_s": 4.6,
+    "xc": "HSE06"
+   },
+   "sp_solv": {
+    "E_Eh": -228.50321737631498,
+    "auxbasis": "def2-universal-jkfit",
+    "basis": "def2-TZVP",
+    "converged": true,
+    "n_electrons": 32,
+    "nao": 142,
+    "peak_rss_MB": 1508.6,
+    "process_wall_s": 32.15,
+    "pyscf": "2.14.0",
+    "solvent": true,
+    "solvent_note": "SMD electrostatics only (IEF-PCM with SMD radii); CDS term set to zero",
+    "status": "ok",
+    "threads": 1,
+    "threads_requested": 2,
+    "wall_s": 31.61,
+    "xc": "HSE06"
+   },
+   "xtb": {
+    "E_xtb_Eh": -14.273531453013,
+    "G_RRHO_Eh": 0.020204135666,
+    "attempts": [
+     {
+      "E_xtb_Eh": -14.273533924312,
+      "G_RRHO_Eh": 0.021606777278,
+      "command": "xtb in.xyz --ohess normal --gfn 2 --chrg -1 --uhf 0 --alpb water -P 1",
+      "n_imaginary": 1,
+      "returncode": 0,
+      "wall_s": 0.1
+     },
+     {
+      "E_xtb_Eh": -14.273531453013,
+      "G_RRHO_Eh": 0.020204135666,
+      "command": "xtb in.xyz --ohess tight --gfn 2 --chrg -1 --uhf 0 --alpb water -P 1",
+      "n_imaginary": 0,
+      "returncode": 0,
+      "wall_s": 0.1
+     }
+    ],
+    "command": "xtb in.xyz --ohess tight --gfn 2 --chrg -1 --uhf 0 --alpb water -P 1",
+    "n_imaginary": 0,
+    "restarts": 1,
+    "status": "ok",
+    "wall_s": 0.2
+   }
+  },
+  "water_w2": {
+   "charge": 0,
+   "d3": {
+    "E_disp_Eh": -0.00040582832031959724,
+    "damping": {
+     "a1": 0.383,
+     "a2": 5.685,
+     "alp": 14.0,
+     "damping": "rational",
+     "s6": 1.0,
+     "s8": 2.31,
+     "s9": 0.0
+    },
+    "program": "s-dftd3 version 1.5.0"
+   },
+   "geometry": "results/preprint/anchor/protocol_test/geometries/water_w2.xyz",
+   "role": "released waters as one (H2O)2 cluster",
+   "sp_gas": {
+    "E_Eh": -152.76966197493294,
+    "auxbasis": "def2-universal-jkfit",
+    "basis": "def2-TZVP",
+    "converged": true,
+    "n_electrons": 20,
+    "nao": 86,
+    "peak_rss_MB": 363.9,
+    "process_wall_s": 3.79,
+    "pyscf": "2.14.0",
+    "solvent": false,
+    "solvent_note": null,
+    "status": "ok",
+    "threads": 1,
+    "threads_requested": 2,
+    "wall_s": 2.67,
+    "xc": "HSE06"
+   },
+   "sp_solv": {
+    "E_Eh": -152.7991327071852,
+    "auxbasis": "def2-universal-jkfit",
+    "basis": "def2-TZVP",
+    "converged": true,
+    "n_electrons": 20,
+    "nao": 86,
+    "peak_rss_MB": 862.7,
+    "process_wall_s": 21.69,
+    "pyscf": "2.14.0",
+    "solvent": true,
+    "solvent_note": "SMD electrostatics only (IEF-PCM with SMD radii); CDS term set to zero",
+    "status": "ok",
+    "threads": 1,
+    "threads_requested": 2,
+    "wall_s": 20.79,
+    "xc": "HSE06"
+   },
+   "xtb": {
+    "E_xtb_Eh": -10.171940698521,
+    "G_RRHO_Eh": 0.012309372394,
+    "attempts": [
+     {
+      "E_xtb_Eh": -10.171616592454,
+      "G_RRHO_Eh": 0.011376703007,
+      "command": "xtb in.xyz --ohess normal --gfn 2 --chrg 0 --uhf 0 --alpb water -P 1",
+      "n_imaginary": 1,
+      "returncode": 0,
+      "wall_s": 0.1
+     },
+     {
+      "E_xtb_Eh": -10.171896816077,
+      "G_RRHO_Eh": 0.013117540008,
+      "command": "xtb in.xyz --ohess tight --gfn 2 --chrg 0 --uhf 0 --alpb water -P 1",
+      "n_imaginary": 1,
+      "returncode": 0,
+      "wall_s": 0.1
+     },
+     {
+      "E_xtb_Eh": -10.171900625866,
+      "G_RRHO_Eh": 0.012035798417,
+      "command": "xtb in.xyz --ohess tight --gfn 2 --chrg 0 --uhf 0 --alpb water -P 1",
+      "n_imaginary": 1,
+      "returncode": 0,
+      "wall_s": 0.0
+     },
+     {
+      "E_xtb_Eh": -10.171940698521,
+      "G_RRHO_Eh": 0.012309372394,
+      "command": "xtb in.xyz --ohess tight --gfn 2 --chrg 0 --uhf 0 --alpb water -P 1",
+      "n_imaginary": 0,
+      "returncode": 0,
+      "wall_s": 0.0
+     }
+    ],
+    "command": "xtb in.xyz --ohess tight --gfn 2 --chrg 0 --uhf 0 --alpb water -P 1",
+    "n_imaginary": 0,
+    "restarts": 3,
+    "status": "ok",
+    "wall_s": 0.2
+   }
+  }
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "commit": "d7e407ca72a3feacbeeaaba0fcd5cbf5eaef353c",
+ "file_list_sha256": "2085a32b01131820e7ebf60e8f34b4108015493ba8b0917620455f7cf265ddb4",
+ "has_runner_source": true,
+ "n_files": 585,
+ "python": "3.13.12",
+ "run_id": "dryrun-probe-d7e407c",
+ "slept_s": 7.0
+}

@@ -1,0 +1,87 @@
+{
+ "mock": false,
+ "note": "Exported by lane p0-w5 (P0-W5.2) from results/preprint/pourbaix/final/slurry/aCa1e-03_CTvalue.json, the central design point. Potentials in V vs SHE. R-cell is not a (pH, E) panel; see final/cell/. Thermodynamic proxy, no rates.",
+ "provenance": {
+  "config_file": "results/preprint/pourbaix/config/final.yaml",
+  "config_file_hash": "sha256:c8eee88424c65d17975ca5291f424498820edd8d98e3e1eab060ba8db62144c0",
+  "config_hash": "sha256:1203cb064ca5b11305128f4a63d8d301f9f4ba03080661422e23fddc263f152d",
+  "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
+  "git_dirty": false,
+  "git_sha": "130e478c20c05f88c1fb045b5f02aaf15a6262ef",
+  "params_sha": "680a44b2efdb94694b25f5317ddc3d73db2f117c",
+  "schema_sha": "16fe14d4454fd1b4b79ed8454a557b6d68aa7b88",
+  "thresholds_file": null,
+  "thresholds_hash": null
+ },
+ "regimes": [
+  {
+   "conditions": {
+    "C_T_mol_kg": 0.01075,
+    "a_Ca": 0.001,
+    "reference_electrode": "SHE"
+   },
+   "domains": [
+    {
+     "phase": "mixed",
+     "polygon": [
+      [
+       10.0,
+       -1.4617
+      ],
+      [
+       13.0,
+       -1.4617
+      ],
+      [
+       13.0,
+       -0.4758
+      ],
+      [
+       10.0,
+       -0.4758
+      ]
+     ],
+     "species": "Al(OH)4[-] + CaCO3(s)"
+    }
+   ],
+   "id": "R-slurry",
+   "ph_range": [
+    10.0,
+    13.0
+   ],
+   "potential_range": [
+    -1.4617,
+    -0.4758
+   ],
+   "water_lines": [
+    {
+     "kind": "upper",
+     "points": [
+      [
+       10.0,
+       0.63815
+      ],
+      [
+       13.0,
+       0.46085
+      ]
+     ]
+    },
+    {
+     "kind": "lower",
+     "points": [
+      [
+       10.0,
+       -0.591
+      ],
+      [
+       13.0,
+       -0.7683
+      ]
+     ]
+    }
+   ]
+  }
+ ],
+ "schema": "fig7-pourbaix/assumed-v0"
+}

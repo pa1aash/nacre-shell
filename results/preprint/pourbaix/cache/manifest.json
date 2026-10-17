@@ -6,6 +6,50 @@
   "pymatgen": "2026.9.24",
   "requests": "2.34.2"
  },
+ "extensions": [
+  {
+   "client_versions": {
+    "emmet-core": "0.87.3",
+    "mp-api": "0.46.5",
+    "mpcontribs-client": null,
+    "pymatgen": "2026.9.24",
+    "requests": "2.34.2"
+   },
+   "files": [
+    "mp_entries_cell_Li-Ca-Cl-O.json",
+    "mp_entries_cell_Li-Al-Cl-O.json",
+    "mp_entries_cell_Li-Ca-B-C-O.json",
+    "mp_entries_cell_Li-Al-B-C-O.json",
+    "mp_entries_cell_Li-Ca-C-N.json",
+    "mp_entries_cell_Li-Al-C-N.json",
+    "janaf_Li2CO3.json",
+    "janaf_Li2O.json",
+    "janaf_Na2CO3.json",
+    "janaf_Na2O.json",
+    "janaf_CaO.json",
+    "janaf_LiClO4.json",
+    "janaf_LiCl.json",
+    "janaf_CaCl2.json",
+    "janaf_AlCl3.json"
+   ],
+   "session": "P0-W5.2",
+   "utc": "2026-10-16T21:55:36Z"
+  },
+  {
+   "client_versions": {
+    "emmet-core": "0.87.3",
+    "mp-api": "0.46.5",
+    "mpcontribs-client": null,
+    "pymatgen": "2026.9.24",
+    "requests": "2.34.2"
+   },
+   "files": [
+    "nbs1982_ocr.json"
+   ],
+   "session": "P0-W5.2",
+   "utc": "2026-10-16T22:14:10Z"
+  }
+ ],
  "files": [
   {
    "file": "mp_ion_reference_data.json",
@@ -243,6 +287,262 @@
    },
    "retrieved_utc": "2026-10-16T12:39:42Z",
    "sha256": "sha256:0606bdb8b1bf9906711bcd7d7a9d025dcad7771afb5ca6641838dfa27aa73234"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "mp_entries_cell_Li-Ca-Cl-O.json",
+   "kind": "mp_entries",
+   "n": 124,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Ca",
+     "Cl",
+     "Li",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T21:53:42Z",
+   "sha256": "sha256:2536eae9562364935cace5bf30fafc807ad9bd0c42cfd5481c10b63eb21f1c81"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "mp_entries_cell_Li-Al-Cl-O.json",
+   "kind": "mp_entries",
+   "n": 223,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "Cl",
+     "Li",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T21:53:55Z",
+   "sha256": "sha256:d1b2f50d884c2f9e714f98eba51494a9a28182e4713af82c2795abe1c44281c6"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "mp_entries_cell_Li-Ca-B-C-O.json",
+   "kind": "mp_entries",
+   "n": 411,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "B",
+     "C",
+     "Ca",
+     "Li",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T21:54:23Z",
+   "sha256": "sha256:99e926ee2b63dfa3051b47bf727b135d1e4589c3ea674a8620613963b9c88c2d"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "mp_entries_cell_Li-Al-B-C-O.json",
+   "kind": "mp_entries",
+   "n": 456,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "B",
+     "C",
+     "Li",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T21:54:55Z",
+   "sha256": "sha256:b31a90dd2055d50a33bf69f04c5567e0a2fe29d7c22f2fa473b0d4e34304f52d"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "mp_entries_cell_Li-Ca-C-N.json",
+   "kind": "mp_entries",
+   "n": 216,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "C",
+     "Ca",
+     "Li",
+     "N"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T21:55:14Z",
+   "sha256": "sha256:c8eccdbd9d6ec95eb739f647d6a99e73ccdf607371df95d2b73e422ca516b6c7"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "mp_entries_cell_Li-Al-C-N.json",
+   "kind": "mp_entries",
+   "n": 195,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "C",
+     "Li",
+     "N"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-16T21:55:28Z",
+   "sha256": "sha256:213fbc3b572846ca1da2affec53ee6467c82296122edd48a65401e99ece10152"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "janaf_Li2CO3.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/C-076.txt"
+   },
+   "retrieved_utc": "2026-10-16T21:55:29Z",
+   "sha256": "sha256:69255fdbe861f20c466d1c97fc58707a41b9724c34e9c42cf9013f730b145448"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "janaf_Li2O.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/Li-014.txt"
+   },
+   "retrieved_utc": "2026-10-16T21:55:30Z",
+   "sha256": "sha256:40c47aca972c38427e3b73f9f74fb74dc053ddbbb88bfdbf37a98d86e78586a6"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "janaf_Na2CO3.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/C-090.txt"
+   },
+   "retrieved_utc": "2026-10-16T21:55:31Z",
+   "sha256": "sha256:e400a6cfb0f8485215ce0d1a79e2686148e86d658c1efb783aea3d8992d10db5"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "janaf_Na2O.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/Na-012.txt"
+   },
+   "retrieved_utc": "2026-10-16T21:55:32Z",
+   "sha256": "sha256:1480ce509d2147d148278a4ed2cbeb92a642fbdf5cc726f058de059d6b87861c"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "janaf_CaO.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/Ca-027.txt"
+   },
+   "retrieved_utc": "2026-10-16T21:55:33Z",
+   "sha256": "sha256:9f767f469525791dd8e1d2da91a9bd196189a739d705fa46b72a3d6cd6450c5a"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "janaf_LiClO4.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/Cl-046.txt"
+   },
+   "retrieved_utc": "2026-10-16T21:55:33Z",
+   "sha256": "sha256:97bbfccff2b4011cb0f462c964f3e68b104bf2ab1b2692490a8abdac27c58d76"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "janaf_LiCl.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/Cl-041.txt"
+   },
+   "retrieved_utc": "2026-10-16T21:55:34Z",
+   "sha256": "sha256:717b72d1c151dfd0444f3d6943c3143cce4d2559cdf8bcafeb3a112a81648e8a"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "janaf_CaCl2.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/Ca-009.txt"
+   },
+   "retrieved_utc": "2026-10-16T21:55:35Z",
+   "sha256": "sha256:5fb274506a8d5790b86a606d443f8306cc1f3dceaed13ccb184eca2be0fe3c4b"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "janaf_AlCl3.json",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/Al-025.txt"
+   },
+   "retrieved_utc": "2026-10-16T21:55:36Z",
+   "sha256": "sha256:cb220c4933fc98aee5ebc65898ae7e25c732c143c5bc320e1b0f123a97a1e6ed"
+  },
+  {
+   "added_by": "P0-W5.2",
+   "file": "nbs1982_ocr.json",
+   "kind": "nbs_ocr",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf"
+   },
+   "retrieved_utc": "2026-10-16T22:14:10Z",
+   "sha256": "sha256:4a91b32b73e066b44bb797fab4f9c87b8fbd2aec34957467f3184cb6374bc7c2"
   }
  ],
  "mp_database_version": "2026.04.13",

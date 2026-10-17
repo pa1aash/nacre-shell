@@ -97,14 +97,28 @@ def test_different_seed_changes_the_waters():
     assert not np.allclose(np.asarray(a["Ca_aqua_w6"].coords), np.asarray(c["Ca_aqua_w6"].coords))
 
 
+COORD_TOL_A = 1e-3  # force-field coordinates differ by about 4e-4 Angstrom between macOS and Linux (decision D12)
+
+
+def _parse_xyz(text):
+    """(symbols, coordinates) of an xyz file; the comment line is not compared."""
+    lines = text.splitlines()
+    n = int(lines[0])
+    rows = [ln.split() for ln in lines[2:2 + n]]
+    return [r[0] for r in rows], np.array([[float(v) for v in r[1:4]] for r in rows])
+
+
 def test_committed_structures_match_a_fresh_build(species):
     idx = json.loads((build.OUT / "index.json").read_text(encoding="utf-8"))
     assert idx["builder_version"] == b.BUILDER_VERSION
     names = {s["name"] for s in idx["species"]}
     assert names == set(species)
     for name, st in species.items():
-        on_disk = (build.OUT / (name + ".xyz")).read_text(encoding="utf-8")
-        assert on_disk == st.xyz(), name
+        on_disk = _parse_xyz((build.OUT / (name + ".xyz")).read_text(encoding="utf-8"))
+        fresh = _parse_xyz(st.xyz())
+        assert on_disk[0] == fresh[0], name                 # species and order are exact
+        assert len(on_disk[1]) == len(fresh[1]), name       # so are the counts
+        assert np.allclose(on_disk[1], fresh[1], rtol=0.0, atol=COORD_TOL_A), name
         meta = json.loads((build.OUT / (name + ".json")).read_text(encoding="utf-8"))
         for key in ("charge", "multiplicity", "coordination_mode", "n_water", "seed", "builder_version"):
             assert key in meta
