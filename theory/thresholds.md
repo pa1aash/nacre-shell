@@ -98,6 +98,8 @@ exists, and W1 records each under its key with the cp2 ruling as the source.
 - State aggregation: the worst state per link, and a path sum for C3 (b).
 - C4: the square-lattice closure is the optimistic supporting condition (Q14). C4 is
   S_spread >= m_S, and a falsified verdict needs the coalescence condition to fail as well.
+  Amended at cp3 (R3): coalescence is a second route to feasibility, not only a supporting
+  condition (Section 2, C4).
 - The enrichment factor E_enr is reported only as a labelled, non-gating sensitivity. It never
   enters a verdict.
 
@@ -243,7 +245,7 @@ inconclusive otherwise.
     bound is met by how much mineral is grown, not by coalescence.
 - **Margin.** e = +m_S, where m_S = `thresholds.C4.margin_S_spread` is the systematic error not
   carried in the interfacial-energy priors.
-- **Supporting condition (independent): coalescence below the thickness bound.**
+- **Second route (independent; cp3 R3, formerly the supporting condition): coalescence below the thickness bound.**
   - The condition is N_s >= N_s_closure = tan^2(theta/2) / (2 d_max^2), Eq. (39)
     [th:eq:nclosure], with d_max = max(d_max_ohm, d_max_tun), Eqs. (41) to (43).
   - The island density is N_s = N_nuc from C3(b), an upper estimate. A failure of closure with
@@ -251,12 +253,31 @@ inconclusive otherwise.
   - The condition is geometric: it uses the geometric thicknesses h_c and h_cl. The charter's
     kinetic critical coalescence thickness (C4 candidate (c)) is named h_coal (cp2 fix F9). It
     needs a nucleation-and-growth model and is not computed in P0.
-- **Decision.**
-  - feasible if `P(S_spread >= m_S) >= p`;
-  - falsified if `P(S_spread < m_S) >= p` **and** `P(N_nuc < N_s_closure) >= p`: islands that do
-    not close below the thickness bound, which is the charter's kill criterion;
-  - inconclusive otherwise, including island growth with credible closure. A thermodynamic
-    screen cannot exclude a coalesced film there.
+- **Decision (cp3 R3, with the joint mass of cp3 R7).** Either route to a continuous film
+  suffices: complete wetting, or islands that close below the thickness bound. Per draw, C4 is
+  good if S_spread >= m_S **or** N_nuc >= N_s_closure, with N_nuc the upper estimate of C3 (b)
+  (the path sum over the registered states). The link masses are those of this indicator:
+  P_bad(C4) = P(S_spread < m_S and N_nuc < N_s_closure), computed draw by draw, and
+  P_good(C4) = 1 - P_bad(C4).
+  - feasible if P_good(C4) >= p. In particular `P(S_spread >= m_S) >= p` **or**
+    `P(N_nuc >= N_s_closure) >= p` is sufficient (cp3 R3). A feasible verdict reached through
+    closure inherits the optimism of the upper estimate, and the report gives the mass of each
+    route separately and says which carried the verdict;
+  - falsified if P_bad(C4) >= p, which needs both routes to fail at p: `P(S_spread < m_S) >= p`
+    **and** `P(N_nuc < N_s_closure) >= p`;
+  - inconclusive otherwise.
+- **Reported: P(gamma_sl > gamma_nl).** Complete wetting needs gamma_sl >= gamma_nl + gamma_sn >=
+  gamma_nl, because gamma_sn >= 0. The prior mass P(gamma_sl > gamma_nl) (gamma_sl at the regime
+  activities) is therefore an upper bound on the mass the S_spread route can ever carry, and the
+  report prints it at every registered state.
+- **Physical result (cp3 R3; derivation, Section 8; `theory/ignorance_priors.md`, Section 2).**
+  For any hydrophilic template, gamma_sl <= gamma_nl: water wets the template at least as
+  favourably, per area, as it wets the mineral. Then S_spread = gamma_sl - gamma_sn - gamma_nl <=
+  -gamma_sn < 0 for every admissible gamma_sn > 0, so complete wetting is excluded whatever the
+  template-nucleus contact is, and the C4 S_spread route fails. C4 then rests on coalescence alone.
+  Ca2+ binding lowers gamma_sl further (Delta_gamma_ads < 0 for a binding template), so the
+  mechanism's own C2 premise works against complete wetting. This is a physics result, not a
+  property of the ignorance prior.
 - **Regimes.** The wetting energies are R-slurry (solid-water). d_max is the R-cell
   electron-transfer bound and is reported as a limitation, not a performance figure.
 
@@ -639,7 +660,7 @@ links:
         edge: m_S
         params: {m_S: thresholds.C4.margin_S_spread}
       - id: C4s
-        role: supporting
+        role: alternative route (cp3 R3; was supporting)
         quantity: N_nuc
         comparator: '>='
         edge: tan(theta/2)**2/(2*d_max**2)
@@ -648,9 +669,14 @@ links:
                  rho_e: regimes.R-cell.parameters.rho_e, phi_B: regimes.R-cell.parameters.phi_B,
                  m_e: regimes.R-cell.parameters.m_eff, j_0: regimes.R-cell.parameters.j_0}
     combine:
-      feasible: 'C4 feasible'
-      falsified: 'C4 falsified and C4s falsified'
+      indicator: 'good per draw if C4 holds or C4s holds'
+      feasible: 'P(C4 holds or C4s holds) >= p_cred (sufficient: C4 feasible, or C4s feasible)'
+      falsified: 'P(C4 fails and C4s fails) >= p_cred (needs C4 falsified and C4s falsified)'
       inconclusive: otherwise
+      joint_mass: 'falsified side P(S_spread < m_S and N_nuc < N_s_closure), draw by draw (cp3 R7)'
+      N_nuc: upper estimate of C3b (path sum); a pass through closure is optimistic and labelled
+    report_mass: 'P(gamma_sl > gamma_nl) at every registered state'
+    complete_wetting_excluded_when: 'gamma_sl <= gamma_nl (hydrophilic template): S_spread <= -gamma_sn for every admissible gamma_sn'
   C5:
     regimes: [R-slurry, R-cell]
     tests:
