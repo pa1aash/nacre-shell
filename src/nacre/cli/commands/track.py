@@ -129,12 +129,15 @@ def deviation_entries(root, track):
 
 
 def freeze_problems(root, track):
-    """Frozen inputs changed since tag <track>-cp3 without a covering deviation entry."""
+    """Frozen inputs changed by commits in <track>-cp3..HEAD without a covering deviation entry."""
     tag = "%s-%s" % (track, FREEZE_CHECKPOINT)
     if not _util.tag_exists(root, tag):
         return []
-    names = _util.git(root, "diff", "--name-only", "-z", "--no-renames", tag, "HEAD", "--", *FROZEN_AFTER_CP3)
-    changed = [p for p in names.stdout.split("\0") if p]
+    # Commits reachable from HEAD but not from the tag: a branch behind the tag, or one fast-forwarded to it,
+    # has none, and a tree diff against the tag would wrongly report the tag's own later changes.
+    names = _util.git(root, "log", "--name-only", "--format=", "-z", "--no-renames", tag + "..HEAD", "--",
+                      *FROZEN_AFTER_CP3)
+    changed = sorted({p for p in names.stdout.split("\0") if p.strip()})
     if not changed:
         return []
     since = _util.git(root, "log", "-1", "--format=%cs", tag).stdout.strip()

@@ -320,3 +320,37 @@ def test_repo_deviations_file_exists_with_header_only():
     from pathlib import Path
     text = (Path(__file__).resolve().parent.parent / "ops" / "tracks" / "p0_deviations.md").read_text()
     assert text.startswith("# Deviations of track p0") and track._ENTRY.search(text) is None
+
+
+# --- freeze rule reads commits since the tag, not the tag's tree -------------------------------
+
+@pytest.fixture
+def tagged_after_change(frozen_repo):
+    """preprint/p0 has an older commit (inputs v1) and the cp3 tag on a later commit that changed an input."""
+    before = git(frozen_repo, "rev-parse", "HEAD").stdout.strip()
+    _write(frozen_repo, {"lit/params.yaml": "v2\n"})
+    commit_all(frozen_repo, "scratch: table at cp3")
+    git(frozen_repo, "tag", "p0-cp3")
+    return before
+
+
+def test_freeze_rule_passes_for_a_branch_behind_the_tag(frozen_repo, tagged_after_change):
+    git(frozen_repo, "checkout", "-q", "-b", "preprint/p0-w9", tagged_after_change)
+    assert track.freeze_problems(frozen_repo, "p0") == []
+
+
+def test_freeze_rule_fails_for_a_branch_commit_after_the_tag(frozen_repo, tagged_after_change):
+    git(frozen_repo, "checkout", "-q", "-b", "preprint/p0-w9", "p0-cp3")
+    _write(frozen_repo, {"lit/params.yaml": "v3\n"})
+    commit_all(frozen_repo, "scratch: own change")
+    assert track.freeze_problems(frozen_repo, "p0") == ["lit/params.yaml"]
+    _write(frozen_repo, {"ops/tracks/p0_deviations.md":
+                         "# Deviations\n\n## %s lit/params.yaml\nChange: ksp.\nRe-audit: screen\n" % _today()})
+    commit_all(frozen_repo, "scratch: deviation")
+    assert track.freeze_problems(frozen_repo, "p0") == []
+
+
+def test_freeze_rule_passes_for_a_branch_at_the_tag(frozen_repo, tagged_after_change):
+    git(frozen_repo, "checkout", "-q", "-b", "preprint/p0-w9", tagged_after_change)
+    git(frozen_repo, "merge", "-q", "--ff-only", "p0-cp3")
+    assert track.freeze_problems(frozen_repo, "p0") == []
