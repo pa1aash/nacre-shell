@@ -23,9 +23,59 @@
 #
 # Auxiliary symbols named aux_* are positive reparametrisation variables used only inside
 # checks (for example Omega = 1 + aux_u to state Omega > 1); they are not physical symbols.
+#
+# Top-level blocks besides `functions`
+#   changes             per version: the functions added, changed (expression, inputs or
+#                       meaning) and removed, so an implementation can be diffed by name
+#   sign_flips          directional tests whose registered and rejected forms differ in sign
+#   no_double_counting  the screen composite (the barrier the screen evaluates) and its channels
+#   demonstrations      named composites that are wrong on purpose, implemented only to show
+#                       the size of an error (C3 item 13); never used for a verdict
 
-version: 1
-session: P0-W3.1
+version: 3
+session: P0-W3.2 (cp2 fix-up)
+changes:
+  - version: 3
+    session: P0-W3.2 (cp2 fix-up)
+    reason: >-
+      cp2 audit fixes and the cp3 gap policy (theory/cp2_fixes.md). The adsorption convention
+      states gamma_sn as a grand-canonical contact excess and the Gibbs-Langmuir term as a
+      neutral-solute approximation (F1, F2); a labelled hydrated-IAP sensitivity (F7); the
+      kinetic coalescence thickness of the charter renamed h_coal (F9); and a carbonate
+      speciation function for the free-ion activities (gap policy item (v)). No v2 expression
+      changed.
+    added: [Omega_bulk_hydrated, gamma_act_1, gamma_act_2, m_CT_fn, m_CaT_fn, A_carb_fn, P_pair_fn,
+            D_Ca_fn, a_CO3_speciation, a_Ca_speciation, c_Ca_free]
+    changed:
+      - {name: conventions.adsorption, what: 'text only (F1, F2): gamma_sn is the grand-canonical excess of the template-crystal contact at the regime chemical potentials, d gamma_sn / d mu_Ca = -Gamma_Ca_sn and d(gamma_sl - gamma_sn)/d mu_Ca = -(Gamma_Ca_sl - Gamma_Ca_sn); gamma_sn comes from contact data at the regime state and never receives Delta_G_seq (a rule for inputs, not Gamma_Ca_sn = 0); the Gibbs-Langmuir term is a neutral-solute approximation, the double-layer term a stated limitation'}
+      - {name: conventions.speciation, what: 'new convention: a_Ca and a_CO3 are free-ion activities from the speciation functions; c_bulk is the free Ca2+ concentration'}
+      - {name: Delta_gamma_ads, what: 'note only (F2): neutral-solute approximation; expression unchanged'}
+      - {name: h_c, what: 'note only (F9): h_c is geometric; the charter kinetic critical coalescence thickness is the symbol h_coal, not a contract function in P0; expression unchanged'}
+    removed: []
+  - version: 2
+    session: P0-W3.2
+    reason: >-
+      Q1 and Q2 settled by derivation (theory/derivation_body.tex, Section 7). At equilibrium
+      the electrochemical potentials of Ca2+ and CO3^2- are uniform, so the driving force at
+      the template is k_B T ln Omega_bulk; Ca2+ binding acts only through the template-liquid
+      interfacial energy (Gibbs adsorption with the Langmuir isotherm). The local-ideal
+      Omega_local survives only as a named demonstration.
+    added: [x_bind, Theta_occ, Gamma_Ca, Delta_gamma_ads, gamma_sl_insitu, cos_theta_template,
+            Omega_local_ideal, Delta_mu_local_ideal, B_acc, N_nuc, N_s_closure]
+    changed:
+      - {name: Delta_mu, what: 'identity "enrichment adds -Delta_G_seq/N_A" removed (moved to Delta_mu_local_ideal); Omega is Omega_bulk in the screen'}
+      - {name: E_enr, what: 'meaning: a concentration ratio, not an activity ratio; it no longer feeds Omega'}
+      - {name: c_local, what: 'meaning: reported C2 quantity; it no longer feeds Omega'}
+      - {name: cos_theta_young, what: 'meaning of gamma_sl: the template-liquid energy at the regime activities (gamma_sl0 + Delta_gamma_ads); expression unchanged'}
+      - {name: S_spread, what: 'meaning of gamma_sl as for cos_theta_young; expression unchanged'}
+      - {name: no_double_counting, what: 'composite rewritten: theta channel carries every template input including Delta_G_seq, Gamma_s and delta_s through Delta_gamma_ads; Omega channel is Omega_bulk; inputs gamma_sl -> gamma_sl0'}
+      - {name: SF2, what: 'sign reversed: at fixed gamma_sl0 and gamma_sn, stronger binding (Delta_G_seq more negative) raises the barrier; the local-ideal form, which lowers it, is the rejected alternative'}
+      - {name: SF3, what: 'new sign-flip test (lane note N3): the direction in which gamma_nl moves f follows the sign of gamma_sl - gamma_sn'}
+    removed:
+      - {name: Omega_local, replaced_by: Omega_local_ideal, why: 'local-ideal bookkeeping is inconsistent at equilibrium; kept only as a named demonstration'}
+  - version: 1
+    session: P0-W3.1
+    reason: first contract (29 functions at the ready mark 4d03ab0; h_cl, Delta_Phi_r, E_window added in b5a944c)
 conventions:
   young: >-
     theta is the contact angle of the spherical-cap nucleus measured through the nucleus;
@@ -42,11 +92,43 @@ conventions:
     use the bare gamma_nl, because gamma_nl multiplies the cap area in the free energy whose
     factorisation gives Delta_G*_het = f(theta) Delta_G*_hom.
   supersaturation: >-
-    One definition: Omega = IAP / K_sp = a_Ca a_CO3 / K_sp for the registered framing;
-    Delta_mu = k_B T ln Omega per formula unit. The charter's S for C3 is this Omega.
-  enrichment: >-
-    Ca2+ alone is enriched, carbonate is held at its bulk activity:
-    Omega_local = (c_local / c_bulk) Omega_bulk.
+    One definition: Omega = IAP / K_sp = a_Ca a_CO3 / K_sp for the registered framing, with
+    bulk activities; Delta_mu = k_B T ln Omega per CaCO3 formula unit, and V_m per CaCO3
+    formula unit. The charter's S (F3: S = IAP/K_sp) is this Omega; the per-ion square root
+    never appears.
+  bookkeeping: >-
+    Uniform chemical potential (contract v2). At equilibrium the electrochemical potentials
+    of Ca2+ and CO3^2- are the same in the bulk, in the interfacial layer and at the binding
+    sites, so the driving force for a nucleus at the template is k_B T ln Omega_bulk.
+    Enrichment (specific binding, E_enr, or a mean potential psi) changes local
+    concentrations, never the driving force. Template-ion interactions enter only the
+    interfacial energies.
+  adsorption: >-
+    gamma_sl = gamma_sl0 + Delta_gamma_ads, with Delta_gamma_ads = -R T (Gamma_s ln(1 + x)
+    - delta_s c_bulk) from the Gibbs adsorption equation and the Langmuir isotherm, and
+    x = E_enr c_bulk / c_max. The Gibbs-Langmuir term is a neutral-solute approximation:
+    Ca2+ adsorbs with its compensating charge. The cancellation of the mean potential in the
+    ion product (derivation, Section 4 (ii)) does not cover the double-layer (electrocapillary)
+    contribution to gamma_sl; the change of the diffuse-layer free energy with the surface
+    charge is neglected and is a stated limitation. Ionic strength screens it (low-potential
+    Gouy-Chapman: it falls as I^(-1/2) at a fixed change of charge). If gamma_sl is supplied directly at the regime activities
+    (grand-canonical), Delta_gamma_ads is already inside it and must not be added again
+    (the same rule as Delta_gamma_w). gamma_sn is the grand-canonical excess of the
+    template-crystal contact at the regime chemical potentials: any Ca2+ excess at that contact
+    (for example ion-bridged carboxylate-Ca-calcite) is inside it, with d gamma_sn / d mu_Ca =
+    -Gamma_Ca_sn. Hence d(gamma_sl - gamma_sn)/d mu_Ca = -(Gamma_Ca_sl - Gamma_Ca_sn), with
+    Gamma_Ca_sl = Gamma_Ca the template-liquid excess. Rule for supplied inputs: gamma_sn (or
+    gamma_sn0 with Delta_gamma_w) comes from contact data at the regime state; Delta_G_seq and
+    Delta_gamma_ads are never added to it. The rule does not assume Gamma_Ca_sn = 0; a contact
+    energy supplied at another Ca2+ activity is flagged as off-state, never corrected with
+    Delta_G_seq.
+  speciation: >-
+    Contract v3. a_Ca and a_CO3 in Omega_bulk are the free-ion activities from the carbonate
+    speciation functions (a_CO3_speciation, a_Ca_speciation) at the registered pH, C_T, Ca_T and
+    I, with the ion pairs CaCO3(aq), CaHCO3+ and CaOH+. Activity model: Davies for charged
+    species, valid for I_ionic <= I_val (fetched), never beyond its turning point; neutral
+    species take activity coefficient one; a draw with I_ionic > I_val is refused and counted.
+    c_bulk of the C2 relations is the free Ca2+ concentration c_Ca_free, not Ca_T.
 
 functions:
   # ------------------------------------------------------------------ C1, adhesion in water
@@ -113,6 +195,10 @@ functions:
     monotonicity:
       - {wrt: Delta_G_seq, direction: decreasing}
     validity: dilute Ca2+ and unsaturated binding sites (E_enr c_bulk << c_max)
+    note: >-
+      a concentration ratio (C2 reporting quantity); at equilibrium the local Ca2+ activity
+      equals the bulk activity and the enrichment sits in a local activity coefficient, so
+      E_enr does not enter Omega or Delta_mu (contract v2)
 
   - name: c_max
     claim: C2
@@ -125,7 +211,9 @@ functions:
     regime: R-slurry
     unit: mol m^-3
     expression: E_enr*c_bulk/(1 + E_enr*c_bulk/c_max)
-    note: Langmuir closure of the binding layer; reduces to E_enr c_bulk when dilute
+    note: >-
+      Langmuir closure of the binding layer; reduces to E_enr c_bulk when dilute. Reported for
+      C2; it does not feed Omega (contract v2).
     limits:
       - {limit: {var: c_max, to: oo}, expected: E_enr*c_bulk}
       - {limit: {var: c_bulk, to: oo}, expected: c_max}
@@ -138,6 +226,218 @@ functions:
       - {wrt: c_bulk, direction: increasing}
       - {wrt: c_max, direction: increasing}
 
+  - name: x_bind
+    claim: C2
+    regime: R-slurry
+    unit: '1'
+    expression: exp(-Delta_G_seq/(R_gas*T))*c_bulk*delta_s/Gamma_s
+    note: Langmuir binding variable, the occupancy odds of a site at the regime activity
+    identities:
+      - note: x = E_enr c_bulk / c_max
+        equals: '@E_enr*c_bulk/@c_max'
+    limits:
+      - {limit: {var: Delta_G_seq, to: oo}, expected: '0'}
+      - {limit: {var: Delta_G_seq, to: -oo}, expected: oo}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: decreasing}
+      - {wrt: c_bulk, direction: increasing}
+      - {wrt: Gamma_s, direction: decreasing}
+
+  - name: Theta_occ
+    claim: C2
+    regime: R-slurry
+    unit: '1'
+    expression: '@x_bind/(1 + @x_bind)'
+    note: fraction of sites occupied (Langmuir); equals c_local / c_max
+    identities:
+      - note: occupancy is the Langmuir c_local over the saturation concentration
+        equals: '(@E_enr*c_bulk/(1 + @E_enr*c_bulk*delta_s/Gamma_s))*delta_s/Gamma_s'
+    limits:
+      - {limit: {var: Delta_G_seq, to: oo}, expected: '0'}
+      - {limit: {var: Delta_G_seq, to: -oo}, expected: '1'}
+    inequalities:
+      - {expr: '@Theta_occ', relation: '<', rhs: '1'}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: decreasing}
+      - {wrt: c_bulk, direction: increasing}
+
+  - name: Gamma_Ca
+    claim: C2
+    regime: R-slurry
+    unit: mol m^-2
+    expression: Gamma_s*@Theta_occ - delta_s*c_bulk
+    note: >-
+      Gibbs relative excess of Ca2+ at the template-liquid interface: the bound amount per area
+      minus the bulk amount that the layer volume would hold without the template
+    limits:
+      - {limit: {var: Delta_G_seq, to: oo}, expected: -delta_s*c_bulk}
+      - {limit: {var: Delta_G_seq, to: -oo}, expected: Gamma_s - delta_s*c_bulk}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: decreasing}
+
+  - name: Delta_gamma_ads
+    claim: C2
+    regime: R-slurry
+    unit: J m^-2
+    expression: -R_gas*T*(Gamma_s*log(1 + @x_bind) - delta_s*c_bulk)
+    note: >-
+      change of the template-liquid interfacial energy by Ca2+ adsorption at the regime
+      activity: the Gibbs adsorption integral -int Gamma_Ca d mu_Ca from zero to the regime
+      activity with the Langmuir isotherm (ideal dilute bulk), for Ca2+ with its compensating
+      charge as a neutral solute; the double-layer (electrocapillary) term is neglected (stated
+      limitation, screened by ionic strength). Zero when gamma_sl is already
+      evaluated at the regime activities. It is the only route by which Delta_G_seq, Gamma_s
+      and delta_s reach the barrier.
+    derivative_identities:
+      - {wrt: Delta_G_seq, equals: 'Gamma_s*@Theta_occ', note: 'each site contributes its occupancy: d gamma_sl / d Delta_G_seq = Gamma_s Theta'}
+      - {wrt: c_bulk, equals: '-(R_gas*T/c_bulk)*@Gamma_Ca', note: 'Gibbs adsorption equation: d gamma_sl / d mu_Ca = -Gamma_Ca, with d mu_Ca = R T d ln c_bulk'}
+    limits:
+      - {limit: {var: Delta_G_seq, to: oo}, expected: R_gas*T*delta_s*c_bulk, note: 'a repulsive template is depleted and its gamma_sl rises (negative adsorption)'}
+      - {limit: {var: Gamma_s, to: '0', dir: '+'}, expected: R_gas*T*delta_s*c_bulk}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: increasing}
+
+  - name: gamma_sl_insitu
+    claim: C3
+    regime: R-slurry
+    unit: J m^-2
+    expression: gamma_sl0 + @Delta_gamma_ads
+    note: template-liquid energy at the regime activities, built from the Ca-free energy
+    limits:
+      - {limit: {var: Delta_G_seq, to: oo}, expected: gamma_sl0 + R_gas*T*delta_s*c_bulk}
+    monotonicity:
+      - {wrt: gamma_sl0, direction: increasing}
+      - {wrt: Delta_G_seq, direction: increasing}
+
+  # ------------------------------------------------------------------ carbonate speciation (v3)
+  # Activities of free Ca2+ and CO3^2- from pH, dissolved inorganic carbon C_T, total Ca_T and
+  # ionic strength I, with the ion pairs CaCO3(aq), CaHCO3+ and CaOH+ (derivation, Section 4,
+  # "Activities from speciation"). Activity model: Davies, valid for I <= I_val. Neutral species
+  # take activity coefficient one. The constants are thermodynamic (I = 0) values from
+  # lit/params.yaml. Mass balance gives a quadratic in a_CO3 with exactly one positive root,
+  # written below in the cancellation-free form.
+  - name: gamma_act_1
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 10**(-A_DH*(sqrt(I_ionic/m_std)/(1 + sqrt(I_ionic/m_std)) - b_D*I_ionic/m_std))
+    note: Davies activity coefficient of a singly charged ion (output g_1)
+    validity: 'I_ionic <= I_val (registered bound of the activity model, below the Davies turning point)'
+    limits:
+      - {at: {I_ionic: '0'}, expected: '1', note: 'I -> 0 gives ideal activities'}
+      - {at: {A_DH: '0'}, expected: '1'}
+
+  - name: gamma_act_2
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 10**(-4*A_DH*(sqrt(I_ionic/m_std)/(1 + sqrt(I_ionic/m_std)) - b_D*I_ionic/m_std))
+    note: Davies activity coefficient of a doubly charged ion (output g_2); z^2 = 4
+    identities:
+      - note: the charge-two coefficient is the fourth power of the charge-one coefficient
+        equals: '@gamma_act_1**4'
+    limits:
+      - {at: {I_ionic: '0'}, expected: '1'}
+
+  - name: m_CT_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: C_T/(rho_water*m_std)
+    note: dissolved inorganic carbon in standard molalities (output m_CT); dilute solution, molality = concentration / water density
+
+  - name: m_CaT_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: Ca_T/(rho_water*m_std)
+    note: total dissolved calcium in standard molalities (output m_CaT)
+
+  - name: A_carb_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 10**(pK1_carbonic + pK2_carbonic - 2*pH) + 10**(pK2_carbonic - pH)/g_1 + 1/g_2
+    note: >-
+      free carbon species per unit carbonate activity (output A_carb): CO2(aq) (activity
+      coefficient one), HCO3- and CO3^2-, from a_HCO3 = a_H a_CO3 / K_2 and
+      a_CO2 = a_H^2 a_CO3 / (K_1 K_2) with a_H = 10^-pH
+    limits:
+      - {at: {g_1: '1', g_2: '1'}, expected: 10**(pK1_carbonic + pK2_carbonic - 2*pH) + 10**(pK2_carbonic - pH) + 1, note: 'ideal activities'}
+    monotonicity:
+      - {wrt: pH, direction: decreasing, note: 'acidification shifts carbon from carbonate to bicarbonate and CO2'}
+
+  - name: P_pair_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: K_CaCO3_aq + K_CaHCO3*10**(pK2_carbonic - pH)/g_1
+    note: Ca-carbonate ion pairs per unit product a_Ca a_CO3 (output P_pair); CaCO3(aq) neutral, CaHCO3+ singly charged
+    limits:
+      - {at: {K_CaCO3_aq: '0', K_CaHCO3: '0'}, expected: '0', note: 'no ion pairs'}
+
+  - name: D_Ca_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 1/g_2 + K_CaOH*a_w*10**pH/g_1
+    note: Ca2+ and CaOH+ per unit Ca2+ activity (output D_Ca), with a_CaOH = K_CaOH a_Ca a_w / a_H
+    limits:
+      - {at: {K_CaOH: '0', g_2: '1'}, expected: '1'}
+    monotonicity:
+      - {wrt: pH, direction: nondecreasing, note: 'hydrolysis to CaOH+ grows with pH (strictly where K_CaOH a_w > 0)'}
+
+  - name: a_CO3_speciation
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: >-
+      2*m_CT*D_Ca/(A_carb*D_Ca + P_pair*(m_CaT - m_CT)
+      + sqrt((A_carb*D_Ca + P_pair*(m_CaT - m_CT))**2 + 4*A_carb*P_pair*m_CT*D_Ca))
+    note: >-
+      free carbonate activity (output a_CO3): the positive root of
+      A P y^2 + (A D + P (m_CaT - m_CT)) y - m_CT D = 0, which follows from the carbon balance
+      m_CT = A y + P y a_Ca and the calcium balance m_CaT = a_Ca (D + P y). The product of the
+      roots is -m_CT D / (A P) < 0, so exactly one root is positive.
+    validity: 'Davies range I_ionic <= I_val; closed system at fixed C_T (no CO2 exchange); solution not yet precipitated'
+    limits:
+      - {at: {P_pair: '0'}, expected: m_CT/A_carb, note: 'no ion pairs: the carbonate system alone'}
+      - {at: {m_CaT: '0'}, expected: m_CT/A_carb, note: 'no Ca: the carbonate system alone'}
+      - {at: {m_CT: '0'}, expected: '0'}
+    identities:
+      - note: 'carbon balance: m_CT = y (A + P a_Ca) with a_Ca = m_CaT/(D + P y)'
+        equals: m_CT/(A_carb + P_pair*m_CaT/(D_Ca + P_pair*@a_CO3_speciation))
+        numeric: true
+    inequalities:
+      - {expr: '@a_CO3_speciation', relation: '<=', rhs: m_CT/A_carb, note: 'ion pairs can only lower the free carbonate'}
+    monotonicity:
+      - {wrt: m_CT, direction: increasing}
+      - {wrt: m_CaT, direction: decreasing}
+
+  - name: a_Ca_speciation
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: m_CaT/(D_Ca + P_pair*a_CO3)
+    note: free Ca2+ activity (output a_Ca) from the calcium balance, at the a_CO3 of a_CO3_speciation
+    limits:
+      - {at: {m_CaT: '0'}, expected: '0', note: 'no Ca'}
+      - {at: {P_pair: '0', D_Ca: '1'}, expected: m_CaT, note: 'no pairs, no hydrolysis, ideal: all calcium is free'}
+    monotonicity:
+      - {wrt: m_CaT, direction: increasing}
+      - {wrt: a_CO3, direction: decreasing}
+
+  - name: c_Ca_free
+    claim: C2
+    regime: R-slurry
+    unit: mol m^-3
+    expression: a_Ca*rho_water*m_std/g_2
+    note: >-
+      free Ca2+ concentration of the regime state; it is the c_bulk of the Langmuir and Gibbs
+      relations (C2), so c_bulk is the free ion, not the total Ca_T
+    limits:
+      - {at: {g_2: '1'}, expected: a_Ca*rho_water*m_std}
+
   # ------------------------------------------------------------------ supersaturation
   - name: Omega_bulk
     claim: C3
@@ -148,14 +448,37 @@ functions:
       - {wrt: a_Ca, direction: increasing}
       - {wrt: K_sp, direction: decreasing}
 
-  - name: Omega_local
+  - name: Omega_bulk_hydrated
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_Ca*a_CO3*a_w**n_hyd/K_sp
+    sensitivity: true
+    note: >-
+      LABELLED SENSITIVITY ONLY (cp2 fix F7, Q13): the ion activity product of a hydrated framing
+      CaCO3.nH2O, IAP = a_Ca a_CO3 a_w^n, with K_sp the solubility product of the same framing.
+      The screen keeps IAP = a_Ca a_CO3 (Omega_bulk). For a_w < 1 the anhydrous form overstates
+      Omega by the factor a_w^(-n), so drying states are optimistic in the screen. Evaluated where
+      W1 supplies n; never used for a verdict.
+    limits:
+      - {at: {a_w: '1'}, expected: '@Omega_bulk', note: 'in the slurry (a_w = 1) the two forms agree'}
+      - {at: {n_hyd: '0'}, expected: '@Omega_bulk'}
+    inequalities:
+      - {expr: '@Omega_bulk_hydrated', relation: '<=', rhs: '@Omega_bulk', domains: {a_w: '(0, 1]'}, note: 'the anhydrous IAP overstates Omega when a_w < 1 (bias toward feasibility at drying states)'}
+    monotonicity:
+      - {wrt: a_w, direction: nondecreasing}
+
+  - name: Omega_local_ideal
     claim: C3
     regime: R-slurry
     unit: '1'
     expression: (c_local/c_bulk)*a_Ca*a_CO3/K_sp
+    demonstration: true
     note: >-
-      only Ca2+ is enriched; the carbonate activity stays at its bulk value and the local
-      Ca2+ activity coefficient is taken equal to the bulk one (open questions Q2, Q3)
+      DEMONSTRATION ONLY (C3 item 13): the local-ideal bookkeeping of contract v1, which gives
+      the locally enriched Ca2+ the bulk standard state and so credits the binding free energy
+      to the driving force. Inconsistent at equilibrium (derivation, Section 7); never used for
+      a verdict.
     identities:
       - note: dilute, unsaturated limit
         subs: {c_local: E_enr*c_bulk}
@@ -171,14 +494,29 @@ functions:
     regime: R-slurry
     unit: J
     expression: k_B*T*log(Omega)
+    note: per CaCO3 formula unit; the screen evaluates it at Omega = Omega_bulk (uniform chemical potential)
     limits:
       - {at: {Omega: '1'}, expected: '0'}
     identities:
-      - note: Ca2+ enrichment adds -Delta_G_seq/N_A to the driving force per formula unit (dilute limit)
-        subs: {Omega: exp(-Delta_G_seq/(R_gas*T))*Omega_bulk}
-        equals: k_B*T*log(Omega_bulk) - k_B*T*Delta_G_seq/(R_gas*T)
+      - note: at the template the driving force is the bulk one
+        subs: {Omega: '@Omega_bulk'}
+        equals: k_B*T*log(a_Ca*a_CO3/K_sp)
     monotonicity:
       - {wrt: Omega, direction: increasing}
+
+  - name: Delta_mu_local_ideal
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: k_B*T*log(@Omega_local_ideal)
+    demonstration: true
+    note: >-
+      DEMONSTRATION ONLY: the driving force the local-ideal bookkeeping would assign; its excess
+      over k_B T ln Omega_bulk is the binding free energy counted as driving force
+    identities:
+      - note: in the dilute limit the excess credit is exactly -Delta_G_seq per Ca2+
+        subs: {c_local: exp(-Delta_G_seq/(R_gas*T))*c_bulk}
+        equals: k_B*T*log(@Omega_bulk) - k_B*T*Delta_G_seq/(R_gas*T)
 
   # ------------------------------------------------------------------ C3, nucleation
   - name: r_star
@@ -253,12 +591,43 @@ functions:
       - {wrt: theta, direction: nondecreasing}
       - {wrt: Omega, direction: nonincreasing}
 
+  - name: B_acc
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: k_B*T*log(J0_het*t_proc/N_req)
+    note: >-
+      largest barrier that still gives N_req nuclei per template area within t_proc, from
+      J = J_0 exp(-DG_het / k_B T) and N = J t_proc (derivation, Section 5)
+    limits:
+      - {at: {N_req: J0_het*t_proc}, expected: '0'}
+    monotonicity:
+      - {wrt: J0_het, direction: increasing}
+      - {wrt: t_proc, direction: increasing}
+      - {wrt: N_req, direction: decreasing}
+
+  - name: N_nuc
+    claim: C3
+    regime: R-slurry
+    unit: m^-2
+    expression: J0_het*t_proc*exp(-DG_het/(k_B*T))
+    note: expected areal density of nuclei within t_proc (no exclusion zones, so an upper estimate)
+    limits:
+      - {at: {DG_het: '@B_acc'}, expected: N_req}
+      - {at: {DG_het: '0'}, expected: J0_het*t_proc}
+    monotonicity:
+      - {wrt: DG_het, direction: decreasing}
+      - {wrt: t_proc, direction: increasing}
+
   - name: cos_theta_young
     claim: C3
     regime: R-slurry
     unit: '1'
     expression: (gamma_sl - gamma_sn0 - Delta_gamma_w)/gamma_nl
-    note: registered convention; bare gamma_nl in the denominator; displacement cost on the substrate side
+    note: >-
+      registered convention; bare gamma_nl in the denominator; displacement cost on the
+      substrate side. gamma_sl is the template-liquid energy at the regime activities
+      (gamma_sl0 + Delta_gamma_ads, or computed in situ).
     limits:
       - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w + gamma_nl}, expected: '1'}
       - {at: {gamma_sl: gamma_sn0 + Delta_gamma_w - gamma_nl}, expected: '-1'}
@@ -268,6 +637,23 @@ functions:
       - {wrt: gamma_sl, direction: increasing}
       - {wrt: gamma_sn0, direction: decreasing}
     validity: a finite contact angle exists only for |cos_theta_young| <= 1; above 1 the nucleus phase spreads (S_spread >= 0)
+
+  - name: cos_theta_template
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: (gamma_sl0 + @Delta_gamma_ads - gamma_sn0 - Delta_gamma_w)/gamma_nl
+    note: >-
+      Young for the screen, with the Ca2+ adsorption on the substrate-liquid side; the form the
+      composite uses when gamma_sl is supplied Ca-free
+    identities:
+      - note: registered Young with the in-situ template-liquid energy
+        equals: (@gamma_sl_insitu - gamma_sn0 - Delta_gamma_w)/gamma_nl
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: increasing, note: 'stronger binding at fixed gamma_sl0 and gamma_sn lowers cos theta and raises the barrier'}
+      - {wrt: gamma_sl0, direction: increasing}
+      - {wrt: gamma_sn0, direction: decreasing}
+      - {wrt: Delta_gamma_w, direction: decreasing}
 
   - name: theta_young
     claim: C3
@@ -330,7 +716,9 @@ functions:
     note: >-
       geometric coalescence thickness: equal caps of contact angle theta on a square lattice
       of density N_s touch when their base radius is half the spacing; cap height is base
-      radius times tan(theta/2). Island-to-film is possible only as h_c -> 0.
+      radius times tan(theta/2). Island-to-film is possible only as h_c -> 0. h_c is geometric
+      only; the charter's kinetic critical coalescence thickness (C4 candidate (c), from a
+      nucleation-and-growth model) is h_coal (cp2 fix F9) and is not a contract function in P0.
     limits:
       - {limit: {var: theta, to: '0', dir: '+'}, expected: '0'}
       - {limit: {var: theta, to: pi, dir: '-'}, expected: oo}
@@ -356,6 +744,22 @@ functions:
       - {expr: '@h_c', relation: '<', rhs: '@h_cl'}
     monotonicity:
       - {wrt: theta, direction: increasing}
+
+  - name: N_s_closure
+    claim: C4
+    regime: R-slurry
+    unit: m^-2
+    expression: tan(theta/2)**2/(2*d_max**2)
+    domains: {theta: '(0, pi)'}
+    note: >-
+      smallest island density for which equal caps close the square lattice at the admissible
+      thickness: h_cl(theta, N_s) <= d_max is N_s >= N_s_closure
+    limits:
+      - {at: {theta: pi/2}, expected: 1/(2*d_max**2)}
+      - {limit: {var: theta, to: '0', dir: '+'}, expected: '0'}
+    monotonicity:
+      - {wrt: theta, direction: increasing}
+      - {wrt: d_max, direction: decreasing}
 
   # ------------------------------------------------------------------ C5, stability
   - name: Psi_pbx
@@ -491,38 +895,107 @@ sign_flips:
         registered: 'f(+) > f(0) > f(-)'
         alternative: 'f(+) < f(0)'
   - id: SF2
+    kind: channel
     parameter: Delta_G_seq
     statement: >-
-      Delta_G_seq < 0 gives Omega_local > Omega_bulk and therefore a lower barrier
-      (Delta_G*_hom at Omega_local below its bulk value); Delta_G_seq > 0 reverses both
-      inequalities. Derivative identity: d Delta_G*_hom(Omega_local)/d Delta_G_seq =
-      2 Delta_G*_hom / (R T ln Omega_local), positive whenever Omega_local > 1.
-    barrier: '@DG_hom'
-    omega_subs: exp(-Delta_G_seq/(R_gas*T))*Omega_bulk
-    derivative_equals: 2*aux_B/(R_gas*T*log(exp(-Delta_G_seq/(R_gas*T))*Omega_bulk))
-    note: aux_B stands for the barrier itself
+      Registered (contract v2, uniform chemical potential): Delta_G_seq reaches the barrier only
+      through Delta_gamma_ads in gamma_sl. d cos(theta)/d Delta_G_seq = Gamma_s Theta/gamma_nl > 0
+      and d Omega/d Delta_G_seq = 0, so at fixed gamma_sl0 and gamma_sn stronger binding
+      (Delta_G_seq more negative) lowers cos(theta) and raises f and Delta_G*_het. Binding helps
+      nucleation only if the template-nucleus energy gamma_sn falls by more than gamma_sl does.
+      Rejected alternative (local-ideal, contract v1): Omega_local = E_enr Omega_bulk with Ca-free
+      interfacial energies, for which d Delta_G*/d Delta_G_seq = 2 Delta_G*/(R T ln Omega_local)
+      > 0, the opposite sign.
+    registered:
+      cos_function: cos_theta_template
+      dcos_equals: Gamma_s*@Theta_occ/gamma_nl
+      expected_sign: positive
+      omega_function: Omega_bulk
+    alternative:
+      barrier: '@DG_hom'
+      omega_subs: exp(-Delta_G_seq/(R_gas*T))*Omega_bulk
+      derivative_equals: 2*aux_B/(R_gas*T*log(exp(-Delta_G_seq/(R_gas*T))*Omega_bulk))
+      note: aux_B stands for the barrier itself
     witness:
-      values: {Omega_bulk: '2', R_gas: '1', T: '1'}
+      values: {gamma_sl0: '3', gamma_sn0: '2', Delta_gamma_w: '0', gamma_nl: '4', Gamma_s: '1',
+               delta_s: '1', c_bulk: '1', R_gas: '1', T: '1', Omega_bulk: '2'}
       delta_plus: 1/4
       delta_minus: -1/4
-      expect: 'barrier(+) > barrier(0) > barrier(-)'
+      expect:
+        registered: 'barrier(+) < barrier(0) < barrier(-)'
+        alternative: 'barrier(+) > barrier(0) > barrier(-)'
+  - id: SF3
+    kind: gamma_nl
+    parameter: gamma_nl
+    note: lane note N3
+    statement: >-
+      d f/d gamma_nl = (3 sin(theta)^2/4) (gamma_sl - gamma_sn)/gamma_nl^2. Lowering gamma_nl
+      lowers f only when gamma_sl - gamma_sn > 0 (the wetting side, theta < pi/2); when
+      gamma_sl - gamma_sn < 0 lowering gamma_nl raises f, and at gamma_sl = gamma_sn it leaves f
+      unchanged at 1/2. Both signs are tested; the reparametrisation gamma_nl = aux_u + aux_v
+      keeps |cos(theta)| < 1. On the wetting side the full barrier f gamma_nl^3 also rises with
+      gamma_nl.
+    cos_function: cos_theta_young
+    cases:
+      - {name: 'gamma_sl - gamma_sn > 0', reparam: {gamma_sl: gamma_sn0 + Delta_gamma_w + aux_u, gamma_nl: aux_u + aux_v}, df_sign: positive, barrier_sign: positive}
+      - {name: 'gamma_sl - gamma_sn < 0', reparam: {gamma_sl: gamma_sn0 + Delta_gamma_w - aux_u, gamma_nl: aux_u + aux_v}, df_sign: negative}
+      - {name: 'gamma_sl - gamma_sn = 0', reparam: {gamma_sl: gamma_sn0 + Delta_gamma_w}, df_sign: zero}
+    witness:
+      values: {gamma_sn0: '2', Delta_gamma_w: '0'}
+      excess: ['1', '-1']
+      gamma_nl: ['2', '3']
+      expect: 'excess > 0: f(2) < f(3); excess < 0: f(2) > f(3)'
 
 no_double_counting:
   statement: >-
-    The template acts on the barrier only through theta (interfacial energies) and only
-    through Omega (Ca2+ enrichment). Each template-dependent input enters exactly one of the
-    two channels; template-independent bulk inputs (gamma_nl, V_m, T, constants) may enter
-    both. This is the syntactic part of the condition and is checked here; the physical
-    proof that the two channels do not count the same free energy twice (the Gibbs
-    adsorption link between Ca2+ binding and gamma_sl) is session P0-W3.2.
+    Contract v2. The exact reference is the grand potential of a cap on the template in an open
+    system at the bulk chemical potentials (derivation, Section 7): Delta Omega(r) =
+    -n Delta mu_bulk + gamma_nl A_cap + (gamma_sn - gamma_sl) A_base, with every template-ion
+    interaction inside the grand-canonical interfacial energies. The template therefore acts on
+    the barrier only through theta. Its Ca2+ binding (Delta_G_seq, Gamma_s, delta_s) enters once,
+    through Delta_gamma_ads in gamma_sl; the Omega channel holds bulk inputs only. Rule for the
+    screen: if gamma_sl is supplied Ca-free (gamma_sl0) add Delta_gamma_ads once; if it is
+    computed at the regime activities add nothing; never raise Omega above Omega_bulk.
   composite: DG_het_template
   composite_expression: >-
-    (2 + c_young)*(1 - c_young)**2/4 * 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(Om_local))**2)
+    (2 + c_young)*(1 - c_young)**2/4 * 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(Om))**2)
   channel_theta:
-    c_young: (gamma_sl - gamma_sn0 - Delta_gamma_w)/gamma_nl
+    c_young: (gamma_sl0 + D_ads - gamma_sn0 - Delta_gamma_w)/gamma_nl
+    D_ads: -R_gas*T*(Gamma_s*log(1 + x_b) - delta_s*c_bulk)
+    x_b: exp(-Delta_G_seq/(R_gas*T))*c_bulk*delta_s/Gamma_s
   channel_omega:
-    Om_local: (E_enr/(1 + E_enr*c_bulk/c_max))*a_Ca*a_CO3/K_sp
-    E_enr: exp(-Delta_G_seq/(R_gas*T))
-    c_max: Gamma_s/delta_s
-  template_dependent: [gamma_sl, gamma_sn0, Delta_gamma_w, Delta_G_seq, Gamma_s, delta_s]
+    Om: a_Ca*a_CO3/K_sp
+  single_entry:
+    via: D_ads
+    inputs: [Delta_G_seq, Gamma_s, delta_s]
+  template_dependent: [gamma_sl0, gamma_sn0, Delta_gamma_w, Delta_G_seq, Gamma_s, delta_s]
   template_independent: [gamma_nl, V_m, T, k_B, N_A, R_gas, a_Ca, a_CO3, K_sp, c_bulk]
+
+demonstrations:
+  - name: DG_het_local_ideal
+    note: >-
+      contract v1 as registered: Ca-free interfacial energies with the local-ideal Omega. The
+      binding is counted once but in a channel that does not exist at equilibrium, and with the
+      opposite effect on the barrier (SF2).
+    composite_expression: >-
+      (2 + c_young)*(1 - c_young)**2/4 * 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(Om))**2)
+    channels:
+      c_young: (gamma_sl0 - gamma_sn0 - Delta_gamma_w)/gamma_nl
+      Om: (E/(1 + E*c_bulk*delta_s/Gamma_s))*a_Ca*a_CO3/K_sp
+      E: exp(-Delta_G_seq/(R_gas*T))
+  - name: DG_het_double
+    note: >-
+      the double count: the Ca-loaded gamma_sl of the uniform bookkeeping together with the
+      local-ideal Omega. The same binding free energy is credited to the driving force and
+      charged to the interfacial energy.
+    composite_expression: >-
+      (2 + c_young)*(1 - c_young)**2/4 * 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(Om))**2)
+    channels:
+      c_young: (gamma_sl0 + D_ads - gamma_sn0 - Delta_gamma_w)/gamma_nl
+      D_ads: -R_gas*T*(Gamma_s*log(1 + x_b) - delta_s*c_bulk)
+      x_b: E*c_bulk*delta_s/Gamma_s
+      Om: (E/(1 + E*c_bulk*delta_s/Gamma_s))*a_Ca*a_CO3/K_sp
+      E: exp(-Delta_G_seq/(R_gas*T))
+    reduces_to:
+      - {subs: {D_ads: '0'}, equals: DG_het_local_ideal, note: 'without the Gibbs term it is the v1 composite'}
+      - {subs: {Om: a_Ca*a_CO3/K_sp}, equals: DG_het_template, note: 'without the local-ideal credit it is the screen composite'}

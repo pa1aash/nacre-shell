@@ -17,8 +17,23 @@ What is checked
   7. Inequalities and monotonicity: the sign of the difference or derivative is proven
      symbolically from the symbol intervals where possible; a statement that cannot be
      proven symbolically is checked on an exact rational grid and labelled "grid".
-  8. Sign-flip tests and the syntactic no-double-counting condition.
-  9. No literature number in theory/** sources (decimals, exponent notation or integers of
+  8. Sign-flip tests: SF1 (water displacement), SF2 (the channel through which Delta_G_seq
+     reaches the barrier, registered against the local-ideal alternative) and SF3 (lane note
+     N3: the direction in which gamma_nl moves f, for both signs of gamma_sl - gamma_sn).
+  9. The no-double-counting condition of contract v2: every template input enters the theta
+     channel only, the Omega channel holds bulk inputs only, the Ca2+ binding inputs reach the
+     composite only through Delta_gamma_ads, and the named demonstrations reduce to the
+     composites they are built from.
+ 10. The version changelog names only functions that exist (added, changed) or are gone
+     (removed).
+ 11. theory/thresholds.md: its fenced `thresholds` block parses, every edge uses registered ids
+     and has the unit of its quantity, every registration constant has a params key, every
+     params key appears in the file's key table, a non-gating link is a descriptor with no
+     verdict test, and the study rule and deletion test name only gating links.
+ 12. theory/ignorance_priors.md: its fenced `ignorance` block parses, every bound has the unit of
+     its quantity, and the branch masses of the gamma_sn prior are the exact integrals of the
+     uniform density over the three Young branches and sum to one.
+ 13. No literature number in theory/** sources (decimals, exponent notation or integers of
      three or more digits outside an allowlist).
 
 Exit status 0 when every check passes, 1 otherwise.
@@ -309,13 +324,35 @@ class Report:
 
 def zero(expr):
     for f in (sp.simplify, lambda x: sp.simplify(sp.expand_log(x, force=True)),
-              lambda x: sp.simplify(sp.trigsimp(sp.expand_trig(x))), lambda x: sp.nsimplify(sp.simplify(x))):
+              lambda x: sp.simplify(sp.trigsimp(sp.expand_trig(x))), lambda x: sp.nsimplify(sp.simplify(x)),
+              lambda x: sp.simplify(x.replace(lambda e: e.is_Pow and e.exp == sp.Rational(1, 2),
+                                              lambda e: sp.sqrt(sp.factor(e.base))))):
         try:
             if f(expr) == 0:
                 return True
         except Exception:
             pass
     return False
+
+
+TINY = float(sp.Integer(10) ** -20)
+
+
+def numeric_zero(expr, points=6):
+    """Fast equality test: the expression vanishes at exact rational points (no simplify).
+
+    Every free symbol gets a positive rational value; the check fails on the first point
+    whose value is not zero to 30 digits. Used where a symbolic simplification of a wrong
+    identity can run for minutes.
+    """
+    syms = sorted(expr.free_symbols, key=lambda s: s.name)
+    vals = [sp.Rational(2 + k, 3 + 2 * k) for k in range(points)]
+    for i in range(points):
+        sub = {s: vals[(i + j) % points] + 1 + j for j, s in enumerate(syms)}
+        v = sp.N(expr.subs(sub), 30)
+        if not (v.is_number and abs(complex(v)) < TINY):
+            return False
+    return True
 
 
 def check_symbols(doc, rep):
@@ -378,7 +415,8 @@ def check_function(ctx, f, rep):
     for idt in f.get("identities", []):
         try:
             e = expr.subs(ctx.subs_map(idt.get("subs")))
-            ok = zero(e - ctx.parse(idt["equals"]))
+            d = e - ctx.parse(idt["equals"])
+            ok = numeric_zero(d) if idt.get("numeric") else zero(d)
             rep.add(ok, "identity", name, idt.get("note", idt["equals"]))
         except Exception as exc:
             rep.add(False, "identity", name, str(exc))
@@ -430,93 +468,384 @@ def check_constants(ctx, contract, rep):
         rep.add(ok, "constant", "%s = %s" % (c["lhs"], c["rhs"]), "dimensions agree" if ok else "dimension mismatch")
 
 
+def _fcos(c):
+    return (2 + c) * (1 - c) ** 2 / 4
+
+
 def check_sign_flips(ctx, contract, rep):
     for sf in contract.get("sign_flips", []):
-        sid, par = sf["id"], ctx.syms[sf["parameter"]]
-        if "df_dcos" in sf:
-            d = sf["df_dcos"]
-            c = sp.Symbol(d["var"], real=True)
-            e = sp.parse_expr(d["expr"], local_dict={d["var"]: c})
-            der = sp.factor(sp.diff(e, c))
-            lo, hi, a, b = parse_interval(d["interval"])
-            mx = maximum(der, c, sp.Interval(lo, hi, a, b))
-            ok = mx.is_nonpositive
-            rep.add(bool(ok), "sign-flip", sid, "df/dcos = %s, max on %s = %s" % (der, d["interval"], mx))
-            fcos = lambda cc: e.subs(c, cc)
-            for side in ("registered", "alternative"):
-                spec = sf[side]
-                cexpr = ctx.parse("@" + spec["cos_function"])
-                dc = sp.diff(cexpr, par)
-                if spec.get("reparam"):
-                    # differentiate first, then restrict the domain by reparametrisation
-                    dc = dc.subs(ctx.subs_map(spec["reparam"]))
-                dc = sp.simplify(dc)
-                ok, how = prove_sign(ctx, dc, spec["expected_sign"])
-                rep.add(ok, "sign-flip", sid, "%s: dcos/d%s = %s is %s, %s" % (
-                    side, sf["parameter"], dc, spec["expected_sign"], how))
-            w = sf["witness"]
-            vals = ctx.subs_map(w["values"])
-            dp, dm = ctx.parse(str(w["delta_plus"])), ctx.parse(str(w["delta_minus"]))
-            reg = ctx.parse("@" + sf["registered"]["cos_function"]).subs(vals)
-            alt = ctx.parse("@" + sf["alternative"]["cos_function"]).subs(vals)
-            fr = [sp.nsimplify(fcos(reg.subs(par, x))) for x in (dp, 0, dm)]
-            fa = [sp.nsimplify(fcos(alt.subs(par, x))) for x in (dp, 0)]
-            ok = fr[0] > fr[1] > fr[2] and fa[0] < fa[1]
-            rep.add(ok, "sign-flip", sid, "witness registered f(+,0,-) = %s; alternative f(+,0) = %s" % (fr, fa))
+        kind = sf.get("kind", "young_cos")
+        if kind == "young_cos":
+            _sf_young_cos(ctx, sf, rep)
+        elif kind == "channel":
+            _sf_channel(ctx, sf, rep)
+        elif kind == "gamma_nl":
+            _sf_gamma_nl(ctx, sf, rep)
         else:
-            B = ctx.parse(sf["barrier"])
-            om = ctx.syms["Omega"]
-            Bd = B.subs(om, ctx.parse(sf["omega_subs"]))
-            der = sp.diff(Bd, par)
-            expect = ctx.parse(sf["derivative_equals"]).subs(sp.Symbol("aux_B", positive=True), Bd)
-            ok = zero(der - expect)
-            rep.add(ok, "sign-flip", sid, "dB/d%s identity" % sf["parameter"])
-            w = sf["witness"]
-            vals = ctx.subs_map(w["values"])
-            Bw = Bd.subs(vals)
-            rest = {s: 1 for s in Bw.free_symbols if s != par}
-            Bw = Bw.subs(rest)
-            b = [sp.N(Bw.subs(par, ctx.parse(str(x))), 30) for x in (w["delta_plus"], 0, w["delta_minus"])]
-            ok = b[0] > b[1] > b[2]
-            rep.add(ok, "sign-flip", sid, "witness barrier(+,0,-) = %s" % ["%.6g" % float(x) for x in b])
+            rep.add(False, "sign-flip", sf["id"], "unknown kind %r" % kind)
+
+
+def _sf_young_cos(ctx, sf, rep):
+    sid, par = sf["id"], ctx.syms[sf["parameter"]]
+    d = sf["df_dcos"]
+    c = sp.Symbol(d["var"], real=True)
+    e = sp.parse_expr(d["expr"], local_dict={d["var"]: c})
+    der = sp.factor(sp.diff(e, c))
+    lo, hi, a, b = parse_interval(d["interval"])
+    mx = maximum(der, c, sp.Interval(lo, hi, a, b))
+    ok = mx.is_nonpositive
+    rep.add(bool(ok), "sign-flip", sid, "df/dcos = %s, max on %s = %s" % (der, d["interval"], mx))
+    fcos = lambda cc: e.subs(c, cc)
+    for side in ("registered", "alternative"):
+        spec = sf[side]
+        cexpr = ctx.parse("@" + spec["cos_function"])
+        dc = sp.diff(cexpr, par)
+        if spec.get("reparam"):
+            # differentiate first, then restrict the domain by reparametrisation
+            dc = dc.subs(ctx.subs_map(spec["reparam"]))
+        dc = sp.simplify(dc)
+        ok, how = prove_sign(ctx, dc, spec["expected_sign"])
+        rep.add(ok, "sign-flip", sid, "%s: dcos/d%s = %s is %s, %s" % (
+            side, sf["parameter"], dc, spec["expected_sign"], how))
+    w = sf["witness"]
+    vals = ctx.subs_map(w["values"])
+    dp, dm = ctx.parse(str(w["delta_plus"])), ctx.parse(str(w["delta_minus"]))
+    reg = ctx.parse("@" + sf["registered"]["cos_function"]).subs(vals)
+    alt = ctx.parse("@" + sf["alternative"]["cos_function"]).subs(vals)
+    fr = [sp.nsimplify(fcos(reg.subs(par, x))) for x in (dp, 0, dm)]
+    fa = [sp.nsimplify(fcos(alt.subs(par, x))) for x in (dp, 0)]
+    ok = fr[0] > fr[1] > fr[2] and fa[0] < fa[1]
+    rep.add(ok, "sign-flip", sid, "witness registered f(+,0,-) = %s; alternative f(+,0) = %s" % (fr, fa))
+
+
+def _sf_channel(ctx, sf, rep):
+    """SF2: Delta_G_seq reaches the barrier through gamma_sl (registered) or Omega (alternative)."""
+    sid, par = sf["id"], ctx.syms[sf["parameter"]]
+    reg = sf["registered"]
+    cexpr = ctx.parse("@" + reg["cos_function"])
+    dc = sp.diff(cexpr, par)
+    rep.add(zero(dc - ctx.parse(reg["dcos_equals"])), "sign-flip", sid,
+            "registered: dcos/d%s = %s" % (sf["parameter"], reg["dcos_equals"]))
+    ok, how = prove_sign(ctx, dc, reg["expected_sign"])
+    rep.add(ok, "sign-flip", sid, "registered: dcos/d%s is %s, %s" % (sf["parameter"], reg["expected_sign"], how))
+    om = ctx.parse("@" + reg["omega_function"])
+    rep.add(sp.diff(om, par) == 0, "sign-flip", sid, "registered: d%s/d%s = 0" % (reg["omega_function"], sf["parameter"]))
+    # registered barrier: f(cos) times the homogeneous barrier at Omega_bulk
+    B_reg = _fcos(cexpr) * ctx.parse("@DG_hom").subs(ctx.syms["Omega"], ctx.syms["Omega_bulk"])
+    # the local-ideal alternative (contract v1)
+    alt = sf["alternative"]
+    B_alt = ctx.parse(alt["barrier"]).subs(ctx.syms["Omega"], ctx.parse(alt["omega_subs"]))
+    der = sp.diff(B_alt, par)
+    expect = ctx.parse(alt["derivative_equals"]).subs(sp.Symbol("aux_B", positive=True), B_alt)
+    rep.add(zero(der - expect), "sign-flip", sid, "alternative: dB/d%s = 2B/(R T ln Omega_local), positive" % sf["parameter"])
+    w = sf["witness"]
+    vals = ctx.subs_map(w["values"])
+    out = {}
+    for side, B in (("registered", B_reg), ("alternative", B_alt)):
+        Bw = B.subs(vals)
+        Bw = Bw.subs({s: 1 for s in Bw.free_symbols if s != par})
+        out[side] = [sp.N(Bw.subs(par, ctx.parse(str(x))), 30) for x in (w["delta_plus"], 0, w["delta_minus"])]
+    r, a = out["registered"], out["alternative"]
+    ok = r[0] < r[1] < r[2] and a[0] > a[1] > a[2]
+    rep.add(ok, "sign-flip", sid, "witness registered B(+,0,-) = %s; alternative B(+,0,-) = %s" % (
+        ["%.6g" % float(x) for x in r], ["%.6g" % float(x) for x in a]))
+
+
+def _sf_gamma_nl(ctx, sf, rep):
+    """SF3 (N3): sign of df/dgamma_nl follows the sign of gamma_sl - gamma_sn."""
+    sid = sf["id"]
+    g = ctx.syms["gamma_nl"]
+    cexpr = ctx.parse("@" + sf["cos_function"])
+    f = _fcos(cexpr)
+    B = f * g ** 3
+    for case in sf["cases"]:
+        sub = ctx.subs_map(case["reparam"])
+        df = sp.simplify(sp.diff(f, g).subs(sub))
+        if case["df_sign"] == "zero":
+            ok, how = zero(df), "identically zero"
+        else:
+            ok, how = prove_sign(ctx, df, case["df_sign"])
+        rep.add(ok, "sign-flip", sid, "%s: df/dgamma_nl is %s, %s" % (case["name"], case["df_sign"], how))
+        if case.get("barrier_sign"):
+            dB = sp.simplify(sp.diff(B, g).subs(sub))
+            ok, how = prove_sign(ctx, dB, case["barrier_sign"])
+            rep.add(ok, "sign-flip", sid, "%s: d(f gamma_nl^3)/dgamma_nl is %s, %s" % (case["name"], case["barrier_sign"], how))
+    w = sf["witness"]
+    base = ctx.subs_map(w["values"])
+    res = []
+    for ex in w["excess"]:
+        fs = []
+        for gn in w["gamma_nl"]:
+            sub = dict(base)
+            sub[ctx.syms["gamma_sl"]] = ctx.parse("gamma_sn0 + Delta_gamma_w + (%s)" % ex).subs(base)
+            sub[g] = ctx.parse(gn)
+            fs.append(sp.nsimplify(f.subs(sub)))
+        res.append(fs)
+    ok = res[0][0] < res[0][1] and res[1][0] > res[1][1]
+    rep.add(ok, "sign-flip", sid, "witness f at gamma_nl = %s: excess %s -> %s; excess %s -> %s" % (
+        w["gamma_nl"], w["excess"][0], res[0], w["excess"][1], res[1]))
+
+
+def _resolve(ctx, text, channels, keep=()):
+    """Substitute channel definitions (which may refer to each other) into text."""
+    names = {k: sp.Symbol(k, real=True) for k in channels}
+    d = ctx.local_dict()
+    d.update(names)
+    expr = sp.parse_expr(" ".join(str(text).split()), local_dict=d)
+    for _ in range(len(channels) + 1):
+        expr = expr.subs({names[k]: sp.parse_expr(" ".join(str(v).split()), local_dict=d)
+                          for k, v in channels.items() if k not in keep})
+    return expr
+
+
+def _input_names(expr):
+    return {s.name for s in expr.free_symbols}
 
 
 def check_no_double_counting(ctx, contract, rep):
     ndc = contract["no_double_counting"]
-    theta_syms, omega_syms = set(), set()
-    for k, v in ndc["channel_theta"].items():
-        theta_syms |= {s.name for s in ctx.parse(v).free_symbols}
-    for k, v in ndc["channel_omega"].items():
-        names = set(re.findall(r"[A-Za-z_][A-Za-z0-9_]*", str(v))) - set(FUNCS)
-        omega_syms |= names
-    omega_syms -= set(ndc["channel_omega"].keys())
-    td = set(ndc["template_dependent"])
-    both = td & theta_syms & omega_syms
-    missing = td - theta_syms - omega_syms
-    unknown = (theta_syms | omega_syms) - td - set(ndc["template_independent"])
-    ok = not both and not missing and not unknown
+    th, om = ndc["channel_theta"], ndc["channel_omega"]
+    td, ti = set(ndc["template_dependent"]), set(ndc["template_independent"])
+    theta_in = _input_names(_resolve(ctx, "c_young", th))
+    omega_in = _input_names(_resolve(ctx, "Om", om))
+    in_omega = sorted(td & omega_in)
+    missing = sorted(td - theta_in)
+    unknown = sorted((theta_in | omega_in) - td - ti)
+    ok = not in_omega and not missing and not unknown
     rep.add(ok, "no-double", "template inputs partitioned",
-            "theta: %s | Omega: %s%s" % (sorted(td & theta_syms), sorted(td & omega_syms),
-                                         ("; in both: %s; unused: %s; unclassified: %s" % (sorted(both), sorted(missing), sorted(unknown))) if not ok else ""))
-    # composite parses, is a barrier in J, and the cross derivatives vanish
-    text = ndc["composite_expression"]
-    for k, v in ndc["channel_theta"].items():
-        text = re.sub(r"\b%s\b" % k, "(" + v + ")", text)
-    for k in ("Om_local", "E_enr", "c_max"):
-        text = re.sub(r"\b%s\b" % k, "(" + ndc["channel_omega"][k] + ")", text)
-    comp = ctx.parse(text)
+            "theta: %s | Omega: %s%s" % (sorted(td & theta_in), sorted(omega_in),
+                                         "" if ok else "; template inputs in Omega: %s; not in theta: %s; unclassified: %s"
+                                         % (in_omega, missing, unknown)))
+    channels = dict(th)
+    channels.update(om)
+    comp = _resolve(ctx, ndc["composite_expression"], channels)
     rep.add(dimension(comp, ctx.dims) == parse_unit("J"), "no-double", "composite barrier", "dimension J")
-    c_y = ctx.parse(ndc["channel_theta"]["c_young"])
-    om_text = ndc["channel_omega"]["Om_local"]
-    for k in ("E_enr", "c_max"):
-        om_text = re.sub(r"\b%s\b" % k, "(" + ndc["channel_omega"][k] + ")", om_text)
-    om = ctx.parse(om_text)
-    cross = [sp.diff(c_y, ctx.syms[s]) for s in td & omega_syms] + [sp.diff(om, ctx.syms[s]) for s in td & theta_syms]
-    rep.add(all(c == 0 for c in cross), "no-double", "cross derivatives",
-            "d theta/d(Omega-channel inputs) = 0 and d Omega/d(theta-channel inputs) = 0")
+    c_y, Om = _resolve(ctx, "c_young", th), _resolve(ctx, "Om", om)
+    cross = [sp.diff(Om, ctx.syms[s]) for s in td]
+    rep.add(all(c == 0 for c in cross), "no-double", "Omega channel",
+            "d Omega/d(every template input) = 0: the driving force is the bulk one")
+    se = ndc.get("single_entry")
+    if se:
+        frozen = _resolve(ctx, "c_young", th, keep=(se["via"],))
+        der = [sp.diff(frozen, ctx.syms[s]) for s in se["inputs"]]
+        free = _input_names(frozen) & set(se["inputs"])
+        rep.add(all(d == 0 for d in der) and not free, "no-double", "single entry",
+                "%s reach the barrier only through %s" % (", ".join(se["inputs"]), se["via"]))
+    composites = {ndc["composite"]: comp}
+    for demo in contract.get("demonstrations", []):
+        try:
+            composites[demo["name"]] = _resolve(ctx, demo["composite_expression"], demo["channels"])
+            rep.add(dimension(composites[demo["name"]], ctx.dims) == parse_unit("J"), "demonstration",
+                    demo["name"], "dimension J; never used for a verdict")
+        except Exception as exc:
+            rep.add(False, "demonstration", demo["name"], str(exc))
+    for demo in contract.get("demonstrations", []):
+        for red in demo.get("reduces_to", []):
+            keep = tuple(red["subs"])
+            part = _resolve(ctx, demo["composite_expression"], demo["channels"], keep=keep)
+            d = ctx.local_dict()
+            part = part.subs({sp.Symbol(k, real=True): sp.parse_expr(str(v), local_dict=d) for k, v in red["subs"].items()})
+            part = _resolve(ctx, str(part), {k: v for k, v in demo["channels"].items() if k not in keep})
+            ok = red["equals"] in composites and numeric_zero(part - composites[red["equals"]])
+            rep.add(ok, "demonstration", demo["name"], "with %s it equals %s" % (red["subs"], red["equals"]))
+    # the local-ideal credit is exactly the binding free energy (dilute limit)
+    if "DG_het_local_ideal" in composites:
+        E = sp.exp(-ctx.syms["Delta_G_seq"] / (ctx.syms["R_gas"] * ctx.syms["T"]))
+        Om_li = E * ctx.parse("@Omega_bulk")
+        credit = sp.expand_log(sp.log(Om_li) - sp.log(ctx.parse("@Omega_bulk")), force=True)
+        rep.add(zero(credit + ctx.syms["Delta_G_seq"] / (ctx.syms["R_gas"] * ctx.syms["T"])), "demonstration",
+                "local-ideal credit", "ln Omega_local - ln Omega_bulk = -Delta_G_seq/(R T) in the dilute limit")
+
+
+def check_thresholds(ctx, contract, rep):
+    """The machine-readable block of theory/thresholds.md: ids, units and params keys."""
+    path = THEORY / "thresholds.md"
+    if not path.exists():
+        rep.add(True, "thresholds", "theory/thresholds.md", "absent (not yet written)")
+        return
+    text = path.read_text(encoding="utf-8")
+    m = re.search(r"```thresholds\n(.*?)```", text, re.S)
+    if not m:
+        rep.add(False, "thresholds", "machine block", "no fenced block tagged thresholds")
+        return
+    doc = yaml.safe_load(m.group(1))
+    ok = doc.get("written_before_screen_output") is True and bool(doc.get("base_commit"))
+    rep.add(ok, "thresholds", "header", "written before screen output, base commit %s" % doc.get("base_commit"))
+    rep.add(doc.get("contract_version") == contract.get("version"), "thresholds", "contract version",
+            "block %s, contract %s" % (doc.get("contract_version"), contract.get("version")))
+    dec = doc["decision"]
+    rep.add(dec.get("omega") == "Omega_bulk", "thresholds", "driving force", "verdicts use %s" % dec.get("omega"))
+    fnames = {f["name"]: f for f in contract["functions"]}
+    demo = {d["name"] for d in contract.get("demonstrations", [])}
+    bad = [n for n in dec.get("forbidden_in_verdicts", []) if n not in fnames and n not in demo]
+    rep.add(not bad, "thresholds", "forbidden in verdicts", "unknown names: %s" % bad if bad else
+            "%d demonstration or reporting names" % len(dec.get("forbidden_in_verdicts", [])))
+    keys = set()
+
+    def qdim(name):
+        if name in fnames:
+            return parse_unit(fnames[name]["unit"])
+        return ctx.dims[name]
+
+    def check_edge(link, tid, quantity, edge, params):
+        e = ctx.parse(str(edge))
+        try:
+            dq, de = qdim(quantity), dimension(e, ctx.dims)
+        except DimError as exc:
+            rep.add(False, "thresholds", "%s %s" % (link, tid), "%s %s: %s" % (quantity, edge, exc))
+            return
+        thr = [s.name for s in e.free_symbols if ctx.entries[s.name].get("kind") == "threshold"]
+        missing = [n for n in thr if n not in (params or {})]
+        ok = dq == de and not missing
+        rep.add(ok, "thresholds", "%s %s" % (link, tid), "%s %s; unit %s%s" % (
+            quantity, edge, fmt_dim(de), (" vs %s" % fmt_dim(dq)) if dq != de else "") +
+            ("; no params key for %s" % missing if missing else ""))
+
+    for link, spec in doc["links"].items():
+        if spec.get("gating") is False:
+            ok = not spec.get("tests") and spec.get("role") == "descriptor"
+            rep.add(ok, "thresholds", "%s descriptor" % link,
+                    "reported, no verdict test" if ok else "a non-gating link must be a descriptor without tests")
+            fnd = spec.get("finding")
+            if fnd:
+                ctx.parse(fnd["quantity"])
+        for test in (spec.get("tests") or []) + (spec.get("sensitivities") or []):
+            params = test.get("params") or {}
+            keys.update(v for v in params.values())
+            for k in params:
+                if k in ctx.entries or k in ("pH", "E_SHE", "schemes", "salts"):
+                    continue
+                rep.add(False, "thresholds", "%s %s" % (link, test["id"]), "params symbol %s is not registered" % k)
+            if test.get("mixture"):
+                keys.add(test["mixture"]["weights"])
+            if "edge" in test:
+                check_edge(link, test["id"], test["quantity"], test["edge"], params)
+            for fr, edge in (test.get("edge_by_framing") or {}).items():
+                check_edge(link, "%s[%s]" % (test["id"], fr), test["quantity"], edge, params)
+            fal = test.get("falsify")
+            if isinstance(fal, dict) and "edge" in fal:
+                check_edge(link, test["id"] + " falsify", fal["quantity"], fal["edge"], params)
+            eq = test.get("equivalent_single_state")
+            if eq:
+                check_edge(link, test["id"] + " single state", eq["quantity"], eq["edge"], params)
+            for q in test.get("report", []) + spec.get("report", []):
+                ctx.parse(str(q))
+            if test.get("cos_function") and test["cos_function"] not in fnames:
+                rep.add(False, "thresholds", "%s %s" % (link, test["id"]), "unknown cos_function")
+    keys.add(dec["credible_level"]["params"])
+    keys.update(((dec.get("drying_states") or {}).get("params") or {}).values())
+    keys.update((doc["study"]["deletion_test"].get("params") or {}).values())
+    conv = dec.get("conventions")
+    if conv:
+        pc, pd, mc = conv["p_cred"], conv["p_deg"], conv["m_cos"]
+        q = lambda x: sp.nsimplify(str(x))
+        ok = (sp.Rational(1, 2) < q(pc["primary"]) < 1 and all(sp.Rational(1, 2) < q(x) < 1 for x in pc["sweep"])
+              and q(pc["primary"]) in [q(x) for x in pc["sweep"]]
+              and q(pd["primary"]) == 1 - q(pc["primary"]) and pd["rule"] == "1 - p_cred"
+              and 0 <= q(mc["primary"]) < 1 and all(0 <= q(x) < 1 for x in mc["sweep"])
+              and all(conv[k].get("set_by") == "W1" for k in ("m_W", "m_S", "m_E")))
+        rep.add(ok, "thresholds", "conventions", "p_cred %s (sweep %s), p_deg = 1 - p_cred = %s, m_cos %s (sweeps %s)" % (
+            pc["primary"], pc["sweep"], pd["primary"], mc["primary"], mc["sweep"]))
+        keys.update(conv[k]["params"] for k in ("p_cred", "p_deg", "m_cos", "m_W", "m_S", "m_E"))
+    sz = doc["decision"].get("sizing")
+    if sz:
+        ok = all(k in sz for k in ("band_mass_half_width_max", "sobol_total_order_half_width_max", "draw_cap",
+                                   "wall_clock_cap", "chunk", "on_cap"))
+        rep.add(ok, "thresholds", "sizing rule", "band half-width <= %s, Sobol half-width <= %s, caps: %s; %s" % (
+            sz.get("band_mass_half_width_max"), sz.get("sobol_total_order_half_width_max"), sz.get("draw_cap"),
+            sz.get("wall_clock_cap")))
+    study = doc["study"]
+    gating = [k for k, s in doc["links"].items() if s.get("gating", True)]
+    descr = [k for k, s in doc["links"].items() if not s.get("gating", True)]
+    named = lambda rule: re.findall(r"C\d", rule)
+    ok = (study.get("gating_links") == gating and study.get("descriptor_links", []) == descr
+          and named(study["falsified"]) == gating and named(study["feasible"]) == gating
+          and set(study["deletion_test"]["links"]) <= set(gating))
+    rep.add(ok, "thresholds", "study rule", "gating %s, descriptors %s, deletion links %s" % (
+        gating, descr, study["deletion_test"]["links"]))
+    table = re.search(r"^## 4\. Params keys$(.*?)^## 5\.", text, re.S | re.M)
+    table = table.group(1) if table else ""
+    rows = {r.split("|")[1].strip().strip("`") for r in table.splitlines() if r.startswith("| `")}
+    unlisted = sorted(k for k in keys if k not in rows)
+    rep.add(not unlisted, "thresholds", "params keys", ("%d keys, all in the table of Section 4" % len(keys))
+            if not unlisted else "%d keys; missing from the table of Section 4: %s" % (len(keys), unlisted))
+    return sorted(keys)
+
+
+def check_ignorance(ctx, rep):
+    """The machine block of theory/ignorance_priors.md: bound units, branch masses, geometry."""
+    path = THEORY / "ignorance_priors.md"
+    if not path.exists():
+        rep.add(True, "ignorance", "theory/ignorance_priors.md", "absent (not yet written)")
+        return
+    m = re.search(r"```ignorance\n(.*?)```", path.read_text(encoding="utf-8"), re.S)
+    if not m:
+        rep.add(False, "ignorance", "machine block", "no fenced block tagged ignorance")
+        return
+    doc = yaml.safe_load(m.group(1))
+    rep.add(doc.get("written_before_screen_output") is True, "ignorance", "header", "written before screen output")
+
+    def same_unit(name, exprs, what):
+        want = ctx.dims[name]
+        try:
+            got = [dimension(ctx.parse(str(e)), ctx.dims) for e in exprs if str(e).strip() != "0"]
+        except DimError as exc:
+            rep.add(False, "ignorance", "%s %s" % (name, what), str(exc))
+            return
+        ok = all(g == want for g in got)
+        rep.add(ok, "ignorance", "%s %s" % (name, what), "unit %s%s" % (fmt_dim(want), "" if ok else "; got %s" % [fmt_dim(g) for g in got]))
+
+    for name, q in doc["quantities"].items():
+        bounds = [q[k] for k in ("low", "high") if k in q]
+        same_unit(name, bounds, "bounds")
+    for name, q in doc["geometry"].items():
+        exprs = [q[k] for k in ("low", "high", "equals") if k in q] + q.get("high_min_of", []) + q.get("low_max_of", [])
+        same_unit(name, exprs, "geometric bounds")
+    br = doc["branches"]
+    G = ctx.parse(br["span"])
+    a, b = ctx.parse(br["cuts"]["complete"]), ctx.parse(br["cuts"]["non"])
+    u = sp.Symbol("u_sn", real=True)
+    exact = {"complete": sp.integrate(1 / G, (u, 0, a)), "partial": sp.integrate(1 / G, (u, a, b)),
+             "non": sp.integrate(1 / G, (u, b, G))}
+    masses = {k: ctx.parse(v) for k, v in br["masses_interior"].items()}
+    dims_ok = all(dimension(v, ctx.dims) == DIMLESS for v in masses.values())
+    ok = dims_ok and all(zero(masses[k] - exact[k]) for k in exact) and zero(sum(masses.values()) - 1)
+    rep.add(ok, "ignorance", "branch masses", "uniform gamma_sn on [0, %s]: complete + partial + non = 1, each the "
+            "integral of the density over its Young branch" % br["span"])
+    ok = zero(ctx.parse(br["cuts"]["non"]) - ctx.parse(br["cuts"]["complete"]) - 2 * ctx.syms["gamma_nl"])
+    rep.add(ok, "ignorance", "partial-wetting width", "b - a = 2 gamma_nl > 0")
+    ss = doc["single_source_binding"]["widen_half_width_to_at_least"]
+    ok = (dimension(ctx.parse(ss["free_energy"]), ctx.dims) == parse_unit("J mol^-1")
+          and dimension(ctx.parse(ss["log10_constant"]), ctx.dims) == DIMLESS)
+    rep.add(ok, "ignorance", "single-source widening", "free energy in J mol^-1, log10 constant dimensionless")
+    rep.add(doc["reporting"]["probability_under_ignorance_is_finding"] is False, "ignorance", "reporting rule",
+            "P(feasible) under an ignorance prior is never a finding")
+
+
+def check_changes(contract, rep):
+    names = {f["name"] for f in contract["functions"]}
+    other = {"no_double_counting"} | {s["id"] for s in contract.get("sign_flips", [])}
+    other |= {"conventions." + k for k in contract.get("conventions", {})}
+    cur = [c for c in contract.get("changes", []) if c.get("version") == contract.get("version")]
+    if not cur:
+        rep.add(False, "changes", "version %s" % contract.get("version"), "no changelog entry for the current version")
+        return
+    c = cur[0]
+    bad = [n for n in c.get("added", []) if n not in names]
+    bad += [x["name"] for x in c.get("changed", []) if x["name"] not in names | other]
+    bad += [x["name"] for x in c.get("removed", []) if x["name"] in names]
+    bad += [x["replaced_by"] for x in c.get("removed", []) if x.get("replaced_by") and x["replaced_by"] not in names]
+    rep.add(not bad, "changes", "version %s" % contract["version"],
+            "added %d, changed %d, removed %d%s" % (len(c.get("added", [])), len(c.get("changed", [])),
+                                                    len(c.get("removed", [])), ("; inconsistent: %s" % bad) if bad else ""))
 
 
 LIT_ALLOW = {"P0-W3.1", "P0-W3.2", "P0-W3.3"}
+# Method conventions set by the cp2 audit (credible level and its sweep, degradation mass with the
+# swept values of 1 - p_cred, m_cos sweeps, sizing half-widths). They may appear only in these
+# files, and only as these tokens; any other decimal there is still refused.
+CONVENTION_FILES = {"thresholds.md", "cp2_fixes.md", "cp2_brief.md", "ignorance_priors.md", "check_contract.py"}
+CONVENTION_TOKENS = {"0.9", "0.6", "0.99", "0.1", "0.2", "0.4", "0.01", "0.02"}
 LIT_RX = [
     ("decimal", re.compile(r"(?<![\w.])\d+\.\d+(?![\w.])")),
     ("exponent", re.compile(r"(?<![\w.])\d+(\.\d+)?[eE][+-]?\d+\b")),
@@ -530,10 +859,12 @@ def check_literature_numbers(rep):
         if not p.is_file() or "build" in p.parts or p.suffix not in (".tex", ".yaml", ".md", ".py"):
             continue
         for no, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
-            text = re.sub(r"P0-W\d+\.\d+|P0-I\d+", "", line)
+            text = re.sub(r"P0-W\d+\.\d+|P0-I\d+|\b\d{4}-\d{2}-\d{2}\b", "", line)
             text = re.sub(r"\b(?:Phase|item|items|slide|flag|section)s?\s+[\d, ]+", "", text)
             for kind, rx in LIT_RX:
                 for m in rx.finditer(text):
+                    if p.name in CONVENTION_FILES and m.group(0) in CONVENTION_TOKENS:
+                        continue
                     hits.append("%s:%d %s %r" % (p.relative_to(ROOT), no, kind, m.group(0)))
     rep.add(not hits, "no-lit-num", "theory/** sources", "; ".join(hits[:8]) if hits else "no decimal, exponent or 3+ digit literal")
 
@@ -549,6 +880,9 @@ def main():
     check_constants(ctx, contract, rep)
     check_sign_flips(ctx, contract, rep)
     check_no_double_counting(ctx, contract, rep)
+    check_changes(contract, rep)
+    check_thresholds(ctx, contract, rep)
+    check_ignorance(ctx, rep)
     check_literature_numbers(rep)
     print("\n".join(rep.lines))
     print()

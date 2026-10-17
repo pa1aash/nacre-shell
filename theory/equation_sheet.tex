@@ -1,4 +1,4 @@
-% Equation sheet of the nacre-shell screen (session P0-W3.1).
+% Equation sheet of the nacre-shell screen (sessions P0-W3.1, P0-W3.2; contract v3).
 % Symbolic only: no literature value appears here. Values are fetched inputs that enter
 % the implementation through the parameter table; paper text quotes numbers only through
 % generated macros. The symbol table is generated from theory/symbols.yaml.
@@ -21,7 +21,7 @@
 \begin{document}
 
 {\large\bfseries Equation sheet: governing relations of the CaCO$_3$-barrier screen}\par
-{\small P0-W3.1. Symbolic only; every symbol is in the table overleaf and in \texttt{theory/symbols.yaml}; units in brackets.}
+{\small P0-W3.2 (cp2 fix-up), contract v3. Symbolic only; every symbol is in the table overleaf and in \texttt{theory/symbols.yaml}; units in brackets.}
 
 \smallskip
 \begin{tabular}{@{}p{\dimexpr\textwidth*10/97\relax}p{\dimexpr\textwidth*41/97\relax}p{\dimexpr\textwidth*41/97\relax}@{}}
@@ -52,22 +52,38 @@ Cycle: Ca$^{2+}$(aq, bulk, $\aCa$) $\to$ Ca$^{2+}$(binding layer). Solution side
 \DGseq &= \DGsite + \Rg T\ln\!\big(1+10^{\,\mathrm{p}K_\mathrm{a}-\mathrm{pH}}\big) \un{J\,mol^{-1}}\\
 \Eenr \equiv \frac{\cl}{\cb} &= \exp\!\Big(-\frac{\DGseq}{\Rg T}\Big) \un{1}
 \end{align}
-Valid for dilute Ca$^{2+}$ with unsaturated sites ($\Eenr\cb\ll\cmax$) and equal activity coefficients in bulk and layer (so $\Eenr$ is both a concentration and an activity ratio). Saturation (Langmuir closure):
+Valid for dilute Ca$^{2+}$ with unsaturated sites ($\Eenr\cb\ll\cmax$). $\Eenr$ is a \emph{concentration} ratio: at equilibrium the Ca$^{2+}$ activity in the layer equals the bulk one, and the enrichment sits in a local activity coefficient. Langmuir closure, with $x$ the occupancy odds:
 \begin{gather}
-\cl=\frac{\Eenr\cb}{1+\Eenr\cb/\cmax}\le\min(\Eenr\cb,\ \cmax) \un{mol\,m^{-3}}\\
-\cmax=\Gs/\ds \un{mol\,m^{-3}}\nonumber
+\cl=\frac{\Eenr\cb}{1+x}=\cmax\Theta,\quad x=\frac{\Eenr\cb}{\cmax},\quad \Theta=\frac{x}{1+x}\\
+\cmax=\Gs/\ds\ \ [\mathrm{mol\,m^{-3}}],\qquad \GCa=\Gs\Theta-\ds\cb\ \ [\mathrm{mol\,m^{-2}}]\nonumber
 \end{gather}
+\phys{Gibbs adsorption: binding lowers the template--liquid energy, $\dd\gsl=-\GCa\,\dd\mu_\mathrm{Ca}$, integrated from zero to the regime activity:}
+\begin{gather}
+\gsl=\gslz+\dga \un{J\,m^{-2}}\\
+\dga=-\Rg T\big(\Gs\ln(1+x)-\ds\cb\big)\nonumber\\
+\partial\dga/\partial\DGseq=\Gs\Theta>0\nonumber
+\end{gather}
+$\dga\equiv0$ if $\gsl$ is computed at the regime activities. $\gsn$ is likewise grand-canonical: a Ca$^{2+}$ excess at the contact (ion-bridged carboxylate--Ca--calcite) is inside it, so
+\begin{equation}
+\partial\gsn/\partial\mu_\mathrm{Ca}=-\GCasn,\qquad \partial(\gsl-\gsn)/\partial\mu_\mathrm{Ca}=-(\GCasl-\GCasn)
+\end{equation}
+with $\GCasl=\GCa$. Rule for supplied inputs: $\gsn$ comes from contact data at the regime state; $\DGseq$ is never added to it (no claim that $\GCasn=0$).
 
 \hd{3\quad Supersaturation (one definition)}
 \phys{Crystallisation is driven by the excess chemical potential of the dissolved ion pair over the solid of the registered framing (ACC or calcite).}
 \begin{equation}
 \Om=\frac{\mathrm{IAP}}{\Ksp}=\frac{\aCa\,\aCO}{\Ksp},\qquad \Dmu=\kB T\ln\Om \un{J}
 \end{equation}
-per formula unit; nucleation requires $\Om>1$ ($\Dmu>0$). Only Ca$^{2+}$ is enriched; carbonate stays at its bulk activity:
-\begin{gather}
-\Oml=\frac{\cl}{\cb}\,\Omb \;\xrightarrow{\text{dilute}}\; \Eenr\,\Omb \un{1}\\
-\Dmu_\mathrm{local}=\Dmu_\mathrm{bulk}-\DGseq/\NA \un{J}
-\end{gather}
+per CaCO$_3$ formula unit ($\Vm$ also per formula unit); nucleation requires $\Om>1$. \textbf{At the template $\Om=\Omb$.} At equilibrium $\tilde\mu_\mathrm{Ca}$ and $\tilde\mu_{\mathrm{CO_3}}$ are uniform; a mean potential $\psi$ gives factors $\e^{\mp2e\psi/\kB T}$ that cancel in the neutral solid, and specific binding lowers the local standard potential by exactly what it raises the concentration. Neither changes $\Dmu$:
+\begin{equation}
+\Dmu=\tilde\mu_\mathrm{Ca}+\tilde\mu_{\mathrm{CO_3}}-\mu_\mathrm{CaCO_3}=\kB T\ln\Omb \un{J}
+\end{equation}
+\textbf{Activities from speciation} (pH, $C_\mathrm{T}$, $\mathrm{Ca}_\mathrm{T}$, $I$; pairs CaCO$_3^0$, CaHCO$_3^+$, CaOH$^+$; Davies, $I\le I_\mathrm{val}$):
+\begin{equation}
+\aCO=\frac{2m_{C_\mathrm{T}}D_\mathrm{c}}{B+\sqrt{B^{2}+4A_\mathrm{c}P_\mathrm{c}m_{C_\mathrm{T}}D_\mathrm{c}}},\ \ \aCa=\frac{m_{\mathrm{Ca}_\mathrm{T}}}{D_\mathrm{c}+P_\mathrm{c}\aCO}
+\end{equation}
+$B=A_\mathrm{c}D_\mathrm{c}+P_\mathrm{c}(m_{\mathrm{Ca}_\mathrm{T}}-m_{C_\mathrm{T}})$; no Ca or no pairs gives $\aCO=m_{C_\mathrm{T}}/A_\mathrm{c}$; $I\to0$ gives ideal activities. $\cb$ is the free Ca$^{2+}$.
+The local-ideal form $\Omega_\mathrm{li}=(\cl/\cb)\Omb$, $\Dmu_\mathrm{li}=\Dmu_\mathrm{bulk}-\DGseq/\NA$, credits the binding free energy to the driving force; it is kept only as the named double-counting demonstration.
 
 \hd{4\quad Classical nucleation (C3, \Rs)}
 \phys{A cluster pays surface free energy before its volume gains $\Dmu$; the barrier is the top of that trade-off. On a substrate the cluster is a spherical cap with the same curvature.}
@@ -86,19 +102,25 @@ $\theta=0$: the nucleus wets the template completely (no barrier); $\theta=\pi$:
 $\dgw\equiv\gsn-\gsnz$ is the free energy per unit contact area to displace the template-bound water layer; \textbf{$\dgw>0$ is a cost} and raises $\theta$, $f$ and $\DGhet$ ($\partial\cos\theta/\partial\dgw=-1/\gnl<0$). If $\gsn$ is supplied as a full in-water interfacial free energy, $\dgw\equiv0$ and is not added again.
 $\geff\equiv\gnl-\dgw$ (deck form) is \textbf{not} used: Young and $\DGhom$ take the bare $\gnl$. Reason: $\gnl$ multiplies the cap's free surface, which never touches the template, and $\DGhet=f\,\DGhom$ follows only if the same $\gnl$ sits in Young and in $\DGhom$. With $\geff$ in the denominator, $\partial\cos\theta/\partial\dgw=(\gsl-\gsnz)/\geff^{2}>0$ on the wetting side: a cost would lower the barrier.
 
-\hd{6\quad Where the template acts}
-\phys{The template enters the barrier through two channels only: wetting (interfacial energies, via $\theta$) and Ca$^{2+}$ enrichment (via $\Om$).}
+\hd{6\quad Where the template acts (screen rule)}
+\phys{In the grand potential at the bulk chemical potentials every template--ion interaction sits in the interfacial energies, so the template acts only through $\theta$; the driving force is the bulk one.}
 \begin{equation}
-\DGhet=f\big(\theta[\gsl,\gsnz,\dgw]\big)\;\frac{16\pi\gnl^{3}\vm^{2}}{3\big(\kB T\ln\Oml[\DGseq,\Gs,\ds]\big)^{2}}
+\DGhet=f\big(\theta[\gslz+\dga,\,\gsnz,\,\dgw]\big)\,\frac{16\pi\gnl^{3}\vm^{2}}{3\big(\kB T\ln\Omb\big)^{2}}
 \end{equation}
-\textbf{No-double-counting condition:} each template-dependent input enters exactly one channel ($\partial\theta/\partial\DGseq=0$, $\partial\Om/\partial\gamma_\mathrm{s\cdot}=0$), and $\gsl,\gsn$ are evaluated without the template-bound Ca$^{2+}$ excess already credited to $\Oml$. Bulk inputs ($\gnl,\Vm,T$) may enter both. Proof: P0-W3.2.
+\textbf{Rule:} $\DGseq$ enters once, through $\dga$ in $\gsl$; $\partial\Om/\partial(\text{template inputs})=0$. If $\gsl$ is computed at the regime activities, add nothing. At fixed $\gslz,\gsn$, stronger binding \emph{lowers} $\cos\theta$ and raises $\DGhet$ (SF2): binding helps only if $\gsn$ falls by more than $\gsl$, i.e.\ if $\GCasn>\GCasl$. Lowering $\gnl$ lowers $f$ only if $\gsl>\gsn$ (SF3). Proof: derivation, Section~7.
+
+\hd{6a\quad Accessibility of the barrier (C3)}
+\phys{Nuclei must form at the stated areal density within the time the template spends in the slurry and drying.}
+\begin{equation}
+\begin{gathered}J=J_0\e^{-\DGhet/\kB T},\qquad N_\mathrm{nuc}=J t_\mathrm{p}\ge N_\mathrm{req}\\ \iff\ \DGhet\le B_\mathrm{acc}=\kB T\ln(J_0t_\mathrm{p}/N_\mathrm{req})\end{gathered}
+\end{equation}
 
 \hd{7\quad Conformality (C4, \Rs)}
 \phys{A barrier needs a continuous film; whether the mineral spreads or beads is a wetting balance, not a barrier height.}
 \begin{equation}
 \Ssp=\gsl-\gsn-\gnl=\gnl(\cos\theta-1) \un{J\,m^{-2}}
 \end{equation}
-$\Ssp\ge0$: no finite $\theta$ ($\theta\to0$, $f\to0$), layer-by-layer growth. $\Ssp<0$: $\theta>0$, island growth; a film forms only on coalescence, at cap height $\hc=\tan(\theta/2)/(2\sqrt{\Ns})$ [m]. A low $f$ does not imply coverage: $f(\pi/2)=\tfrac12$ is still island growth.
+$\Ssp\ge0$: no finite $\theta$ ($\theta\to0$, $f\to0$), layer-by-layer growth. $\Ssp<0$: $\theta>0$, island growth; a film forms only on coalescence, at cap height $\hc=\tan(\theta/2)/(2\sqrt{\Ns})$, and closes at $h_\mathrm{cl}=\sqrt2\hc\le d_\mathrm{max}$ iff $\Ns\ge\tan^{2}(\theta/2)/(2d_\mathrm{max}^{2})$ [m; m$^{-2}$]. A small-$\theta$ bound and $\Ssp\ge0$ are one criterion at different strictness ($\Ssp=\gnl(\cos\theta-1)$); coalescence is the independent one. A low $f$ does not imply coverage: $f(\pi/2)=\tfrac12$ is still island growth. $\hc$ is geometric; the kinetic critical coalescence thickness of the charter is $\hcoal$ (not computed in P0).
 
 \hd{8\quad Stability (C5): screens, necessary not sufficient}
 (a) \Rs, aqueous Pourbaix, per non-O, non-H atom [J\,mol$^{-1}$]:

@@ -1,7 +1,7 @@
 {
-  "last_session": "P0-W3.1",
+  "last_session": "P0-W3.2",
   "status": "DONE",
-  "day": 1,
+  "day": 2,
   "equation_sheet": {
     "status": "ready",
     "sha": "4d03ab0a3db0e866825ebc99684a7bf7203f0f2a",
@@ -9,27 +9,90 @@
     "check_contract": "PASS",
     "functions": 32
   },
+  "contract_v2": {
+    "status": "ready",
+    "sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
+    "version": 2,
+    "functions": 42,
+    "check_contract": "PASS",
+    "summary": "uniform chemical potential: Omega = Omega_bulk at the template; Delta_G_seq enters once, through Delta_gamma_ads in gamma_sl; composite inputs gamma_sl -> gamma_sl0; Omega_local renamed Omega_local_ideal (demonstration); 11 added functions; changelog in contract.yaml `changes`"
+  },
+  "thresholds": {
+    "status": "ready",
+    "sha": "db872ae9190c3b729bc2b13898919fbfbe56815b",
+    "file": "theory/thresholds.md",
+    "machine_block": "fenced block tagged thresholds (W4 copies it into configs/preprint/thresholds.yaml)",
+    "written_before_screen_output": true,
+    "base_commit": "49100a9d92b5dc48f1db1d15529967dfeeece12d",
+    "revised_base_commit": "800d5ea3de41a0fb16084519d5c2680eeb14952d",
+    "contract_version": 3,
+    "params_keys": 27,
+    "check_contract": "PASS",
+    "conventions": {
+      "p_cred": "0.9 (sweep 0.6/0.9/0.99)",
+      "p_deg": "1 - p_cred = 0.1",
+      "m_cos": "0 (sweeps 0.1/0.2)",
+      "m_W, m_S, m_E": "set by W1 (evidence or zero)",
+      "sizing": "band half-width <= 0.01, Sobol total-order half-width <= 0.02; caps 2^20 base draws per state, 6 h per run; chunks 2^14"
+    }
+  },
   "artifacts": [
+    "theory/contract.yaml",
+    "theory/symbols.yaml",
+    "theory/tools/check_contract.py",
+    "theory/tools/gen_symbol_table.py",
+    "theory/generated/symbol_table.tex",
     "theory/equation_sheet.tex",
     "theory/build/equation_sheet.pdf",
     "theory/macros.tex",
-    "theory/symbols.yaml",
-    "theory/generated/symbol_table.tex",
-    "theory/contract.yaml",
-    "theory/tools/check_contract.py",
-    "theory/tools/gen_symbol_table.py",
     "theory/derivation.tex",
     "theory/derivation_body.tex",
     "theory/build/derivation.pdf",
     "theory/open_questions.md",
-    "ops/reports/P0-W3.1.md"
+    "theory/thresholds.md",
+    "theory/cp2_brief.md",
+    "theory/ignorance_priors.md",
+    "theory/cp2_fixes.md",
+    "ops/reports/P0-W3.2.md",
+    ".local/packets/p0-2.zip (local only)"
   ],
   "notes": [
-    "Young: theta measured through the nucleus; cos(theta) = (gamma_sl - gamma_sn)/gamma_nl with gamma_sn = gamma_sn0 + Delta_gamma_w; Delta_gamma_w > 0 is a cost.",
-    "gamma_eff = gamma_nl - Delta_gamma_w is not used in Young or DG_hom; kept as the deck diagnostic only.",
-    "Derivation complete in all 11 sections; section 7 carries the no-double-counting outline, full proof in P0-W3.2.",
-    "16 open questions for cp2; Q1 (enrichment bookkeeping), Q2 (carbonate), Q6, Q8 and Q9 are sign-relevant.",
-    "Contract extended additively after the ready mark (h_cl, Delta_Phi_r, E_window); no existing function changed.",
-    ".venv is a symlink to ~/.nacre-venvs/p-w3, excluded locally via .git/info/exclude."
-  ]
+    "Q1/Q2 settled: uniform electrochemical potential; Delta_mu = k_B T ln Omega_bulk at the template; enrichment (binding or psi) never changes the driving force.",
+    "Ca2+ binding enters only gamma_sl via Delta_gamma_ads = -R T (Gamma_s ln(1 + x) - delta_s c_bulk); at fixed gamma_sl0 and gamma_sn stronger binding raises the barrier (SF2 reversed vs v1).",
+    "Contract v2: 11 added, 8 changed, Omega_local -> Omega_local_ideal (demonstration); composite inputs gamma_sl -> gamma_sl0.",
+    "3 W4 contract-equivalence tests fail on this branch until W4 implements v2 (expected handshake gap); 773 other tests pass.",
+    "Thresholds: band-mass rule at credible level p; C3 single edge f = 1/2 replaces the deck bands, plus DG_het <= B_acc; C4 S_spread with coalescence supporting; C5 hull tolerance from formation-energy error, R-cell undetermined never passes.",
+    "Charter change requested at cp2: C2 definition and physics (exact text in theory/cp2_brief.md), consequential C3/C5 fields.",
+    "Sign audit: resolved 5 / deferred 7 / for cp2 4.",
+    "cp2 fix-up (2026-10-17): F1-F9 applied, one commit each; fix log theory/cp2_fixes.md.",
+    "C2 is a reported binding descriptor (enters C3 only through Delta_gamma_ads); study gates on C1, C3, C4, C5; deletion links [C3, C4]; finding 'the sequestration premise fails' if P(Delta_G_seq >= 0) >= p_cred.",
+    "N_req = 1/A_patch (regimes.R-slurry.parameters.patch_area); thresholds.C3.N_req becomes derived.",
+    "Ignorance priors: gamma_sn ~ U[0, gamma_p + gamma_nv]; complete-wetting mass is non-zero only if gamma_sl > gamma_nl on the prior support (recorded, not forced).",
+    "Charter texts for the integrator in theory/cp2_brief.md sections A, B, E (approved) and C (C2 kill_criterion/verdict_bands consistency: needs a ruling).",
+    "W4 handshake: 3 W4 contract tests still fail on this branch (now v3: 22 functions to implement incl. the v2 ones); 773 other tests pass."
+  ],
+  "contract_v3": {
+    "status": "ready",
+    "sha": "db872ae9190c3b729bc2b13898919fbfbe56815b",
+    "version": 3,
+    "functions": 53,
+    "check_contract": "PASS",
+    "summary": "cp2 fix-up: adsorption convention text (gamma_sn grand-canonical contact excess; Gibbs-Langmuir neutral-solute approximation), carbonate speciation functions (a_CO3_speciation, a_Ca_speciation, c_Ca_free and helpers; Davies, ion pairs CaCO3(aq), CaHCO3+, CaOH+), Omega_bulk_hydrated (labelled sensitivity), h_coal rename (symbol; h_c note); 11 added, 4 changed, 0 removed; no v2 expression changed"
+  },
+  "cp2": "PASS pending integrator tag",
+  "cp2_fixes": {
+    "F1": "44f0bc00431505096b9820af225fdec081443f61",
+    "F2": "96df9a782f7250715bd6353b7b85bfdb5fe595b7",
+    "F3": "a4178a1b84cdfbd7b4e1d260217e57ad6f2cda6b",
+    "F4": "4f64f4d569d8239692e297832cf70f3c90546d20",
+    "F5": "29cc993e5eb145512f7ce8942029544e5400ec3a",
+    "F6": "e5ce0da1389aabe7d66cbafe08b6875c1a6cd42d",
+    "F7": "83460ffeb0d36e16dd4a34539b1e21c78b92039d",
+    "F8": "dacfb15b04a76f36c6fd163c3156ca344da46e15",
+    "F9": "fad32e5fb91eff607b0ba14474c762b2be30ea49",
+    "conventions": "d90967cd58b5b47e253f727ac89e29dcf4a74ff1",
+    "ignorance_priors": "9249661f4c1b044a12ff3fdfab2a7afee82ea545",
+    "speciation": "717485662dae8d3442202fb0e3e9ef279301064b",
+    "fix_log": "theory/cp2_fixes.md @ f3d7570f5a0e459bffb3ad1964cc305a048977e9"
+  }
 }
