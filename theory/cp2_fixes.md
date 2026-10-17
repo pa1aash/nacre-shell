@@ -62,3 +62,44 @@ Twelve faults were planted, and each makes `check_contract.py` fail:
 
 Two of these first made the checker crash instead of reporting. The dimension errors are now
 caught and reported as FAIL.
+
+# cp3 amendments (session P0-W3.3, lane p0-w3)
+
+The planning chat ruled on checkpoint cp3 on 2026-10-17: PASS once R1 to R12 are applied. Items
+R1 to R8 belong to this lane and were applied one commit each on `preprint/p0-w3`, based on
+`ac5cdfb`; R9 is recorded here only (lane W2 owns the retrodiction criterion). Equation numbers
+are those of the P0-W3.3 cp3 build of `theory/build/derivation.pdf`, with the stable label in
+brackets. Every commit passes `theory/tools/check_contract.py`. No screen output was run or read
+(rule R7). The thresholds machine block is now version 2; the contract stays at version 3 (no
+contract expression changed).
+
+| Item | Files, section or equation | Commit | Summary |
+|---|---|---|---|
+| R1 | `theory/thresholds.md` C5 R-slurry, Section 3 (design points), key table, machine block `C5s`, `C5s_phase`; derivation 9, new paragraph and Eq. (43) [th:eq:pbx-omega], Table 1 row C5, rule 5 of 7; equation sheet 8(a) | `cfa9f2d3644f2d284781f5772b3f6a5b4eae3a49` | Dissolution is decided by Omega_bulk >= 1 with the sourced calcite K_sp and the speciation activities, the quantity C3 uses; derivation states the shared Omega and shows why a hull distance cannot decide it (the tolerance hides undersaturation down to ln Omega = -n_at e_f / (R T); a computed dissolution energy shifts K_sp by its error over R T ln 10). The Pourbaix hull stays for competing solids (dissolved Ca removed) and the Al baseline at fixed C(IV), with its DFT tolerance. The falsifiability control applies to the Omega test. Calcite K_sp decides; ACC Omega is the labelled sensitivity (F6). Verdict per design point over (a_Ca, C_T): the dose window. Carbon redox is an assumption with a labelled sensitivity. Disclosure added. |
+| R2 | `theory/thresholds.md` C5 R-cell, key table, machine block `C5c_ox`, `C5c_red`; symbols `m_expt` (new); checker (edges of the no-expt fallback); derivation 9, new paragraph "Which thermochemistry decides the limit" | `eed03d8b8b28fa1437663c35eddeffbe29733d97` | The all-experimental route governs wherever its inputs exist; DFT schemes are comparators with their benchmark errors, and a benchmark-corrected value equals the experimental route by construction (never a second confirmation). m_expt = tabulated uncertainties plus a bound on the neglected Ca(ClO4)2 solid entropy from analog entropies (new W1 keys). Falsified if E_ox(expt) + m_expt < E_cell_max (solid-salt sink stands); a pass needs E_ox(expt) - m_expt >= E_cell_max with the solvated sink. E_cell_max is a design axis by cathode class, with the two crossover cutoffs reported. Every scheme printed; disclosure that the values were seen first. Physics: Li2CO3's measured onset lies near its experimental equilibrium limit (key `li2co3_oxidation_onset`, W5 benchmark B6). Where the experimental route is missing, the F5 rule with m_E applies (interpretation; the ruling is silent there). |
+| R3 | `theory/thresholds.md` C4 and machine block `C4`; derivation 8, new paragraph and Eq. (41) [th:eq:spread-bound]; `theory/ignorance_priors.md` Section 2 and block | `63e086ba59ebd87fae849b91abc54b1c231aae53` | C4 is good per draw if S_spread >= m_S or N_nuc >= N_s_closure (upper-estimate N_nuc); falsified only if both fail at p, inconclusive otherwise; P(gamma_sl > gamma_nl) reported. Physical result: S_spread <= gamma_sl - gamma_nl because gamma_sn >= 0, so for any hydrophilic template (gamma_sl <= gamma_nl) S_spread < 0 for every admissible gamma_sn and complete wetting is excluded. |
+| R5 | `theory/thresholds.md` C3 (b), key table, machine block `C3b`; derivation 5, new Eq. (27) [th:eq:nreq]; symbols `q_0` (new), `N_req`; equation sheet 6a; checker (single-state edge consistency) | `1ade8de3d9fecf6493a0345e416f61114a73152d` | N_req = ln(1/q_0)/A_patch with q_0 = 1 - p_cred: Poisson occupancy leaves a fraction exp(-N_nuc A_patch) <= q_0 of the contact patches empty. The cp2 form 1/A_patch is q_0 = 1/e. |
+| R6 | `theory/thresholds.md` C3 (a), Section 3 ("Framings"), key table, machine block `study.framings`; derivation 4 (K_sp sentence) and Table 11; `theory/open_questions.md` Q12 | `01a809e6d48420b015c0332dea8c8f048c7eacc5` | Calcite and ACC both registered, each run as a whole chain. Falsified only if falsified under every framing; feasible under at least one, named, with the other beside it. Disclosure: a calcite-framing estimate near one half was available when the project was designed. |
+| R7 | `theory/thresholds.md` Section 1 ("Link masses", "States"), C3 verdict, deletion test, machine block `decision.link_mass`, `decision.states` | `faca26521255fda6f1fa6d293911ff52b655b458` | (1) Link masses are joint, draw by draw: falsified side P(any test bad) for A-and-B links, P(both routes bad) for C4; the deletion test uses the same joint masses. (4) Every registered state is propagated; C3 (b) (and the C4 closure route) cannot be falsified unless every state, drying included, is evaluated: with a state missing, a shortfall is inconclusive and a pass stands. The mirror for worst-state links (a pass needs every state) is stated as a consequence. |
+| R8 | `theory/thresholds.md` C1 terminations, Section 1 (gamma_sl0 truncation), C5 R-cell gated phases and sinks, key table, machine block; `theory/ignorance_priors.md` 1d | `d782db2f19fafb5a40367f604502c36f75d0cc16` | Per-termination C1 verdicts plus an ignorance mixture over the weights (flat Dirichlet), never a point weight. R-cell gated phases CaCO3, corundum and boehmite; LiBOB and LiPCP sinks undetermined (never a pass). gamma_sl0 truncated at 0, untruncated prior a labelled sensitivity. |
+| Header, references, PDFs | `theory/thresholds.md` header and `revised_cp3`; equation references in `thresholds.md` and `open_questions.md`; derivation and equation-sheet PDFs | `74ac69c2586c017e2bc08efecbfbc918b94f48ee` | Thresholds marked ready for cp3 at this commit (`ops/state/p0-w3.json` `thresholds_cp3`). Derivation 18 pages, equation sheet 3 pages, no undefined references or overfull boxes. |
+
+**R9 (recorded only; lane W2 owns it).** The retrodiction criterion is approved as frozen. The
+requirement that a constant-predictor baseline must fail is dropped: with all 12 outcomes in one
+direction, a constant predictor scores 12 of 12, so the requirement cannot be met by any
+predictor. A permutation null is reported as a descriptive control. The label-swap check stands.
+This amends D17 for W2; nothing in `theory/**` depends on it.
+
+**Interpretations for the auditor.**
+- R1: the hull for competing phases excludes dissolved Ca-bearing species, so that it does not
+  re-decide dissolution with the bias R1 removes.
+- R1: verdicts are formed per design point, and the study verdict is combined at each point.
+- R2: where the experimental route is missing, the cp2 F5 rule over the DFT schemes with m_E
+  decides, labelled DFT-decided; the reduction limits follow the same route rule.
+- R3 with R7: C4's feasible side is the joint P(S_spread route or closure route good); the two
+  single-route conditions of R3 are sufficient for it.
+- R7: the worst-state mirror of the missing-state rule (a pass needs every registered state).
+
+**Negative tests (scratch copies, one fault at a time).** Each fails the checker: a C3b
+single-state edge inconsistent with N_req; a no-expt fallback edge with the wrong unit; the C5s
+Omega edge replaced by a voltage margin.
