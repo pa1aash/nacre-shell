@@ -242,3 +242,48 @@ def test_equidistant_anchor_site_is_refused():
 
     with pytest.raises(ValueError, match="equidistant"):
         hero.anchor_chain(sc, oligomer.build({"n_units": 4}, 7), list(mid), 0.0, p, "c")
+
+
+def test_hero_regenerates_part_by_part(hero, parts):
+    # Rebuild step by step and name the first part that departs from the committed file
+    # (beyond the regeneration tolerance), or the step at which the build stops.
+    from nacre.structures import compare, hero as hero_mod, oligomer, slab
+
+    spec = build.load_config()["targets"]["hero_interface"]
+    slab_spec = build.load_config()["targets"][spec["slab"]]
+    trace, error = [], None
+    try:
+        hero_mod.build(slab.build(slab_spec["params"], slab_spec.get("seed", 0)),
+                       oligomer.build({"n_units": 4}, 7), evidence.hydration_geometry(),
+                       spec["params"], spec["seed"], trace=trace)
+    except (RuntimeError, ValueError) as exc:
+        error = str(exc)
+    comp, sym, pos = parts
+    # Each step is checked on the part it adds: a chain on its heavy atoms (a later Ca site
+    # removes or turns one of its H), a Ca site on its ion and waters, the nucleus whole.
+    added = {"bridge": ["bridge"], "nucleus": ["nucleus"]}
+    for step, snap in trace:
+        names = added.get(step, [step, f"{step}_water"] if step.startswith("bound") else [step])
+        for c in names:
+            xyz = snap[c]
+            if step.startswith("chain"):
+                heavy = sym[comp == c] != "H"
+                ref = pos[comp == c][heavy]
+                xyz = xyz[np.array([s != "H" for s in _snap_symbols(snap, c, comp, sym)])]
+            else:
+                ref = pos[comp == c]
+            assert len(ref) == len(xyz), f"after step {step}: part {c} has {len(xyz)} atoms, not {len(ref)}"
+            d = float(np.abs(ref - xyz).max()) if len(ref) else 0.0
+            assert d <= compare.POSITION_TOL, f"after step {step}: part {c} moved {d:.3f} A"
+    assert error is None, f"build stopped after {trace[-1][0] if trace else 'start'}: {error}"
+
+
+def _snap_symbols(snap, c, comp, sym):
+    """Element symbols of part c at a chain step: the committed heavy atoms keep their order,
+    and the chain at that step still holds every H (one may go to a later Ca site)."""
+    from nacre.structures import oligomer
+
+    rec = oligomer.build({"n_units": 4}, 7)
+    keep = np.setdiff1d(np.arange(len(rec)), np.where((rec.arrays["catechol"] == 0)
+                                                       & (np.array(rec.get_chemical_symbols()) == "H"))[0])
+    return list(np.array(rec.get_chemical_symbols())[keep])

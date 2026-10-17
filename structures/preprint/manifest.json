@@ -38,7 +38,7 @@
   "builder": "nacre.structures.hero.build",
   "file": "hero_interface.extxyz",
   "n_atoms": 3873,
-  "sha256": "4a23d689b2103d0df4699e5ccec6b8f0875608716ffe6f417d835931795cc7aa",
+  "sha256": "65ef4b5fcca04a6740bcf5bb8314192d542cdd695da786d73937d68e8622a3ff",
   "total_charge": 0
  },
  "smoke_interface": {

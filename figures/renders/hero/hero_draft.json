@@ -37,7 +37,7 @@
     }
    },
    "file": "structures/preprint/hero_interface.extxyz",
-   "sha256": "4a23d689b2103d0df4699e5ccec6b8f0875608716ffe6f417d835931795cc7aa"
+   "sha256": "65ef4b5fcca04a6740bcf5bb8314192d542cdd695da786d73937d68e8622a3ff"
   },
   {
    "evidence_row_ids": {
@@ -47,7 +47,7 @@
     }
    },
    "file": "structures/preprint/hero_interface.extxyz",
-   "sha256": "4a23d689b2103d0df4699e5ccec6b8f0875608716ffe6f417d835931795cc7aa"
+   "sha256": "65ef4b5fcca04a6740bcf5bb8314192d542cdd695da786d73937d68e8622a3ff"
   },
   {
    "evidence_row_ids": {
@@ -57,12 +57,12 @@
     }
    },
    "file": "structures/preprint/hero_interface.extxyz",
-   "sha256": "4a23d689b2103d0df4699e5ccec6b8f0875608716ffe6f417d835931795cc7aa"
+   "sha256": "65ef4b5fcca04a6740bcf5bb8314192d542cdd695da786d73937d68e8622a3ff"
   }
  ],
  "output": "figures/renders/hero/hero_draft.png",
- "output_bytes": 1573302,
- "output_sha256": "7c4ece46e7dabe22692bc975ba81d99cdb8ac24d6606c63e352ba6aaec61aba4",
+ "output_bytes": 1573161,
+ "output_sha256": "e645631e16624148282c7c2f1d17c600c7e9d5f1d8aef800debc479af46fc547",
  "palette": {
   "colour_space": "linear RGB (palette elements.<El>.linear_rgb) as Principled base colour",
   "colours_used": {

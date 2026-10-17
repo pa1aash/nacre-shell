@@ -266,7 +266,9 @@ def ca_site(sc, chain_index_map, chain, unit_k, geom, rng, name, p):
                 clear = r.min()
             else:
                 clear = np.inf
-            fit = np.linalg.norm(rmat @ dirs[i] - ua) + np.linalg.norm(rmat @ dirs[j] - ub)
+            # Rounded: symmetric shell directions fit equally well, and the first pair in
+            # enumeration order must win on every platform.
+            fit = round(float(np.linalg.norm(rmat @ dirs[i] - ua) + np.linalg.norm(rmat @ dirs[j] - ub)), 6)
             key = (clear < p["clearance"] - 0.4, fit)
             if best is None or key < best[0]:
                 best = (key, wat)
@@ -404,15 +406,25 @@ def build_nucleus(sc, p, rng, bridge_ca, geom):
     return {"target_fu": target, "placed_fu": n_ca, "attempts": attempts, "rejected": rejected}
 
 
-def build(slab, chain, geom, params=None, seed=0, source_ids=None):
+def snapshot(sc):
+    """Positions of every live part of the scene, keyed by component."""
+    comp = np.array(sc.comp)
+    return {c: sc.pos[(comp == c) & sc.alive].copy() for c in dict.fromkeys(sc.comp)}
+
+
+def build(slab, chain, geom, params=None, seed=0, source_ids=None, trace=None):
+    """Build the hero scene. ``trace``, if a list, receives (step, snapshot) after each step,
+    so a failing build shows which part departed first."""
     from ase import Atoms
 
     p = _deep(DEFAULTS, params)
     rng = np.random.default_rng(seed)
     sc = Scene(slab)
+    record = trace.append if trace is not None else (lambda item: None)
     maps = []
     for i, ch in enumerate(p["chains"]):
         maps.append(anchor_chain(sc, chain, ch["site"], ch["azimuth"], p, f"chain{i}"))
+        record((f"chain{i}", snapshot(sc)))
     n_bound_water = []
     bound = []
     for j, b in enumerate(p["bound"]):
@@ -427,6 +439,7 @@ def build(slab, chain, geom, params=None, seed=0, source_ids=None):
                 continue
             bound.append({"chain": b["chain"], "unit": int(k)})
             n_bound_water.append(nw)
+            record((f"bound{j}", snapshot(sc)))
             break
     p["bound"] = bound
     # The bridging site is built before the nucleus; the nucleus carbonate then takes the
@@ -443,7 +456,9 @@ def build(slab, chain, geom, params=None, seed=0, source_ids=None):
         br["unit"] = rim_unit(sc, maps[br["chain"]], chain, centre, n["base_radius"], z_b)
     p["bridge"] = br
     bridge_ca, _ = ca_site(sc, maps[br["chain"]], chain, br["unit"], geom, rng, "bridge", p)
+    record(("bridge", snapshot(sc)))
     nuc = build_nucleus(sc, p, rng, bridge_ca, geom)
+    record(("nucleus", snapshot(sc)))
     charge_sites = sum(q for _, q in sc.ledger)
     n_co3 = charge_sites // 2
     if charge_sites % 2 or n_co3 != len(p["carbonate"]):
