@@ -7,7 +7,7 @@
    -0.38
   ],
   "margin": 1.03,
-  "ortho_scale": 56.5829,
+  "ortho_scale": 56.4309,
   "type": "ORTHO",
   "up": [
    0.0,
@@ -16,7 +16,7 @@
   ]
  },
  "counts": {
-  "atoms": 2931,
+  "atoms": 2922,
   "elements": [
    "Al",
    "C",
@@ -25,7 +25,7 @@
    "N",
    "O"
   ],
-  "half_bonds": 7490
+  "half_bonds": 7438
  },
  "elements_table_sha256": "84a79466dda3a3445b8ac856aaeaea1069b10e54b49ed11f3f21435d6e14706b",
  "inputs": [
@@ -37,7 +37,7 @@
     }
    },
    "file": "structures/preprint/hero_interface.extxyz",
-   "sha256": "65ef4b5fcca04a6740bcf5bb8314192d542cdd695da786d73937d68e8622a3ff"
+   "sha256": "24cf31db7925987be74175d08f2922d3ee40cc85e1fc4cd79989ab60e979808a"
   },
   {
    "evidence_row_ids": {
@@ -47,7 +47,7 @@
     }
    },
    "file": "structures/preprint/hero_interface.extxyz",
-   "sha256": "65ef4b5fcca04a6740bcf5bb8314192d542cdd695da786d73937d68e8622a3ff"
+   "sha256": "24cf31db7925987be74175d08f2922d3ee40cc85e1fc4cd79989ab60e979808a"
   },
   {
    "evidence_row_ids": {
@@ -57,12 +57,12 @@
     }
    },
    "file": "structures/preprint/hero_interface.extxyz",
-   "sha256": "65ef4b5fcca04a6740bcf5bb8314192d542cdd695da786d73937d68e8622a3ff"
+   "sha256": "24cf31db7925987be74175d08f2922d3ee40cc85e1fc4cd79989ab60e979808a"
   }
  ],
  "output": "figures/renders/hero/hero_draft.png",
- "output_bytes": 1573161,
- "output_sha256": "e645631e16624148282c7c2f1d17c600c7e9d5f1d8aef800debc479af46fc547",
+ "output_bytes": 1592307,
+ "output_sha256": "995598409c18d73c397b791d3a22892e356d59de7c2979b3aec6f54103addf48",
  "palette": {
   "colour_space": "linear RGB (palette elements.<El>.linear_rgb) as Principled base colour",
   "colours_used": {

@@ -57,7 +57,7 @@ def bulk_hexagonal():
 
 def _layers(z, tol):
     """Group sorted z values into layers; returns list of index arrays (ascending z)."""
-    order = np.argsort(z)
+    order = np.argsort(z, kind="stable")
     groups, cur = [], [order[0]]
     for i in order[1:]:
         if z[i] - z[cur[-1]] > tol:
@@ -122,6 +122,9 @@ def build(params=None, seed=0):
     else:
         slab = slab1.repeat((int(p["nx"]), int(p["ny"]), 1))
     # Tilt every O-H in a seeded azimuth after the lateral repeat, so the pattern is not a strict tile.
+    # The draws follow the canonical atom order: the order the atoms arrive in depends on the
+    # symmetry analysis and on ties in sorting, which differ between platforms.
+    slab = slab[stable_order(slab.numbers, slab.positions)]
     _tilt_oh(slab, rng, p)
     zmin = slab.positions[:, 2].min()
     slab.positions[:, 2] -= zmin - p["vacuum"]

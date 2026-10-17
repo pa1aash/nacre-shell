@@ -7,7 +7,7 @@
    -0.3
   ],
   "margin": 1.06,
-  "ortho_scale": 35.5517,
+  "ortho_scale": 35.6881,
   "type": "ORTHO",
   "up": [
    0.0,
@@ -35,12 +35,12 @@
     }
    },
    "file": "structures/preprint/smoke_interface.extxyz",
-   "sha256": "ee156f570fde1a5ea9bfe7950a1dba69cc7ad55f8fc64a6e9e432ac71734f172"
+   "sha256": "97972947e2e2d464f731410c0b2bdde1a7dac0b67730780bbc161b6bac8ffcaf"
   }
  ],
  "output": "figures/renders/smoke/smoke.png",
- "output_bytes": 238403,
- "output_sha256": "a2d7db87ea053f64f5220cf71a5e48f49fb1d3e3b62d39b607d81d7601e44500",
+ "output_bytes": 236684,
+ "output_sha256": "f06edf0509d1d2094fb74d86d3874431c0078171a0416a216096c5e5af7a0406",
  "palette": {
   "colour_space": "linear RGB (palette elements.<El>.linear_rgb) as Principled base colour",
   "colours_used": {

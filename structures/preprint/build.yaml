@@ -58,7 +58,7 @@ targets:
     seed: 11
     params:
       chains:              # anchor site (fractions of the cell) and azimuth (degrees from +x)
-        - {site: [0.303, 0.096], azimuth: 210}  # its unit-1 catechol sits at the cap's base rim
+        - {site: [0.5, 0.138], azimuth: 330}    # its unit-1 catechol sits at the cap's base rim
         - {site: [0.3967, 0.5212], azimuth: 0}  # under the nucleus: the layer it wets (off a tie)
         - {site: [0.62, 0.36], azimuth: 180}    # under the nucleus
         - {site: [0.13, 0.80], azimuth: 300}
