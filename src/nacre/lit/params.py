@@ -431,6 +431,12 @@ def resolve(path, params=None):
     for alias, leaf in _view_leaves(p.doc):
         if alias == path:
             return leaf["key"]
+    # W3 writes some keys with a capital letter (params.debye_huckel_A, params.davies_I_val); keys are lower-case
+    # slugs, so a case-insensitive match is accepted when it is unique
+    bare = path[7:] if path.startswith("params.") else path
+    hits = [k for k in p.entries if k.lower() == bare.lower()]
+    if len(hits) == 1:
+        return hits[0]
     raise KeyError("lit/params.yaml has no key or alias %r" % path)
 
 

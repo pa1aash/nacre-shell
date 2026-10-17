@@ -231,3 +231,11 @@ def test_alias_resolves_and_must_match(root):
     doc = with_alias(base_doc())
     doc["regimes"]["R-slurry"]["parameters"]["gamma_nl"]["key"] = "nope"
     assert any("not in params" in e for e in problems(root, doc))
+
+
+def test_resolve_accepts_the_capitalised_contract_spellings():
+    p = P.load_params()
+    assert P.resolve("params.debye_huckel_A", p) == "debye_huckel_a"
+    assert P.resolve("params.davies_I_val", p) == "davies_i_val"
+    with pytest.raises(KeyError):
+        P.resolve("params.no_such_key", p)
