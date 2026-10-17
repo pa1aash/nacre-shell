@@ -7,7 +7,8 @@ from figs_helpers import REPO
 
 from nacre.figs import schema, upstream
 
-PINS = ["results_schema", "thresholds", "retro_schema", "retro_cases", "symbols"]
+PINS = ["results_schema", "thresholds", "retro_schema", "retro_cases", "symbols",
+        "retro_results", "screen_table_r2", "screen_ignorance"]
 
 
 @pytest.mark.parametrize("key", PINS)
@@ -20,6 +21,7 @@ def test_registry_names_owner_commit_and_path():
         e = upstream.entry(key, REPO)
         assert re.fullmatch(r"[0-9a-f]{40}", e["commit"]), key
         assert e["owner"] in {"p0-w2", "p0-w3", "p0-w4"} and e["path"], key
+        assert e["kind"] in {"contract", "data"} and "same_bytes" in e["merged_tree"], key
 
 
 def test_tampered_pin_is_refused(tmp_path, monkeypatch):
@@ -65,11 +67,23 @@ def test_retro_mock_uses_the_usable_cases_of_the_pinned_list():
     assert [c["observed_relation"] for c in mock["cases"]] == [c["outcome"]["relation"] for c in cases]
 
 
-def test_owner_schema_rejects_a_window_limit_without_status():
+def test_owner_schema_rejects_a_scheme_row_without_status():
     sch = upstream.load("results_schema", REPO)
-    doc = json.loads((REPO / "figures/src/mock/stability.json").read_text())
-    del doc["stability"]["R-cell"]["windows"]["CaCO3"]["oxidation"]["status"]
+    doc = json.loads((REPO / "figures/src/mock/screen_c5.json").read_text())
+    assert schema.validate(doc, sch) == []
+    del doc["claims"]["C5"]["tests"]["C5c_ox"]["scheme_table"][0]["status"]
     assert schema.validate(doc, sch)
+
+
+@pytest.mark.parametrize("key", ["screen_table_r2", "screen_ignorance"])
+def test_pinned_screen_documents_conform_to_the_pinned_schema(key):
+    sch = upstream.load("results_schema", REPO)
+    assert schema.validate(json.loads(upstream.snapshot_bytes(key, REPO)), sch) == []
+
+
+def test_pinned_retro_record_conforms_to_the_transcription():
+    sch, _ = schema.resolve("figures/src/schemas/retro_results_v1.schema.json", REPO)
+    assert schema.validate(json.loads(upstream.snapshot_bytes("retro_results", REPO)), sch) == []
 
 
 def test_fig5_reads_the_c3a_edge_from_the_thresholds_copy():
