@@ -7,10 +7,10 @@
 
 % (1) The two regimes, and which links apply in each.
 The mechanism is assembled in one environment and must survive in another. % CL-R09
-The template is anchored, binds \ce{Ca^2+} and templates the mineral while the electrode is a water-processed, alkaline slurry at room temperature (\Rs); the finished interface then sits in a non-aqueous, fluorine-free electrolyte with the collector held at the anodic potential of the cathode (\Rc). % CL-R09
+The template is meant to anchor, bind \ce{Ca^2+} and template the mineral while the electrode is a water-processed, alkaline slurry at room temperature (\Rs); the finished interface then sits in a non-aqueous, fluorine-free electrolyte with the collector held at the anodic potential of the cathode (\Rc). % CL-R09
 The two regimes differ in solvent, reference state and mode of attack on the collector, so each relation below is used only in the regime whose reference states it assumes. % CL-R09
 Adhesion, \ce{Ca^2+} binding and nucleation are defined only in \Rs, because water-wetted surfaces, the hydrated ion and an aqueous ion activity product do not exist in the cell; coverage is judged with the \Rs\ wetting energies against a thickness bound set by electron transport in \Rc; stability is a separate question in each regime (Fig.~\ref{fig:chain}). % CL-R09
-The links are necessary conditions in series: one that fails for every plausible input ends the chain, and one that passes shows only that its step is thermodynamically possible under the stated framing. % CL-R09, CL-R05
+The links are necessary conditions in series: one whose failing side carries at least the credible mass of the propagated inputs ends the chain, and one that passes shows only that its step is thermodynamically possible under the stated framing. % CL-R09, CL-R05
 
 \begin{figure*}[t]
   \IfFileExists{\nacreRepoRoot/figures/out/fig2.pdf}{%
@@ -37,7 +37,7 @@ $\Wwet$ is obtained as the potential of mean force of a template fragment pulled
 
 % (3) Ca2+ binding as a descriptor.
 The template can hold \ce{Ca^2+} only if its coordinating groups compete successfully with the hydration shell of the ion. % CL-R02
-The transfer free energy $\DGseq$ of one \ce{Ca^2+} from the hydrated bulk at the regime activity to a site, built as a thermodynamic cycle that includes the deprotonation of the site at the regime pH and the activity corrections at the regime ionic strength, measures that competition, and $\DGseq<0$ means net binding (Fig.~\ref{fig:chain}b). % CL-R02
+The transfer free energy $\DGseq$ of one \ce{Ca^2+} from the hydrated bulk at the regime activity to a site, built as a thermodynamic cycle that includes the deprotonation of the site at the regime pH and the activity corrections at the regime ionic strength, measures that competition, and $\DGseq<0$ means enrichment of the ion at the sites (Fig.~\ref{fig:chain}b). % CL-R02
 Binding raises the local \ce{Ca^2+} concentration, but it cannot raise the driving force for nucleation. % CL-R02
 The interfacial region exchanges ions with the slurry, so at equilibrium every ion carries the same electrochemical potential at a site as in the bulk: binding lowers the local standard potential of the ion by exactly as much as it raises the concentration term, and a mean electrostatic potential cancels in the neutral solid. % CL-R02
 The driving force per formula unit at the template is therefore the bulk one, % CL-R02
@@ -50,7 +50,7 @@ Bound \ce{Ca^2+} is a surface excess $\GCa=\Gs\Theta-\ds\cb$ of the template--li
 \begin{equation}\label{eq:gibbs}
 \dga=\gsl-\gslz=-\Rg T\big[\Gs\ln(1+x)-\ds\cb\big],\qquad x=\frac{\ds\cb}{\Gs}\,\e^{-\DGseq/\Rg T},
 \end{equation}
-which is negative for a binding template; $\gslz$ is the energy of the \ce{Ca}-free template. % CL-R02
+which is negative whenever the excess $\GCa$ is positive; $\gslz$ is the energy of the \ce{Ca}-free template. % CL-R02
 Treating the adsorbing component as \ce{Ca^2+} with its compensating charge, a neutral solute, is an approximation: it leaves out the change of the diffuse-layer free energy when binding changes the surface charge, a correction that ionic strength screens and to which the model assigns no sign. % CL-R02
 \ce{Ca^2+} held at the template--crystal contact, for example bridging a carboxylate to the crystal, is not part of $\dga$: it belongs to the template--nucleus energy $\gsn$, which is taken from contact data at the regime state (Fig.~\ref{fig:cycle}). % CL-R02
 $\DGseq$ is therefore a binding descriptor, reported with the occupancy, the excess and $\dga$, and not a criterion of its own. % CL-R02
@@ -80,7 +80,7 @@ The sign convention is fixed: $\theta$ is measured through the nucleus, and $\co
 Young's relation carries the bare $\gnl$, the same energy that sets the homogeneous barrier: water displaced from under the contact sits on the contact disc and never touches the free surface of the cap, and only one $\gnl$ lets the barrier factorise as written. % CL-R03
 A displacement cost therefore enters $\gsn$ once, as a positive correction that raises $\theta$ and the barrier, and not at all when $\gsn$ is already a full in-water contact energy. % CL-R03, CL-R05
 Every template-dependent input enters once, in one interfacial energy, and only through $\theta$: $\Omb$ depends on bulk activities alone, while $\DGseq$, $\Gs$ and $\ds$ enter only through $\dga$, added once to the \ce{Ca}-free $\gslz$, and not at all when $\gsl$ is computed at the regime activities. % CL-R05
-Crediting the bound ions to the driving force as well would count the binding free energy twice and give it the opposite effect on the barrier; the proof that the composite of Eq.~\eqref{eq:het} counts each template input once is in the Supplementary Information. % CL-R05
+Crediting the bound ions to the driving force instead of $\gsl$ would give binding the opposite effect on the barrier, and crediting them to both would count the binding free energy twice; the proof that the composite of Eq.~\eqref{eq:het} counts each template input once is in the Supplementary Information. % CL-R05
 A barrier is low enough only relative to the number of attempts the system makes in the time available. % CL-R11
 Nuclei form on the template at a rate per area $J=J_0\e^{-\DGhet/\kB T}$, so over the time $t_\mathrm{p}$ the template spends at the registered \Rs\ states the areal density of nuclei must reach a required density, % CL-R11
 \begin{equation}\label{eq:access}

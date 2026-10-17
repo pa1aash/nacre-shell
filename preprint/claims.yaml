@@ -1123,7 +1123,9 @@ claims:
       Text written to criterion.md at the W2.2 fixed-before-run commit and to rulings D17 and R9
       (lane notes N11, N23). P0-W2.3 makes the new fixed-before-run commit with the interface
       mapping, the permutation null and the dropped constant baseline; the paragraph is re-read
-      against it before cp4.
+      against it before cp4. The committed cases.yaml still maps RC11 through Omega_local =
+      E_enr Omega_bulk (the local-ideal channel); the text says that case is remapped, as lane
+      notes N11 and N23 require, which W2.3 must do in that commit.
   - id: CL-M06
     statement: >-
       Solid energies are Materials Project data used under CC BY with the changes stated and no
