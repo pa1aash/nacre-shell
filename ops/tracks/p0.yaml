@@ -629,7 +629,11 @@ lane_notes:
     and job.log under results/preprint/anchor/dispatch/dryrun-probe-d7e407c/logs/, which the *.log ignore
     rule keeps out of git, so nacre verify --strict fails the provenance check on a clean checkout. Add
     both files with git add -f (their hashes match the record) or stop the dispatch tool listing ignored
-    files as outputs.'
+    files as outputs. CI on preprint/p0 at 09bbc82 (run 39021204954) also fails tests/anchor/test_builders.py::test_committed_structures_match_a_fresh_build
+    for Ca_catecholate_monoanion_bidentate_w4 even with the D12 tolerance of 1e-3 Angstrom: on Linux the
+    last atoms differ by about 0.4 Angstrom (for example x 4.45 against 4.82), so the builder is not platform-deterministic
+    for that species. This is a behaviour question for W5: make the builder deterministic across platforms,
+    or compare an invariant such as bond lengths and coordination, and confirm on Linux CI.'
 - id: N13
   date: '2026-10-17'
   day: 3
@@ -649,8 +653,11 @@ lane_notes:
   date: '2026-10-17'
   day: 3
   lanes: [p0-w6]
-  note: Re-pin the owner schemas from the merged tree and remove the pinned upstream copies where they
-    now match.
+  note: 'Re-pin the owner schemas from the merged tree and remove the pinned upstream copies where they
+    now match. CI on preprint/p0 (run 39021204954) also fails tests/figs/test_rdkit_structures.py::test_atom_labels_are_set_at_the_rsc_label_size
+    and ::test_drawing_is_reproducible on Linux: matplotlib cannot find the font Arial and the fallback
+    is disabled. Choose a font that the CI image has, or provision the font in the workflow, and confirm
+    on Linux CI.'
 - id: N16
   date: '2026-10-17'
   day: 3
