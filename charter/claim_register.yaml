@@ -381,14 +381,14 @@ claims:
     name: Conformality
     link: outcome-condition
     physical_observable:
-      symbol: "pending-G2: one of theta (small-angle bound), S_spread, or h_c"
+      symbol: "pending-G2: one of theta (small-angle bound), S_spread, or h_coal"
       definition: >-
         A morphology criterion separate from f(theta). Candidates (choice registered at G2):
         (a) a small-contact-angle bound on the C3 theta; (b) the spreading coefficient
         S_spread = gamma_sub,liq - (gamma_sub,nuc + gamma_nuc,liq), with S_spread >= 0
         meaning complete wetting (layer-by-layer growth); (c) a coalescence condition from a
         kinetic Monte Carlo or rate-equation model of island nucleation and coalescence,
-        giving the critical coalescence thickness h_c. Supporting observables: template
+        giving the critical coalescence thickness h_coal. Supporting observables: template
         coverage and lateral continuity; a coarse film-thickness versus electronic
         resistance bound (item 18).
       units: degrees (a); J m^-2 (b); nm (c)
