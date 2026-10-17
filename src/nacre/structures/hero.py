@@ -102,6 +102,7 @@ class Scene:
         self.comp = ["slab"] * len(slab)
         self.alive = np.ones(len(slab), dtype=bool)
         self.ledger = [("slab", int(slab.info["total_charge"]))]
+        self.anchors = []
 
     def add(self, sym, pos, comp):
         self.sym += list(sym)
@@ -189,10 +190,13 @@ def anchor_chain(sc, chain, site, azimuth, p, name):
                 # enumeration order then wins on every platform.
                 score = round(float(pos[heavy, 2].mean()), 6)
                 if best is None or score < best[0]:
-                    best = (score, pos, s2, h1, h2)
+                    best = (score, pos, s2, h1, h2, float(np.degrees(phi)), int(oa != o_a[0]))
     if best is None:
         raise RuntimeError(f"{name}: no clash-free anchoring near {site} at azimuth {azimuth}")
-    _, pos, s2, h1, h2 = best
+    _, pos, s2, h1, h2, phi_deg, swapped = best
+    sc.anchors.append({"chain": name, "s1": np.round(sc.pos[s1], 3).tolist(),
+                       "s2": np.round(sc.pos[s2], 3).tolist(), "phi_deg": phi_deg, "swapped": swapped,
+                       "partners": len(partners)})
     sc.remove([s1, s2, h1, h2])
     sc.add(csym[keep_c], pos[keep_c], name)
     sc.ledger.append((f"{name} anchor: two surface OH removed", +2))
@@ -407,9 +411,11 @@ def build_nucleus(sc, p, rng, bridge_ca, geom):
 
 
 def snapshot(sc):
-    """Positions of every live part of the scene, keyed by component."""
+    """Positions of every live part of the scene, keyed by component, and the anchors so far."""
     comp = np.array(sc.comp)
-    return {c: sc.pos[(comp == c) & sc.alive].copy() for c in dict.fromkeys(sc.comp)}
+    out = {c: sc.pos[(comp == c) & sc.alive].copy() for c in dict.fromkeys(sc.comp)}
+    out["_anchors"] = [dict(a) for a in sc.anchors]
+    return out
 
 
 def build(slab, chain, geom, params=None, seed=0, source_ids=None, trace=None):
@@ -501,6 +507,7 @@ def build(slab, chain, geom, params=None, seed=0, source_ids=None, trace=None):
         "dissolved carbonate for charge balance, water behind a cut-away plane",
     )
     out.info["charge_ledger"] = json.dumps(sc.ledger)
+    out.info["anchors"] = json.dumps(sc.anchors)
     out.info["nucleus_fu_target"] = nuc["target_fu"]
     out.info["nucleus_fu_placed"] = nuc["placed_fu"]
     out.info["nucleus_attempts"] = nuc["attempts"]

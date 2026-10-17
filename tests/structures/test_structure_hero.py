@@ -259,6 +259,10 @@ def test_hero_regenerates_part_by_part(hero, parts):
     except (RuntimeError, ValueError) as exc:
         error = str(exc)
     comp, sym, pos = parts
+    committed_anchors = json.loads(hero.info["anchors"])
+    for step, snap in trace:
+        for k, a in enumerate(snap["_anchors"]):
+            assert a == committed_anchors[k], f"after step {step}: anchor {a} != committed {committed_anchors[k]}"
     # Each step is checked on the part it adds: a chain on its heavy atoms (a later Ca site
     # removes or turns one of its H), a Ca site on its ion and waters, the nucleus whole.
     added = {"bridge": ["bridge"], "nucleus": ["nucleus"]}

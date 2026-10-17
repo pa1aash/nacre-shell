@@ -225,9 +225,19 @@ def test_seed_changes_random_constructions(small_slab):
 
 @pytest.fixture(scope="module")
 def fresh_build(tmp_path_factory):
+    # Each written target is built on its own, so one that fails does not hide the others.
     out = tmp_path_factory.mktemp("fresh")
-    _, manifest = build.build_all(out_dir=out)
-    return out, manifest
+    manifest, errors = {}, {}
+    for name, spec in build.load_config()["targets"].items():
+        if not spec.get("write", True):
+            continue
+        try:
+            _, m = build.build_all([name], out_dir=out)
+        except (RuntimeError, ValueError) as exc:
+            errors[name] = f"build failed: {exc}"
+            continue
+        manifest[name] = m[name]
+    return out, manifest, errors
 
 
 def _tolerance_report(out_dir, manifest):
@@ -242,14 +252,15 @@ def _tolerance_report(out_dir, manifest):
 
 def test_committed_files_regenerate_within_tolerance(fresh_build):
     # Coordinates within compare.POSITION_TOL; species, order, counts and metadata exact.
-    out, manifest = fresh_build
+    out, manifest, errors = fresh_build
     committed = json.loads((STRUCT_DIR / "manifest.json").read_text())
-    assert set(manifest) == set(committed)
+    report = {**errors, **_tolerance_report(out, manifest)}
     for name, entry in manifest.items():
-        assert entry["n_atoms"] == committed[name]["n_atoms"], name
-        assert entry["total_charge"] == committed[name]["total_charge"], name
-        assert entry["builder"] == committed[name]["builder"], name
-    assert _tolerance_report(out, manifest) == {}
+        for key in ("n_atoms", "total_charge", "builder"):
+            if entry[key] != committed[name][key]:
+                report.setdefault(name, []).append(f"{key} {entry[key]} != {committed[name][key]}")
+    assert set(manifest) | set(errors) == set(committed)
+    assert report == {}
 
 
 def test_committed_files_regenerate_bit_for_bit(fresh_build):
@@ -259,7 +270,8 @@ def test_committed_files_regenerate_bit_for_bit(fresh_build):
         pytest.skip(f"same-platform check: committed bytes were built on {ref['system']} {ref['machine']}, "
                     f"this is {here['system']} {here['machine']}; regeneration is checked to "
                     f"{compare.POSITION_TOL} A by test_committed_files_regenerate_within_tolerance")
-    out, manifest = fresh_build
+    out, manifest, errors = fresh_build
+    assert errors == {}
     committed = json.loads((STRUCT_DIR / "manifest.json").read_text())
     for name, entry in manifest.items():
         assert entry["sha256"] == committed[name]["sha256"], name
