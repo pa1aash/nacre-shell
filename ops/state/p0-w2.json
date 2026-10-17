@@ -1,26 +1,30 @@
 {
-  "last_session": "P0-W2.2",
-  "status": "BLOCKED",
-  "day": 2,
-  "retro_schema": {"sha": "af75ed0f380e3094e7f83ff542d4fe15155748b0"},
-  "criterion_sha": "af75ed0f380e3094e7f83ff542d4fe15155748b0",
+  "last_session": "P0-W2.3",
+  "status": "DONE",
+  "day": 3,
+  "retro_schema": {"sha": "4ded6c789c9eb66c385db8d41e51ea15a48a28b9"},
+  "criterion_sha": "4ded6c789c9eb66c385db8d41e51ea15a48a28b9",
+  "results_sha": "2a1f38654a822d8bd2183f1163d9e4a0a43975d7",
   "artifacts": [
     "preprint/retrodiction/cases.yaml",
     "preprint/retrodiction/criterion.md",
     "preprint/retrodiction/SCHEMA.md",
+    "preprint/retrodiction/results/results.json",
     "src/nacre/retro/cases.py",
     "src/nacre/retro/cli.py",
+    "src/nacre/retro/run.py",
     "tests/retro/test_retro_cases.py",
     "tests/retro/test_retro_cli.py",
+    "tests/retro/test_retro_run.py",
+    "jobs/ledger/p0-w2.jsonl",
     "lit/contrary.md",
-    "lit/novelty.md",
-    "ops/reports/P0-W2.2.md"
+    "ops/reports/P0-W2.3.md"
   ],
   "notes": [
-    "Cases and criterion fixed before any run at af75ed0: 12 usable, 25 excluded; pass rule k = 10 of N = 12, chance probability 79/4096 = 0.0193.",
-    "BLOCKED on one acceptance item: no usable hydroxyl-terminated case (no independent calcite-OH input could be sourced); options in ops/reports/P0-W2.2.md, Diagnosis.",
-    "W2.3 needs lit/params.yaml keys gamma_calcite_water, molar_volume_calcite and ksp_calcite (W1.2) and cp1, cp2.",
-    "Fig 4 (W6) must move to retro-results/v1: pairwise orderings, no threshold.",
-    "Contrary: B13 (N4, chitosan insoluble in alkaline slurry) added; W1 contrary rows cross-referenced (73 of 73); B7 and B10 upgraded to full text."
+    "Fixed before run at 4ded6c7 (cp3 R9, cp2 interface mapping, RC11 under contract v3, shared priors bound to the p0-cp3 keys gamma_nl_calcite, v_m_calcite, log10_ksp_calcite); superseded criterion v1 af75ed0.",
+    "Retrodiction run (20000 draws, seed 0, params p0-cp3): 7/12 correct, rule k = 10 FAIL; misses RC07, RC08, RC09, RC11 incorrect and RC04 inconclusive; swap check holds; permutation null median 5, central 95 % [2, 8] in both schemes.",
+    "Diagnoses: RC04 DFS precision (input); RC07-RC09 contact angles in air as in-water gamma_sl via OWRK (input route); RC11 single-entry bookkeeping of bound Ca2+ (model). The Dupre route to gamma_sn: 5 of 6 correct.",
+    "Contrary B14 (contact-angle route; bears on gamma_sl0_template) and B15 (Ca2+ binding through gamma_sl; supports D14) added.",
+    "For the planning chat: confirm the pre-run key binding; decide how the paper states the failed retrodiction. Fig 4 (W6) reads results/results.json."
   ]
 }
