@@ -37,7 +37,7 @@
     }
    },
    "file": "structures/preprint/hero_interface.extxyz",
-   "sha256": "fb4de2157a5d41cfc687d65e0b6f5ae3f0f5362760d65c1e35da3c8304ea9ca1"
+   "sha256": "4a23d689b2103d0df4699e5ccec6b8f0875608716ffe6f417d835931795cc7aa"
   },
   {
    "evidence_row_ids": {
@@ -47,7 +47,7 @@
     }
    },
    "file": "structures/preprint/hero_interface.extxyz",
-   "sha256": "fb4de2157a5d41cfc687d65e0b6f5ae3f0f5362760d65c1e35da3c8304ea9ca1"
+   "sha256": "4a23d689b2103d0df4699e5ccec6b8f0875608716ffe6f417d835931795cc7aa"
   },
   {
    "evidence_row_ids": {
@@ -57,7 +57,7 @@
     }
    },
    "file": "structures/preprint/hero_interface.extxyz",
-   "sha256": "fb4de2157a5d41cfc687d65e0b6f5ae3f0f5362760d65c1e35da3c8304ea9ca1"
+   "sha256": "4a23d689b2103d0df4699e5ccec6b8f0875608716ffe6f417d835931795cc7aa"
   }
  ],
  "output": "figures/renders/hero/hero_draft.png",

@@ -52,6 +52,7 @@ DEFAULTS = {
     "azimuth_tol": 35.0,
     "phi_step_deg": 2.0,
     "site_pair_range": [2.3, 3.1],
+    "site_tie_tol": 0.01,
     "co_bond": 1.28,
     "nucleus": {"centre": [0.5, 0.45], "base_radius": 11.0, "contact_angle_deg": 50.0,
                 "base_height": 2.5, "density_g_cm3": 1.9, "attempts": 20000, "env_min": 2.3,
@@ -143,7 +144,13 @@ def anchor_chain(sc, chain, site, azimuth, p, name):
     d_t = np.linalg.norm(((sc.pos[top, :2] - target) @ np.linalg.inv(sc.cell[:2, :2])
                           - np.round((sc.pos[top, :2] - target) @ np.linalg.inv(sc.cell[:2, :2])))
                          @ sc.cell[:2, :2], axis=1)
-    s1 = int(top[np.argmin(d_t)])
+    order = np.argsort(d_t, kind="stable")
+    if d_t[order[1]] - d_t[order[0]] < p["site_tie_tol"]:
+        # Two surface O equally near the requested site: which one wins would depend on the
+        # last bits of the arithmetic, so on the platform. Refuse rather than guess.
+        raise ValueError(f"{name}: site {site} is equidistant from two surface O "
+                         f"({d_t[order[0]]:.4f} and {d_t[order[1]]:.4f} A); move it")
+    s1 = int(top[order[0]])
     r_top = np.linalg.norm(sc.pos[top] - sc.pos[s1], axis=1)
     lo, hi = p["site_pair_range"]
     partners = [int(t) for t in top[(r_top > lo) & (r_top < hi)]]
@@ -178,7 +185,9 @@ def anchor_chain(sc, chain, site, azimuth, p, name):
                 r, _ = sc.distances(pos[rest], ~excl)
                 if r.min() < p["clearance"]:
                     continue
-                score = pos[heavy, 2].mean()
+                # Rounded so that symmetry-equivalent orientations tie exactly; the first in
+                # enumeration order then wins on every platform.
+                score = round(float(pos[heavy, 2].mean()), 6)
                 if best is None or score < best[0]:
                     best = (score, pos, s2, h1, h2)
     if best is None:

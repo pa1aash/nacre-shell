@@ -223,3 +223,22 @@ def test_render_log_reads_row_ids_from_the_structure():
     assert config.evidence_row_ids(st) == {"ca_hydration": g["row_ids"]}
     smoke = config.read_extxyz(STRUCT_DIR / "smoke_interface.extxyz")
     assert config.evidence_row_ids(smoke) == {"ion": g["row_ids"]}
+
+
+def test_equidistant_anchor_site_is_refused():
+    from nacre.structures import hero, slab
+
+    s = slab.build({"nx": 2, "ny": 1, "n_o_layers": 3, "orthogonal": True}, seed=0)
+    sym = np.array(s.get_chemical_symbols())
+    top = np.where((sym == "O") & (s.positions[:, 2] > s.positions[sym == "O", 2].max() - 0.3))[0]
+    d = np.linalg.norm(s.positions[top][:, None, :2] - s.positions[top][None, :, :2], axis=-1)
+    np.fill_diagonal(d, np.inf)
+    i, j = np.unravel_index(np.argmin(d), d.shape)  # nearest pair: its midpoint is a tie
+    a, b = s.positions[top[i], :2], s.positions[top[j], :2]
+    mid = (a + b) / 2 / np.diag(np.asarray(s.cell))[:2]
+    sc = hero.Scene(s)
+    p = hero._deep(hero.DEFAULTS, {})
+    from nacre.structures import oligomer
+
+    with pytest.raises(ValueError, match="equidistant"):
+        hero.anchor_chain(sc, oligomer.build({"n_units": 4}, 7), list(mid), 0.0, p, "c")

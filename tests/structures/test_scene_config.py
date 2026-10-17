@@ -291,3 +291,15 @@ def test_render_logs_hold_no_machine_dependent_values():
             assert bad not in text, (log_path, bad)
         for item in log["inputs"]:
             assert "evidence_row_ids" in item, log_path
+
+
+def test_every_render_log_names_current_inputs():
+    logs = sorted(RENDER_DIR.glob("*/*.json"))
+    assert {lp.parent.name for lp in logs} >= {"smoke", "hero"}
+    for log_path in logs:
+        log = json.loads(log_path.read_text())
+        png = REPO / log["output"]
+        assert log["output_sha256"] == config.sha256(png), log_path
+        assert log["scene_config_sha256"] == config.sha256(REPO / log["scene_config"]), log_path
+        for item in log["inputs"]:
+            assert config.sha256(REPO / item["file"]) == item["sha256"], (log_path, item["file"])
