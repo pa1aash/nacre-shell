@@ -103,3 +103,43 @@ This amends D17 for W2; nothing in `theory/**` depends on it.
 **Negative tests (scratch copies, one fault at a time).** Each fails the checker: a C3b
 single-state edge inconsistent with N_req; a no-expt fallback edge with the wrong unit; the C5s
 Omega edge replaced by a voltage margin.
+
+## cp3b registrations for production (session P0-W3.4, lane note N22)
+
+Four registrations required by cp3 for W4.3's production run, one commit each, based on `227d997`
+(after tag `p0-cp3`). No screen output was consulted: nothing under `results/preprint/screen/` was
+read. The thresholds machine block is now version 3 and the ignorance block version 2. The contract
+stays at version 3. Every commit passes `theory/tools/check_contract.py`. Ready mark:
+`thresholds_cp3b` at `fd29fcdb023517e7c90b06493f760db77ea47c3c` (after the PDF rebuild).
+
+| Item | Files, section | Commit | Summary |
+|---|---|---|---|
+| A1 | `theory/thresholds.md` Section 1 conventions, C5 R-cell "Margin m_expt" and the new "Margin-to-scheme mapping", key table, machine block (`decision.conventions.m_expt`, `C5c_ox.margin_by_route`, `C5c_red`); symbol `N_unc`; checker (margin routes) | `0fd2b59aa37c451b25de4ad0491ef26371382844` | m_expt (`thresholds.C5.window_margin_expt`, W1 key `window_margin_expt`) applies to the all-experimental route. m_E (`thresholds.C5.window_margin`, W1 key `window_margin`) applies to a DFT scheme only where no experimental route exists (cp2 F5). Comparators carry no margin. A margin covers one reaction and one sink. m_E for other reactions is n_unc e_f/(Delta_n F), W1's rule. A limit whose margin key is absent is undetermined. The params path `thresholds.C5.expt_margin`, which did not resolve in `lit/params.yaml`, is replaced. The m_expt part keys are named as W1 derived them. |
+| A2 | `theory/thresholds.md` C1 "Termination ignorance mixture", machine block `C1.mixture` | `8ff2b532c101bbcac31aefb261853c5cb245981f` | W_mix = sum_k w_k W_k (Dupre works add over disjoint areas), with w ~ Dirichlet(1, ..., 1) drawn once per draw. No point weight and no sub-region. Per-termination verdicts are always beside the mixture. The weight-free bounds P(min_k W_k > m_W) <= P_good(mix) <= P(max_k W_k > m_W) are printed. Otherwise the verdict is labelled conditional on the mixture. |
+| A3 | `theory/ignorance_priors.md` Section 4a and block v2 (`geometry.A_patch`, `a_site`, `rho_L`, expanded Gamma_s cap, `delta_s.r_Ca_treatment`, `analog_bounds`, `evaluable_now`); `theory/thresholds.md` C3 (b) keys and `C3b.A_patch_bound`; symbols `d_p`, `a_asp`, `rho_PDA`, `M_u`; checker (N_req range, evaluable-now consistency) | `f338fe96ba09049a9bf835b2178bcb678c9903e7` | a_asp <= A_patch <= pi d_p^2/4, loguniform; both keys absent, so it is a gap (C3b "gap", flip values printed). a_site >= 2 sqrt(3) r_Ca^2 (hexagonal packing of bound ions). rho_L <= rho_PDA/M_u (stoichiometry). r_Ca is the radius at the lowest registered coordination number. While it is a gap, the 2 r_Ca term is dropped (valid, looser), and the Ca-O analog is a labelled sensitivity. Analog-based bounds never refuse draws. Evaluable now: delta_s and V_site. Gaps: A_patch, a_site, rho_L and the Gamma_s cap. |
+| A4 | `theory/thresholds.md` C1 "C1 inputs in P0", key table, machine block `C1.p0_inputs`; checker (P0 inputs) | `22ef46446205f63fab6074ba971ee89e18d99489` | No PMF, so the registered C1 verdict is "gap" (inconclusive). Two estimates run side by side: the flagged analog `w_adh_wet_catechol_oxide_analog`, conditional on the analog (positive support only, so it leans toward anchoring), and the Dupre estimate gamma_ow + gamma_pw - gamma_op with the ignorance priors of 1c (its bounds admit both signs; band masses never a finding; flip value gamma_op* and the flip line). Neither estimate resolves terminations or needs the contact-area definition. |
+| PDFs | `theory/equation_sheet.tex`, `theory/generated/symbol_table.tex`, `theory/build/equation_sheet.pdf` | `4c0a3b0`, `fd29fcd` | Symbol table regenerated (five new symbols). Row spacing is set as a length, so the sheet stays at 3 pages. `4c0a3b0` failed the theory number scan (a decimal row spacing) and was pushed through a masked exit status. `fd29fcd` fixes it. The derivation is unchanged at 18 pages. |
+
+**Freeze rule.** `theory/thresholds.md` is frozen after `p0-cp3`, and `nacre track check P0-W3.4`
+now refuses until `ops/tracks/p0_deviations.md` carries a dated entry. That file belongs to the
+integrator (`ops/**`), and the lane-ownership hook rejects it on this branch. The entry text for
+the integrator is in `ops/reports/P0-W3.4.md`.
+
+**Interpretations for the auditor (cp4).**
+- A1: the m_expt path is taken as W1's `thresholds.C5.window_margin_expt`.
+- A1: a margin is per reaction and sink, so the solvated-sink and Al-phase expt limits need their
+  own budget keys.
+- A2: the mixture quantity is the area-weighted Dupre work, not a mixture of per-termination
+  indicators.
+- A3: the footprint bound assumes one interfacial layer of sites, as Section 4 did.
+- A3: the accessible-site content is not registered as a lower bound on rho_L.
+- A4: "the rule already registered" is read as follows. The PMF route decides C1, so it is a gap
+  in P0. The analog verdict is conditional, and the ignorance masses are not a finding. Hence no
+  study verdict in P0 can be feasible.
+
+**Negative tests (scratch copies, one fault at a time).** Each fails the checker:
+- an m_E formula without the Faraday constant;
+- the m_expt route path set back to `thresholds.C5.expt_margin`;
+- an a_site bound with the unit of a length;
+- A_patch marked evaluable while listed as a gap;
+- a Dupre support term with an added pure number.
