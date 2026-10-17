@@ -73,22 +73,22 @@ def design_points(cfg, resolver, axes=("Ca_T", "C_T")):
     return pts
 
 
-def control_point(cfg, resolver):
-    """W5's sourced dissolving condition for the Omega falsifiability control (CP3-R1)."""
-    c = cfg.get("omega_control")
-    if not c:
-        return None
-    vals, labels = {}, {}
-    for sym, spec in c["inputs"].items():
-        unit = AXIS_UNITS.get(sym, "1")
-        if "value" in spec:
-            vals[sym] = units.convert(float(spec["value"]), spec.get("unit", unit), unit)
-            labels[sym] = "%g %s" % (spec["value"], spec.get("unit", ""))
-        else:
-            v = resolver.range(spec["params"])[spec["at"]] if spec["at"] != "value" else resolver.value(spec["params"])
-            vals[sym] = units.convert(float(v), resolver.get(spec["params"])[1] or "1", unit)
-            labels[sym] = "%s@%s" % (spec["params"], spec["at"])
-    return vals, labels
+def control_points(cfg, resolver):
+    """W5's registered control states of the Omega test (block v2 C5s.control): {name: (values, labels)}."""
+    out = {}
+    for name, c in ((cfg.get("omega_control") or {}).get("states") or {}).items():
+        vals, labels = {}, {}
+        for sym, spec in c.items():
+            unit = AXIS_UNITS.get(sym, "1")
+            if "value" in spec:
+                vals[sym] = units.convert(float(spec["value"]), spec.get("unit", unit), unit)
+                labels[sym] = "%g %s" % (spec["value"], spec.get("unit", ""))
+            else:
+                v = resolver.range(spec["params"])[spec["at"]] if spec["at"] != "value" else resolver.value(spec["params"])
+                vals[sym] = units.convert(float(v), resolver.get(spec["params"])[1] or "1", unit)
+                labels[sym] = "%s@%s" % (spec["params"], spec["at"])
+        out[name] = (vals, labels)
+    return out
 
 
 def _fixed(symbol, value, unit, source):
@@ -196,7 +196,7 @@ def state_samples(outputs):
 # ------------------------------------------------------------------ claims at one (point, framing)
 
 
-def claims_at(rule, resolver, outs, registered, d_max=None):
+def claims_at(rule, resolver, outs, registered, d_max=None, rng=None):
     """C1 to C4 at one design point and framing ({state: (outputs, masses, rp)})."""
     states = {sid: state_samples(o) for sid, (o, _, _) in outs.items()}
     claims = {}
@@ -209,7 +209,7 @@ def claims_at(rule, resolver, outs, registered, d_max=None):
                              "gap": "not evaluable: no registered state supplies %s" % missing}
             continue
         claims[claim] = decision.evaluate_link(rule, claim, have, resolver, registered_states=registered,
-                                               d_max=d_max if claim == "C4" else None)
+                                               d_max=d_max if claim == "C4" else None, rng=rng)
     seq = {sid: s for sid, s in states.items() if "Delta_G_seq" in s}
     claims["C2"] = decision.evaluate_c2(rule, seq, resolver) if seq else \
         {"verdict": "descriptor", "role": "descriptor", "tests": {}, "falsified_mass": None,
@@ -221,68 +221,93 @@ def omega_point(outs, p):
     """Omega_bulk >= 1 at one design point: worst over the registered states (CP3-R1)."""
     per = {}
     for sid, (o, _, _) in outs.items():
+        om = None
         if "nucleate" in o and np.any(np.isfinite(o["nucleate"]["Omega_bulk"])):
-            per[sid] = decision.evaluate_omega_point(o["nucleate"]["Omega_bulk"], p)
-        elif "speciation" in o:
-            pass
+            om = o["nucleate"]["Omega_bulk"]
+        if om is not None:
+            per[sid] = decision.evaluate_omega_point(om, p)
+            if "speciation" in o:            # a grid in total calcium: print the speciated a_Ca beside it
+                per[sid]["a_Ca_median"] = _median(o["speciation"]["a_Ca"])
+                per[sid]["a_CO3_median"] = _median(o["speciation"]["a_CO3"])
     if not per:
         return None
     sid = max(per, key=lambda k: decision.ORDER.index(per[k]["verdict"]))
     return {**per[sid], "state": sid, "by_state": {k: v["verdict"] for k, v in per.items()}}
 
 
+def _median(v):
+    v = np.asarray(v, float)
+    v = v[np.isfinite(v)]
+    return float(np.median(v)) if v.size else None
+
+
 # ------------------------------------------------------------------ the run
 
 
 def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="table", truncation=True,
-             draws=None, seed=0, chunk=None, framings=None, stability=None, cells=None, d_max_rng_seed=1):
+             draws=None, seed=0, chunk=None, framings=None, stability=None, cells=None, controls=None,
+             d_max_rng_seed=1):
     """Claims and the study verdict over the design points and framings; returns (claims, study, extra).
 
-    extra carries the dose window, the per-point table, the control and the gaps.
+    controls: {control: parameter table} of the deletion test (bare_oxide, PVDF), rerun at the
+    same design points, framings and states; the deletion test is formed per framing at every
+    point (block v2, study.framings). extra carries the dose window and the gaps.
     """
     pc = cfg["propagation"]
     n = int(draws or pc["draws_per_regime"])
     chunk = int(chunk or pc["chunk"])
-    reg = cfg.get("registrations") or {}
-    framings = list(framings or reg.get("framings") or ["calcite"])
-    registered = list(((cfg.get("bindings") or {}).get("R-slurry") or {}).get("states") or ["default"])
+    framings = list(framings or (rule.get("study", {}).get("framings") or {}).get("registered")
+                    or (cfg.get("registrations") or {}).get("framings") or ["calcite"])
     p = decision.credible_level(rule, resolver)
     try:
         points = design_points(cfg, resolver) or [("table", {}, {})]
+        gap = None
     except decision.Gap as exc:
         points, gap = [("table", {}, {})], str(exc)
-    else:
-        gap = None
+    rng = np.random.default_rng(np.random.SeedSequence([seed, 7]))
     by_point, omega_pts, omega_sens = {}, {}, {}
-    seeds = np.random.SeedSequence(seed).spawn(len(points) * len(framings) + 2)
+    seeds = np.random.SeedSequence(seed).spawn(len(points) * len(framings) + 3)
     k = 0
     c4s = next(t for t in rule["links"]["C4"]["tests"] if t["id"] == "C4s")
     try:
         d_max, d_flags = decision.d_max_draws(c4s, resolver, n, np.random.default_rng(d_max_rng_seed))
     except decision.Gap as exc:
         d_max, d_flags = None, ["d_max not evaluable: %s" % exc]
+
+    def run_point(table, fr, design, sd, mock_ok):
+        states = load_point(table, cfg, fr, design, mock_ok, prior_set, truncation)
+        outs, notes = propagate_states(states, n, sd, chunk)
+        cl = claims_at(rule, resolver, outs, [sid for sid, _ in states], d_max, rng) if outs else \
+            {c: {"verdict": "inconclusive" if c != "C2" else "descriptor", "tests": {}, "falsified_mass": None,
+                 "gap": "no link evaluable: %s" % _unsampled(states)} for c in ("C1", "C2", "C3", "C4")}
+        return states, outs, notes, cl
+
     for pid, design, labels in points:
         per_f = {}
         for fr in framings:
-            states = load_point(params_path, cfg, fr, design, allow_mock, prior_set, truncation)
-            outs, notes = propagate_states(states, n, int(seeds[k].generate_state(1)[0]), chunk)
+            sd = int(seeds[k].generate_state(1)[0])
             k += 1
-            cl = claims_at(rule, resolver, outs, registered, d_max) if outs else \
-                {c: {"verdict": "inconclusive" if c != "C2" else "descriptor", "tests": {}, "falsified_mass": None,
-                     "gap": "no link evaluable: %s" % _unsampled(states)} for c in ("C1", "C2", "C3", "C4")}
+            states, outs, notes, cl = run_point(params_path, fr, design, sd, allow_mock)
             om = omega_point(outs, p)
             if fr == "calcite" and om is not None:
                 omega_pts[pid] = {"axes": labels, **om}
             elif om is not None:
-                omega_sens.setdefault("Omega_bulk under the %s framing (labelled sensitivity)" % fr, {})[pid] = \
+                omega_sens.setdefault("C5s_ACC: Omega_bulk under the %s framing (labelled, not gating)" % fr, {})[pid] = \
                     {"axes": labels, **om}
-            per_f[fr] = {"claims": {c: decision.public(r) for c, r in cl.items()}, "notes": notes,
-                         "unsampled": _unsampled(states)}
+            ctl_claims = {}
+            for name, table in (controls or {}).items():
+                ctl_claims[name] = run_point(table, fr, design, sd, False)[3]
+            per_f[fr] = {"claims": cl, "controls": ctl_claims, "notes": notes, "unsampled": _unsampled(states)}
             del outs
         by_point[pid] = {"axes": labels, "framings": per_f}
-    control = _control(rule, resolver, params_path, cfg, allow_mock, prior_set, truncation, n, chunk,
-                       int(seeds[-1].generate_state(1)[0]), p)
-    omega = decision.omega_window(omega_pts, p, control, omega_sens) if omega_pts else None
+    ctl = {}
+    for name, cp in _safe_controls(cfg, resolver).items():
+        if isinstance(cp, str):
+            ctl[name] = {"axes": {}, "verdict": "inconclusive", "gap": cp}
+            continue
+        ctl[name] = _control(params_path, cfg, allow_mock, prior_set, truncation, n, chunk,
+                             int(seeds[-1].generate_state(1)[0]), p, *cp)
+    omega = decision.omega_window(omega_pts, p, decision.control_outcomes(ctl), omega_sens) if omega_pts else None
     return assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_set, cfg, gap, d_flags)
 
 
@@ -290,27 +315,32 @@ def _unsampled(states):
     return {sid: dict(rp.unsampled) for sid, rp in states}
 
 
-def _control(rule, resolver, params_path, cfg, allow_mock, prior_set, truncation, n, chunk, seed, p):
-    try:
-        cp = control_point(cfg, resolver)
-    except decision.Gap as exc:
-        return {"axes": {}, "verdict": "inconclusive", "fails_where_it_must": False, "gap": str(exc)}
-    if cp is None:
-        return None
-    vals, labels = cp
+def _safe_controls(cfg, resolver):
+    """{control: (values, labels) or the Gap message} of the registered control states."""
+    out = {}
+    for name in ((cfg.get("omega_control") or {}).get("states") or {}):
+        one = {"omega_control": {"states": {name: cfg["omega_control"]["states"][name]}}}
+        try:
+            out[name] = control_points(one, resolver)[name]
+        except decision.Gap as exc:
+            out[name] = str(exc)
+    return out
+
+
+def _control(params_path, cfg, allow_mock, prior_set, truncation, n, chunk, seed, p, vals, labels):
     design = {k: v for k, v in vals.items() if k in AXIS_UNITS}
     fixed = {k: v for k, v in vals.items() if k not in AXIS_UNITS}
     states = load_point(params_path, cfg, "calcite", design, allow_mock, prior_set, truncation, fixed_inputs=fixed)
     outs, _ = propagate_states(states, n, seed, chunk)
     om = omega_point(outs, p)
     if om is None:
-        return {"axes": labels, "verdict": "inconclusive", "fails_where_it_must": False,
+        return {"axes": labels, "verdict": "inconclusive",
                 "gap": "Omega_bulk not evaluable at the control: %s" % _unsampled(states)}
-    return {"axes": labels, **om, "fails_where_it_must": om["verdict"] == "falsified"}
+    return {"axes": labels, **om}
 
 
 def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_set, cfg, gap=None, d_flags=()):
-    """Reduce (states done) over framings then design points; C5 and the study per point."""
+    """Reduce (states done) over framings then design points; C5 and the study per point and framing."""
     reg = cfg.get("registrations") or {}
     cell_reg = reg.get("R-cell") or {}
     p = decision.credible_level(rule, resolver)
@@ -326,23 +356,30 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
     for pid in point_ids:
         studies = {}
         for fr, fd in by_point[pid]["framings"].items():
-            cl = fd["claims"]
             om_pt = (omega or {}).get("dose_window", {}).get("points", {}).get(pid) if omega else None
-            om_rec = decision.omega_window({pid: om_pt}, p, (omega or {}).get("control")) if om_pt else None
-            pb = (stability or {}).get(fr) if isinstance(stability, dict) and fr in (stability or {}) else \
-                (stability.get("R-slurry") if isinstance(stability, dict) and "R-slurry" in stability else None)
-            cl["C5"] = decision.public(decision.evaluate_c5(
-                rule, resolver, omega=om_rec, pourbaix=pb, cells=cells, framing=fr,
-                gated_phases=cell_reg.get("gated_phases"), cutoffs=cutoffs,
-                margin_key=cell_reg.get("margin_key", "thresholds.C5.margin_expt"),
-                never_pass_sinks=tuple(cell_reg.get("never_pass_sinks") or ())))
-            studies[fr] = decision.study_verdict(rule, cl, None)
+            om_rec = decision.omega_window({pid: om_pt}, p, (omega or {}).get("controls")) if om_pt else None
+            pb = (stability or {}).get("R-slurry") if isinstance(stability, dict) else None
+
+            def c5_of(_):
+                return decision.evaluate_c5(rule, resolver, omega=om_rec, pourbaix=pb, cells=cells, framing=fr,
+                                            cutoffs=cutoffs, never_pass_sinks=tuple(cell_reg.get("never_pass_sinks") or ()))
+            fd["claims"]["C5"] = c5_of(None)
+            deletion = None
+            if fd["controls"]:
+                for cc in fd["controls"].values():
+                    cc["C5"] = fd["claims"]["C5"]
+                deletion = decision.deletion_test(rule, fd["claims"], fd["controls"], resolver)
+            studies[fr] = decision.study_verdict(rule, fd["claims"], deletion)
+            fd["claims"] = {c: decision.public(r) for c, r in fd["claims"].items()}
+            fd["controls"] = {k: {c: {"verdict": r["verdict"], "falsified_mass": r.get("falsified_mass")}
+                                  for c, r in cc.items()} for k, cc in fd["controls"].items()}
         for c in link_by_point:
             link_by_point[c][pid] = decision.combine_framings(
                 {fr: by_point[pid]["framings"][fr]["claims"][c] for fr in by_point[pid]["framings"]}) if c != "C2" else \
                 {fr: (by_point[pid]["framings"][fr]["claims"]["C2"].get("finding") or {}).get("statement")
                  for fr in by_point[pid]["framings"]}
         study_by_point[pid] = decision.combine_framings(studies)
+        study_by_point[pid]["deletion_by_framing"] = {fr: s.get("deletion_test") for fr, s in studies.items()}
     primary = _primary(point_ids, by_point)
     claims = {}
     eligible = prior_set != "ignorance"
@@ -358,14 +395,20 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
                      "finding_eligible": eligible or c not in IGNORANCE_DEPENDENT}
         if c == "C5" and omega is not None:
             claims[c]["dose_window"] = omega["dose_window"]
-            claims[c]["omega_control"] = omega.get("control")
+            claims[c]["omega_controls"] = omega.get("controls")
     head = decision.over_design({pid: r["verdict"] for pid, r in study_by_point.items()})
     gating = rule["study"].get("gating_links") or ["C1", "C3", "C4", "C5"]
-    study = {"verdict": head["verdict"], "links": {c: claims[c]["verdict"] for c in gating}, "deletion_test": None,
+    deletions = [d for r in study_by_point.values() for d in r["deletion_by_framing"].values()]
+    study = {"verdict": head["verdict"], "links": {c: claims[c]["verdict"] for c in gating},
+             "deletion_test": deletions[0] if len(deletions) == 1 else ({"by_point": {pid: r["deletion_by_framing"]
+                                                                                       for pid, r in study_by_point.items()}}
+                                                                        if any(deletions) else None),
              "framing": None, "gating_links": list(gating), "design_dependent": head["design_dependent"],
              "by_design": study_by_point, "framings": list(framings), "prior_set": prior_set,
              "finding_eligible": eligible,
              "sequestration_premise": link_by_point["C2"].get(primary, {}).get(framings[0])}
+    if any(d is not None and not d["holds"] for d in deletions):
+        study["framing"] = "generic adhesion study"
     extra = {"design_gap": gap, "d_max_flags": list(d_flags), "omega": omega, "points": point_ids,
              "unsampled": {pid: {fr: fd["unsampled"] for fr, fd in by_point[pid]["framings"].items()}
                            for pid in point_ids}}

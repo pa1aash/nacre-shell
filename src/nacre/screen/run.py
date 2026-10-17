@@ -330,7 +330,7 @@ def production_guard(root, rp_list, out_path, thresholds_path=THRESHOLDS):
 def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_run=True, allow_mock=False,
         config_path=CONFIG, independence=False, dependence_check=None, overrides=None, stability_path=None,
         cell_paths=None, controls=None, framing=None, prior_set="table", truncation=True, decide=True,
-        decision_draws=None):
+        decision_draws=None, truncation_sensitivity=False):
     """Run the screen and write the results document; returns (path, doc).
 
     The sensitivity analysis runs at the primary framing and the central design point. The
@@ -339,7 +339,8 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
 
     framing: one framing for a dry run (the registered set is in screen.yaml). prior_set:
     table | ignorance | analog (labelled in the output). truncation: False reports the
-    untruncated gamma_sl0 sensitivity. stability_path: a W5 document with the R-slurry
+    untruncated gamma_sl0 sensitivity; truncation_sensitivity reruns the decisions untruncated and
+    lists the verdicts that change (block v2, decision.priors). stability_path: a W5 document with the R-slurry
     Pourbaix section; cell_paths: W5's per-sink R-cell documents; controls: {control: table}
     for the deletion test (bare_oxide, PVDF).
     """
@@ -382,21 +383,15 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
                      if stability_path else None)
         cells = study.load_cells(cell_paths)
         frs = [framing] if framing else None
-        claims, study_doc, extra = study.evaluate(
-            rule, resolver, params_path, cfg, allow_mock, prior_set, truncation, draws=decision_draws,
-            seed=int(seeds[-1].generate_state(1)[0]), framings=frs, stability=stability, cells=cells)
+        kw = dict(draws=decision_draws, seed=int(seeds[-1].generate_state(1)[0]), framings=frs, stability=stability,
+                  cells=cells, controls=controls)
+        claims, study_doc, extra = study.evaluate(rule, resolver, params_path, cfg, allow_mock, prior_set, truncation, **kw)
         _attach_link_records(regimes_out, claims)
-        if controls:
-            control_claims = {name: study.evaluate(rule, resolver, table, cfg, False, prior_set, truncation,
-                                                   draws=decision_draws, framings=frs, stability=stability,
-                                                   cells=cells)[0] for name, table in controls.items()}
-            study_doc["deletion_test"] = decision.deletion_test(rule, claims, control_claims, resolver)
-            dt = study_doc["deletion_test"]
-            if study_doc["verdict"] == "feasible" and not dt["holds"]:
-                study_doc["verdict"] = "inconclusive"
-            study_doc["framing"] = None if dt["holds"] else "generic adhesion study"
-        elif study_doc["verdict"] == "feasible":
-            study_doc["verdict"] = "inconclusive"                  # feasible needs the deletion test
+        trunc = truncation_report(loaded.get("R-slurry") or [], cfg)
+        if trunc and truncation and truncation_sensitivity:
+            c2, s2, _ = study.evaluate(rule, resolver, params_path, cfg, allow_mock, prior_set, False, **kw)
+            trunc["untruncated_sensitivity"] = changed_verdicts(claims, study_doc, c2, s2)
+        study_doc["truncation"] = trunc or None
         study_doc["gaps"] = _gaps(claims, extra)
         study_doc["not_evaluable"] = not_evaluable or None
     if not regimes_out and claims is None:
@@ -417,6 +412,34 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
         with ledger.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(line, sort_keys=True) + "\n")
     return path, doc
+
+
+def truncation_report(states, cfg):
+    """{symbol: removed prior mass} of every truncated prior of the primary state (cp3 R8)."""
+    out = {}
+    for _, rp in states[:1]:
+        for pr in rp.joint.priors:
+            if pr.truncate:
+                kept = pr.truncated_mass()
+                out[pr.symbol] = {"bounds": list(pr.truncate), "kept_mass": kept, "removed_mass": 1.0 - kept,
+                                  "key": pr.name}
+    return out
+
+
+def changed_verdicts(claims, study_doc, claims_u, study_u):
+    """Verdicts that differ between the truncated run and the untruncated sensitivity."""
+    out = {}
+    for c in claims:
+        a, b = claims[c].get("verdict"), claims_u[c].get("verdict")
+        if a != b:
+            out[c] = {"truncated": a, "untruncated": b}
+        for pid, r in (claims[c].get("by_design") or {}).items():
+            ru = (claims_u[c].get("by_design") or {}).get(pid)
+            if isinstance(r, dict) and isinstance(ru, dict) and r.get("verdict") != ru.get("verdict"):
+                out.setdefault(c + " by design", {})[pid] = {"truncated": r.get("verdict"), "untruncated": ru.get("verdict")}
+    if study_doc["verdict"] != study_u["verdict"]:
+        out["study"] = {"truncated": study_doc["verdict"], "untruncated": study_u["verdict"]}
+    return {"label": "untruncated gamma_sl0 prior (labelled sensitivity)", "changed": out}
 
 
 def _gaps(claims, extra):

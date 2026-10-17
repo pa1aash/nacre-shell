@@ -2,12 +2,14 @@
 # Copied verbatim; the authority is theory/thresholds.md (rule R-thr). Do not edit:
 # after tag p0-cp3 a change goes through a dated entry in ops/tracks/p0_deviations.md.
 # source: theory/thresholds.md
-# source-sha: db872ae9190c3b729bc2b13898919fbfbe56815b
-version: 1
+# source-sha: 74ac69c2586c017e2bc08efecbfbc918b94f48ee
+version: 2
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
 revised: {session: P0-W3.2 cp2 fix-up, base_commit: 800d5ea3de41a0fb16084519d5c2680eeb14952d, fixes: theory/cp2_fixes.md}
+revised_cp3: {session: P0-W3.3, ruling: planning chat 2026-10-17 (cp3), base_commit: ac5cdfb, items: [R1, R2, R3, R5, R6, R7, R8],
+              log: theory/cp2_fixes.md (cp3 section), disclosures: [R1, R2, R6]}
 contract_version: 3
 decision:
   statistic: band_mass
@@ -38,6 +40,20 @@ decision:
     wall_clock_cap: 6 h per run
     chunk: 2**14 draws, streamed
     on_cap: report as capped with the half-widths reached
+  link_mass:
+    rule: joint, draw by draw, on the same draws (cp3 R7 (1))
+    and_links: 'falsified side = P(any test bad)'
+    C4: 'falsified side = P(S_spread route bad and closure route bad)'
+    verdict: shared rule on the joint masses; single-test masses reported
+    deletion_test: joint falsified-side mass
+  states:
+    propagate: every registered state of the regime (cp3 R7 (4))
+    worst_state_links: falsification at an evaluated state stands; a pass needs every registered state
+    path_sum: 'C3b (and the C4 closure route) cannot be falsified unless every registered state, drying included, is evaluated; with a state missing a shortfall is inconclusive and a pass stands'
+    report: missing states and the links they bound
+  priors:
+    gamma_sl0: {truncate_below: '0', reason: interface stability, sensitivity: untruncated prior, labelled,
+                report: [truncated mass, verdicts that change], params: params.gamma_sl0_template}
   omega: Omega_bulk
   forbidden_in_verdicts: [Omega_local_ideal, Delta_mu_local_ideal, DG_het_local_ideal, DG_het_double, E_enr, c_local,
                           Omega_bulk_hydrated]
@@ -57,7 +73,9 @@ links:
         comparator: '>'
         edge: m_W
         params: {m_W: thresholds.C1.margin_W_adh_wet}
-        mixture: {over: termination, weights: regimes.R-slurry.parameters.termination_weights}
+        mixture: {over: termination, weights: regimes.R-slurry.parameters.termination_weights,
+                  weight_prior: 'ignorance: uniform on the simplex (flat Dirichlet), or on the sub-region W1 bounds',
+                  point_weight: never, per_termination_verdicts: reported (cp3 R8)}
     combine: C1
   C2:
     role: descriptor
@@ -94,13 +112,15 @@ links:
         aggregation: path_sum
         quantity: N_nuc
         comparator: '>='
-        edge: 1/A_patch
-        N_req: {equals: 1/A_patch, rule: cp2 fix F4, not the C4 closure density}
-        equivalent_single_state: {quantity: DG_het, comparator: '<=', edge: k_B*T*log(J0_het*t_proc*A_patch)}
+        edge: log(1/(1 - p_cred))/A_patch
+        N_req: {equals: log(1/(1 - p_cred))/A_patch, q_0: 1 - p_cred, rule: cp3 R5 (Poisson occupancy; empty-patch fraction at most q_0),
+                not: the C4 closure density}
+        equivalent_single_state: {quantity: DG_het, comparator: '<=', edge: k_B*T*log(J0_het*t_proc*A_patch/log(1/(1 - p_cred)))}
         params: {J0_het: regimes.R-slurry.parameters.J0_het, t_proc: regimes.R-slurry.parameters.t_proc,
-                 A_patch: regimes.R-slurry.parameters.patch_area}
+                 A_patch: regimes.R-slurry.parameters.patch_area, p_cred: thresholds.decision.credible_level}
         report: [DG_het/(k_B*T), DG_hom/(k_B*T)]
     combine: 'C3a and C3b'
+    joint_mass: 'falsified side P(C3a bad or C3b bad), draw by draw (cp3 R7)'
   C4:
     regimes: [R-slurry, R-cell]
     aggregation: worst_state
@@ -111,7 +131,7 @@ links:
         edge: m_S
         params: {m_S: thresholds.C4.margin_S_spread}
       - id: C4s
-        role: supporting
+        role: alternative route (cp3 R3; was supporting)
         quantity: N_nuc
         comparator: '>='
         edge: tan(theta/2)**2/(2*d_max**2)
@@ -120,14 +140,45 @@ links:
                  rho_e: regimes.R-cell.parameters.rho_e, phi_B: regimes.R-cell.parameters.phi_B,
                  m_e: regimes.R-cell.parameters.m_eff, j_0: regimes.R-cell.parameters.j_0}
     combine:
-      feasible: 'C4 feasible'
-      falsified: 'C4 falsified and C4s falsified'
+      indicator: 'good per draw if C4 holds or C4s holds'
+      feasible: 'P(C4 holds or C4s holds) >= p_cred (sufficient: C4 feasible, or C4s feasible)'
+      falsified: 'P(C4 fails and C4s fails) >= p_cred (needs C4 falsified and C4s falsified)'
       inconclusive: otherwise
+      joint_mass: 'falsified side P(S_spread < m_S and N_nuc < N_s_closure), draw by draw (cp3 R7)'
+      N_nuc: upper estimate of C3b (path sum); a pass through closure is optimistic and labelled
+    report_mass: 'P(gamma_sl > gamma_nl) at every registered state'
+    complete_wetting_excluded_when: 'gamma_sl <= gamma_nl (hydrophilic template): S_spread <= -gamma_sn for every admissible gamma_sn'
   C5:
     regimes: [R-slurry, R-cell]
     tests:
       - id: C5s
         regime: R-slurry
+        role: dissolution
+        aggregation: worst_state
+        quantity: Omega_bulk
+        comparator: '>='
+        edge: '1'
+        K_sp: calcite under every registered framing (cp3 R1); ACC is the sensitivity C5s_ACC
+        activities: {a_Ca: a_Ca_speciation, a_CO3: a_CO3_speciation}
+        params: {K_sp: params.log10_ksp_calcite, a_Ca: params.a_ca_slurry, Ca_T: params.ca_total_slurry,
+                 C_T: params.dic_slurry, pH: regimes.R-slurry.parameters.pH_range}
+        design_axes: [a_Ca, C_T]
+        report_as: dose window (design points where C5s is feasible), with the falsified and inconclusive sets
+        shares_quantity_with: C3
+        state: bulk
+        requires: falsifiability_control_fails_where_it_must
+        control:
+          applies_to: C5s
+          undersaturated: must report dissolution (P(Omega_bulk < 1) >= p_cred)
+          supersaturated: must report stability (P(Omega_bulk >= 1) >= p_cred)
+          params: {pH: params.ph_slurry_modified}
+          on_failure: inconclusive
+        carbon_redox: {assumption: 'C(IV) fixed by the regime (a_CO3); carbonate reduction to CH4 is not observed in aqueous processing',
+                       sensitivity: construction with carbon redox allowed, labelled, never decides}
+        hull_not_used_for_dissolution: 'hull distance (R*T/N_M)*log(1/Omega_bulk) per atom; the tolerance hides dissolution down to log(Omega_bulk) = -N_atoms*e_form/(R*T)'
+      - id: C5s_phase
+        regime: R-slurry
+        role: competing_phase
         aggregation: worst_point
         quantity: Delta_G_pbx
         comparator: '<='
@@ -136,9 +187,11 @@ links:
           ACC: (N_atoms*e_form + Delta_ACC)/N_M
         params: {e_form: thresholds.C5.formation_energy_error, Delta_ACC: regimes.R-slurry.parameters.ACC_offset,
                  pH: regimes.R-slurry.parameters.pH_range, E_SHE: regimes.R-slurry.parameters.E_SHE_range}
+        carbon: C(IV) fixed at the regime C_T
+        competitors: solid phases only; dissolved Ca-bearing species excluded (dissolution is C5s)
         state: bulk
-        requires: falsifiability_control_fails_where_it_must
         acc_edge_equivalence: the ACC edge makes the test equal to the calcite-level test (cp2 fix F6)
+        al_baseline: {reported: true, gating: false, tolerance: same DFT tolerance, carbon: C(IV) fixed}
     sensitivities:
       - id: C5s_ACC
         label: ACC dissolution margin under the ACC framing (reported, not gating)
@@ -151,30 +204,56 @@ links:
         regime: R-cell
         quantity: E_ox
         comparator: '>='
-        edge: E_cell_max + m_E
-        pass: {reduce: min_over_reference_schemes, sink: solvated}
-        falsify: {quantity: E_ox, comparator: '<', edge: E_cell_max - m_E, reduce: every_reference_scheme, sink: [solvated, solid_salt]}
+        edge: E_cell_max + m_expt
+        governing_route: expt (all-experimental thermochemistry) wherever its inputs exist (cp3 R2)
+        pass: {route: expt, sink: solvated}
+        falsify: {quantity: E_ox, comparator: '<', edge: E_cell_max - m_expt, route: expt, sink: [solvated, solid_salt]}
         otherwise: inconclusive
-        params: {E_cell_max: regimes.R-cell.parameters.E_max, m_E: thresholds.C5.window_margin,
+        comparators: {dft_schemes: regimes.R-cell.parameters.gas_reference_schemes, printed_with: measured benchmark errors,
+                      benchmark_corrected: equals expt by construction; never a second confirmation}
+        where_expt_missing: {rule: cp2 fix F5, pass: lowest-onset DFT scheme, falsify: every DFT scheme, margin: m_E,
+                             edge_pass: E_cell_max + m_E, edge_falsify: E_cell_max - m_E, label: DFT-decided}
+        params: {E_cell_max: regimes.R-cell.parameters.E_max, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes,
                  salts: regimes.R-cell.parameters.electrolyte_salts}
+        m_expt_parts: [tabulated uncertainties of reactants and products per transferred electron,
+                       bound on the neglected solid entropy of Ca(ClO4)2 from analog solid-salt entropies]
+        m_expt_params: [params.s_ca_clo4_2_analog_bound, params.s_solid_salt_analogs]
+        design_axis: {E_cell_max: by cathode class, params: regimes.R-cell.parameters.cathode_class,
+                      report: [crossover E_ox - m_expt (feasible at or below, solvated sink), crossover E_ox + m_expt (falsified above)]}
         undetermined: never_passes
         solid_salt_sink: {falsification: stands, pass: inconclusive, reason: upper bound on the onset}
+        table: every route and scheme printed (expt, each DFT scheme, each benchmark-corrected scheme)
+        disclosure: scheme values were seen before this rule (cp3 R2; packet p0-3 decision 3)
         limitation: electrolyte anodic limit not assessed
       - id: C5c_red
         regime: R-cell
         quantity: E_red
         comparator: '<='
-        edge: E_cell_min - m_E
-        pass: {reduce: max_over_reference_schemes}
-        falsify: {quantity: E_red, comparator: '>', edge: E_cell_min + m_E, reduce: every_reference_scheme}
+        edge: E_cell_min - m_expt
+        governing_route: expt wherever its inputs exist (cp3 R2)
+        pass: {route: expt}
+        falsify: {quantity: E_red, comparator: '>', edge: E_cell_min + m_expt, route: expt}
         otherwise: inconclusive
-        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_E: thresholds.C5.window_margin,
+        where_expt_missing: {rule: cp2 fix F5, margin: m_E, edge_pass: E_cell_min - m_E, edge_falsify: E_cell_min + m_E,
+                             label: DFT-decided}
+        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes}
         undetermined: never_passes
-    gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, regimes.R-cell.parameters.al_phases]}
-    combine: 'C5s and C5c_ox and C5c_red'
+    gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, corundum, boehmite]}
+    al_phases: {registered: [corundum, boehmite], params: regimes.R-cell.parameters.al_phases, others: reported, not gated}
+    sinks: {LiClO4: "CaCO3 via the Ca(ClO4)2 exchange route; Al phases undetermined until Al(ClO4)3 is tabulated", LiBOB: undetermined (never a pass), LiPCP: undetermined (never a pass)}
+    combine: 'C5s and C5s_phase and C5c_ox and C5c_red'
 study:
+  framings:
+    registered: [calcite, ACC]
+    params: {framing: regimes.R-slurry.parameters.framing}
+    run: whole chain per framing (K_sp, V_m, gamma_nl of one framing; never mixed across links)
+    falsified: falsified under every registered framing
+    feasible: feasible under at least one framing; name it and report the other beside it
+    inconclusive: otherwise
+    c5_dissolution: calcite K_sp under both framings
+    disclosure: a calcite-framing estimate near one half was available when the project was designed (N5)
   gating_links: [C1, C3, C4, C5]
   descriptor_links: [C2]
   falsified: 'any of C1, C3, C4, C5 falsified'

@@ -164,9 +164,12 @@ def test_binding_errors_are_named(tmp_path):
 def test_screen_bindings_name_only_contract_symbols():
     from nacre.screen import chain, run
     known = set(chain.SEQ_CYCLE_INPUTS + chain.SEQ_LOCAL_INPUTS + chain.NUC_BASE + chain.ACCESS_INPUTS
-                + chain.ANCHOR_INPUTS + ("gamma_sl0", "gamma_sl", "Delta_G_seq"))
+                + chain.ANCHOR_INPUTS + chain.SPECIATION_INPUTS + chain.PMF_INPUTS
+                + ("gamma_sl0", "gamma_sl", "Delta_G_seq"))
     b = run.load_config(ROOT)["bindings"]["R-slurry"]
-    syms = set(b["common"]) | {s for f in b["by_framing"].values() for s in f} | {s for st in b["states"].values() for s in st}
+    syms = set(b["common"]) | {s for f in b["by_framing"].values() for s in f} | \
+        {s for st in b["states"].values() for s in st if not s.startswith("_")} | \
+        {s for st in b["states"].values() for s in (st.get("_fixed") or {})}
     assert syms <= known, syms - known
 
 
@@ -182,3 +185,32 @@ def test_unknown_or_wrong_dimension_units_are_refused(tmp_path, unit, match):
     doc = {"mock": False, "params": {"g": _entry("gamma_nl", U, unit=unit)}}
     with pytest.raises(PriorFileError, match=match):
         pa.regime_priors(_table(tmp_path, doc), "R-slurry")
+
+
+def test_truncation_confines_draws_and_reports_the_kept_mass(tmp_path):
+    doc = {"mock": False, "params": {"g": _entry("gamma_sl0", {"family": "uniform", "low": -0.03, "high": 0.01})}}
+    rp = pa.regime_priors(_table(tmp_path, doc), "R-slurry", truncate={"gamma_sl0": (0.0, None)})
+    pr = rp.joint.priors[0]
+    x = pr.sample(np.random.default_rng(1), 20000)
+    assert x.min() >= 0.0 and x.max() <= 0.01
+    assert pr.truncated_mass() == pytest.approx(0.25)
+    n = {"family": "normal", "mean": 0.0, "sd": 1.0}
+    doc = {"mock": False, "params": {"g": _entry("gamma_sl0", n)}}
+    pr = pa.regime_priors(_table(tmp_path, doc), "R-slurry", truncate={"gamma_sl0": (0.0, None)}).joint.priors[0]
+    assert pr.truncated_mass() == pytest.approx(0.5) and pr.sample(np.random.default_rng(2), 5000).min() >= 0
+
+
+def test_states_share_their_draws_except_the_state_specific_inputs(tmp_path):
+    from nacre.screen import propagate
+    doc = {"mock": False, "params": {"a": _entry("gamma_nl", U), "t1": _entry("T", {"family": "uniform", "low": 280.0,
+                                                                                   "high": 300.0}),
+                                     "t2": _entry("T", {"family": "uniform", "low": 330.0, "high": 350.0})}}
+    p = _table(tmp_path, doc)
+    s1 = pa.regime_priors(p, "R-slurry", bindings={"gamma_nl": "a", "T": "t1"})
+    s2 = pa.regime_priors(p, "R-slurry", bindings={"gamma_nl": "a", "T": "t2"})
+    ev = lambda x: ({"l": {"g": np.asarray(x["gamma_nl"]), "T": np.asarray(x["T"])}}, {})
+    o1, _ = propagate.propagate_chain(ev, s1.joint, 4000, 9, 1024, redraw=("T",), redraw_seed=1)
+    o2, _ = propagate.propagate_chain(ev, s2.joint, 4000, 9, 1024, redraw=("T",), redraw_seed=2)
+    assert np.array_equal(o1["l"]["g"], o2["l"]["g"])                       # common random numbers
+    u1, u2 = (o1["l"]["T"] - 280.0) / 20.0, (o2["l"]["T"] - 330.0) / 20.0
+    assert abs(np.corrcoef(u1, u2)[0, 1]) < 0.05                            # state-specific inputs independent

@@ -52,16 +52,16 @@ def test_c1_per_termination_verdicts_and_the_ignorance_mixture():
     rec = dc.evaluate_test(RULE, t, {"W_adh_wet": w}, r)
     assert rec["edge"] == 0.1 and rec["P_good"] == pytest.approx(np.mean(w > 0.1))
     assert rec["verdict"] == "inconclusive"
-    good, bad = {"W_adh_wet": np.full(10, 1.0)}, {"W_adh_wet": np.full(10, -1.0)}
-    rec = dc.evaluate_test(RULE, t, None, r, mixture={"t1": good, "t2": bad})
-    # weights 3 : 1 in the table are never used as a point weight: the simplex spans [0, 1]
+    good, bad = {"W_adh_wet": np.full(4000, 1.0)}, {"W_adh_wet": np.full(4000, -1.0)}
+    rng = np.random.default_rng(0)
+    rec = dc.evaluate_test(RULE, t, None, r, mixture={"t1": good, "t2": bad}, rng=rng)
+    # flat-Dirichlet weights drawn per draw, never the table's point weights 3 : 1
     assert rec["by_termination"]["t1"]["verdict"] == "feasible"
-    assert rec["by_termination"]["t2"]["verdict"] == "falsified"
-    assert rec["P_good_range"] == [0.0, 1.0] and rec["verdict"] == "inconclusive"
-    rec = dc.evaluate_test(RULE, t, None, r, mixture={"t1": good, "t2": good})
-    assert rec["verdict"] == "feasible"
-    rec = dc.evaluate_test(RULE, t, None, r, mixture={"t1": bad, "t2": bad})
-    assert rec["verdict"] == "falsified"
+    assert rec["by_termination"]["t2"]["verdict"] == "falsified" and rec["falsified_alone"] == ["t2"]
+    assert rec["P_good"] == pytest.approx(0.5, abs=0.02) and rec["verdict"] == "inconclusive"
+    assert rec["P_good_range"] == [0.0, 1.0]
+    assert dc.evaluate_test(RULE, t, None, r, mixture={"t1": good, "t2": good}, rng=rng)["verdict"] == "feasible"
+    assert dc.evaluate_test(RULE, t, None, r, mixture={"t1": bad, "t2": bad}, rng=rng)["verdict"] == "falsified"
 
 
 # ------------------------------------------------------------------ C2
@@ -106,7 +106,11 @@ def test_c3_accessibility_sums_over_states_and_the_missing_state_rule():
     assert out["tests"]["C3b"]["states_missing"] == ["drying"]
     big = {"f_theta": np.full(10, 0.2), "N_nuc": np.full(10, 20.0)}
     out = dc.evaluate_link(RULE, "C3", {"slurry": big}, r, registered_states=["slurry", "drying"])
-    assert out["tests"]["C3b"]["verdict"] == "feasible"         # a pass stands
+    assert out["tests"]["C3b"]["verdict"] == "feasible"         # a path-sum pass stands
+    assert out["verdict"] == "inconclusive"                     # but C3a needs every registered state
+    bad = {"f_theta": np.full(10, 0.8), "N_nuc": np.full(10, 1.0)}
+    out = dc.evaluate_link(RULE, "C3", {"slurry": bad}, r, registered_states=["slurry", "drying"])
+    assert out["verdict"] == "falsified"                        # C3a fails at an evaluated state: it stands
 
 
 def test_c3_worst_state_governs_the_wetting_part():
@@ -135,7 +139,7 @@ def test_c4_or_rule_of_cp3():
     open_ = dc.evaluate_link(RULE, "C4", {"s": _c4(-1.0, 0.5 * edge90, 0.0)}, r)
     assert open_["verdict"] == "falsified"                      # both fail at p
     spreads = dc.evaluate_link(RULE, "C4", {"s": _c4(0.5, 0.0, 1.0)}, r)
-    assert spreads["verdict"] == "feasible" and spreads["P_gamma_sl_gt_gamma_nl"] == 1.0
+    assert spreads["verdict"] == "feasible" and spreads["P_gamma_sl_gt_gamma_nl"] == {"s": 1.0}
     half = _c4(-1.0, 0.5 * edge90, 0.0)
     half["N_nuc"][:5] = 2 * edge90
     assert dc.evaluate_link(RULE, "C4", {"s": half}, r)["verdict"] == "inconclusive"
@@ -172,6 +176,18 @@ def test_falsified_mass_is_joint_draw_by_draw():
          "cos_theta": np.zeros(n), "gamma_sl_minus_nl": np.zeros(n)}
     out = dc.evaluate_link(RULE, "C4", {"s": s}, r)
     assert out["falsified_mass"] == pytest.approx(0.0)          # AND on disjoint bad sets, not the min 0.5
+    assert out["verdict"] == "feasible"                         # every draw has a good route
+
+
+def test_link_verdict_is_the_joint_mass_not_a_combination_of_test_verdicts():
+    r = _resolver()
+    n = 1000
+    i = np.arange(n)
+    f = np.where(i < 80, 0.8, 0.2)                              # C3a bad on 8 % of the draws
+    nn = np.where((i >= 80) & (i < 160), 1.0, 100.0)            # C3b bad on another 8 %
+    out = dc.evaluate_link(RULE, "C3", {"s": {"f_theta": f, "N_nuc": nn}}, r)
+    assert out["tests"]["C3a"]["verdict"] == "feasible" and out["tests"]["C3b"]["verdict"] == "feasible"
+    assert out["P_good"] == pytest.approx(0.84) and out["verdict"] == "inconclusive"
 
 
 # ------------------------------------------------------------------ gaps and refusals
@@ -197,23 +213,27 @@ def _design(points):
     return {pid: {"axes": {"Ca_T": i}, "Omega_bulk": np.asarray(om, float)} for i, (pid, om) in enumerate(points.items())}
 
 
-def test_c5_omega_dose_window_and_falsifiability_control():
-    dissolves = {"axes": {"pH": 6.3}, "Omega_bulk": np.full(100, 0.01)}
+def test_c5_omega_dose_window_and_both_falsifiability_controls():
+    under = {"axes": {"pH": 6.3}, "Omega_bulk": np.full(100, 0.01)}
+    over = {"axes": {"pH": 12.0}, "Omega_bulk": np.full(100, 100.0)}
+    ctl = {"undersaturated": under, "supersaturated": over}
     stable = {"lo": np.full(100, 5.0), "hi": np.full(100, 50.0)}
-    rec = dc.evaluate_c5_slurry_omega(_design(stable), P, control=dissolves)
-    assert rec["verdict"] == "feasible" and rec["control"]["fails_where_it_must"]
+    rec = dc.evaluate_c5_slurry_omega(_design(stable), P, controls=ctl)
+    assert rec["verdict"] == "feasible" and rec["controls_pass"]
     assert rec["dose_window"]["feasible_points"] == ["hi", "lo"]
-    # a control that does not report dissolution where it must forbids a pass
-    rec = dc.evaluate_c5_slurry_omega(_design(stable), P, control={"axes": {}, "Omega_bulk": np.full(100, 3.0)})
-    assert rec["verdict"] == "inconclusive" and not rec["control"]["fails_where_it_must"]
+    # a control that does not come out as it must forbids every verdict but inconclusive
+    bad_under = dict(ctl, undersaturated={"axes": {}, "Omega_bulk": np.full(100, 3.0)})
+    rec = dc.evaluate_c5_slurry_omega(_design(stable), P, controls=bad_under)
+    assert rec["verdict"] == "inconclusive" and not rec["controls"]["undersaturated"]["fails_where_it_must"]
+    bad_over = dict(ctl, supersaturated={"axes": {}, "Omega_bulk": np.full(100, 0.5)})
+    assert dc.evaluate_c5_slurry_omega(_design(stable), P, controls=bad_over)["verdict"] == "inconclusive"
     assert dc.evaluate_c5_slurry_omega(_design(stable), P)["verdict"] == "inconclusive"
     # the window is design-dependent when low doses dissolve
     mixed = {"low": np.full(100, 0.1), "high": np.full(100, 10.0)}
-    rec = dc.evaluate_c5_slurry_omega(_design(mixed), P, control=dissolves)
+    rec = dc.evaluate_c5_slurry_omega(_design(mixed), P, controls=ctl)
     assert rec["design_dependent"] and rec["verdict"] == "inconclusive"
-    assert rec["dose_window"]["feasible_points"] == ["high"]
-    assert rec["dose_window"]["points"]["low"]["verdict"] == "falsified"
-    allbad = dc.evaluate_c5_slurry_omega(_design({"a": np.full(10, 0.5)}), P, control=dissolves)
+    assert rec["dose_window"]["feasible_points"] == ["high"] and rec["dose_window"]["falsified_points"] == ["low"]
+    allbad = dc.evaluate_c5_slurry_omega(_design({"a": np.full(10, 0.5)}), P, controls=ctl)
     assert allbad["verdict"] == "falsified"
 
 
@@ -228,28 +248,31 @@ def _stability(calcite_grid):
 def test_c5_competing_phase_test_keeps_its_dft_tolerance():
     r = _resolver()
     grid = [[9.0, 0.01, 0.02], [9.0, 0.0, 0.03], [9.0, 9.0, 9.0]]   # region: pH 2-3, E -1..0
-    out = dc.evaluate_c5_slurry_phase(_test("C5", "C5s"), _stability(grid), r, "calcite")
+    out = dc.evaluate_c5_slurry_phase(_test("C5", "C5s_phase"), _stability(grid), r, "calcite")
     assert out["verdict"] == "feasible"
     assert out["value"] == pytest.approx(0.03 * 5 / 2) and out["edge"] == pytest.approx(0.05 * 5 / 2)
     grid[1][2] = 0.06
-    assert dc.evaluate_c5_slurry_phase(_test("C5", "C5s"), _stability(grid), r, "calcite")["verdict"] == "falsified"
+    assert dc.evaluate_c5_slurry_phase(_test("C5", "C5s_phase"), _stability(grid), r, "calcite")["verdict"] == "falsified"
 
 
 # ------------------------------------------------------------------ C5 R-cell (R2)
 
 
-def _cell(kind, ox_by_scheme, red=1.0):
+GATED = ["CaCO3", "corundum", "boehmite"]
+
+
+def _cell(kind, ox_by_scheme, red=1.0, phases=("CaCO3",)):
     lim = lambda v: ({"status": "ok", "value_V": v, "reaction": "r", "reason": ""} if v is not None
                      else {"status": "undetermined", "value_V": None, "reaction": "", "reason": "missing"})
     ox = {s: lim(v) for s, v in ox_by_scheme.items()}
+    w = {"reduction": lim(red), "oxidation": ox.get("expt", lim(None)), "oxidation_by_scheme": ox}
     return {"kind": "window", "reference_electrode": "Li+/Li", "temperature_K": 300.0,
             "sink_assumption": {"active": kind, "statement": "x", "kind": kind},
-            "windows": {"CaCO3": {"reduction": lim(red), "oxidation": ox.get("expt", lim(None)),
-                                  "oxidation_by_scheme": ox}}}
+            "windows": {ph: dict(w) for ph in phases}}
 
 
 def _cell_eval(cells, cuts, **kw):
-    return dc.evaluate_c5_cell(cells, _resolver(), ["CaCO3"], "oxidation", cuts, "thresholds.C5.margin_expt", **kw)
+    return dc.evaluate_c5_cell(cells, _resolver(), ["CaCO3"], "oxidation", cuts, "thresholds.C5.expt_margin", **kw)
 
 
 def test_c5_cell_expt_governs_and_dft_schemes_are_comparators():
@@ -257,6 +280,7 @@ def test_c5_cell_expt_governs_and_dft_schemes_are_comparators():
     cells = {"LiX": _cell("solid_salt", {"expt": 3.9, "janaf": 4.6, "mp": 3.5})}
     rec = _cell_eval(cells, {"4.3": 4.3})
     assert rec["verdict"] == "falsified"                        # 3.9 + 0.1 < 4.3; a solid-salt falsification stands
+    assert rec["crossovers"]["CaCO3"]["LiX"] == {"feasible_at_or_below_V": None, "falsified_above_V": pytest.approx(4.0)}
     roles = {(r["scheme"], r["role"]) for r in rec["scheme_table"]}
     assert ("expt", "governing") in roles and ("janaf", "comparator") in roles and ("mp", "comparator") in roles
     cells = {"LiX": _cell("solid_salt", {"expt": 4.5, "mp": 3.0})}
@@ -271,27 +295,38 @@ def test_c5_cell_cutoff_axis_margin_and_undetermined_limits():
     assert rec["cutoff_axis"]["LFP"]["verdict"] == "feasible" and rec["cutoff_axis"]["NMC"]["verdict"] == "falsified"
     assert rec["design_dependent"] and rec["verdict"] == "inconclusive"
     assert _cell_eval(cells, {"x": 4.05})["verdict"] == "inconclusive"     # within the margin
-    cells = {"solvated": _cell("solvated", {"expt": None, "janaf": 5.0})}
+    cells = {"solvated": _cell("solvated", {"expt": None, "janaf": None})}
     assert _cell_eval(cells, {"x": 3.6})["verdict"] == "inconclusive"      # undetermined never passes
+    # where the expt route is missing the limit is DFT-decided under F5 (margin m_E)
+    cells = {"solvated": _cell("solvated", {"expt": None, "janaf": 5.0, "mp": 4.6})}
+    rec = _cell_eval(cells, {"x": 4.3})
+    assert rec["verdict"] == "feasible" and "DFT-decided" in rec["cutoff_axis"]["x"]["phases"]["CaCO3"]["sinks"]["solvated"]["note"]
+    cells = {"solvated": _cell("solvated", {"expt": None, "janaf": 4.0, "mp": 4.6})}
+    assert _cell_eval(cells, {"x": 4.3})["verdict"] == "inconclusive"      # falsified under one scheme only
+    cells = {"solvated": _cell("solvated", {"expt": None, "janaf": 4.0, "mp": 3.9})}
+    assert _cell_eval(cells, {"x": 4.3})["verdict"] == "falsified"         # falsified under every scheme
     cells = {"solvated": _cell("solvated", {"expt": 4.6}), "LiBOB": _cell("solid_salt", {"expt": 4.8})}
     rec = _cell_eval(cells, {"x": 4.3}, never_pass_sinks=("LiBOB",))
     assert rec["cutoff_axis"]["x"]["phases"]["CaCO3"]["sinks"]["LiBOB"]["verdict"] == "inconclusive"
     r = dc.Resolver({"thresholds.decision.credible_level": P})
     rec = dc.evaluate_c5_cell({"solvated": _cell("solvated", {"expt": 9.0})}, r, ["CaCO3"], "oxidation", {"x": 4.3},
-                              "thresholds.C5.margin_expt")
+                              "thresholds.C5.expt_margin")
     assert rec["verdict"] == "inconclusive" and rec["margin_V"] is None   # m_expt not registered
 
 
-def test_c5_combines_its_tests_and_reports_gaps():
+def test_c5_combines_its_tests_over_the_blocks_gated_phases_and_reports_gaps():
     r = _resolver()
-    omega = dc.evaluate_c5_slurry_omega(_design({"a": np.full(10, 5.0)}), P,
-                                        control={"axes": {}, "Omega_bulk": np.full(10, 0.1)})
+    ctl = {"undersaturated": {"axes": {}, "Omega_bulk": np.full(10, 0.1)},
+           "supersaturated": {"axes": {}, "Omega_bulk": np.full(10, 10.0)}}
+    omega = dc.evaluate_c5_slurry_omega(_design({"a": np.full(10, 5.0)}), P, controls=ctl)
     grid = [[0.0, 0.0, 0.0]] * 3
-    cells = {"solvated": _cell("solvated", {"expt": 4.6}, red=1.0)}
+    cells = {"solvated": _cell("solvated", {"expt": 4.6}, red=1.0, phases=GATED)}
     out = dc.evaluate_c5(RULE, r, omega=omega, pourbaix=_stability(grid), cells=cells)
-    assert out["verdict"] == "feasible"
-    out = dc.evaluate_c5(RULE, r, omega=omega, pourbaix=_stability(grid), cells={"solvated": _cell("solvated", {"expt": 3.0})})
-    assert out["verdict"] == "falsified"
+    assert out["verdict"] == "feasible" and out["gated_phases"]["R-cell"] == GATED
+    only_caco3 = {"solvated": _cell("solvated", {"expt": 4.6}, red=1.0)}
+    assert dc.evaluate_c5(RULE, r, omega=omega, pourbaix=_stability(grid), cells=only_caco3)["verdict"] == "inconclusive"
+    low = {"solvated": _cell("solvated", {"expt": 3.0}, phases=GATED)}
+    assert dc.evaluate_c5(RULE, r, omega=omega, pourbaix=_stability(grid), cells=low)["verdict"] == "falsified"
     out = dc.evaluate_c5(RULE, r)
     assert out["verdict"] == "inconclusive" and all("gap" in t for t in out["tests"].values())
 

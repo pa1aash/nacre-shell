@@ -99,10 +99,15 @@ def test_bound_dry_run_evaluates_every_link_or_names_its_gap():
     # the drying state is propagated (a_w sampled), so C3b is evaluated over both states
     c3b = claims["C3"]["tests"]["C3b"]
     assert c3b["states_missing"] == [] and "path_sum over 2" in c3b["aggregation"]
+    assert set(claims["C4"]["P_gamma_sl_gt_gamma_nl"]) == {"slurry", "drying"}
+    assert study["truncation"]["gamma_sl0"]["removed_mass"] > 0
     # the dose window and its falsifiability control (pH at the modified-slurry minimum)
     dw = claims["C5"]["dose_window"]
     assert set(dw["points"]) == set(study["by_design"])
-    assert claims["C5"]["omega_control"]["verdict"] in ("falsified", "inconclusive", "feasible")
+    ctl = claims["C5"]["omega_controls"]
+    assert set(ctl) == {"undersaturated", "supersaturated"}
+    assert ctl["undersaturated"]["must"] == "falsified" and ctl["supersaturated"]["must"] == "feasible"
+    assert all(dw["points"][p]["a_Ca_median"] > 0 for p in dw["points"])   # grid in total Ca: a_Ca printed
     assert "C5" in study["gaps"]                         # no W5 stability documents given
     reg = doc["regimes"]["R-slurry"]
     assert "speciation" in reg["links"] and reg["prior_set"] == "ignorance"

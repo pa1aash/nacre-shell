@@ -956,7 +956,7 @@ thresholds:
     formation_energy_error:
       key: formation_energy_mae
       prior: *id007
-    margin_expt:
+    expt_margin:
       key: margin_expt
       prior: *id008
 regimes:

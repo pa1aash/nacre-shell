@@ -212,9 +212,15 @@ def degrade_mass(rule, resolver, p):
 
 
 def _param(rule, resolver, name, key):
-    """A margin: the table key if set, else the block's primary convention for that margin."""
+    """A parameter of an edge in SI units: the table key if set (converted from its unit string
+    to the SI unit of the symbol), else the block's primary convention for that margin."""
     if resolver.has(key):
-        return float(resolver.value(key))
+        value, unit = resolver.get(key)
+        from nacre.screen.params_adapter import symbol_units
+        si = symbol_units().get(name)
+        if unit and si:
+            return units.convert(float(value), unit, si)
+        return float(value)
     primary = _convention(rule, name).get("primary")
     if primary is not None:
         return float(primary)
@@ -297,29 +303,43 @@ def _forbidden(rule, quantity):
         raise RuleError("%s is forbidden in verdicts (thresholds decision.forbidden_in_verdicts)" % quantity)
 
 
-def mixture_verdict(per, p):
-    """CP3-R8: the ignorance mixture over termination weights, never a point weight.
+def mixture_record(test, per, p, rng):
+    """C1 over the populated terminations (thresholds block v2, cp3 R8).
 
-    The band mass of a weighted mixture is the weighted mean of the per-termination masses,
-    so over the whole simplex it ranges over [min, max] of them. The mixture is feasible only
-    if it is feasible for every weight vector (min P_good >= p) and falsified only if it is
-    falsified for every one (min P_bad >= p).
+    The weights are drawn uniformly on the simplex (a flat Dirichlet) alongside every other
+    input, one weight vector per draw; a draw's mixture indicator is the weighted share of the
+    terminations that are good on it, and the band masses are those of the mixture. A point
+    weight is never used. The per-termination verdicts are reported, and a termination that is
+    falsified on its own is named; the band-mass range over the simplex is printed beside.
     """
-    goods = [r["P_good"] for r in per.values() if r.get("P_good") is not None]
-    if len(goods) < len(per) or not goods:
-        return {"P_good_range": None, "verdict": "inconclusive"}
-    lo, hi = min(goods), max(goods)
-    v = "feasible" if lo >= p else ("falsified" if 1.0 - hi >= p else "inconclusive")
-    return {"P_good_range": [lo, hi], "verdict": v}
+    goods = [np.asarray(r["_good"], float) for r in per.values()]
+    if len({g.shape for g in goods}) != 1:
+        raise RuleError("the terminations must share their draws")
+    w = rng.dirichlet(np.ones(len(goods)), size=goods[0].shape[0]).T
+    g = np.vstack(goods)
+    ok = np.all(np.isfinite(g), axis=0)
+    mix = np.full(goods[0].shape, np.nan)
+    mix[ok] = np.sum(w[:, ok] * g[:, ok], axis=0)
+    rec = _record(test, mix, _edge_value(per), p, ["ignorance mixture over the termination weights: flat Dirichlet, "
+                                                   "drawn with the other inputs; never a point weight"])
+    pg = [r["P_good"] for r in per.values() if r.get("P_good") is not None]
+    rec.update({"by_termination": per, "P_good_range": [min(pg), max(pg)] if len(pg) == len(per) else None,
+                "falsified_alone": sorted(t for t, r in per.items() if r["verdict"] == "falsified")})
+    return rec
 
 
-def evaluate_test(rule, test, samples, resolver, p=None, mixture=None, extra=None):
+def _edge_value(per):
+    e = next(iter(per.values())).get("edge")
+    return 0.0 if e in (None, "per_draw") else e
+
+
+def evaluate_test(rule, test, samples, resolver, p=None, mixture=None, extra=None, rng=None):
     """Evaluate one test of C1 to C4 on one state's screen samples.
 
     samples: {quantity: array} for the state (from the chain; also "cos_theta").
     mixture: {termination: samples} for a test with ``mixture`` (C1): per-termination
-    records and the ignorance mixture over the weights (CP3-R8).
-    extra: per-draw values of symbols the edge names (d_max, an N_req).
+    records and the flat-Dirichlet mixture over the weights (cp3 R8).
+    extra: per-draw values of symbols the edge names (d_max, p_cred).
     """
     _forbidden(rule, test["quantity"])
     p = credible_level(rule, resolver) if p is None else p
@@ -335,17 +355,7 @@ def evaluate_test(rule, test, samples, resolver, p=None, mixture=None, extra=Non
             ex = dict(extra, **({"theta": theta_of(s)} if "theta" in str(test["edge"]) else {}))
             edge = _edge(test["edge"], params, resolver, ex, rule)
             per[t] = _record(test, indicator(s[test["quantity"]], test["comparator"], edge), edge, p)
-        mix = mixture_verdict(per, p)
-        rec = {"quantity": test["quantity"], "comparator": test["comparator"], "edge_expression": str(test["edge"]),
-               "by_termination": per, "mixture": "ignorance over the termination weights (cp3 R8)",
-               "P_good_range": mix["P_good_range"], "verdict": mix["verdict"], "notes": []}
-        rec["P_good"] = mix["P_good_range"][0] if mix["P_good_range"] else None
-        rec["P_bad"] = 1.0 - mix["P_good_range"][1] if mix["P_good_range"] else None
-        # the joint indicator: a draw counts bad only where it is bad for every termination
-        goods = [r["_good"] for r in per.values()]
-        if len({g.shape for g in goods}) == 1:
-            rec["_good"] = np.max(np.vstack(goods), axis=0)
-        return rec
+        return mixture_record(test, per, p, rng if rng is not None else np.random.default_rng(0))
     if "theta" in str(test["edge"]):
         extra["theta"] = theta_of(samples)
     edge = _edge(test["edge"], params, resolver, extra, rule)
@@ -354,19 +364,6 @@ def evaluate_test(rule, test, samples, resolver, p=None, mixture=None, extra=Non
 
 
 # ------------------------------------------------------------------ C3b and C4s edges
-
-
-def required_density(rule, test, resolver, p):
-    """CP3-R5: N_req = ln(1/q0) / A_patch with q0 = 1 - p_cred, m^-2.
-
-    The expected number of nuclei under a contact patch of area A_patch must be at least
-    ln(1/q0), so that the Poisson probability of a patch with no nucleus is at most q0.
-    """
-    key = (test.get("params") or {}).get("A_patch") or "regimes.R-slurry.parameters.patch_area"
-    a_patch = resolver.si(key, "m^2")
-    if not a_patch > 0:
-        raise RuleError("patch area must be positive")
-    return float(np.log(1.0 / (1.0 - p)) / a_patch)
 
 
 def _prior_draws(pr, unit_from, unit_to, n, rng):
@@ -436,51 +433,47 @@ class _CentralResolver:
 # ------------------------------------------------------------------ links C1, C3, C4
 
 
-def _aggregate(test, per, agg, registered, present):
-    """Combine per-state records of a test; per-draw goods are combined draw by draw."""
-    missing = sorted(set(registered or present) - set(present))
-    if agg == "worst_state":
-        sid = max(per, key=lambda k: ORDER.index(per[k]["verdict"]))
-        rec = dict(per[sid])
-        rec["aggregation"] = "worst_state (%s of %d)" % (sid, len(per))
-        rec["by_state"] = {s: public({k: v for k, v in r.items() if k in ("P_good", "P_bad", "verdict", "gap")})
-                           for s, r in per.items()}
-        goods = [r.get("_good") for r in per.values()]
-        if all(g is not None for g in goods) and len({np.shape(g) for g in goods}) == 1:
-            rec["_good"] = np.min(np.vstack(goods), axis=0)        # bad at any state is bad
-        if missing and rec["verdict"] == "feasible":
-            rec["verdict"] = "inconclusive"
-            rec["notes"] = rec.get("notes", []) + ["registered state(s) %s not evaluated: a pass cannot stand" % missing]
-    else:
-        rec = per
-    rec["states_missing"] = missing
+def _aggregate(per, label):
+    """Report record of one test over the states: the worst state, and every state's masses."""
+    sid = max(per, key=lambda k: (ORDER.index(per[k]["verdict"]), per[k].get("P_bad") or 0.0))
+    rec = {k: v for k, v in per[sid].items() if k != "_good"}
+    rec["aggregation"] = "%s (%s of %d)" % (label, sid, len(per))
+    rec["by_state"] = {s: public({k: v for k, v in r.items() if k in ("P_good", "P_bad", "verdict")})
+                       for s, r in per.items()}
+    rec["_by_state"] = {s: r["_good"] for s, r in per.items()}
     return rec
 
 
-def _states_good(states, fn):
-    """fn(state samples) for every state; None when any state lacks a quantity."""
-    return {sid: fn(s) for sid, s in states.items()}
+#: How a link's tests form its per-draw indicator (thresholds block v2, decision.link_mass).
+OR_LINKS = {"C4"}           # good on a draw if either route is good; every other link: all tests good
 
 
-def evaluate_link(rule, claim, states, resolver, registered_states=None, mixtures=None, d_max=None,
-                  path_states=None):
-    """Verdict of C1, C3 or C4 over the registered states (CP3-R3, R5, R7(1), R7(2), R7(4)).
+def evaluate_link(rule, claim, states, resolver, registered_states=None, mixtures=None, d_max=None, rng=None):
+    """Verdict of C1, C3 or C4 over the registered states (thresholds block v2).
 
-    states: {state id: {quantity: array}} of screen samples sharing their draws.
-    registered_states: the state ids the registration names (default: those given).
-    d_max: per-draw admissible thickness for C4s (d_max_draws); computed at the central values
-    when not given. A missing or unset key makes its test an explicit gap.
+    states: {state id: {quantity: array}} of screen samples sharing their draws (common
+    random numbers). Within each state the link has one indicator per draw: every test good
+    (C1, C3) or either route good (C4, cp3 R3), with C3(b) and C4's closure route reading the
+    path-summed N_nuc. The link's band masses at a state are those of the indicator (cp3 R7(1));
+    the verdict is the worst over the states and the falsified-side mass the largest. A missing
+    registered state (cp3 R7(4)) bounds the verdict: a worst-state pass needs every state, and a
+    path-sum shortfall cannot falsify. A missing or unset key makes its test an explicit gap;
+    the link is then decided only where the remaining tests decide it.
     """
     link = rule["links"][claim]
     p = credible_level(rule, resolver)
     registered = list(registered_states or states)
     present = [s for s in registered if s in states] if registered_states else list(states)
-    records = {}
+    missing = sorted(set(registered) - set(present))
+    states = {s: states[s] for s in present}
+    records, goods = {}, {}                     # goods: test id -> {state: per-draw indicator}
     for test in link["tests"]:
         agg = test.get("aggregation", link.get("aggregation", "worst_state"))
         try:
             if agg == "path_sum":
-                records[test["id"]] = _path_sum(rule, test, states, resolver, p, registered, present)
+                rec = _path_sum(rule, test, states, resolver, p, missing)
+                goods[test["id"]] = {s: rec["_good"] for s in states}
+                records[test["id"]] = {k: v for k, v in rec.items() if k != "_good"}
                 continue
             extra = {}
             if test["id"] == "C4s":
@@ -491,20 +484,84 @@ def evaluate_link(rule, claim, states, resolver, registered_states=None, mixture
                 per = {sid: evaluate_test(rule, test, dict(s, N_nuc=total), resolver, p, extra=extra)
                        for sid, s in states.items()}
             else:
-                per = {sid: evaluate_test(rule, test, s, resolver, p, (mixtures or {}).get(sid), extra)
+                per = {sid: evaluate_test(rule, test, s, resolver, p, (mixtures or {}).get(sid), extra, rng)
                        for sid, s in states.items()}
-            records[test["id"]] = _aggregate(test, per, agg, registered, present)
+            rec = _aggregate(per, agg)
+            goods[test["id"]] = rec.pop("_by_state")
+            records[test["id"]] = rec
         except Gap as exc:
             records[test["id"]] = gap_record(test, exc)
-    out = {"verdict": combine(claim, link["combine"], records), "tests": records,
-           "falsified_mass": joint_falsified_mass(claim, link["combine"], records), "role": "gating"}
+    out = _link_verdict(claim, link, records, goods, states, p, missing)
+    out.update({"tests": records, "role": "gating", "states_missing": missing})
     if claim == "C4":
-        sl = [np.asarray(s["gamma_sl_minus_nl"], float) for s in states.values() if "gamma_sl_minus_nl" in s]
-        if sl:
-            m = mass_of(indicator(np.concatenate(sl), ">", 0.0))
-            out["P_gamma_sl_gt_gamma_nl"] = m["P_good"]
-        out["rule"] = "cp3 R3: C4 feasible or C4s feasible; falsified only if both falsified"
+        out["P_gamma_sl_gt_gamma_nl"] = {sid: mass_of(indicator(s["gamma_sl_minus_nl"], ">", 0.0))["P_good"]
+                                         for sid, s in states.items() if "gamma_sl_minus_nl" in s}
+        out["route_masses"] = {t: records[t].get("P_good") for t in ("C4", "C4s") if t in records}
+    return public(out)
+
+
+def _joint(claim, tests, goods, sid, override=None):
+    """Per-draw indicator of a link at one state (override: test id -> constant indicator)."""
+    n = next(len(goods[t][sid]) for t in tests if t not in (override or {}))  if any(
+        t not in (override or {}) for t in tests) else len(goods[tests[0]][sid])
+    g = np.vstack([np.full(n, float(override[t])) if override and t in override else np.asarray(goods[t][sid], float)
+                   for t in tests])
+    ok = np.all(np.isfinite(g), axis=0)
+    out = np.full(n, np.nan)
+    out[ok] = (np.max if claim in OR_LINKS else np.min)(g[:, ok], axis=0)
     return out
+
+
+def _link_verdict(claim, link, records, goods, states, p, missing):
+    """The joint-mass verdict of a link (block v2, link_mass and states)."""
+    tests = [t["id"] for t in link["tests"]]
+    have = [t for t in tests if t in goods]
+    path_tests = [t["id"] for t in link["tests"] if t.get("aggregation") == "path_sum" or t["id"] == "C4s"]
+    rule_text = ("good per draw if either route is good" if claim in OR_LINKS else "good per draw if every test is good")
+    if not have or not states:
+        return {"verdict": "inconclusive", "P_good": None, "P_bad": None, "falsified_mass": None,
+                "joint_rule": rule_text, "notes": ["no test of the link could be evaluated"]}
+
+    def masses(override=None):
+        per = {}
+        for sid in states:
+            m = mass_of(_joint(claim, have, goods, sid, override))
+            per[sid] = {**m, "verdict": verdict_from_mass(m["P_good"], p)}
+        return per
+
+    per = masses()
+    worst_sid = max(per, key=lambda k: (ORDER.index(per[k]["verdict"]), per[k]["P_bad"] or 0.0))
+    verdict = per[worst_sid]["verdict"]
+    notes = []
+    complete = len(have) == len(tests)
+    if not complete:
+        gap_t = sorted(set(tests) - set(have))
+        if claim in OR_LINKS and verdict == "falsified":
+            verdict = "inconclusive"
+            notes.append("route(s) %s not evaluable: a falsification needs both routes" % gap_t)
+        if claim not in OR_LINKS and verdict == "feasible":
+            verdict = "inconclusive"
+            notes.append("test(s) %s not evaluable: a pass needs every test" % gap_t)
+    if missing:
+        notes.append("registered state(s) %s not evaluated (cp3 R7(4))" % missing)
+        if verdict == "feasible":
+            # a worst-state pass needs every state; a pass carried by the path-sum route alone stands
+            alt = masses({t: 0.0 for t in have if t not in path_tests}) if claim in OR_LINKS else None
+            if alt is None or not all(r["verdict"] == "feasible" for r in alt.values()):
+                verdict = "inconclusive"
+                notes.append("a pass needs every registered state")
+        elif verdict == "falsified":
+            # a falsification at an evaluated state stands only without the path-sum shortfall
+            alt = masses({t: 1.0 for t in have if t in path_tests})
+            if claim in OR_LINKS or not any(r["verdict"] == "falsified" for r in alt.values()):
+                verdict = "inconclusive"
+                notes.append("a path-sum shortfall cannot falsify while a state is missing")
+    jm = per[worst_sid]
+    return {"verdict": verdict, "P_good": jm["P_good"], "P_bad": jm["P_bad"],
+            "falsified_mass": max((r["P_bad"] for r in per.values() if r["P_bad"] is not None), default=None),
+            "half_width": half_width(jm["P_good"], jm["n_used"]), "joint_rule": rule_text,
+            "joint_by_state": {sid: {k: r[k] for k in ("P_good", "P_bad", "verdict")} for sid, r in per.items()},
+            "worst_state": worst_sid, "notes": notes}
 
 
 def _nuclei_sum(states):
@@ -514,73 +571,22 @@ def _nuclei_sum(states):
     return np.sum(arrays, axis=0)
 
 
-def _path_sum(rule, test, states, resolver, p, registered, present):
-    """C3b: nuclei summed over the states draw by draw against N_req (CP3-R5, R7(4))."""
-    n_req = required_density(rule, test, resolver, p)
-    total = _nuclei_sum({s: states[s] for s in present})
-    rec = _record(dict(test, edge="log(1/(1 - p_cred))/A_patch"), indicator(total, test["comparator"], n_req), n_req, p)
-    rec["N_req"] = n_req
-    rec["N_req_rule"] = "cp3 R5: ln(1/q0)/A_patch, q0 = 1 - p_cred"
-    rec["aggregation"] = "path_sum over %d state(s)" % len(present)
-    missing = sorted(set(registered) - set(present))
-    rec["states_missing"] = missing
+def _path_sum(rule, test, states, resolver, p, missing):
+    """C3b: nuclei summed over the evaluated states draw by draw against N_req (cp3 R5, R7(4))."""
+    n_req = float(_edge(test["edge"], test.get("params"), resolver, {"p_cred": p}, rule))
+    total = _nuclei_sum(states)
+    rec = _record(test, indicator(total, test["comparator"], n_req), n_req, p)
+    rec.update({"N_req": n_req, "N_req_rule": "cp3 R5: ln(1/q0)/A_patch, q0 = 1 - p_cred",
+                "aggregation": "path_sum over %d state(s)" % len(states), "states_missing": missing})
     if missing and rec["verdict"] == "falsified":
         rec["verdict"] = "inconclusive"
         rec["notes"].append("registered state(s) %s not evaluated: a shortfall cannot falsify (cp3 R7(4))" % missing)
     return rec
 
 
-def combine(claim, rule_combine, records):
-    """Link verdict from its tests' verdicts.
-
-    'A and B' is feasible when every test is feasible and falsified when any is. C4 follows
-    the cp3 ruling R3 (feasible if either test is feasible, falsified only if both are).
-    """
-    v = {t: r["verdict"] for t, r in records.items()}
-    if claim == "C4":
-        if "feasible" in (v.get("C4"), v.get("C4s")):
-            return "feasible"
-        if v.get("C4") == "falsified" and v.get("C4s") == "falsified":
-            return "falsified"
-        return "inconclusive"
-    ids = [c.strip() for c in str(rule_combine).split(" and ")]
-    vs = [v[i] for i in ids]
-    if all(x == "feasible" for x in vs):
-        return "feasible"
-    if any(x == "falsified" for x in vs):
-        return "falsified"
-    return "inconclusive"
-
-
-def joint_falsified_mass(claim, rule_combine, records):
-    """CP3-R7(1): the link's falsified-side mass, draw by draw.
-
-    For an 'A and B' link a draw is on the falsified side when any test is bad on it; for C4
-    when both C4 and C4s are bad on it. Deterministic tests (C5) carry mass 0 or 1 on every
-    draw. Draws excluded by any test are excluded from the joint mass.
-    """
-    ids = ["C4", "C4s"] if claim == "C4" else [c.strip() for c in str(rule_combine).split(" and ")]
-    goods = []
-    for i in ids:
-        r = records.get(i) or {}
-        g = r.get("_good")
-        if g is None:
-            if r.get("P_bad") in (0.0, 1.0):                         # deterministic test
-                goods.append(float(r["P_bad"] == 0.0))
-                continue
-            return None
-        goods.append(g)
-    arrays = [np.asarray(g, float) for g in goods if np.ndim(g)]
-    n = arrays[0].shape if arrays else ()
-    if any(a.shape != n for a in arrays):
-        return None
-    stack = np.vstack([np.broadcast_to(np.asarray(g, float), n) for g in goods]) if n else np.array(goods, float)[:, None]
-    ok = np.all(np.isfinite(stack), axis=0)
-    if not np.any(ok):
-        return None
-    bad = stack[:, ok] < 0.5
-    joint = np.all(bad, axis=0) if claim == "C4" else np.any(bad, axis=0)
-    return float(joint.mean())
+def required_density(rule, test, resolver, p):
+    """N_req of the block's C3b edge, log(1/(1 - p_cred)) / A_patch (cp3 R5), m^-2."""
+    return float(_edge(test["edge"], test.get("params"), resolver, {"p_cred": p}, rule))
 
 
 # ------------------------------------------------------------------ C2 (descriptor)
@@ -646,37 +652,59 @@ def evaluate_omega_point(omega, p):
     return {**m, "half_width": half_width(m["P_good"], m["n_used"]), "verdict": verdict_from_mass(m["P_good"], p)}
 
 
-def evaluate_c5_slurry_omega(by_design, p, control=None, sensitivities=None):
-    """CP3-R1: dissolution decided by Omega_bulk >= 1 over the design axes (the dose window).
+def evaluate_c5_slurry_omega(by_design, p, controls=None, sensitivities=None):
+    """C5s (block v2): dissolution decided by Omega_bulk >= 1 over the design axes (the dose window).
 
-    by_design: {point id: {"axes": {...}, "Omega_bulk": draws}} with the sourced calcite K_sp
-    and speciated activities. control: {"axes", "Omega_bulk"} at W5's sourced dissolving
-    condition; the test can pass only if the control is falsified there (it must report
-    dissolution). sensitivities: {label: by_design} reported beside (ACC Omega, never gating).
+    by_design: {point id: {"axes": {...}, "Omega_bulk": draws}} with the calcite K_sp under
+    every framing and the speciated activities. controls: {"undersaturated": {"axes",
+    "Omega_bulk"}, "supersaturated": {...}} at W5's registered control states: the Omega test
+    must report dissolution at the first and stability at the second, else C5s is inconclusive.
+    sensitivities: {label: by_design} reported beside (C5s_ACC, never gating).
     """
     points = {pid: {"axes": d["axes"], **evaluate_omega_point(d["Omega_bulk"], p)} for pid, d in by_design.items()}
-    ctl = None
-    if control is not None:
-        ctl = {"axes": control["axes"], **evaluate_omega_point(control["Omega_bulk"], p)}
-        ctl["fails_where_it_must"] = ctl["verdict"] == "falsified"
+    ctl = {k: {"axes": c["axes"], **evaluate_omega_point(c["Omega_bulk"], p)} for k, c in (controls or {}).items()}
     sens = {lab: {pid: {"axes": d["axes"], **evaluate_omega_point(d["Omega_bulk"], p)} for pid, d in bd.items()}
             for lab, bd in (sensitivities or {}).items()}
-    return omega_window(points, p, ctl, sens)
+    return omega_window(points, p, control_outcomes(ctl), sens)
 
 
-def omega_window(points, p, control=None, sensitivities=None):
-    """The CP3-R1 record from per-point Omega records ({pid: {"axes", P_good, ..., verdict}})."""
-    window = sorted(pid for pid, r in points.items() if r["verdict"] == "feasible")
+#: What each falsifiability control must report (block v2, C5s.control).
+CONTROL_MUST = {"undersaturated": "falsified", "supersaturated": "feasible"}
+
+
+def control_outcomes(controls):
+    """Mark each control record with whether it came out as it must."""
+    out = {}
+    for k, c in (controls or {}).items():
+        if c is None:
+            continue
+        out[k] = dict(c, must=CONTROL_MUST[k], fails_where_it_must=c.get("verdict") == CONTROL_MUST[k])
+    return out
+
+
+def omega_window(points, p, controls=None, sensitivities=None):
+    """The C5s record from per-point Omega records ({pid: {"axes", P_good, ..., verdict}}).
+
+    The verdict at a design point is its band-mass verdict; it is inconclusive unless both
+    controls came out as they must (block v2: on_failure inconclusive). The dose window is the
+    set of points where C5s is feasible, with the falsified and inconclusive sets beside it.
+    """
+    controls = controls or {}
+    ok = all(k in controls and controls[k]["fails_where_it_must"] for k in CONTROL_MUST)
+    notes = [] if ok else ["falsifiability controls %s did not all come out as they must: C5s is inconclusive"
+                           % sorted(CONTROL_MUST)]
+    points = {pid: dict(r) for pid, r in points.items()}
+    for pid, r in points.items():
+        r["verdict_before_control"] = r.get("verdict_before_control", r["verdict"])
+        r["verdict"] = r["verdict_before_control"] if ok else "inconclusive"
+    sets = {v: sorted(pid for pid, r in points.items() if r["verdict"] == v) for v in ORDER}
     head = over_design({k: r["verdict"] for k, r in points.items()})
-    notes = []
-    verdict = head["verdict"]
-    if verdict == "feasible" and not (control and control.get("fails_where_it_must")):
-        verdict = "inconclusive"
-        notes.append("falsifiability control not shown to fail where it must (no pass without it)")
     rec = {"quantity": "Omega_bulk", "comparator": ">=", "edge": 1.0, "edge_expression": "1",
-           "verdict": verdict, "P_good": None, "P_bad": None, "design_dependent": head["design_dependent"],
-           "dose_window": {"feasible_points": window, "points": points}, "control": control,
-           "rule": "cp3 R1: Omega_bulk >= 1 with the sourced calcite K_sp and speciated activities",
+           "verdict": head["verdict"], "P_good": None, "P_bad": None, "design_dependent": head["design_dependent"],
+           "dose_window": {"feasible_points": sets["feasible"], "falsified_points": sets["falsified"],
+                           "inconclusive_points": sets["inconclusive"], "points": points},
+           "controls": controls, "controls_pass": ok, "role": "dissolution",
+           "rule": "block v2 C5s: Omega_bulk >= 1, calcite K_sp under every framing, speciated activities",
            "notes": notes}
     if len(points) == 1:
         only = next(iter(points.values()))
@@ -757,124 +785,170 @@ def _limit(window, side, scheme):
 
 
 def scheme_table(cells, gated_phases, side):
-    """Every (phase, sink, scheme) limit: the expt route governs, janaf and mp are comparators."""
+    """Every (phase, sink, scheme) limit: expt governs; each DFT scheme and each benchmark-corrected
+    DFT scheme is a comparator (a corrected value equals expt by construction, never a confirmation)."""
     rows = []
     for sink, cell in cells.items():
         kind = (cell.get("sink_assumption") or {}).get("kind", "other")
-        bench = ((cell.get("schemes") or {}))
+        bench = cell.get("schemes") or {}
         for phase in gated_phases:
-            w = (cell.get("windows") or {}).get(phase)
-            schemes = sorted(set((w or {}).get(side + "_by_scheme") or {}) | {GOVERNING_SCHEME})
+            w = (cell.get("windows") or {}).get(phase) or {}
+            schemes = sorted(set(w.get(side + "_by_scheme") or {}) | {GOVERNING_SCHEME})
             for sc in schemes:
-                status, val = _limit(w or {}, side, sc) if w else ("absent", None)
+                status, val = _limit(w, side, sc) if w else ("absent", None)
+                err = (bench.get(sc) or {}).get("benchmark_error_V")
                 rows.append({"phase": phase, "sink": sink, "sink_kind": kind, "scheme": sc,
                              "role": "governing" if sc == GOVERNING_SCHEME else "comparator",
-                             "status": status, "value_V": val,
-                             "benchmark_error_V": (bench.get(sc) or {}).get("benchmark_error_V")})
+                             "status": status, "value_V": val, "benchmark_error_V": err})
+                if sc != GOVERNING_SCHEME and err is not None and val is not None:
+                    rows.append({"phase": phase, "sink": sink, "sink_kind": kind, "scheme": sc + "_corrected",
+                                 "role": "comparator", "status": status, "value_V": val - err,
+                                 "benchmark_error_V": err})
     return rows
 
 
 def cell_verdict(value, status, kind, bound, margin, side):
-    """One governing limit against one cutoff: falsified if beyond the edge by the margin."""
+    """One limit against one cutoff: falsified beyond the edge by the margin (either sink); a pass
+    needs the solvated sink (a solid-salt onset is an upper bound on the true onset)."""
     if status != "ok":
-        return "inconclusive", "governing limit %s: never a pass" % status
+        return "inconclusive", "limit %s: never a pass" % status
     if margin is None:
-        return "inconclusive", "experimental margin m_expt not registered"
+        return "inconclusive", "margin not registered"
     if side == "oxidation":
         if value + margin < bound:
-            return "falsified", "E_ox + m_expt < E_cell_max"
+            return "falsified", "E_ox + m < E_cell_max"
         if value - margin >= bound:
             if kind != "solvated":
                 return "inconclusive", "pass under a %s sink: an upper bound on the onset, needs the solvated sink" % kind
-            return "feasible", "E_ox - m_expt >= E_cell_max"
+            return "feasible", "E_ox - m >= E_cell_max"
         return "inconclusive", "within the margin"
     if value - margin > bound:
-        return "falsified", "E_red - m_expt > E_cell_min"
+        return "falsified", "E_red - m > E_cell_min"
     if value + margin <= bound:
-        return ("feasible", "E_red + m_expt <= E_cell_min") if kind == "solvated" else \
-            ("inconclusive", "pass under a %s sink needs the solvated sink" % kind)
+        return "feasible", "E_red + m <= E_cell_min"
     return "inconclusive", "within the margin"
 
 
-def evaluate_c5_cell(cells, resolver, gated_phases, side, cutoffs, margin_key, never_pass_sinks=()):
-    """CP3-R2: the R-cell window limit of every gated phase against the cutoff design axis.
+def _dft_decided(rows, kind, bound, m_e, side):
+    """cp2 fix F5 over the DFT schemes where the expt route is missing: a pass under the
+    lowest-onset scheme, a falsification under every scheme, margin m_E (labelled DFT-decided)."""
+    dft = [r for r in rows if r["role"] == "comparator" and not r["scheme"].endswith("_corrected")]
+    if not dft or any(r["status"] != "ok" for r in dft):
+        return "inconclusive", "expt route missing and a DFT scheme undetermined: never a pass"
+    vs = [cell_verdict(r["value_V"], "ok", kind, bound, m_e, side)[0] for r in dft]
+    if all(v == "falsified" for v in vs):
+        return "falsified", "DFT-decided (F5): falsified under every scheme"
+    low = min(dft, key=lambda r: r["value_V"]) if side == "oxidation" else max(dft, key=lambda r: r["value_V"])
+    v, n = cell_verdict(low["value_V"], "ok", kind, bound, m_e, side)
+    return ("feasible", "DFT-decided (F5): passes under the lowest-onset scheme") if v == "feasible" else         ("inconclusive", "DFT-decided (F5): " + n)
 
-    cells: {sink: stability R-cell section} (one per registered salt plus the solvated sink).
-    cutoffs: {label: potential in V} of E_cell_max (oxidation) or E_cell_min (reduction).
-    A phase falsifies a cutoff if its governing limit falls beyond it under any sink (a
-    solid-salt falsification stands); a pass needs every registered electrolyte to pass with
-    the solvated sink. Sinks in never_pass_sinks stay undetermined (never a pass).
+
+def evaluate_c5_cell(cells, resolver, gated_phases, side, cutoffs, margin_key, never_pass_sinks=(),
+                     dft_margin_key="thresholds.C5.window_margin"):
+    """C5c_ox or C5c_red (block v2, cp3 R2) for the gated phases over the cutoff design axis.
+
+    cells: {sink: stability R-cell section}; cutoffs: {cathode class or label: V}. The expt route
+    governs with margin m_expt; where it is missing the limit is DFT-decided under F5 with m_E.
+    A phase falsifies a cutoff if any sink falsifies it; it passes only if the solvated sink
+    passes and no sink falsifies. Sinks in never_pass_sinks are undetermined (never a pass).
+    The crossover cutoffs E_ox - m_expt (feasible at or below, solvated sink) and E_ox + m_expt
+    (falsified above) are printed per phase and sink.
     """
-    try:
-        margin = resolver.si(margin_key, "V")
-    except Gap:
-        margin = None
+    def margin(key):
+        try:
+            return resolver.si(key, "V")
+        except Gap:
+            return None
+    m_expt, m_e = margin(margin_key), margin(dft_margin_key)
     table = scheme_table(cells, gated_phases, side)
+    crossovers = {}
+    for r in table:
+        if r["role"] == "governing" and r["status"] == "ok" and m_expt is not None:
+            lo, hi = (r["value_V"] - m_expt, r["value_V"] + m_expt)
+            crossovers.setdefault(r["phase"], {})[r["sink"]] = (
+                {"feasible_at_or_below_V": lo if r["sink_kind"] == "solvated" else None, "falsified_above_V": hi}
+                if side == "oxidation" else {"feasible_at_or_above_V": hi, "falsified_below_V": lo})
     by_cut = {}
     for label, bound in cutoffs.items():
         per_phase = {}
         for phase in gated_phases:
             sinks = {}
             for sink, cell in cells.items():
-                rows = [r for r in table if r["phase"] == phase and r["sink"] == sink and r["role"] == "governing"]
-                st, val = (rows[0]["status"], rows[0]["value_V"]) if rows else ("absent", None)
-                if sink in never_pass_sinks and st == "ok":
-                    st = "undetermined"
-                sinks[sink] = cell_verdict(val, st, rows[0]["sink_kind"] if rows else "other", bound, margin, side)
-            solv = [v for s, (v, _) in sinks.items() if cells[s].get("sink_assumption", {}).get("kind") == "solvated"]
-            if any(v == "falsified" for v, _ in sinks.values()):
+                rows = [r for r in table if r["phase"] == phase and r["sink"] == sink]
+                gov = [r for r in rows if r["role"] == "governing"]
+                kind = (cell.get("sink_assumption") or {}).get("kind", "other")
+                st, val = (gov[0]["status"], gov[0]["value_V"]) if gov else ("absent", None)
+                if st == "ok":
+                    v, n = cell_verdict(val, st, kind, bound, m_expt, side)
+                    n = "expt: " + n
+                else:
+                    v, n = _dft_decided(rows, kind, bound, m_e, side)
+                if sink in never_pass_sinks and v == "feasible":
+                    v, n = "inconclusive", "sink thermochemistry undetermined: never a pass"
+                sinks[sink] = (v, n, kind)
+            solv = [v for v, _, k in sinks.values() if k == "solvated"]
+            if any(v == "falsified" for v, _, _ in sinks.values()):
                 vp = "falsified"
-            elif solv and all(v == "feasible" for v in solv):
-                vp = "feasible"                  # the solvated sink passes and no sink falsifies
+            elif solv and all(v == "feasible" for v in solv) and side == "oxidation":
+                vp = "feasible"
+            elif side == "reduction" and sinks and all(v == "feasible" for v, _, _ in sinks.values()):
+                vp = "feasible"
             else:
                 vp = "inconclusive"
-            per_phase[phase] = {"verdict": vp, "sinks": {s: {"verdict": v, "note": n} for s, (v, n) in sinks.items()}}
+            per_phase[phase] = {"verdict": vp, "sinks": {s: {"verdict": v, "note": n} for s, (v, n, _) in sinks.items()}}
         by_cut[label] = {"bound_V": float(bound), "verdict": worst([r["verdict"] for r in per_phase.values()]),
                          "phases": per_phase}
     head = over_design({k: r["verdict"] for k, r in by_cut.items()})
     return {**_deterministic(head["verdict"]), "verdict": head["verdict"], "design_dependent": head["design_dependent"],
-            "quantity": "E_ox" if side == "oxidation" else "E_red", "scheme_table": table,
-            "cutoff_axis": by_cut, "margin_V": margin, "governing_scheme": GOVERNING_SCHEME,
-            "rule": "cp3 R2: all-experimental route governs; DFT schemes are comparators", "notes": []}
+            "quantity": "E_ox" if side == "oxidation" else "E_red", "scheme_table": table, "crossovers": crossovers,
+            "cutoff_axis": by_cut, "margin_V": m_expt, "dft_margin_V": m_e, "governing_scheme": GOVERNING_SCHEME,
+            "rule": "block v2 C5c: expt governs with m_expt; F5 over the DFT schemes where expt is missing",
+            "disclosure": "the CaCO3/LiClO4 scheme values were seen before this rule (cp3 R2; packet p0-3 decision 3)",
+            "notes": []}
 
 
-def evaluate_c5(rule, resolver, omega=None, pourbaix=None, cells=None, framing="calcite", gated_phases=None,
-                cutoffs=None, margin_key="thresholds.C5.margin_expt", never_pass_sinks=()):
-    """C5 = Omega test and competing-phase test (R-slurry) and both R-cell limits.
+def evaluate_c5(rule, resolver, omega=None, pourbaix=None, cells=None, framing="calcite", cutoffs=None,
+                never_pass_sinks=()):
+    """C5 = C5s (Omega dissolution) and C5s_phase and C5c_ox and C5c_red (block v2).
 
-    omega: the evaluate_c5_slurry_omega record; pourbaix: the stability R-slurry section;
-    cells: {sink: R-cell section}. A part with no input is an explicit gap.
+    omega: the C5s record (omega_window); pourbaix: the stability R-slurry section; cells:
+    {sink: R-cell section}; cutoffs: {"oxidation": {label: V}, "reduction": {label: V}}. A part
+    with no input is an explicit gap. The gated phases and margin keys are the block's.
     """
     p = credible_level(rule, resolver)
+    link = rule["links"]["C5"]
+    tests = {t["id"]: t for t in link["tests"] + (link.get("sensitivities") or [])}
     recs = {}
-    recs["C5s_omega"] = omega if omega is not None else \
-        {"verdict": "inconclusive", "P_good": None, "P_bad": None, "gap": "no Omega_bulk draws (speciation inputs)"}
-    test = next(t for t in rule["links"]["C5"]["tests"] if t["id"] == "C5s")
+    recs["C5s"] = omega if omega is not None else         {"verdict": "inconclusive", "P_good": None, "P_bad": None, "gap": "no Omega_bulk draws (speciation inputs)"}
     if pourbaix is None:
-        recs["C5s"] = {"verdict": "inconclusive", "P_good": None, "P_bad": None, "gap": "no R-slurry stability section"}
+        recs["C5s_phase"] = {"verdict": "inconclusive", "P_good": None, "P_bad": None, "gap": "no R-slurry stability section"}
     else:
         try:
-            recs["C5s"] = evaluate_c5_slurry_phase(test, pourbaix, resolver, framing)
+            recs["C5s_phase"] = evaluate_c5_slurry_phase(tests["C5s_phase"], pourbaix, resolver, framing)
         except Gap as exc:
-            recs["C5s"] = gap_record(test, exc)
-    for tid, side, key in (("C5c_ox", "oxidation", "regimes.R-cell.parameters.E_max"),
-                           ("C5c_red", "reduction", "regimes.R-cell.parameters.E_min")):
+            recs["C5s_phase"] = gap_record(tests["C5s_phase"], exc)
+    gated = (link.get("gated_phases") or {}).get("R-cell") or ["CaCO3"]
+    for tid, side, bound_sym in (("C5c_ox", "oxidation", "E_cell_max"), ("C5c_red", "reduction", "E_cell_min")):
+        t = tests[tid]
         if not cells:
             recs[tid] = {"verdict": "inconclusive", "P_good": None, "P_bad": None, "gap": "no R-cell window"}
             continue
         cuts = (cutoffs or {}).get(side)
         if not cuts:
             try:
-                cuts = {"registered": resolver.si(key, "V")}
+                cuts = {"registered": resolver.si(t["params"][bound_sym], "V")}
             except Gap as exc:
                 recs[tid] = {"verdict": "inconclusive", "P_good": None, "P_bad": None, "gap": str(exc)}
                 continue
-        recs[tid] = evaluate_c5_cell(cells, resolver, gated_phases or ["CaCO3"], side, cuts, margin_key,
-                                     never_pass_sinks)
-    vs = [r["verdict"] for r in recs.values()]
+        recs[tid] = evaluate_c5_cell(cells, resolver, gated, side, cuts, t["params"]["m_expt"], never_pass_sinks,
+                                     t["params"].get("m_E", "thresholds.C5.window_margin"))
+    vs = [recs[t]["verdict"] for t in [c.strip() for c in str(link["combine"]).split(" and ")]]
     verdict = "falsified" if "falsified" in vs else ("feasible" if all(v == "feasible" for v in vs) else "inconclusive")
     mass = 1.0 if verdict == "falsified" else (0.0 if verdict == "feasible" else None)
-    return {"verdict": verdict, "tests": recs, "falsified_mass": mass, "role": "gating", "credible_level": p}
+    if omega is not None and omega.get("P_bad") is not None and verdict != "falsified":
+        mass = max(mass or 0.0, omega["P_bad"]) if mass is not None else None
+    return {"verdict": verdict, "tests": recs, "falsified_mass": mass, "role": "gating", "credible_level": p,
+            "gated_phases": {"R-cell": gated}}
 
 
 # ------------------------------------------------------------------ study

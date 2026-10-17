@@ -64,9 +64,10 @@ def test_loader_returns_the_rule_and_its_source(tmp_path):
         thr.load_thresholds(tmp_path / "missing.yaml")
 
 
-@pytest.mark.skipif(not (ROOT / thr.THEORY).exists(),
-                    reason="theory/thresholds.md is not on this branch yet (W3 sets it at cp2; integration brings it)")
 def test_committed_copy_equals_theory_thresholds():
-    copy = ROOT / thr.COPY
-    assert copy.exists(), "theory/thresholds.md is present but configs/preprint/thresholds.yaml was not copied"
-    assert thr.equal((ROOT / thr.THEORY).read_text(encoding="utf-8"), copy.read_text(encoding="utf-8"))
+    # the authority is theory/thresholds.md at the copy's source commit; on this lane branch the
+    # tree may still hold an earlier version of the same file, never a diverging one
+    sha, tree_sha = thr.check_against_authority(ROOT)
+    assert sha and tree_sha
+    rule = thr.load_thresholds(ROOT / thr.COPY)["rule"]
+    assert rule["version"] == 2 and rule["contract_version"] == 3

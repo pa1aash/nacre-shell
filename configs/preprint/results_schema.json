@@ -1354,17 +1354,44 @@
         "dose_window": {
           "$ref": "#/$defs/dose_window"
         },
-        "omega_control": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/$defs/omega_point"
-            }
-          ]
-        },
         "P_gamma_sl_gt_gamma_nl": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "P(gamma_sl > gamma_nl) at every registered state (block v2, C4 report_mass).",
+          "additionalProperties": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "rule": {
+          "type": "string"
+        },
+        "credible_level": {
+          "type": "number"
+        },
+        "omega_controls": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "The Omega test's falsifiability controls (block v2): undersaturated must be falsified (dissolution), supersaturated feasible (stability).",
+          "additionalProperties": {
+            "$ref": "#/$defs/omega_point"
+          }
+        },
+        "states_missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "P_good": {
           "type": [
             "number",
             "null"
@@ -1372,11 +1399,40 @@
           "minimum": 0,
           "maximum": 1
         },
-        "rule": {
+        "P_bad": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "half_width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "joint_rule": {
           "type": "string"
         },
-        "credible_level": {
-          "type": "number"
+        "joint_by_state": {
+          "type": "object"
+        },
+        "worst_state": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "route_masses": {
+          "type": "object"
+        },
+        "gated_phases": {
+          "type": "object"
         }
       },
       "additionalProperties": false
@@ -1473,6 +1529,13 @@
             "object",
             "null"
           ]
+        },
+        "truncation": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Truncated priors (cp3 R8: gamma_sl0 >= 0): the removed mass, and with the untruncated sensitivity the verdicts that change."
         }
       }
     },
@@ -1644,6 +1707,35 @@
         },
         "gap": {
           "type": "string"
+        },
+        "must": {
+          "enum": [
+            "feasible",
+            "inconclusive",
+            "falsified"
+          ]
+        },
+        "verdict_before_control": {
+          "enum": [
+            "feasible",
+            "inconclusive",
+            "falsified"
+          ]
+        },
+        "a_Ca_median": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "a_CO3_median": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "by_state": {
+          "type": "object"
         }
       }
     },
@@ -1666,6 +1758,18 @@
           "type": "object",
           "additionalProperties": {
             "$ref": "#/$defs/omega_point"
+          }
+        },
+        "falsified_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "inconclusive_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         }
       }

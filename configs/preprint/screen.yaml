@@ -77,7 +77,6 @@ registrations:
     gated_phases: [CaCO3, corundum, boehmite]
     never_pass_sinks: [LiBOB, LiPCP]  # sink thermochemistry undetermined: never a pass
     schemes: {governing: expt, comparators: [janaf, mp]}
-    margin_key: thresholds.C5.margin_expt   # R2: the experimental uncertainty budget (pending W1)
 
 # Design axes (gap policy (ii), cp3 R8: W5's grids). Values are design registrations, not
 # literature values; axes given by a table key take its sourced points.
@@ -90,14 +89,19 @@ design_axes:
   R_A_max: {params: r_a_max, at: [value]}     # cp3 R7(2): design axis; registration pending
   j_req: {params: j_req, at: [value]}         # cp3 R7(2): design axis; registration pending
 
-# cp3 R1: the Omega falsifiability control at W5's sourced dissolving condition (P0-W5.2,
-# Task B): it must report dissolution (Omega_bulk < 1 at the credible level).
+# Thresholds block v2, C5s.control: the Omega test must report dissolution at W5's registered
+# undersaturated control state and stability at its supersaturated one (P0-W5.2, Task B).
 omega_control:
-  source: P0-W5.2 falsifiability control (calcite, undersaturated)
-  inputs:
-    pH: {params: ph_slurry_modified, at: min}
-    C_T: {params: dic_slurry, at: min}
-    Ca_T: {value: 1.0e-6, unit: mol dm^-3}
+  source: P0-W5.2 falsifiability control (calcite)
+  states:
+    undersaturated:
+      pH: {params: ph_slurry_modified, at: min}
+      C_T: {params: dic_slurry, at: min}
+      Ca_T: {value: 1.0e-6, unit: mol dm^-3}
+    supersaturated:
+      pH: {value: 12.0}
+      C_T: {params: dic_slurry, at: value}
+      Ca_T: {value: 1.0e-1, unit: mol dm^-3}
 
 # Prior sets, selectable per run (--prior-set) and labelled in every output (cp3 R8, gap policy).
 prior_sets:

@@ -107,3 +107,31 @@ def load_thresholds(path=COPY):
     sha, body = split_copy(text)
     return {"source_sha": sha, "rule": yaml.safe_load(body)}
 
+
+
+def check_against_authority(root, copy_path=COPY):
+    """Check the committed copy against theory/thresholds.md at the copy's source commit.
+
+    The copy names the commit of its authority (``# source-sha:``). The check reads
+    theory/thresholds.md at that commit from the repository's objects and requires the copy's
+    block to equal its block, and the working tree's theory/thresholds.md to be that version or
+    an earlier one on the same line (the theory lane's file reaches this branch only through
+    integration). Returns (source sha, tree sha); raises ThresholdsMismatch otherwise.
+    """
+    root = Path(root)
+    text = (root / copy_path).read_text(encoding="utf-8")
+    sha, _ = split_copy(text)
+
+    def git(*args):
+        return subprocess.run(["git", "-C", str(root), *args], capture_output=True, text=True)
+    shown = git("show", "%s:%s" % (sha, THEORY.as_posix()))
+    if shown.returncode != 0:
+        raise ThresholdsMismatch("the copy's source commit %s is not in this repository's objects" % sha)
+    equal(shown.stdout, text)
+    tree_sha = git("log", "-1", "--format=%H", "HEAD", "--", THEORY.as_posix()).stdout.strip()
+    if tree_sha and tree_sha != sha and git("merge-base", "--is-ancestor", tree_sha, sha).returncode != 0:
+        raise ThresholdsMismatch("theory/thresholds.md on this branch (%s) is not an ancestor of the copy's "
+                                 "source %s" % (tree_sha, sha))
+    if tree_sha == sha:
+        equal((root / THEORY).read_text(encoding="utf-8"), text)
+    return sha, tree_sha
