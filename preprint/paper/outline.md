@@ -36,8 +36,8 @@ Tables:
 
 1. Overview of the four links and their order. Fig 2 is cited, with each panel introduced in its own paragraph. Claim: CL-R05.
 2. Adhesion in water (Fig 2a). The wet Dupre balance of three interfacial free energies. It is not a dry adhesion energy. Claim: CL-R01.
-3. Sequestration (Fig 2b, Fig 3). The binding free energy from the hydrated ion, built as a thermodynamic cycle with protonation and ionic-strength legs. It maps to local enrichment and then to local supersaturation. Claim: CL-R02.
-4. Nucleation (Fig 2c). The classical heterogeneous barrier: the shape factor times the homogeneous barrier, with the local supersaturation from the previous link. Claim: CL-R03.
+3. Sequestration (Fig 2b, Fig 3). The binding free energy from the hydrated ion, built as a thermodynamic cycle with protonation and ionic-strength legs. How it enters nucleation, through the ion activities at the interface or through the interfacial energies, is set by the derivation at cp2 (W3 questions Q1 and Q2); the text does not assume a route before then. Claim: CL-R02.
+4. Nucleation (Fig 2c). The classical heterogeneous barrier: the shape factor times the homogeneous barrier, with the sequestration term entering as the cp2 derivation fixes it. Claim: CL-R03.
 5. Stability (Fig 2d). The decomposition free energy above the aqueous hull in the slurry, and the lithium-referenced window in the cell. Claim: CL-R04.
 6. Consistency. Each interfacial free energy enters once, and the proof is in the SI. The chain is a product of conditions, and no link is credited twice. Claim: CL-R05.
 
@@ -52,7 +52,7 @@ Tables:
 
 1. Propagation. Monte Carlo draws from the priors through the chain, per regime (\NumScreenDraws draws). Claim: CL-G01.
 2. Variance decomposition. First- and total-order Sobol indices with bootstrap intervals (\NumSobolBaseSamples base samples). Claim: CL-G01.
-3. Decision criteria and thresholds, fixed before the screen is read (Table 2). Claim: CL-P02.
+3. Decision criteria and thresholds (Table 2), set at cp2 and frozen at cp3; after cp3 they change only through a dated deviation entry (rule R-thr). No claim is made about when they were set relative to any calculation (lane note N5). Claim: CL-P02.
 4. Required precision. How the accuracy a governing quantity needs is derived from the barrier map and the criteria. Claim: CL-P01.
 5. Retrodiction protocol. Cases, outcome coding and the rule that every case is reported. Claim: CL-T01.
 6. Pourbaix construction and the anchor calculation, each in a few sentences. Claims: CL-X01, CL-X02.

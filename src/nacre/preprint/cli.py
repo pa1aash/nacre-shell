@@ -64,14 +64,26 @@ def _lint_scope(args):
 
 
 def _prepare(args):
-    from nacre.preprint import build, declarations, macros
+    from nacre.preprint import build, declarations, macros, refs
     from nacre.report import template
     try:
         build.prepare(_util.repo_root(), args.mode)
-    except (build.PrepareError, macros.MacroError, declarations.DeclarationsError, template.TemplateError) as exc:
+    except (build.PrepareError, macros.MacroError, declarations.DeclarationsError, template.TemplateError,
+            refs.RefsError) as exc:
         print("prepare (%s): FAIL\n%s" % (args.mode, exc))
         return 1
     return 0
+
+
+def _cites(args):
+    from nacre.preprint import refs
+    root = _util.repo_root()
+    problems = refs.unresolved(root)
+    if not problems:
+        print("cites: %d keys, all in %s; without pages: %s" % (
+            len(refs.cited(root)), refs.source(root).relative_to(root).as_posix(),
+            ", ".join(refs.without_pages(root)) or "none"))
+    return _report("cites", problems)
 
 
 def _guard(args):
@@ -97,5 +109,7 @@ def register(subparsers):
     q = sub.add_parser("prepare", help="template, head, mode, generated files; release mode runs the guard")
     q.add_argument("--mode", choices=["draft", "release"], default="draft")
     q.set_defaults(func=_prepare)
+    q = sub.add_parser("cites", help="every \\cite key resolves in preprint/paper/refs.bib")
+    q.set_defaults(func=_cites)
     q = sub.add_parser("guard", help="run the release guard only")
     q.set_defaults(func=_guard)

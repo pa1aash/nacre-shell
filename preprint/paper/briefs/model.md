@@ -18,11 +18,11 @@ Write the four links as one consistent chain, in energetic order, with each obse
 3. **Sequestration (Fig 2b and Fig 3).**
    - The free energy of moving Ca2+ from the hydrated bulk at the regime activity to a binding site.
    - It is built as a thermodynamic cycle (Fig 3) with protonation-state and ionic-strength legs at the regime pH.
-   - It maps to the enrichment factor c_local/c_bulk = exp(-Delta_G_seq/RT), and so to the local supersaturation S.
+   - Pending cp2 (W3 questions Q1 and Q2): whether sequestration enters nucleation through a local enrichment and supersaturation, c_local/c_bulk = exp(-Delta_G_seq/RT), or through the interfacial energies. The Introduction (P0-W8.2) states the template's role neutrally, as lowering the barrier through the interfacial energies and the ion activities at the interface; write this paragraph to the cp2 ruling and do not assert enrichment before it.
    - Claim: CL-R02.
 4. **Nucleation (Fig 2c).**
    - The heterogeneous barrier is the shape factor f(theta) times the homogeneous barrier, with the Young relation for theta.
-   - The local S from step 3 enters the homogeneous barrier through k_B T ln S.
+   - If cp2 keeps the enrichment route, the local S from step 3 enters the homogeneous barrier through k_B T ln S; otherwise the sequestration term enters through the interfacial energies.
    - The f(theta) expression and the 16 pi / 3 prefactor are allowlisted forms. Every other number is a macro.
    - Claim: CL-R03.
 5. **Stability (Fig 2d).**

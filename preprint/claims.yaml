@@ -14,11 +14,16 @@
 #   statement    draft wording, no numbers (numbers are macros named in `evidence`).
 #   section      the manuscript section that carries it (file stem in preprint/paper/sections).
 #   type         physical relation | parameter bound | governing parameter | required precision |
-#                proxy result | retrodiction outcome | outlook | limitation.
+#                proxy result | retrodiction outcome | outlook | limitation | background |
+#                novelty | contrary evidence. The last three (letters K, V and E) are the
+#                Introduction's literature statements (added in P0-W8.2).
 #   polarity     claims | does-not-claim.
 #   evidence     list of {kind, ref}; kind is macro (preprint/generated/sources.yaml), figure
 #                (Fig 1..8), table (Table 1..3), derivation (an SI section label), reference
-#                (a refs.bib key or a pending pointer) or claim (another id).
+#                (a refs.bib key or a pending pointer), claim (another id), row (a row_id of
+#                lit/evidence_table.csv), doi (a DOI in preprint/paper/refs.bib that is also
+#                recorded in lit/evidence_table.csv, lit/novelty.md or lit/contrary.md) or
+#                dossier (<file>#<anchor>: a lit/ file and a string that occurs in it).
 #   checkpoint   the track checkpoint the claim depends on: cp1..cp5, or none.
 #   supplier     the lane that supplies the evidence.
 #   scope_check  clean (lint-scope finds nothing) or allowlisted (an explicit does-not-claim
@@ -46,8 +51,9 @@ claims:
   - id: CL-R02
     statement: >-
       Sequestration of Ca2+ by the bound template is a binding free energy built as a
-      thermodynamic cycle from the hydrated ion to the binding site; it fixes the local
-      enrichment of Ca2+ and hence the local supersaturation at the interface.
+      thermodynamic cycle from the hydrated ion to the binding site; how it enters the
+      nucleation barrier, through the ion activities at the interface or through the
+      interfacial energies, is fixed by the derivation.
     section: model
     type: physical relation
     polarity: claims
@@ -61,11 +67,15 @@ claims:
     supplier: p0-w3
     scope_check: clean
     status: planned
+    notes: >-
+      Made neutral in P0-W8.2: whether binding acts through a local enrichment and
+      supersaturation or through the interfacial energies is settled by derivation at cp2
+      (W3 questions Q1 and Q2). The Introduction does not assume either route (CL-R07).
   - id: CL-R03
     statement: >-
       Heterogeneous nucleation on the templated surface follows classical nucleation theory
-      with a spherical-cap shape factor of the Young contact angle, and the local
-      supersaturation from sequestration enters the homogeneous barrier it scales.
+      with a spherical-cap shape factor of the Young contact angle; the sequestration term
+      enters the barrier in the form the derivation fixes for sequestration.
     section: model
     type: physical relation
     polarity: claims
@@ -209,9 +219,9 @@ claims:
     status: planned
   - id: CL-P02
     statement: >-
-      The thresholds and decision criteria against which each link is judged are fixed in a
-      table before the screen is read, so the required precision is stated against criteria
-      that did not move with the result.
+      The thresholds and decision criteria against which each link is judged are stated in a
+      table and frozen at the parameter checkpoint; afterwards they change only through a
+      dated deviation entry, so the required precision is stated against fixed criteria.
     section: methods
     type: required precision
     polarity: claims
@@ -221,6 +231,9 @@ claims:
     supplier: p0-w4
     scope_check: clean
     status: planned
+    notes: >-
+      Reworded in P0-W8.2 under lane note N5: no claim about when the thresholds were set
+      relative to any calculation. Authority: theory/thresholds.md and track rule R-thr.
   # --- retrodiction ---
   - id: CL-T01
     statement: >-
@@ -402,6 +415,7 @@ claims:
     supplier: p0-w8
     scope_check: allowlisted
     status: planned
+    notes: Also used verbatim as a scope sentence at the end of the Introduction (P0-W8.2).
   - id: CL-N02
     statement: This paper does not claim any corrosion rate, capacity or device performance.
     section: discussion
@@ -413,6 +427,7 @@ claims:
     supplier: p0-w8
     scope_check: allowlisted
     status: planned
+    notes: Also used verbatim as a scope sentence at the end of the Introduction (P0-W8.2).
   - id: CL-N03
     statement: This paper does not claim any result from the full first-principles or machine-learned-potential calculations.
     section: outlook
@@ -426,6 +441,7 @@ claims:
     supplier: p0-w8
     scope_check: allowlisted
     status: planned
+    notes: Also used verbatim as a scope sentence at the end of the Introduction (P0-W8.2).
   - id: CL-N04
     statement: This paper does not claim that any interface, template or film thickness is optimal.
     section: discussion
@@ -448,3 +464,404 @@ claims:
     supplier: p0-w8
     scope_check: allowlisted
     status: planned
+  # --- Introduction (P0-W8.2): background, hypothesis framing, novelty, contrary evidence ---
+  # Each entry is the claim of one or more sentences of sections/introduction.tex; the sentence
+  # ends with a comment naming the id. Literature statements trace to evidence rows or DOIs.
+  - id: CL-K01
+    statement: >-
+      Water-processed lithium-ion cathodes replace the fluorinated binder and organic solvent
+      of conventional manufacture with fluorine-free binders cast from water.
+    section: introduction
+    type: background
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TA-027}
+      - {kind: row, ref: TA-006}
+      - {kind: doi, ref: 10.1002/cssc.202202161}
+    checkpoint: none
+    supplier: p0-w1
+    scope_check: clean
+    status: drafted
+    notes: TA-027 compares the aqueous Na-CMC and acrylate electrode with an NMP and PVdF reference.
+  - id: CL-K02
+    statement: >-
+      Lithium leaching from the active particles drives the aqueous slurry strongly alkaline.
+    section: introduction
+    type: background
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TA-001}
+      - {kind: row, ref: TA-015}
+      - {kind: row, ref: TA-017}
+      - {kind: doi, ref: 10.1016/j.jpowsour.2020.228315}
+      - {kind: doi, ref: 10.1016/j.electacta.2019.05.141}
+    checkpoint: none
+    supplier: p0-w1
+    scope_check: clean
+    status: drafted
+  - id: CL-K03
+    statement: >-
+      At the slurry pH the native oxide film on the aluminium collector converts to hydroxide
+      and dissolves, exposing the metal during slurry contact.
+    section: introduction
+    type: background
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TA-006}
+      - {kind: row, ref: TB-014}
+      - {kind: row, ref: TB-022}
+      - {kind: doi, ref: 10.1002/cssc.202202161}
+      - {kind: doi, ref: 10.1002/maco.201608843}
+      - {kind: doi, ref: 10.1016/j.jpowsour.2013.10.039}
+      - {kind: dossier, ref: "lit/contrary.md#### B11."}
+    checkpoint: none
+    supplier: p0-w1
+    scope_check: clean
+    status: drafted
+  - id: CL-K04
+    statement: >-
+      The slurry stage is a regime of its own, an alkaline aqueous contact between mixing and
+      drying, distinct from the non-aqueous cell, which is a second set of conditions.
+    section: introduction
+    type: background
+    polarity: claims
+    evidence:
+      - {kind: reference, ref: "charter/regimes.yaml (R-slurry, R-cell)"}
+      - {kind: row, ref: TA-001}
+      - {kind: row, ref: TB-022}
+      - {kind: claim, ref: CL-K02}
+      - {kind: claim, ref: CL-K03}
+    checkpoint: cp1
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+    notes: A definition of the two regimes from the charter, not a literature statement.
+  - id: CL-K05
+    statement: >-
+      Nacre grows calcium carbonate on an organic matrix whose macromolecules select the
+      polymorph that forms.
+    section: introduction
+    type: background
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TC-105}
+      - {kind: doi, ref: 10.1126/science.271.5245.67}
+    checkpoint: none
+    supplier: p0-w1
+    scope_check: clean
+    status: drafted
+    notes: >-
+      TC-105 rests on the abstract only (grade D). The sentence before it in the text,
+      "Biomineralisation suggests another route", is framing and carries no separate claim.
+  - id: CL-K06
+    statement: >-
+      Amorphous calcium carbonate appears among the precursor phases at the growth front of
+      nacre and coats the mature tablets, and organic macromolecules can stabilise such an
+      amorphous precursor.
+    section: introduction
+    type: background
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TC-002}
+      - {kind: row, ref: TC-004}
+      - {kind: row, ref: TC-001}
+      - {kind: row, ref: TC-005}
+      - {kind: doi, ref: 10.1021/jacs.5b07931}
+      - {kind: doi, ref: 10.1038/s41467-024-46117-x}
+      - {kind: doi, ref: 10.1073/pnas.0502577102}
+      - {kind: doi, ref: 10.1073/pnas.1118085109}
+    checkpoint: none
+    supplier: p0-w1
+    scope_check: clean
+    status: drafted
+    notes: >-
+      TC-004 finds a crystalline hemihydrate more abundant than the amorphous phase among the
+      precursors, hence "among the precursor phases". TC-005 is a sea-urchin protein, hence
+      "organic macromolecules can", not a statement about nacre's own matrix.
+  - id: CL-K07
+    statement: >-
+      The inputs are weakly constrained by experiment; the oxide-water interfacial free energy
+      is known only through calorimetric surface enthalpies of hydroxylated or dry surfaces,
+      not as a free energy against liquid water.
+    section: introduction
+    type: background
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TB-052}
+      - {kind: row, ref: TB-053}
+      - {kind: row, ref: TB-056}
+      - {kind: doi, ref: 10.1346/ccmn.2000.0480611}
+      - {kind: doi, ref: 10.1021/jp405820g}
+      - {kind: dossier, ref: "lit/corpus/coverage_notes.yaml#gamma_sub_water_oxide:"}
+    checkpoint: none
+    supplier: p0-w1
+    scope_check: clean
+    status: drafted
+  - id: CL-K08
+    statement: >-
+      Wet adhesion of catechol-bearing proteins has been measured on mica and silica, not on
+      alumina.
+    section: introduction
+    type: background
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TD-025}
+      - {kind: row, ref: TD-026}
+      - {kind: row, ref: TD-027}
+      - {kind: row, ref: TD-028}
+      - {kind: doi, ref: 10.1098/rsif.2012.0759}
+      - {kind: dossier, ref: "lit/corpus/coverage_notes.yaml#w_adh_catechol_alumina_wet:"}
+    checkpoint: none
+    supplier: p0-w1
+    scope_check: clean
+    status: drafted
+  - id: CL-K09
+    statement: >-
+      The interfacial energies of a carbonate nucleus on an organic surface exist only as
+      effective values from fits of nucleation rates, beside a contact-angle bound on a mineral
+      surface.
+    section: introduction
+    type: background
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TC-076}
+      - {kind: row, ref: TC-079}
+      - {kind: row, ref: TC-081}
+      - {kind: row, ref: TC-083}
+      - {kind: row, ref: TC-088}
+      - {kind: doi, ref: 10.1073/pnas.1222162110}
+      - {kind: doi, ref: 10.1021/acs.cgd.4c00602}
+      - {kind: doi, ref: 10.1038/s42004-018-0056-5}
+      - {kind: dossier, ref: "lit/corpus/coverage_notes.yaml#gamma_sub_nuc_or_contact_angle:"}
+    checkpoint: none
+    supplier: p0-w1
+    scope_check: clean
+    status: drafted
+    notes: >-
+      The coverage note also counts MD-derived effective values; the sentence names the
+      experimental fits it cites. TC-088 is a compiled bound on quartz.
+  - id: CL-K10
+    statement: >-
+      Several other inputs rest on a single original determination.
+    section: introduction
+    type: background
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TC-033}
+      - {kind: row, ref: TC-030}
+      - {kind: row, ref: TD-054}
+      - {kind: dossier, ref: "lit/corpus/coverage_notes.yaml#ksp_calcite:"}
+      - {kind: dossier, ref: "lit/corpus/coverage_notes.yaml#hydration_free_energy_ca:"}
+      - {kind: dossier, ref: "lit/corpus/coverage_notes.yaml#acc_excess_free_energy:"}
+    checkpoint: none
+    supplier: p0-w1
+    scope_check: clean
+    status: drafted
+    notes: >-
+      The coverage notes give one independent original for the calcite solubility product,
+      the calcium hydration free energy and the excess free energy of the amorphous phase.
+  - id: CL-R06
+    statement: >-
+      Transplanted to the collector, the sequence is a physical hypothesis with four links,
+      each a free-energy question: adhesion of a catechol-bearing layer to the hydrated oxide
+      once it has displaced interfacial water, Ca2+ binding at the layer relative to the
+      hydrated ion, templated nucleation of calcium carbonate, and stability of the film in
+      each regime.
+    section: introduction
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: figure, ref: Fig 1}
+      - {kind: claim, ref: CL-R01}
+      - {kind: claim, ref: CL-R02}
+      - {kind: claim, ref: CL-R03}
+      - {kind: claim, ref: CL-R04}
+    checkpoint: cp2
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+    notes: Posed as questions; the answers are the Model and Results.
+  - id: CL-R07
+    statement: >-
+      A template lowers the heterogeneous nucleation barrier through the interfacial energies
+      and the ion activities at the interface; how ion binding enters the barrier is made
+      precise in the Model, and no route is assumed in the Introduction.
+    section: introduction
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TC-083}
+      - {kind: doi, ref: 10.1073/pnas.1222162110}
+      - {kind: claim, ref: CL-R02}
+      - {kind: claim, ref: CL-R03}
+    checkpoint: cp2
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+    notes: >-
+      Neutral wording required by the P0-W8.2 prompt: no assertion that Ca2+ binding raises
+      the local supersaturation (W3 questions Q1 and Q2, cp2). TC-083 reports a calcite
+      barrier on polysaccharides set by the competition of substrate-crystal and
+      substrate-liquid energies.
+  - id: CL-R08
+    statement: >-
+      The question is thermodynamic first, because a link that is unfavourable for every
+      plausible input ends the sequence whatever the kinetics.
+    section: introduction
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: claim, ref: CL-R05}
+      - {kind: derivation, ref: si:derivation}
+    checkpoint: cp2
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+    notes: The chain is a product of conditions (outline, Model paragraph six).
+  - id: CL-G03
+    statement: >-
+      A screen that ranks the inputs and states the precision each needs addresses the gap
+      left by the weakly constrained inputs.
+    section: introduction
+    type: governing parameter
+    polarity: claims
+    evidence:
+      - {kind: claim, ref: CL-G01}
+      - {kind: claim, ref: CL-P01}
+      - {kind: claim, ref: CL-K07}
+    checkpoint: cp4
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+  - id: CL-V01
+    statement: >-
+      To our knowledge, based on a structured search of the indexed journal and preprint
+      literature with patent literature not searched, no previous study has evaluated, for an
+      aluminium current collector in the alkaline aqueous-slurry regime, the combined
+      thermodynamic chain of wet adhesion of a catechol or polysaccharide template to the
+      native oxide, Ca2+ sequestration by that template, templated nucleation on it and the
+      stability of the resulting film; within the searched literature, the links have not been
+      evaluated as one chain for this interface and regime.
+    section: introduction
+    type: novelty
+    polarity: claims
+    evidence:
+      - {kind: dossier, ref: "lit/novelty.md#**Wording N1 (for the Introduction or the end of the Abstract).**"}
+      - {kind: dossier, ref: "lit/novelty.md#**Wording N2 (crediting the separate links; to follow N1).**"}
+    checkpoint: cp1
+    supplier: p0-w2
+    scope_check: clean
+    status: drafted
+    notes: >-
+      Wording N1 with both qualifiers, and the closing sentence of N2. Two departures from the
+      N1 text: the search month is left out (rule R5, no typed numbers; the date stays in
+      lit/novelty.md), and "sequestration and enrichment" reads "sequestration" (no
+      enrichment assertion before cp2). Applies to R-slurry only (N1 condition 2). None of
+      the unsupported wordings U1 to U12 is used.
+  - id: CL-V02
+    statement: >-
+      Each link has precedent on its own: catechol adsorption on alumina in water has been
+      simulated; polydopamine enriches interfaces with Ca2+ and templates calcium minerals,
+      including continuous calcium carbonate films, on other substrates and stabilises
+      amorphous calcium carbonate; and aluminium corrosion in aqueous cathode slurries is
+      mitigated by pH control, carbon coating, phosphate buffering or acidic binders.
+    section: introduction
+    type: novelty
+    polarity: claims
+    evidence:
+      - {kind: dossier, ref: "lit/novelty.md#**Wording N2 (crediting the separate links; to follow N1).**"}
+      - {kind: doi, ref: 10.1021/jp512780s}
+      - {kind: doi, ref: 10.1021/acs.jpcb.9b04473}
+      - {kind: doi, ref: 10.1021/acs.langmuir.5c02791}
+      - {kind: doi, ref: 10.1002/adfm.200902347}
+      - {kind: doi, ref: 10.1007/s11998-016-9898-x}
+      - {kind: doi, ref: 10.1002/cssc.201700616}
+      - {kind: doi, ref: 10.1021/cg301759t}
+      - {kind: doi, ref: 10.1002/maco.201608843}
+      - {kind: doi, ref: 10.1016/j.jpowsour.2013.10.039}
+      - {kind: doi, ref: 10.1002/celc.202500327}
+      - {kind: doi, ref: 10.1149/06418.0013ecst}
+      - {kind: row, ref: TD-038}
+      - {kind: row, ref: TD-039}
+    checkpoint: cp1
+    supplier: p0-w2
+    scope_check: clean
+    status: drafted
+    notes: >-
+      Wording N2 verbatim with the DOIs it names. "Enriches interfaces with Ca2+" reports the
+      cited calcium-phosphate work on polydopamine; it is not this paper's sequestration route.
+  - id: CL-E01
+    statement: >-
+      Calcite scale precipitated onto aluminium alloys from hot brines was porous and
+      accompanied more alloy corrosion than a non-scaling brine, with attack beneath the
+      deposit.
+    section: introduction
+    type: contrary evidence
+    polarity: claims
+    evidence:
+      - {kind: doi, ref: 10.1021/acsomega.0c01538}
+      - {kind: row, ref: TB-001}
+      - {kind: row, ref: TB-005}
+      - {kind: dossier, ref: "lit/contrary.md#### B1."}
+    checkpoint: none
+    supplier: p0-w2
+    scope_check: clean
+    status: drafted
+    notes: >-
+      Osorio-Celestino and co-workers (2020), read in full text (lit/contrary.md B1).
+      Severity blocking: the Discussion weighs it again (CL-L05).
+  - id: CL-E02
+    statement: >-
+      An electrodeposited polydopamine coating reduced calcium carbonate deposition relative to
+      bare steel, the opposite of what templated nucleation needs, so the sign of the
+      template's effect is open.
+    section: introduction
+    type: contrary evidence
+    polarity: claims
+    evidence:
+      - {kind: doi, ref: 10.3390/coatings13020306}
+      - {kind: dossier, ref: "lit/contrary.md#### B10."}
+    checkpoint: none
+    supplier: p0-w2
+    scope_check: clean
+    status: drafted
+    notes: Abstract only (lit/contrary.md B10); not in the evidence table, traced by its DOI in the contrary dossier.
+  - id: CL-E03
+    statement: >-
+      The first finding concerns a porous scale formed in the bulk and settled on the metal,
+      not a coherent film nucleated on a template; the distinction is central to what follows
+      and must be argued from the nucleation and conformality links, not assumed.
+    section: introduction
+    type: contrary evidence
+    polarity: claims
+    evidence:
+      - {kind: dossier, ref: "lit/contrary.md#The distinction between a porous fouling scale and a coherent templated film is the hypothesis's premise"}
+      - {kind: doi, ref: 10.1021/acsomega.0c01538}
+      - {kind: row, ref: TB-005}
+      - {kind: claim, ref: CL-E01}
+      - {kind: claim, ref: CL-R03}
+    checkpoint: none
+    supplier: p0-w2
+    scope_check: clean
+    status: drafted
+  - id: CL-P03
+    statement: >-
+      This paper is a thermodynamic screen of the chain with literature-bounded inputs; for
+      each governing quantity it states the accuracy a first-principles value must reach to
+      move the outcome across a decision criterion.
+    section: introduction
+    type: required precision
+    polarity: claims
+    evidence:
+      - {kind: claim, ref: CL-R05}
+      - {kind: claim, ref: CL-B01}
+      - {kind: claim, ref: CL-G01}
+      - {kind: claim, ref: CL-P01}
+      - {kind: claim, ref: CL-T01}
+      - {kind: claim, ref: CL-X01}
+      - {kind: claim, ref: CL-O01}
+    checkpoint: cp4
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+    notes: Forward reference; the section order follows the outline.

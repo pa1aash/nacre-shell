@@ -1,15 +1,19 @@
 """preprint/claims.yaml: schema, cross-references and the does-not-claim entries."""
+import csv
 import re
 
 import pytest
 import yaml
 
-from nacre.preprint import lint_scope, macros, paths
+from nacre.preprint import lint_scope, macros, paths, refs
+from nacre.report import bib as bibmod
 from preprint_helpers import REPO
 
 TYPES = {"physical relation": "R", "parameter bound": "B", "governing parameter": "G",
          "required precision": "P", "proxy result": "X", "retrodiction outcome": "T",
-         "outlook": "O", "limitation": "LN"}
+         "outlook": "O", "limitation": "LN", "background": "K", "novelty": "V",
+         "contrary evidence": "E"}
+LIT_RECORDS = ("lit/novelty.md", "lit/contrary.md")
 FIGURES = {"Fig %d" % n for n in range(1, 9)} | {"Fig 2%s" % p for p in "abcd"}
 TABLES = {"Table %d" % n for n in range(1, 4)}
 CHECKPOINTS = {"cp1", "cp2", "cp3", "cp4", "cp5", "none"}
@@ -31,7 +35,7 @@ def test_fields_and_vocabulary(claims):
         for key in ("id", "statement", "section", "type", "polarity", "evidence", "checkpoint",
                     "supplier", "scope_check", "status"):
             assert c.get(key), (c.get("id"), key)
-        assert re.fullmatch(r"CL-[RBGPXTOLN]\d{2}", c["id"]), c["id"]
+        assert re.fullmatch(r"CL-[RBGPXTOLNKVE]\d{2}", c["id"]), c["id"]
         assert c["type"] in TYPES, c["id"]
         assert c["id"][3] in TYPES[c["type"]], c["id"]
         assert c["section"] in sections, c["id"]
@@ -46,8 +50,26 @@ def test_ids_unique(claims):
     assert len(ids) == len(set(ids))
 
 
+def _evidence_rows():
+    with (REPO / "lit" / "evidence_table.csv").open(encoding="utf-8", newline="") as fh:
+        return {r["row_id"]: r for r in csv.DictReader(fh)}
+
+
+def _bib_dois():
+    return {doi for doi in bibmod.bib_index(REPO, refs.source(REPO)).values() if doi}
+
+
+def _recorded_dois(rows):
+    """DOIs that W1's evidence table or W2's novelty and contrary records name."""
+    text = " ".join((REPO / f).read_text(encoding="utf-8").lower() for f in LIT_RECORDS)
+    return {r["doi"].lower() for r in rows.values()}, text
+
+
 def test_evidence_resolves(claims):
     ids = {c["id"] for c in claims}
+    rows = _evidence_rows()
+    bib_dois = _bib_dois()
+    table_dois, record_text = _recorded_dois(rows)
     sources = macros.load_sources(REPO)["macros"]
     si = (paths.paper(REPO) / "si" / "main_si.tex").read_text(encoding="utf-8")
     si_labels = set(re.findall(r"\\label\{(si:[^}]+)\}", si))
@@ -64,6 +86,16 @@ def test_evidence_resolves(claims):
                 assert ref in si_labels, (c["id"], ref)
             elif kind == "claim":
                 assert ref in ids, (c["id"], ref)
+            elif kind == "row":
+                assert ref in rows, (c["id"], ref)
+            elif kind == "doi":
+                doi = bibmod.normalise_doi(ref)
+                assert doi in bib_dois, (c["id"], "not in refs.bib", ref)
+                assert doi in table_dois or doi in record_text, (c["id"], "not in lit/ records", ref)
+            elif kind == "dossier":
+                f, _, anchor = ref.partition("#")
+                assert f.startswith("lit/") and anchor, (c["id"], ref)
+                assert anchor in (REPO / f).read_text(encoding="utf-8"), (c["id"], ref)
             else:
                 assert kind == "reference", (c["id"], kind)
 
@@ -94,3 +126,16 @@ def test_scope_check_field_matches_the_linter(claims):
         else:
             assert c["scope_check"] == "clean", c["id"]
     assert lint_scope.lint_claims(REPO) == []
+
+
+
+def test_literature_claims_trace_to_a_row_or_a_doi(claims):
+    """Rule R2: a background or contrary statement traces to an evidence row or a DOI; a novelty
+    statement traces to its wording in lit/novelty.md."""
+    for c in claims:
+        kinds = {ev["kind"] for ev in c["evidence"]}
+        if c["type"] in ("background", "contrary evidence"):
+            assert kinds & {"row", "doi"}, c["id"]
+        elif c["type"] == "novelty":
+            assert any(ev["kind"] == "dossier" and ev["ref"].startswith("lit/novelty.md#")
+                       for ev in c["evidence"]), c["id"]
