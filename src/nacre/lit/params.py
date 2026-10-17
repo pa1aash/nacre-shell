@@ -224,8 +224,8 @@ def _check_prior(key, e, grades, symbols, bad):
     elif fam == "fixed":
         if not _num(pr["value"]) or not (_num(value) and _close(value, pr["value"])):
             bad("fixed prior value must equal value")
-        if rule == "P1" and len(srcs) != 1:
-            bad("rule P1 needs exactly one source")
+        if rule == "P1" and not srcs:
+            bad("rule P1 needs its source rows")
     elif fam == "categorical":
         opts = pr["options"]
         if not isinstance(opts, list) or not opts:

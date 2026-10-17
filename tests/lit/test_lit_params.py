@@ -170,7 +170,7 @@ def mutate(fn):
                                                    prior={"family": "loguniform", "low": 0.5, "high": 2.0}),
      "high/low > 10"),
     (lambda d: d["params"]["t_slurry"].update(prior={"family": "fixed", "value": 300.0}), "fixed prior value"),
-    (lambda d: d["params"]["t_slurry"].update(sources=["TC-002", "TC-003"]), "exactly one source"),
+    (lambda d: d["params"]["t_slurry"].update(sources=[], best_grade=None), "P1 needs its source rows"),
     (lambda d: d["params"]["gamma_sl_organic"].update(range={"min": 0.0, "max": 1.0}), "X1"),
     (lambda d: d["params"]["gamma_nl_calcite"].update(status="maybe"), "status"),
     (lambda d: d["params"]["gamma_nl_calcite"].update(regimes=["R-moon"]), "regimes"),

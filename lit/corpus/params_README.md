@@ -235,7 +235,11 @@ quantity) carries `derived`, which records the formula, the input keys and their
 is the formula at the input values. The range is the envelope over the input ranges: the formula
 is evaluated at every corner of the input box, which is exact for formulas monotone in each input,
 and every formula used here is. A margin used as a fixed edge has family `fixed`. A derived
-quantity that moves with sampled inputs has family `none`, and the screen computes it per draw.
+quantity that moves with sampled inputs has family `none`, and the screen computes it per draw. An
+input of a D1 formula may be a row's printed uncertainty (`take: uncertainty`, the printed ±x as a
+number) or one unit of the last printed decimal place of a row's value (`take: last_digit`, for tables
+whose stated uncertainty convention is a number of last-digit units). Both are read from the row's
+text and are not typed.
 
 **R1 (registered convention).** A convention set at a gate is read, not typed, from the
 machine-readable block of its authority (`theory/thresholds.md`, block `thresholds`). `registered`
@@ -247,6 +251,9 @@ registration whose ruling has not been recorded keeps rule X2 and says so in `ra
 (cp3 R2: `E_cell_max` by cathode class) is a categorical entry. Each option names its class and
 the per-class key, which is built from that class's rows by clauses N1 to P1. The screen reports
 one verdict per class, and no class is preferred.
+
+**P1, extended.** Several independent sources that print the identical point without an uncertainty
+give a fixed prior under P1 with all of them as sources; the width is still not sourced.
 
 ### 7.3 Margins of the thresholds (theory/thresholds.md, conventions m_W, m_S, m_E)
 

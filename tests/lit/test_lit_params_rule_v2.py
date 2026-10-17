@@ -32,6 +32,8 @@ ROWS = [
     good_row(row_id="TK-012", doi="10.1/i", value="4.2", unit="V", range_or_uncertainty="", grade="B"),
     good_row(row_id="TK-013", doi="10.1/j", value="50", unit="mJ m^-2", range_or_uncertainty="", grade="B"),
     good_row(row_id="TK-014", doi="10.1/k", value="80", unit="mJ m^-2", range_or_uncertainty="", grade="B"),
+    good_row(row_id="TK-015", doi="10.1/l", value="-176.09", unit="kcal/mol", range_or_uncertainty="", grade="B"),
+    good_row(row_id="TK-016", doi="10.1/m", value="-380.7", unit="kJ/mol", range_or_uncertainty="±2.9", grade="A"),
 ]
 
 THRESHOLDS = """# t
@@ -117,7 +119,7 @@ def test_w1_widens_a_free_energy_to_the_method_error(root):
     assert b["rule"] == "W1" and b["prior"]["low"] == pytest.approx(mid - m) and b["prior"]["high"] == pytest.approx(mid + m)
     assert b["widening"]["unwidened"] == {"min": -9500.0, "max": -4400.0} and b["widening"]["applied"]
     assert {"single_source", "widened"} <= set(b["flags"])
-    assert set(e["m"]["sources"]) <= set(b["sources"])
+    assert b["widening"]["sources"] == e["m"]["sources"] and b["sources"] == ["TK-004", "TK-005"]
 
 
 def test_w1_converts_the_method_error_for_a_log10_constant(root):
@@ -229,3 +231,12 @@ def test_m0_margin_zero_needs_its_reason(root):
     doc["params"]["m_s"]["margin_reason"] = ""
     path.write_text(yaml.safe_dump(doc, sort_keys=False))
     assert any("M0" in x for x in P.load_params(path, root, strict=False).errors)
+
+
+def test_take_reads_the_printed_uncertainty_and_last_digit(root):
+    e, _ = build(root, {
+        "u": entry(symbol="dG", unit="J mol^-1", admit=[{"row": "TK-016", "take": "uncertainty"}]),
+        "d": entry(symbol="dG", unit="J mol^-1", admit=[{"row": "TK-015", "take": "last_digit"}]),
+    })
+    assert e["u"]["rule"] == "P1" and e["u"]["value"] == pytest.approx(2900.0)
+    assert e["d"]["value"] == pytest.approx(0.01 * 4184.0)

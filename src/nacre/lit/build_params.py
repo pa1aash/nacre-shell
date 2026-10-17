@@ -28,6 +28,8 @@ Specification per key:
           original: <id>                             rows with one original id count once (E3; default: doi)
           offset_row: <row_id>                       add that row's value (a reference-electrode potential
                                                      vs SHE) to convert the scale; the row becomes a source
+          take: uncertainty | last_digit             read the printed ± (or one unit of the printed value's last
+                                                     decimal place) as the number (rule version 2, D1 inputs)
       fixed_from: <row_id>                           X3: a definitional value printed in that row
       categorical: [{label, sources: [...]}]         X3 categorical input
       comparators: [<row_id>, ...]                   named in notes, never admitted (E2)
@@ -177,8 +179,33 @@ def _apply_op(x, op):
     raise SpecError("unknown op %r" % op)
 
 
+def _take(row, adm, key_unit):
+    """README 7.2 D1 inputs read from a row's printed text: `take: uncertainty` is the printed ± as a point;
+    `take: last_digit` is one unit of the printed value's last decimal place, as a point."""
+    unit = adm.get("unit") or row["unit"]
+    take = adm["take"]
+    if take == "uncertainty":
+        rng = (row.get("range_or_uncertainty") or "").strip()
+        if not rng.startswith("±") or rng.endswith("%"):
+            raise SpecError("%s: take uncertainty needs a printed ±x" % row["row_id"])
+        x = float(rng[1:])
+    elif take == "last_digit":
+        v = (row.get("value") or "").strip().lstrip("<>=≤≥+-")
+        if "e" in v.lower() or not v:
+            raise SpecError("%s: take last_digit needs a plain decimal value" % row["row_id"])
+        decimals = len(v.split(".")[1]) if "." in v else 0
+        x = 10.0 ** -decimals
+    else:
+        raise SpecError("%s: unknown take %r" % (row["row_id"], take))
+    y = abs(_convert(x, unit, key_unit) - _convert(0.0, unit, key_unit)) if unit not in ("1", "dimensionless") else x
+    return {"row": row["row_id"], "grade": row["grade"], "original": adm.get("original") or row["doi"].lower(),
+            "u": None, "cmp": "", "point": y, "lo": y, "hi": y}
+
+
 def admitted_value(row, adm, key_unit):
     """One admitted row -> dict(point, lo, hi, u, kind, grade, original, row)."""
+    if adm.get("take"):
+        return _take(row, adm, key_unit)
     unit = adm.get("unit") or row["unit"]
     op = adm.get("op", "none")
     rng = (row.get("range_or_uncertainty") or "").strip()
@@ -378,8 +405,14 @@ def _build_entry_core(key, spec, rows, symbols):
             points = [x for x in points if a <= x <= b]
             method.append("T1: sourced span %s to %s cut at %s by %s" % (_sig(a0), _sig(b0), _sig(a if a != a0 else b),
                                                                          trunc["ruling"]))
+        if a == b and all(v["lo"] == v["hi"] == a for v in vals):
+            x = _sig(a)
+            return {**base, "status": status, "value": x, "range": {"min": x, "max": x},
+                    "prior": {"family": "fixed", "value": x}, "rule": "P1", **common,
+                    "method": "P1: %d independent sources print the same point without uncertainty; the width is "
+                              "not sourced" % n_orig}
         if a == b:
-            raise SpecError("%s: degenerate span from several identical points; P1 does not apply" % key)
+            raise SpecError("%s: degenerate span; P1 does not apply" % key)
         if a > 0 and b / a > 10 and transform == "none":
             prior, rule = {"family": "loguniform", "low": _sig(a), "high": _sig(b)}, "T1" if trunc else "L1"
             method.append("L1: span exceeds a decade")
@@ -473,11 +506,10 @@ def apply_widening(key, spec, e, params):
     e["range"] = {"min": a, "max": b}
     e["rule"] = "W1"
     e["widening"] = {"by": m_key, "m": _sig(m), "scale": w["scale"], "unwidened": {"min": lo, "max": hi},
-                     "applied": applied}
+                     "applied": applied, "sources": list(params[m_key]["sources"])}
     e["method"] += "; W1: %s to a half-width of at least m = %s (%s%s)" % (
         "widened about the midpoint" if applied else "sourced half-width already exceeds m, not widened",
         _sig(m), m_key, ", divided by R T ln 10 at 298.15 K" if w["scale"] == "log10_constant" else "")
-    e["sources"] = list(dict.fromkeys(e["sources"] + params[m_key]["sources"]))
     return e
 
 
