@@ -50,10 +50,13 @@ claims:
     status: planned
   - id: CL-R02
     statement: >-
-      Sequestration of Ca2+ by the bound template is a binding free energy built as a
-      thermodynamic cycle from the hydrated ion to the binding site; how it enters the
-      nucleation barrier, through the ion activities at the interface or through the
-      interfacial energies, is fixed by the derivation.
+      Ca2+ binding by the template is a binding descriptor: the transfer free energy of the
+      hydrated ion to a site, built as a thermodynamic cycle, sets the occupancy and the Ca2+
+      excess at the template-liquid interface; at equilibrium the bound ion carries the bulk
+      electrochemical potential, so binding does not change the driving force and enters the
+      barrier only through the template-liquid energy, in the Gibbs-Langmuir approximation for
+      a neutral solute, while any Ca2+ at the template-crystal contact belongs to the
+      template-nucleus energy.
     section: model
     type: physical relation
     polarity: claims
@@ -62,20 +65,24 @@ claims:
       - {kind: figure, ref: Fig 2b}
       - {kind: figure, ref: Fig 3}
       - {kind: macro, ref: NumDGseqMedian}
-      - {kind: macro, ref: NumSlocalMedian}
     checkpoint: cp2
     supplier: p0-w3
     scope_check: clean
-    status: planned
+    status: drafted
     notes: >-
-      Made neutral in P0-W8.2: whether binding acts through a local enrichment and
-      supersaturation or through the interfacial energies is settled by derivation at cp2
-      (W3 questions Q1 and Q2). The Introduction does not assume either route (CL-R07).
+      Rewritten in P0-W8.3 to the cp2 ruling (fixes F1 to F3, decision D14) and cp3 R4 (C2 is
+      a descriptor and does not gate). No entry of this ledger shows binding or enrichment
+      raising the supersaturation; the enrichment factor is a concentration ratio, reported
+      only as a labelled non-gating sensitivity. The local-supersaturation macro of P0-W8.1
+      is withdrawn from sources.yaml for the same reason. Derivation sections 3, 4 and 7.
   - id: CL-R03
     statement: >-
       Heterogeneous nucleation on the templated surface follows classical nucleation theory
-      with a spherical-cap shape factor of the Young contact angle; the sequestration term
-      enters the barrier in the form the derivation fixes for sequestration.
+      with a spherical-cap shape factor of the Young contact angle, at the bulk
+      supersaturation of the regime state; the template acts only through the
+      template-liquid and template-nucleus energies, each template input entering once, so
+      binding alone raises the barrier and the template lowers it only if the
+      template-nucleus energy falls by more.
     section: model
     type: physical relation
     polarity: claims
@@ -88,37 +95,47 @@ claims:
     checkpoint: cp2
     supplier: p0-w3
     scope_check: clean
-    status: planned
+    status: drafted
+    notes: >-
+      P0-W8.3, to the cp2 ruling (SF2 reversed against contract v1) and the C3 rule of
+      theory/thresholds.md (single edge at the hemisphere, absolute-barrier criterion).
   - id: CL-R04
     statement: >-
-      Film stability is a thermodynamic condition on the calcium carbonate phase and the
-      aluminium oxide in each regime: the decomposition free energy above the aqueous
-      stability hull in the slurry, and the lithium-referenced stability window in the cell.
+      Film stability is a thermodynamic condition in each regime: in the slurry, dissolution of
+      calcium carbonate is decided by the bulk supersaturation, the quantity nucleation uses,
+      with the aqueous Pourbaix construction as the competing-phase and aluminium-oxide
+      baseline; in the cell, by the anodic oxidation of the carbonate referenced to Li+/Li,
+      with the all-experimental thermochemical route governing wherever it exists and the
+      oxidation sink fixed by the electrolyte.
     section: model
     type: physical relation
     polarity: claims
     evidence:
       - {kind: derivation, ref: si:derivation}
-      - {kind: figure, ref: Fig 2d}
-    checkpoint: cp2
+    checkpoint: cp3
     supplier: p0-w3
     scope_check: clean
-    status: planned
+    status: drafted
+    notes: >-
+      P0-W8.3, to cp3 R1 (dissolution by Omega_bulk) and R2 (experimental route governs; DFT
+      schemes are comparators). Fig 2d shows coalescence, not stability, so it is no longer
+      evidence here.
   - id: CL-R05
     statement: >-
-      The four links can be written as one consistent chain in which each interfacial free
-      energy enters exactly once, so no term is counted twice between adhesion, sequestration
-      and nucleation.
+      The links can be written as one consistent chain in which every template-dependent input
+      enters exactly once, in one interfacial energy, so no term is counted twice between
+      adhesion, Ca2+ binding and nucleation.
     section: model
     type: physical relation
     polarity: claims
     evidence:
       - {kind: derivation, ref: si:no-double-counting}
       - {kind: figure, ref: Fig 1}
+      - {kind: figure, ref: Fig 3}
     checkpoint: cp2
     supplier: p0-w3
     scope_check: clean
-    status: planned
+    status: drafted
   # --- parameter bounds ---
   - id: CL-B01
     statement: >-
@@ -256,9 +273,10 @@ claims:
   # --- proxy results ---
   - id: CL-X01
     statement: >-
-      The Pourbaix analysis gives the pH and potential window in which calcium carbonate and
-      the aluminium oxide are thermodynamically stable in the slurry; it is a thermodynamic
-      proxy for film stability and carries no kinetic information.
+      In the slurry, the dose window in which calcium carbonate does not dissolve follows from
+      the bulk supersaturation, and the Pourbaix construction places the competing solids and
+      the aluminium-oxide baseline; both are thermodynamic proxies for film stability and carry
+      no kinetic information.
     section: results
     type: proxy result
     polarity: claims
@@ -683,9 +701,9 @@ claims:
     notes: Posed as questions; the answers are the Model and Results.
   - id: CL-R07
     statement: >-
-      A template lowers the heterogeneous nucleation barrier through the interfacial energies
-      and the ion activities at the interface; how ion binding enters the barrier is made
-      precise in the Model, and no route is assumed in the Introduction.
+      A template lowers the heterogeneous nucleation barrier through its interfacial energies
+      with the nucleus and the solution; how ion binding enters the barrier is made precise
+      in the Model.
     section: introduction
     type: physical relation
     polarity: claims
@@ -699,10 +717,10 @@ claims:
     scope_check: clean
     status: drafted
     notes: >-
-      Neutral wording required by the P0-W8.2 prompt: no assertion that Ca2+ binding raises
-      the local supersaturation (W3 questions Q1 and Q2, cp2). TC-083 reports a calcite
-      barrier on polysaccharides set by the competition of substrate-crystal and
-      substrate-liquid energies.
+      P0-W8.3: "and the ion activities at the interface" removed, because at equilibrium the
+      template changes no ion's chemical potential (cp2 ruling); binding acts through the
+      template-liquid energy (CL-R02). TC-083 reports a calcite barrier on polysaccharides set
+      by the competition of substrate-crystal and substrate-liquid energies.
   - id: CL-R08
     statement: >-
       The question is thermodynamic first, because a link that is unfavourable for every
@@ -756,8 +774,11 @@ claims:
       Wording N1 with both qualifiers, and the closing sentence of N2. Two departures from the
       N1 text: the search month is left out (rule R5, no typed numbers; the date stays in
       lit/novelty.md), and "sequestration and enrichment" reads "sequestration" (no
-      enrichment assertion before cp2). Applies to R-slurry only (N1 condition 2). None of
-      the unsupported wordings U1 to U12 is used.
+      enrichment assertion; at equilibrium enrichment does not raise the supersaturation).
+      P0-W8.3 restores the search month as the generated macro NumNoveltySearchMonth, read
+      from the query log of lit/novelty.md (lane note N14), so only the second departure
+      remains. Applies to R-slurry only (N1 condition 2). None of the unsupported wordings U1
+      to U12 is used.
   - id: CL-V02
     statement: >-
       Each link has precedent on its own: catechol adsorption on alumina in water has been
@@ -789,7 +810,8 @@ claims:
     status: drafted
     notes: >-
       Wording N2 verbatim with the DOIs it names. "Enriches interfaces with Ca2+" reports the
-      cited calcium-phosphate work on polydopamine; it is not this paper's sequestration route.
+      cited calcium-phosphate work on polydopamine as a concentration statement; it is not this
+      paper's route, and nothing in the ledger lets it raise the supersaturation (CL-R02).
   - id: CL-E01
     statement: >-
       Calcite scale precipitated onto aluminium alloys from hot brines was porous and
