@@ -201,6 +201,12 @@ days:
     model: Opus
     master_trace: none
     requires: []
+  - id: P0-W3.4
+    lane: p0-w3
+    day: 3
+    model: Opus
+    master_trace: none
+    requires: [cp2]
   - id: P0-W4.3
     lane: p0-w4
     day: 3
@@ -255,12 +261,6 @@ days:
     model: Sonnet
     master_trace: none
     requires: []
-  - id: P0-W3.4
-    lane: p0-w3
-    day: 4
-    model: Opus
-    master_trace: none
-    requires: [cp2]
   - id: P0-W4.4
     lane: p0-w4
     day: 4
@@ -557,6 +557,7 @@ decisions:
 - {id: D23, date: '2026-10-17', decision: 'Raw Materials Project entries pushed on Days 1 and 2 remain on the branch under CC BY 4.0, with results/preprint/pourbaix/cache/NOTICE.md now present. No further raw entries go to public branches. At C3 the raw cache is deposited in a Zenodo data record and git keeps only the manifest, hashes and the rebuild script. Also recorded in the cp4 packet notes for the planning chat.', reason: 'Every committed result records the cache hash, so the entries stay; P0-W5.3 B asked the integrator to rule.'}
 - {id: D24, date: '2026-10-17', decision: 'Integrator merges of P0-I2.5: no cross-lane mechanical fix was needed. The four merges (w3, w4, w1, w5) had no textual conflict, pyproject.toml needed no union edit, uv.lock was unchanged by uv lock, and no xfail marker remains (D11, D13 and D18 closed by W4.3a). C2 charter fields were applied from cp2_brief section C only for kill_criterion.statement; verdict_bands kept its key name because the schema and tests require it (spot-check file).', reason: 'Records the D8 precedent check.'}
 - {id: D25, date: '2026-10-17', decision: 'The cp3 tag test failure (production guard test depended on the tag being absent) was fixed by W4 in its lane (ddace06, d9735a1) and merged. nacre track check now reads the freeze rule from commits in p0-cp3..HEAD, not from a tree diff against the tag, so lanes behind or at the tag pass and only a lane commit to a frozen input after the tag needs a deviation entry.', reason: A tree diff against the tag flags a lane that has not yet received the tag's own changes.}
+- {id: D26, date: '2026-10-17', decision: 'P0-W3.4 moves from day 4 to day 3 in the ledger, after P0-W3.3, so that nacre track check passes for it. Lane note N22 and the P0-I2.5 prompt place it in wave 2 of day 3 (W3.4 and W2.3 first).', reason: The ledger listed it on day 4 while the lane notes and the next-step line schedule it on day 3; its requirement (cp2) is unchanged.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
