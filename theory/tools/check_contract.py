@@ -29,7 +29,8 @@ What is checked
  11. theory/thresholds.md: its fenced `thresholds` block parses, every edge uses registered ids
      and has the unit of its quantity, every registration constant has a params key, every
      params key appears in the file's key table, a non-gating link is a descriptor with no
-     verdict test, and the study rule and deletion test name only gating links.
+     verdict test, and the study rule and deletion test name only gating links; each C5 R-cell
+     margin route names the params path its test uses, and a route formula has its margin's unit.
  12. theory/ignorance_priors.md: its fenced `ignorance` block parses, every bound has the unit of
      its quantity, and the branch masses of the gamma_sn prior are the exact integrals of the
      uniform density over the three Young branches and sum to one.
@@ -718,6 +719,25 @@ def check_thresholds(ctx, contract, rep):
                 rep.add(False, "thresholds", "%s %s" % (link, test["id"]), "params symbol %s is not registered" % k)
             if test.get("mixture"):
                 keys.add(test["mixture"]["weights"])
+        p0 = spec.get("p0_inputs")
+        if p0:
+            # cp3b A4: the registered route and every side-by-side estimate compute the link's quantity,
+            # and a Dupre support has the unit of that quantity
+            q = (spec.get("tests") or [{}])[0].get("quantity")
+            reg = p0["registered_route"]
+            ok = reg["quantity"] in fnames and parse_unit(fnames[reg["quantity"]]["unit"]) == qdim(q)
+            for name, est in p0["side_by_side"].items():
+                ok = ok and est["quantity"] == q and (not est.get("function") or est["function"] in fnames)
+                if est.get("params"):
+                    keys.add(est["params"])
+                sup = est.get("support")
+                if isinstance(sup, dict):
+                    try:
+                        ok = ok and all(dimension(ctx.parse(str(sup[k])), ctx.dims) == qdim(q) for k in ("low", "high"))
+                    except DimError:
+                        ok = False
+            rep.add(bool(ok) and p0.get("both_reported") is True, "thresholds", "%s P0 inputs" % link,
+                    "registered route %s (%s); side by side %s" % (reg["quantity"], reg.get("verdict"), sorted(p0["side_by_side"])))
             if "edge" in test:
                 check_edge(link, test["id"], test["quantity"], test["edge"], params)
             for fr, edge in (test.get("edge_by_framing") or {}).items():
@@ -730,6 +750,25 @@ def check_thresholds(ctx, contract, rep):
                 for k in ("edge_pass", "edge_falsify"):
                     if k in miss:
                         check_edge(link, "%s %s (no expt route)" % (test["id"], k), test["quantity"], miss[k], params)
+            mbr = test.get("margin_by_route")
+            if isinstance(mbr, dict):
+                # cp3b A1: each deciding route names its margin symbol and the params path the test uses
+                # for it; a route formula has the unit of its margin
+                for route, rs in mbr.items():
+                    if not isinstance(rs, dict) or "symbol" not in rs:
+                        continue
+                    sym = rs["symbol"]
+                    ok = params.get(sym) == rs.get("params")
+                    rep.add(ok, "thresholds", "%s %s margin %s" % (link, test["id"], route),
+                            "%s from %s%s" % (sym, rs.get("params"), "" if ok else "; test params give %s" % params.get(sym)))
+                    if rs.get("formula"):
+                        try:
+                            d = dimension(ctx.parse(str(rs["formula"])), ctx.dims)
+                            rep.add(d == ctx.dims[sym], "thresholds", "%s %s margin formula" % (link, test["id"]),
+                                    "%s = %s; unit %s" % (sym, rs["formula"], fmt_dim(d)))
+                        except DimError as exc:
+                            rep.add(False, "thresholds", "%s %s margin formula" % (link, test["id"]), str(exc))
+                        keys.update((rs.get("formula_params") or {}).values())
             eq = test.get("equivalent_single_state")
             if eq:
                 check_edge(link, test["id"] + " single state", eq["quantity"], eq["edge"], params)
@@ -810,7 +849,18 @@ def check_ignorance(ctx, rep):
         same_unit(name, bounds, "bounds")
     for name, q in doc["geometry"].items():
         exprs = [q[k] for k in ("low", "high", "equals") if k in q] + q.get("high_min_of", []) + q.get("low_max_of", [])
+        exprs += q.get("high_min_of_expanded", [])
         same_unit(name, exprs, "geometric bounds")
+        if q.get("N_req_range"):
+            same_unit("N_req", [q["N_req_range"][k] for k in ("low", "high")], "range from %s" % name)
+    ev = doc.get("evaluable_now")
+    if ev:
+        listed = {str(x).split(" (")[0] for x in ev.get("evaluable", []) + ev.get("gap", [])}
+        statuses = {name: str(q.get("status", "")) for name, q in doc["geometry"].items()}
+        bad = [n for n, s in statuses.items() if s and n in listed and
+               (s.startswith("gap") != any(str(x).startswith(n) for x in ev.get("gap", [])))]
+        rep.add(not bad, "ignorance", "evaluable now", "evaluable %s; gap %s%s" % (
+            ev.get("evaluable"), ev.get("gap"), "" if not bad else "; status disagrees for %s" % bad))
     br = doc["branches"]
     G = ctx.parse(br["span"])
     a, b = ctx.parse(br["cuts"]["complete"]), ctx.parse(br["cuts"]["non"])

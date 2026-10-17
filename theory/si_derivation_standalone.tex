@@ -1,0 +1,15 @@
+% Standalone build of the SI derivation text (session P0-W3.4), with standard TeX Live packages only.
+% The SI inputs theory/si_derivation.tex directly under its own \section, after theory/macros.tex.
+% Build: latexmk -pdf -outdir=build si_derivation_standalone.tex (inside theory/).
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=22mm]{geometry}
+\usepackage{amsmath}
+\usepackage{array}
+\input{macros}
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\theequation}{S\arabic{equation}}
+\begin{document}
+\section*{Supplementary derivation (standalone build)}
+\input{si_derivation}
+\end{document}

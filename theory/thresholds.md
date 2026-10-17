@@ -9,7 +9,10 @@ the conventions below, again before any screen output existed; `theory/cp2_fixes
 change with its commit. The cp3 amendments (P0-W3.3, planning ruling of 2026-10-17, items R1 to R8,
 one commit each) were applied before any screen output existed as well; they are logged with their
 commits in the cp3 section of `theory/cp2_fixes.md`. R1 and R2 were set after W5's C5 results
-were seen, and R6 after an early calcite estimate; each carries its disclosure.
+were seen, and R6 after an early calcite estimate; each carries its disclosure. The cp3b
+registrations for production (P0-W3.4, items A1 to A4 of lane note N22, one commit each) were
+written without consulting any screen output: no file under `results/preprint/screen/` was read.
+They are logged in the cp3 section of `theory/cp2_fixes.md`.
 
 This file is the threshold authority of track p0 (rule R-thr). `configs/preprint/thresholds.yaml`
 (W4) is a copy of the fenced `thresholds` block at the end, and W4 checks the two equal. After tag
@@ -115,8 +118,8 @@ exists, and W1 records each under its key with the cp2 ruling as the source.
 | C3 margin m_cos | 0 primary (the priors carry the method error); published sweeps 0.1 and 0.2 | `thresholds.C3.margin_cos_theta` |
 | C1 margin m_W | set by W1 from fetched method-error evidence, or zero where the prior carries it | `thresholds.C1.margin_W_adh_wet` |
 | C4 margin m_S | set by W1 as for m_W | `thresholds.C4.margin_S_spread` |
-| C5 window margin m_E | set by W1 as for m_W | `thresholds.C5.window_margin` |
-| C5 experimental margin m_expt (cp3 R2) | set by W1: the experimental uncertainty budget of the governing route (tabulated uncertainties plus the bound on the neglected Ca(ClO4)2 solid entropy from analog entropies) | `thresholds.C5.expt_margin` |
+| C5 window margin m_E | set by W1 as for m_W; applies to a DFT scheme only where no experimental route exists (cp3b A1) | `thresholds.C5.window_margin` (W1 key `window_margin`) |
+| C5 experimental margin m_expt (cp3 R2) | set by W1: the experimental uncertainty budget of the governing route (tabulated uncertainties plus the bound on the neglected Ca(ClO4)2 solid entropy from analog entropies); applies to the all-experimental route (cp3b A1) | `thresholds.C5.window_margin_expt` (W1 key `window_margin_expt`) |
 
 - **p_deg in the sweep.** p_deg is registered as the rule 1 - p_cred, so it moves with the
   credible level in the p_cred sweep (0.4, 0.1, 0.01). A rise of the falsified-side mass by
@@ -169,14 +172,83 @@ and the running half-widths, and no full draw table is held in memory.
   report gives a C1 verdict per termination.
   - The mixture verdict uses an ignorance mixture over the weights
     (`regimes.R-slurry.parameters.termination_weights`): the weights are drawn uniformly on the
-    simplex (a flat Dirichlet), or uniformly on the sub-region W1's evidence bounds, and the band
-    masses are those of the mixture with the weights drawn alongside every other input.
+    simplex (a flat Dirichlet), and the band masses are those of the mixture with the weights drawn
+    alongside every other input (registered at cp3b A2, below).
   - A point weight is never used: no fetched distribution of terminations exists, and a point
     weight would put an unsourced number into the verdict.
   - The C1 link verdict is the mixture verdict; the per-termination verdicts are printed beside
     it, and a termination that alone is falsified is named.
+- **Termination ignorance mixture (cp3b A2).** Let the K registered terminations be those for
+  which the C1 route is evaluated, with Dupre works W_1, ..., W_K on a draw.
+  - **Mixture quantity.** The template meets the oxide wherever it lands, so a contact of unit area
+    covers a fraction w_k of termination k. Reversible works of adhesion add over disjoint areas,
+    so the work to separate that contact is the area-weighted sum W_mix = sum_k w_k W_k. The
+    mixture test applies the C1 edge to W_mix.
+  - **Weights.** w = (w_1, ..., w_K) ~ Dirichlet(1, ..., 1), the flat Dirichlet, which is uniform on
+    the simplex: every composition of the surface is equally weighted, and no termination is
+    preferred. The weights are drawn once per Monte Carlo draw, independently of every other input,
+    so the band masses of W_mix are joint masses over the weights and the inputs. The earlier
+    alternative of a sub-region bounded by W1's evidence is not registered: W1 admitted no bound
+    (`termination_weights` is a gap), and narrowing the simplex later is a change to a frozen input
+    (a dated entry in `ops/tracks/p0_deviations.md`).
+  - **No point weight**, as above. With K = 1, the mixture is that termination's verdict.
+  - **Per-termination verdicts always beside the mixture.** For every termination the report prints
+    P_good,k = P(W_k > m_W) and its verdict, and it names every termination that is falsified on its
+    own.
+  - **What the weights can and cannot change.** On every draw W_mix lies between min_k W_k and
+    max_k W_k, whatever the weights. The mixture's good mass is therefore bounded independently of
+    the weight prior:
+    P(min_k W_k > m_W) <= P_good(mix) <= P(max_k W_k > m_W).
+    The report prints these two weight-free masses beside the mixture.
+    - If the lower one is at least p, C1 is feasible for every weighting.
+    - If the upper one is at most 1 - p, C1 is falsified for every weighting.
+    - In either case the verdict does not rest on the ignorance prior over the weights.
+    - Otherwise the mixture verdict depends on that prior, and it is labelled "conditional on the
+      termination ignorance mixture" wherever it is quoted, the study verdict included. By the
+      reporting rule of `theory/ignorance_priors.md` (Section 3), a mass under an ignorance prior
+      is never a finding.
 - **Regime.** R-slurry only. Retention in the cell is not judged (layer persistence is a stated
   limitation).
+- **C1 inputs in P0 (cp3b A4).** No potential of mean force exists for P0, so the route that
+  decides C1, W = Delta_F_PMF / A_c (`delta_f_pmf`, `a_c`), is absent. Two estimates of W_adh_wet
+  are run side by side, and both are reported.
+  - **(i) The flagged analog.** W is drawn from `params.w_adh_wet_catechol_oxide_analog`: measured
+    works of adhesion in water of catechol-bearing films on oxide surfaces. Two differences limit
+    what it can show.
+    - **Not the P0 system.** The analog is a different film on different oxides (mica, silica,
+      copper oxide), measured at pH 3 to 7.5. The direction of the bias this introduces is not
+      established.
+    - **No negative values.** The prior is loguniform on positive values, because a pull-off
+      measurement records a work only for contacts that adhere. A contact that water displaces
+      gives no measured work. The analog therefore cannot represent W <= 0, and it falsifies C1
+      only if m_W lies above its range. It leans toward anchoring.
+  - **(ii) A Dupre estimate from the ignorance-bounded interfacial energies.**
+    W = gamma_ow + gamma_pw - gamma_op, Eq. (1) [th:eq:dupre], with:
+    - gamma_ow ~ U[0, gamma_o + gamma_w] and gamma_op ~ U[0, gamma_o + gamma_p], independent
+      (`theory/ignorance_priors.md`, 1c);
+    - gamma_pw = gamma_sl0, the sourced prior truncated at zero (1d).
+
+    The bounds put W in [gamma_pw - gamma_o - gamma_p, gamma_pw + gamma_o + gamma_w]. Because
+    gamma_pw <= gamma_p + gamma_w (1d), the lower end is at most gamma_w - gamma_o. That is
+    negative whenever the dry oxide's surface energy exceeds water's; the upper end is positive.
+    So the thermodynamic bounds admit both signs of W. Its band masses measure where the edge sits
+    inside that range, not evidence about the contact.
+  - **The link verdict uses the rule already registered.**
+    - The C1 verdict is decided by the PMF route. With that route absent, the registered C1
+      verdict is "gap", counted as inconclusive (lane note N21). C1 therefore cannot be feasible
+      in P0, and the study cannot be feasible either.
+    - Each estimate is judged by the same C1 rule beside it (P(W > m_W) against p, edge m_W,
+      `thresholds.C1.margin_W_adh_wet`). The analog verdict is reported as conditional on the
+      analog (`theory/ignorance_priors.md`, Section 3, item 4). The Dupre-ignorance band masses
+      are properties of the prior, never a finding (Section 3, item 1).
+    - With the Dupre estimate the report gives the flip value gamma_op* = gamma_ow + gamma_pw - m_W
+      (1c) and the flip line in the (gamma_ow, gamma_op) plane. A study verdict formed with either
+      estimate in place of the PMF route carries the same label.
+  - **Terminations and contact area.** Neither estimate resolves terminations. The per-termination
+    values are therefore identical, the mixture of A2 reduces to that value, and the report says so.
+    Both estimates are per area already, so neither needs the contact-area definition
+    (`thresholds.C1.contact_area_definition`, still pending for cp4), which only the PMF route
+    uses.
 
 ### C2, sequestration (R-slurry): a binding descriptor, not a gate
 
@@ -271,6 +343,12 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
     `patch_area` and the credible level.
   - The Poisson-occupancy form, proposed in `theory/cp2_brief.md` section D, is the registered
     rule since cp3 (R5).
+  - **A_patch bound (cp3b A3).** The ignorance bound is a_asp <= A_patch <= pi d_p^2 / 4, loguniform
+    between them (`theory/ignorance_priors.md`, 4a.1): one asperity contact below, the particle's
+    projected area above. Its keys (`params.asperity_contact_area`,
+    `params.cathode_particle_diameter`) are absent, so A_patch is a gap. C3 (b) is reported as
+    "gap" and counted inconclusive, and the flip values of A_patch (P_good = p_cred and
+    P_good = 1 - p_cred) are printed.
 - **Margin.** None beyond the J_0 prior. N_nuc ignores exclusion zones, so it is an upper estimate
   and the criterion is necessary, not sufficient. A state with Omega_bulk <= 1 contributes no
   nuclei.
@@ -450,13 +528,43 @@ independent of those values, and the report says so.
     lowest-onset scheme, a falsification under every scheme, margin m_E), and the report marks the
     limit as DFT-decided.
 - **Margin m_expt.** The experimental uncertainty budget of the route
-  (`thresholds.C5.expt_margin`, per transferred electron), not the DFT formation-energy margin:
-  - the tabulated uncertainties of every reactant and product, combined per transferred electron;
+  (`thresholds.C5.window_margin_expt`, W1 key `window_margin_expt`, per transferred electron), not
+  the DFT formation-energy margin:
+  - the tabulated uncertainties of every reactant and product, combined per transferred electron
+    (W1 keys `params.u_tab_dfh_ca_clo4_2`, `params.u_tab_dfh_liclo4`, `params.u_tab_dfg_co2`,
+    `params.u_tab_dfg_caco3`);
   - plus a bound on the neglected solid entropy of Ca(ClO4)2, whose free energy enters through its
-    tabulated enthalpy (W5's exchange route), taken from the entropies of analog solid salts
-    (W1 keys `params.s_ca_clo4_2_analog_bound`, from `params.s_solid_salt_analogs`).
+    tabulated enthalpy (W5's exchange route), taken from the entropies of analog solid salts. W1
+    carries it as the bound on the neglected exchange entropy (`params.exchange_entropy_bound`),
+    built from the analog entropy span (`params.s_ca_clo4_2_analog_low`,
+    `params.s_ca_clo4_2_analog_high`).
 
   W1 derives the value and lists its parts in the key's notes.
+- **Margin-to-scheme mapping (cp3b A1).** Each margin belongs to one route, and a limit is
+  judged with the margin of the route that decides it:
+
+  | Route deciding the limit | Margin | Key (params path; W1 key) |
+  |---|---|---|
+  | all-experimental route (`expt`), wherever its inputs exist | m_expt | `thresholds.C5.window_margin_expt`; `window_margin_expt` |
+  | DFT schemes, **only where no experimental route exists** (the cp2 F5 rule: pass under the lowest-onset scheme, falsification under every scheme) | m_E | `thresholds.C5.window_margin`; `window_margin` |
+  | DFT schemes and benchmark-corrected schemes where the experimental route exists | none: comparators, printed with their measured benchmark errors, never deciding | (none) |
+
+  - **Why the margins differ.** m_expt bounds the error of tabulated thermochemistry, so it is the
+    whole error of the `expt` route. m_E bounds the error of computed formation energies, so it
+    belongs only to a limit that rests on them. Applying m_E to the `expt` route would charge a
+    tabulated value with a DFT error it does not carry. Applying m_expt to a DFT scheme would
+    understate that scheme's error.
+  - **One margin per reaction and sink.** A margin is the budget of one reaction with one sink.
+    `window_margin_expt` is the budget of the registered reaction
+    CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 1/2 O2 + 2 Li with the solid-salt sink. `window_margin`
+    is m_E for the same reaction. For a DFT-decided limit of any other reaction, m_E follows the
+    rule W1 used: m_E = n_unc e_f / (Delta_n F). Here n_unc is the number of atoms whose computed
+    formation energy does not cancel between the two sides, and Delta_n is the number of electrons
+    transferred per formula unit. For the registered reaction, n_unc counts the five atoms of
+    CaCO3 and Delta_n = 2. An `expt` limit of any other reaction, including the same reaction with
+    the solvated sink (whose solvation terms add their own uncertainty), needs its own budget key.
+  - **A limit whose margin key is absent is `undetermined`.** It never gives a pass and never
+    falsifies (Section 2, C5, "Undetermined never passes").
 - **Oxidation rule (the governing route).**
   - **falsified** if E_ox(expt) + m_expt < E_cell_max, with either sink. The solid-salt sink stands
     here: the true product is the lower in free energy of the solid salt and the solvated ions, so
@@ -574,7 +682,11 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `thresholds.decision.degrade_mass_min` | p_deg | registration (cp2) | deletion test |
 | `thresholds.C1.margin_W_adh_wet` | m_W | literature (method error) | C1 |
 | `thresholds.C1.contact_area_definition` | A_c rule | registration (cp2) | C1 |
-| `regimes.R-slurry.parameters.termination_weights` | weights | literature | C1 |
+| `regimes.R-slurry.parameters.termination_weights` | weights | literature (gap; flat Dirichlet ignorance mixture, cp3b A2) | C1 |
+| `params.w_adh_wet_catechol_oxide_analog` | W_adh_wet (analog) | literature (flagged analog) | C1 side by side, conditional on the analog (cp3b A4) |
+| `params.gamma_sl0_template` (as gamma_pw) | gamma_pw | literature, truncated at 0 | C1 Dupre-ignorance estimate (cp3b A4) |
+| `params.asperity_contact_area` | a_asp | literature (new key; gap) | lower bound on A_patch (cp3b A3) |
+| `params.cathode_particle_diameter` | d_p | literature (new key; gap) | upper bound on A_patch (cp3b A3) |
 | `thresholds.C2.margin_DG_seq` | m_seq | literature (method error) | C2 labelled sensitivity (not gating) |
 | `thresholds.C3.margin_cos_theta` | m_cos | registration (cp2; proposed zero) | C3 (a) |
 | `regimes.R-slurry.parameters.framing` | framing | registration (cp3 R6: calcite and ACC both registered) | C3, C4, C5 sensitivity; study combination |
@@ -599,10 +711,15 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `params.a_w_slurry` | a_w | literature (per drying state) | reported at every drying state (F7) |
 | `params.acc_hydration_n` | n_hyd | literature (ACC framing) | hydrated-IAP sensitivity (F7) |
 | `regimes.R-slurry.parameters.E_SHE_range` | E_SHE | literature | C5 |
-| `thresholds.C5.window_margin` | m_E | literature (derived from e_form) | C5 R-cell, only where the experimental route is missing (cp3 R2) |
-| `thresholds.C5.expt_margin` | m_expt | literature (experimental uncertainty budget) | C5 R-cell governing route (cp3 R2) |
-| `params.s_ca_clo4_2_analog_bound` | S bound | literature (analog entropies) | m_expt (cp3 R2) |
-| `params.s_solid_salt_analogs` | S analogs | literature | m_expt (cp3 R2) |
+| `thresholds.C5.window_margin` | m_E | literature (derived from e_form; W1 key `window_margin`) | C5 R-cell, a DFT scheme only where the experimental route is missing (cp3 R2, cp3b A1) |
+| `thresholds.C5.window_margin_expt` | m_expt | literature (experimental uncertainty budget; W1 key `window_margin_expt`; formerly named `thresholds.C5.expt_margin` here) | C5 R-cell governing route (cp3 R2, cp3b A1) |
+| `params.u_tab_dfh_ca_clo4_2` | u_tab | literature (tabulated uncertainty) | m_expt (cp3b A1) |
+| `params.u_tab_dfh_liclo4` | u_tab | literature (tabulated uncertainty) | m_expt (cp3b A1) |
+| `params.u_tab_dfg_co2` | u_tab | literature (tabulated uncertainty) | m_expt (cp3b A1) |
+| `params.u_tab_dfg_caco3` | u_tab | literature (tabulated uncertainty) | m_expt (cp3b A1) |
+| `params.exchange_entropy_bound` | Delta_S_ex bound | literature (analog entropies) | m_expt (cp3 R2; the solid-entropy part as W1 derived it) |
+| `params.s_ca_clo4_2_analog_low` | S analog (low) | literature (analog entropies) | m_expt (cp3 R2) |
+| `params.s_ca_clo4_2_analog_high` | S analog (high) | literature (analog entropies) | m_expt (cp3 R2) |
 | `regimes.R-cell.parameters.cathode_class` | cathode class | design axis | E_cell_max per class (cp3 R2) |
 | `params.li2co3_oxidation_onset` | E (Li2CO3 onset) | literature | physics justification of the carbonate-oxidation reading (cp3 R2) |
 | `regimes.R-cell.parameters.E_min` | E_cell_min | literature | C5 R-cell |
@@ -624,13 +741,15 @@ checks that every expression parses, that only registered ids appear, and that e
 unit of its quantity.
 
 ```thresholds
-version: 2
+version: 3
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
 revised: {session: P0-W3.2 cp2 fix-up, base_commit: 800d5ea3de41a0fb16084519d5c2680eeb14952d, fixes: theory/cp2_fixes.md}
 revised_cp3: {session: P0-W3.3, ruling: planning chat 2026-10-17 (cp3), base_commit: ac5cdfb, items: [R1, R2, R3, R5, R6, R7, R8],
               log: theory/cp2_fixes.md (cp3 section), disclosures: [R1, R2, R6]}
+revised_cp3b: {session: P0-W3.4, rule: cp3-mandated registrations for production (lane note N22), base_commit: 227d997,
+               items: [A1, A2, A3, A4], log: theory/cp2_fixes.md (cp3 section, cp3b registrations), screen_output_consulted: false}
 contract_version: 3
 decision:
   statistic: band_mass
@@ -649,6 +768,7 @@ decision:
     m_W: {set_by: W1, from: fetched method-error evidence, or zero where the prior carries it, params: thresholds.C1.margin_W_adh_wet}
     m_S: {set_by: W1, from: fetched method-error evidence, or zero where the prior carries it, params: thresholds.C4.margin_S_spread}
     m_E: {set_by: W1, from: fetched method-error evidence, or zero where the prior carries it, params: thresholds.C5.window_margin}
+    m_expt: {set_by: W1, from: experimental uncertainty budget of the expt route (cp3 R2), params: thresholds.C5.window_margin_expt}
     approved: [single_edge_f_half_plus_absolute_criterion, worst_state_per_link, path_sum_C3b,
                square_lattice_closure_optimistic_supporting, C4_S_spread_falsified_only_if_coalescence_fails]
     E_enr: labelled non-gating sensitivity
@@ -695,9 +815,32 @@ links:
         edge: m_W
         params: {m_W: thresholds.C1.margin_W_adh_wet}
         mixture: {over: termination, weights: regimes.R-slurry.parameters.termination_weights,
-                  weight_prior: 'ignorance: uniform on the simplex (flat Dirichlet), or on the sub-region W1 bounds',
-                  point_weight: never, per_termination_verdicts: reported (cp3 R8)}
+                  weight_prior: 'Dirichlet(1, ..., 1) over the K registered terminations (flat; uniform on the simplex) (cp3b A2)',
+                  sub_region: not registered (W1 admitted no bound; narrowing needs a dated deviation entry),
+                  draw: once per Monte Carlo draw, independent of every other input,
+                  quantity: 'W_mix = sum_k w_k W_k (area-weighted Dupre work of a contact shared among terminations)',
+                  point_weight: never, per_termination_verdicts: always reported beside the mixture (P_good_k and verdict),
+                  falsified_alone: named,
+                  weight_free_bounds: {report: ['P(min_k W_k > m_W)', 'P(max_k W_k > m_W)'],
+                                       feasible_for_every_weighting: 'P(min_k W_k > m_W) >= p_cred',
+                                       falsified_for_every_weighting: 'P(max_k W_k > m_W) <= 1 - p_cred',
+                                       otherwise: label conditional on the termination ignorance mixture (not a finding)}}
     combine: C1
+    p0_inputs:
+      registered_route: {quantity: W_adh_wet_from_pmf, inputs: [Delta_F_pmf, A_c], status: absent in P0 (no PMF),
+                          verdict: gap, counted: inconclusive (lane note N21)}
+      side_by_side:
+        analog: {quantity: W_adh_wet, params: params.w_adh_wet_catechol_oxide_analog, rule: C1 rule (edge m_W),
+                 label: conditional on the analog, support: positive only (adhering contacts measured; cannot represent W <= 0)}
+        dupre_ignorance: {quantity: W_adh_wet, function: W_adh_wet,
+                          inputs: {gamma_ow: 'U[0, gamma_o + gamma_w]', gamma_op: 'U[0, gamma_o + gamma_p]', gamma_pw: params.gamma_sl0_template (truncated at 0)},
+                          support: {low: gamma_pw - gamma_o - gamma_p, high: gamma_pw + gamma_o + gamma_w},
+                          rule: C1 rule (edge m_W), label: ignorance prior; band masses never a finding,
+                          report: [flip value gamma_op* = gamma_ow + gamma_pw - m_W, flip line in the (gamma_ow, gamma_op) plane]}
+      both_reported: true
+      terminations: not resolved by either estimate; per-termination values identical; the mixture reduces to that value
+      contact_area_definition: not needed by either estimate (PMF route only)
+      study: a study verdict formed with either estimate carries its label; the registered study verdict has C1 = gap
   C2:
     role: descriptor
     gating: false
@@ -740,6 +883,8 @@ links:
         params: {J0_het: regimes.R-slurry.parameters.J0_het, t_proc: regimes.R-slurry.parameters.t_proc,
                  A_patch: regimes.R-slurry.parameters.patch_area, p_cred: thresholds.decision.credible_level}
         report: [DG_het/(k_B*T), DG_hom/(k_B*T)]
+        A_patch_bound: {ignorance: theory/ignorance_priors.md geometry.A_patch (low a_asp, high pi*d_p**2/4, loguniform),
+                        status: gap, on_gap: 'C3b reported as gap, counted inconclusive; flip values of A_patch reported (cp3b A3)'}
     combine: 'C3a and C3b'
     joint_mass: 'falsified side P(C3a bad or C3b bad), draw by draw (cp3 R7)'
   C4:
@@ -834,12 +979,23 @@ links:
                       benchmark_corrected: equals expt by construction; never a second confirmation}
         where_expt_missing: {rule: cp2 fix F5, pass: lowest-onset DFT scheme, falsify: every DFT scheme, margin: m_E,
                              edge_pass: E_cell_max + m_E, edge_falsify: E_cell_max - m_E, label: DFT-decided}
-        params: {E_cell_max: regimes.R-cell.parameters.E_max, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
+        params: {E_cell_max: regimes.R-cell.parameters.E_max, m_expt: thresholds.C5.window_margin_expt, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes,
                  salts: regimes.R-cell.parameters.electrolyte_salts}
+        margin_by_route:
+          expt: {symbol: m_expt, params: thresholds.C5.window_margin_expt, key: window_margin_expt, applies: wherever the expt inputs exist,
+                 reaction: CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 1/2 O2 + 2 Li (solid-salt sink)}
+          dft_where_expt_missing: {symbol: m_E, params: thresholds.C5.window_margin, key: window_margin, rule: cp2 fix F5,
+                                   formula: N_unc*e_form/(Delta_n_Li*F_c), formula_params: {e_form: thresholds.C5.formation_energy_error},
+                                   registered_reaction: {N_unc: 5 atoms of CaCO3, Delta_n_Li: 2}}
+          dft_where_expt_exists: {margin: none, role: comparator, printed_with: measured benchmark error}
+          benchmark_corrected: {margin: none, role: comparator, never: a second confirmation}
+          per_reaction: one margin per reaction and sink; an expt limit of any other reaction or sink needs its own budget key
+          margin_key_absent: undetermined (never passes, never falsifies)
         m_expt_parts: [tabulated uncertainties of reactants and products per transferred electron,
                        bound on the neglected solid entropy of Ca(ClO4)2 from analog solid-salt entropies]
-        m_expt_params: [params.s_ca_clo4_2_analog_bound, params.s_solid_salt_analogs]
+        m_expt_params: [params.u_tab_dfh_ca_clo4_2, params.u_tab_dfh_liclo4, params.u_tab_dfg_co2, params.u_tab_dfg_caco3,
+                        params.exchange_entropy_bound, params.s_ca_clo4_2_analog_low, params.s_ca_clo4_2_analog_high]
         design_axis: {E_cell_max: by cathode class, params: regimes.R-cell.parameters.cathode_class,
                       report: [crossover E_ox - m_expt (feasible at or below, solvated sink), crossover E_ox + m_expt (falsified above)]}
         undetermined: never_passes
@@ -858,8 +1014,9 @@ links:
         otherwise: inconclusive
         where_expt_missing: {rule: cp2 fix F5, margin: m_E, edge_pass: E_cell_min - m_E, edge_falsify: E_cell_min + m_E,
                              label: DFT-decided}
-        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_expt: thresholds.C5.expt_margin, m_E: thresholds.C5.window_margin,
+        params: {E_cell_min: regimes.R-cell.parameters.E_min, m_expt: thresholds.C5.window_margin_expt, m_E: thresholds.C5.window_margin,
                  schemes: regimes.R-cell.parameters.gas_reference_schemes}
+        margin_by_route: same as C5c_ox (expt route m_expt; m_E only where the expt route is missing; a reduction limit needs its own budget key)
         undetermined: never_passes
     gated_phases: {R-slurry: [CaCO3 framing phase], R-cell: [CaCO3, corundum, boehmite]}
     al_phases: {registered: [corundum, boehmite], params: regimes.R-cell.parameters.al_phases, others: reported, not gated}

@@ -222,12 +222,153 @@ and a flag.
 
 W1 applies the rule. This file only states it.
 
+## 4a. Geometric bounds for the remaining geometric gaps (cp3b A3)
+
+Session P0-W3.4, written without consulting any screen output. Four inputs of the screen still have
+no admitted row: the contact patch area, the site footprint, the group density and the Ca2+ radius
+(`lit/params.yaml`: `patch_area`, `site_footprint_area`, `template_group_density` and
+`ca_ionic_radius`, status `gap`). Each bound below comes from geometry or stoichiometry alone, and
+each names the params keys it needs. Whether W4 can evaluate a bound now is stated in 4a.5.
+
+### 4a.1 The contact patch area, A_patch (C3 (b))
+
+**Physics.** A cathode particle reaches the collector only where it touches it, and C3 (b) asks
+for a nucleus under each such patch (`theory/thresholds.md`, C3 (b)). The patch is bounded by two
+pieces of geometry.
+
+- **Upper bound: the particle's projection.** The part of a particle that touches a flat foil
+  lies inside the particle's shadow on the foil. Its area therefore cannot exceed the particle's
+  projected area. With d_p the projected-area-equivalent diameter (the diameter of the disc whose
+  area equals the particle's largest projected area), A_patch <= pi d_p^2 / 4.
+- **Lower bound: one asperity.** Real surfaces touch at asperities, so a particle that touches the
+  foil does so through at least one asperity contact of finite area a_asp. Hence
+  A_patch >= a_asp.
+
+So a_asp <= A_patch <= pi d_p^2 / 4. The bound spans the whole range from one asperity to full
+conformal contact, many decades, and only ln A_patch enters the C3 (b) edge. The prior is
+therefore loguniform between the bounds (W1's rule L1). Through N_req = ln(1/q_0)/A_patch the
+bound carries over to
+4 ln(1/q_0)/(pi d_p^2) <= N_req <= ln(1/q_0)/a_asp.
+A smaller patch demands more nuclei per area, so the asperity end is the strict one.
+
+**Keys.**
+- d_p: new key `params.cathode_particle_diameter`.
+- a_asp: new key `params.asperity_contact_area`.
+
+W1 holds neither key. The particle size W1 found (TL-086) is recorded as a comparator, because a
+particle size is not a contact area. It is, however, the upper bound above, so W1 may admit it
+under `params.cathode_particle_diameter`. No source for a_asp is known to this lane.
+
+**While the bound is a gap.** A_patch is reported as a gap, and C3 (b) is reported as "gap" and
+counted as inconclusive (C3 then cannot be feasible). N_nuc does not depend on A_patch, and
+P(N_nuc A_patch >= ln(1/q_0)) rises with A_patch. The flip values of Section 3 are therefore
+computed and printed:
+- A_F, where P_good(A_F) = p_cred;
+- A_X, where P_good(A_X) = 1 - p_cred.
+
+They state which patch areas a measurement must exclude for C3 (b) to decide. Once both keys
+exist, a flip value outside [a_asp, pi d_p^2 / 4] makes the C3 (b) verdict robust to the ignorance
+on A_patch (Section 3, item 2).
+
+### 4a.2 The site footprint, a_site
+
+**Physics.** Each site holds one Ca2+, so two occupied sites are at least the contact distance
+2 r_Ca apart. The ions' mutual repulsion can only push them further apart. The densest
+arrangement of equal discs in a plane is the hexagonal one, in which each disc of radius r claims
+the area 2 sqrt(3) r^2. Hence
+
+a_site >= 2 sqrt(3) r_Ca^2,   so   1/(N_A a_site) <= 1/(2 sqrt(3) N_A r_Ca^2).
+
+The bound counts only the ion. The coordinating group's own footprint can only enlarge a_site, so
+this is the loosest bound geometry allows, and it holds for any template chemistry. Like the
+footprint term of Section 4, it assumes one layer of sites at the template-liquid interface. Sites
+stacked in depth are bounded instead by the volume terms: rho_L d_layer here, and
+c_max = Gamma_s/delta_s <= 1/V_m in the delta_s bound.
+
+**Keys.** r_Ca (`params.ca_ionic_radius`), with the treatment of 4a.4. No new key.
+
+### 4a.3 The group density, rho_L
+
+**Physics: stoichiometry.** A coordinating group belongs to a repeat unit of the template. A
+volume of template of mass density rho_PDA therefore holds at most rho_PDA/M_u moles of groups per
+volume. Here M_u is the least template mass per mole of coordinating groups: over the candidate
+repeat units, the molar mass of a unit divided by the number of coordinating groups it carries.
+Taking the least value covers every mixture of units. Hence
+
+0 < rho_L <= rho_PDA / M_u,   and   rho_L d_layer <= rho_PDA d_layer / M_u.
+
+The accessible-site content W1 uses for the analog (`params.pda_binding_site_content`) is not
+registered as a lower bound on rho_L. It counts accessible amine-binding sites. Amines bind the
+oxidised (quinone) form, so these sites are not established to be a subset of the coordinating
+catechol groups (W1's note on the key calls the content a proxy).
+
+**Keys.**
+- rho_PDA: `params.pda_density` (sourced, single source).
+- M_u: new key `params.template_mass_per_group_min`. W1 obtains it from the candidate repeat
+  units of polydopamine and their compositions; no value is typed here.
+
+**Consequence for Gamma_s.** With 4a.2 and 4a.3, the geometric cap of Section 4 becomes
+
+Gamma_s <= min( 1/(2 sqrt(3) N_A r_Ca^2), rho_PDA d_layer / M_u ).
+
+### 4a.4 The Ca2+ radius in the delta_s bound
+
+**The lower bound needs the radius of the ion itself.** The binding layer must contain the bound
+ion, so delta_s >= 2 r_Ca. The radius enters a lower bound, so it must not be overstated.
+- r_Ca is the Ca2+ ionic radius at the **lowest coordination number** registered for the bound
+  ion. Where none is registered, it is the lowest coordination number tabulated for Ca2+.
+- Ionic radii grow with coordination number. The lowest therefore gives the smallest 2 r_Ca, and
+  the bound stays valid at any higher coordination the site may have.
+- W1 records the coordination number with the key.
+
+**The analog overstates the radius.** The analog `params.ca_o_distance_aqueous_analog` is the
+Ca-O distance of hydrated Ca2+. It exceeds r_Ca by the radius of the water oxygen (W1's note).
+Using it in place of r_Ca:
+- makes the lower bound of delta_s larger than the true bound, so it can exclude admissible
+  thicknesses;
+- makes the footprint bound of 4a.2 larger, so the cap on Gamma_s becomes smaller than the true
+  cap.
+
+Neither result is a valid bound.
+
+**Registered treatment.**
+- **While r_Ca is a gap, the 2 r_Ca term is dropped.** Dropping a term from a maximum lowers it,
+  so the lower bound stays valid, only looser: Gamma_s V_m <= delta_s <= d_layer. V_m is that of
+  the framing (`params.v_m_calcite` or `params.v_m_acc`).
+- **The analog form runs as a labelled sensitivity:** max(2 r_Ca(analog), Gamma_s V_m), labelled
+  "tighter than the geometric bound".
+- **A draw with an empty interval (Gamma_s V_m > d_layer) is refused and counted,** never
+  clipped.
+
+**Rule for every analog-based bound.** A bound evaluated with an analog key is reported and
+flagged. A draw outside it is flagged, never refused. Only a bound built from primary keys refuses
+draws. This covers the Gamma_s cap evaluated with `params.ca_o_distance_aqueous_analog` or
+`params.template_group_density_site_analog`. W1 describes the second as counting accessible sites
+only, so it may understate rho_L and give too small a cap.
+
+### 4a.5 What W4 can evaluate now
+
+| Quantity | Bound | Inputs available in `lit/params.yaml` | Status for production |
+|---|---|---|---|
+| A_patch | a_asp <= A_patch <= pi d_p^2/4, loguniform | neither key | **gap**: C3 (b) reported as "gap", counted inconclusive; flip values A_F, A_X printed |
+| a_site | a_site >= 2 sqrt(3) r_Ca^2 | r_Ca is a gap (analog only) | **gap**; the analog form is reported and flagged, never refuses |
+| rho_L | 0 < rho_L <= rho_PDA/M_u | rho_PDA present; M_u absent | **gap**; the analog runs beside as before |
+| Gamma_s cap | min(1/(2 sqrt(3) N_A r_Ca^2), rho_PDA d_layer/M_u) | each term needs a gap key | **gap**: no geometric cap on the sourced Gamma_s prior; the analog cap is reported, never refuses |
+| delta_s | max(2 r_Ca, Gamma_s V_m) <= delta_s <= d_layer | Gamma_s, V_m, d_layer present; r_Ca a gap | **evaluable now** with the 2 r_Ca term dropped (valid, looser); analog sensitivity beside |
+| V_site | V_site = delta_s/(N_A Gamma_s) | follows from delta_s and Gamma_s | **evaluable now** |
+
+A gap is reported as "gap" and counted as inconclusive for the link that needs it, as lane note
+N21 registers. The geometric gaps still open are therefore A_patch, a_site, rho_L and with them the
+Gamma_s cap. delta_s and V_site can be drawn now.
+
 ## 5. Machine-readable form
 
 ```ignorance
-version: 1
+version: 2
 authority: theory/ignorance_priors.md
 written_before_screen_output: true
+revised_cp3b: {session: P0-W3.4, item: A3, base_commit: 227d997, screen_output_consulted: false,
+               adds: [geometry.A_patch, geometry.a_site, geometry.rho_L, Gamma_s expanded cap, delta_s r_Ca treatment, analog_bounds, evaluable_now]}
 quantities:
   gamma_sn:
     prior: uniform
@@ -273,18 +414,58 @@ branches:
   complete_wetting_excluded_when: 'gamma_sl <= gamma_nl (hydrophilic template; S_spread <= gamma_sl - gamma_nl - gamma_sn)'
   clipping: masses are clipped to [0, 1] when a cut leaves [0, span]
 geometry:
+  A_patch:
+    low: a_asp
+    high: pi*d_p**2/4
+    prior: loguniform
+    bound_from: [a contact holds at least one asperity contact, the contact lies inside the particle's projection]
+    params: {a_asp: params.asperity_contact_area, d_p: params.cathode_particle_diameter}
+    N_req_range: {low: 4*log(1/q_0)/(pi*d_p**2), high: log(1/q_0)/a_asp}
+    status: gap
+    on_gap: 'C3b reported as gap (counted inconclusive); flip values A_F (P_good = p_cred) and A_X (P_good = 1 - p_cred) reported'
+  a_site:
+    low: 2*sqrt(3)*r_Ca**2
+    bound_from: hexagonal packing of the bound ions (contact distance 2 r_Ca); the group footprint can only enlarge it
+    assumes: one layer of sites at the template-liquid interface
+    params: {r_Ca: params.ca_ionic_radius}
+    status: gap
+    analog: {r_Ca: params.ca_o_distance_aqueous_analog, effect: overstates r_Ca, use: reported and flagged, never refuses}
+  rho_L:
+    low: '0'
+    high: rho_PDA/M_u
+    bound_from: stoichiometry (least template mass per mole of coordinating groups)
+    params: {rho_PDA: params.pda_density, M_u: params.template_mass_per_group_min}
+    status: gap
+    analog: {rho_L: params.template_group_density_site_analog, use: reported and flagged, never refuses}
   Gamma_s:
     low: '0'
     high_min_of: [1/(N_A*a_site), rho_L*d_layer]
+    high_min_of_expanded: [1/(2*sqrt(3)*N_A*r_Ca**2), rho_PDA*d_layer/M_u]
     params: {a_site: params.site_footprint_area, rho_L: params.template_group_density,
-             d_layer: params.template_layer_thickness}
+             d_layer: params.template_layer_thickness, r_Ca: params.ca_ionic_radius, rho_PDA: params.pda_density,
+             M_u: params.template_mass_per_group_min}
+    status: gap (no geometric cap on the sourced prior params.gamma_s_site_density until r_Ca or M_u exists)
   delta_s:
     low_max_of: [2*r_Ca, Gamma_s*V_m]
     high: d_layer
     params: {r_Ca: params.ca_ionic_radius, d_layer: params.template_layer_thickness,
              V_m: [params.v_m_calcite, params.v_m_acc]}
+    r_Ca_treatment:
+      primary: Ca2+ ionic radius at the lowest coordination number registered for the bound ion (else the lowest tabulated)
+      while_gap: drop the 2*r_Ca term (low = Gamma_s*V_m); valid and looser
+      analog: {r_Ca: params.ca_o_distance_aqueous_analog, effect: lower bound tighter than the geometric bound, use: labelled sensitivity}
+    empty_interval: refused and counted, never clipped
+    status: evaluable now (2*r_Ca term dropped)
   V_site:
     equals: delta_s/(N_A*Gamma_s)
+    status: evaluable now (derived per draw)
+analog_bounds:
+  rule: a bound evaluated with an analog key is reported and flagged; draws outside it are flagged, never refused
+  refuses_draws: only bounds built from primary keys
+evaluable_now:
+  evaluable: [delta_s (2*r_Ca term dropped), V_site]
+  gap: [A_patch, a_site, rho_L, Gamma_s cap]
+  gap_reporting: reported as gap and counted inconclusive for the link that needs it (lane note N21)
 single_source_binding:
   widen_half_width_to_at_least: {free_energy: m_seq, log10_constant: m_seq/(R_gas*T*log(10))}
   params: {m_seq: thresholds.C2.margin_DG_seq}
