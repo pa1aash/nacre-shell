@@ -134,5 +134,23 @@
     "derivation_fix": "f23632d (strong-binding limit wording, contact exchange assumption, hydrophilic condition); flagged for cp4"
   },
   "cp3_fix_log": "theory/cp2_fixes.md (cp3 section) @ 46fb82a",
-  "early_read": ".local/early_read/derivation_for_coauthors.pdf (local only, 19 pages)"
+  "early_read": ".local/early_read/derivation_for_coauthors.pdf (local only, 19 pages)",
+  "thresholds_cp3b": {
+    "status": "ready",
+    "sha": "fd29fcdb023517e7c90b06493f760db77ea47c3c",
+    "file": "theory/thresholds.md",
+    "machine_block_version": 3,
+    "ignorance_block_version": 2,
+    "contract_version": 3,
+    "check_contract": "PASS",
+    "screen_output_consulted": false,
+    "items": {
+      "A1": "0fd2b59aa37c451b25de4ad0491ef26371382844",
+      "A2": "8ff2b532c101bbcac31aefb261853c5cb245981f",
+      "A3": "f338fe96ba09049a9bf835b2178bcb678c9903e7",
+      "A4": "22ef46446205f63fab6074ba971ee89e18d99489"
+    },
+    "for_w4": "regenerate configs/preprint/thresholds.yaml from block version 3: m_expt params path is now thresholds.C5.window_margin_expt (was thresholds.C5.expt_margin); margin_by_route (m_expt for expt, m_E only where expt is missing, comparators carry none; absent margin key -> undetermined); C1 mixture W_mix = sum w_k W_k with w ~ Dirichlet(1,...,1) and weight-free bounds; C1 p0_inputs (registered PMF route = gap; analog and Dupre-ignorance estimates side by side, labelled); C3b A_patch is a gap (report flip values); ignorance block v2: delta_s evaluable now as Gamma_s*V_m <= delta_s <= d_layer, V_site derived; A_patch, a_site, rho_L and the Gamma_s cap are gaps; analog bounds never refuse draws",
+    "track_check": "refuses (theory/thresholds.md changed after p0-cp3); the deviation entry is integrator-owned (ops/**), text in ops/reports/P0-W3.4.md"
+  }
 }
