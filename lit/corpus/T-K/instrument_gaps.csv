@@ -1,0 +1,62 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-17T10:16:08Z,unpaywall,10.1351/pac198355060977,parse_error,not a PDF: https://www.degruyter.com/document/doi/10.1351/pac198355060977/pdf
+2026-10-17T10:16:17Z,unpaywall,10.6028/nbs.tn.270-6,http_error,HTTP 403 https://doi.org/10.6028/nbs.tn.270-6
+2026-10-17T10:16:25Z,unpaywall,10.6028/nbs.tn.270-8,http_error,HTTP 403 https://doi.org/10.6028/nbs.tn.270-8
+2026-10-17T10:17:58Z,unpaywall,10.1351/pac199062091839,parse_error,not a PDF: https://www.degruyter.com/document/doi/10.1351/pac199062091839/pdf
+2026-10-17T10:18:11Z,unpaywall,10.1039/ft9918702995,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:18:21Z,unpaywall,10.1351/pac198860121743,parse_error,not a PDF: https://www.degruyter.com/document/doi/10.1351/pac198860121743/pdf
+2026-10-17T10:19:46Z,unpaywall,10.26434/chemrxiv-2021-djssr,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/614827ada7b2491fd331351c/original/a-computational-study-on-the-ca2-solvation-coordination-environment-and-mobility-in-electrolytes-for-calcium-ion-batteries.pdf
+2026-10-17T10:20:53Z,semanticscholar,Gibbs energy of transfer Ca2+ water dimethyl sulfoxide,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-17T10:21:22Z,semanticscholar,transfer Gibbs energies divalent metal ions water aprotic solvents,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-17T10:21:48Z,semanticscholar,aluminium(III) ion transfer Gibbs energy water to organic solvent,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-17T10:21:56Z,unpaywall,10.1039/ft9959103843,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:22:00Z,unpaywall,10.1351/pac199062050899,parse_error,not a PDF: https://www.degruyter.com/document/doi/10.1351/pac199062050899/pdf
+2026-10-17T10:22:26Z,unpaywall,10.1021/ja00828a008,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:23:02Z,unpaywall,10.1021/acs.inorgchem.0c01821,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.inorgchem.0c01821
+2026-10-17T10:30:40Z,unpaywall,10.18434/t42s31,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.18434/t42s31
+2026-10-17T10:30:42Z,fulltext,10.18434/t42s31,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-17T10:30:53Z,direct,10.18434/t42s31,parse_error,not a PDF: https://janaf.nist.gov/tables/Cl-046.txt
+2026-10-17T10:30:56Z,direct+wayback,10.18434/t42s31,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://janaf.nist.gov/tables/Cl-046.txt
+2026-10-17T10:31:06Z,direct,10.18434/t42s31,not_indexed,HTTP 404 https://janaf.nist.gov/tables/Cl-046.pdf
+2026-10-17T10:31:07Z,direct+wayback,10.18434/t42s31,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://janaf.nist.gov/tables/Cl-046.pdf
+2026-10-17T10:33:56Z,unpaywall,10.3390/ma11112251,http_error,HTTP 403 https://www.mdpi.com/1996-1944/11/11/2251/pdf?version=1542017500
+2026-10-17T10:33:57Z,europepmc,10.3390/ma11112251,http_error,HTTP 403 https://europepmc.org/articles/PMC6266846?pdf=render
+2026-10-17T10:34:55Z,unpaywall,10.1002/advs.202309657,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC11220708/pdf/ADVS-11-2309657.pdf
+2026-10-17T10:34:55Z,europepmc,10.1002/advs.202309657,http_error,HTTP 403 https://europepmc.org/articles/PMC11220708?pdf=render
+2026-10-17T10:35:04Z,unpaywall,10.1039/d0ra10280f,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2021/ra/d0ra10280f
+2026-10-17T10:35:05Z,europepmc,10.1039/d0ra10280f,http_error,HTTP 403 https://europepmc.org/articles/PMC8695088?pdf=render
+2026-10-17T10:35:15Z,unpaywall,10.3390/en13236363,http_error,HTTP 403 https://www.mdpi.com/1996-1073/13/23/6363/pdf?version=1606911234
+2026-10-17T10:36:19Z,unpaywall,10.3390/en13195194,http_error,HTTP 403 https://www.mdpi.com/1996-1073/13/19/5194/pdf?version=1601909486
+2026-10-17T10:38:43Z,unpaywall,10.1149/2.0281902jes,parse_error,not a PDF: https://iopscience.iop.org/article/10.1149/2.0281902jes/pdf
+2026-10-17T10:38:44Z,unpaywall+wayback,10.1149/2.0281902jes,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1149/2.0281902jes/pdf
+2026-10-17T10:38:44Z,fulltext,10.1149/2.0281902jes,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-17T10:39:19Z,unpaywall,10.3390/ma15113931,http_error,HTTP 403 https://www.mdpi.com/1996-1944/15/11/3931/pdf?version=1654152558
+2026-10-17T10:39:20Z,europepmc,10.3390/ma15113931,http_error,HTTP 403 https://europepmc.org/articles/PMC9181973?pdf=render
+2026-10-17T10:39:33Z,unpaywall,10.1149/2.0651903jes,parse_error,not a PDF: https://iopscience.iop.org/article/10.1149/2.0651903jes/pdf
+2026-10-17T10:39:39Z,unpaywall+wayback,10.1149/2.0651903jes,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1149/2.0651903jes/pdf
+2026-10-17T10:39:39Z,fulltext,10.1149/2.0651903jes,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-17T10:39:42Z,unpaywall,10.3389/fchem.2024.1400758,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC11091315/pdf/fchem-12-1400758.pdf
+2026-10-17T10:39:43Z,europepmc,10.3389/fchem.2024.1400758,http_error,HTTP 403 https://europepmc.org/articles/PMC11091315?pdf=render
+2026-10-17T10:39:45Z,unpaywall+wayback,10.3389/fchem.2024.1400758,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pmc.ncbi.nlm.nih.gov/articles/PMC11091315/pdf/fchem-12-1400758.pdf
+2026-10-17T10:39:47Z,europepmc+wayback,10.3389/fchem.2024.1400758,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC11091315?pdf=render
+2026-10-17T10:40:04Z,unpaywall,10.3390/batteries9100515,http_error,HTTP 403 https://www.mdpi.com/2313-0105/9/10/515/pdf?version=1697787857
+2026-10-17T10:40:05Z,unpaywall,10.3390/batteries9100515,http_error,HTTP 403 https://www.preprints.org/manuscript/202309.1494/v1/download
+2026-10-17T10:40:59Z,unpaywall,10.1002/anie.201802277,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/anie.201802277
+2026-10-17T10:41:00Z,europepmc,10.1002/anie.201802277,http_error,HTTP 403 https://europepmc.org/articles/PMC5947587?pdf=render
+2026-10-17T10:41:09Z,unpaywall+wayback,10.1002/anie.201802277,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/anie.201802277
+2026-10-17T10:41:10Z,europepmc+wayback,10.1002/anie.201802277,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC5947587?pdf=render
+2026-10-17T10:41:49Z,unpaywall,10.1016/j.electacta.2020.136271,http_error,HTTP 403 https://www.sciencedirect.com/science/article/pii/S0013468620306630/pdf
+2026-10-17T10:41:52Z,unpaywall+wayback,10.1016/j.electacta.2020.136271,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.sciencedirect.com/science/article/pii/S0013468620306630/pdf
+2026-10-17T10:41:52Z,fulltext,10.1016/j.electacta.2020.136271,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-17T10:44:14Z,unpaywall,10.1002/aenm.202303985,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/2580551 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10abca780>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/2580551)"
+2026-10-17T10:44:16Z,unpaywall+wayback,10.1002/aenm.202303985,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.osti.gov/servlets/purl/2580551
+2026-10-17T10:44:16Z,fulltext,10.1002/aenm.202303985,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-17T10:44:29Z,unpaywall,10.1021/jacs.0c06363,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c74c95469df454c3f440f0/original/electrolyte-oxidation-pathways-in-lithium-ion-batteries.pdf
+2026-10-17T10:46:30Z,unpaywall,10.1021/jacs.0c06363,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1802423 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x106e86b10>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1802423)"
+2026-10-17T10:48:04Z,unpaywall,10.1021/acselectrochem.4c00106,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acselectrochem.4c00106?ref=article_openPDF
+2026-10-17T10:48:05Z,unpaywall,10.1021/acselectrochem.4c00106,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC11973861/pdf/ec4c00106.pdf
+2026-10-17T10:48:06Z,europepmc,10.1021/acselectrochem.4c00106,http_error,HTTP 403 https://europepmc.org/articles/PMC11973861?pdf=render
+2026-10-17T10:48:08Z,unpaywall+wayback,10.1021/acselectrochem.4c00106,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/acselectrochem.4c00106?ref=article_openPDF
+2026-10-17T10:48:09Z,unpaywall+wayback,10.1021/acselectrochem.4c00106,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pmc.ncbi.nlm.nih.gov/articles/PMC11973861/pdf/ec4c00106.pdf
+2026-10-17T10:48:10Z,europepmc+wayback,10.1021/acselectrochem.4c00106,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC11973861?pdf=render
+2026-10-17T10:52:20Z,unpaywall,10.1021/cr980144k,paywalled,"no open copy on unpaywall, openalex or europepmc"

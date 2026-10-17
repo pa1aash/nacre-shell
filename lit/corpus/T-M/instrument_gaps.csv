@@ -1,0 +1,64 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-17T10:18:39Z,unpaywall,10.1016/j.bjbas.2015.05.012,http_error,HTTP 403 https://www.sciencedirect.com/science/article/pii/S2314853515000335/pdf
+2026-10-17T10:18:46Z,unpaywall+wayback,10.1016/j.bjbas.2015.05.012,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.sciencedirect.com/science/article/pii/S2314853515000335/pdf
+2026-10-17T10:18:46Z,fulltext,10.1016/j.bjbas.2015.05.012,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-17T10:19:41Z,unpaywall,10.3891/acta.chem.scand.27-2075,http_error,"ConnectionError: HTTPConnectionPool(host='actachemscand.org', port=80): Max retries exceeded with url: /pdf/acta_vol_27_p2075-2082.pdf (Caused by NameResolutionError(""HTTPConnection(host='actachemscand.org', port=80): Failed to resolve 'actachemscand.org' ([Errno 8] nodename nor servname provided, or not known)"")) (http://actachemscand.org/pdf/acta_vol_27_p2075-2082.pdf)"
+2026-10-17T10:20:38Z,unpaywall,10.3390/ijms252312727,http_error,HTTP 403 https://www.mdpi.com/1422-0067/25/23/12727/pdf?version=1732689278
+2026-10-17T10:20:39Z,unpaywall,10.3390/ijms252312727,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC11641643/pdf/ijms-25-12727.pdf
+2026-10-17T10:20:40Z,europepmc,10.3390/ijms252312727,http_error,HTTP 403 https://europepmc.org/articles/PMC11641643?pdf=render
+2026-10-17T10:21:17Z,unpaywall,10.1021/acsomega.3c06994,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acsomega.3c06994
+2026-10-17T10:21:19Z,unpaywall,10.1021/acsomega.3c06994,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC10785783/pdf/ao3c06994.pdf
+2026-10-17T10:21:19Z,europepmc,10.1021/acsomega.3c06994,http_error,HTTP 403 https://europepmc.org/articles/PMC10785783?pdf=render
+2026-10-17T10:21:26Z,unpaywall+wayback,10.1021/acsomega.3c06994,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/acsomega.3c06994
+2026-10-17T10:21:32Z,unpaywall+wayback,10.1021/acsomega.3c06994,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pmc.ncbi.nlm.nih.gov/articles/PMC10785783/pdf/ao3c06994.pdf
+2026-10-17T10:21:39Z,europepmc+wayback,10.1021/acsomega.3c06994,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC10785783?pdf=render
+2026-10-17T10:21:58Z,unpaywall,10.1016/j.jpba.2018.06.015,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:22:15Z,unpaywall,10.3390/app13020776,http_error,HTTP 403 https://www.mdpi.com/2076-3417/13/2/776/pdf?version=1673922406
+2026-10-17T10:23:36Z,unpaywall,10.3891/acta.chem.scand.39a-0093,http_error,"ConnectionError: HTTPConnectionPool(host='actachemscand.org', port=80): Max retries exceeded with url: /pdf/acta_vol_39a_p0093-0107.pdf (Caused by NameResolutionError(""HTTPConnection(host='actachemscand.org', port=80): Failed to resolve 'actachemscand.org' ([Errno 8] nodename nor servname provided, or not known)"")) (http://actachemscand.org/pdf/acta_vol_39a_p0093-0107.pdf)"
+2026-10-17T10:24:38Z,unpaywall,10.1021/ic060014r,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:25:42Z,semanticscholar,catechol pKa determination aqueous ionic strength temperature,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-17T10:29:23Z,unpaywall,10.1016/j.jnoncrysol.2013.12.023,http_error,"ConnectionError: HTTPSConnectionPool(host='api.unpaywall.org', port=443): Max retries exceeded with url: /v2/10.1016/j.jnoncrysol.2013.12.023?email=palaashgang%40gmail.com (Caused by NameResolutionError(""HTTPSConnection(host='api.unpaywall.org', port=443): Failed to resolve 'api.unpaywall.org' ([Errno 8] nodename nor servname provided, or not known)"")) after 6 attempts (https://api.unpaywall.org/v2/10.1016/j.jnoncrysol.2013.12.023)"
+2026-10-17T10:29:28Z,openalex,10.1016/j.jnoncrysol.2013.12.023,http_error,HTTP 403 http://hdl.handle.net/2262/89859
+2026-10-17T10:29:52Z,unpaywall,10.1038/s41557-023-01339-2,http_error,"ConnectionError: HTTPSConnectionPool(host='api.unpaywall.org', port=443): Max retries exceeded with url: /v2/10.1038/s41557-023-01339-2?email=palaashgang%40gmail.com (Caused by NameResolutionError(""HTTPSConnection(host='api.unpaywall.org', port=443): Failed to resolve 'api.unpaywall.org' ([Errno 8] nodename nor servname provided, or not known)"")) after 6 attempts (https://api.unpaywall.org/v2/10.1038/s41557-023-01339-2)"
+2026-10-17T10:30:21Z,unpaywall,10.1021/acs.jpcc.9b11594,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.jpcc.9b11594
+2026-10-17T10:30:30Z,unpaywall+wayback,10.1021/acs.jpcc.9b11594,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/acs.jpcc.9b11594
+2026-10-17T10:30:30Z,fulltext,10.1021/acs.jpcc.9b11594,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-17T10:30:33Z,unpaywall,10.1021/acs.cgd.7b00874,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.cgd.7b00874
+2026-10-17T10:32:05Z,unpaywall,10.1107/s0108768193002575,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:32:08Z,unpaywall,10.1107/s0108768194012474,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:32:18Z,unpaywall,10.1524/zkri.1981.156.3-4.233,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-17T10:32:36Z,fulltext,10.4236/jmp.2013.48155,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-17T10:33:13Z,direct,10.1038/srep02832,http_error,HTTP 503 (https://static-content.springer.com/esm/art%3A10.1038%2Fsrep02832/MediaObjects/41598_2013_BFsrep02832_MOESM1_ESM.pdf)
+2026-10-17T10:34:04Z,unpaywall,10.1021/acs.jpcb.0c01582,http_error,HTTP 403 https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/60c7499c337d6c0c88e27749/original/ion-pairing-and-multiple-ion-binding-in-calcium-carbonate-solutions-based-on-a-polarizable-amoeba-force-field-and-ab-initio-molecular-dynamics.pdf
+2026-10-17T10:34:06Z,unpaywall,10.1021/acs.jpcb.0c01582,parse_error,not a PDF: http://hdl.handle.net/20.500.11937/84792
+2026-10-17T10:34:31Z,openalex,polydopamine adhesion surface forces apparatus alumina mica adhesion energy mJ/m2,not_indexed,no results
+2026-10-17T10:35:08Z,unpaywall,10.1002/adfm.201001270,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.1002/adfm.201001270
+2026-10-17T10:35:09Z,openalex,10.1002/adfm.201001270,not_indexed,HTTP 404 https://api.openalex.org/works/doi:10.1002/adfm.201001270
+2026-10-17T10:35:10Z,fulltext,10.1002/adfm.201001270,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-17T10:35:14Z,unpaywall,10.1021/acsami.4c01740,http_error,HTTP 403 https://escholarship.org/content/qt1q3364vz/qt1q3364vz.pdf
+2026-10-17T10:35:15Z,unpaywall,10.1021/acsami.4c01740,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC11071048/pdf/am4c01740.pdf
+2026-10-17T10:35:16Z,europepmc,10.1021/acsami.4c01740,http_error,HTTP 403 https://europepmc.org/articles/PMC11071048?pdf=render
+2026-10-17T10:36:17Z,unpaywall,10.1093/nsr/nwaa166,http_error,HTTP 403 https://academic.oup.com/nsr/article-pdf/8/1/nwaa166/38882479/nwaa166.pdf
+2026-10-17T10:36:18Z,europepmc,10.1093/nsr/nwaa166,http_error,HTTP 403 https://europepmc.org/articles/PMC8288373?pdf=render
+2026-10-17T10:36:22Z,unpaywall+wayback,10.1093/nsr/nwaa166,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://academic.oup.com/nsr/article-pdf/8/1/nwaa166/38882479/nwaa166.pdf
+2026-10-17T10:36:22Z,europepmc+wayback,10.1093/nsr/nwaa166,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC8288373?pdf=render
+2026-10-17T10:38:28Z,unpaywall,10.1016/j.cis.2017.12.004,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1476427 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x107667d40>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1476427)"
+2026-10-17T10:38:40Z,unpaywall,10.17169/refubium-26561,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.17169/refubium-26561
+2026-10-17T10:38:42Z,openalex,10.17169/refubium-26561,parse_error,not a PDF: https://refubium.fu-berlin.de/handle/fub188/26804
+2026-10-17T10:38:45Z,openalex+wayback,10.17169/refubium-26561,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://refubium.fu-berlin.de/handle/fub188/26804
+2026-10-17T10:38:45Z,fulltext,10.17169/refubium-26561,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-17T10:39:27Z,direct,10.1093/nsr/nwaa166,http_error,HTTP 403 https://europepmc.org/articles/PMC8288373/pdf/nwaa166.pdf
+2026-10-17T10:39:29Z,direct+wayback,10.1093/nsr/nwaa166,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC8288373/pdf/nwaa166.pdf
+2026-10-17T10:39:46Z,unpaywall,10.1103/physrevresearch.4.013232,http_error,HTTP 403 http://link.aps.org/pdf/10.1103/PhysRevResearch.4.013232
+2026-10-17T10:39:52Z,unpaywall+wayback,10.1103/physrevresearch.4.013232,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/http://link.aps.org/pdf/10.1103/PhysRevResearch.4.013232
+2026-10-17T10:39:52Z,fulltext,10.1103/physrevresearch.4.013232,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-17T10:39:56Z,unpaywall,10.1149/1945-7111/abc9a1,parse_error,not a PDF: https://iopscience.iop.org/article/10.1149/1945-7111/abc9a1/pdf
+2026-10-17T10:40:00Z,unpaywall+wayback,10.1149/1945-7111/abc9a1,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1149/1945-7111/abc9a1/pdf
+2026-10-17T10:40:00Z,fulltext,10.1149/1945-7111/abc9a1,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-17T10:40:37Z,openalex,gamma-alumina surface hydroxyl groups mu1 mu2 mu3 distribution quantification 1H NMR DFT hydration,not_indexed,no results
+2026-10-17T10:40:55Z,unpaywall,10.1021/jacs.5c21453,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/jacs.5c21453?ref=article_openPDF
+2026-10-17T10:40:57Z,europepmc,10.1021/jacs.5c21453,http_error,HTTP 403 https://europepmc.org/articles/PMC13220264?pdf=render
+2026-10-17T10:40:59Z,unpaywall+wayback,10.1021/jacs.5c21453,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.acs.org/doi/pdf/10.1021/jacs.5c21453?ref=article_openPDF
+2026-10-17T10:41:01Z,europepmc+wayback,10.1021/jacs.5c21453,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC13220264?pdf=render
+2026-10-17T10:41:07Z,unpaywall,10.1515/ntrev-2022-0536,parse_error,not a PDF: https://www.degruyter.com/document/doi/10.1515/ntrev-2022-0536/pdf
+2026-10-17T10:41:14Z,unpaywall,10.1006/jcat.2002.3741,paywalled,"no open copy on unpaywall, openalex or europepmc"

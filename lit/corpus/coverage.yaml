@@ -1,6 +1,6 @@
-generated_utc: '2026-10-16T20:44:25Z'
+generated_utc: '2026-10-17T10:59:37Z'
 rule: 'covered: >=2 independent sources (distinct DOIs) with numeric rows; single-source: 1; gap: 0'
-rows: 740
+rows: 954
 duplicates_dropped:
 - dropped: TB-011
   kept: TA-006
@@ -576,12 +576,12 @@ targets:
   slugs:
   - hydration_free_energy_ca
   status: covered
-  independent_sources: 4
+  independent_sources: 5
   grades:
     A: 0
     B: 0
     C: 6
-    D: 0
+    D: 1
   best_grade: C
   row_ids:
   - TD-054
@@ -590,7 +590,9 @@ targets:
   - TD-057
   - TE-064
   - TF-051
+  - TK-002
   dois:
+  - 10.1021/acs.inorgchem.0c01821
   - 10.1021/acs.jpcb.0c11077
   - 10.1021/ct400146w
   - 10.1021/ct400751u
@@ -605,11 +607,11 @@ targets:
   slugs:
   - pka_catechol
   status: covered
-  independent_sources: 4
+  independent_sources: 7
   grades:
     A: 0
-    B: 7
-    C: 4
+    B: 10
+    C: 23
     D: 0
   best_grade: B
   row_ids:
@@ -624,11 +626,36 @@ targets:
   - TF-023
   - TF-024
   - TF-025
+  - TM-001
+  - TM-003
+  - TM-005
+  - TM-007
+  - TM-009
+  - TM-010
+  - TM-011
+  - TM-012
+  - TM-013
+  - TM-014
+  - TM-015
+  - TM-016
+  - TM-017
+  - TM-018
+  - TM-019
+  - TM-020
+  - TM-021
+  - TM-022
+  - TM-023
+  - TM-024
+  - TM-025
+  - TM-026
   dois:
+  - 10.1021/acsomega.3c06994
   - 10.1038/s41467-023-36303-8
   - 10.1073/pnas.0605552103
+  - 10.1246/nikkashi1948.90.3_267
   - 10.2116/bunsekikagaku.68.871
   - 10.3389/fchem.2018.00208
+  - 10.3891/acta.chem.scand.27-2075
   rank: 9
   role: protonation correction in Delta_G_seq at the slurry pH (C2) and binding mode in C1
   independent_originals: 3
