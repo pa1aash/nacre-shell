@@ -1,11 +1,11 @@
-# Screen run configuration (P0-W4.2). Methodological settings of the Monte Carlo and the
+# Screen run configuration (P0-W4.2; cp3 registrations and design axes P0-W4.3a). Methodological settings of the Monte Carlo and the
 # sensitivity analysis only: no prior and no threshold lives here (priors come from
 # lit/params.yaml, thresholds from configs/preprint/thresholds.yaml, the copy of
 # theory/thresholds.md). Written before any production output exists (rule R7); P0-W4.3
 # runs the production screens with this file as committed.
 propagation:
-  draws_per_regime: 1048576     # 2^20 >= 10^6 draws per regime (Task 4a)
-  chunk: 131072                 # rows per chunk; the largest input array is chunk x k floats
+  draws_per_regime: 1048576     # 2^20 per registered state: the sizing rule's draw cap (thresholds, cp2)
+  chunk: 16384                  # 2^14 rows per chunk, as the sizing rule registers; chunk x k floats
   seed: 20261017                # root seed; each regime and each chunk draws from its own child
   quantiles: [0.005, 0.025, 0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.975, 0.995]
 sobol:                           # independent marginals (Task 4b)
@@ -25,30 +25,86 @@ shapley:                         # dependent inputs under the stated correlation
 dependence_check: true          # Task 4e: rerun the Shapley ranking under independence
 # Which parameter-table key supplies each chain input (theory symbol -> lit/params.yaml key).
 # The table holds alternatives under one symbol (framings, registered states, competing
-# sources); the screen reads exactly the bound keys. DRAFT, written against lit/params.yaml at
-# 680a44b (P0-W1.2): the choices marked "cp3" are confirmed or replaced at cp3, before W4.3.
-# The framing itself is registered in the table (regimes.R-slurry.parameters.framing).
+# sources); the screen reads exactly the bound keys. A bound key that the table does not hold
+# yet is an explicit gap of the run (named in the output), never a substitute value. Keys
+# marked "pending W1" are the names this configuration expects W1 to add (cp3).
 bindings:
   R-slurry:
     common:
       gamma_sl0: gamma_sl0_template
       gamma_sn0: gamma_sn0_template
       Delta_gamma_w: delta_gamma_w
-      pH: ph_slurry                   # cp3: ph_slurry against ph_slurry_modified
-      pKa: pka_catechol               # cp3: the anchoring template group (catechol); carboxyl is a comparator
+      pH: ph_slurry                   # cp3 R8: pH 10-13 (unmodified slurries) primary
+      pKa: pka_catechol               # cp3 R8: catechol pKa from catechol itself (ionic-strength flag below)
       Delta_G_site: delta_g_site
-      c_bulk: c_bulk_slurry
       Gamma_s: gamma_s_site_density
       delta_s: delta_s
-      a_Ca: a_ca_slurry
-      a_CO3: a_co3_slurry
       J0_het: j0_het
-      N_req: n_req
       gamma_ow: gamma_ow_alumina
       gamma_op: gamma_op
+      # contract v3 speciation: a_Ca, a_CO3 and c_bulk are computed per draw from these
+      I_ionic: ionic_strength_slurry
+      rho_water: water_density
+      pK1_carbonic: pk1_carbonic
+      pK2_carbonic: pk2_carbonic
+      K_CaCO3_aq: log10_k_caco3_aq
+      K_CaHCO3: log10_k_cahco3
+      K_CaOH: log10_k_caoh            # pending W1
+      A_DH: davies_a                  # pending W1
+      b_D: davies_b                   # pending W1
+      I_val: davies_i_val             # pending W1
     by_framing:
       calcite: {gamma_nl: gamma_nl_calcite, V_m: v_m_calcite, K_sp: log10_ksp_calcite}
       ACC: {gamma_nl: gamma_nl_acc, V_m: v_m_acc, K_sp: log10_ksp_acc}
     states:                           # registered R-slurry path (thresholds: worst_state, path_sum)
-      slurry: {T: t_slurry, t_proc: t_proc_slurry}
-      drying: {T: t_drying_primary, t_proc: t_drying_secondary}
+      slurry:
+        T: t_slurry
+        t_proc: t_proc_slurry
+        _fixed: {a_w: 1.0}            # the wet slurry has a_w = 1 by the charter definition (P0-W5.2, F7)
+      drying:
+        T: t_drying_primary
+        t_proc: t_drying_secondary
+        a_w: a_w_slurry               # gap at 680a44b: the drying state is then not evaluable (R7(4))
+
+# cp3 rulings R6 and R8 (planning chat 2026-10-17), as registrations of the run.
+registrations:
+  framings: [calcite, ACC]            # R6: both registered; falsified only under every framing
+  pH: {primary: ph_slurry, sensitivity: ph_slurry_modified}
+  pKa: {key: pka_catechol, flag: 'stated at the ionic strength of its sources, not at the regime I; reported as a flag'}
+  termination_weights: ignorance_mixture   # per-termination verdicts and the simplex, never a point weight
+  truncate: {gamma_sl0: {low: 0.0}}   # gamma_sl0 >= 0; --untruncated reports the untruncated sensitivity
+  R-cell:
+    gated_phases: [CaCO3, corundum, boehmite]
+    never_pass_sinks: [LiBOB, LiPCP]  # sink thermochemistry undetermined: never a pass
+    schemes: {governing: expt, comparators: [janaf, mp]}
+    margin_key: thresholds.C5.margin_expt   # R2: the experimental uncertainty budget (pending W1)
+
+# Design axes (gap policy (ii), cp3 R8: W5's grids). Values are design registrations, not
+# literature values; axes given by a table key take its sourced points.
+design_axes:
+  Ca_T: {unit: mol dm^-3, values: [1.0e-6, 1.0e-5, 1.0e-4, 1.0e-3, 1.0e-2, 1.0e-1],
+         source: 'P0-W5.2 provisional a_Ca grid, one point per decade, read as the total dissolved Ca dose'}
+  C_T: {params: dic_slurry, at: [min, value, max]}
+  Al_T: {unit: mol dm^-3, values: [1.0e-8, 1.0e-6, 1.0e-4], use: 'Pourbaix Al-phase baseline (W5) only'}
+  E_cell_max: {params: e_cell_max, at: [min, value, max], keyed_to: 'cathode class (charge cut-off), from LFP to LNMO'}
+  R_A_max: {params: r_a_max, at: [value]}     # cp3 R7(2): design axis; registration pending
+  j_req: {params: j_req, at: [value]}         # cp3 R7(2): design axis; registration pending
+
+# cp3 R1: the Omega falsifiability control at W5's sourced dissolving condition (P0-W5.2,
+# Task B): it must report dissolution (Omega_bulk < 1 at the credible level).
+omega_control:
+  source: P0-W5.2 falsifiability control (calcite, undersaturated)
+  inputs:
+    pH: {params: ph_slurry_modified, at: min}
+    C_T: {params: dic_slurry, at: min}
+    Ca_T: {value: 1.0e-6, unit: mol dm^-3}
+
+# Prior sets, selectable per run (--prior-set) and labelled in every output (cp3 R8, gap policy).
+prior_sets:
+  table: {}
+  ignorance:                          # theory/ignorance_priors.md: uniform on [0, sum of the dry energies]
+    gamma_sn0: {bounds: {gamma_p: gamma_p_pda, gamma_nv: {calcite: gamma_nv_calcite, ACC: gamma_nv_acc}}}
+    gamma_ow: {bounds: {gamma_o: gamma_o_alumina, gamma_w: gamma_w}}
+    gamma_op: {bounds: {gamma_o: gamma_o_alumina, gamma_p: gamma_p_pda}}
+  analog:                             # flagged analog priors, run side by side; none registered yet
+    bindings: {}

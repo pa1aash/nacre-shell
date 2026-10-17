@@ -1,0 +1,1008 @@
+# MOCK PARAMETER TABLE in the key names of lit/params.yaml (P0-W4.3a), for dry runs of the bound
+# path: contract v3 speciation, the ignorance priors, both framings, both registered states, the
+# design axes and the cp3 decision rules. Synthetic round numbers chosen only to lie inside each
+# input's physical domain; they are not literature values, carry no physical meaning and never
+# feed a reported result (rule R-dry). The adapter refuses this file unless allow_mock / --mock is
+# given, and dry runs write only under results/preprint/screen/dryrun/ (git-ignored).
+mock: true
+meta:
+  session: P0-W4.3a
+  note: synthetic table in the key names of lit/params.yaml, for dry runs of the bound path
+params:
+  gamma_nl_calcite:
+    symbol: gamma_nl
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 0.1
+      high: 0.3
+    sources: []
+    correlation_group: young
+    value: 0.2
+    range:
+      min: 0.1
+      max: 0.3
+  gamma_nl_acc:
+    symbol: gamma_nl
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 0.01
+      high: 0.03
+    sources: []
+    correlation_group: young
+    value: 0.02
+    range:
+      min: 0.01
+      max: 0.03
+  gamma_sl0_template:
+    symbol: gamma_sl0
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: -0.02
+      high: 0.05
+    sources: []
+    correlation_group: young
+    value: 0.015000000000000001
+    range:
+      min: -0.02
+      max: 0.05
+  gamma_sn0_template:
+    symbol: gamma_sn0
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id001
+      family: none
+    sources: []
+    correlation_group: null
+    value: null
+  delta_gamma_w:
+    symbol: Delta_gamma_w
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: *id001
+    sources: []
+    correlation_group: null
+    value: null
+  v_m_calcite:
+    symbol: V_m
+    transform: none
+    unit: m^3 mol^-1
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 3.0e-05
+      high: 4.0e-05
+    sources: []
+    correlation_group: null
+    value: 3.5000000000000004e-05
+    range:
+      min: 3.0e-05
+      max: 4.0e-05
+  v_m_acc:
+    symbol: V_m
+    transform: none
+    unit: m^3 mol^-1
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 4.0e-05
+      high: 5.0e-05
+    sources: []
+    correlation_group: null
+    value: 4.5e-05
+    range:
+      min: 4.0e-05
+      max: 5.0e-05
+  log10_ksp_calcite:
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: -9.0
+      high: -8.0
+    sources: []
+    correlation_group: null
+    value: -8.5
+    range:
+      min: -9.0
+      max: -8.0
+  log10_ksp_acc:
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: -7.0
+      high: -6.0
+    sources: []
+    correlation_group: null
+    value: -6.5
+    range:
+      min: -7.0
+      max: -6.0
+  ph_slurry:
+    symbol: pH
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id012
+      family: uniform
+      low: 10.0
+      high: 13.0
+    sources: []
+    correlation_group: null
+    value: 11.5
+    range:
+      min: 10.0
+      max: 13.0
+  ph_slurry_modified:
+    symbol: pH
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 6.0
+      high: 12.0
+    sources: []
+    correlation_group: null
+    value: 9.0
+    range:
+      min: 6.0
+      max: 12.0
+  pka_catechol:
+    symbol: pKa
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 9.0
+      high: 9.5
+    sources: []
+    correlation_group: null
+    value: 9.25
+    range:
+      min: 9.0
+      max: 9.5
+  delta_g_site:
+    symbol: Delta_G_site
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: -30000.0
+      high: -5000.0
+    sources: []
+    correlation_group: null
+    value: -17500.0
+    range:
+      min: -30000.0
+      max: -5000.0
+  gamma_s_site_density:
+    symbol: Gamma_s
+    transform: none
+    unit: mol m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 1.0e-06
+      high: 5.0e-06
+    sources: []
+    correlation_group: null
+    value: 3.0e-06
+    range:
+      min: 1.0e-06
+      max: 5.0e-06
+  delta_s:
+    symbol: delta_s
+    transform: none
+    unit: m
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 3.0e-10
+      high: 1.0e-09
+    sources: []
+    correlation_group: null
+    value: 6.5e-10
+    range:
+      min: 3.0e-10
+      max: 1.0e-09
+  j0_het:
+    symbol: J0_het
+    transform: none
+    unit: m^-2 s^-1
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id010
+      family: loguniform
+      low: 10000000000.0
+      high: 1.0e+20
+    sources: []
+    correlation_group: null
+    value: null
+  gamma_ow_alumina:
+    symbol: gamma_ow
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: *id001
+    sources: []
+    correlation_group: null
+    value: null
+  gamma_op:
+    symbol: gamma_op
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: *id001
+    sources: []
+    correlation_group: null
+    value: null
+  ionic_strength_slurry:
+    symbol: I_ionic
+    transform: none
+    unit: mol kg^-1
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 0.01
+      high: 0.2
+    sources: []
+    correlation_group: null
+    value: 0.10500000000000001
+    range:
+      min: 0.01
+      max: 0.2
+  water_density:
+    symbol: rho_water
+    transform: none
+    unit: kg m^-3
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: fixed
+      value: 1000.0
+    sources: []
+    correlation_group: null
+    value: 1000.0
+  pk1_carbonic:
+    symbol: pK1_carbonic
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 6.0
+      high: 6.5
+    sources: []
+    correlation_group: null
+    value: 6.25
+    range:
+      min: 6.0
+      max: 6.5
+  pk2_carbonic:
+    symbol: pK2_carbonic
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 10.0
+      high: 10.5
+    sources: []
+    correlation_group: null
+    value: 10.25
+    range:
+      min: 10.0
+      max: 10.5
+  log10_k_caco3_aq:
+    symbol: K_CaCO3_aq
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 3.0
+      high: 3.5
+    sources: []
+    correlation_group: null
+    value: 3.25
+    range:
+      min: 3.0
+      max: 3.5
+  log10_k_cahco3:
+    symbol: K_CaHCO3
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 1.0
+      high: 1.5
+    sources: []
+    correlation_group: null
+    value: 1.25
+    range:
+      min: 1.0
+      max: 1.5
+  log10_k_caoh:
+    symbol: K_CaOH
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: -13.0
+      high: -12.5
+    sources: []
+    correlation_group: null
+    value: -12.75
+    range:
+      min: -13.0
+      max: -12.5
+  davies_a:
+    symbol: A_DH
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: fixed
+      value: 0.5
+    sources: []
+    correlation_group: null
+    value: 0.5
+  davies_b:
+    symbol: b_D
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: fixed
+      value: 0.3
+    sources: []
+    correlation_group: null
+    value: 0.3
+  davies_i_val:
+    symbol: I_val
+    transform: none
+    unit: mol kg^-1
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: fixed
+      value: 0.5
+    sources: []
+    correlation_group: null
+    value: 0.5
+  t_slurry:
+    symbol: T
+    transform: none
+    unit: K
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 290.0
+      high: 300.0
+    sources: []
+    correlation_group: null
+    value: 295.0
+    range:
+      min: 290.0
+      max: 300.0
+  t_proc_slurry:
+    symbol: t_proc
+    transform: none
+    unit: s
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: loguniform
+      low: 100.0
+      high: 10000.0
+    sources: []
+    correlation_group: null
+    value: null
+  t_drying_primary:
+    symbol: T
+    transform: none
+    unit: K
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 330.0
+      high: 370.0
+    sources: []
+    correlation_group: null
+    value: 350.0
+    range:
+      min: 330.0
+      max: 370.0
+  t_drying_secondary:
+    symbol: t_proc
+    transform: none
+    unit: s
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: loguniform
+      low: 100.0
+      high: 1000.0
+    sources: []
+    correlation_group: null
+    value: null
+  a_w_slurry:
+    symbol: a_w
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 0.5
+      high: 0.9
+    sources: []
+    correlation_group: null
+    value: 0.7
+    range:
+      min: 0.5
+      max: 0.9
+  dic_slurry:
+    symbol: C_T
+    transform: none
+    unit: mol m^-3
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 5.0
+      high: 20.0
+    sources: []
+    correlation_group: null
+    value: 10.0
+    range:
+      min: 5.0
+      max: 20.0
+  gamma_p_pda:
+    symbol: gamma_p
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 0.04
+      high: 0.06
+    sources: []
+    correlation_group: null
+    value: 0.05
+    range:
+      min: 0.04
+      max: 0.06
+  gamma_nv_calcite:
+    symbol: gamma_nv
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 0.3
+      high: 0.5
+    sources: []
+    correlation_group: null
+    value: 0.4
+    range:
+      min: 0.3
+      max: 0.5
+  gamma_nv_acc:
+    symbol: gamma_nv
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 0.1
+      high: 0.2
+    sources: []
+    correlation_group: null
+    value: 0.15000000000000002
+    range:
+      min: 0.1
+      max: 0.2
+  gamma_o_alumina:
+    symbol: gamma_o
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 0.5
+      high: 0.7
+    sources: []
+    correlation_group: null
+    value: 0.6
+    range:
+      min: 0.5
+      max: 0.7
+  gamma_w:
+    symbol: gamma_w
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior:
+      family: uniform
+      low: 0.07
+      high: 0.075
+    sources: []
+    correlation_group: null
+    value: 0.07250000000000001
+    range:
+      min: 0.07
+      max: 0.075
+  delta_f_pmf:
+    symbol: Delta_F_pmf
+    transform: none
+    unit: J
+    regimes:
+    - R-slurry
+    status: mock
+    prior: *id001
+    sources: []
+    correlation_group: null
+    value: null
+  a_c:
+    symbol: A_c
+    transform: none
+    unit: m^2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: *id001
+    sources: []
+    correlation_group: null
+    value: null
+  e_cell_max:
+    symbol: E_cell_max
+    transform: &id002
+    - R-cell
+    unit: V
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id014
+      family: uniform
+      low: 3.5
+      high: 5.0
+    sources: []
+    correlation_group: null
+    value: 4.2
+    range:
+      min: 3.5
+      max: 5.0
+  e_cell_min:
+    symbol: E_cell_min
+    transform: *id002
+    unit: V
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id015
+      family: uniform
+      low: 2.5
+      high: 3.0
+    sources: []
+    correlation_group: null
+    value: 3.0
+    range:
+      min: 2.5
+      max: 3.0
+  r_a_max:
+    symbol: R_A_max
+    transform: *id002
+    unit: ohm m^2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id016
+      family: fixed
+      value: 0.001
+    sources: []
+    correlation_group: null
+    value: 0.001
+  j_req:
+    symbol: j_req
+    transform: *id002
+    unit: A m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id017
+      family: fixed
+      value: 10.0
+    sources: []
+    correlation_group: null
+    value: 10.0
+  rho_e_caco3:
+    symbol: rho_e
+    transform: *id002
+    unit: ohm m
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id018
+      family: loguniform
+      low: 100000000.0
+      high: 1000000000000.0
+    sources: []
+    correlation_group: null
+    value: 10000000000.0
+  phi_b_caco3:
+    symbol: phi_B
+    transform: *id002
+    unit: J
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id019
+      family: uniform
+      low: 3.0e-19
+      high: 6.0e-19
+    sources: []
+    correlation_group: null
+    value: 4.5e-19
+    range:
+      min: 3.0e-19
+      max: 6.0e-19
+  m_eff_tunnel:
+    symbol: m_eff
+    transform: *id002
+    unit: kg
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id020
+      family: fixed
+      value: 5.0e-31
+    sources: []
+    correlation_group: null
+    value: 5.0e-31
+  j_0_tunnel:
+    symbol: j_0
+    transform: *id002
+    unit: A m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id021
+      family: loguniform
+      low: 100000000.0
+      high: 1000000000000.0
+    sources: []
+    correlation_group: null
+    value: 10000000000.0
+  p_cred:
+    symbol: p_cred
+    transform: none
+    unit: '1'
+    regimes:
+    - shared
+    status: mock
+    prior: *id001
+    sources: []
+    correlation_group: null
+    value: null
+  m_cos:
+    symbol: m_cos
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior: *id001
+    sources: []
+    correlation_group: null
+    value: null
+  m_s:
+    symbol: m_S
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id006
+      family: fixed
+      value: 0.0
+    sources: []
+    correlation_group: null
+    value: 0.0
+  m_w_adh_wet:
+    symbol: m_W
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id004
+      family: fixed
+      value: 0.0
+    sources: []
+    correlation_group: null
+    value: 0.0
+  m_seq_method_error:
+    symbol: m_seq
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id005
+      family: uniform
+      low: 5000.0
+      high: 8000.0
+    sources: []
+    correlation_group: null
+    value: 6500.0
+    range:
+      min: 5000.0
+      max: 8000.0
+  patch_area:
+    symbol: A_patch
+    transform: none
+    unit: m^2
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id009
+      family: fixed
+      value: 1.0e-12
+    sources: []
+    correlation_group: null
+    value: 1.0e-12
+  formation_energy_mae:
+    symbol: e_form
+    transform: &id003
+    - shared
+    unit: J mol^-1
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id007
+      family: fixed
+      value: 5000.0
+    sources: []
+    correlation_group: null
+    value: 5000.0
+  acc_offset:
+    symbol: Delta_ACC
+    transform: *id003
+    unit: J mol^-1
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id011
+      family: fixed
+      value: 10000.0
+    sources: []
+    correlation_group: null
+    value: 10000.0
+  e_she_slurry:
+    symbol: E_SHE
+    transform: none
+    unit: V
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id013
+      family: uniform
+      low: -1.5
+      high: -0.5
+    sources: []
+    correlation_group: null
+    value: -1.0
+    range:
+      min: -1.5
+      max: -0.5
+  margin_expt:
+    symbol: m_expt
+    transform: *id002
+    unit: V
+    regimes:
+    - R-slurry
+    status: mock
+    prior: &id008
+      family: fixed
+      value: 0.1
+    sources: []
+    correlation_group: null
+    value: 0.1
+  termination_weights:
+    symbol: termination_weights
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: mock
+    prior: *id001
+    sources: []
+    correlation_group: null
+    value: null
+correlation_groups:
+  young:
+    members:
+    - gamma_nl_calcite
+    - gamma_nl_acc
+    - gamma_sl0_template
+    kind: rank
+    matrix:
+    - - 1.0
+      - 0.0
+      - 0.3
+    - - 0.0
+      - 1.0
+      - 0.3
+    - - 0.3
+      - 0.3
+      - 1.0
+    sources:
+    - mock
+    reason: synthetic correlation exercising the copula
+thresholds:
+  decision:
+    credible_level:
+      key: p_cred
+      prior: *id001
+  C1:
+    margin_W_adh_wet:
+      key: m_w_adh_wet
+      prior: *id004
+  C2:
+    margin_DG_seq:
+      key: m_seq_method_error
+      prior: *id005
+  C3:
+    margin_cos_theta:
+      key: m_cos
+      prior: *id001
+  C4:
+    margin_S_spread:
+      key: m_s
+      prior: *id006
+  C5:
+    formation_energy_error:
+      key: formation_energy_mae
+      prior: *id007
+    margin_expt:
+      key: margin_expt
+      prior: *id008
+regimes:
+  R-slurry:
+    parameters:
+      patch_area:
+        key: patch_area
+        prior: *id009
+      J0_het:
+        key: j0_het
+        prior: *id010
+      ACC_offset:
+        key: acc_offset
+        prior: *id011
+      pH_range:
+        key: ph_slurry
+        prior: *id012
+      E_SHE_range:
+        key: e_she_slurry
+        prior: *id013
+      termination_weights:
+        key: termination_weights
+        prior: *id001
+  R-cell:
+    parameters:
+      E_max:
+        key: e_cell_max
+        prior: *id014
+      E_min:
+        key: e_cell_min
+        prior: *id015
+      R_A_max:
+        key: r_a_max
+        prior: *id016
+      j_req:
+        key: j_req
+        prior: *id017
+      rho_e:
+        key: rho_e_caco3
+        prior: *id018
+      phi_B:
+        key: phi_b_caco3
+        prior: *id019
+      m_eff:
+        key: m_eff_tunnel
+        prior: *id020
+      j_0:
+        key: j_0_tunnel
+        prior: *id021

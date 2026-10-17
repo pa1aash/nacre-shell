@@ -66,7 +66,6 @@ def test_loader_returns_the_rule_and_its_source(tmp_path):
 
 @pytest.mark.skipif(not (ROOT / thr.THEORY).exists(),
                     reason="theory/thresholds.md is not on this branch yet (W3 sets it at cp2; integration brings it)")
-@pytest.mark.xfail(strict=True, reason="W4.3 absorbs the cp2 thresholds and regenerates the copy (D13)")
 def test_committed_copy_equals_theory_thresholds():
     copy = ROOT / thr.COPY
     assert copy.exists(), "theory/thresholds.md is present but configs/preprint/thresholds.yaml was not copied"

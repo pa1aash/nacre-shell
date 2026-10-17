@@ -129,7 +129,7 @@ def read_table(path, allow_mock=False):
     return doc, "sha256:" + hashlib.sha256(raw).hexdigest()
 
 
-def regime_priors(path, regime, allow_mock=False, bindings=None):
+def regime_priors(path, regime, allow_mock=False, bindings=None, absent="refuse", truncate=None, extra=()):
     """Joint prior of one regime's inputs from the parameter table at path.
 
     Without bindings every key of the regime is read, and a symbol may appear only once.
@@ -137,6 +137,12 @@ def regime_priors(path, regime, allow_mock=False, bindings=None):
     holds alternatives under one symbol (framings, states, competing sources), and the
     binding says which one supplies each chain input. A bound key must exist and carry the
     symbol it is bound to; it need not be marked for the regime (a shared key may serve).
+    With absent="gap" a bound key missing from the table is reported as unsampled (an
+    explicit gap naming the key) instead of refusing the table.
+
+    truncate: {symbol: (low, high)} in SI units, applied by inverse-CDF truncation (cp3 R8).
+    extra: Prior objects added to the joint as independent inputs (design-axis values,
+    auxiliary uniforms of the ignorance priors); never table keys.
     """
     if regime not in REGIMES:
         raise PriorFileError("unknown regime %r" % regime)
@@ -144,8 +150,12 @@ def regime_priors(path, regime, allow_mock=False, bindings=None):
     priors, unsampled, group_of = [], {}, {}
     if bindings is not None:
         missing = sorted(k for k in bindings.values() if k not in doc["params"])
-        if missing:
+        if missing and absent != "gap":
             raise PriorFileError("%s: bound keys not in the table: %s" % (path, missing))
+        for sym, k in bindings.items():
+            if k not in doc["params"]:
+                unsampled[sym] = "gap: bound key %r is not in the table" % k
+        bindings = {sym: k for sym, k in bindings.items() if k in doc["params"]}
         wrong = sorted("%s -> %s (%s)" % (sym, k, doc["params"][k].get("symbol")) for sym, k in bindings.items()
                        if doc["params"][k].get("symbol") != sym)
         if wrong:
@@ -176,9 +186,16 @@ def regime_priors(path, regime, allow_mock=False, bindings=None):
         if not isinstance(unit, str):
             raise PriorFileError("%s: 'unit' is required" % where)
         unit, params = to_si(symbol, unit, transform, params, where)
-        priors.append(Prior(key, symbol, unit, fam, params, ",".join(entry.get("sources") or []), transform))
+        cut = (truncate or {}).get(symbol)
+        priors.append(Prior(key, symbol, unit, fam, params, ",".join(entry.get("sources") or []), transform,
+                            tuple(cut) if cut and fam != "fixed" else None))
         if entry.get("correlation_group"):
             group_of[key] = entry["correlation_group"]
+    for p in extra:
+        if p.symbol in {q.symbol for q in priors}:
+            raise PriorFileError("%s: injected input %s duplicates a table input" % (path, p.symbol))
+        priors.append(p)
+        unsampled.pop(p.symbol, None)
     if not priors:
         raise PriorFileError("%s: regime %s has no sampled or fixed inputs" % (path, regime))
     rs, pairs = _spearman(doc.get("correlation_groups") or {}, priors, group_of, path)

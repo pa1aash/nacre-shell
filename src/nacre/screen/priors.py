@@ -60,6 +60,9 @@ class Prior:
     params: dict
     source: str = ""
     transform: str = "none"
+    #: (low, high) of the physical quantity, either None; draws are confined to it by inverse-CDF
+    #: truncation (cp3 R8: gamma_sl0 >= 0), so the shape inside the bounds is unchanged.
+    truncate: tuple = None
 
     @property
     def is_fixed(self):
@@ -77,9 +80,39 @@ class Prior:
             return np.full(np.shape(u), p["value"], dtype=float)
         raise PriorFileError("unknown distribution %r" % self.distribution)
 
+    def _stated_cdf(self, y):
+        p = self.params
+        if self.distribution == "uniform":
+            return np.clip((y - p["low"]) / (p["high"] - p["low"]), 0.0, 1.0)
+        if self.distribution == "loguniform":
+            return np.clip(np.log(y / p["low"]) / np.log(p["high"] / p["low"]), 0.0, 1.0) if y > 0 else 0.0
+        if self.distribution == "normal":
+            return special.ndtr((y - p["mean"]) / p["sd"])
+        raise PriorFileError("a fixed prior cannot be truncated")
+
+    def truncated_mass(self):
+        """Prior mass kept by the truncation (1 without one)."""
+        lo, hi = self._cdf_bounds()
+        return float(hi - lo)
+
+    def _cdf_bounds(self):
+        if not self.truncate:
+            return 0.0, 1.0
+        lo, hi = self.truncate
+        to_stated = (lambda v: np.log10(v)) if self.transform == "log10" else (lambda v: v)
+        a = 0.0 if lo is None else float(self._stated_cdf(to_stated(lo)))
+        b = 1.0 if hi is None else float(self._stated_cdf(to_stated(hi)))
+        if not b > a:
+            raise PriorFileError("%s: the truncation %r keeps no prior mass" % (self.name, self.truncate))
+        return a, b
+
     def ppf(self, u):
         """Physical value at cumulative probability u in (0, 1) (inverse CDF, SI units)."""
-        y = self._stated_ppf(np.asarray(u, dtype=float))
+        u = np.asarray(u, dtype=float)
+        if self.truncate:
+            a, b = self._cdf_bounds()
+            u = a + u * (b - a)
+        y = self._stated_ppf(u)
         return 10.0 ** y if self.transform == "log10" else y
 
     def sample(self, rng, n):

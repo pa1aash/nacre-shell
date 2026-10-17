@@ -51,6 +51,25 @@ class BoundaryMass:
 EMPTY = BoundaryMass(0, 0, 0)
 
 
+@dataclass(frozen=True)
+class RefusedMass:
+    """Draws refused because an input left the registered validity range of a model
+    (for example the Davies activity model above I_val); refused draws are NaN, never
+    extrapolated, and are counted here."""
+    n_evaluated: int
+    n_refused: int
+    reason: str = ""
+
+    def __add__(self, other):
+        return RefusedMass(self.n_evaluated + other.n_evaluated, self.n_refused + other.n_refused,
+                           self.reason or other.reason)
+
+    def as_dict(self):
+        return {"n_evaluated": self.n_evaluated, "n_refused": self.n_refused,
+                "fraction_refused": self.n_refused / self.n_evaluated if self.n_evaluated else 0.0,
+                "reason": self.reason}
+
+
 def clip_cos_theta(ratio):
     """Clip a Young ratio to a contact-angle cosine in [-1, 1] and count the clipped draws.
 

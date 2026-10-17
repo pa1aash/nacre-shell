@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from nacre.screen import chain, decision, params_adapter, propagate, shapley, sobol, summary
+from nacre.screen import chain, decision, params_adapter, propagate, shapley, sobol, study, summary
 from nacre.screen import thresholds as thr
 
 CONFIG = Path("configs") / "preprint" / "screen.yaml"
@@ -62,20 +62,40 @@ def _inside(path, directory):
         return False
 
 
+def _sampled(names, s):
+    """Replace derived symbols by the sampled inputs they come from (speciation, ignorance)."""
+    out = []
+    for k in names:
+        if k in s:
+            out.append(k)
+        elif k in ("a_Ca", "a_CO3", "c_bulk") and s >= set(chain.SPECIATION_INPUTS):
+            out.extend(chain.SPECIATION_INPUTS)
+        elif k in chain.IGNORANCE and chain.IGNORANCE[k][0] in s:
+            out.extend([chain.IGNORANCE[k][0], *chain.IGNORANCE[k][1]])
+        elif k == "Delta_gamma_w" and chain.IGNORANCE["gamma_sn0"][0] in s:
+            continue
+        else:
+            out.append(k)
+    return list(dict.fromkeys(out))
+
+
 def link_inputs(link, symbols):
-    """Theory symbols a link reads (nucleate includes the upstream cycle when gamma_sl0 is given)."""
+    """Sampled symbols a link reads (nucleate includes the upstream cycle when gamma_sl0 is given)."""
     s = set(symbols)
-    seq = list(chain.SEQ_CYCLE_INPUTS) if s >= set(chain.SEQ_CYCLE_INPUTS) else ["Delta_G_seq"]
+    d = chain.derived_symbols(s)
+    seq = list(chain.SEQ_CYCLE_INPUTS) if d >= set(chain.SEQ_CYCLE_INPUTS) else ["Delta_G_seq"]
     seq = [k for k in dict.fromkeys(seq + list(chain.SEQ_LOCAL_INPUTS))]
     if link == "anchor":
-        return list(chain.ANCHOR_INPUTS)
+        return _sampled(list(chain.PMF_INPUTS) if d >= set(chain.PMF_INPUTS) else list(chain.ANCHOR_INPUTS), s)
+    if link == "speciation":
+        return list(chain.SPECIATION_INPUTS)
     if link == "sequester":
-        return seq
+        return _sampled(seq, s)
     if link == "nucleate":
-        access = [k for k in chain.ACCESS_INPUTS if k in s]
-        if chain.template_energy_mode(s) == "ca_free":
-            return [k for k in dict.fromkeys(seq + list(chain.NUC_BASE) + ["gamma_sl0"] + access)]
-        return list(chain.NUC_BASE) + ["gamma_sl"] + access
+        access = [k for k in chain.ACCESS_INPUTS if k in d]
+        if chain.template_energy_mode(d) == "ca_free":
+            return _sampled(seq + list(chain.NUC_BASE) + ["gamma_sl0"] + access, s)
+        return _sampled(list(chain.NUC_BASE) + ["gamma_sl"] + access, s)
     raise KeyError(link)
 
 
@@ -151,7 +171,9 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
                          "evaluations": sum(d["evaluations"] for d in designs),
                          "bootstrap_resamples": int(sc["bootstrap"]), "confidence_level": float(sc["confidence"])},
         "parameters": joint.names, "links": out_links,
-        "boundary_mass": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items() if lk in out_links},
+        "boundary_mass": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items()
+                          if lk in out_links and lk != "speciation"},
+        "refused": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items() if lk == "speciation"} or None,
         "dependence": joint.dependence_record(),
         "dependence_check": {"alternative": "independent", "rank_agreement": agreement} if agreement else None,
         "convergence": {
@@ -166,82 +188,56 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
     return (regime, outputs) if return_outputs else regime
 
 
-def _state_samples(outputs):
-    """Decision-rule samples of one state: the chain outputs keyed by quantity."""
-    s = {}
-    for q, (link, name) in decision.QUANTITY_SOURCE.items():
-        if link in outputs and name in outputs[link]:
-            s[q] = outputs[link][name]
-    if "nucleate" in outputs:
-        s["cos_theta"] = outputs["nucleate"]["cos_theta"]
-    return s
-
-
-def evaluate_claims(rule, slurry_states, resolver, stability=None, control_fails_where_it_must=None,
-                    solid_salt_registered=False):
-    """C1 to C5 under the frozen rule. C1 to C4 read the R-slurry draws of every registered state
-    ({state: chain outputs}); C5 reads the deterministic stability section when given."""
-    states = {sid: _state_samples(o) for sid, o in (slurry_states or {}).items()}
-    claims = {}
-    for claim in ("C1", "C2", "C3", "C4"):
-        need = {t["quantity"] for t in rule["links"][claim]["tests"]}
-        if states and all(q in st for st in states.values() for q in need):
-            claims[claim] = decision.evaluate_link(rule, claim, states, resolver)
-        else:
-            claims[claim] = {"verdict": "inconclusive", "tests": {}, "falsified_mass": None}
-    if stability is not None:
-        claims["C5"] = decision.evaluate_c5(rule, stability, resolver, control_fails_where_it_must, solid_salt_registered)
-    else:
-        claims["C5"] = {"verdict": "inconclusive", "tests": {}, "falsified_mass": None}
-    return claims
-
-
 def _attach_link_records(regimes_out, claims):
-    """Each test record also goes to threshold_evaluation of the link that carries its quantity."""
+    """Each test record of the detail point also goes to threshold_evaluation of the link carrying it."""
     reg = regimes_out.get("R-slurry")
     if reg is None:
         return
     for claim, rec in claims.items():
-        for tid, t in rec["tests"].items():
+        for tid, t in (rec.get("tests") or {}).items():
             src = decision.QUANTITY_SOURCE.get(t.get("quantity"))
             if src and src[0] in reg["links"]:
                 ev = reg["links"][src[0]]["threshold_evaluation"] or {}
-                ev["%s.%s" % (claim, tid)] = t
+                ev["%s.%s" % (claim, tid)] = {k: v for k, v in t.items() if k in ("verdict", "P_good", "P_bad", "edge",
+                                                                                "edge_expression", "gap", "notes")}
                 reg["links"][src[0]]["threshold_evaluation"] = ev
 
 
 FRAMING_KEY = "regimes.R-slurry.parameters.framing"
 
 
-def load_states(params_path, regime, cfg, allow_mock, framing=None, dry_run=True):
-    """[(state, RegimePriors)] of one regime.
+def load_states(params_path, regime, cfg, allow_mock, framing=None, dry_run=True, prior_set="table",
+                truncation=True):
+    """[(state, RegimePriors)] of one regime at the primary framing and the central design point.
 
-    A mock table is read whole as one state. The parameter table is read through the
-    bindings of configs/preprint/screen.yaml: the common keys, the keys of the registered
-    framing and the keys of each registered state. Regimes without bindings, or whose bound
-    keys are all unsampled, give no state.
+    A mock table without bindings is read whole as one state. Otherwise the table is read
+    through the bindings of configs/preprint/screen.yaml (nacre.screen.study.load_point). The
+    framings are registered in screen.yaml (cp3 R6); a framing passed explicitly selects one.
     """
     doc, _ = params_adapter.read_table(params_path, allow_mock)
     b = (cfg.get("bindings") or {}).get(regime)
     try:
-        if doc["mock"]:
+        if doc["mock"] and not study.bound_table(doc, b):
             return [("default", params_adapter.regime_priors(params_path, regime, allow_mock))]
         if not b:
             return []
-        registered = decision.Resolver.from_table(doc)
-        fr = registered.value(FRAMING_KEY) if registered.has(FRAMING_KEY) else None
-        if fr is None:
-            if not dry_run or framing is None:
-                raise ProductionRefused("the framing (%s) is not registered in the table%s"
+        frs = [framing] if framing else list((cfg.get("registrations") or {}).get("framings") or [])
+        if not frs:
+            registered = decision.Resolver.from_table(doc)
+            fr = registered.value(FRAMING_KEY) if registered.has(FRAMING_KEY) else None
+            if fr is None:
+                raise ProductionRefused("the framing (%s) is not registered%s"
                                         % (FRAMING_KEY, "" if not dry_run else "; pass framing for a dry run"))
-            fr = framing
-        if fr not in b["by_framing"]:
-            raise params_adapter.PriorFileError("no bindings for framing %r" % fr)
-        out = []
-        for state, sb in (b.get("states") or {"default": {}}).items():
-            bind = {**(b.get("common") or {}), **b["by_framing"][fr], **(sb or {})}
-            out.append((state, params_adapter.regime_priors(params_path, regime, allow_mock, bindings=bind)))
-        return out
+            frs = [fr]
+        if frs[0] not in b["by_framing"]:
+            raise params_adapter.PriorFileError("no bindings for framing %r" % frs[0])
+        resolver = decision.Resolver.from_table(doc)
+        try:
+            pts = study.design_points(cfg, resolver)
+        except decision.Gap:
+            pts = []
+        design = pts[len(pts) // 2][1] if pts else {}
+        return study.load_point(params_path, cfg, frs[0], design, allow_mock, prior_set, truncation, regime)
     except params_adapter.PriorFileError as exc:
         if "no sampled or fixed inputs" in str(exc):
             return []
@@ -277,7 +273,8 @@ def run_states(states, cfg, seed, dependence_check, thresholds, independence, fu
                 "quantities": {lk: {q: {"symbol": chain.OUTPUTS[lk][q].symbol, "units": chain.OUTPUTS[lk][q].units,
                                         **propagate.describe(v, levels)}
                                     for q, v in d.items() if np.any(np.isfinite(v))} for lk, d in o.items()},
-                "boundary_mass": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items()},
+                "boundary_mass": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items()
+                                  if lk != "speciation"},
                 "unsampled": dict(rp.unsampled)}
     return entry, outs
 
@@ -332,69 +329,82 @@ def production_guard(root, rp_list, out_path, thresholds_path=THRESHOLDS):
 
 def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_run=True, allow_mock=False,
         config_path=CONFIG, independence=False, dependence_check=None, overrides=None, stability_path=None,
-        controls=None, control_fails_where_it_must=None, solid_salt_registered=False, framing=None):
+        cell_paths=None, controls=None, framing=None, prior_set="table", truncation=True, decide=True,
+        decision_draws=None):
     """Run the screen and write the results document; returns (path, doc).
 
-    framing: the registered framing comes from the table
-    (regimes.R-slurry.parameters.framing); a dry run may pass one while it is unregistered.
+    The sensitivity analysis runs at the primary framing and the central design point. The
+    decision layer (nacre.screen.study) runs over every design point, registered framing and
+    registered state; in a dry run its claims are mock like the rest of the document.
 
-    Production only: stability_path is a results document with the C5 stability section
-    (lane p0-w5); controls maps each deletion-test control (bare_oxide, PVDF) to the
-    parameter table of the screen rerun with that control in place of the template.
+    framing: one framing for a dry run (the registered set is in screen.yaml). prior_set:
+    table | ignorance | analog (labelled in the output). truncation: False reports the
+    untruncated gamma_sl0 sensitivity. stability_path: a W5 document with the R-slurry
+    Pourbaix section; cell_paths: W5's per-sink R-cell documents; controls: {control: table}
+    for the deletion test (bare_oxide, PVDF).
     """
     root = Path(root)
     out_path = Path(out_path)
     cfg_path = root / config_path
     cfg = load_config(root, config_path)
     for section, values in (overrides or {}).items():
-        cfg[section] = {**cfg[section], **values}
+        cfg[section] = {**(cfg.get(section) or {}), **values}
     params_path = Path(params_path) if params_path else root / params_adapter.PRODUCTION_PARAMS
     if not dry_run:
         _inputs_frozen(root)
-    loaded = {r: load_states(params_path, r, cfg, allow_mock, framing, dry_run) for r in regimes}
+    _sizing_caps(cfg)
+    loaded = {r: load_states(params_path, r, cfg, allow_mock, framing, dry_run, prior_set, truncation) for r in regimes}
     rp_list = [rp for states in loaded.values() for _, rp in states]
     if not rp_list:
         raise params_adapter.PriorFileError("no regime has sampled inputs in %s" % params_path)
     if dry_run:
         if not _inside(out_path, root / DRYRUN_DIR):
             raise ProductionRefused("dry-run output belongs under %s" % DRYRUN_DIR)
-        thresholds = None
     else:
         production_guard(root, rp_list, out_path)
-        thresholds = thr.load_thresholds(root / THRESHOLDS)
-    seeds = np.random.SeedSequence(cfg["propagation"]["seed"]).spawn(len(params_adapter.REGIMES))
+    thresholds = thr.load_thresholds(root / THRESHOLDS) if (root / THRESHOLDS).exists() else None
+    seeds = np.random.SeedSequence(cfg["propagation"]["seed"]).spawn(len(params_adapter.REGIMES) + 1)
     seed_of = {r: int(s.generate_state(1)[0]) for r, s in zip(params_adapter.REGIMES, seeds)}
-    regimes_out, outputs, not_evaluable = {}, {}, {}
+    regimes_out, not_evaluable = {}, {}
     for regime, states in loaded.items():
-        entry, outs = run_states(states, cfg, seed_of[regime], dependence_check, thresholds, independence)
+        entry, _ = run_states(states, cfg, seed_of[regime], dependence_check, thresholds, independence)
         if entry is None:
             not_evaluable[regime] = {sid: dict(rp.unsampled) for sid, rp in states}
             continue
-        regimes_out[regime], outputs[regime] = entry, outs
-    if not regimes_out:
-        raise params_adapter.PriorFileError(
-            "no link of the chain is evaluable from %s; unsampled inputs: %s" % (params_path, not_evaluable))
-    claims = study = None
-    if thresholds is not None:
+        entry["prior_set"] = prior_set
+        entry["barrier_prefactor"] = barrier_prefactor(states)
+        regimes_out[regime] = entry
+    claims = study_doc = None
+    if thresholds is not None and decide and "R-slurry" in regimes:
         rule = thresholds["rule"]
         resolver = decision.Resolver.from_table(yaml.safe_load(Path(params_path).read_text(encoding="utf-8")))
         stability = (json.loads(Path(stability_path).read_text(encoding="utf-8")).get("stability")
                      if stability_path else None)
-        claims = evaluate_claims(rule, outputs.get("R-slurry"), resolver, stability, control_fails_where_it_must,
-                                 solid_salt_registered)
+        cells = study.load_cells(cell_paths)
+        frs = [framing] if framing else None
+        claims, study_doc, extra = study.evaluate(
+            rule, resolver, params_path, cfg, allow_mock, prior_set, truncation, draws=decision_draws,
+            seed=int(seeds[-1].generate_state(1)[0]), framings=frs, stability=stability, cells=cells)
         _attach_link_records(regimes_out, claims)
-        deletion = None
         if controls:
-            control_claims = {}
-            for name, table in controls.items():
-                c_states = load_states(table, "R-slurry", cfg, False, framing, dry_run)
-                _, c_out = run_states(c_states, cfg, seed_of["R-slurry"], False, None, False, full=False)
-                control_claims[name] = evaluate_claims(rule, c_out, resolver, stability,
-                                                       control_fails_where_it_must, solid_salt_registered)
-            deletion = decision.deletion_test(rule, claims, control_claims, resolver)
-        study = decision.study_verdict(rule, claims, deletion)
+            control_claims = {name: study.evaluate(rule, resolver, table, cfg, False, prior_set, truncation,
+                                                   draws=decision_draws, framings=frs, stability=stability,
+                                                   cells=cells)[0] for name, table in controls.items()}
+            study_doc["deletion_test"] = decision.deletion_test(rule, claims, control_claims, resolver)
+            dt = study_doc["deletion_test"]
+            if study_doc["verdict"] == "feasible" and not dt["holds"]:
+                study_doc["verdict"] = "inconclusive"
+            study_doc["framing"] = None if dt["holds"] else "generic adhesion study"
+        elif study_doc["verdict"] == "feasible":
+            study_doc["verdict"] = "inconclusive"                  # feasible needs the deletion test
+        study_doc["gaps"] = _gaps(claims, extra)
+        study_doc["not_evaluable"] = not_evaluable or None
+    if not regimes_out and claims is None:
+        raise params_adapter.PriorFileError(
+            "no link of the chain is evaluable from %s; unsampled inputs: %s" % (params_path, not_evaluable))
     prov = _provenance(root, cfg, cfg_path, rp_list, THRESHOLDS, dry_run)
-    doc = summary.build(regimes_out, prov, mock=dry_run or any(rp.mock for rp in rp_list), claims=claims, study=study)
+    doc = summary.build(regimes_out or None, prov, mock=dry_run or any(rp.mock for rp in rp_list), claims=claims,
+                        study=study_doc)
     path = summary.write(doc, out_path)
     if not dry_run:
         line = {"kind": "screen", "session": "P0-W4.3", "git_sha": prov["git_sha"], "git_dirty": prov["git_dirty"],
@@ -407,3 +417,49 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
         with ledger.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(line, sort_keys=True) + "\n")
     return path, doc
+
+
+def _gaps(claims, extra):
+    """Every explicit gap of the decision layer, by link and test, plus the unsampled inputs."""
+    out = {}
+    for c, rec in claims.items():
+        g = [rec["gap"]] if rec.get("gap") else []
+        g += ["%s: %s" % (t, r["gap"]) for t, r in (rec.get("tests") or {}).items() if isinstance(r, dict) and r.get("gap")]
+        if g:
+            out[c] = g
+    if extra.get("design_gap"):
+        out["design_axes"] = [extra["design_gap"]]
+    if extra.get("d_max_flags"):
+        out["C4s_d_max"] = list(extra["d_max_flags"])
+    return out
+
+
+def _sizing_caps(cfg):
+    """The sizing rule's caps (thresholds, cp2): at most 2^20 draws per state, chunks of 2^14."""
+    pc = cfg["propagation"]
+    if int(pc["draws_per_regime"]) > 2 ** 20:
+        raise ProductionRefused("draws_per_regime %d exceeds the sizing rule's cap of 2^20 per state"
+                                % pc["draws_per_regime"])
+    if int(pc["chunk"]) > 2 ** 17:
+        raise ProductionRefused("chunk %d exceeds the memory bound of the run" % pc["chunk"])
+
+
+def barrier_prefactor(states):
+    """Fig 5 prefactor: Delta_G*_hom / k_B T = B / ln^2(Omega) at the reference inputs (medians).
+
+    B = 16 pi gamma_nl^3 V_m^2 / (3 N_A^2 (k_B T)^3), at the prior medians of gamma_nl, V_m and T
+    of the primary state; the references are recorded with it.
+    """
+    from nacre.physics.constants import AVOGADRO, BOLTZMANN
+    if not states:
+        return None
+    joint = states[0][1].joint
+    med = {}
+    for sym in ("gamma_nl", "V_m", "T"):
+        if sym not in joint.symbols:
+            return None
+        med[sym] = float(joint.priors[joint.symbols.index(sym)].ppf(0.5))
+    b = 16 * np.pi * med["gamma_nl"] ** 3 * med["V_m"] ** 2 / (3 * AVOGADRO ** 2 * (BOLTZMANN * med["T"]) ** 3)
+    return {"reference_gamma_nl": med["gamma_nl"], "V_m": med["V_m"], "T": med["T"], "B_kT": float(b),
+            "reference": "prior medians of the primary state", "state": states[0][0],
+            "units": {"reference_gamma_nl": "J m^-2", "V_m": "m^3 mol^-1", "T": "K", "B_kT": "1"}}

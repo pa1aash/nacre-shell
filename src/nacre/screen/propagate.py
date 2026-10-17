@@ -29,7 +29,7 @@ def describe(values, levels=QUANTILE_LEVELS):
             "quantiles": {repr(float(p)): float(x) for p, x in zip(levels, q)}}
 
 
-def propagate_chain(evaluate, joint, n, seed, chunk=2 ** 17, key="symbol"):
+def propagate_chain(evaluate, joint, n, seed, chunk=2 ** 17, key="symbol", redraw=(), redraw_seed=None):
     """Monte Carlo propagation of a joint prior through the chain, in seeded chunks.
 
     evaluate: x -> (outputs {link: {quantity: array}}, masses {link: {name: BoundaryMass}})
@@ -39,7 +39,19 @@ def propagate_chain(evaluate, joint, n, seed, chunk=2 ** 17, key="symbol"):
     outputs are kept: one float64 array of n values per quantity.
     Returns (outputs, masses) with outputs {link: {quantity: (n,) array}} and the boundary
     masses summed over chunks.
+
+    Common random numbers: the registered states of a regime are propagated with the same
+    seed, so draw i of every state shares the inputs common to the states and per-draw
+    indicators combine across states (worst state, path sum, joint masses). The inputs
+    named in ``redraw`` (state-specific keys such as T and t_proc) are drawn again from their
+    marginals with redraw_seed, so they are independent between states; an input that is
+    correlated with another cannot be redrawn this way and is refused.
     """
+    idx = [j for j, p in enumerate(joint.priors) if getattr(p, key) in set(redraw)]
+    for j in idx:
+        if np.any(np.delete(joint.spearman[j], j) != 0):
+            raise ValueError("state-specific input %s is correlated with another input" % getattr(joint.priors[j], key))
+    rseqs = np.random.SeedSequence(redraw_seed).spawn((n + chunk - 1) // chunk) if idx else None
     if n < 1:
         raise ValueError("number of draws must be at least 1")
     n_chunks = (n + chunk - 1) // chunk
@@ -48,6 +60,10 @@ def propagate_chain(evaluate, joint, n, seed, chunk=2 ** 17, key="symbol"):
     for c, seq in enumerate(np.random.SeedSequence(seed).spawn(n_chunks)):
         m = min(chunk, n - c * chunk)
         xs = joint.sample(np.random.default_rng(seq), m)
+        if idx:
+            rr = np.random.default_rng(rseqs[c])
+            for j in idx:
+                xs[:, j] = joint.priors[j].ppf(rr.random(m))
         out, mass = evaluate({col: xs[:, j] for j, col in enumerate(cols)})
         if outputs is None:
             outputs = {lk: {q: np.empty(n) for q in d} for lk, d in out.items()}

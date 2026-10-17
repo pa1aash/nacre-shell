@@ -1,0 +1,395 @@
+"""Decision layer of a screen run: design points x framings x registered states (cp3 rulings).
+
+For every design point of the R-slurry design axes (configs/preprint/screen.yaml, CP3-R8:
+total dissolved Ca dose and C_T) and every registered framing (CP3-R6: calcite and ACC), the
+registered states are propagated with common random numbers and the links are evaluated
+under the frozen rule (nacre.screen.decision). The results are reduced, in this order:
+
+  1. states   worst state per test, path sum for C3(b), joint masses draw by draw (R7(1));
+              a registered state that cannot be propagated is missing (R7(4));
+  2. framings falsified only under every framing, feasible under at least one (R6);
+  3. design   the common verdict over the design points, else design-dependent (inconclusive
+              at the headline) with the point-by-point table; C5's Omega test is reported as
+              the dose window (R1).
+
+The prior set is selectable per run and labelled in every output: ``table`` (the parameter
+table as bound), ``ignorance`` (the bounded ignorance priors of theory/ignorance_priors.md for
+the unmeasured interfacial energies) or ``analog`` (flagged analog priors, side by side). A
+verdict that depends on an ignorance prior is never a finding (finding_eligible: false).
+Arrays are released after each (point, framing): only the public records are kept.
+"""
+import itertools
+
+import numpy as np
+import yaml
+
+from nacre.screen import chain, decision, params_adapter, propagate
+from nacre.screen import units
+from nacre.screen.priors import Prior
+
+#: Links whose decisive quantities depend on the gamma_sn ignorance prior (C3, C4) or the C1 comparator.
+IGNORANCE_DEPENDENT = {"C3", "C4"}
+
+
+# ------------------------------------------------------------------ design axes
+
+
+def _axis_values(spec, resolver, si_unit):
+    """Values of one design axis in SI: listed values with a unit, or points of a table key."""
+    if "values" in spec:
+        if spec["values"] is None:
+            raise decision.Gap("design axis has no registered values (%s)" % spec.get("source", "pending"))
+        return [(_label(v, spec), units.convert(float(v), spec.get("unit", si_unit), si_unit)) for v in spec["values"]]
+    key = spec["params"]
+    out = []
+    for at in spec.get("at", ["value"]):
+        if at == "value":
+            v, u = resolver.get(key)
+        else:
+            v, u = resolver.range(key)[at], resolver.get(key)[1]
+        out.append(("%s@%s" % (key, at), units.convert(float(v), u or "1", si_unit)))
+    return out
+
+
+def _label(v, spec):
+    return "%g %s" % (float(v), spec.get("unit", ""))
+
+
+AXIS_UNITS = {"Ca_T": "mol m^-3", "C_T": "mol m^-3", "E_cell_max": "V", "R_A_max": "Ohm m^2", "j_req": "A m^-2"}
+
+
+def design_points(cfg, resolver, axes=("Ca_T", "C_T")):
+    """[(point id, {symbol: SI value}, {axis: label})] of the R-slurry design grid."""
+    spec = (cfg.get("design_axes") or {})
+    lists = []
+    for a in axes:
+        if a not in spec:
+            return []
+        lists.append([(a, lab, v) for lab, v in _axis_values(spec[a], resolver, AXIS_UNITS[a])])
+    pts = []
+    for combo in itertools.product(*lists):
+        pid = "; ".join("%s=%s" % (a, lab) for a, lab, _ in combo)
+        pts.append((pid, {a: v for a, _, v in combo}, {a: lab for a, lab, _ in combo}))
+    return pts
+
+
+def control_point(cfg, resolver):
+    """W5's sourced dissolving condition for the Omega falsifiability control (CP3-R1)."""
+    c = cfg.get("omega_control")
+    if not c:
+        return None
+    vals, labels = {}, {}
+    for sym, spec in c["inputs"].items():
+        unit = AXIS_UNITS.get(sym, "1")
+        if "value" in spec:
+            vals[sym] = units.convert(float(spec["value"]), spec.get("unit", unit), unit)
+            labels[sym] = "%g %s" % (spec["value"], spec.get("unit", ""))
+        else:
+            v = resolver.range(spec["params"])[spec["at"]] if spec["at"] != "value" else resolver.value(spec["params"])
+            vals[sym] = units.convert(float(v), resolver.get(spec["params"])[1] or "1", unit)
+            labels[sym] = "%s@%s" % (spec["params"], spec["at"])
+    return vals, labels
+
+
+def _fixed(symbol, value, unit, source):
+    return Prior("design:" + symbol, symbol, unit, "fixed", {"value": float(value)}, source)
+
+
+def _aux(symbol):
+    return Prior("aux:" + symbol, symbol, "1", "uniform", {"low": 0.0, "high": 1.0},
+                 "ignorance prior auxiliary (theory/ignorance_priors.md)")
+
+
+# ------------------------------------------------------------------ states
+
+
+def bindings_for(cfg, regime, framing, state, prior_set):
+    """The bindings of one (framing, state) under a prior set, and the injected aux inputs."""
+    b = (cfg.get("bindings") or {})[regime]
+    bind = {**(b.get("common") or {}), **b["by_framing"][framing], **((b.get("states") or {}).get(state) or {})}
+    aux = []
+    ps = (cfg.get("prior_sets") or {}).get(prior_set) or {}
+    if prior_set == "ignorance":
+        for target, (u, pair) in chain.IGNORANCE.items():
+            spec = ps.get(target)
+            if not spec:
+                continue
+            for sym, key in spec["bounds"].items():
+                bind[sym] = key[framing] if isinstance(key, dict) else key
+            bind.pop(target, None)
+            if target == "gamma_sn0":
+                bind.pop("Delta_gamma_w", None)
+            aux.append(_aux(u))
+    elif prior_set == "analog":
+        if not ps.get("bindings"):
+            raise params_adapter.PriorFileError("prior set 'analog': no analog priors are registered in screen.yaml")
+        bind.update(ps["bindings"])
+    return bind, aux
+
+
+def bound_table(doc, b):
+    """True when the table holds the keys the bindings name (a mock in its own key names is read whole)."""
+    if not b:
+        return False
+    keys = set((b.get("common") or {}).values())
+    return bool(keys & set(doc.get("params") or {}))
+
+
+def load_point(params_path, cfg, framing, design, allow_mock, prior_set="table", truncation=True,
+               regime="R-slurry", fixed_inputs=None):
+    """[(state, RegimePriors)] of the registered states at one design point and framing."""
+    doc, _ = params_adapter.read_table(params_path, allow_mock)
+    b = (cfg.get("bindings") or {}).get(regime)
+    trunc = {k: (v.get("low"), v.get("high")) for k, v in ((cfg.get("registrations") or {}).get("truncate") or {}).items()} \
+        if truncation else {}
+    if doc["mock"] and not bound_table(doc, b):
+        return [("default", params_adapter.regime_priors(params_path, regime, allow_mock))]
+    out = []
+    for state, sb in (b.get("states") or {"default": {}}).items():
+        bind, aux = bindings_for(cfg, regime, framing, state, prior_set)
+        extra = list(aux)
+        fixed = {**((sb or {}).get("_fixed") or {}), **(fixed_inputs or {})}
+        bind = {k: v for k, v in bind.items() if not str(k).startswith("_") and k not in design and k not in fixed}
+        for sym, v in design.items():
+            extra.append(_fixed(sym, v, AXIS_UNITS.get(sym, "1"), "design axis"))
+        for sym, v in fixed.items():
+            extra.append(_fixed(sym, v, params_adapter.symbol_units().get(sym, "1"), "registered state value"))
+        out.append((state, params_adapter.regime_priors(params_path, regime, allow_mock, bindings=bind, absent="gap",
+                                                        truncate=trunc, extra=extra)))
+    return out
+
+
+def propagate_states(states, n, seed, chunk):
+    """{state: chain outputs} with common random numbers; also the uncoupled-state notes."""
+    outs, notes = {}, []
+    if not states:
+        return outs, notes
+    symbols = [tuple(rp.joint.symbols) for _, rp in states]
+    keys = [tuple(rp.joint.names) for _, rp in states]
+    coupled = len(set(symbols)) == 1
+    specific = {s for i, s in enumerate(symbols[0]) if len({k[i] for k in keys}) > 1} if coupled else set()
+    if not coupled:
+        notes.append("states have different input sets: draws are not coupled across states")
+    seqs = np.random.SeedSequence(seed).spawn(len(states) + 1)
+    for (sid, rp), sq in zip(states, seqs[1:]):
+        if not chain.evaluable_links(rp.joint.symbols):
+            continue
+        common = int(seqs[0].generate_state(1)[0]) if coupled else int(sq.generate_state(1)[0])
+        o, masses = propagate.propagate_chain(chain.evaluate, rp.joint, n, common, chunk,
+                                              redraw=tuple(specific), redraw_seed=int(sq.generate_state(1)[0]))
+        outs[sid] = (o, masses, rp)
+    return outs, notes
+
+
+def state_samples(outputs):
+    """Decision-rule samples of one state: the chain outputs keyed by quantity."""
+    s = {}
+    for q, (link, name) in decision.QUANTITY_SOURCE.items():
+        if link in outputs and name in outputs[link] and np.any(np.isfinite(outputs[link][name])):
+            s[q] = outputs[link][name]
+    if "nucleate" in outputs:
+        for q in ("cos_theta", "gamma_sl_minus_nl", "Omega_bulk"):
+            s[q] = outputs["nucleate"][q]
+    return s
+
+
+# ------------------------------------------------------------------ claims at one (point, framing)
+
+
+def claims_at(rule, resolver, outs, registered, d_max=None):
+    """C1 to C4 at one design point and framing ({state: (outputs, masses, rp)})."""
+    states = {sid: state_samples(o) for sid, (o, _, _) in outs.items()}
+    claims = {}
+    need = {"C1": {"W_adh_wet"}, "C3": {"f_theta", "N_nuc"}, "C4": {"S_spread", "N_nuc", "cos_theta"}}
+    for claim, q in need.items():
+        have = {sid: s for sid, s in states.items() if q <= set(s)}
+        if not have:
+            missing = sorted(q - set().union(*[set(s) for s in states.values()])) if states else sorted(q)
+            claims[claim] = {"verdict": "inconclusive", "tests": {}, "falsified_mass": None, "role": "gating",
+                             "gap": "not evaluable: no registered state supplies %s" % missing}
+            continue
+        claims[claim] = decision.evaluate_link(rule, claim, have, resolver, registered_states=registered,
+                                               d_max=d_max if claim == "C4" else None)
+    seq = {sid: s for sid, s in states.items() if "Delta_G_seq" in s}
+    claims["C2"] = decision.evaluate_c2(rule, seq, resolver) if seq else \
+        {"verdict": "descriptor", "role": "descriptor", "tests": {}, "falsified_mass": None,
+         "gap": "not evaluable: Delta_G_seq is not supplied"}
+    return claims
+
+
+def omega_point(outs, p):
+    """Omega_bulk >= 1 at one design point: worst over the registered states (CP3-R1)."""
+    per = {}
+    for sid, (o, _, _) in outs.items():
+        if "nucleate" in o and np.any(np.isfinite(o["nucleate"]["Omega_bulk"])):
+            per[sid] = decision.evaluate_omega_point(o["nucleate"]["Omega_bulk"], p)
+        elif "speciation" in o:
+            pass
+    if not per:
+        return None
+    sid = max(per, key=lambda k: decision.ORDER.index(per[k]["verdict"]))
+    return {**per[sid], "state": sid, "by_state": {k: v["verdict"] for k, v in per.items()}}
+
+
+# ------------------------------------------------------------------ the run
+
+
+def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="table", truncation=True,
+             draws=None, seed=0, chunk=None, framings=None, stability=None, cells=None, d_max_rng_seed=1):
+    """Claims and the study verdict over the design points and framings; returns (claims, study, extra).
+
+    extra carries the dose window, the per-point table, the control and the gaps.
+    """
+    pc = cfg["propagation"]
+    n = int(draws or pc["draws_per_regime"])
+    chunk = int(chunk or pc["chunk"])
+    reg = cfg.get("registrations") or {}
+    framings = list(framings or reg.get("framings") or ["calcite"])
+    registered = list(((cfg.get("bindings") or {}).get("R-slurry") or {}).get("states") or ["default"])
+    p = decision.credible_level(rule, resolver)
+    try:
+        points = design_points(cfg, resolver) or [("table", {}, {})]
+    except decision.Gap as exc:
+        points, gap = [("table", {}, {})], str(exc)
+    else:
+        gap = None
+    by_point, omega_pts, omega_sens = {}, {}, {}
+    seeds = np.random.SeedSequence(seed).spawn(len(points) * len(framings) + 2)
+    k = 0
+    c4s = next(t for t in rule["links"]["C4"]["tests"] if t["id"] == "C4s")
+    try:
+        d_max, d_flags = decision.d_max_draws(c4s, resolver, n, np.random.default_rng(d_max_rng_seed))
+    except decision.Gap as exc:
+        d_max, d_flags = None, ["d_max not evaluable: %s" % exc]
+    for pid, design, labels in points:
+        per_f = {}
+        for fr in framings:
+            states = load_point(params_path, cfg, fr, design, allow_mock, prior_set, truncation)
+            outs, notes = propagate_states(states, n, int(seeds[k].generate_state(1)[0]), chunk)
+            k += 1
+            cl = claims_at(rule, resolver, outs, registered, d_max) if outs else \
+                {c: {"verdict": "inconclusive" if c != "C2" else "descriptor", "tests": {}, "falsified_mass": None,
+                     "gap": "no link evaluable: %s" % _unsampled(states)} for c in ("C1", "C2", "C3", "C4")}
+            om = omega_point(outs, p)
+            if fr == "calcite" and om is not None:
+                omega_pts[pid] = {"axes": labels, **om}
+            elif om is not None:
+                omega_sens.setdefault("Omega_bulk under the %s framing (labelled sensitivity)" % fr, {})[pid] = \
+                    {"axes": labels, **om}
+            per_f[fr] = {"claims": {c: decision.public(r) for c, r in cl.items()}, "notes": notes,
+                         "unsampled": _unsampled(states)}
+            del outs
+        by_point[pid] = {"axes": labels, "framings": per_f}
+    control = _control(rule, resolver, params_path, cfg, allow_mock, prior_set, truncation, n, chunk,
+                       int(seeds[-1].generate_state(1)[0]), p)
+    omega = decision.omega_window(omega_pts, p, control, omega_sens) if omega_pts else None
+    return assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_set, cfg, gap, d_flags)
+
+
+def _unsampled(states):
+    return {sid: dict(rp.unsampled) for sid, rp in states}
+
+
+def _control(rule, resolver, params_path, cfg, allow_mock, prior_set, truncation, n, chunk, seed, p):
+    try:
+        cp = control_point(cfg, resolver)
+    except decision.Gap as exc:
+        return {"axes": {}, "verdict": "inconclusive", "fails_where_it_must": False, "gap": str(exc)}
+    if cp is None:
+        return None
+    vals, labels = cp
+    design = {k: v for k, v in vals.items() if k in AXIS_UNITS}
+    fixed = {k: v for k, v in vals.items() if k not in AXIS_UNITS}
+    states = load_point(params_path, cfg, "calcite", design, allow_mock, prior_set, truncation, fixed_inputs=fixed)
+    outs, _ = propagate_states(states, n, seed, chunk)
+    om = omega_point(outs, p)
+    if om is None:
+        return {"axes": labels, "verdict": "inconclusive", "fails_where_it_must": False,
+                "gap": "Omega_bulk not evaluable at the control: %s" % _unsampled(states)}
+    return {"axes": labels, **om, "fails_where_it_must": om["verdict"] == "falsified"}
+
+
+def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_set, cfg, gap=None, d_flags=()):
+    """Reduce (states done) over framings then design points; C5 and the study per point."""
+    reg = cfg.get("registrations") or {}
+    cell_reg = reg.get("R-cell") or {}
+    p = decision.credible_level(rule, resolver)
+    cutoffs = None
+    try:
+        e_axis = (cfg.get("design_axes") or {}).get("E_cell_max")
+        if e_axis:
+            cutoffs = {"oxidation": dict(_axis_values(e_axis, resolver, "V"))}
+    except decision.Gap:
+        cutoffs = None
+    point_ids = list(by_point)
+    study_by_point, link_by_point = {}, {c: {} for c in ("C1", "C2", "C3", "C4", "C5")}
+    for pid in point_ids:
+        studies = {}
+        for fr, fd in by_point[pid]["framings"].items():
+            cl = fd["claims"]
+            om_pt = (omega or {}).get("dose_window", {}).get("points", {}).get(pid) if omega else None
+            om_rec = decision.omega_window({pid: om_pt}, p, (omega or {}).get("control")) if om_pt else None
+            pb = (stability or {}).get(fr) if isinstance(stability, dict) and fr in (stability or {}) else \
+                (stability.get("R-slurry") if isinstance(stability, dict) and "R-slurry" in stability else None)
+            cl["C5"] = decision.public(decision.evaluate_c5(
+                rule, resolver, omega=om_rec, pourbaix=pb, cells=cells, framing=fr,
+                gated_phases=cell_reg.get("gated_phases"), cutoffs=cutoffs,
+                margin_key=cell_reg.get("margin_key", "thresholds.C5.margin_expt"),
+                never_pass_sinks=tuple(cell_reg.get("never_pass_sinks") or ())))
+            studies[fr] = decision.study_verdict(rule, cl, None)
+        for c in link_by_point:
+            link_by_point[c][pid] = decision.combine_framings(
+                {fr: by_point[pid]["framings"][fr]["claims"][c] for fr in by_point[pid]["framings"]}) if c != "C2" else \
+                {fr: (by_point[pid]["framings"][fr]["claims"]["C2"].get("finding") or {}).get("statement")
+                 for fr in by_point[pid]["framings"]}
+        study_by_point[pid] = decision.combine_framings(studies)
+    primary = _primary(point_ids, by_point)
+    claims = {}
+    eligible = prior_set != "ignorance"
+    for c in ("C1", "C2", "C3", "C4", "C5"):
+        detail = dict(by_point[primary]["framings"][framings[0]]["claims"][c])
+        if c == "C2":
+            claims[c] = {**detail, "by_design": link_by_point[c]}
+            continue
+        head = decision.over_design({pid: r["verdict"] for pid, r in link_by_point[c].items()})
+        claims[c] = {**detail, "verdict": head["verdict"], "design_dependent": head["design_dependent"],
+                     "by_design": link_by_point[c], "detail_point": primary, "detail_framing": framings[0],
+                     "prior_set": prior_set,
+                     "finding_eligible": eligible or c not in IGNORANCE_DEPENDENT}
+        if c == "C5" and omega is not None:
+            claims[c]["dose_window"] = omega["dose_window"]
+            claims[c]["omega_control"] = omega.get("control")
+    head = decision.over_design({pid: r["verdict"] for pid, r in study_by_point.items()})
+    gating = rule["study"].get("gating_links") or ["C1", "C3", "C4", "C5"]
+    study = {"verdict": head["verdict"], "links": {c: claims[c]["verdict"] for c in gating}, "deletion_test": None,
+             "framing": None, "gating_links": list(gating), "design_dependent": head["design_dependent"],
+             "by_design": study_by_point, "framings": list(framings), "prior_set": prior_set,
+             "finding_eligible": eligible,
+             "sequestration_premise": link_by_point["C2"].get(primary, {}).get(framings[0])}
+    extra = {"design_gap": gap, "d_max_flags": list(d_flags), "omega": omega, "points": point_ids,
+             "unsampled": {pid: {fr: fd["unsampled"] for fr, fd in by_point[pid]["framings"].items()}
+                           for pid in point_ids}}
+    return claims, study, extra
+
+
+def _primary(point_ids, by_point):
+    """The central design point (middle of the list), whose detailed records are kept."""
+    return point_ids[len(point_ids) // 2]
+
+
+def load_cells(paths):
+    """{sink: R-cell section} from W5's per-sink stability documents (schema v2 or v3)."""
+    import json
+    from pathlib import Path
+    cells = {}
+    for path in paths or ():
+        doc = json.loads(Path(path).read_text(encoding="utf-8"))
+        cell = (doc.get("stability") or {}).get("R-cell")
+        if cell:
+            sink = cell.get("sink_assumption", {}).get("active") or Path(path).stem
+            cells[sink] = cell
+    return cells
+
+
+def config_registrations(cfg):
+    return yaml.safe_dump(cfg.get("registrations") or {}, sort_keys=True)
