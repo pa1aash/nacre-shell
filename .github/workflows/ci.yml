@@ -23,6 +23,13 @@ jobs:
       - name: Sync environment (locked)
         if: ${{ !startsWith(github.ref_name, 'preprint/p0-') }}
         run: uv sync --locked
+      # Release figures are built on the Mac with Arial. The runner has no Arial, so it gets a
+      # metric-compatible substitute before the figure tests.
+      - name: Install figure font substitute
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-liberation
+          fc-cache -f
       - name: Tests
         run: uv run pytest -q
       - name: Full-history scan
