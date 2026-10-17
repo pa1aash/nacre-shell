@@ -33,7 +33,6 @@ def contract():
     return c
 
 
-@pytest.mark.xfail(strict=True, reason="W4.3 implements contract v3 (D11)")
 @pytest.mark.parametrize("name", sorted(registry.FUNCTIONS))
 def test_implementation_matches_contract_expression(contract, name):
     if name not in contract.functions:
@@ -43,12 +42,10 @@ def test_implementation_matches_contract_expression(contract, name):
         assert res.ok, res.messages
 
 
-@pytest.mark.xfail(strict=True, reason="W4.3 implements contract v3 (D11)")
 def test_every_contract_function_is_implemented(contract):
     assert sorted(set(contract.functions) - set(registry.FUNCTIONS)) == []
 
 
-@pytest.mark.xfail(strict=True, reason="W4.3 implements contract v3 (D11)")
 def test_template_barrier_matches_contract_composite(contract):
     res = eq.check_composite(contract)
     assert res.ok, res.messages

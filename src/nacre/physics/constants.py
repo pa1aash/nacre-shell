@@ -1,7 +1,8 @@
 """Physical constants used by the physics core, in SI units.
 
 None is typed here: each is read from sympy's unit system at import time. k_B, N_A, e and
-hbar are exact by the definition of the SI; the electron mass is the value sympy carries
+hbar are exact by the definition of the SI, and the standard molality is one mole per
+kilogram by the definition of the molal scale; the electron mass is the value sympy carries
 (it may be replaced by an effective tunnelling mass, theory open question Q10). The
 contract's constant relations R = N_A k_B and F = N_A e define R and F.
 """
@@ -21,6 +22,8 @@ AVOGADRO = _si(_u.avogadro_constant, 1 / _u.mol)
 ELEMENTARY_CHARGE = _si(_u.elementary_charge, _u.coulomb)
 #: Reduced Planck constant hbar in J s.
 HBAR = _si(_u.hbar, _u.joule * _u.second)
+#: Standard molality m0 of the molal activity scale, mol kg^-1 (exact by definition).
+STANDARD_MOLALITY = _si(_u.mol / _u.kilogram, _u.mol / _u.kilogram)
 #: Electron rest mass m_e in kg.
 ELECTRON_MASS = _si(_u.electron_rest_mass, _u.kilogram)
 #: Molar gas constant R = N_A k_B in J mol^-1 K^-1.

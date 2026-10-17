@@ -25,6 +25,22 @@ def saturation_ratio_bulk(a_Ca, a_CO3, K_sp):
     return scalar_or_array(a * b / k)
 
 
+def saturation_ratio_bulk_hydrated(a_Ca, a_CO3, a_w, n_hyd, K_sp):
+    """LABELLED SENSITIVITY: Omega of a hydrated framing CaCO3.nH2O, a_Ca a_CO3 a_w^n / K_sp.
+
+    Contract v3 (cp2 fix F7). The screen keeps IAP = a_Ca a_CO3; for a_w < 1 that overstates
+    Omega by a_w^(-n), so drying states are optimistic. Never used for a verdict.
+    """
+    a = positive("a_Ca (Ca2+ activity)", a_Ca)
+    b = positive("a_CO3 (carbonate activity)", a_CO3)
+    w = positive("a_w (water activity)", a_w)
+    n = np.asarray(n_hyd, dtype=float)
+    if not np.all(np.isfinite(n)) or np.any(n < 0):
+        raise ValueError("n_hyd (structural water per formula unit) must be finite and non-negative")
+    k = positive("K_sp (solubility product)", K_sp)
+    return scalar_or_array(a * b * np.exp(n * np.log(w)) / k)
+
+
 def driving_force_per_formula_unit(omega, temperature):
     """Driving force Delta_mu = k_B T ln Omega per formula unit, in J.
 

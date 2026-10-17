@@ -1,8 +1,8 @@
-"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v2).
+"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v3).
 
 Maps every contract function name to the physics function that implements it and to the
 contract symbol ids of its arguments, in call order. Constants (k_B, N_A, R_gas, F_c, q_e,
-hbar, m_e) are never arguments: the implementation takes them from nacre.physics.constants.
+hbar, m_e, m_std) are never arguments: the implementation takes them from nacre.physics.constants.
 
 ``valid`` marks inputs where the contract expression is defined but the implementation
 rejects the point as outside the physical domain (it raises ValueError there); the
@@ -13,15 +13,15 @@ from typing import Callable, Optional
 
 import numpy as np
 
-from nacre.physics import adhesion, conformality, film, nucleation, sequestration, stability, template
+from nacre.physics import adhesion, conformality, film, nucleation, sequestration, speciation, stability, template
 from nacre.physics import supersaturation as sat
 from nacre.physics import wetting
 from nacre.physics.devtools import wrong_variants
 
 #: Contract version this registry implements; the contract tests skip a different version.
-CONTRACT_VERSION = 2
+CONTRACT_VERSION = 3
 
-CONSTANT_IDS = {"k_B", "N_A", "R_gas", "F_c", "q_e", "hbar", "m_e"}
+CONSTANT_IDS = {"k_B", "N_A", "R_gas", "F_c", "q_e", "hbar", "m_e", "m_std"}
 
 
 @dataclass(frozen=True)
@@ -39,9 +39,17 @@ def _theta_in_open_interval(theta, d_max):
     return (theta > 0) & (theta < np.pi)
 
 
+def _davies_representable(z2):
+    def ok(A_DH, I_ionic, b_D):
+        with np.errstate(all="ignore"):
+            return np.abs(speciation.davies_ln_coefficient(z2, A_DH, I_ionic, b_D)) <= speciation.LN_RANGE
+    return ok
+
+
 YOUNG = ("gamma_sl", "gamma_sn0", "Delta_gamma_w", "gamma_nl")
 CNT = ("gamma_nl", "V_m", "Omega", "T")
 BIND = ("Delta_G_seq", "T", "c_bulk", "Gamma_s", "delta_s")
+DAVIES = ("A_DH", "I_ionic", "b_D")
 
 FUNCTIONS = {
     # C1 adhesion in water
@@ -58,8 +66,20 @@ FUNCTIONS = {
     "Gamma_Ca": Entry(sequestration.calcium_surface_excess, BIND),
     "Delta_gamma_ads": Entry(sequestration.adsorption_interfacial_energy_change, BIND),
     "gamma_sl_insitu": Entry(template.template_liquid_energy_in_situ, ("gamma_sl0",) + BIND),
+    # carbonate speciation (contract v3)
+    "gamma_act_1": Entry(speciation.activity_coefficient_charge_one, DAVIES, _davies_representable(1.0)),
+    "gamma_act_2": Entry(speciation.activity_coefficient_charge_two, DAVIES, _davies_representable(4.0)),
+    "m_CT_fn": Entry(speciation.total_carbon_molal, ("C_T", "rho_water")),
+    "m_CaT_fn": Entry(speciation.total_calcium_molal, ("Ca_T", "rho_water")),
+    "A_carb_fn": Entry(speciation.carbonate_speciation_factor, ("pK1_carbonic", "pK2_carbonic", "pH", "g_1", "g_2")),
+    "P_pair_fn": Entry(speciation.ion_pair_factor, ("K_CaCO3_aq", "K_CaHCO3", "pK2_carbonic", "pH", "g_1")),
+    "D_Ca_fn": Entry(speciation.free_calcium_factor, ("g_1", "g_2", "K_CaOH", "a_w", "pH")),
+    "a_CO3_speciation": Entry(speciation.carbonate_activity, ("m_CT", "D_Ca", "A_carb", "P_pair", "m_CaT")),
+    "a_Ca_speciation": Entry(speciation.calcium_activity, ("m_CaT", "D_Ca", "P_pair", "a_CO3")),
+    "c_Ca_free": Entry(speciation.free_calcium_concentration, ("a_Ca", "rho_water", "g_2")),
     # supersaturation
     "Omega_bulk": Entry(sat.saturation_ratio_bulk, ("a_Ca", "a_CO3", "K_sp")),
+    "Omega_bulk_hydrated": Entry(sat.saturation_ratio_bulk_hydrated, ("a_Ca", "a_CO3", "a_w", "n_hyd", "K_sp")),
     "Omega_local_ideal": Entry(wrong_variants.saturation_ratio_local_ideal,
                                ("c_local", "c_bulk", "a_Ca", "a_CO3", "K_sp")),
     "Delta_mu": Entry(sat.driving_force_per_formula_unit, ("Omega", "T")),

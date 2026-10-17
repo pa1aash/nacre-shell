@@ -29,7 +29,7 @@ FUNCS = {"exp": sp.exp, "log": sp.log, "sqrt": sp.sqrt, "cos": sp.cos, "sin": sp
          "oo": sp.oo}
 CONSTANT_VALUES = {"k_B": C.BOLTZMANN, "N_A": C.AVOGADRO, "R_gas": C.GAS_CONSTANT,
                    "F_c": C.FARADAY, "q_e": C.ELEMENTARY_CHARGE, "hbar": C.HBAR,
-                   "m_e": C.ELECTRON_MASS}
+                   "m_e": C.ELECTRON_MASS, "m_std": C.STANDARD_MOLALITY}
 _INTERVAL = re.compile(r"^\s*([\[\(])\s*(.+?)\s*,\s*(.+?)\s*([\]\)])\s*$")
 
 
