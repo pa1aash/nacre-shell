@@ -171,6 +171,7 @@ def render(root, mod, data, input_path, out_dir, tiff=False, cvd=True, aux=None)
         "input_sha256": _sha(input_path),
         "schema": schema.resolve(mod.FIGURE["schema"], root)[1],
         "aux": {k: v[1] for k, v in sorted((aux or {}).items())},
+        "font": style.font_record(root),
         "outputs": {str(o.resolve().relative_to(root.resolve())): _sha(o) for o in outputs},
         "checker": "pass (artists and PDF text)",
     }

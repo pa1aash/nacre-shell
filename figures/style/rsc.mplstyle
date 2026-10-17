@@ -3,7 +3,7 @@
 
 ## Font
 font.family                 : sans-serif                         # applied.font_family
-font.sans-serif             : Arial, Helvetica                   # applied.font_family
+font.sans-serif             : Arial, Helvetica, Liberation Sans  # applied.font_family
 mathtext.fontset            : custom                             # applied.font_family (mathtext in the same family)
 mathtext.rm                 : sans                               # applied.font_family
 mathtext.it                 : sans:italic                        # applied.font_family

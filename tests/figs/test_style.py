@@ -161,3 +161,46 @@ def test_mock_inputs_regenerate_identically(tmp_path, monkeypatch):
     mod.main()
     for f in ["retro_results.json", "screen_summary.json", "stability.json", "params.yaml"]:
         assert (tmp_path / f).read_text() == (REPO / "figures/src/mock" / f).read_text(), f
+
+
+# ------------------------------------------------------------------ font fallback (lane note N18)
+
+def _only(monkeypatch, installed):
+    from nacre.figs import style
+    monkeypatch.setattr(style, "_find", lambda name: ("/fonts/%s.ttf" % name) if name in installed else None)
+
+
+def test_font_chain_is_arial_then_helvetica_then_liberation_sans():
+    from nacre.figs import style
+    assert style.font_chain(REPO) == ["Arial", "Helvetica", "Liberation Sans"]
+
+
+@pytest.mark.parametrize("installed, family, release", [
+    ({"Arial", "Helvetica", "Liberation Sans"}, "Arial", True),
+    ({"Helvetica", "Liberation Sans"}, "Helvetica", False),
+    ({"Liberation Sans"}, "Liberation Sans", False),
+])
+def test_font_takes_the_first_installed_face(monkeypatch, installed, family, release):
+    from nacre.figs import style
+    _only(monkeypatch, installed)
+    f = style.font(REPO)
+    assert (f["family"], f["release"]) == (family, release)
+    assert style.font_record(REPO) == {"family": family, "file": family + ".ttf", "release": release}
+
+
+def test_no_installed_face_is_an_error_not_a_silent_default(monkeypatch):
+    from nacre.figs import style
+    _only(monkeypatch, set())
+    with pytest.raises(style.FontError, match="Liberation Sans"):
+        style.font(REPO)
+
+
+def test_use_pins_the_chosen_face_alone():
+    from nacre.figs import style
+    plt = style.use(REPO)
+    assert list(plt.rcParams["font.sans-serif"]) == [style.font(REPO)["family"]]
+
+
+def test_find_returns_none_for_a_missing_face():
+    from nacre.figs import style
+    assert style._find("No Such Face Anywhere") is None

@@ -37,8 +37,51 @@ def applied(root=None):
     return spec(root)["applied"]
 
 
+class FontError(Exception):
+    pass
+
+
+def font_chain(root=None):
+    """The figure font and its fallbacks, in order (applied.font_family, lane note N18)."""
+    fam = applied(root)["font_family"]
+    return [fam["value"]] + list(fam.get("fallbacks", []))
+
+
+def _find(name):
+    """Path of an installed font of family `name`, or None (no silent default font)."""
+    from matplotlib import font_manager
+    try:
+        return font_manager.findfont(name, fallback_to_default=False)
+    except ValueError:
+        return None
+
+
+def font(root=None):
+    """The first installed font of the chain: {family, file, rank, release}.
+
+    rank 0 is the specification's own face; release is True only for it. Raises FontError when
+    no face of the chain is installed, rather than letting matplotlib fall back to its default.
+    """
+    chain = font_chain(root)
+    for rank, name in enumerate(chain):
+        path = _find(name)
+        if path:
+            return {"family": name, "file": path, "rank": rank, "release": rank == 0}
+    raise FontError("none of the figure fonts is installed: %s" % ", ".join(chain))
+
+
+def font_record(root=None):
+    """Provenance form of font(): the family, the font file's base name and the release flag."""
+    f = font(root)
+    return {"family": f["family"], "file": Path(f["file"]).name, "release": f["release"]}
+
+
 def use(root=None):
-    """Select the Agg backend, register the Crameri maps and apply rsc.mplstyle."""
+    """Select the Agg backend, register the Crameri maps, apply rsc.mplstyle and pin the font.
+
+    The style lists the whole chain; the font actually used is then set alone, so matplotlib can
+    neither pick a different face of the list nor fall back silently.
+    """
     import matplotlib
     matplotlib.use("Agg")
     with warnings.catch_warnings():
@@ -47,6 +90,7 @@ def use(root=None):
     import matplotlib.pyplot as plt
     plt.rcdefaults()
     plt.style.use(str(paths(root or _root())["style"] / "rsc.mplstyle"))
+    plt.rcParams["font.sans-serif"] = [font(root)["family"]]
     return plt
 
 

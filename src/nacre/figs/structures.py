@@ -110,18 +110,12 @@ def _settings(root):
         "width_pt": float(a["structure_bond_width"]["value"]),
         "double_space": float(a["structure_double_bond_space"]["value"]),
         "font_pt": float(a["structure_label_font_size"]["value"]),
-        "family": a["font_family"]["value"],
     }
 
 
 def font_file(root):
-    from matplotlib import font_manager
-    fam = style.applied(root)["font_family"]
-    for name in [fam["value"]] + fam.get("fallbacks", []):
-        path = font_manager.findfont(name, fallback_to_default=False)
-        if path:
-            return path
-    raise RuntimeError("no font file for %s" % fam["value"])
+    """The label font file: the first installed face of the figure-font chain (style.font)."""
+    return style.font(root)["file"]
 
 
 def _palette_rgb(root):
@@ -198,6 +192,7 @@ def build_all(root, cvd=True, log=print):
             outs += cvdmod.simulate_png(png, cdir, name, dpi)
         smi, prov = smiles(name, root)
         records[name] = {"smiles": smi, "source": prov, "derive": table(root)[name].get("derive"),
+                         "font": style.font_record(root),
                          "outputs": {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
                                      for p in outs}}
         log("rdkit %s: ok" % name)

@@ -4,6 +4,11 @@
    "smiles": "CC(=O)[O-]",
    "source": "nacre.anchor.builders.LIGANDS['acetate']",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/acetate.svg": "839e55f0b39eeb1fc3795c69777cace72f381e3bd9ffa857d27b3570e757fc91",
     "figures/out/rdkit/acetate.pdf": "b60aeb649ca94d9cfd1fcee7b54c6a1b4e68ebfa1abe402e2ce07f2569d17e1d",
@@ -17,6 +22,11 @@
    "smiles": "C1=CC=C(C(=C1)O)O",
    "source": "PubChem CID 289 (figures/rdkit/sources)",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/catechol.svg": "d08cd17f0560c3e71ce6f854c9b94b4b93cd0dc636bc225bc562e1d49e079a3a",
     "figures/out/rdkit/catechol.pdf": "84d9126a8690ec66f221883e9af1a97e8b877c978ad7587284c486b918e6402c",
@@ -30,6 +40,11 @@
    "smiles": "[O-]c1ccccc1[O-]",
    "source": "nacre.anchor.builders.LIGANDS['catecholate_dianion']",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/catecholate_dianion.svg": "4ebe583739e1b663a3dc131f240a74c4ae52ba547afd03c8569e3eba6782f1c6",
     "figures/out/rdkit/catecholate_dianion.pdf": "8c88bb5ea5438c94187048dd6eb9f621a4043796e48db77345e47716379f9ecc",
@@ -43,6 +58,11 @@
    "smiles": "[O-]c1ccccc1O",
    "source": "nacre.anchor.builders.LIGANDS['catecholate_monoanion']",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/catecholate_monoanion.svg": "47396981ad1c94f504dec4d96d20c637c7d7ecd25899ce09fb1e044678e51d40",
     "figures/out/rdkit/catecholate_monoanion.pdf": "9fc2b39d33083e2a7277cfcf3d5d5f0e1b0db718964fc6ad09e8f70d783d700d",
@@ -56,6 +76,11 @@
    "smiles": "C([C@@H]1[C@H]([C@@H]([C@H]([C@@H](O1)O)N)O)O)O",
    "source": "PubChem CID 441477 (figures/rdkit/sources)",
    "derive": "beta_1_4_repeat_unit",
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/chitosan_unit.svg": "ef944d6f944c97fc8a215c56039f46f5b44b3d667c6ed0b989a0c491b4a2bf9c",
     "figures/out/rdkit/chitosan_unit.pdf": "d46026647391b0af32b0775688aaffabdbcfa2238489a08f3d19d104c6917a53",
@@ -69,6 +94,11 @@
    "smiles": "Oc1cc2cc(-c3c(O)c(O)cc4cc(-c5c(O)c(O)cc6cc(-c7c(O)c(O)cc8cc[nH]c78)[nH]c56)[nH]c34)[nH]c2cc1O",
    "source": "nacre.structures.oligomer.dhi_chain_smiles(4)",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/oligomer.svg": "d786903bddb07a4e58f8112d74d6f01a39c1c1672edbba3ae34d788ec1347195",
     "figures/out/rdkit/oligomer.pdf": "9592dbe8c0351e2a528001e8c391e377324de07d17ba548f2e8d3ea73580d8b8",
@@ -82,6 +112,11 @@
    "smiles": "Oc1cc2cc[nH]c2cc1O",
    "source": "nacre.structures.oligomer.dhi_chain_smiles(1)",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/oligomer_unit.svg": "be7aba0741ce1ad4c4b79e37e4cd80867f98857f10c04e468a4878c4fd9632b7",
     "figures/out/rdkit/oligomer_unit.pdf": "2b888806792b945db03c9d1a54e57b444ab5c2821d82fd9a56308748718ae99c",
@@ -95,6 +130,11 @@
    "smiles": "C1=CC(=O)C(=O)C=C1",
    "source": "PubChem CID 11421 (figures/rdkit/sources)",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/quinone.svg": "76d1c0f88d76012c4c3c23625fbb01b71efe0353cb51b7bc8db9f810f00e07fe",
     "figures/out/rdkit/quinone.pdf": "3b30beaf5f40c3cecba3b0aefa8e3561e4ad0ef4ceb5d0116e0db280b66cbb5f",

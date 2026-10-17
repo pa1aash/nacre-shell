@@ -68,25 +68,43 @@ def test_drawing_follows_the_rsc_structure_settings(name):
     assert max(lengths) == pytest.approx(float(a["structure_bond_length"]["value"]), abs=0.6)
 
 
-def test_atom_labels_are_set_at_the_rsc_label_size():
+def _label_height(pdf):
     import pymupdf
+    with pymupdf.open(pdf) as doc:
+        return max(d["rect"].height for d in doc[0].get_drawings() if d.get("type") == "f")
+
+
+def _cap_o(font_path, size):
     from matplotlib.ft2font import FT2Font
-    size = float(style.applied(REPO)["structure_label_font_size"]["value"])
-    ft = FT2Font(S.font_file(REPO))
+    ft = FT2Font(font_path)
     ft.set_size(size, 72)
     g = ft.load_char(ord("O"))
-    expected = (g.bbox[3] - g.bbox[1]) / 64.0
-    with pymupdf.open(REPO / "figures/out/rdkit/catechol.pdf") as doc:
-        heights = [d["rect"].height for d in doc[0].get_drawings() if d.get("type") == "f"]
-    assert max(heights) == pytest.approx(expected, rel=0.08)
+    return (g.bbox[3] - g.bbox[1]) / 64.0
 
 
-def test_svg_carries_no_text_elements():
-    for name in STANDALONE:
-        svg = (REPO / "figures/out/rdkit" / (name + ".svg")).read_text()
-        assert "<text" not in svg, name
+def test_atom_labels_are_set_at_the_rsc_label_size(tmp_path):
+    # Drawn now with whichever face of the chain is installed and measured against that face, so
+    # the test holds for Arial, Helvetica or Liberation Sans alike (lane note N18).
+    size = float(style.applied(REPO)["structure_label_font_size"]["value"])
+    pdf = tmp_path / "catechol.pdf"
+    S.svg_to_pdf(S.svg("catechol", REPO), pdf)
+    assert _label_height(pdf) == pytest.approx(_cap_o(S.font_file(REPO), size), rel=0.08)
+
+
+def test_committed_structures_are_release_drawings():
+    import json
+    recs = json.loads((REPO / "figures/out/manifest.json").read_text())["rdkit"]
+    release = style.font_chain(REPO)[0]
+    assert set(recs) == set(STANDALONE)
+    for name, rec in recs.items():
+        assert rec["font"]["family"] == release and rec["font"]["release"] is True, name
 
 
 def test_drawing_is_reproducible():
     name = "acetate"
-    assert S.svg(name, REPO) == (REPO / "figures/out/rdkit" / (name + ".svg")).read_text()
+    first = S.svg(name, REPO)
+    assert S.svg(name, REPO) == first
+    # The committed drawing is a release (Arial) drawing; it is compared byte for byte only
+    # where that face is the one installed. Elsewhere the outlines differ by design.
+    if style.font(REPO)["release"]:
+        assert first == (REPO / "figures/out/rdkit" / (name + ".svg")).read_text()
