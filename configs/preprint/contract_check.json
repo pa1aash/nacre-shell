@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-10-17T10:15:57Z",
+  "checked_utc": "2026-10-17T10:58:39Z",
   "contract_sha": "db872ae9190c3b729bc2b13898919fbfbe56815b",
   "contract_version": 3,
   "coverage": [],
@@ -449,10 +449,10 @@
       "status": "PASS"
     }
   },
-  "implementation_sha": "9a1acb0535d595afaacce7f0db1989ff96666986",
+  "implementation_sha": "3da2a16a7c984dcef3fba037c9c09a1c227c15d7",
   "points": 256,
   "ref": "origin/preprint/p0-w3",
-  "ref_sha": "ac5cdfb4c288153102c170547a54140edbaf2b34",
+  "ref_sha": "d27552a4f01a0f26710a884e275d14ddffc5e19a",
   "reference": "40-digit evaluation of the contract expression; a point beyond rtol passes only where the implementation is at least as accurate as the direct floating-point evaluation of the contract expression (ill-conditioned points, listed in notes)",
   "rtol": 1e-12,
   "seed": 0,
