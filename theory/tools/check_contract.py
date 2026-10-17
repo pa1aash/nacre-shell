@@ -830,7 +830,18 @@ def check_ignorance(ctx, rep):
         same_unit(name, bounds, "bounds")
     for name, q in doc["geometry"].items():
         exprs = [q[k] for k in ("low", "high", "equals") if k in q] + q.get("high_min_of", []) + q.get("low_max_of", [])
+        exprs += q.get("high_min_of_expanded", [])
         same_unit(name, exprs, "geometric bounds")
+        if q.get("N_req_range"):
+            same_unit("N_req", [q["N_req_range"][k] for k in ("low", "high")], "range from %s" % name)
+    ev = doc.get("evaluable_now")
+    if ev:
+        listed = {str(x).split(" (")[0] for x in ev.get("evaluable", []) + ev.get("gap", [])}
+        statuses = {name: str(q.get("status", "")) for name, q in doc["geometry"].items()}
+        bad = [n for n, s in statuses.items() if s and n in listed and
+               (s.startswith("gap") != any(str(x).startswith(n) for x in ev.get("gap", [])))]
+        rep.add(not bad, "ignorance", "evaluable now", "evaluable %s; gap %s%s" % (
+            ev.get("evaluable"), ev.get("gap"), "" if not bad else "; status disagrees for %s" % bad))
     br = doc["branches"]
     G = ctx.parse(br["span"])
     a, b = ctx.parse(br["cuts"]["complete"]), ctx.parse(br["cuts"]["non"])

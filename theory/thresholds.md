@@ -303,6 +303,12 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
     `patch_area` and the credible level.
   - The Poisson-occupancy form, proposed in `theory/cp2_brief.md` section D, is the registered
     rule since cp3 (R5).
+  - **A_patch bound (cp3b A3).** The ignorance bound is a_asp <= A_patch <= pi d_p^2 / 4, loguniform
+    between them (`theory/ignorance_priors.md`, 4a.1): one asperity contact below, the particle's
+    projected area above. Its keys (`params.asperity_contact_area`,
+    `params.cathode_particle_diameter`) are absent, so A_patch is a gap. C3 (b) is reported as
+    "gap" and counted inconclusive, and the flip values of A_patch (P_good = p_cred and
+    P_good = 1 - p_cred) are printed.
 - **Margin.** None beyond the J_0 prior. N_nuc ignores exclusion zones, so it is an upper estimate
   and the criterion is necessary, not sufficient. A state with Omega_bulk <= 1 contributes no
   nuclei.
@@ -699,7 +705,7 @@ revised: {session: P0-W3.2 cp2 fix-up, base_commit: 800d5ea3de41a0fb16084519d5c2
 revised_cp3: {session: P0-W3.3, ruling: planning chat 2026-10-17 (cp3), base_commit: ac5cdfb, items: [R1, R2, R3, R5, R6, R7, R8],
               log: theory/cp2_fixes.md (cp3 section), disclosures: [R1, R2, R6]}
 revised_cp3b: {session: P0-W3.4, rule: cp3-mandated registrations for production (lane note N22), base_commit: 227d997,
-               items: [A1, A2], log: theory/cp2_fixes.md (cp3 section, cp3b registrations), screen_output_consulted: false}
+               items: [A1, A2, A3], log: theory/cp2_fixes.md (cp3 section, cp3b registrations), screen_output_consulted: false}
 contract_version: 3
 decision:
   statistic: band_mass
@@ -818,6 +824,8 @@ links:
         params: {J0_het: regimes.R-slurry.parameters.J0_het, t_proc: regimes.R-slurry.parameters.t_proc,
                  A_patch: regimes.R-slurry.parameters.patch_area, p_cred: thresholds.decision.credible_level}
         report: [DG_het/(k_B*T), DG_hom/(k_B*T)]
+        A_patch_bound: {ignorance: theory/ignorance_priors.md geometry.A_patch (low a_asp, high pi*d_p**2/4, loguniform),
+                        status: gap, on_gap: 'C3b reported as gap, counted inconclusive; flip values of A_patch reported (cp3b A3)'}
     combine: 'C3a and C3b'
     joint_mass: 'falsified side P(C3a bad or C3b bad), draw by draw (cp3 R7)'
   C4:
