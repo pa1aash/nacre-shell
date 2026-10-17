@@ -81,6 +81,7 @@ OUTPUTS = {
         "a_Ca": Output("a_Ca (free Ca2+ activity)", "1", "log10"),
         "a_CO3": Output("a_CO3 (free carbonate activity)", "1", "log10"),
         "c_Ca_free": Output("c_Ca_free (free Ca2+ concentration, c_bulk)", "mol m^-3", "log10"),
+        "Omega_bulk": Output("Omega_bulk from the speciated activities (C5s; no template input)", "1", "log10"),
     },
     "sequester": {
         "Delta_G_seq": Output("Delta_G_seq", "J mol^-1"),
@@ -390,6 +391,14 @@ def evaluate(x, links=None):
     flags = x.pop("_geometry_flags", {})
     out, masses = {}, {}
     if "speciation" in links and spec is not None:
+        spec = dict(spec)
+        n = _shape(x)
+        if "K_sp" in x:                      # C5s needs only the speciation and K_sp (thresholds C5s)
+            a_ca, a_co3, ksp = spec["a_Ca"], spec["a_CO3"], _arr(x, "K_sp", n)
+            ok = _finite(a_ca, a_co3, ksp) & (a_ca > 0) & (a_co3 > 0) & (ksp > 0)
+            spec["Omega_bulk"] = _apply(sat.saturation_ratio_bulk, ok, n, a_ca, a_co3, ksp)
+        else:
+            spec["Omega_bulk"] = np.full(n, np.nan)
         out["speciation"], masses["speciation"] = spec, {"activity_model": spec_mass}
     if "anchor" in links:
         out["anchor"], masses["anchor"] = anchor(x), {}

@@ -98,7 +98,7 @@ def link_inputs(link, symbols):
         base = list(chain.PMF_INPUTS) if d >= set(chain.PMF_INPUTS) else list(chain.ANCHOR_INPUTS)
         return _sampled(base + (["W_adh_wet"] if "W_adh_wet" in s else []), s)
     if link == "speciation":
-        return list(chain.SPECIATION_INPUTS)
+        return list(chain.SPECIATION_INPUTS) + (["K_sp"] if "K_sp" in s else [])
     if link == "sequester":
         return _sampled(seq, s)
     if link == "nucleate":

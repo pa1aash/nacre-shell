@@ -205,3 +205,14 @@ def test_w5_cells_read_with_the_registered_phase_names_and_benchmarks():
     assert set(cells) == {"LiBOB", "LiClO4", "LiPCP", "solvated"}
     assert all("corundum" in c["windows"] and "boehmite" not in c["windows"] for c in cells.values())
     assert set(cells["LiClO4"]["schemes"]) == {"janaf", "mp"}
+
+
+def test_omega_needs_only_the_speciation_and_k_sp():
+    # C5s is decidable from sourced inputs even when the template energies are gaps
+    x = _x(pH=11.0, C_T=10.0, Ca_T=1.0, I_ionic=0.05, rho_water=997.0, pK1_carbonic=6.35, pK2_carbonic=10.33,
+           K_CaCO3_aq=10 ** 3.2, K_CaHCO3=10 ** 1.1, K_CaOH=10 ** -12.8, a_w=1.0, A_DH=0.51, b_D=0.3, I_val=0.5,
+           K_sp=10 ** -8.48)
+    out, _ = chain.evaluate(x)
+    assert "nucleate" not in out and np.all(out["speciation"]["Omega_bulk"] > 0)
+    rec = study.omega_point({"slurry": (out, None, None)}, 0.9)
+    assert rec is not None and rec["state"] == "slurry"

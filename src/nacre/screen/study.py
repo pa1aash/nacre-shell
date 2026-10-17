@@ -366,8 +366,10 @@ def omega_point(outs, p):
     per = {}
     for sid, (o, _, _) in outs.items():
         om = None
-        if "nucleate" in o and np.any(np.isfinite(o["nucleate"]["Omega_bulk"])):
-            om = o["nucleate"]["Omega_bulk"]
+        for lk in ("nucleate", "speciation"):        # the same quantity; speciation alone suffices (C5s)
+            if lk in o and "Omega_bulk" in o[lk] and np.any(np.isfinite(o[lk]["Omega_bulk"])):
+                om = o[lk]["Omega_bulk"]
+                break
         if om is not None:
             per[sid] = decision.evaluate_omega_point(om, p)
             if "speciation" in o:            # a grid in total calcium: print the speciated a_Ca beside it
