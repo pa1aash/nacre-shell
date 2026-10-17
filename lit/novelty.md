@@ -393,6 +393,27 @@ Ranked by closeness to P0: the number of blocks covered, then how much of the ch
 
 Records retained but judged further from P0 (no row): 10.1149/ma2016-03/2/589 (PDA-coated anode collector, meeting abstract, companion to row 10); 10.2139/ssrn.4698483 (effect of Cu and Al metals on CaCO3 scale, title only). Records retained as contrary evidence are in `lit/contrary.md`: 10.3390/coatings13020306, PDA coatings reduce CaCO3 deposition; and 10.1021/acsomega.0c01538, CaCO3 scaling raises Al-alloy corrosion.
 
+### Full-text retry for rows 1, 3 and 5 (dated note, 2026-10-17, P0-W2.2)
+
+Open routes were tried for each row: Unpaywall, OpenAlex, Europe PMC, Semantic Scholar, repository search, and archived copies of the open-access locations. The table rows above are left as written. This note records what each route returned and what the full text changes.
+
+- **Row 1** (10.1007/s11998-016-9898-x): not retrieved.
+  - Unpaywall and OpenAlex list no open copy.
+  - The publisher page returns a bot-challenge shell, and no repository copy was found.
+  - Crossref and OpenAlex carry no abstract, so the row still rests on the abstract read on day 1. It stays at "abstract".
+- **Row 3** (10.1002/celc.202500327): read in full, from the typeset CC-BY version in the UCLouvain repository (9 pp.). The full text narrows what the row's abstract-based description implies.
+  - **pH without additive.** In water alone the pH levels off at 10.8 (LNMO) and 12.3 (NMC622) (p. 3, Fig. 2A). In the full slurry it ends at 9.7 (LNMO) and 12.5 (NMC622) (p. 5, Fig. 3F).
+  - **pH with LiH2PO4.** In the dilute test dispersion, LiH2PO4 holds the pH at 6.6 and 9.7 (p. 4, Fig. 2E).
+  - **Al pitting.** The evidence on the Al is SEM only. Al from NMC622 + LiH2PO4 electrodes is "free of obvious pitting" (p. 6, Fig. 4D).
+  - **Phosphate layer.** The XPS phosphate signal (P 2p) was measured on the cathode powders, not on the Al. The authors describe it as "a thin, largely inorganic phosphate layer forming on the active-material surface" and call their case "indirect yet coherent evidence" (p. 7).
+
+  So the phosphate layer is shown on the active material, and the protection of the Al is attributed to pH buffering. No passivation layer on the collector is shown. The row's blocks and its difference from P0 are unchanged.
+- **Row 5** (10.1021/jacs.4c03943): no open copy; the row stays at "abstract".
+  - The abstract describes mesoporous PDA platelets in a nacre-like brick-and-mortar layer on Zn, with no mineral.
+  - The row is unchanged.
+
+**Effect on the wording.** N1 and N2 are unchanged. N2 credits "mitigation of Al corrosion in aqueous slurries" and row 3 still supports that credit, now as pH-buffering mitigation. No new evidence bears on the decision rule.
+
 ## Novelty wording supported by the evidence
 
 **Wording N1 (for the Introduction or the end of the Abstract).**
@@ -431,6 +452,6 @@ Conditions on N1 and N2:
 
 - **G1 Patents.** No headless patent route: `LENS_TOKEN` is empty and no other key is present. Outstanding. YOU: a free Lens.org API token, added to `.env` as `LENS_TOKEN`, would let a later session rerun the 33 logged patent strings unchanged.
 - **G2 ChemRxiv.** The search API returned HTTP 403 to every request. DOI-bearing ChemRxiv items are still partly covered through the indexing routes.
-- **G3 Full text.** Publisher-hosted open copies refused headless clients. Only 5 full texts were reached, and the remaining locators are abstracts or titles. Rows 1 to 5 (the top five) were read from abstracts only. The full text of rows 1, 3 and 5 should be read before cp4, through an authenticated or library route by the operator.
+- **G3 Full text.** Publisher-hosted open copies refused headless clients. Only 5 full texts were reached, and the remaining locators are abstracts or titles. Rows 1 to 5 (the top five) were read from abstracts only. The full text of rows 1, 3 and 5 should be read before cp4, through an authenticated or library route by the operator. *Update 2026-10-17 (P0-W2.2): row 3 was read in full through an open repository copy (see the dated note under Closest prior art); rows 1 and 5 have no open copy and remain outstanding for an operator or library route.*
 - **G4 Depth.** For combinations with more than 25 hits per route, only the top 25 records were screened. The decisive combinations (SOMP and the S-O-M triple, with and without the context block) were screened in full on both boolean routes.
 - **G5 Language.** The query terms are English only.

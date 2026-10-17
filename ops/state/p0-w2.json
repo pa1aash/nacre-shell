@@ -1,16 +1,26 @@
 {
-  "last_session": "P0-W2.1",
-  "status": "DONE",
-  "day": 1,
+  "last_session": "P0-W2.2",
+  "status": "BLOCKED",
+  "day": 2,
+  "retro_schema": {"sha": "af75ed0f380e3094e7f83ff542d4fe15155748b0"},
+  "criterion_sha": "af75ed0f380e3094e7f83ff542d4fe15155748b0",
   "artifacts": [
-    "lit/novelty.md",
+    "preprint/retrodiction/cases.yaml",
+    "preprint/retrodiction/criterion.md",
+    "preprint/retrodiction/SCHEMA.md",
+    "src/nacre/retro/cases.py",
+    "src/nacre/retro/cli.py",
+    "tests/retro/test_retro_cases.py",
+    "tests/retro/test_retro_cli.py",
     "lit/contrary.md",
-    "ops/reports/P0-W2.1.md"
+    "lit/novelty.md",
+    "ops/reports/P0-W2.2.md"
   ],
   "notes": [
-    "Novelty wording N1/N2 supported within the searched literature; patents not searched (LENS_TOKEN empty) and ChemRxiv API returned 403.",
-    "Contrary dossier: blocking 2 (B1, B2), material 9 (B3-B11), minor 1 (B12).",
-    "p0-w1 evidence_table.csv not yet pushed; row_id cross-check due Day 2 (P0-W2.2).",
-    "Full text of top-five prior art and of B2/B7/B9/B10 sources outstanding (publisher copies refused headless clients)."
+    "Cases and criterion fixed before any run at af75ed0: 12 usable, 25 excluded; pass rule k = 10 of N = 12, chance probability 79/4096 = 0.0193.",
+    "BLOCKED on one acceptance item: no usable hydroxyl-terminated case (no independent calcite-OH input could be sourced); options in ops/reports/P0-W2.2.md, Diagnosis.",
+    "W2.3 needs lit/params.yaml keys gamma_calcite_water, molar_volume_calcite and ksp_calcite (W1.2) and cp1, cp2.",
+    "Fig 4 (W6) must move to retro-results/v1: pairwise orderings, no threshold.",
+    "Contrary: B13 (N4, chitosan insoluble in alkaline slurry) added; W1 contrary rows cross-referenced (73 of 73); B7 and B10 upgraded to full text."
   ]
 }
