@@ -11,6 +11,10 @@ correlation groups (nacre.screen.sampling.JointPrior):
   * family categorical or none (gaps, computed or registered inputs): not sampled; they
     are returned as unsampled with the table's reason, and a link that needs one cannot be
     evaluated from the table alone;
+  * units: each prior is converted from the table's ``unit`` string to the SI unit of its
+    symbol in theory/symbols.yaml by nacre.screen.units (a linear factor on every prior
+    parameter); an unknown unit string, or one of another dimension, is refused. A log10
+    quantity must be dimensionless;
   * correlation groups of kind ``rank`` enter as their Spearman matrix; ``assumed
     independent`` groups enter as the identity, and the group exists so that the screen
     can test its sensitivity to that assumption (Task 4e).
@@ -26,6 +30,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
+from nacre.screen import units
 from nacre.screen.priors import MockPriorsRefused, Prior, PriorFileError
 from nacre.screen.sampling import JointPrior
 
@@ -33,6 +38,37 @@ PRODUCTION_PARAMS = Path("lit") / "params.yaml"
 REGIMES = ("R-slurry", "R-cell")
 SAMPLED = {"normal": ("mean", "sd"), "uniform": ("low", "high"), "loguniform": ("low", "high")}
 UNSAMPLED = ("categorical", "none")
+SYMBOLS = Path(__file__).resolve().parents[3] / "theory" / "symbols.yaml"
+_SI = {}
+
+
+def symbol_units(path=SYMBOLS):
+    """{symbol id: SI unit string} of theory/symbols.yaml (empty when the file is absent)."""
+    key = str(path)
+    if key not in _SI:
+        p = Path(path)
+        doc = yaml.safe_load(p.read_text(encoding="utf-8")) if p.exists() else {}
+        _SI[key] = {e["id"]: str(e.get("unit", "1")) for e in (doc or {}).get("symbols", [])}
+    return _SI[key]
+
+
+def to_si(symbol, unit, transform, params, where):
+    """(SI unit, params) of a prior stated in ``unit``; UnitError names the key on refusal."""
+    try:
+        units.parse(unit)
+        if transform == "log10":
+            if units.dimension(unit) != units.dimension("1"):
+                raise units.UnitError("a log10 quantity must be dimensionless, got %r" % unit)
+            return unit, params
+        si = symbol_units().get(symbol)
+        if si is None:
+            return unit, params
+        k = units.factor(unit, si)
+    except units.UnitError as exc:
+        raise PriorFileError("%s: %s" % (where, exc)) from None
+    if params is None or k == 1.0:
+        return si, params
+    return si, {name: v * k for name, v in params.items()}
 
 
 @dataclass(frozen=True, eq=False)
@@ -139,6 +175,7 @@ def regime_priors(path, regime, allow_mock=False, bindings=None):
         unit = entry.get("unit")
         if not isinstance(unit, str):
             raise PriorFileError("%s: 'unit' is required" % where)
+        unit, params = to_si(symbol, unit, transform, params, where)
         priors.append(Prior(key, symbol, unit, fam, params, ",".join(entry.get("sources") or []), transform))
         if entry.get("correlation_group"):
             group_of[key] = entry["correlation_group"]

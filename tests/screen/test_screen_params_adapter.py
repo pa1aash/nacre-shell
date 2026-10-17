@@ -21,8 +21,9 @@ def _table(tmp_path, doc):
     return p
 
 
-def _entry(symbol, prior, regimes=("shared",), group=None, transform="none"):
-    return {"symbol": symbol, "transform": transform, "unit": "1", "regimes": list(regimes),
+def _entry(symbol, prior, regimes=("shared",), group=None, transform="none", unit=None):
+    unit = unit if unit is not None else (pa.symbol_units().get(symbol, "1") if transform == "none" else "1")
+    return {"symbol": symbol, "transform": transform, "unit": unit, "regimes": list(regimes),
             "status": "sourced", "prior": prior, "sources": [], "correlation_group": group}
 
 
@@ -167,3 +168,17 @@ def test_screen_bindings_name_only_contract_symbols():
     b = run.load_config(ROOT)["bindings"]["R-slurry"]
     syms = set(b["common"]) | {s for f in b["by_framing"].values() for s in f} | {s for st in b["states"].values() for s in st}
     assert syms <= known, syms - known
+
+
+def test_priors_are_converted_to_the_si_unit_of_their_symbol(tmp_path):
+    doc = {"mock": False, "params": {"g": _entry("gamma_nl", {"family": "uniform", "low": 10.0, "high": 20.0},
+                                                 unit="mJ m^-2")}}
+    p = pa.regime_priors(_table(tmp_path, doc), "R-slurry").joint.priors[0]
+    assert p.units == "J m^-2" and p.params == pytest.approx({"low": 0.01, "high": 0.02}, rel=1e-15)
+
+
+@pytest.mark.parametrize("unit,match", [("furlong", "unknown unit"), ("J mol^-1", "cannot convert")])
+def test_unknown_or_wrong_dimension_units_are_refused(tmp_path, unit, match):
+    doc = {"mock": False, "params": {"g": _entry("gamma_nl", U, unit=unit)}}
+    with pytest.raises(PriorFileError, match=match):
+        pa.regime_priors(_table(tmp_path, doc), "R-slurry")
