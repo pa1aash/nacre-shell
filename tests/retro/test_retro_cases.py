@@ -172,3 +172,62 @@ def test_criterion_must_state_matching_n_and_k():
     assert any("k = 9" in e for e in rc.check_criterion("N = 12\nk = 9\n", summary))
     assert any("N = 11" in e for e in rc.check_criterion("N = 11\nk = 10\n", summary))
     assert rc.check_criterion("no numbers here", summary)
+
+
+def _surface_input(data, cid="RC01", role="test"):
+    c = next(c for c in _usable(data) if c["id"] == cid)
+    return c, next(i for i in c["inputs"] if i["role"] == role)
+
+
+def test_committed_inputs_each_name_their_interface(committed):
+    by_symbol = {}
+    for c in _usable(committed):
+        for i in c["inputs"]:
+            assert i["interface"] in rc.INTERFACES, (c["id"], i["symbol"])
+            if i["symbol"] in rc.SYMBOL_MAPPING:
+                by_symbol.setdefault(i["symbol"], set()).add((i["interface"], i["interface_mapping"]))
+    # adhesion -> gamma_sn by Dupre; Ca2+ binding -> gamma_sl by Gibbs-Langmuir; OWRK -> gamma_sl
+    assert by_symbol["dG_bind"] == by_symbol["E_int"] == {("gamma_sn", "dupre")}
+    assert by_symbol["c_local"] == {("gamma_sl", "gibbs_langmuir")}
+    assert by_symbol["gamma_s_owrk"] == {("gamma_sl", "owrk")}
+    assert all(p["interface"] in rc.INTERFACES for p in committed["shared_priors"].values())
+
+
+def test_rejects_input_without_interface(committed):
+    d = copy.deepcopy(committed)
+    _surface_input(d)[1].pop("interface")
+    assert any("interface must be one of" in e for e in _errors(d))
+
+
+def test_rejects_adhesion_mapped_to_the_wrong_interface(committed):
+    d = copy.deepcopy(committed)
+    _surface_input(d)[1]["interface"] = "gamma_sl"
+    assert any("mapping dupre reaches gamma_sn" in e for e in _errors(d))
+    d = copy.deepcopy(committed)
+    _surface_input(d)[1]["interface_mapping"] = "gibbs_langmuir"
+    assert any("dG_bind maps by 'dupre'" in e for e in _errors(d))
+
+
+def test_rejects_mixed_mappings_within_a_case(committed):
+    d = copy.deepcopy(committed)
+    c, ref = _surface_input(d, role="reference")
+    ref.update(symbol="c_local", interface="gamma_sl", interface_mapping="gibbs_langmuir")
+    assert any("one and the same interface mapping" in e for e in _errors(d))
+
+
+def test_rejects_omega_local_mapping_and_omega_channel(committed):
+    d = copy.deepcopy(committed)
+    c, inp = _surface_input(d, "RC11")
+    inp["maps_to"] = "Omega_local = E_enr Omega_bulk"
+    c["channel"] = "omega"
+    errors = _errors(d)
+    assert any("Omega_local, which contract v3 refuses" in e for e in errors)
+    assert any("RC11: under contract v3" in e for e in errors)
+
+
+def test_rejects_interface_mapping_on_a_shared_input(committed):
+    d = copy.deepcopy(committed)
+    c = _usable(d)[0]
+    shared = next(i for i in c["inputs"] if i["role"] == "shared")
+    shared["interface_mapping"] = "dupre"
+    assert any("interface_mapping is only for surface inputs" in e for e in _errors(d))

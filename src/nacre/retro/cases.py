@@ -2,8 +2,9 @@
 
 Checks that every outcome and input carries a DOI and a locator (or a lit/params.yaml key), that
 each outcome's relation agrees with its observable and values, that no usable input is derived
-from the outcome it is compared with, that assumptions say what they rest on, and that there are
-at least MIN_USABLE usable cases. It also computes the pass threshold k of criterion.md from the
+from the outcome it is compared with, that assumptions say what they rest on, that every usable
+input names the interface it acts on (cp2 interface mapping, decision D17) with no Omega_local
+mapping (contract v3), and that there are at least MIN_USABLE usable cases. It also computes the pass threshold k of criterion.md from the
 number of usable cases and checks that criterion.md states the same N and k.
 """
 import math
@@ -38,8 +39,17 @@ CASE_KEYS = {"id", "study", "termination", "templated", "test", "reference", "mi
              "link_reported_in_source", "negative", "status", "exclusion_reason"}
 OUTCOME_KEYS = {"comparison", "observable", "test_value", "reference_value", "unit", "relation",
                 "reading", "doi", "locator"}
-INPUT_KEYS = {"symbol", "role", "value", "distribution", "unit", "doi", "locator", "params_key",
-              "evidence_row", "evidence_rows", "maps_to", "assumption", "basis", "derived_from_outcome"}
+INPUT_KEYS = {"symbol", "role", "interface", "interface_mapping", "value", "distribution", "unit", "doi", "locator",
+              "params_key", "evidence_row", "evidence_rows", "maps_to", "assumption", "basis", "derived_from_outcome"}
+
+# Interfaces an input may act on (SCHEMA.md section 4): the three Young energies, the net energy of a
+# simulated nucleus, the bulk state of the pair, and the shared Young ratio of a nuisance contact.
+INTERFACES = {"gamma_sn", "gamma_sl", "gamma_nl", "net", "bulk", "young"}
+# A surface input's mapping and the interface it reaches.
+MAPPING_INTERFACE = {"dupre": "gamma_sn", "gibbs_langmuir": "gamma_sl", "owrk": "gamma_sl", "net": "net"}
+SYMBOL_MAPPING = {"dG_bind": "dupre", "E_int": "dupre", "W_adh": "dupre", "c_local": "gibbs_langmuir",
+                  "Delta_G_seq": "gibbs_langmuir", "gamma_s_owrk": "owrk", "gamma_net_sim": "net"}
+REFUSED_MAPS = ("Omega_local",)
 
 # The required coverage (P0-W2.2 task A): five terminations plus templated mineralisation.
 REQUIRED_TERMINATIONS = ("carboxyl", "hydroxyl", "methyl", "amine", "catechol")
@@ -151,6 +161,25 @@ def _check_input(where, inp, errors):
     row = inp.get("evidence_row")
     if row is not None and not ROW_ID.match(str(row)):
         errors.append("%s: malformed evidence_row %r" % (where, row))
+    _check_interface(where, inp, errors)
+
+
+def _check_interface(where, inp, errors):
+    """The input names its interface; a surface input also names the mapping that reaches it."""
+    iface, mapping, sym = inp.get("interface"), inp.get("interface_mapping"), inp.get("symbol")
+    if iface not in INTERFACES:
+        errors.append("%s: interface must be one of %s, got %r" % (where, sorted(INTERFACES), iface))
+    if any(r in str(inp.get("maps_to", "")) for r in REFUSED_MAPS):
+        errors.append("%s: maps through Omega_local, which contract v3 refuses" % where)
+    if sym in SYMBOL_MAPPING:
+        if inp.get("role") not in ("test", "reference"):
+            errors.append("%s: %s is a surface input; its role must be test or reference" % (where, sym))
+        if mapping != SYMBOL_MAPPING[sym]:
+            errors.append("%s: %s maps by %r, got interface_mapping %r" % (where, sym, SYMBOL_MAPPING[sym], mapping))
+        elif iface != MAPPING_INTERFACE[mapping]:
+            errors.append("%s: mapping %s reaches %s, got interface %r" % (where, mapping, MAPPING_INTERFACE[mapping], iface))
+    elif mapping is not None:
+        errors.append("%s: interface_mapping is only for surface inputs (%s)" % (where, ", ".join(sorted(SYMBOL_MAPPING))))
 
 
 def validate(data, evidence_rows=None):
@@ -164,6 +193,8 @@ def validate(data, evidence_rows=None):
         errors.append("fixed_before_run must be true")
     for name, prior in sorted((data.get("shared_priors") or {}).items()):
         _check_source("shared_priors.%s" % name, prior, errors, allow_params=True)
+        if prior.get("interface") not in INTERFACES:
+            errors.append("shared_priors.%s: interface must be one of %s" % (name, sorted(INTERFACES)))
         if not _blank(prior.get("params_key")) and not prior.get("evidence_rows"):
             errors.append("shared_priors.%s: a pending params key must list its evidence rows" % name)
 
@@ -226,6 +257,16 @@ def validate(data, evidence_rows=None):
                 errors.append("%s: needs at least one test and one reference input" % cid)
             for n, inp in enumerate(inputs):
                 _check_input("%s.inputs[%d]" % (cid, n), inp, errors)
+            maps = {i.get("role"): set() for i in inputs}
+            for i in inputs:
+                if i.get("symbol") in SYMBOL_MAPPING:
+                    maps[i.get("role")].add(i.get("interface_mapping"))
+            if maps.get("test") != maps.get("reference") or len(maps.get("test") or ()) != 1:
+                errors.append("%s: test and reference need one and the same interface mapping, got %s and %s"
+                              % (cid, sorted(maps.get("test") or ()), sorted(maps.get("reference") or ())))
+            if c.get("channel") != "theta":
+                errors.append("%s: under contract v3 every template input acts through theta (Omega is the bulk value)"
+                              % cid)
             ids = set()
             for a in c.get("assumptions") or []:
                 if _blank(a.get("text")) or not re.match(r"^A-%s-\d+$" % re.escape(str(cid)), str(a.get("id"))):
