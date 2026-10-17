@@ -10,20 +10,24 @@
 # Schema (each entry of `claims`)
 #   id           stable id, CL-<letter><two digits>; the letter follows the type
 #                (R relation, B bound, G governing, P precision, X proxy, T retrodiction,
-#                O outlook, L limitation, N does-not-claim).
+#                O outlook, L limitation, N does-not-claim, K background, V novelty,
+#                E contrary evidence, M method).
 #   statement    draft wording, no numbers (numbers are macros named in `evidence`).
 #   section      the manuscript section that carries it (file stem in preprint/paper/sections).
 #   type         physical relation | parameter bound | governing parameter | required precision |
 #                proxy result | retrodiction outcome | outlook | limitation | background |
-#                novelty | contrary evidence. The last three (letters K, V and E) are the
-#                Introduction's literature statements (added in P0-W8.2).
+#                novelty | contrary evidence | method. K, V and E are the Introduction's
+#                literature statements (added in P0-W8.2); method (letter M) is a rule or setting
+#                the Methods states (added in P0-W8.3).
 #   polarity     claims | does-not-claim.
 #   evidence     list of {kind, ref}; kind is macro (preprint/generated/sources.yaml), figure
 #                (Fig 1..8), table (Table 1..3), derivation (an SI section label), reference
 #                (a refs.bib key or a pending pointer), claim (another id), row (a row_id of
 #                lit/evidence_table.csv), doi (a DOI in preprint/paper/refs.bib that is also
-#                recorded in lit/evidence_table.csv, lit/novelty.md or lit/contrary.md) or
-#                dossier (<file>#<anchor>: a lit/ file and a string that occurs in it).
+#                recorded in lit/evidence_table.csv, lit/novelty.md or lit/contrary.md),
+#                dossier (<file>#<anchor>: a lit/ file and a string that occurs in it) or
+#                record (<path>#<anchor>: any tracked repository file, such as a theory
+#                authority, a configuration, a lane record or a ruling, and a string in it).
 #   checkpoint   the track checkpoint the claim depends on: cp1..cp5, or none.
 #   supplier     the lane that supplies the evidence.
 #   scope_check  clean (lint-scope finds nothing) or allowlisted (an explicit does-not-claim
@@ -47,7 +51,7 @@ claims:
     checkpoint: cp2
     supplier: p0-w3
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-R02
     statement: >-
       Ca2+ binding by the template is a binding descriptor: the transfer free energy of the
@@ -247,7 +251,7 @@ claims:
     checkpoint: cp3
     supplier: p0-w4
     scope_check: clean
-    status: planned
+    status: drafted
     notes: >-
       Reworded in P0-W8.2 under lane note N5: no claim about when the thresholds were set
       relative to any calculation. Authority: theory/thresholds.md and track rule R-thr.
@@ -887,3 +891,316 @@ claims:
     scope_check: clean
     status: drafted
     notes: Forward reference; the section order follows the outline.
+  # --- Physical model (P0-W8.3): the claims of sections/model.tex beyond CL-R01 to CL-R05 ---
+  # Written to the derivation as audited at cp2 and cp3; each sentence of the section ends with
+  # a comment naming its id.
+  - id: CL-R09
+    statement: >-
+      The mechanism is assembled in the alkaline aqueous slurry and must survive in the
+      non-aqueous cell; adhesion, Ca2+ binding and nucleation are defined only in the slurry,
+      coverage uses slurry wetting energies against a thickness bound from the cell, and
+      stability is a separate question in each regime; the links are necessary conditions in
+      series.
+    section: model
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:derivation}
+      - {kind: figure, ref: Fig 2}
+      - {kind: record, ref: "theory/derivation_body.tex#Two rules follow from the regime split."}
+    checkpoint: cp2
+    supplier: p0-w3
+    scope_check: clean
+    status: drafted
+  - id: CL-R10
+    statement: >-
+      At a fixed template-nucleus energy, Ca2+ binding alone raises the nucleation barrier,
+      because the bound ions must be stripped from the area a nucleus covers; the template helps
+      nucleation only if the template-nucleus energy falls by more than the adsorption lowers
+      the template-liquid energy.
+    section: model
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:derivation}
+      - {kind: figure, ref: Fig 3}
+      - {kind: record, ref: "theory/derivation_body.tex#\\paragraph{Consequence for the barrier (Q1).}"}
+      - {kind: record, ref: "theory/cp2_brief.md#At fixed gamma_sl0 and gamma_sn, stronger binding raises the barrier"}
+    checkpoint: cp2
+    supplier: p0-w3
+    scope_check: clean
+    status: drafted
+  - id: CL-R11
+    statement: >-
+      A barrier is low enough only if the expected areal density of nuclei formed during the
+      time at the registered slurry states reaches the density required by the particle contact
+      patch, with the fraction of empty patches bounded through Poisson occupancy; the criterion
+      is necessary, not sufficient, and only the logarithm of the kinetic prefactor enters.
+    section: model
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:derivation}
+      - {kind: record, ref: "theory/derivation_body.tex#\\paragraph{Accessibility of the barrier.}"}
+      - {kind: record, ref: "theory/thresholds.md#N_req (cp2 fix F4, amended at cp3 R5)"}
+    checkpoint: cp3
+    supplier: p0-w3
+    scope_check: clean
+    status: drafted
+  - id: CL-R12
+    statement: >-
+      Because the template-nucleus energy cannot be negative, the spreading coefficient is
+      bounded by the difference of the template-water and mineral-water energies, so complete
+      wetting is excluded on a template that water wets at least as favourably as it wets the
+      mineral, hydrophilic in that relative sense, and a continuous film there can form only by
+      coalescence of islands, that is by nucleation density.
+    section: model
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:derivation}
+      - {kind: figure, ref: Fig 2d}
+      - {kind: record, ref: "theory/derivation_body.tex#\\paragraph{Complete wetting is excluded on a hydrophilic template (cp3).}"}
+      - {kind: record, ref: "theory/thresholds.md#Physical result (cp3 R3"}
+    checkpoint: cp3
+    supplier: p0-w3
+    scope_check: clean
+    status: drafted
+  - id: CL-R13
+    statement: >-
+      Lithium carbonate in non-aqueous cells oxidises close to the experimental equilibrium limit
+      of the same reaction, so the anodic limit of calcium carbonate is read as the onset of an
+      observable reaction.
+    section: model
+    type: physical relation
+    polarity: claims
+    evidence:
+      - {kind: row, ref: TK-059}
+      - {kind: row, ref: TK-062}
+      - {kind: row, ref: TI-061}
+      - {kind: doi, ref: 10.1002/anie.201802277}
+      - {kind: doi, ref: 10.1038/s41467-022-32557-w}
+      - {kind: record, ref: "results/preprint/pourbaix/gas_reference.md#**B6 comparator.**"}
+    checkpoint: cp3
+    supplier: p0-w5
+    scope_check: clean
+    status: drafted
+    notes: >-
+      W1 key li2co3_oxidation_onset (rows TK-059, TK-062, TI-061) against the experimental
+      equilibrium potential of W5's gas-reference benchmark (B6). The measured onset includes an
+      overpotential and is an upper bound on the thermodynamic potential (gas_reference.md).
+  - id: CL-L06
+    statement: >-
+      The model leaves out the validity of classical nucleation theory at nucleus size, the
+      double-layer term of the adsorption energy, kinetics beyond the accessibility bound, and the
+      persistence of the layer in the cell; the Discussion takes each up.
+    section: model
+    type: limitation
+    polarity: claims
+    evidence:
+      - {kind: derivation, ref: si:derivation}
+      - {kind: claim, ref: CL-L03}
+      - {kind: record, ref: "theory/derivation_body.tex#\\paragraph{Limitation: the double-layer term.}"}
+    checkpoint: cp2
+    supplier: p0-w3
+    scope_check: clean
+    status: drafted
+  # --- Methods (P0-W8.3): type method (M), the rules and settings the Methods states ---
+  - id: CL-M01
+    statement: >-
+      Every prior is built from fetched evidence rows by one rule committed before any value was
+      entered: admission without proxies, one count per original determination, grades that limit
+      the prior family, correlation groups, and widening of single-source binding energies.
+    section: methods
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: record, ref: "lit/corpus/params_README.md### 3. Choice of prior family"}
+      - {kind: record, ref: "lit/corpus/params_README.md#C1. Keys whose admitted values come from the same determination"}
+      - {kind: record, ref: "lit/corpus/params_README.md#W1 (single-source widening)"}
+    checkpoint: cp3
+    supplier: p0-w1
+    scope_check: clean
+    status: drafted
+  - id: CL-M02
+    statement: >-
+      Unmeasured interfacial energies carry ignorance priors between thermodynamic bounds, and a
+      probability of feasibility under such a prior is never reported as a finding; flip values
+      and required precision are reported instead, analog priors run side by side and flagged, and
+      process variables and the cathode class are design axes.
+    section: methods
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: record, ref: "theory/ignorance_priors.md#P(feasible) under an ignorance prior is never reported as a finding"}
+      - {kind: record, ref: "theory/ignorance_priors.md#Flagged analog priors"}
+      - {kind: record, ref: "theory/thresholds.md#E_cell_max is a design axis"}
+    checkpoint: cp3
+    supplier: p0-w3
+    scope_check: clean
+    status: drafted
+  - id: CL-M03
+    statement: >-
+      Priors are propagated by Monte Carlo per registered state with copula rank correlations;
+      Sobol indices rank independent inputs and Shapley effects correlated ones; the draws follow a
+      registered sizing rule with caps; required precision is the largest prior contraction that
+      decides the verdict.
+    section: methods
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: macro, ref: NumSizingBandHalfWidth}
+      - {kind: macro, ref: NumSizingSobolHalfWidth}
+      - {kind: macro, ref: NumSizingDrawCap}
+      - {kind: macro, ref: NumSizingWallClockCap}
+      - {kind: record, ref: "theory/thresholds.md#Sizing rule for the Monte Carlo"}
+      - {kind: record, ref: "configs/preprint/precision_method.md### 2. Definitions"}
+      - {kind: doi, ref: 10.1016/s0010-4655(02)00280-1}
+      - {kind: doi, ref: 10.1080/00949659708811825}
+    checkpoint: cp2
+    supplier: p0-w4
+    scope_check: clean
+    status: drafted
+    notes: >-
+      The Shapley-effects reference is a missing-input marker in the text: no evidence row records
+      it yet (outstanding action for W1).
+  - id: CL-M04
+    statement: >-
+      Each link is judged by the band mass on each side of an edge taken from the physics, at the
+      registered credible level and margin conventions with their published sweeps; link masses
+      are joint on the same draws, worst-state links take their worst state, and accessibility sums
+      along the path of states.
+    section: methods
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: macro, ref: NumPcred}
+      - {kind: macro, ref: NumMcos}
+      - {kind: macro, ref: NumPdeg}
+      - {kind: table, ref: Table 2}
+      - {kind: record, ref: "theory/thresholds.md#Link masses are joint, draw by draw"}
+    checkpoint: cp3
+    supplier: p0-w3
+    scope_check: clean
+    status: drafted
+  - id: CL-M05
+    statement: >-
+      The study gates on adhesion, nucleation, coverage and stability with Ca2+ binding as a
+      descriptor, needs a deletion test against the bare oxide and PVDF, and runs calcite and
+      amorphous framings as whole chains, falsified only under every framing and feasible under at
+      least one.
+    section: methods
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: record, ref: "theory/thresholds.md#Framings (cp3 R6)"}
+      - {kind: record, ref: "theory/thresholds.md#Deletion test"}
+      - {kind: record, ref: "theory/thresholds.md#C2 is a binding descriptor. It enters C3 only through Delta_gamma_ads"}
+    checkpoint: cp3
+    supplier: p0-w3
+    scope_check: clean
+    status: drafted
+  - id: CL-T02
+    statement: >-
+      The retrodiction protocol, the case selection, interface mapping, correctness and pass rules,
+      label-blind barrier code with a swap check and a descriptive permutation null, was committed
+      before the run, with its limits stated, including that most sources already report the
+      input-outcome link.
+    section: methods
+    type: retrodiction outcome
+    polarity: claims
+    evidence:
+      - {kind: macro, ref: NumRetroPassCount}
+      - {kind: macro, ref: NumRetroUsableCases}
+      - {kind: macro, ref: NumRetroLinkReported}
+      - {kind: record, ref: "preprint/retrodiction/criterion.md#This criterion was written, and committed together with `cases.yaml`, before any retrodiction run."}
+      - {kind: record, ref: "ops/tracks/p0.yaml#R9 the retrodiction constant-predictor baseline is dropped"}
+    checkpoint: cp3
+    supplier: p0-w2
+    scope_check: clean
+    status: drafted
+    notes: >-
+      Text written to criterion.md at the W2.2 fixed-before-run commit and to rulings D17 and R9
+      (lane notes N11, N23). P0-W2.3 makes the new fixed-before-run commit with the interface
+      mapping, the permutation null and the dropped constant baseline; the paragraph is re-read
+      against it before cp4.
+  - id: CL-M06
+    statement: >-
+      Solid energies are Materials Project data used under CC BY with the changes stated and no
+      endorsement implied; slurry dissolution is decided by the supersaturation test with
+      controls, the Pourbaix hull at fixed carbonate carbon answers competing solids, the gas
+      reference schemes are benchmarked, and the experimental route governs the cell limits.
+    section: methods
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: macro, ref: NumMpDatabaseVersion}
+      - {kind: doi, ref: 10.1103/physrevb.85.235438}
+      - {kind: record, ref: "results/preprint/pourbaix/cache/attribution_for_paper.md### Points W8 must keep"}
+      - {kind: record, ref: "results/preprint/pourbaix/gas_reference.md#The two schemes bracket the experiment"}
+      - {kind: record, ref: "theory/thresholds.md#Governing route (cp3 R2)"}
+    checkpoint: cp3
+    supplier: p0-w5
+    scope_check: clean
+    status: drafted
+    notes: >-
+      The Materials Project reference (10.1063/1.4812323) is listed by W5 (P0-W5.3, NOTICE.md) and
+      is not an evidence-table row, so it is cited in the text but not used as doi evidence here.
+      The NIST-JANAF reference is a missing-input marker: its DataCite DOI did not resolve through
+      nacre bib add.
+  - id: CL-M07
+    statement: >-
+      The single anchor calculation is a pipeline check, not a screen input, at a level chosen
+      from published benchmarks for Ca2+ with oxygen-donor ligands, with a stated standard-state
+      conversion.
+    section: methods
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: macro, ref: NumAnchorFunctional}
+      - {kind: record, ref: "src/nacre/anchor/PROTOCOL.md### Level used"}
+      - {kind: row, ref: TE-062}
+      - {kind: doi, ref: 10.1021/acs.jpcb.0c11077}
+      - {kind: doi, ref: 10.1039/c7cp04913g}
+      - {kind: doi, ref: 10.1021/jp810292n}
+    checkpoint: cp3
+    supplier: p0-w5
+    scope_check: clean
+    status: drafted
+  - id: CL-M08
+    statement: >-
+      Three rules were set with values in view and are not independent of them: the framings, set
+      when an earlier rough calcite estimate existed; the cell scheme rule, set after the scheme
+      values were seen; and the slurry dissolution rule, set after the control and the
+      supersaturation values were seen; the thresholds were set before any screen output, not
+      before every calculation.
+    section: methods
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: record, ref: "theory/thresholds.md#A calcite-framing estimate near one half was available"}
+      - {kind: record, ref: "theory/thresholds.md#Disclosure (cp3 R1)"}
+      - {kind: record, ref: "theory/thresholds.md#Disclosure (cp3 R2)"}
+      - {kind: record, ref: "ops/tracks/p0.yaml#an earlier rough estimate under the calcite"}
+    checkpoint: cp3
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+    notes: >-
+      Lane note N5 asks for "the primary framing here is chosen on literature grounds". Since cp3
+      R6 both framings are registered and neither is primary, so the sentence says the framings
+      were chosen on literature grounds and are both run as whole chains.
+  - id: CL-M09
+    statement: >-
+      Code, inputs and the number pipeline are archived, every number in the text is a generated
+      macro with logged provenance, and every reference was added by its DOI.
+    section: methods
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: record, ref: "preprint/generated/sources.yaml#rule R5: every number in the paper is a generated macro"}
+      - {kind: record, ref: "preprint/paper/bib/provenance.jsonl#\"key\": \"jain2013commentary\""}
+    checkpoint: none
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted

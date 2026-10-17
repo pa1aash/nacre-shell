@@ -121,11 +121,12 @@ def prepare(root, mode, out=print):
     _, marked = refs.write_build_copy(root)
     out("template: %s (%d files verified)" % (tdir, nfiles))
     out("macros: %d written to %s" % (nmacros, texscan.rel(root, paths.numbers_tex(root))))
-    derivation = root / "theory" / "derivation_body.tex"
+    derivation = root / "theory" / "si_derivation.tex"
     out("references: %d cited, all resolve in %s; %d without pages (marked in the build copy%s)"
         % (len(refs.cited(root)), texscan.rel(root, refs.source(root)), len(marked),
            ": " + ", ".join(marked) if marked else ""))
-    out("derivation: %s" % ("present" if derivation.is_file() else "absent (W3 has not delivered it; SI shows a draft marker)"))
+    out("SI derivation: %s" % ("present" if derivation.is_file()
+                               else "absent (theory/si_derivation.tex, P0-W3.4, not pushed; the SI shows a placeholder)"))
     if mode == "release":
         problems = guard(root)
         if problems:
