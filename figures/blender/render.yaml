@@ -11,11 +11,12 @@ engine:
   device: CPU
   samples: 64          # scenes may lower or raise this with their own `samples`
   seed: 0
-  threads: 2           # also passed on the command line as --threads 2 (memory rule R10)
+  threads: 4           # also passed on the command line as --threads 4 (memory rule R10)
   adaptive_sampling: false
   denoise: true
   denoiser: OPENIMAGEDENOISE
   max_bounces: 4
+  transparent_max_bounces: 24   # the faded water shell is drawn with partial opacity
 
 colour_management:
   view_transform: Standard   # identity tone mapping, so palette colours are not shifted by a filmic curve
@@ -38,4 +39,4 @@ bonds:
   factor: 1.15      # bonded if distance < factor x (sum of covalent radii)
   pairs: [[H, O], [C, H], [C, C], [C, N], [C, O], [N, H], [Al, O], [Ca, O]]
 
-mesh: {sphere_segments: 32, sphere_rings: 16, bond_segments: 16}
+mesh: {sphere_segments: 24, sphere_rings: 12, bond_segments: 12}

@@ -1,0 +1,41 @@
+# Figure 2c render: the amorphous CaCO3 nucleus, a lens of flat base and 50 degree contact angle, on the
+# template, with the bridging Ca2+ at its rim. Drawn from the Fig 1 structure. Illustrative. No text.
+name: fig2_c
+description: amorphous CaCO3 lens on the template (illustrative; crop of the Fig 1 structure)
+resolution: [800, 800]
+samples: 48
+camera:
+  direction: [0.15, 1.0, -0.5]
+  up: [0.0, 0.0, 1.0]
+  margin: 1.04
+components:
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [slab]
+    clip: {box: [[21.0, 61.0], [2.5, 39.0]], seed_elements: [Al], attach: [O, H]}
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [chain]
+    bond_radius: 0.19
+    clip: {box: [[21.0, 61.0], [0.0, 41.6]], molecules: true}
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [bridge]
+    clip: {box: [[21.0, 61.0], [0.0, 41.6]], molecules: true}
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [nucleus]
+    focus: true
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [water]
+    clip: {box: [[21.0, 61.0], [20.0, 39.0]], molecules: true}
+    fade: {reference: [slab, chain, nucleus, bridge], near: 2.5, far: 7.0, alpha: 0.2}
+drawing_choices:
+  illustrative: an illustrative construction for a schematic figure panel, not a simulated structure
+  style: ball-and-stick for every species, atom radius 0.28 x van der Waals (ase.data), sticks 0.14 A (template 0.19 A)
+  lighting: key, fill and rim rig of rig.py, shadow catcher, ambient occlusion and depth haze (rig.py docstring)
+  mesh: spheres 24 x 12, sticks 12 segments (memory rule R10)
+  camera: orthographic, oblique (direction 0.15, 1, -0.5)
+  water_shell: water behind the plane through the lens axis and within 7 A of slab, template, bridge and nucleus; opacity 0.2 to 2.5 A, falling to 0 at 7 A
+  crop: x 21-61 A of the Fig 1 cell, so the strip chains and their bound Ca2+ are out of the panel

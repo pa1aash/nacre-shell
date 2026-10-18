@@ -3,7 +3,7 @@
 #   figures/blender/render.sh <scene> <out.png>
 # Before rendering it reads `memory_pressure | tail -1`; below 25 % free it waits 5 minutes and
 # re-checks, for at most 60 minutes, then exits 3 so the caller records the render as outstanding.
-# Blender runs with --threads 2. Writes <out>.run.txt beside the image with the reading at start,
+# Blender runs with --threads 4. Writes <out>.run.txt beside the image with the reading at start,
 # wall time and peak resident memory of the renderer.
 set -eu
 scene=${1:?scene name}
@@ -33,7 +33,7 @@ mkdir -p "${out:h}"
 log="${out:r}.run.txt"
 start=$(date +%s)
 rc=0
-/usr/bin/time -l "$blender" -b --threads 2 -P "$here/scene.py" -- --scene "$scene" --out "$out" \
+/usr/bin/time -l "$blender" -b --threads 4 -P "$here/scene.py" -- --scene "$scene" --out "$out" \
   > "${out:r}.blender.out" 2> "${out:r}.time.out" || rc=$?
 end=$(date +%s)
 peak=$(grep -E 'maximum resident set size' "${out:r}.time.out" | awk '{print $1}')

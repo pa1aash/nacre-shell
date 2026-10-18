@@ -33,7 +33,7 @@ def _scene(**over):
 def test_render_config_is_reproducible_and_transparent():
     cfg = config.load_render_config()
     assert cfg["engine"]["name"] == "CYCLES" and cfg["engine"]["device"] == "CPU"
-    assert cfg["engine"]["threads"] == 2  # R10: two threads on the shared 8 GB machines
+    assert cfg["engine"]["threads"] == 4  # R10: four threads on the shared 8 GB machines
     assert cfg["film_transparent"] is True
     assert cfg["colour_management"]["view_transform"] == "Standard"
 
@@ -47,7 +47,7 @@ def test_palette_is_the_tracked_style_palette():
 
 def test_render_wrapper_follows_the_memory_rule():
     sh = (BLENDER_DIR / "render.sh").read_text()
-    assert "--threads 2" in sh and "--threads 4" not in sh
+    assert "--threads 4" in sh and "--threads 2" not in sh
     assert "pct < 25" in sh and "waited >= 60" in sh
 
 
@@ -283,7 +283,7 @@ def test_render_logs_hold_no_machine_dependent_values():
     import getpass
     import platform
 
-    for log_path in sorted(RENDER_DIR.glob("*/*.json")):
+    for log_path in sorted(RENDER_DIR.rglob("*.json")):
         text = log_path.read_text()
         log = json.loads(text)
         assert "timing_s" not in log, log_path
@@ -294,8 +294,8 @@ def test_render_logs_hold_no_machine_dependent_values():
 
 
 def test_every_render_log_names_current_inputs():
-    logs = sorted(RENDER_DIR.glob("*/*.json"))
-    assert {lp.parent.name for lp in logs} >= {"smoke", "hero"}
+    logs = sorted(RENDER_DIR.rglob("*.json"))
+    assert {lp.parent.name for lp in logs} >= {"smoke", "compare", "fig2"}
     for log_path in logs:
         log = json.loads(log_path.read_text())
         png = REPO / log["output"]
@@ -303,3 +303,195 @@ def test_every_render_log_names_current_inputs():
         assert log["scene_config_sha256"] == config.sha256(REPO / log["scene_config"]), log_path
         for item in log["inputs"]:
             assert config.sha256(REPO / item["file"]) == item["sha256"], (log_path, item["file"])
+
+
+# ---------------------------------------------------------------- day 3: crops, fade, focus, rig
+def _cfg():
+    cfg = config.load_render_config()
+    return cfg, config.load_radii(config.repo_path(cfg["elements"]))
+
+
+def test_chunked_bonds_equal_the_full_matrix():
+    cfg, radii = _cfg()
+    st = config.read_extxyz(committed_structures()["al2o3_0001_oh_water"])
+    sym, pos = st["symbols"], st["positions"]
+    got = config.find_bonds(sym, pos, radii, cfg["bonds"]["factor"], cfg["bonds"]["pairs"], chunk=97)
+    rc = np.array([radii[x]["covalent"] for x in sym])
+    d = np.linalg.norm(pos[:, None] - pos[None], axis=-1)
+    ii, jj = np.where(np.triu(d < cfg["bonds"]["factor"] * (rc[:, None] + rc[None]), k=1))
+    allowed = {frozenset(p) for p in cfg["bonds"]["pairs"]}
+    want = [(int(i), int(j)) for i, j in zip(ii, jj) if frozenset((sym[i], sym[j])) in allowed]
+    assert got == want
+
+
+def test_molecule_clip_keeps_whole_molecules_only():
+    cfg, radii = _cfg()
+    st = config.read_extxyz(committed_structures()["hero_interface"])
+    idx = config.select_atoms(st, ["chain", "water"], [])
+    box = [[20.0, 50.0], [10.0, 30.0]]
+    kept = set(config.clip_molecules(st["symbols"], st["positions"], idx, box, radii,
+                                     cfg["bonds"]["factor"], cfg["bonds"]["pairs"]))
+    comp = st["component"]
+    for c in {comp[i] for i in idx if comp[i].startswith("chain")}:
+        members = {i for i in idx if comp[i] == c}
+        assert members <= kept or not (members & kept), c  # a chain is drawn whole or not at all
+    water_o = [i for i in kept if comp[i] == "water" and st["symbols"][i] == "O"]
+    water_h = [i for i in kept if comp[i] == "water" and st["symbols"][i] == "H"]
+    assert len(water_h) == 2 * len(water_o)
+
+
+def test_fade_gives_a_thin_shell():
+    cfg, radii = _cfg()
+    st = config.read_extxyz(committed_structures()["hero_interface"])
+    idx = config.select_atoms(st, ["water"], [])
+    ref = config.select_atoms(st, ["slab", "chain", "nucleus"], [])
+    fade = {"reference": [], "near": 2.5, "far": 7.0, "alpha": 0.2}
+    keep, alpha = config.fade_alpha(st["symbols"], st["positions"], idx, ref, fade, radii,
+                                    cfg["bonds"]["factor"], cfg["bonds"]["pairs"])
+    assert 0 < len(keep) < len(idx)  # far water is not drawn
+    assert max(alpha) == pytest.approx(0.2) and min(alpha) >= config.MIN_ALPHA
+    d = config.min_distances(st["positions"][keep], st["positions"][ref])
+    assert d.max() < fade["far"] + 1.0  # O within far; its H at most a bond further
+    for i, a in zip(keep, alpha):
+        if st["symbols"][i] == "O":
+            dd = config.min_distances(st["positions"][[i]], st["positions"][ref])[0]
+            expect = 0.2 * np.clip((7.0 - dd) / 4.5, 0, 1)
+            assert a >= expect - 1e-9  # the molecule's nearest atom sets it (H may be nearer)
+            break
+
+
+@pytest.mark.parametrize("bad", [
+    {"camera": {"dof": {"focus": "nucleus"}}},
+    {"camera": {"dof": {"focus": "nucleus", "fstop": 0}}},
+    {"components": [{"file": "x.extxyz", "style": "ball_and_stick", "fade": {"near": 1, "far": 2}}]},
+    {"components": [{"file": "x.extxyz", "style": "ball_and_stick",
+                     "fade": {"reference": [], "near": 3, "far": 2, "alpha": 0.5}}]},
+    {"components": [{"file": "x.extxyz", "style": "ball_and_stick", "bond_radius": 0.9}]},
+    {"components": [{"file": "x.extxyz", "style": "ball_and_stick",
+                     "clip": {"box": [[0, 1], [0, 1]], "molecules": False}}]},
+    {"drawing_choices": ["a list"]},
+])
+def test_invalid_day3_options_are_refused(tmp_path, bad):
+    with pytest.raises(config.ConfigError):
+        config.parse_scene(_write(tmp_path, _scene(**bad)))
+
+
+def test_rig_has_nucleus_rim_ground_shadow_and_depth_cue():
+    r = rig.RIG
+    assert r["nucleus_rim"]["linked"] is True  # lights the nucleus only
+    assert 90.0 < r["nucleus_rim"]["azimuth"] < 270.0  # behind the subject
+    assert r["nucleus_rim"]["irradiance"] < r["key"]["irradiance"]  # subtle
+    assert r["ground"]["shadow_catcher"] is True
+    assert rig.depth_cue_factor(0.0) == 0.0 and rig.depth_cue_factor(r["depth_cue"]["start"]) == 0.0
+    assert rig.depth_cue_factor(1.0) == pytest.approx(r["depth_cue"]["strength"])
+    assert r["depth_cue"]["strength"] < 1.0
+    src = (BLENDER_DIR / "rig.py").read_text()
+    for needle in ("light_linking.receiver_collection", "is_shadow_catcher", "View Z Depth"):
+        assert needle in src, needle
+    for word in ("Nucleus rim", "Ground shadow", "Depth cue"):
+        assert word in rig.__doc__, word
+
+
+FIG_SCENES = ("hero_a", "hero_b", "hero_c", "fig2_a", "fig2_b", "fig2_c", "fig2_d")
+
+
+def test_figure_scenes_use_one_representation():
+    for name in FIG_SCENES:
+        s = config.parse_scene(name)
+        assert {c["style"] for c in s["components"]} == {"ball_and_stick"}, name
+        assert s["drawing_choices"], name
+
+
+def test_figure_render_logs_cite_sourced_geometry_and_hold_no_text():
+    for name, sub in [("hero_a", "hero/compare"), ("hero_b", "hero/compare"), ("hero_c", "hero/compare"),
+                      ("fig2_a", "fig2"), ("fig2_b", "fig2"), ("fig2_c", "fig2"), ("fig2_d", "fig2")]:
+        log = json.loads((RENDER_DIR / sub / f"{name}.json").read_text())
+        png = RENDER_DIR / sub / f"{name}.png"
+        assert log["text_objects"] == 0, name
+        assert log["counts"]["cross_component_bonds"] > 0, name  # anchors and Ca shells are drawn
+        assert log["styles_used"] == ["ball_and_stick"], name
+        assert log["drawing_choices"] == config.parse_scene(name)["drawing_choices"], name
+        w, h, *_ = _png_header(png)
+        assert [w, h] == log["render"]["resolution"], name
+        if name.startswith("hero"):
+            assert png.stat().st_size <= 2_000_000, name  # 2 MB, decimal
+        else:
+            assert w == 800, name
+        for item in log["inputs"]:
+            assert item["drawing_choices"], (name, item["file"])
+            if "Ca" in log["counts"]["elements"] and "fig2a" not in item["file"]:
+                rows = {v["cn"] for v in item["evidence_row_ids"].values()}
+                assert rows == {"TE-072"}, name
+            if name in ("hero_a", "hero_b", "hero_c", "fig2_c", "fig2_d"):
+                assert item["params_keys"]["acc"]["keys"]["r_co"] == "c_o_bond_length_acc", name
+
+
+def _blender():
+    import os
+    import shutil
+
+    exe = os.environ.get("BLENDER", "/Applications/Blender.app/Contents/MacOS/Blender")
+    return exe if os.path.exists(exe) else shutil.which("blender")
+
+
+def _free_memory_pct():
+    import re
+    import subprocess
+
+    try:
+        out = subprocess.run(["memory_pressure"], capture_output=True, text=True, timeout=30).stdout
+    except (OSError, subprocess.SubprocessError):
+        return None
+    m = re.search(r"(\d+)%\s*$", out.strip())
+    return int(m.group(1)) if m else None
+
+
+def test_render_is_reproducible(tmp_path):
+    """Two renders of one small scene with the fixed seed and settings: identical bytes on the
+    same platform; elsewhere (another build of the renderer) the pixels agree to a tolerance."""
+    import platform
+    import subprocess
+
+    exe = _blender()
+    if exe is None:
+        pytest.skip("no Blender on this machine (renders are made on the Mac)")
+    free = _free_memory_pct()
+    if free is not None and free < 25:
+        pytest.skip(f"memory rule R10: {free}% free, below 25%")
+    scene = tmp_path / "repro.yaml"
+    scene.write_text(yaml.safe_dump({
+        "name": "repro", "resolution": [96, 72], "samples": 4,
+        "components": [{"file": "structures/preprint/ca_hydrated.extxyz", "style": "ball_and_stick"}]}))
+    outs = []
+    for k in range(2):
+        out = tmp_path / f"r{k}.png"
+        subprocess.run([exe, "-b", "--threads", "4", "-P", str(BLENDER_DIR / "scene.py"), "--",
+                        "--scene", str(scene), "--out", str(out)], check=True, capture_output=True,
+                       timeout=600)
+        outs.append(out)
+    ref = json.loads((REPO / "structures" / "preprint" / "reference_platform.json").read_text())
+    same = ref == {"system": platform.system(), "machine": platform.machine()}
+    if same:
+        assert config.sha256(outs[0]) == config.sha256(outs[1])
+    else:
+        from PIL import Image
+
+        a, b = (np.asarray(Image.open(o).convert("RGBA"), dtype=float) for o in outs)
+        assert np.abs(a - b).mean() < 1.0
+
+
+def test_anchor_and_ca_bonds_cross_components():
+    cfg, radii = _cfg()
+    s = config.parse_scene("hero_a")
+    atoms, comp_of = [], []
+    for k, comp in enumerate(s["components"]):
+        st = config.read_extxyz(config.repo_path(comp["file"]))
+        a, _ = config.select_component(st, comp, cfg, radii)
+        atoms += a
+        comp_of += [k] * len(a)
+    cross = config.cross_component_bonds(atoms, comp_of, radii, cfg["bonds"]["factor"])
+    kinds = {frozenset((atoms[i][5].rstrip("0123456789").split("_")[0], atoms[j][5].rstrip("0123456789").split("_")[0]))
+             for i, j in cross}
+    for want in (("chain", "slab"), ("bound", "chain"), ("bridge", "chain"), ("bridge", "nucleus")):
+        assert frozenset(want) in kinds, want
+    assert all(atoms[i][3] == 1.0 and atoms[j][3] == 1.0 for i, j in cross)  # never to faded water
