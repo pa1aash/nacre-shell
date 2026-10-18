@@ -16,14 +16,25 @@ targets:
     builder: oligomer
     seed: 7
     params: {n_units: 4}
+  catechol_oligomer_6:        # longer generic chain (24 A, flat): the template carpet under the Fig 1 lens
+    builder: oligomer
+    seed: 3
+    write: false
+    params: {n_units: 6}
+  catechol_oligomer_cooh:     # carboxyl-ended chain (DHICA-type end unit): the Fig 2b carboxylate site
+    builder: oligomer
+    seed: 7
+    write: false
+    params: {n_units: 4, end_group: COOH}
   ca_hydrated:
     builder: hydrated_ion
     evidence: ca_hydration   # CN and Ca-O from lane p0-w1 rows (sources/ca_hydration_w1.json)
     seed: 3
   acc_cluster:
     builder: acc_cluster
+    evidence: acc            # packing (v_m_acc) and C-O (c_o_bond_length_acc) from lane p0-w1 keys
     seed: 5
-    params: {n_fu: 8, density_g_cm3: 1.9}
+    params: {n_fu: 8}
 
   # Day 1 smoke scene: a small slab, a few waters and one hydrated Ca2+.
   smoke_slab:
@@ -44,31 +55,118 @@ targets:
       - {name: slab, target: smoke_slab_water}
       - {name: ion, target: ca_hydrated, place: {xy: [0.5, 0.5], gap: 2.6}}
 
-  # Figure 1 hero (day 2 draft): illustrative template-nucleus contact. See nacre.structures.hero.
+  # Figure 1 hero (day 3): illustrative template-nucleus contact. See nacre.structures.hero.
+  # Cell 85.7 x 41.2 A: the lens sits in the middle, a strip on each side holds the bound Ca2+.
   hero_slab:
     builder: slab
     seed: 0
     write: false
-    params: {nx: 9, ny: 5, n_o_layers: 4, vacuum: 10.0, orthogonal: true}
+    params: {nx: 18, ny: 5, n_o_layers: 3, vacuum: 10.0, orthogonal: true}
   hero_interface:
     builder: hero
     slab: hero_slab
-    chain: catechol_oligomer
-    evidence: ca_hydration   # Ca2+ shells: CN and Ca-O from lane p0-w1 rows
+    chain: catechol_oligomer_6
+    evidence: ca_hydration   # Ca2+ shells: CN and Ca-O from lane p0-w1 rows; the nucleus from params keys
     seed: 11
     params:
       chains:              # anchor site (fractions of the cell) and azimuth (degrees from +x)
-        - {site: [0.5, 0.138], azimuth: 330}    # its unit-1 catechol sits at the cap's base rim
-        - {site: [0.3967, 0.5212], azimuth: 0}  # under the nucleus: the layer it wets (off a tie)
-        - {site: [0.62, 0.36], azimuth: 180}    # under the nucleus
-        - {site: [0.13, 0.80], azimuth: 300}
-        - {site: [0.85, 0.74], azimuth: 230}
-        - {site: [0.88, 0.22], azimuth: 120}
+        - {site: [0.32, 0.48], azimuth: 0}      # middle row under the lens, from its left rim: the bridge chain
+        - {site: [0.68, 0.22], azimuth: 180}    # front row under the lens, from the right
+        - {site: [0.68, 0.78], azimuth: 180}    # back row under the lens, from the right
+        - {site: [0.05, 0.66], azimuth: 0}      # left strip, behind the section plane
+        - {site: [0.96, 0.75], azimuth: 180}    # right strip, behind the section plane
       bound:               # a few Ca2+ at catecholate sites, not a cloud (derivation section 7)
-        - {chain: 3, unit: auto}
-        - {chain: 4, unit: auto}
-        - {chain: 5, unit: auto}
-      bridge: {chain: 0, unit: 1}                # Ca2+ bridging the catecholate and the nucleus
-      nucleus: {centre: [0.5, 0.45], base_radius: 11.0, contact_angle_deg: 50.0, base_height: 6.5}
-      carbonate: [[0.36, 0.67, 9.0], [0.64, 0.70, 12.0]]   # fx, fy, height above the hydroxyl H (A)
-      water: {y_cut: 0.62, thickness: 18.0}
+        - {chain: 3, unit: 3}
+        - {chain: 4, unit: 3}
+        - {chain: 4, unit: 5}
+      bridge: {chain: 0, unit: 1}                # Ca2+ under the lens rim, bridging catecholate and nucleus
+      nucleus: {centre: [0.468, 0.481], base_radius: 15.0, contact_angle_deg: 50.0, base_height: 11.0}
+      carbonate: [[0.20, 0.55, 17.0], [0.82, 0.45, 17.0]]   # fx, fy, height above the hydroxyl H (A)
+      water: {y_cut: null, thickness: 27.0}
+    drawing_choices:
+      contact_angle_deg: 50 degrees, an illustration of the partial wetting that W3's analysis allows (not a result)
+      base_radius: 15 A lens base radius, chosen so the lens reads as a cap rather than a cluster
+      base_height: 11 A, the lens base resting on the catechol layer (chain tops at 12-13 A)
+      acc_structural_water: the structural water of ACC (0.5-1.1 H2O per CaCO3 in the sourced rows) is not drawn
+      acc_min_distances: Ca-Ca 3.4, Ca-C 2.9, Ca-O 2.3, C-C 3.0, O-O 2.5 A exclusion distances of the insertion (drawing rule)
+      chain: generic 4-unit 5,6-dihydroxyindole chain, MMFF94 conformer, rigid body (structure of the layer is debated)
+      placements: chain sites and azimuths, dissolved carbonate positions and the lens centre are composition choices
+      slab: bulk corundum spacings, unrelaxed; OH 0.97 A tilted 15 degrees
+      water: random sequential insertion at 1 g/cm3, rigid gas-phase geometry, not equilibrated
+
+  # Figure 2 panels a-d (illustrative constructions). Panel c is drawn from hero_interface.
+  panel_slab:
+    builder: slab
+    seed: 0
+    write: false
+    params: {nx: 9, ny: 3, n_o_layers: 3, vacuum: 10.0, orthogonal: true}
+  fig2a_interface:          # a: the catechol layer displaces interfacial water (bare oxide on the left)
+    builder: hero
+    slab: panel_slab
+    chain: catechol_oligomer
+    evidence: ca_hydration
+    seed: 21
+    params:
+      chains:
+        - {site: [0.49, 0.20], azimuth: 0}
+        - {site: [0.49, 0.68], azimuth: 0}
+      bound: []
+      nucleus: null
+      carbonate: []
+      water: {y_cut: null, thickness: 11.0}
+    drawing_choices:
+      placements: two chains on the right half, bare hydroxylated oxide with its interfacial water on the left
+      chain: generic 4-unit 5,6-dihydroxyindole chain, MMFF94 conformer, rigid body
+      slab: bulk corundum spacings, unrelaxed; OH 0.97 A tilted 15 degrees
+      water: random sequential insertion at 1 g/cm3, rigid gas-phase geometry, not equilibrated
+  fig2b_interface:          # b: a few Ca2+ at a catecholate and a carboxylate site
+    builder: hero
+    slab: panel_slab
+    chain: {default: catechol_oligomer, cooh: catechol_oligomer_cooh}
+    evidence: ca_hydration
+    seed: 22
+    params:
+      chains:
+        - {site: [0.08, 0.20], azimuth: 0}
+        - {site: [0.08, 0.68], azimuth: 340, template: cooh}
+      bound:
+        - {chain: 0, unit: auto}
+        - {chain: 1, site: carboxylate}
+      nucleus: null
+      carbonate: [[0.78, 0.5, 13.0]]
+      water: {y_cut: null, thickness: 15.0}
+    drawing_choices:
+      placements: two chains, one with a carboxyl end unit; two bound Ca2+ (a few, not a cloud); one dissolved carbonate
+      chain: generic 4-unit 5,6-dihydroxyindole chains, MMFF94 conformers, rigid bodies; DHICA-type carboxyl end unit
+      slab: bulk corundum spacings, unrelaxed; OH 0.97 A tilted 15 degrees
+      water: random sequential insertion at 1 g/cm3, rigid gas-phase geometry, not equilibrated
+  film_slab:
+    builder: slab
+    seed: 0
+    write: false
+    params: {nx: 12, ny: 3, n_o_layers: 3, vacuum: 10.0, orthogonal: true}
+  fig2d_interface:          # d: neighbouring lenses coalesced into a continuous film on the template
+    builder: hero
+    slab: film_slab
+    chain: catechol_oligomer
+    evidence: ca_hydration
+    seed: 24
+    params:
+      chains:
+        - {site: [0.06, 0.20], azimuth: 0}
+        - {site: [0.40, 0.52], azimuth: 0}
+        - {site: [0.72, 0.84], azimuth: 0}
+      bound: []
+      nucleus: {caps: [[0.22, 0.5, 11.0], [0.5, 0.5, 11.0], [0.78, 0.5, 11.0]], contact_angle_deg: 50.0,
+                base_height: 6.5}
+      carbonate: []
+      water: {y_cut: null, thickness: 18.0}
+    drawing_choices:
+      contact_angle_deg: 50 degrees at the film edges, as in Fig 1 (illustration, not a result)
+      caps: three overlapping lenses of base radius 11 A, 16 A apart, drawn as one coalesced film
+      base_height: 6.5 A, the film base on the catechol layer
+      acc_structural_water: the structural water of ACC is not drawn
+      acc_min_distances: Ca-Ca 3.4, Ca-C 2.9, Ca-O 2.3, C-C 3.0, O-O 2.5 A exclusion distances (drawing rule)
+      chain: generic 4-unit 5,6-dihydroxyindole chain, MMFF94 conformer, rigid body
+      slab: bulk corundum spacings, unrelaxed; OH 0.97 A tilted 15 degrees
+      water: random sequential insertion at 1 g/cm3, rigid gas-phase geometry, not equilibrated

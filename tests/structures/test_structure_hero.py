@@ -1,4 +1,5 @@
-"""Figure 1 hero scene: composition, charge balance, sourced Ca2+ geometry and the cell-edge crop."""
+"""Figure 1 hero scene and Figure 2 panels: composition, charge balance, sourced geometry
+(Ca2+ shell rows, ACC params keys), the physics constraints and the crops."""
 from __future__ import annotations
 
 import json
@@ -7,7 +8,7 @@ import numpy as np
 import pytest
 import yaml
 
-from nacre.structures import build, evidence
+from nacre.structures import build, evidence, hero as hero_mod, params_source
 from nacre.structures.meta import read_structure
 
 from structures_helpers import BLENDER_DIR, STRUCT_DIR, load_blender_module
@@ -154,11 +155,75 @@ def test_chains_are_anchored_bidentate(parts):
         assert (d < 2.15).sum() == 2, c
 
 
-def test_water_only_behind_the_cut(hero, parts):
+def test_water_fills_the_cell_above_the_template(hero, parts):
     comp, sym, pos = parts
-    y_cut = hero.info["params"]["water"]["y_cut"] * np.asarray(hero.cell)[1][1]
-    assert np.all(pos[(comp == "water") & (sym == "O"), 1] >= y_cut - 1e-6)
-    assert hero.info["n_water_placed"] > 100
+    o = pos[(comp == "water") & (sym == "O")]
+    cell = np.diag(np.asarray(hero.cell))[:2]
+    assert hero.info["n_water_placed"] == hero.info["n_water_target"] > 1000
+    # Spread over the whole cell (the renderer draws only the faded shell near the interface).
+    assert o[:, 0].min() < 0.1 * cell[0] and o[:, 0].max() > 0.9 * cell[0]
+    assert o[:, 1].min() < 0.1 * cell[1] and o[:, 1].max() > 0.9 * cell[1]
+
+
+def test_three_to_five_chains_spread_across_the_width(hero, parts):
+    comp, sym, pos = parts
+    chains = sorted({c for c in comp if c.startswith("chain")})
+    assert 3 <= len(chains) <= 5
+    xs = [pos[comp == c, 0].mean() for c in chains]
+    width = np.asarray(hero.cell)[0][0]
+    assert min(xs) < 0.25 * width and max(xs) > 0.75 * width
+
+
+def test_nucleus_uses_the_sourced_acc_geometry(hero, parts):
+    comp, sym, pos = parts
+    g = params_source.acc_geometry()
+    src = hero.info["source_ids"]["acc"]
+    assert src["keys"] == g["keys"] and src["params_commit"] == g["params_commit"]
+    lens = json.loads(hero.info["nucleus_lens"])
+    assert hero.info["nucleus_fu_target"] == round(lens["volume_a3"] * g["fu_per_a3"])
+    assert hero.info["nucleus_fu_placed"] == hero.info["nucleus_fu_target"]
+    # Every carbonate C-O (nucleus and dissolved) is the sourced length.
+    is_c = np.where((sym == "C") & np.array([c.startswith(("nucleus", "carbonate")) for c in comp]))[0]
+    o = np.where(sym == "O")[0]
+    for i in is_c:
+        d = np.sort(np.linalg.norm(pos[o] - pos[i], axis=1))[:3]
+        assert np.allclose(d, g["r_co"], atol=2e-6)
+    for typed in ({"nucleus": {"density_g_cm3": 1.9}}, {"co_bond": 1.28}):
+        with pytest.raises(ValueError):
+            hero_mod.build(None, None, None, g, typed)
+
+
+def test_nucleus_lens_has_a_flat_base_on_the_template(hero, parts):
+    comp, sym, pos = parts
+    lens = json.loads(hero.info["nucleus_lens"])
+    nuc = comp == "nucleus"
+    core = nuc & (sym != "O")
+    core[np.where(nuc)[0][:4]] = False  # the bridging carbonate sits on the bridge Ca shell
+    assert pos[core, 2].min() >= lens["z_base"] - 1e-6
+    # The lowest ions lie close to the base plane: the base is filled, not a floating cluster.
+    low = pos[core, 2] < lens["z_base"] + 2.0
+    assert low.sum() >= 8
+    chain_top = np.percentile(pos[np.char.startswith(comp, "chain"), 2], 95)
+    assert abs(lens["z_base"] - chain_top) < 3.0  # resting on the catechol layer
+    p = hero.info["params"]["nucleus"]
+    assert 45 <= p["contact_angle_deg"] <= 55  # about 50 degrees: partial wetting, not zero, below 90
+
+
+def test_dissolved_carbonate_is_far_from_the_nucleus(hero, parts):
+    comp, sym, pos = parts
+    nuc = pos[comp == "nucleus"]
+    for c in {c for c in comp if c.startswith("carbonate")}:
+        d = np.linalg.norm(pos[comp == c][:, None] - nuc[None], axis=-1).min()
+        assert d >= 8.0, c
+
+
+def test_drawing_choices_are_recorded_in_the_metadata(hero):
+    choices = json.loads(hero.info["drawing_choices"])
+    for key in ("contact_angle_deg", "base_radius", "base_height", "acc_structural_water",
+                "acc_min_distances", "placements", "slab", "water"):
+        assert key in choices, key
+    spec = build.load_config()["targets"]["hero_interface"]
+    assert choices == spec["drawing_choices"]
 
 
 def test_no_overlaps_between_parts(parts):
@@ -173,16 +238,46 @@ def test_no_overlaps_between_parts(parts):
 
 
 # ---------------------------------------------------------------- scene config and crop
-def test_hero_scene_parses_and_is_draft_sized():
-    s = config.parse_scene("hero")
-    assert s["resolution"][0] * s["resolution"][1] <= 1280 * 960
-    assert all(c["clip"] for c in s["components"])
-    cam = s["camera"]["direction"]
-    assert cam[2] < 0  # looks down onto the template
+HERO_SCENES = ("hero_a", "hero_b", "hero_c")
 
 
-def test_crop_keeps_no_detached_hydroxyl():
-    s = config.parse_scene("hero")
+def test_hero_scenes_parse_and_are_draft_sized():
+    for name in HERO_SCENES:
+        s = config.parse_scene(name)
+        w, h = s["resolution"]
+        assert 1280 <= w <= 1600 and w * h <= 1600 * 1200, name  # draft, about 1600 px wide or less for the 2 MB cap
+        assert {c["style"] for c in s["components"]} == {"ball_and_stick"}, name  # one representation
+        assert s["drawing_choices"], name
+        assert s["camera"]["direction"][2] < 0, name  # looks down onto the template
+        focus = [c for c in s["components"] if c["focus"]]
+        assert len(focus) == 1 and focus[0]["include"] == ["nucleus"], name
+        water = [c for c in s["components"] if c["include"] == ["water"]]
+        assert len(water) == 1 and water[0]["fade"]["far"] <= 10.0, name  # a thin shell
+        chains = [c for c in s["components"] if c["include"] == ["chain"]]
+        assert chains[0]["bond_radius"] > config.load_render_config()["styles"]["ball_and_stick"]["bond_radius"]
+        assert chains[0]["clip"]["molecules"] is True  # whole molecules only
+
+
+def _tilt_deg(d):
+    return float(np.degrees(np.arctan2(-d[2], np.hypot(d[0], d[1]))))
+
+
+def test_side_cross_section_and_close_crop():
+    a, b, c = (config.parse_scene(n) for n in HERO_SCENES)
+    assert 9.5 <= _tilt_deg(a["camera"]["direction"]) <= 20.0  # about 10 degrees (tan 0.176)
+    assert a["camera"]["direction"][0] == 0.0  # looking along the surface
+    assert b["camera"]["direction"] == a["camera"]["direction"]
+    assert b["camera"]["dof"] == {"focus": "nucleus", "fstop": b["camera"]["dof"]["fstop"]}
+    assert a["camera"]["dof"] is None and c["camera"]["dof"] is None
+    wa = np.diff(a["components"][0]["clip"]["box"][0])[0]
+    wb = np.diff(b["components"][0]["clip"]["box"][0])[0]
+    assert wb < 0.75 * wa  # B is a tighter crop of A
+    assert c["camera"]["direction"] == [0.18, 1.0, -0.38]  # the day 2 oblique view
+
+
+@pytest.mark.parametrize("scene", HERO_SCENES)
+def test_crop_keeps_no_detached_hydroxyl(scene):
+    s = config.parse_scene(scene)
     rcfg = config.load_render_config()
     radii = config.load_radii(config.repo_path(rcfg["elements"]))
     comp = s["components"][0]
@@ -190,6 +285,9 @@ def test_crop_keeps_no_detached_hydroxyl():
     idx = config.select_atoms(st, comp["include"], comp["exclude_elements"])
     kept = config.clip_selection(st["symbols"], st["positions"], idx, comp["clip"], radii,
                                  rcfg["bonds"]["factor"], rcfg["bonds"]["pairs"])
+    # The anchoring catechol O took the place of surface O: count them with the slab.
+    kept = sorted(set(kept) | {i for i in range(len(st["symbols"]))
+                               if st["component"][i].startswith("chain") and st["symbols"][i] == "O"})
     sym = [st["symbols"][i] for i in kept]
     pos = st["positions"][kept]
     bonds = config.find_bonds(sym, pos, radii, rcfg["bonds"]["factor"], rcfg["bonds"]["pairs"])
@@ -208,7 +306,7 @@ def test_crop_keeps_no_detached_hydroxyl():
 
 
 def test_clip_box_is_validated(tmp_path):
-    doc = yaml.safe_load((BLENDER_DIR / "scenes" / "hero.yaml").read_text())
+    doc = yaml.safe_load((BLENDER_DIR / "scenes" / "hero_a.yaml").read_text())
     doc["name"] = "bad"
     doc["components"][0]["clip"]["box"] = [[5.0, 1.0], [0.0, 1.0]]
     p = tmp_path / "bad.yaml"
@@ -247,14 +345,15 @@ def test_equidistant_anchor_site_is_refused():
 def test_hero_regenerates_part_by_part(hero, parts):
     # Rebuild step by step and name the first part that departs from the committed file
     # (beyond the regeneration tolerance), or the step at which the build stops.
-    from nacre.structures import compare, hero as hero_mod, oligomer, slab
+    from nacre.structures import compare, slab
 
-    spec = build.load_config()["targets"]["hero_interface"]
-    slab_spec = build.load_config()["targets"][spec["slab"]]
+    targets = build.load_config()["targets"]
+    spec = targets["hero_interface"]
+    slab_spec = targets[spec["slab"]]
     trace, error = [], None
     try:
         hero_mod.build(slab.build(slab_spec["params"], slab_spec.get("seed", 0)),
-                       oligomer.build({"n_units": 4}, 7), evidence.hydration_geometry(),
+                       _chain(), evidence.hydration_geometry(), params_source.acc_geometry(),
                        spec["params"], spec["seed"], trace=trace)
     except (RuntimeError, ValueError) as exc:
         error = str(exc)
@@ -282,12 +381,70 @@ def test_hero_regenerates_part_by_part(hero, parts):
     assert error is None, f"build stopped after {trace[-1][0] if trace else 'start'}: {error}"
 
 
+def _chain():
+    from nacre.structures import oligomer
+
+    targets = build.load_config()["targets"]
+    t = targets[targets["hero_interface"]["chain"]]
+    return oligomer.build(t["params"], t["seed"])
+
+
 def _snap_symbols(snap, c, comp, sym):
     """Element symbols of part c at a chain step: the committed heavy atoms keep their order,
     and the chain at that step still holds every H (one may go to a later Ca site)."""
-    from nacre.structures import oligomer
-
-    rec = oligomer.build({"n_units": 4}, 7)
+    rec = _chain()
     keep = np.setdiff1d(np.arange(len(rec)), np.where((rec.arrays["catechol"] == 0)
                                                        & (np.array(rec.get_chemical_symbols()) == "H"))[0])
     return list(np.array(rec.get_chemical_symbols())[keep])
+
+
+# ---------------------------------------------------------------- Figure 2 panels
+def _panel(name):
+    a = read_structure(STRUCT_DIR / f"{name}.extxyz")
+    return a, np.asarray(a.arrays["component"]).astype(str), np.array(a.get_chemical_symbols()), a.positions
+
+
+def test_fig2_panels_are_illustrative_and_neutral():
+    for name in ("fig2a_interface", "fig2b_interface", "fig2d_interface"):
+        a, comp, sym, pos = _panel(name)
+        assert a.info["illustrative"] is True and "not a simulated structure" in a.info["label"], name
+        assert sum(q for _, q in json.loads(a.info["charge_ledger"])) == a.info["total_charge"] == 0, name
+        assert json.loads(a.info["drawing_choices"]), name
+
+
+def test_fig2a_layer_displaces_interfacial_water():
+    a, comp, sym, pos = _panel("fig2a_interface")
+    assert "Ca" not in set(sym)
+    chain_x = pos[np.char.startswith(comp, "chain"), 0]
+    top = pos[comp == "slab", 2].max()
+    w = pos[(comp == "water") & (sym == "O")]
+    first_layer = w[w[:, 2] < top + 3.5]
+    # Interfacial water per area: on the bare oxide, and under the low atoms of the layer
+    # (within 2.5 A in plane of chain heavy atoms less than 6 A up). The layer displaces part of
+    # it (about 0.6 of the bare density as built); the test requires a clear reduction.
+    heavy = pos[np.char.startswith(comp, "chain") & (sym != "H")]
+    low = heavy[heavy[:, 2] < top + 6.0]
+    cell = np.diag(np.asarray(a.cell))[:2]
+    grid = np.stack(np.meshgrid(np.arange(0, cell[0], 0.5), np.arange(0, cell[1], 0.5)), -1).reshape(-1, 2)
+    foot = (np.linalg.norm(grid[:, None] - low[None, :, :2], axis=-1).min(1) < 2.5).mean() * cell.prod()
+    under = (np.linalg.norm(first_layer[:, None, :2] - low[None, :, :2], axis=-1).min(1) < 2.5).sum()
+    on_bare = (first_layer[:, 0] < chain_x.min() - 2.0).sum()
+    bare_area = (chain_x.min() - 2.0) * cell[1]
+    assert on_bare >= 5 and under / foot < 0.75 * on_bare / bare_area
+
+
+def test_fig2b_few_ca_at_catecholate_and_carboxylate():
+    a, comp, sym, pos = _panel("fig2b_interface")
+    ca = [c for c in comp[sym == "Ca"]]
+    assert len(ca) == 2  # a few bound ions, not a cloud
+    kinds = sorted(b["site"] for b in a.info["params"]["bound"])
+    assert kinds == ["carboxylate", "catecholate"]
+
+
+def test_fig2d_film_is_continuous():
+    a, comp, sym, pos = _panel("fig2d_interface")
+    nuc = pos[(comp == "nucleus") & (sym != "O")]
+    xs = np.sort(nuc[:, 0])
+    assert np.diff(xs).max() < 4.0  # no gap between the coalesced lenses (Ca and C along the film)
+    assert a.info["nucleus_fu_placed"] == a.info["nucleus_fu_target"]
+    assert len(json.loads(a.info["nucleus_lens"])["caps"]) == 3

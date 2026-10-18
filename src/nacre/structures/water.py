@@ -98,6 +98,7 @@ def build(substrate, params=None, seed=0):
     all_pos = sub_pos.copy()
     all_sym = sub_sym.copy()
     placed = attempts = 0
+    cutoff = max(p["min_any"], p["min_heavy"], p["min_oo"])
     while placed < target and attempts < p["max_attempts"]:
         attempts += 1
         fx, fy = rng.uniform(fx0, fx1), rng.uniform(fy0, fy1)
@@ -107,14 +108,22 @@ def build(substrate, params=None, seed=0):
         # O-H must also lie inside the slab-normal window so H does not dip into the substrate.
         if mol[:, 2].min() < z0 - p["gap"] + p["min_any"]:
             continue
-        d = _mic(mol[:, None, :] - all_pos[None, :, :], cell, pbc)
+        # Only atoms within the largest cutoff in z can decide the trial (z is not periodic),
+        # so the others are skipped before the minimum-image distances; the decision is the
+        # same as over all atoms.
+        if not pbc[2]:
+            near = (all_pos[:, 2] > mol[:, 2].min() - cutoff) & (all_pos[:, 2] < mol[:, 2].max() + cutoff)
+        else:
+            near = slice(None)
+        d = _mic(mol[:, None, :] - all_pos[near][None, :, :], cell, pbc)
         r = np.linalg.norm(d, axis=-1)
-        if r.min() < p["min_any"]:
+        if r.min(initial=np.inf) < p["min_any"]:
             continue
-        heavy = all_sym != "H"
+        near_sym = all_sym[near]
+        heavy = near_sym != "H"
         if r[0, heavy].min(initial=np.inf) < p["min_heavy"]:
             continue
-        is_o = all_sym == "O"
+        is_o = near_sym == "O"
         if r[0, is_o].min(initial=np.inf) < p["min_oo"]:
             continue
         all_pos = np.vstack([all_pos, mol])

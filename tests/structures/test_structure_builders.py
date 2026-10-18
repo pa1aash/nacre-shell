@@ -8,7 +8,7 @@ from collections import Counter
 import numpy as np
 import pytest
 
-from nacre.structures import acc, build, compare, ion, mp_source, oligomer, slab, water
+from nacre.structures import acc, build, compare, ion, mp_source, oligomer, params_source, slab, water
 from nacre.structures.meta import CLASH_THRESHOLD, formal_charge, min_distance, read_structure, write_structure
 
 from structures_helpers import STRUCT_DIR, committed_structures
@@ -126,10 +126,40 @@ def test_hydrated_ca_other_shells(cn):
 
 
 def test_acc_counts_and_charge():
-    a = acc.build({"n_fu": 8}, seed=5)
+    a = acc.build({"n_fu": 8}, seed=5, accg=params_source.acc_geometry())
     c = Counter(a.get_chemical_symbols())
     assert c == {"Ca": 8, "C": 8, "O": 24}
     assert a.info["total_charge"] == 0 == formal_charge(a.get_chemical_symbols())
+
+
+def test_acc_geometry_comes_from_w1_params_keys():
+    rec = params_source.load()
+    assert rec["ref"] == "origin/preprint/p0-w1" and len(rec["commit"]) == 40
+    g = params_source.acc_geometry()
+    v_m = rec["keys"]["v_m_acc"]["value"]
+    assert g["fu_per_a3"] == pytest.approx(6.02214076e23 / (v_m * 1e30))
+    assert g["r_co"] == pytest.approx(rec["keys"]["c_o_bond_length_acc"]["value"] * 1e10)
+    assert g["keys"] == {"packing": "v_m_acc", "packing_check": "rho_acc", "r_co": "c_o_bond_length_acc"}
+    a = acc.build({"n_fu": 4}, seed=5, accg=g)
+    sym = np.array(a.get_chemical_symbols())
+    c, o = a.positions[sym == "C"], a.positions[sym == "O"]
+    d = np.linalg.norm(c[:, None] - o[None], axis=-1)
+    assert np.allclose(np.sort(d, axis=1)[:, :3], g["r_co"], atol=1e-9)
+
+
+@pytest.mark.parametrize("typed", [{"density_g_cm3": 1.9}, {"r_co": 1.28}])
+def test_acc_drawing_values_cannot_be_typed(typed):
+    with pytest.raises(ValueError):
+        acc.build({"n_fu": 4, **typed}, seed=5, accg=params_source.acc_geometry())
+    with pytest.raises(ValueError):
+        acc.build({"n_fu": 4}, seed=5)
+
+
+def test_params_record_cross_check_refuses_disagreeing_keys():
+    rec = params_source.load()
+    bad = {**rec, "keys": {**rec["keys"], "rho_acc": {**rec["keys"]["rho_acc"], "value": 1000.0}}}
+    with pytest.raises(ValueError):
+        params_source.acc_geometry(bad)
 
 
 @pytest.mark.parametrize("n", [1, 2, 4])
@@ -155,7 +185,8 @@ def test_oligomer_targets_are_built_from_the_conformer_record():
             a = oligomer.build(spec.get("params"), spec.get("seed", 0))
             assert np.array_equal(a.positions, np.array(entry["positions"]))
             assert json.loads(a.info["source_ids"])["conformer"] == key
-            assert entry["smiles"] == oligomer.dhi_chain_smiles(entry["params"]["n_units"])
+            assert entry["smiles"] == oligomer.dhi_chain_smiles(entry["params"]["n_units"],
+                                                                entry["params"].get("end_group"))
             assert set(entry["generated_on"]) == {"system", "machine"}
 
 
@@ -207,7 +238,7 @@ def test_water_layer(small_slab):
 @pytest.mark.parametrize("builder", [
     (lambda s: slab.build({"nx": 2, "ny": 2, "n_o_layers": 3}, seed=s)),
     (lambda s: ion.build({"cn": 7, "r_ca_o": 2.4}, seed=s)),
-    (lambda s: acc.build({"n_fu": 4}, seed=s)),
+    (lambda s: acc.build({"n_fu": 4}, seed=s, accg=params_source.acc_geometry())),
     (lambda s: oligomer.to_atoms(oligomer.generate({"n_units": 2}, seed=s))),
 ])
 def test_deterministic_for_fixed_seed(builder, tmp_path):
@@ -331,14 +362,19 @@ def test_no_clashes_in_committed(committed):
 # ---------------------------------------------------------------- machine independence
 def test_bytes_do_not_depend_on_xtb_environment(tmp_path, monkeypatch):
     # Two builds on this machine, with and without ~/.nacre-envs/xtb, must give identical bytes;
-    # both agree with the committed files to the stated tolerance on any platform.
+    # both agree with the committed files to the stated tolerance on any platform. The scene
+    # targets of the hero builder only assemble parts built by the builders checked here (their
+    # chains come from the conformer record), so they are left out: each takes minutes to build,
+    # and test_committed_files_regenerate_* rebuild them once.
+    names = [n for n, spec in build.load_config()["targets"].items()
+             if spec["builder"] != "hero" and spec.get("write", True)]
     shas = []
     for with_xtb_env in (False, True):
         home = tmp_path / f"home{int(with_xtb_env)}"
         (home / ".nacre-envs" / ("xtb" if with_xtb_env else "other")).mkdir(parents=True)
         monkeypatch.setenv("HOME", str(home))
         out = tmp_path / f"out{int(with_xtb_env)}"
-        _, manifest = build.build_all(out_dir=out)
+        _, manifest = build.build_all(names, out_dir=out)
         shas.append({n: e["sha256"] for n, e in manifest.items()})
         assert _tolerance_report(out, manifest) == {}
     assert shas[0] == shas[1]
