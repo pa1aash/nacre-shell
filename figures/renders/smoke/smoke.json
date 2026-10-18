@@ -1,4 +1,7 @@
 {
+ "atom_scale": {
+  "ball_and_stick": 0.28
+ },
  "blender_version": "5.2.2 LTS",
  "camera": {
   "direction": [
@@ -6,6 +9,7 @@
    1.0,
    -0.3
   ],
+  "dof": null,
   "margin": 1.06,
   "ortho_scale": 35.6881,
   "type": "ORTHO",
@@ -17,17 +21,25 @@
  },
  "counts": {
   "atoms": 298,
+  "cross_component_bonds": 0,
   "elements": [
    "Al",
    "Ca",
    "H",
    "O"
   ],
-  "half_bonds": 912
+  "focus_atoms": 0,
+  "half_bonds": 912,
+  "translucent_atoms": 0
+ },
+ "drawing_choices": {
+  "purpose": "pipeline check, not a figure",
+  "style": "ball-and-stick, atom radius 0.28 x van der Waals (ase.data), sticks 0.14 A"
  },
  "elements_table_sha256": "84a79466dda3a3445b8ac856aaeaea1069b10e54b49ed11f3f21435d6e14706b",
  "inputs": [
   {
+   "drawing_choices": {},
    "evidence_row_ids": {
     "ion": {
      "cn": "TE-072",
@@ -35,12 +47,13 @@
     }
    },
    "file": "structures/preprint/smoke_interface.extxyz",
+   "params_keys": {},
    "sha256": "97972947e2e2d464f731410c0b2bdde1a7dac0b67730780bbc161b6bac8ffcaf"
   }
  ],
  "output": "figures/renders/smoke/smoke.png",
- "output_bytes": 236684,
- "output_sha256": "f06edf0509d1d2094fb74d86d3874431c0078171a0416a216096c5e5af7a0406",
+ "output_bytes": 278885,
+ "output_sha256": "97e7692f8213fafec0da21e51cca249bcbffe6bdab614ae7f61415a86072bdbf",
  "palette": {
   "colour_space": "linear RGB (palette elements.<El>.linear_rgb) as Principled base colour",
   "colours_used": {
@@ -100,13 +113,23 @@
   ],
   "samples": 32,
   "seed": 0,
-  "threads": 2
+  "threads": 4,
+  "transparent_max_bounces": 24
  },
  "rig": {
   "ambient_occlusion": {
    "distance": 2.5,
    "samples": 16,
    "strength": 0.55
+  },
+  "depth_cue": {
+   "haze": [
+    0.8,
+    0.84,
+    0.9
+   ],
+   "start": 0.35,
+   "strength": 0.45
   },
   "distance_factor": 3.0,
   "fill": {
@@ -115,11 +138,24 @@
    "irradiance": 1.4,
    "size_frac": 1.0
   },
+  "ground": {
+   "gap": 0.6,
+   "shadow_catcher": true,
+   "size_factor": 4.0
+  },
   "key": {
    "azimuth": -35.0,
    "elevation": 40.0,
    "irradiance": 4.0,
    "size_frac": 0.6
+  },
+  "nucleus_rim": {
+   "azimuth": 165.0,
+   "distance_factor": 3.0,
+   "elevation": 30.0,
+   "irradiance": 3.0,
+   "linked": true,
+   "size_frac": 0.4
   },
   "penumbra_deg": {
    "fill": 18.92,
@@ -147,7 +183,10 @@
  },
  "scene": "smoke",
  "scene_config": "figures/blender/scenes/smoke.yaml",
- "scene_config_sha256": "c1a8885d0b6bce0ce078f3213101867ef1ae29ab7af27e0c5057dcb0edcba038",
+ "scene_config_sha256": "90527e131751686cf7e02891f69b09fa39ae7a9693f67b099a9a55beeba52d90",
+ "styles_used": [
+  "ball_and_stick"
+ ],
  "text_objects": 0,
  "yaml_source": "pure-python from .venv/lib/python3.12/site-packages"
 }
