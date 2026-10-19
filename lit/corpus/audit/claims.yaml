@@ -1,0 +1,202 @@
+# Claim support for the reference audit (P0-W1.4, Task C). One entry per bib key of
+# preprint/paper/refs.bib on origin/preprint/p0-w8 (read-only). `rows` lists only evidence rows that
+# support the claim as written in the cited sentence; a DOI match alone is not support. `use` is how
+# the text uses the work: quote, paraphrase or data source. A key with no rows is reported as an
+# unsupported citation by src/nacre/lit/ref_audit.py. Read with sections at origin/preprint/p0-w8
+# 242644f (2026-10-19).
+
+heidbuchel2022enabling:
+  claim: "intro 7: water-processed cathodes replace the fluorinated binder and organic solvent with fluorine-free binders cast from water; intro 8: at slurry pH the native Al oxide film converts and dissolves during slurry contact"
+  use: paraphrase
+  rows: [TA-006, TB-014]
+  note: "intro 8 is supported (paste pH 11.44; pH above 9 attacks the Al2O3 layer); the intro 7 claim (binder and solvent replacement) has no evidence row"
+hawley2020lithium:
+  claim: "intro 8: lithium leaching drives the slurry strongly alkaline"
+  use: paraphrase
+  rows: [TA-001, TA-002, TA-004]
+li2016effect:
+  claim: "intro 8: the native oxide converts and dissolves at slurry pH; intro 37: Al corrosion in aqueous slurries is mitigated by pH control"
+  use: paraphrase
+  rows: [TA-046, TB-022]
+  note: "both rows are grade D (abstract); they support the pH dependence of the attack, not the mitigation wording of intro 37"
+doberdo2014enabling:
+  claim: "intro 8: oxide dissolution during slurry contact; intro 37: mitigation by carbon coating"
+  use: paraphrase
+  rows: []
+bauer2019effects:
+  claim: "intro 8: lithium leaching drives the slurry strongly alkaline"
+  use: paraphrase
+  rows: [TA-017]
+  note: "grade D (abstract) only"
+devol2015nanoscale:
+  claim: "intro 13: ACC appears among precursor phases at the nacre growth front; methods 102: ACC framing chosen as the precursor seen at the growth front"
+  use: paraphrase
+  rows: [TC-002]
+  note: "grade D (abstract) only"
+schmidt2024myriad:
+  claim: "intro 13: ACC appears among the precursor phases at the nacre growth front"
+  use: paraphrase
+  rows: [TC-004]
+falini1996control:
+  claim: "intro 13: nacre matrix macromolecules select the CaCO3 polymorph"
+  use: paraphrase
+  rows: [TC-105]
+  note: "grade D (abstract) only"
+gong2012phase:
+  claim: "intro 13: organic macromolecules can stabilise an ACC precursor"
+  use: paraphrase
+  rows: [TC-005]
+  note: "grade D (abstract) only; the work is on sea-urchin spicules, not nacre, which the sentence does not claim"
+nassif2005amorphous:
+  claim: "intro 13: ACC coats the mature nacre tablets"
+  use: paraphrase
+  rows: [TC-001]
+ryu2010musselinspired:
+  claim: "intro 37: polydopamine enriches interfaces with Ca2+ and templates calcium minerals on other substrates"
+  use: paraphrase
+  rows: []
+giuffre2013polysaccharide:
+  claim: "intro 17: a template lowers the heterogeneous barrier through its interfacial energies; intro 31: nucleus-organic energies exist only as effective values from nucleation-rate fits"
+  use: paraphrase
+  rows: [TH-020, TH-021, TC-083, TH-025]
+  note: "the effective energies are secondary citations (grade C, original paywalled); the qualitative rows are grade D"
+majzlan2000surface:
+  claim: "intro 31: the oxide-water interfacial free energy is known only through calorimetric surface enthalpies (boehmite)"
+  use: paraphrase
+  rows: [TB-052]
+  note: "grade D (abstract) only"
+tavakoli2013amorphous:
+  claim: "intro 31: calorimetric surface enthalpies of hydroxylated or dry (amorphous alumina) surfaces"
+  use: paraphrase
+  rows: [TB-056]
+  note: "grade D (abstract); whether the value is hydrated or anhydrous is not stated in the abstract"
+lu2013adhesion:
+  claim: "intro 31: wet adhesion of catechol-bearing proteins measured on mica and silica, not alumina"
+  use: paraphrase
+  rows: [TD-025, TD-026, TD-027, TD-028]
+li2018apparent:
+  claim: "intro 31: a contact-angle bound on a mineral surface (quartz)"
+  use: paraphrase
+  rows: [TC-088]
+yeh2015molecular:
+  claim: "intro 37: catechol adsorption on alumina in water has been simulated"
+  use: paraphrase
+  rows: [TD-038]
+  note: "grade D (abstract) only"
+yeh2019molecular:
+  claim: "intro 37: catechol (oligomer) adsorption on alumina in water has been simulated"
+  use: paraphrase
+  rows: [TD-039]
+  note: "grade D (abstract) only"
+shrestha2025dft:
+  claim: "intro 37: catechol adsorption on alumina has been simulated (DFT, gamma-alumina (110))"
+  use: paraphrase
+  rows: []
+li2017biomimetic:
+  claim: "intro 37: polydopamine templates continuous CaCO3 films on other substrates"
+  use: paraphrase
+  rows: []
+ko2017natureinspired:
+  claim: "intro 37: polydopamine templates calcium minerals (CaCO3 mineralisation)"
+  use: paraphrase
+  rows: []
+wang2013amorphous:
+  claim: "intro 37: a catechol (mussel-inspired) polymer stabilises amorphous CaCO3"
+  use: paraphrase
+  rows: []
+maffre2025buffer:
+  claim: "intro 37: Al corrosion in aqueous slurries is mitigated by phosphate buffering"
+  use: paraphrase
+  rows: []
+soeda2015alginic:
+  claim: "intro 37: Al corrosion in aqueous slurries is mitigated by acidic binders (alginic acid)"
+  use: paraphrase
+  rows: []
+osoriocelestino2020influence:
+  claim: "intro 42: calcite scale on Al alloys from hot brines was porous, with more corrosion and attack beneath the deposit"
+  use: paraphrase
+  rows: [TB-001, TB-002, TB-003, TB-004]
+yu2023study:
+  claim: "intro 43: an electrodeposited polydopamine coating reduced CaCO3 deposition relative to bare steel"
+  use: paraphrase
+  rows: []
+knight2024kinetics:
+  claim: "intro 31: nucleus-organic interfacial energies exist only as effective values from nucleation-rate fits"
+  use: paraphrase
+  rows: [TC-076, TC-077, TC-078]
+jain2013commentary:
+  claim: "methods 76: solid-phase energies were taken from the Materials Project"
+  use: data source
+  rows: []
+  note: "attribution of the database, not a claim; no evidence row exists for the database itself"
+persson2012prediction:
+  claim: "methods 78: Pourbaix entries rebuilt from solid entries and aqueous ion references following Persson et al."
+  use: paraphrase
+  rows: [TE-036]
+  note: "grade D (abstract) only"
+saltelli2002making:
+  claim: "methods 25: first- and total-order Sobol indices rank the independent inputs"
+  use: paraphrase
+  rows: [TE-024, TE-025]
+archer1997sensitivity:
+  claim: "methods 25: Sobol indices with bootstrap confidence intervals"
+  use: paraphrase
+  rows: [TE-035]
+  note: "grade D (abstract) only"
+friedman2021preferential:
+  claim: "methods 89: the anchor functional had the lowest error among functionals benchmarked against coupled cluster for Ca2+ with carboxylate-type ligands"
+  use: data source
+  rows: [TE-061, TE-062, TE-063]
+  note: "TE-063 records that the authors deem all four functionals equally valid; 'lowest error' is a 0.3 to 0.5 kcal/mol difference"
+goerigk2017look:
+  claim: "methods 89: dispersion correction choice"
+  use: paraphrase
+  rows: [TE-070]
+marenich2009universal:
+  claim: "methods 89: the SMD continuum model for water"
+  use: paraphrase
+  rows: [TE-067]
+  note: "grade D (abstract) only"
+bannwarth2019gfn2:
+  claim: "methods 90: geometries and thermal corrections from GFN2-xTB"
+  use: paraphrase
+  rows: [TE-075, TE-076]
+ehlert2021robust:
+  claim: "methods 90: implicit water (ALPB) for the semi-empirical geometries"
+  use: paraphrase
+  rows: [TE-081, TE-083]
+pracht2020automated:
+  claim: "methods 90: a conformer search (CREST)"
+  use: paraphrase
+  rows: [TE-088]
+  note: "grade D (abstract) only"
+rossini1971selected:
+  claim: "methods 83: tabulated thermochemistry of the all-experimental route (alkaline-earth compounds)"
+  use: data source
+  rows: [TK-030, TK-033]
+rossini1981selected:
+  claim: "methods 83: tabulated thermochemistry of the all-experimental route (alkali-metal compounds)"
+  use: data source
+  rows: [TI-042, TI-044]
+anon1995:
+  claim: "not cited in the sections; USGS Bulletin 2131 is the source of the CaCO3, CaO and CO2 formation values of the experimental route"
+  use: data source
+  rows: [TI-002, TI-006, TI-008]
+  note: "bib entry has no title or author (Robie and Hemingway 1995)"
+mahne2018electrochemical:
+  claim: "model 124: Li2CO3 in non-aqueous cells oxidises close to the experimental equilibrium limit"
+  use: paraphrase
+  rows: [TI-059, TK-058, TK-060]
+cao2022oxidative:
+  claim: "model 124: Li2CO3 in non-aqueous cells oxidises close to the experimental equilibrium limit"
+  use: paraphrase
+  rows: [TI-061, TK-061, TK-063]
+  note: "TK-064 (contrary): above 4.3 V in LiPF6 EC/EMC the CO2 comes from a chemical route"
+stevanovic2012correcting:
+  claim: "methods 80: tolerance from the formation-energy error of the database"
+  use: data source
+  rows: [TI-080, TI-082]
+wang2021framework:
+  claim: "methods 80: tolerance from the formation-energy error of the database"
+  use: data source
+  rows: [TI-083]
