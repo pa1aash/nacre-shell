@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-10-19T12:09:01Z",
+  "checked_utc": "2026-10-19T15:24:05Z",
   "contract_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
   "contract_version": 4,
   "coverage": [],
@@ -70,7 +70,7 @@
     },
     "Delta_G_seq_cycle_2H": {
       "limit_cases": 2,
-      "max_rel_err": 8.155767690296684e-14,
+      "max_rel_err": 1.8854275648601626e-15,
       "monotonicity_samples": 128,
       "notes": [],
       "points": 256,
@@ -509,7 +509,7 @@
       "status": "PASS"
     }
   },
-  "implementation_sha": "22498ed686be08fa668d745cc10f3c2be7c1b328",
+  "implementation_sha": "7b54cc83e313968257516f20d8313ede89819062",
   "points": 256,
   "ref": "fd5846f",
   "ref_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
