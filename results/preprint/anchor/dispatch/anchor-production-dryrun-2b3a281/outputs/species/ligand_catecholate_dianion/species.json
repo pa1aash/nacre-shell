@@ -1,0 +1,22 @@
+{
+ "G_star_J_per_mol": -630237146.8096416,
+ "G_star_ensemble_J_per_mol": -630237155.5282617,
+ "cds_active_all": true,
+ "charge": -2,
+ "conformers_considered": 3,
+ "conformers_ok": 3,
+ "kind": "reference",
+ "mock": true,
+ "name": "ligand_catecholate_dianion",
+ "selected_conformer": 0,
+ "selected_geometry": "selected.xyz",
+ "status": "ok",
+ "terms": {
+  "E_disp_J_per_mol": -31505.995673749952,
+  "E_el_disp_J_per_mol": -630132133.6227857,
+  "G_RRHO_J_per_mol": 265132.8910133228,
+  "G_star_J_per_mol": -630237146.8096416,
+  "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+  "dG_solv_J_per_mol": -378071.9480850137
+ }
+}

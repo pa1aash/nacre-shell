@@ -1,0 +1,10 @@
+{
+ "species_ok": 10,
+ "failed": [],
+ "cycles": {
+  "Ca_catecholate_monoanion_bidentate_w4": 17479.518247127533,
+  "Ca_catecholate_dianion_bidentate_w4": 428343.5393182039,
+  "Ca_acetate_monodentate_w5": 116201.36837625504,
+  "Ca_acetate_bidentate_w4": 50371.15220499039
+ }
+}

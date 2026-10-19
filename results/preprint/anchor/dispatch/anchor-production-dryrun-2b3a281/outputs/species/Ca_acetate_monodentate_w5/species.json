@@ -1,0 +1,22 @@
+{
+ "G_star_J_per_mol": -1207665532.6033828,
+ "G_star_ensemble_J_per_mol": -1207665532.6033828,
+ "cds_active_all": true,
+ "charge": 1,
+ "conformers_considered": 2,
+ "conformers_ok": 2,
+ "kind": "complex",
+ "mock": true,
+ "name": "Ca_acetate_monodentate_w5",
+ "selected_conformer": 1,
+ "selected_geometry": "selected.xyz",
+ "status": "ok",
+ "terms": {
+  "E_disp_J_per_mol": -60386.49170802074,
+  "E_el_disp_J_per_mol": -1207746332.259338,
+  "G_RRHO_J_per_mol": 272411.7583396032,
+  "G_star_J_per_mol": -1207665532.6033828,
+  "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+  "dG_solv_J_per_mol": -199537.97260047367
+ }
+}

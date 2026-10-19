@@ -1,0 +1,390 @@
+{
+ "T_K": 298.15,
+ "backend": "mock",
+ "cycles": [
+  {
+   "aqua": "Ca_aqua_w6",
+   "cds_active": true,
+   "complex": "Ca_catecholate_monoanion_bidentate_w4",
+   "dG_bind_J_per_mol": 17479.518247127533,
+   "dG_bind_ensemble_J_per_mol": 17479.518247127533,
+   "k": 2,
+   "ligand": "ligand_catecholate_monoanion",
+   "m": 6,
+   "n": 4,
+   "net_standard_state_check_J_per_mol": 0.0,
+   "reaction": "[Ca(H2O)6]2+ + ligand_catecholate_monoanion -> Ca_catecholate_monoanion_bidentate_w4 + (H2O)2",
+   "status": "ok",
+   "terms_J_per_mol": {
+    "E_el_disp_J_per_mol": 5110.82656288147,
+    "G_RRHO_J_per_mol": -310922.4980252111,
+    "RT_ln_H2O_over_k": 8231.232971991174,
+    "dG_1atm_to_1M_J_per_mol": 0.0,
+    "dG_solv_J_per_mol": 315059.95673751144
+   },
+   "water": "water_w2",
+   "water_concentration_mol_per_L": 55.34515681376631,
+   "water_density_source": {
+    "key": "water_density",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+    "sources": [
+     "TF-049"
+    ],
+    "status": "single-source"
+   },
+   "water_mode": "cluster"
+  },
+  {
+   "aqua": "Ca_aqua_w6",
+   "cds_active": true,
+   "complex": "Ca_catecholate_dianion_bidentate_w4",
+   "dG_bind_J_per_mol": 428343.5393182039,
+   "dG_bind_ensemble_J_per_mol": 428352.2579382658,
+   "k": 2,
+   "ligand": "ligand_catecholate_dianion",
+   "m": 6,
+   "n": 4,
+   "net_standard_state_check_J_per_mol": 0.0,
+   "reaction": "[Ca(H2O)6]2+ + ligand_catecholate_dianion -> Ca_catecholate_dianion_bidentate_w4 + (H2O)2",
+   "status": "ok",
+   "terms_J_per_mol": {
+    "E_el_disp_J_per_mol": 10890.836250066757,
+    "G_RRHO_J_per_mol": -220898.44337884133,
+    "RT_ln_H2O_over_k": 8231.232971991174,
+    "dG_1atm_to_1M_J_per_mol": 0.0,
+    "dG_solv_J_per_mol": 630119.9134750229
+   },
+   "water": "water_w2",
+   "water_concentration_mol_per_L": 55.34515681376631,
+   "water_density_source": {
+    "key": "water_density",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+    "sources": [
+     "TF-049"
+    ],
+    "status": "single-source"
+   },
+   "water_mode": "cluster"
+  },
+  {
+   "aqua": "Ca_aqua_w6",
+   "cds_active": true,
+   "complex": "Ca_acetate_monodentate_w5",
+   "dG_bind_J_per_mol": 116201.36837625504,
+   "dG_bind_ensemble_J_per_mol": 116201.36837625504,
+   "k": 1,
+   "ligand": "ligand_acetate",
+   "m": 6,
+   "n": 5,
+   "net_standard_state_check_J_per_mol": 0.0,
+   "reaction": "[Ca(H2O)6]2+ + ligand_acetate -> Ca_acetate_monodentate_w5 + (H2O)1",
+   "status": "ok",
+   "terms_J_per_mol": {
+    "E_el_disp_J_per_mol": 15041.254874885082,
+    "G_RRHO_J_per_mol": -223849.35828380633,
+    "RT_ln_H2O_over_k": 9949.515047789328,
+    "dG_1atm_to_1M_J_per_mol": 0.0,
+    "dG_solv_J_per_mol": 315059.95673751144
+   },
+   "water": "water_w1",
+   "water_concentration_mol_per_L": 55.34515681376631,
+   "water_density_source": {
+    "key": "water_density",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+    "sources": [
+     "TF-049"
+    ],
+    "status": "single-source"
+   },
+   "water_mode": "cluster"
+  },
+  {
+   "aqua": "Ca_aqua_w6",
+   "cds_active": true,
+   "complex": "Ca_acetate_bidentate_w4",
+   "dG_bind_J_per_mol": 50371.15220499039,
+   "dG_bind_ensemble_J_per_mol": 50371.15220499039,
+   "k": 2,
+   "ligand": "ligand_acetate",
+   "m": 6,
+   "n": 4,
+   "net_standard_state_check_J_per_mol": 0.0,
+   "reaction": "[Ca(H2O)6]2+ + ligand_acetate -> Ca_acetate_bidentate_w4 + (H2O)2",
+   "status": "ok",
+   "terms_J_per_mol": {
+    "E_el_disp_J_per_mol": 13218.180112540722,
+    "G_RRHO_J_per_mol": -286138.2176169914,
+    "RT_ln_H2O_over_k": 8231.232971991174,
+    "dG_1atm_to_1M_J_per_mol": 0.0,
+    "dG_solv_J_per_mol": 315059.95673758606
+   },
+   "water": "water_w2",
+   "water_concentration_mol_per_L": 55.34515681376631,
+   "water_density_source": {
+    "key": "water_density",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+    "sources": [
+     "TF-049"
+    ],
+    "status": "single-source"
+   },
+   "water_mode": "cluster"
+  }
+ ],
+ "departures": [],
+ "driver_version": "1.0.0",
+ "env_check": {
+  "backend": "mock",
+  "mock": true
+ },
+ "generated_utc": "2026-10-19T12:41:23Z",
+ "level": {
+  "basis": "def2-TZVP",
+  "conformers": "CREST (GFN2-xTB/ALPB water, default mode); lowest max_conformers within ewin_kcal, re-ranked by G* (TE-087)",
+  "density_fitting": "def2-universal-jkfit",
+  "dispersion": "D3(BJ)",
+  "dispersion_run": "D3(BJ) HSE06 parameters via the DFT library's dispersion add-on",
+  "ecp_ca": null,
+  "functional": "HSE06",
+  "geometries": "GFN2-xTB/ALPB(water) optimisation; CREST conformer search for complexes",
+  "solvent_run": "SMD (water), electrostatics and CDS; the CDS term from the ENABLE_SMD build (check-env), or flagged and omitted if absent",
+  "solvent_run_locally": "IEF-PCM with the SMD intrinsic radii (SMD electrostatics); the SMD CDS term omitted",
+  "solvent_target": "SMD (water)",
+  "standard_state": "1 atm -> 1 M for every solute (nacre.anchor.cycle); water as one cluster with RT ln([H2O]/k)",
+  "thermal": "GFN2-xTB/ALPB(water) harmonic frequencies, xtb's modified rigid-rotor harmonic-oscillator free energy at 298.15 K"
+ },
+ "mock": true,
+ "options": {
+  "ewin_kcal": 3.0,
+  "jobs": 4,
+  "max_conformers": 5,
+  "max_memory_mb": 24000,
+  "threads": 8
+ },
+ "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+ "question": "binding free energies of acetate and catecholate to hydrated Ca2+ (pipeline consistency check; no literature comparison in this step)",
+ "species": {
+  "Ca_acetate_bidentate_w4": {
+   "G_star_J_per_mol": -1050137150.8149002,
+   "G_star_ensemble_J_per_mol": -1050137150.8149002,
+   "cds_active_all": true,
+   "charge": 1,
+   "conformers_considered": 2,
+   "conformers_ok": 2,
+   "kind": "complex",
+   "mock": true,
+   "name": "Ca_acetate_bidentate_w4",
+   "selected_conformer": 1,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": -52509.99278958325,
+    "E_el_disp_J_per_mol": -1050215294.3239487,
+    "G_RRHO_J_per_mol": 254002.61359625816,
+    "G_star_J_per_mol": -1050137150.8149002,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -183784.97476352347
+   }
+  },
+  "Ca_acetate_monodentate_w5": {
+   "G_star_J_per_mol": -1207665532.6033828,
+   "G_star_ensemble_J_per_mol": -1207665532.6033828,
+   "cds_active_all": true,
+   "charge": 1,
+   "conformers_considered": 2,
+   "conformers_ok": 2,
+   "kind": "complex",
+   "mock": true,
+   "name": "Ca_acetate_monodentate_w5",
+   "selected_conformer": 1,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": -60386.49170802074,
+    "E_el_disp_J_per_mol": -1207746332.259338,
+    "G_RRHO_J_per_mol": 272411.7583396032,
+    "G_star_J_per_mol": -1207665532.6033828,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -199537.97260047367
+   }
+  },
+  "Ca_aqua_w6": {
+   "G_star_J_per_mol": -997606249.9427596,
+   "G_star_ensemble_J_per_mol": -997606249.9427596,
+   "cds_active_all": true,
+   "charge": 2,
+   "conformers_considered": 2,
+   "conformers_ok": 2,
+   "kind": "reference",
+   "mock": true,
+   "name": "Ca_aqua_w6",
+   "selected_conformer": 0,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": -49884.49315010409,
+    "E_el_disp_J_per_mol": -997713034.2149149,
+    "G_RRHO_J_per_mol": 513687.34497716324,
+    "G_star_J_per_mol": -997606249.9427596,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -414828.9430377483
+   }
+  },
+  "Ca_catecholate_dianion_bidentate_w4": {
+   "G_star_J_per_mol": -1312483093.3049734,
+   "G_star_ensemble_J_per_mol": -1312483093.3049734,
+   "cds_active_all": true,
+   "charge": 0,
+   "conformers_considered": 2,
+   "conformers_ok": 2,
+   "kind": "complex",
+   "mock": true,
+   "name": "Ca_catecholate_dianion_bidentate_w4",
+   "selected_conformer": 0,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": -65637.49098697907,
+    "E_el_disp_J_per_mol": -1312769889.8190212,
+    "G_RRHO_J_per_mol": 410145.6258059679,
+    "G_star_J_per_mol": -1312483093.3049734,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -131274.98197398797
+   }
+  },
+  "Ca_catecholate_monoanion_bidentate_w4": {
+   "G_star_J_per_mol": -1365250542.341685,
+   "G_star_ensemble_J_per_mol": -1365250542.341685,
+   "cds_active_all": true,
+   "charge": 1,
+   "conformers_considered": 2,
+   "conformers_ok": 2,
+   "kind": "complex",
+   "mock": true,
+   "name": "Ca_catecholate_monoanion_bidentate_w4",
+   "selected_conformer": 0,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": -68262.99062645824,
+    "E_el_disp_J_per_mol": -1365284429.5837302,
+    "G_RRHO_J_per_mol": 241252.3422665087,
+    "G_star_J_per_mol": -1365250542.341685,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -215290.97043727463
+   }
+  },
+  "ligand_acetate": {
+   "G_star_J_per_mol": -367513231.9324552,
+   "G_star_ensemble_J_per_mol": -367513231.9324552,
+   "cds_active_all": true,
+   "charge": -1,
+   "conformers_considered": 2,
+   "conformers_ok": 2,
+   "kind": "reference",
+   "mock": true,
+   "name": "ligand_acetate",
+   "selected_conformer": 1,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": -18378.49747635414,
+    "E_el_disp_J_per_mol": -367579865.4715758,
+    "G_RRHO_J_per_mol": 174229.65304176314,
+    "G_star_J_per_mol": -367513231.9324552,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -115521.9841371124
+   }
+  },
+  "ligand_catecholate_dianion": {
+   "G_star_J_per_mol": -630237146.8096416,
+   "G_star_ensemble_J_per_mol": -630237155.5282617,
+   "cds_active_all": true,
+   "charge": -2,
+   "conformers_considered": 3,
+   "conformers_ok": 3,
+   "kind": "reference",
+   "mock": true,
+   "name": "ligand_catecholate_dianion",
+   "selected_conformer": 0,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": -31505.995673749952,
+    "E_el_disp_J_per_mol": -630132133.6227857,
+    "G_RRHO_J_per_mol": 265132.8910133228,
+    "G_star_J_per_mol": -630237146.8096416,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -378071.9480850137
+   }
+  },
+  "ligand_catecholate_monoanion": {
+   "G_star_J_per_mol": -682593731.8252822,
+   "G_star_ensemble_J_per_mol": -682593731.8252822,
+   "cds_active_all": true,
+   "charge": -1,
+   "conformers_considered": 2,
+   "conformers_ok": 2,
+   "kind": "reference",
+   "mock": true,
+   "name": "ligand_catecholate_monoanion",
+   "selected_conformer": 0,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": -34131.49531322912,
+    "E_el_disp_J_per_mol": -682640893.3778075,
+    "G_RRHO_J_per_mol": 186263.6621202334,
+    "G_star_J_per_mol": -682593731.8252822,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -147027.97981078894
+   }
+  },
+  "water_w1": {
+   "G_star_J_per_mol": -157347697.4185034,
+   "G_star_ensemble_J_per_mol": -157347697.4185034,
+   "cds_active_all": true,
+   "charge": 0,
+   "conformers_considered": 1,
+   "conformers_ok": 1,
+   "kind": "reference",
+   "mock": true,
+   "name": "water_w1",
+   "selected_conformer": 0,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": -7876.498918437488,
+    "E_el_disp_J_per_mol": -157531526.172278,
+    "G_RRHO_J_per_mol": 191655.88139551686,
+    "G_star_J_per_mol": -157347697.4185034,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -15752.997836875573
+   }
+  },
+  "water_w2": {
+   "G_star_J_per_mol": -314940191.1410815,
+   "G_star_ensemble_J_per_mol": -314940191.1410815,
+   "cds_active_all": true,
+   "charge": 0,
+   "conformers_considered": 2,
+   "conformers_ok": 2,
+   "kind": "reference",
+   "mock": true,
+   "name": "water_w2",
+   "selected_conformer": 0,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": -15752.997836874976,
+    "E_el_disp_J_per_mol": -315064387.1824294,
+    "G_RRHO_J_per_mol": 147776.16680567685,
+    "G_star_J_per_mol": -314940191.1410815,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -31505.995673751146
+   }
+  }
+ },
+ "status": "ok",
+ "wall_s": 2.6
+}

@@ -1,0 +1,22 @@
+{
+ "G_star_J_per_mol": -682593731.8252822,
+ "G_star_ensemble_J_per_mol": -682593731.8252822,
+ "cds_active_all": true,
+ "charge": -1,
+ "conformers_considered": 2,
+ "conformers_ok": 2,
+ "kind": "reference",
+ "mock": true,
+ "name": "ligand_catecholate_monoanion",
+ "selected_conformer": 0,
+ "selected_geometry": "selected.xyz",
+ "status": "ok",
+ "terms": {
+  "E_disp_J_per_mol": -34131.49531322912,
+  "E_el_disp_J_per_mol": -682640893.3778075,
+  "G_RRHO_J_per_mol": 186263.6621202334,
+  "G_star_J_per_mol": -682593731.8252822,
+  "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+  "dG_solv_J_per_mol": -147027.97981078894
+ }
+}

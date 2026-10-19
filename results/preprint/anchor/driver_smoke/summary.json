@@ -1,0 +1,185 @@
+{
+ "T_K": 298.15,
+ "backend": "real",
+ "cycles": [
+  {
+   "aqua": "Ca_aqua_w6",
+   "complex": "Ca_catecholate_monoanion_bidentate_w4",
+   "k": 2,
+   "ligand": "ligand_catecholate_monoanion",
+   "m": 6,
+   "missing": [
+    "Ca_catecholate_monoanion_bidentate_w4",
+    "ligand_catecholate_monoanion",
+    "Ca_aqua_w6"
+   ],
+   "n": 4,
+   "reaction": "[Ca(H2O)6]2+ + ligand_catecholate_monoanion -> Ca_catecholate_monoanion_bidentate_w4 + (H2O)2",
+   "status": "outstanding",
+   "water": "water_w2"
+  },
+  {
+   "aqua": "Ca_aqua_w6",
+   "complex": "Ca_catecholate_dianion_bidentate_w4",
+   "k": 2,
+   "ligand": "ligand_catecholate_dianion",
+   "m": 6,
+   "missing": [
+    "Ca_catecholate_dianion_bidentate_w4",
+    "ligand_catecholate_dianion",
+    "Ca_aqua_w6"
+   ],
+   "n": 4,
+   "reaction": "[Ca(H2O)6]2+ + ligand_catecholate_dianion -> Ca_catecholate_dianion_bidentate_w4 + (H2O)2",
+   "status": "outstanding",
+   "water": "water_w2"
+  },
+  {
+   "aqua": "Ca_aqua_w6",
+   "complex": "Ca_acetate_monodentate_w5",
+   "k": 1,
+   "ligand": "ligand_acetate",
+   "m": 6,
+   "missing": [
+    "Ca_acetate_monodentate_w5",
+    "ligand_acetate",
+    "Ca_aqua_w6"
+   ],
+   "n": 5,
+   "reaction": "[Ca(H2O)6]2+ + ligand_acetate -> Ca_acetate_monodentate_w5 + (H2O)1",
+   "status": "outstanding",
+   "water": "water_w1"
+  },
+  {
+   "aqua": "Ca_aqua_w6",
+   "complex": "Ca_acetate_bidentate_w4",
+   "k": 2,
+   "ligand": "ligand_acetate",
+   "m": 6,
+   "missing": [
+    "Ca_acetate_bidentate_w4",
+    "ligand_acetate",
+    "Ca_aqua_w6"
+   ],
+   "n": 4,
+   "reaction": "[Ca(H2O)6]2+ + ligand_acetate -> Ca_acetate_bidentate_w4 + (H2O)2",
+   "status": "outstanding",
+   "water": "water_w2"
+  }
+ ],
+ "departures": [
+  "SMD CDS term absent in this build: electrostatics only (flagged per species)"
+ ],
+ "driver_version": "1.0.0",
+ "env_check": {
+  "backend": "real",
+  "cpu_count": 8,
+  "crest": [
+   "==============================================",
+   "       |                                            |",
+   "       |                 C R E S T                  |",
+   "       |                                            |",
+   "       |  Conformer-Rotamer Ensemble Sampling Tool  |",
+   "       |          based on the GFN methods          |"
+  ],
+  "dispersion_addon": "unavailable: No module named 'pyscf_dispersion'",
+  "glibc": [
+   "",
+   ""
+  ],
+  "machine": "arm64",
+  "mem_total_kB": null,
+  "platform": "macOS-26.3.1-arm64-arm-64bit",
+  "python": "3.12.13",
+  "smd_cds": {
+   "active": false,
+   "libsolvent_loaded": false,
+   "pyscf": "2.14.0",
+   "reason": "libsolvent not built (pyscf compiled without -DENABLE_SMD=ON)",
+   "utc": "2026-10-19T12:02:53Z"
+  },
+  "utc": "2026-10-19T12:02:50Z",
+  "xtb": [
+   "-----------------------------------------------------------      ",
+   "     |                   =====================                   |     ",
+   "     |                           x T B                           |     ",
+   "     |                   =====================                   |     ",
+   "     |                         S. Grimme                         |     ",
+   "     |          Mulliken Center for Theoretical Chemistry        |     "
+  ]
+ },
+ "generated_utc": "2026-10-19T12:11:01Z",
+ "level": {
+  "basis": "def2-TZVP",
+  "conformers": "CREST (GFN2-xTB/ALPB water, default mode); lowest max_conformers within ewin_kcal, re-ranked by G* (TE-087)",
+  "density_fitting": "def2-universal-jkfit",
+  "dispersion": "D3(BJ)",
+  "dispersion_run": "D3(BJ) HSE06 parameters via the DFT library's dispersion add-on",
+  "ecp_ca": null,
+  "functional": "HSE06",
+  "geometries": "GFN2-xTB/ALPB(water) optimisation; CREST conformer search for complexes",
+  "solvent_run": "SMD (water), electrostatics and CDS; the CDS term from the ENABLE_SMD build (check-env), or flagged and omitted if absent",
+  "solvent_run_locally": "IEF-PCM with the SMD intrinsic radii (SMD electrostatics); the SMD CDS term omitted",
+  "solvent_target": "SMD (water)",
+  "standard_state": "1 atm -> 1 M for every solute (nacre.anchor.cycle); water as one cluster with RT ln([H2O]/k)",
+  "thermal": "GFN2-xTB/ALPB(water) harmonic frequencies, xtb's modified rigid-rotor harmonic-oscillator free energy at 298.15 K"
+ },
+ "mock": false,
+ "options": {
+  "ewin_kcal": 3.0,
+  "jobs": 1,
+  "max_conformers": 2,
+  "max_memory_mb": 1500,
+  "threads": 1
+ },
+ "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+ "question": "binding free energies of acetate and catecholate to hydrated Ca2+ (pipeline consistency check; no literature comparison in this step)",
+ "species": {
+  "water_w1": {
+   "G_star_J_per_mol": -200573597.16907454,
+   "G_star_ensemble_J_per_mol": -200573597.16907454,
+   "cds_active_all": false,
+   "charge": 0,
+   "conformers_considered": 1,
+   "conformers_ok": 1,
+   "kind": "reference",
+   "mock": false,
+   "name": "water_w1",
+   "selected_conformer": 0,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": 0.0,
+    "E_el_disp_J_per_mol": -200546693.58623028,
+    "G_RRHO_J_per_mol": 5371.62753695774,
+    "G_star_J_per_mol": -200573597.16907454,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -40201.08059715629
+   }
+  },
+  "water_w2": {
+   "G_star_J_per_mol": -401135780.1874273,
+   "G_star_ensemble_J_per_mol": -401135780.1874273,
+   "cds_active_all": false,
+   "charge": 0,
+   "conformers_considered": 2,
+   "conformers_ok": 1,
+   "kind": "reference",
+   "mock": false,
+   "name": "water_w2",
+   "selected_conformer": 0,
+   "selected_geometry": "selected.xyz",
+   "status": "ok",
+   "terms": {
+    "E_disp_J_per_mol": 0.0,
+    "E_el_disp_J_per_mol": -401118248.9500849,
+    "G_RRHO_J_per_mol": 42471.34764591366,
+    "G_star_J_per_mol": -401135780.1874273,
+    "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+    "dG_solv_J_per_mol": -67928.45520426688
+   }
+  }
+ },
+ "status": "ok",
+ "wall_s": 487.1
+}

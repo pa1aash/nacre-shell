@@ -1,0 +1,22 @@
+{
+ "G_star_J_per_mol": -1050137150.8149002,
+ "G_star_ensemble_J_per_mol": -1050137150.8149002,
+ "cds_active_all": true,
+ "charge": 1,
+ "conformers_considered": 2,
+ "conformers_ok": 2,
+ "kind": "complex",
+ "mock": true,
+ "name": "Ca_acetate_bidentate_w4",
+ "selected_conformer": 1,
+ "selected_geometry": "selected.xyz",
+ "status": "ok",
+ "terms": {
+  "E_disp_J_per_mol": -52509.99278958325,
+  "E_el_disp_J_per_mol": -1050215294.3239487,
+  "G_RRHO_J_per_mol": 254002.61359625816,
+  "G_star_J_per_mol": -1050137150.8149002,
+  "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+  "dG_solv_J_per_mol": -183784.97476352347
+ }
+}
