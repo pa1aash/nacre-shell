@@ -3,7 +3,7 @@
   "builder": "nacre.structures.acc.build",
   "file": "acc_cluster.extxyz",
   "n_atoms": 40,
-  "sha256": "a325b5edefa78ea2844c4c10a3d3311455f8e03af3ccd66d9cacc4a5e19ccaef",
+  "sha256": "b3bca1b3d1f99ccd5b7eb88663f996ec5908434b1ad644c8e7fc7f7764180864",
   "total_charge": 0
  },
  "al2o3_0001_oh": {
@@ -34,11 +34,32 @@
   "sha256": "283909a6eed72ee651aaf0e9440938c98283a68e64971df1aff8c20ba6cd1433",
   "total_charge": 0
  },
+ "fig2a_interface": {
+  "builder": "nacre.structures.hero.build",
+  "file": "fig2a_interface.extxyz",
+  "n_atoms": 2337,
+  "sha256": "68ad545df8af8f7d7a4490326288ad739d8b5dc8dbd22e051e66140cc5ff64ff",
+  "total_charge": 0
+ },
+ "fig2b_interface": {
+  "builder": "nacre.structures.hero.build",
+  "file": "fig2b_interface.extxyz",
+  "n_atoms": 2806,
+  "sha256": "d81d233cfe9a207777584c38f4502d2019619fe7ade6652de101c71898593b86",
+  "total_charge": 0
+ },
+ "fig2d_interface": {
+  "builder": "nacre.structures.hero.build",
+  "file": "fig2d_interface.extxyz",
+  "n_atoms": 4331,
+  "sha256": "2073c10c8f64c975bc08168967ee7e79e52c93b26da8fd115b9f7f1ef4548f7f",
+  "total_charge": 0
+ },
  "hero_interface": {
   "builder": "nacre.structures.hero.build",
   "file": "hero_interface.extxyz",
-  "n_atoms": 3878,
-  "sha256": "24cf31db7925987be74175d08f2922d3ee40cc85e1fc4cd79989ab60e979808a",
+  "n_atoms": 13854,
+  "sha256": "e50ea6c6f4b3d4c33e12930e4d369ff367cb1134aed058c42d09ea1467c49fb7",
   "total_charge": 0
  },
  "smoke_interface": {

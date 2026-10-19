@@ -1,4 +1,5 @@
-"""Hero scene of Figure 1: an illustrative construction of the template-nucleus contact.
+"""Hero scene of Figure 1 (and the Fig 2 panels): an illustrative construction of the
+template-nucleus contact.
 
 Composition (every placement is a parameter in build.yaml; nothing is simulated):
 
@@ -9,32 +10,39 @@ Composition (every placement is a parameter in build.yaml; nothing is simulated)
    removed (surface +2, catecholate -2, so each anchor is neutral). The chain is a rigid
    body turned about the O-O axis; of the orientations that keep every other atom at
    least ``clearance`` from the slab and earlier parts and point within ``azimuth_tol``
-   of the requested azimuth, the lowest-lying one is taken.
-3. ``bound``: a few Ca2+ at catecholate sites of the chains. The catechol is a monoanion
-   (one H removed), bound bidentate (``unit: auto`` takes the outermost unit where the
-   site is clash-free); Ca sits on the bisector away from the ring at the
-   evidence Ca-O distance, and the rest of its evidence coordination number is filled
-   with water from the hydrated-ion shell. Each site is +1. Binding does not add driving
-   force (derivation, section 7), so the scene shows few bound ions, not a cloud.
-4. ``nucleus``: a first amorphous CaCO3 nucleus drawn as a low-contact-angle spherical
-   cap on the template: base radius ``base_radius``, contact angle ``contact_angle_deg``,
-   base plane ``base_height`` above the top hydroxyl H. Ca2+ and CO3^2- are inserted
-   alternately inside the cap under the minimum-distance rules of nacre.structures.acc
-   and stay clear of the template atoms, so the cap fills the gaps of the layer it
-   wets. The contact is the focus of the figure.
-5. ``bridge``: one Ca2+ at a catecholate site under the rim of the cap, bridging the
-   template and the nucleus: it is built like a bound site, its waters inside the cap
-   are removed, and one nucleus carbonate is placed first so that its O completes the
-   Ca shell. This site is also +1.
+   of the requested azimuth, the lowest-lying one is taken. A chain entry may name a
+   ``template`` other than the default chain (for example the carboxyl-ended chain).
+3. ``bound``: a few Ca2+ at sites of the chains. A ``catecholate`` site is a catechol
+   monoanion (one H removed; ``unit: auto`` takes the outermost unit where the site is
+   clash-free); a ``carboxylate`` site is the deprotonated carboxyl end group. Ca sits on
+   the bisector of the O pair at the evidence Ca-O distance, and the rest of its evidence
+   coordination number is filled with water from the hydrated-ion shell. Each site is +1.
+   Binding does not add driving force (derivation, section 7), so a scene shows a few
+   bound ions, not a cloud.
+4. ``nucleus``: an amorphous CaCO3 nucleus drawn as a lens: one spherical cap (or, for a
+   coalesced film, the union of several ``caps``) with a flat base on the template, base
+   plane ``base_height`` above the top hydroxyl H, at contact angle
+   ``contact_angle_deg``. Ca2+ and CO3^2- are inserted alternately inside it under the
+   minimum-distance rules of nacre.structures.acc and stay clear of the template atoms.
+   The number of formula units is the lens volume times the sourced packing (N_A / V_m,
+   key v_m_acc) and the carbonate C-O length is the sourced key c_o_bond_length_acc
+   (nacre.structures.params_source); neither may be typed. The structural water of ACC
+   is not drawn. The contact is the focus of the figure.
+5. ``bridge`` (optional): one Ca2+ at a catecholate site under the rim of the cap,
+   bridging the template and the nucleus: it is built like a bound site, its waters
+   inside the cap are removed, and one nucleus carbonate is placed first so that its O
+   completes the Ca shell. This site is also +1.
 6. ``carbonate``: dissolved CO3^2- ions that balance the charge of the Ca sites
    (decision D5); their number follows from the bookkeeping and must equal the number
-   of positions given.
-7. ``water``: water packed only behind a cut-away plane (``y_cut``, fraction of the
-   cell), so the interface in front of it reads; see nacre.structures.water.
+   of positions given. Each must lie at least ``carbonate_far`` from the nucleus.
+7. ``water``: water packed above the slab, in the whole cell or behind a cut-away plane
+   (``y_cut``, fraction of the cell); see nacre.structures.water. The renderer draws
+   only the shell near the interface, fading with distance.
 
 Per-atom ``component`` labels: slab, chain<i>, bound<j>, bound<j>_water, bridge,
 bridge_water, nucleus, carbonate<k>, water. The total charge is the explicit sum of the
-bookkeeping above and must be zero.
+bookkeeping above and must be zero. ``drawing_choices`` (from build.yaml) names every
+unsourced drawing parameter and is written into the file's metadata.
 """
 from __future__ import annotations
 
@@ -53,19 +61,22 @@ DEFAULTS = {
     "phi_step_deg": 2.0,
     "site_pair_range": [2.3, 3.1],
     "site_tie_tol": 0.01,
-    "co_bond": 1.28,
     "nucleus": {"centre": [0.5, 0.45], "base_radius": 11.0, "contact_angle_deg": 50.0,
-                "base_height": 2.5, "density_g_cm3": 1.9, "attempts": 20000, "env_min": 2.3,
-                "env_min_h": 1.9},
+                "base_height": 2.5, "caps": None, "attempts": 60000, "env_min": 2.3,
+                "env_min_h": 1.9, "grid": 0.25},
+    "bridge": None,
     "carbonate_min": 2.6,
+    "carbonate_far": 8.0,
     "water": {"y_cut": 0.62, "gap": 1.6, "thickness": 18.0, "density_g_cm3": 1.0},
 }
 
 
 def _deep(defaults, given):
+    """Defaults merged one level deep; a part given as null (for example nucleus) stays null."""
     out = {}
     for k, v in defaults.items():
-        out[k] = {**v, **(given or {}).get(k, {})} if isinstance(v, dict) else (given or {}).get(k, v)
+        g = (given or {}).get(k, v if not isinstance(v, dict) else {})
+        out[k] = {**v, **g} if isinstance(v, dict) and g is not None else g
     for k, v in (given or {}).items():
         out.setdefault(k, v)
     return out
@@ -206,15 +217,29 @@ def anchor_chain(sc, chain, site, azimuth, p, name):
     return {int(c): first + k for k, c in enumerate(keep_c)}
 
 
-def ca_site(sc, chain_index_map, chain, unit_k, geom, rng, name, p):
-    """Ca2+ bound bidentate to a catechol monoanion of a placed chain; returns the Ca index.
+SITE_KINDS = ("catecholate", "carboxylate")
 
-    The Ca must stay ``ca_clearance`` from every atom other than its two catecholate O and
-    their ring C, and the shell waters ``clearance`` - 0.4 from everything; otherwise the site
-    is refused (a drawing never shows overlapping atoms).
+
+def ca_site(sc, chain_index_map, chain, unit_k, geom, rng, name, p, kind="catecholate"):
+    """Ca2+ bound bidentate to a site of a placed chain; returns the Ca index.
+
+    ``kind`` catecholate: the O pair of catechol unit ``unit_k``, made a monoanion (one H
+    removed, the other turned away from Ca). ``kind`` carboxylate: the carboxyl O pair of
+    the end group, deprotonated. Either site carries +1 with its Ca2+.
+
+    The Ca must stay ``ca_clearance`` from every atom other than its two O and their C,
+    and the shell waters ``clearance`` - 0.4 from everything; otherwise the site is
+    refused (a drawing never shows overlapping atoms).
     """
+    if kind not in SITE_KINDS:
+        raise ValueError(f"{name}: site must be one of {SITE_KINDS}")
     csym = np.array(chain.get_chemical_symbols())
-    unit = chain.arrays["catechol"]
+    if kind == "carboxylate":
+        if "carboxyl" not in chain.arrays:
+            raise ValueError(f"{name}: the chain has no carboxyl end group")
+        unit, unit_k = chain.arrays["carboxyl"], 0
+    else:
+        unit = chain.arrays["catechol"]
     o = [chain_index_map[i] for i in np.where((unit == unit_k) & (csym == "O"))[0]]
     h = [chain_index_map[i] for i in np.where((unit == unit_k) & (csym == "H"))[0]]
     pos = sc.pos
@@ -236,13 +261,16 @@ def ca_site(sc, chain_index_map, chain, unit_k, geom, rng, name, p):
     r_ca, _ = sc.distances(ca[None, :], ~own)
     if r_ca.min() < p["ca_clearance"]:
         raise RuntimeError(f"{name}: Ca at unit {unit_k} would sit {r_ca.min():.2f} A from another atom")
-    # Monoanion: remove the H of the first O, turn the H of the second O away from Ca.
+    # Catechol monoanion: remove the H of the first O, turn the H of the second O away from
+    # Ca. Carboxylate: remove the acid H.
     h_first = min(h, key=lambda hh: np.linalg.norm(pos[hh] - pos[o[0]]))
-    h_second = [hh for hh in h if hh != h_first][0]
-    u1 = (pos[o[1]] - ca) / np.linalg.norm(pos[o[1]] - ca)
-    u2 = (pos[o[1]] - pos[c_of[1]]) / np.linalg.norm(pos[o[1]] - pos[c_of[1]])
-    dh = (u1 + u2) / np.linalg.norm(u1 + u2)
-    h_new = pos[o[1]] + 0.97 * dh
+    h_second = None
+    if kind == "catecholate":
+        h_second = [hh for hh in h if hh != h_first][0]
+        u1 = (pos[o[1]] - ca) / np.linalg.norm(pos[o[1]] - ca)
+        u2 = (pos[o[1]] - pos[c_of[1]]) / np.linalg.norm(pos[o[1]] - pos[c_of[1]])
+        dh = (u1 + u2) / np.linalg.norm(u1 + u2)
+        h_new = pos[o[1]] + 0.97 * dh
     # Hydration shell: evidence CN, two places taken by the catecholate O.
     shell = ion.build({"cn": geom["cn"], "r_ca_o": r_cao}, seed=int(rng.integers(1 << 31)))
     ssym = np.array(shell.get_chemical_symbols())
@@ -280,13 +308,15 @@ def ca_site(sc, chain_index_map, chain, unit_k, geom, rng, name, p):
         raise RuntimeError(f"{name}: no clash-free hydration shell at unit {unit_k}")
     # All checks passed: only now change the scene.
     sc.remove([h_first])
-    sc.pos[h_second] = h_new
+    if h_second is not None:
+        sc.pos[h_second] = h_new
     sc.add(["Ca"], ca[None, :], name)
     ca_idx = len(sc.sym) - 1
     wat = best[1]
     if len(wat):
         sc.add(["O", "H", "H"] * len(wat), wat.reshape(-1, 3), f"{name}_water")
-    sc.ledger.append((f"{name}: Ca2+ on a catechol monoanion (one H removed)", +2 - 1))
+    what = "a catechol monoanion (one H removed)" if kind == "catecholate" else "a carboxylate (acid H removed)"
+    sc.ledger.append((f"{name}: Ca2+ on {what}", +2 - 1))
     return ca_idx, len(wat)
 
 
@@ -309,7 +339,48 @@ def _carbonate(centre, rot, r_co):
     return sym, pos @ rot.T + centre
 
 
-def place_bridge_carbonate(sc, p, rng, bridge_ca, cap_centre, geom):
+def lens(sc, n):
+    """The nucleus shape: caps as (centre, sphere radius) and the base plane height.
+
+    One cap from ``centre`` and ``base_radius``, or the union of ``caps`` ([fx, fy,
+    base_radius] each); all share the contact angle and the flat base plane.
+    """
+    slab_top = sc.pos[(np.array(sc.comp) == "slab") & sc.alive, 2].max()
+    z_b = slab_top + n["base_height"]
+    th = np.radians(n["contact_angle_deg"])
+    spec = n["caps"] or [[n["centre"][0], n["centre"][1], n["base_radius"]]]
+    caps = []
+    for fx, fy, a in spec:
+        radius = a / np.sin(th)
+        height = radius * (1 - np.cos(th))
+        caps.append((np.r_[sc.xy([fx, fy]), z_b + height - radius], float(radius)))
+    return caps, float(z_b)
+
+
+def lens_inside(caps, z_b, pts):
+    pts = np.atleast_2d(pts)
+    hit = np.zeros(len(pts), dtype=bool)
+    for c, r in caps:
+        hit |= np.linalg.norm(pts - c, axis=1) <= r
+    return hit & (pts[:, 2] >= z_b)
+
+
+def lens_box(caps, z_b):
+    lo = np.min([c - r for c, r in caps], axis=0)
+    hi = np.max([c + r for c, r in caps], axis=0)
+    lo[2] = z_b
+    return lo, hi
+
+
+def lens_volume(caps, z_b, step):
+    """Volume of the lens by counting the points of a regular grid inside it (A^3)."""
+    lo, hi = lens_box(caps, z_b)
+    axes = [np.arange(lo[k] + step / 2, hi[k], step) for k in range(3)]
+    g = np.stack(np.meshgrid(*axes, indexing="ij"), axis=-1).reshape(-1, 3)
+    return float(lens_inside(caps, z_b, g).sum() * step ** 3)
+
+
+def place_bridge_carbonate(sc, p, rng, bridge_ca, cap_centre, geom, r_co):
     n = p["nucleus"]
     ca = sc.pos[bridge_ca]
     comp = np.array(sc.comp)
@@ -328,7 +399,7 @@ def place_bridge_carbonate(sc, p, rng, bridge_ca, cap_centre, geom):
             perp = _rot(u, spin) @ perp0
             # acc.carbonate puts O1 along +y of its frame; map +y to -u so O1 faces the Ca.
             rot = np.stack([perp, -u, np.cross(perp, -u)], axis=1)
-            sym, pos = _carbonate(ca + u * (geom["r_ca_o"] + p["co_bond"]), rot, p["co_bond"])
+            sym, pos = _carbonate(ca + u * (geom["r_ca_o"] + r_co), rot, r_co)
             r, idx = sc.distances(pos, env)
             lim = np.where(np.array(sc.sym)[idx] == "H", n["env_min_h"], n["env_min"])
             if (r >= lim[None, :]).all():
@@ -337,46 +408,39 @@ def place_bridge_carbonate(sc, p, rng, bridge_ca, cap_centre, geom):
     raise RuntimeError("bridge: no clash-free carbonate on the Ca shell towards the nucleus")
 
 
-def build_nucleus(sc, p, rng, bridge_ca, geom):
+def build_nucleus(sc, p, rng, bridge_ca, geom, accg):
+    """Fill the lens with Ca2+ and CO3^2- at the sourced packing; returns placement counts."""
     n = p["nucleus"]
-    sym = np.array(sc.sym)
-    slab_top = sc.pos[(np.array(sc.comp) == "slab") & sc.alive, 2].max()
-    a = n["base_radius"]
-    th = np.radians(n["contact_angle_deg"])
-    radius = a / np.sin(th)
-    height = radius * (1 - np.cos(th))
-    z_b = slab_top + n["base_height"]
-    cxy = sc.xy(n["centre"])
-    centre = np.r_[cxy, z_b + height - radius]
-
-    def inside(x):
-        return x[2] >= z_b and np.linalg.norm(x - centre) <= radius
-
-    vol = np.pi * height ** 2 * (3 * radius - height) / 3
-    m_fu = 100.0869
-    target = int(round(vol * n["density_g_cm3"] * 0.602214076 / m_fu))
-    # First carbonate completes the bridging Ca shell: it takes the place of the shell water
-    # that points most towards the cap, with one O at the evidence Ca-O distance.
-    cap_sym, cap_pos = place_bridge_carbonate(sc, p, rng, bridge_ca, centre, geom)
+    r_co = accg["r_co"]
+    caps, z_b = lens(sc, n)
+    vol = lens_volume(caps, z_b, n["grid"])
+    target = int(round(vol * accg["fu_per_a3"]))
+    lo, hi = lens_box(caps, z_b)
+    cap_sym, cap_pos = [], np.zeros((0, 3))
+    if bridge_ca is not None:
+        # The first carbonate completes the bridging Ca shell: it takes the place of the shell
+        # water that points most towards the nearest cap, one O at the evidence Ca-O distance.
+        near = min(caps, key=lambda cr: np.linalg.norm(cr[0][:2] - sc.pos[bridge_ca][:2]))[0]
+        cap_sym, cap_pos = place_bridge_carbonate(sc, p, rng, bridge_ca, near, geom, r_co)
     env = sc.alive.copy()
-    env[bridge_ca] = False
-    placed_fu, attempts = 0, 0
-    # The bridging carbonate is the first CO3; then Ca and CO3 alternate, ending neutral.
-    units = ["Ca"] + ["CO3", "Ca"] * max(target - 1, 0)
+    if bridge_ca is not None:
+        env[bridge_ca] = False
+    attempts = 0
+    # Ca and CO3 alternate (after the bridging carbonate, if any), ending neutral.
+    units = (["Ca"] + ["CO3", "Ca"] * max(target - 1, 0)) if bridge_ca is not None \
+        else ["Ca", "CO3"] * target
     rejected = {"outside": 0, "nucleus": 0, "template": 0}
     for unit in units:
         while attempts < n["attempts"]:
             attempts += 1
-            v = rng.normal(size=3)
-            v /= np.linalg.norm(v)
-            pt = centre + v * radius * rng.uniform(0, 1) ** (1 / 3)
-            if not inside(pt):
+            pt = rng.uniform(lo, hi)
+            if not lens_inside(caps, z_b, pt)[0]:
                 rejected["outside"] += 1
                 continue
             if unit == "Ca":
                 ns, npos = ["Ca"], pt[None, :]
             else:
-                ns, npos = _carbonate(pt, random_rotation(rng), p["co_bond"])
+                ns, npos = _carbonate(pt, random_rotation(rng), r_co)
             if len(cap_pos) and not acc._ok(ns, npos, cap_sym, cap_pos, acc.DEFAULTS):
                 rejected["nucleus"] += 1
                 continue
@@ -393,13 +457,14 @@ def build_nucleus(sc, p, rng, bridge_ca, geom):
             break
     # Keep the nucleus neutral: drop the last-placed unit of the species in excess
     # (never the bridging carbonate, which is placed first).
+    first_free = 4 if bridge_ca is not None else 0
     while cap_sym.count("Ca") != cap_sym.count("C"):
         if cap_sym.count("Ca") > cap_sym.count("C"):
             i = len(cap_sym) - 1 - cap_sym[::-1].index("Ca")
             drop = [i]
         else:
             i = len(cap_sym) - 1 - cap_sym[::-1].index("C")
-            if i == 0:
+            if i < first_free:
                 raise RuntimeError(f"nucleus: no Ca placed (rejections {rejected})")
             drop = list(range(i, i + 4))
         keep = [k for k in range(len(cap_sym)) if k not in drop]
@@ -407,7 +472,9 @@ def build_nucleus(sc, p, rng, bridge_ca, geom):
     n_ca = cap_sym.count("Ca")
     sc.add(cap_sym, cap_pos, "nucleus")
     sc.ledger.append(("nucleus: CaCO3 formula units", 0))
-    return {"target_fu": target, "placed_fu": n_ca, "attempts": attempts, "rejected": rejected}
+    return {"target_fu": target, "placed_fu": n_ca, "attempts": attempts, "rejected": rejected,
+            "volume_a3": round(vol, 3), "z_base": z_b,
+            "caps": [[*np.round(c, 6).tolist(), round(r, 6)] for c, r in caps]}
 
 
 def snapshot(sc):
@@ -418,68 +485,93 @@ def snapshot(sc):
     return out
 
 
-def build(slab, chain, geom, params=None, seed=0, source_ids=None, trace=None):
-    """Build the hero scene. ``trace``, if a list, receives (step, snapshot) after each step,
-    so a failing build shows which part departed first."""
+def build(slab, chains, geom, accg, params=None, seed=0, source_ids=None, drawing_choices=None,
+          trace=None):
+    """Build the scene. ``chains`` maps template names to oligomers ("default" is required, or
+    pass one oligomer); ``geom`` is the evidence Ca2+ shell, ``accg`` the sourced ACC geometry
+    (nacre.structures.params_source.acc_geometry). ``trace``, if a list, receives
+    (step, snapshot) after each step, so a failing build shows which part departed first."""
     from ase import Atoms
 
+    if not isinstance(chains, dict):
+        chains = {"default": chains}
     p = _deep(DEFAULTS, params)
+    for typed in ("density_g_cm3", "co_bond"):
+        if typed in (params or {}) or typed in ((params or {}).get("nucleus") or {}):
+            raise ValueError(f"{typed} comes from the params record (v_m_acc, c_o_bond_length_acc), never typed")
+    r_co = accg["r_co"]
     rng = np.random.default_rng(seed)
     sc = Scene(slab)
     record = trace.append if trace is not None else (lambda item: None)
-    maps = []
+    maps, used = [], []
     for i, ch in enumerate(p["chains"]):
-        maps.append(anchor_chain(sc, chain, ch["site"], ch["azimuth"], p, f"chain{i}"))
+        tmpl = chains[ch.get("template", "default")]
+        maps.append(anchor_chain(sc, tmpl, ch["site"], ch["azimuth"], p, f"chain{i}"))
+        used.append(tmpl)
         record((f"chain{i}", snapshot(sc)))
     n_bound_water = []
     bound = []
     for j, b in enumerate(p["bound"]):
-        units = [b["unit"]] if b["unit"] != "auto" else sorted(set(chain.arrays["catechol"]) - {-1, 0},
-                                                                 reverse=True)
+        kind = b.get("site", "catecholate")
+        chain = used[b["chain"]]
+        if kind == "carboxylate":
+            units = [0]
+        elif b.get("unit", "auto") != "auto":
+            units = [b["unit"]]
+        else:
+            units = sorted(set(chain.arrays["catechol"]) - {-1, 0}, reverse=True)
         for k in units:
             try:
-                _, nw = ca_site(sc, maps[b["chain"]], chain, k, geom, rng, f"bound{j}", p)
+                _, nw = ca_site(sc, maps[b["chain"]], chain, k, geom, rng, f"bound{j}", p, kind)
             except RuntimeError:
                 if k == units[-1]:
                     raise
                 continue
-            bound.append({"chain": b["chain"], "unit": int(k)})
+            bound.append({"chain": b["chain"], "unit": int(k), "site": kind})
             n_bound_water.append(nw)
             record((f"bound{j}", snapshot(sc)))
             break
     p["bound"] = bound
-    # The bridging site is built before the nucleus; the nucleus carbonate then takes the
-    # place of the shell water that points most towards the cap.
+    bridge_ca = None
     n = p["nucleus"]
-    th = np.radians(n["contact_angle_deg"])
-    radius = n["base_radius"] / np.sin(th)
-    height = radius * (1 - np.cos(th))
-    slab_top = sc.pos[(np.array(sc.comp) == "slab") & sc.alive, 2].max()
-    z_b = slab_top + n["base_height"]
-    centre = np.r_[sc.xy(n["centre"]), z_b + height - radius]
-    br = dict(p["bridge"])
-    if br["unit"] == "auto":
-        br["unit"] = rim_unit(sc, maps[br["chain"]], chain, centre, n["base_radius"], z_b)
-    p["bridge"] = br
-    bridge_ca, _ = ca_site(sc, maps[br["chain"]], chain, br["unit"], geom, rng, "bridge", p)
-    record(("bridge", snapshot(sc)))
-    nuc = build_nucleus(sc, p, rng, bridge_ca, geom)
-    record(("nucleus", snapshot(sc)))
+    if n is not None and p["bridge"] is not None:
+        # The bridging site is built before the nucleus; the nucleus carbonate then takes the
+        # place of the shell water that points most towards the cap.
+        caps, z_b = lens(sc, n)
+        br = dict(p["bridge"])
+        if br["unit"] == "auto":
+            centre, radius = caps[0]
+            base = float(np.sqrt(radius ** 2 - (z_b - centre[2]) ** 2))
+            br["unit"] = rim_unit(sc, maps[br["chain"]], used[br["chain"]], centre, base, z_b)
+        p["bridge"] = br
+        bridge_ca, _ = ca_site(sc, maps[br["chain"]], used[br["chain"]], br["unit"], geom, rng, "bridge", p)
+        record(("bridge", snapshot(sc)))
+    nuc = None
+    if n is not None:
+        nuc = build_nucleus(sc, p, rng, bridge_ca, geom, accg)
+        record(("nucleus", snapshot(sc)))
     charge_sites = sum(q for _, q in sc.ledger)
     n_co3 = charge_sites // 2
     if charge_sites % 2 or n_co3 != len(p["carbonate"]):
         raise ValueError(f"Ca sites carry {charge_sites:+d}; give {charge_sites / 2:g} carbonate positions, "
                          f"not {len(p['carbonate'])}")
+    slab_top = sc.pos[(np.array(sc.comp) == "slab") & sc.alive, 2].max()
     for k, (fx, fy, dz) in enumerate(p["carbonate"]):
         c = np.r_[sc.xy([fx, fy]), slab_top + dz]
         for _ in range(500):
-            s, x = _carbonate(c, random_rotation(rng), p["co_bond"])
+            s, x = _carbonate(c, random_rotation(rng), r_co)
             r, _ = sc.distances(x)
             if r.min() >= p["carbonate_min"]:
                 break
             c = c + rng.normal(scale=0.5, size=3)
         else:
             raise RuntimeError(f"carbonate{k}: no clash-free position near {(fx, fy, dz)}")
+        nuc_mask = np.array(sc.comp) == "nucleus"
+        if nuc_mask.any():
+            far = sc.distances(x, nuc_mask)[0].min()
+            if far < p["carbonate_far"]:
+                raise ValueError(f"carbonate{k} lies {far:.1f} A from the nucleus; dissolved carbonate "
+                                 f"must stay {p['carbonate_far']} A away")
         sc.add(s, x, f"carbonate{k}")
         sc.ledger.append((f"carbonate{k}: dissolved CO3^2-", -2))
     total = sum(q for _, q in sc.ledger)
@@ -490,27 +582,37 @@ def build(slab, chain, geom, params=None, seed=0, source_ids=None, trace=None):
     solid = Atoms(symbols=[sc.sym[i] for i in alive], positions=sc.pos[alive], cell=sc.cell, pbc=sc.pbc)
     solid.new_array("component", np.array([sc.comp[i] for i in alive]))
     w = p["water"]
-    wet = water.build(solid, {"xy_box": [[0.0, 1.0], [w["y_cut"], 1.0]], "z_base_component": "slab",
+    box = None if w.get("y_cut") is None else [[0.0, 1.0], [w["y_cut"], 1.0]]
+    wet = water.build(solid, {"xy_box": box, "z_base_component": "slab",
                               "gap": w["gap"], "thickness": w["thickness"],
-                              "density_g_cm3": w["density_g_cm3"]}, seed=int(rng.integers(1 << 31)))
+                              "density_g_cm3": w["density_g_cm3"],
+                              **({"max_attempts": w["max_attempts"]} if "max_attempts" in w else {})},
+                      seed=int(rng.integers(1 << 31)))
     out = Atoms(symbols=wet.get_chemical_symbols(), positions=wet.positions, cell=sc.cell, pbc=sc.pbc)
     out.new_array("component", np.asarray(wet.arrays["component"]))
+    src = dict(source_ids or {})
     stamp(
         out,
         builder="nacre.structures.hero.build",
         params={k: v for k, v in p.items()},
         seed=seed,
-        source_ids=source_ids,
+        source_ids=src,
         total_charge=total,
-        notes="illustrative hero scene: hydroxylated alumina, anchored catechol oligomers, a few "
-        "Ca2+ at catecholate sites, a bridging Ca2+ under the rim of a low-contact-angle ACC cap, "
-        "dissolved carbonate for charge balance, water behind a cut-away plane",
+        notes="illustrative construction: hydroxylated alumina, anchored catechol oligomers, a few "
+        "Ca2+ at template sites" + (", an amorphous CaCO3 nucleus as a lens of flat base on the template"
+                                     if nuc else "") +
+        (", a bridging Ca2+ under its rim" if bridge_ca is not None else "") +
+        ", dissolved carbonate for charge balance, water above the template",
     )
+    out.info["drawing_choices"] = json.dumps(drawing_choices or {}, sort_keys=True)
     out.info["charge_ledger"] = json.dumps(sc.ledger)
     out.info["anchors"] = json.dumps(sc.anchors)
-    out.info["nucleus_fu_target"] = nuc["target_fu"]
-    out.info["nucleus_fu_placed"] = nuc["placed_fu"]
-    out.info["nucleus_attempts"] = nuc["attempts"]
+    if nuc:
+        out.info["nucleus_fu_target"] = nuc["target_fu"]
+        out.info["nucleus_fu_placed"] = nuc["placed_fu"]
+        out.info["nucleus_attempts"] = nuc["attempts"]
+        out.info["nucleus_lens"] = json.dumps({"caps": nuc["caps"], "z_base": round(nuc["z_base"], 6),
+                                               "volume_a3": nuc["volume_a3"]})
     out.info["bound_waters"] = json.dumps(n_bound_water)
     out.info["bridge_waters"] = int((np.asarray(out.arrays["component"]) == "bridge_water").sum() // 3)
     out.info["n_water_placed"] = int(wet.info["n_water_placed"])

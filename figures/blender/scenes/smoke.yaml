@@ -11,3 +11,6 @@ camera:
 components:
   - file: structures/preprint/smoke_interface.extxyz
     style: ball_and_stick
+drawing_choices:
+  style: ball-and-stick, atom radius 0.28 x van der Waals (ase.data), sticks 0.14 A
+  purpose: pipeline check, not a figure

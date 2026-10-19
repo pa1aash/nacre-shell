@@ -15,7 +15,7 @@ from pathlib import Path
 
 import yaml
 
-from nacre.structures import acc, assemble, evidence, hero, ion, oligomer, slab, water
+from nacre.structures import acc, assemble, evidence, hero, ion, oligomer, params_source, slab, water
 from nacre.structures.meta import OUT_DIR, write_structure
 
 CONFIG = OUT_DIR / "build.yaml"
@@ -26,7 +26,7 @@ BUILDERS = {
     "water_layer": lambda spec, built: water.build(built[spec["substrate"]], spec.get("params"),
                                                    spec.get("seed", 0)),
     "hydrated_ion": lambda spec, built: _hydrated_ion(spec),
-    "acc_cluster": lambda spec, built: acc.build(spec.get("params"), spec.get("seed", 0)),
+    "acc_cluster": lambda spec, built: _acc(spec),
     "oligomer": lambda spec, built: oligomer.build(spec.get("params"), spec.get("seed", 0)),
     "hero": lambda spec, built: _hero(spec, built),
     "assembly": lambda spec, built: assemble.build(
@@ -50,23 +50,49 @@ def _evidence_params(spec):
     return params, src
 
 
+def _acc_source():
+    g = params_source.acc_geometry()
+    return {"params": params_source.RECORD.name, "params_commit": g["params_commit"], "keys": g["keys"],
+            "sources": g["sources"], "rule": g["rule"]}
+
+
+def _acc(spec):
+    if spec.get("evidence") != "acc":
+        raise ValueError("acc_cluster needs evidence: acc (packing and C-O from the params record)")
+    return acc.build(spec.get("params"), spec.get("seed", 0), params_source.acc_geometry(),
+                     source_ids={"acc": _acc_source()})
+
+
 def _hydrated_ion(spec):
     params, src = _evidence_params(spec)
     return ion.build(params, seed=spec.get("seed", 0), source_ids=src)
 
 
+def _chain_targets(spec):
+    """Chain templates of a hero target: ``chain`` names one target or maps names to targets."""
+    ch = spec["chain"]
+    return {"default": ch} if isinstance(ch, str) else dict(ch)
+
+
+def _src(atoms):
+    v = atoms.info["source_ids"]
+    return json.loads(v) if isinstance(v, str) else v
+
+
 def _hero(spec, built):
-    slab_atoms, chain = built[spec["slab"]], built[spec["chain"]]
+    slab_atoms = built[spec["slab"]]
+    chains = {name: built[t] for name, t in _chain_targets(spec).items()}
     _, ev_src = _evidence_params({"evidence": spec.get("evidence")})
     if ev_src is None:
         raise ValueError("the hero scene needs evidence: ca_hydration for its Ca2+ shells")
-    src = {"slab": json.loads(slab_atoms.info["source_ids"]) if isinstance(slab_atoms.info["source_ids"], str)
-           else slab_atoms.info["source_ids"],
-           "chain": json.loads(chain.info["source_ids"]) if isinstance(chain.info["source_ids"], str)
-           else chain.info["source_ids"],
-           "ca_hydration": ev_src}
-    return hero.build(slab_atoms, chain, evidence.hydration_geometry(), spec.get("params"),
-                      spec.get("seed", 0), source_ids=src)
+    src = {"slab": _src(slab_atoms), "ca_hydration": ev_src}
+    for name, atoms in chains.items():
+        src["chain" if name == "default" else f"chain_{name}"] = _src(atoms)
+    if (spec.get("params") or {}).get("nucleus", {}) is not None:
+        src["acc"] = _acc_source()
+    return hero.build(slab_atoms, chains, evidence.hydration_geometry(), params_source.acc_geometry(),
+                      spec.get("params"), spec.get("seed", 0), source_ids=src,
+                      drawing_choices=spec.get("drawing_choices"))
 
 
 def current_platform():
@@ -86,7 +112,7 @@ def _deps(spec):
     if spec["builder"] == "water_layer":
         return [spec["substrate"]]
     if spec["builder"] == "hero":
-        return [spec["slab"], spec["chain"]]
+        return [spec["slab"], *_chain_targets(spec).values()]
     if spec["builder"] == "assembly":
         return [part["target"] for part in spec["parts"]]
     return []

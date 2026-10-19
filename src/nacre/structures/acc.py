@@ -2,7 +2,10 @@
 
 Ca2+ ions and rigid trigonal-planar CO3^2- units are inserted alternately at random
 positions (and random carbonate orientations) inside a sphere whose radius follows from
-``n_fu`` formula units at ``density_g_cm3``. A trial is accepted only under the
+``n_fu`` formula units at the sourced packing (N_A / V_m, key v_m_acc), with the sourced
+carbonate C-O length (key c_o_bond_length_acc); both come from
+nacre.structures.params_source and may not be typed. The structural water of ACC is
+not drawn. The minimum distances below are drawing rules (exclusion distances), not data. A trial is accepted only under the
 minimum-distance rules below; after ``attempts_per_unit`` failures the radius grows by
 ``grow`` and the final radius is recorded. The cluster is charge-neutral by construction.
 """
@@ -15,8 +18,6 @@ from nacre.structures.water import random_rotation
 
 DEFAULTS = {
     "n_fu": 8,
-    "density_g_cm3": 1.9,
-    "r_co": 1.28,
     "min_ca_ca": 3.4,
     "min_ca_c": 2.9,
     "min_ca_o": 2.3,
@@ -52,14 +53,18 @@ def _ok(new_sym, new_pos, sym, pos, p):
     return True
 
 
-def build(params=None, seed=0):
+def build(params=None, seed=0, accg=None, source_ids=None):
+    """``accg``: the sourced geometry (nacre.structures.params_source.acc_geometry)."""
     from ase import Atoms
-    from ase.data import atomic_masses, atomic_numbers
 
-    p = {**DEFAULTS, **(params or {})}
+    typed = {"density_g_cm3", "r_co"} & set(params or {})
+    if typed:
+        raise ValueError(f"{sorted(typed)} come from the params record and may not be typed")
+    if accg is None:
+        raise ValueError("acc.build needs the sourced ACC geometry (params_source.acc_geometry)")
+    p = {**DEFAULTS, **(params or {}), "fu_per_a3": accg["fu_per_a3"], "r_co": accg["r_co"]}
     rng = np.random.default_rng(seed)
-    m = sum(atomic_masses[atomic_numbers[s]] for s in ("Ca", "C", "O", "O", "O"))
-    vol = int(p["n_fu"]) * m / (p["density_g_cm3"] * 0.602214076)  # A^3
+    vol = int(p["n_fu"]) / p["fu_per_a3"]  # A^3
     radius = (3 * vol / (4 * np.pi)) ** (1 / 3)
     radius0 = radius
     c_sym, c_pos = carbonate(p["r_co"])
@@ -89,6 +94,7 @@ def build(params=None, seed=0):
         builder="nacre.structures.acc.build",
         params=p,
         seed=seed,
+        source_ids=source_ids,
         total_charge=formal_charge(sym),
         notes="anhydrous random close insertion of Ca2+ and CO3^2- in a sphere; "
         "not a simulated ACC structure",

@@ -74,9 +74,10 @@ def atom_transforms(positions, radii):
 
 
 def half_bond_transforms(p_start, p_end, radius):
-    """Half bonds from each start point to the bond midpoint."""
+    """Half bonds from each start point to the bond midpoint (radius: one value or one per bond)."""
     out = []
-    for a, b in zip(p_start, p_end):
+    radii = np.broadcast_to(np.asarray(radius, dtype=float), (len(p_start),))
+    for a, b, radius in zip(p_start, p_end, radii):
         mid = 0.5 * (np.asarray(a) + np.asarray(b))
         v = mid - a
         length = np.linalg.norm(v)

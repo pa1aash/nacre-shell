@@ -1,0 +1,6 @@
+scene: hero_a
+memory at start: System-wide memory free percentage: 46% (waited 0 min)
+wall seconds: 479
+peak resident bytes (renderer): 1298120704
+exit status: 0
+RENDERED hero_a.png scene build 18.7 s, render 367.3 s

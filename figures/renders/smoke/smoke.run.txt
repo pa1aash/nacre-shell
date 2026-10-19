@@ -1,6 +1,6 @@
 scene: smoke
-memory at start: System-wide memory free percentage: 69% (waited 0 min)
-wall seconds: 63
-peak resident bytes (renderer): 1088946176
+memory at start: System-wide memory free percentage: 54% (waited 0 min)
+wall seconds: 136
+peak resident bytes (renderer): 927956992
 exit status: 0
-RENDERED smoke.png scene build 1.0 s, render 13.1 s
+RENDERED smoke.png scene build 2.3 s, render 33.8 s

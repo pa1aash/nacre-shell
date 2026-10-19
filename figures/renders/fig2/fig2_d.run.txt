@@ -1,0 +1,6 @@
+scene: fig2_d
+memory at start: System-wide memory free percentage: 48% (waited 0 min)
+wall seconds: 316
+peak resident bytes (renderer): 1108295680
+exit status: 0
+RENDERED fig2_d.png scene build 8.3 s, render 202.8 s

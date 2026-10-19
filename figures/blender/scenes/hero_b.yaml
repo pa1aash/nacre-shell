@@ -1,0 +1,43 @@
+# Figure 1 hero, composition B: a closer crop of A on the nucleus-template contact,
+# with a shallow depth of field centred on the depth of the nucleus (its contact line in profile).
+# Illustrative construction (structures/preprint/hero_interface.extxyz). No text, labels or arrows.
+name: hero_b
+description: close crop of A on the contact line, shallow depth of field
+resolution: [1280, 720]    # below the 1600 px draft width: the 2 MB file cap (DOF partial alpha compresses poorly)
+samples: 32
+camera:
+  direction: [0.0, 1.0, -0.176]    # tan 10 degrees: looking along +y, 10 degrees down
+  up: [0.0, 0.0, 1.0]
+  margin: 1.02
+  dof: {focus: nucleus, fstop: 0.1}
+components:
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [slab]
+    clip: {box: [[8.0, 61.0], [12.5, 39.0]], seed_elements: [Al], attach: [O, H]}
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [chain]
+    bond_radius: 0.19
+    clip: {box: [[8.0, 61.0], [12.5, 41.6]], molecules: true}
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [bound, bridge, carbonate]
+    clip: {box: [[8.0, 61.0], [12.5, 41.6]], molecules: true}
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [nucleus]
+    focus: true
+    clip: {box: [[8.0, 61.0], [12.5, 41.6]], molecules: true}
+  - file: structures/preprint/hero_interface.extxyz
+    style: ball_and_stick
+    include: [water]
+    clip: {box: [[8.0, 61.0], [20.0, 39.0]], molecules: true}   # behind the plane through the lens axis (y = 20 A)
+    fade: {reference: [slab, chain, nucleus, bound, bridge], near: 2.5, far: 7.0, alpha: 0.2}
+drawing_choices:
+  style: ball-and-stick for every species, atom radius 0.28 x van der Waals (ase.data), sticks 0.14 A (template 0.19 A)
+  water_shell: water drawn only behind the plane through the lens axis and within 7 A of the slab, template, ions and nucleus; opacity 0.2 to 2.5 A, falling linearly to 0 at 7 A
+  lighting: key, fill and rim rig of rig.py, nucleus rim light, shadow catcher, ambient occlusion and depth haze (rig.py docstring)
+  mesh: spheres 24 x 12, sticks 12 segments (memory rule R10)
+  section: everything in front of the plane y = 12.5 A (7.5 A in front of the lens axis, keeping the bridging carbonate) is removed, whole molecules and ions only; the slab is cut bond-aware
+  camera: orthographic, along the surface, 10 degree tilt; depth of field f/0.1 (ortho aperture), focus on the nucleus depth

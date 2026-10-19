@@ -16,6 +16,12 @@ of build.yaml); ``generate`` gives a fresh conformer without touching the record
 Each atom carries ``catechol``: the unit index (0 at the chain end listed first in the
 SMILES, the anchoring end) for the two catechol O of a unit and their H, -1 otherwise.
 
+End group. With ``end_group: COOH`` the free C2 of the last unit carries a carboxylic
+acid (a 5,6-dihydroxyindole-2-carboxylic acid end unit, as in polydopamine- and
+eumelanin-type material), the carboxylate site of Figure 2b. Such a chain also carries
+``carboxyl``: 0 for the two carboxyl O and the acid H, -1 otherwise. Without the
+parameter the chain, its conformer key and its arrays are unchanged.
+
 No semi-empirical refinement is applied: the output must not depend on which software
 is installed on the machine. If a refinement step is added, it is requested explicitly
 through a parameter and the file records that it was applied and the pinned tool
@@ -36,24 +42,39 @@ DEFAULTS = {"n_units": 4, "force_field": "MMFF94", "ff_max_iters": 5000}
 CONFORMERS = SOURCE_DIR / "oligomer_conformers.json"
 
 
-def dhi_chain_smiles(n_units: int) -> str:
-    """SMILES of n 5,6-dihydroxyindole units linked C2 -> C7' (catechol form)."""
+END_GROUPS = {None: "", "COOH": "(C(=O)O)"}
+
+
+def _rc(k: int) -> str:
+    """SMILES ring-closure label: digits below 10, %nn from 10 on."""
+    return str(k) if k < 10 else f"%{k}"
+
+
+def dhi_chain_smiles(n_units: int, end_group=None) -> str:
+    """SMILES of n 5,6-dihydroxyindole units linked C2 -> C7' (catechol form).
+
+    ``end_group`` "COOH" puts a carboxylic acid on the free C2 of the last unit.
+    """
     if n_units < 1:
         raise ValueError("n_units must be at least 1")
-    a, b = 2 * (n_units - 1) + 1, 2 * (n_units - 1) + 2
+    if end_group not in END_GROUPS:
+        raise ValueError(f"end_group must be one of {sorted(k for k in END_GROUPS if k)}")
+    end = END_GROUPS[end_group]
+    a, b = _rc(2 * (n_units - 1) + 1), _rc(2 * (n_units - 1) + 2)
     # Last unit, entered through its C7 (or the whole molecule when n_units == 1).
     if n_units == 1:
-        return "Oc1cc2cc[nH]c2cc1O"
-    smi = f"c{a}c(O)c(O)cc{b}cc[nH]c{a}{b}"
+        return f"Oc1cc2cc{end}[nH]c2cc1O"
+    smi = f"c{a}c(O)c(O)cc{b}cc{end}[nH]c{a}{b}"
     for k in range(n_units - 2, 0, -1):
-        a, b = 2 * k + 1, 2 * k + 2
+        a, b = _rc(2 * k + 1), _rc(2 * k + 2)
         smi = f"c{a}c(O)c(O)cc{b}cc(-{smi})[nH]c{a}{b}"
     return f"Oc1cc2cc(-{smi})[nH]c2cc1O"
 
 
 def conformer_key(params, seed) -> str:
     p = {**DEFAULTS, **(params or {})}
-    return f"n{int(p['n_units'])}_{p['force_field']}_it{int(p['ff_max_iters'])}_seed{int(seed)}"
+    end = f"_{p['end_group'].lower()}" if p.get("end_group") else ""
+    return f"n{int(p['n_units'])}{end}_{p['force_field']}_it{int(p['ff_max_iters'])}_seed{int(seed)}"
 
 
 def _catechol_units(mol):
@@ -73,13 +94,27 @@ def _catechol_units(mol):
     return unit
 
 
+def _carboxyl_atoms(mol):
+    """Per-atom 0 for the carboxyl O pair and the acid H, -1 elsewhere."""
+    from rdkit import Chem
+
+    mark = np.full(mol.GetNumAtoms(), -1, dtype=int)
+    for _, o1, o2 in mol.GetSubstructMatches(Chem.MolFromSmarts("C(=O)[OX2H]")):
+        for o in (o1, o2):
+            mark[o] = 0
+            for nb in mol.GetAtomWithIdx(o).GetNeighbors():
+                if nb.GetSymbol() == "H":
+                    mark[nb.GetIdx()] = 0
+    return mark
+
+
 def generate(params=None, seed=0) -> dict:
     """Embed and relax a fresh conformer (platform-dependent; see the module docstring)."""
     from rdkit import Chem
     from rdkit.Chem import AllChem
 
     p = {**DEFAULTS, **(params or {})}
-    smiles = dhi_chain_smiles(int(p["n_units"]))
+    smiles = dhi_chain_smiles(int(p["n_units"]), p.get("end_group"))
     mol = Chem.AddHs(Chem.MolFromSmiles(smiles))
     ep = AllChem.ETKDGv3()
     ep.randomSeed = int(seed)
@@ -91,7 +126,9 @@ def generate(params=None, seed=0) -> dict:
     converged = ff.Minimize(maxIts=int(p["ff_max_iters"])) == 0
     pos = mol.GetConformer().GetPositions()
     pos = np.round(pos - pos.mean(axis=0), 6) + 0.0
+    extra = {"carboxyl": _carboxyl_atoms(mol).tolist()} if p.get("end_group") == "COOH" else {}
     return {
+        **extra,
         "key": conformer_key(p, seed),
         "params": p,
         "seed": int(seed),
@@ -117,6 +154,8 @@ def to_atoms(rec):
 
     atoms = Atoms(symbols=rec["symbols"], positions=np.array(rec["positions"], dtype=float), pbc=False)
     atoms.new_array("catechol", np.array(rec["catechol"], dtype=int))
+    if "carboxyl" in rec:
+        atoms.new_array("carboxyl", np.array(rec["carboxyl"], dtype=int))
     return atoms
 
 

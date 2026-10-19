@@ -1,0 +1,105 @@
+{
+ "blob": "cc68303ff6cad6d45b77bfc776e28e210f8c2553",
+ "commit": "227d997bb6559cdf09cd892651da558db51e475c",
+ "keys": {
+  "c_o_bond_length_acc": {
+   "best_grade": "B",
+   "conditions": "amorphous calcium carbonate, structure model fitted to scattering data (Mg-ACC) and first pair-distribution peak",
+   "correlation_group": null,
+   "flags": [],
+   "method": "U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)",
+   "notes": "N16 (W7 drawing parameter) for the ACC framing; one fitted model (Mg-ACC) and one pair-distribution peak.",
+   "prior": {
+    "family": "uniform",
+    "high": 1.32e-10,
+    "low": 1.27e-10
+   },
+   "range": {
+    "max": 1.32e-10,
+    "min": 1.27e-10
+   },
+   "regimes": [
+    "R-slurry"
+   ],
+   "role": "primary",
+   "rule": "U1",
+   "sources": [
+    "TM-032",
+    "TM-033"
+   ],
+   "status": "sourced",
+   "symbol": "d_CO",
+   "transform": "none",
+   "unit": "m",
+   "value": 1.295e-10
+  },
+  "rho_acc": {
+   "best_grade": "A",
+   "conditions": "synthetic Mg-free ACC, dried powder, gas pycnometry, CaCO3.nH2O with n = 1.1 and 0.5",
+   "correlation_group": null,
+   "flags": [
+    "single_source"
+   ],
+   "method": "not concordant within 2 combined standard uncertainties, so U1; U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)",
+   "notes": "N16 (W7 drawing parameter). Mass density of the ACC phase including its structural water; the two rows are two hydration states of one paper. Mg-ACC (TM-027), biogenic ACC from a scattering fit (TM-028), a force-field model (TM-029) and SAXS of wet colloids (TC-054, TC-055) are comparators. Comparators (not admitted, E2): TG-017, TM-027, TM-028, TM-029, TC-054, TC-055.",
+   "prior": {
+    "family": "uniform",
+    "high": 2432.0,
+    "low": 2278.0
+   },
+   "range": {
+    "max": 2432.0,
+    "min": 2278.0
+   },
+   "regimes": [
+    "R-slurry"
+   ],
+   "role": "primary",
+   "rule": "U1",
+   "sources": [
+    "TG-013",
+    "TG-014"
+   ],
+   "status": "single-source",
+   "symbol": "rho_ACC",
+   "transform": "none",
+   "unit": "kg m^-3",
+   "value": 2355.0
+  },
+  "v_m_acc": {
+   "best_grade": "C",
+   "conditions": "dried ACC powders by pycnometry, structural water included (CaCO3.1.1H2O and CaCO3.0.5H2O)",
+   "correlation_group": null,
+   "flags": [
+    "single_source"
+   ],
+   "method": "U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)",
+   "notes": "Two hydration states from one paper (Jensen 2018). In situ SAXS density 1.62 g cm^-3 of wet colloidal ACC (TC-054, TC-055) is far lower; that gap is in lit/conflicts.md. The molar volume per CaCO3 includes structural water. Comparators (not admitted, E2): TC-054, TC-055, TG-017.",
+   "prior": {
+    "family": "uniform",
+    "high": 5.254e-05,
+    "low": 4.493e-05
+   },
+   "range": {
+    "max": 5.254e-05,
+    "min": 4.493e-05
+   },
+   "regimes": [
+    "R-slurry"
+   ],
+   "role": "primary",
+   "rule": "U1",
+   "sources": [
+    "TG-015",
+    "TG-016"
+   ],
+   "status": "single-source",
+   "symbol": "V_m",
+   "transform": "none",
+   "unit": "m^3 mol^-1",
+   "value": 4.8735e-05
+  }
+ },
+ "ref": "origin/preprint/p0-w1",
+ "source": "lane p0-w1 lit/params.yaml"
+}
