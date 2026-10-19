@@ -18,8 +18,10 @@ What is checked
      symbolically from the symbol intervals where possible; a statement that cannot be
      proven symbolically is checked on an exact rational grid and labelled "grid".
   8. Sign-flip tests: SF1 (water displacement), SF2 (the channel through which Delta_G_seq
-     reaches the barrier, registered against the local-ideal alternative) and SF3 (lane note
-     N3: the direction in which gamma_nl moves f, for both signs of gamma_sl - gamma_sn).
+     reaches the barrier, registered against the local-ideal alternative), SF3 (lane note
+     N3: the direction in which gamma_nl moves f, for both signs of gamma_sl - gamma_sn) and
+     SF4 (D27: the admissible set gamma_sl >= 0 is an upper set in Delta_G_seq, and the
+     clipped and floored alternatives put a non-existent interface on the bad side of C3 (a)).
   9. The no-double-counting condition of contract v2: every template input enters the theta
      channel only, the Omega channel holds bulk inputs only, the Ca2+ binding inputs reach the
      composite only through Delta_gamma_ads, and the named demonstrations reduce to the
@@ -30,10 +32,14 @@ What is checked
      and has the unit of its quantity, every registration constant has a params key, every
      params key appears in the file's key table, a non-gating link is a descriptor with no
      verdict test, and the study rule and deletion test name only gating links; each C5 R-cell
-     margin route names the params path its test uses, and a route formula has its margin's unit.
+     margin route names the params path its test uses, and a route formula has its margin's unit;
+     the admissibility rule (D27) holds a contract quantity against an edge of its unit, and an
+     analog route names only contract functions and registered params symbols.
  12. theory/ignorance_priors.md: its fenced `ignorance` block parses, every bound has the unit of
      its quantity, and the branch masses of the gamma_sn prior are the exact integrals of the
-     uniform density over the three Young branches and sum to one.
+     uniform density over the three Young branches and sum to one; the favourable (C3 (a)) mass
+     is the integral up to its cut, and the admissibility condition has the unit of an energy per
+     area.
  13. No literature number in theory/** sources (decimals, exponent notation or integers of
      three or more digits outside an allowlist).
 
@@ -204,6 +210,10 @@ class Context:
                 rep[s] = lo + u
             elif lo == -sp.oo and hi == sp.oo:
                 rep[s] = sp.Symbol(s.name + "_d", real=True)
+            elif lo == -sp.oo:
+                # a half-line below a finite end, for example a binding free energy below zero
+                u = sp.Symbol(s.name + "_u", positive=True) if hi_open else sp.Symbol(s.name + "_u", nonnegative=True)
+                rep[s] = hi - u
             else:
                 t = sp.Symbol(s.name + "_d", real=True)
                 rep[s] = t
@@ -485,6 +495,8 @@ def check_sign_flips(ctx, contract, rep):
             _sf_channel(ctx, sf, rep)
         elif kind == "gamma_nl":
             _sf_gamma_nl(ctx, sf, rep)
+        elif kind == "admissibility":
+            _sf_admissibility(ctx, sf, rep)
         else:
             rep.add(False, "sign-flip", sf["id"], "unknown kind %r" % kind)
 
@@ -588,6 +600,33 @@ def _sf_gamma_nl(ctx, sf, rep):
     ok = res[0][0] < res[0][1] and res[1][0] > res[1][1]
     rep.add(ok, "sign-flip", sid, "witness f at gamma_nl = %s: excess %s -> %s; excess %s -> %s" % (
         w["gamma_nl"], w["excess"][0], res[0], w["excess"][1], res[1]))
+
+
+def _sf_admissibility(ctx, sf, rep):
+    """SF4 (D27): the admissible set gamma_sl >= 0 is an upper set in Delta_G_seq, so conditioning on it
+    removes the strongest binders only and cannot reverse SF2; the rejected forms put a draw whose
+    interface does not exist on the bad side of C3 (a)."""
+    sid, par = sf["id"], ctx.syms[sf["parameter"]]
+    g = ctx.parse("@" + sf["function"])
+    dg = sp.diff(g, par)
+    rep.add(zero(dg - ctx.parse(sf["dgamma_equals"])), "sign-flip", sid,
+            "d%s/d%s = %s" % (sf["function"], sf["parameter"], sf["dgamma_equals"]))
+    ok, how = prove_sign(ctx, dg, "positive")
+    rep.add(ok, "sign-flip", sid, "the admissible set is an upper set in %s (derivative positive, %s)" % (sf["parameter"], how))
+    lim = sp.limit(g, par, -sp.oo)
+    rep.add(lim == ctx.parse(str(sf["limit_strong_binding"])), "sign-flip", sid,
+            "%s -> %s as %s -> -oo: every gamma_sl0 is overshot by strong enough binding" % (sf["function"], lim, sf["parameter"]))
+    w = sf["witness"]
+    vals = ctx.subs_map(w["values"])
+    gw = g.subs(vals)
+    weak, strong = (sp.N(gw.subs(par, ctx.parse(str(w[k]))), 30) for k in ("weak", "strong"))
+    sn = (ctx.syms["gamma_sn0"] + ctx.syms["Delta_gamma_w"]).subs(vals)
+    nl = ctx.syms["gamma_nl"].subs(vals)
+    cos = lambda gsl: max(-1, min(1, (gsl - sn) / nl))
+    f_clip, f_floor = sp.nsimplify(_fcos(cos(strong))), sp.nsimplify(_fcos(cos(sp.Integer(0))))
+    ok = weak >= 0 and strong < 0 and f_clip == 1 and sp.Rational(1, 2) < f_floor < 1
+    rep.add(ok, "sign-flip", sid, "witness gamma_sl %.4g (weak, admitted), %.4g (strong, refused); rejected forms give "
+            "f = %.4g (clipped) and %.4g (floored) for a refused draw" % (float(weak), float(strong), float(f_clip), float(f_floor)))
 
 
 def _resolve(ctx, text, channels, keep=()):
@@ -694,7 +733,8 @@ def check_thresholds(ctx, contract, rep):
     def check_edge(link, tid, quantity, edge, params):
         e = ctx.parse(str(edge))
         try:
-            dq, de = qdim(quantity), dimension(e, ctx.dims)
+            dq = qdim(quantity)
+            de = dq if e == 0 else dimension(e, ctx.dims)  # a zero edge carries the unit of its quantity
         except DimError as exc:
             rep.add(False, "thresholds", "%s %s" % (link, tid), "%s %s: %s" % (quantity, edge, exc))
             return
@@ -784,6 +824,34 @@ def check_thresholds(ctx, contract, rep):
                         ok = False
             rep.add(bool(ok) and p0.get("both_reported") is True, "thresholds", "%s P0 inputs" % link,
                     "registered route %s (%s); side by side %s" % (reg["quantity"], reg.get("verdict"), sorted(p0["side_by_side"])))
+        ar = spec.get("analog_route")
+        if ar:
+            # D27 (A3): an analog solution constant reaches Delta_G_seq only through named contract functions
+            fns = [ar[k]["function"] for k in ("Delta_G_site", "cycle") if k in ar] + [ar.get("x_bind")]
+            bad = [n for n in fns if n not in fnames]
+            prm = {}
+            for k in ("Delta_G_site", "cycle"):
+                prm.update(ar.get(k, {}).get("params") or {})
+            bad += [k for k in prm if k not in ctx.entries]
+            keys.update(prm.values())
+            rep.add(not bad, "thresholds", "%s analog route" % link,
+                    "functions %s; params %s%s" % (fns, sorted(prm), "" if not bad else "; unknown %s" % bad))
+    adm = dec.get("admissibility")
+    if adm:
+        # D27: the admissibility condition is a contract quantity held against an edge of its own unit
+        cond = adm["condition"]
+        if cond["quantity"] in fnames:
+            check_edge("decision", "admissibility", cond["quantity"], cond["edge"], adm.get("params"))
+        else:
+            rep.add(False, "thresholds", "decision admissibility", "unknown quantity %s" % cond["quantity"])
+        bad = [k for k in (adm.get("params") or {}) if k not in ctx.entries]
+        bad += [k for k in adm.get("joint_over", []) if k not in ctx.entries]
+        keys.update((adm.get("params") or {}).values())
+        need = ("draws_outside", "verdicts", "report", "retained_mass_rule", "unrestricted")
+        miss = [k for k in need if k not in adm]
+        rep.add(not bad and not miss, "thresholds", "admissibility rule",
+                "joint over %s; draws outside %s%s" % (adm.get("joint_over"), adm.get("draws_outside"),
+                                                       "" if not (bad or miss) else "; unknown %s, missing %s" % (bad, miss)))
     keys.add(dec["credible_level"]["params"])
     keys.update(((dec.get("drying_states") or {}).get("params") or {}).values())
     keys.update((doc["study"]["deletion_test"].get("params") or {}).values())
@@ -877,6 +945,22 @@ def check_ignorance(ctx, rep):
             "integral of the density over its Young branch" % br["span"])
     ok = zero(ctx.parse(br["cuts"]["non"]) - ctx.parse(br["cuts"]["complete"]) - 2 * ctx.syms["gamma_nl"])
     rep.add(ok, "ignorance", "partial-wetting width", "b - a = 2 gamma_nl > 0")
+    fav = br.get("favourable")
+    if fav:
+        # D27 (A5): the C3 (a) good side of the gamma_sn axis is [0, gamma_sl - m_cos gamma_nl]
+        cut = ctx.parse(fav["cut"])
+        ok = (dimension(cut, ctx.dims) == ctx.dims["gamma_sn"]
+              and zero(ctx.parse(fav["mass_interior"]) - sp.integrate(1 / G, (u, 0, cut))))
+        rep.add(ok, "ignorance", "favourable mass", "gamma_sn uniform on [0, %s]: mass of gamma_sn <= %s" % (br["span"], fav["cut"]))
+    adm = doc.get("admissibility")
+    if adm:
+        try:
+            ok = dimension(ctx.parse(adm["condition"]["expr"]), ctx.dims) == parse_unit("J m^-2")
+        except (DimError, KeyError) as exc:
+            ok = False
+        ok = ok and adm.get("draws_outside", "").startswith("refused") and "retained_mass" in adm
+        rep.add(ok, "ignorance", "admissibility", "%s %s 0; draws outside %s" % (
+            adm["condition"].get("expr"), adm["condition"].get("relation"), adm.get("draws_outside")))
     ss = doc["single_source_binding"]["widen_half_width_to_at_least"]
     ok = (dimension(ctx.parse(ss["free_energy"]), ctx.dims) == parse_unit("J mol^-1")
           and dimension(ctx.parse(ss["log10_constant"]), ctx.dims) == DIMLESS)
