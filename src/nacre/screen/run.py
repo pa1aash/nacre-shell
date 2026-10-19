@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from nacre.screen import chain, decision, gaps, params_adapter, propagate, shapley, sobol, study, summary
+from nacre.screen import admissibility, chain, decision, gaps, params_adapter, propagate, shapley, sobol, study, summary
 from nacre.screen import thresholds as thr
 
 CONFIG = Path("configs") / "preprint" / "screen.yaml"
@@ -33,6 +33,8 @@ SCREEN_DIR = Path("results") / "preprint" / "screen"
 DRYRUN_DIR = SCREEN_DIR / "dryrun"
 LEDGER = Path("jobs") / "ledger" / "p0-w4.jsonl"
 CHECKPOINT_TAG = "p0-cp3"
+#: Session that writes production documents (ledger lines and provenance).
+SESSION = "P0-W4.3b"
 #: Mass groups that count refused draws (activity model, geometric bounds), not clipped boundaries.
 REFUSAL_GROUPS = ("speciation", "geometry")
 
@@ -93,6 +95,8 @@ def link_inputs(link, symbols):
     s = set(symbols)
     d = chain.derived_symbols(s)
     seq = list(chain.SEQ_CYCLE_INPUTS) if d >= set(chain.SEQ_CYCLE_INPUTS) else ["Delta_G_seq"]
+    if chain.SEQ_CYCLE_2H in s and d >= set(chain.SEQ_CYCLE_INPUTS):
+        seq.append(chain.SEQ_CYCLE_2H)                      # the two-proton cycle of the analog route (AM3)
     seq = [k for k in dict.fromkeys(seq + list(chain.SEQ_LOCAL_INPUTS))]
     if link == "anchor":
         base = list(chain.PMF_INPUTS) if d >= set(chain.PMF_INPUTS) else list(chain.ANCHOR_INPUTS)
@@ -118,9 +122,12 @@ def link_joint(joint, link):
     return joint.marginal([joint.names[i] for i in idx])
 
 
-def link_model(link):
-    """Model of one link on the sensitivity scale of each quantity (chain.Output.scale)."""
-    return chain.sensitivity_model(link)
+def link_model(link, admissible=False):
+    """Model of one link on the sensitivity scale of each quantity (chain.Output.scale).
+
+    admissible: the nucleate link is analysed on the admitted draws (AM3, sensitivity).
+    """
+    return chain.sensitivity_model(link, admissible=admissible)
 
 
 def _round_quantiles(levels):
@@ -128,7 +135,7 @@ def _round_quantiles(levels):
 
 
 def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None, independence=False,
-               return_outputs=False):
+               return_outputs=False, admissible=None):
     """Results entry of one regime (schema $defs/regime). rp: params_adapter.RegimePriors.
 
     With return_outputs the propagated draws ({link: {quantity: array}}) are returned too,
@@ -136,12 +143,22 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
     """
     joint = rp.joint.independent() if independence else rp.joint
     pc, sc, hc = cfg["propagation"], cfg["sobol"], cfg["shapley"]
+    if admissible is None:
+        admissible = bool((cfg.get("registrations") or {}).get("admissibility"))
     links = links or chain.evaluable_links(joint.symbols)
     mc_seq, sens_seq = np.random.SeedSequence(seed).spawn(2)
     outputs, masses = propagate.propagate_chain(chain.evaluate, joint, pc["draws_per_regime"],
                                                 int(mc_seq.generate_state(1)[0]), pc["chunk"])
     levels = _round_quantiles(pc["quantiles"])
     out_links, convergences, designs = {}, [], []
+    adm_rec = None
+    if admissible and "nucleate" in outputs:
+        keep = chain.admissible_mask(outputs)
+        ev = np.isfinite(np.asarray(outputs["nucleate"][chain.ADMISSIBILITY_QUANTITY], dtype=float))
+        adm_rec = {"label": admissibility.SENSITIVITY_NOTE, "M_adm": float(keep.sum() / ev.sum()) if ev.any() else None,
+                   "n_evaluable": int(ev.sum()), "n_refused": int(ev.sum() - keep.sum())}
+        outputs = dict(outputs, nucleate={q: np.where(keep, np.asarray(v, dtype=float), np.nan)
+                                          for q, v in outputs["nucleate"].items()})
     check = dependence_check if dependence_check is not None else cfg.get("dependence_check", False)
     agreement = {}
     for link, link_seq in zip(links, sens_seq.spawn(len(links))):
@@ -156,7 +173,7 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
         sub = link_joint(joint, link)
         s_seq, h_seq, d_seq = link_seq.spawn(3)
         idx, design, conv = sobol.size_and_verify(
-            link_model(link), sub, names, sc["target_ci_half_width"], int(s_seq.generate_state(1)[0]),
+            link_model(link, admissible), sub, names, sc["target_ci_half_width"], int(s_seq.generate_state(1)[0]),
             pilot=sc["pilot_base"], n_bootstrap=sc["bootstrap"], confidence=sc["confidence"], key="symbol",
             chunk=pc["chunk"], max_base=sc["max_base"], on_cap="cap", scope=sc.get("target_scope", "all"),
             top_k=int(sc.get("top_k", 3)))
@@ -165,12 +182,18 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
                   n_bootstrap=hc["bootstrap"], confidence=hc["confidence"], chunk=pc["chunk"],
                   design="subsets" if players <= hc["max_players_for_subsets"] else "permutations",
                   n_perm=hc["n_perm"])
-        sh, sh_design = shapley.shapley_effects(link_model(link), sub, names, rng=np.random.default_rng(h_seq), **kw)
+        sh, sh_design = shapley.shapley_effects(link_model(link, admissible), sub, names, rng=np.random.default_rng(h_seq),
+                                                **kw)
+        if admissible and link == "nucleate":
+            # AM3: on the admitted draws; the restriction makes the inputs dependent, so the Shapley effects
+            # (rejection inside the double loop) carry the ranking and the Sobol indices are approximate
+            sh_design = dict(sh_design, admissibility=admissibility.SENSITIVITY_NOTE)
+            design = dict(design, method="%s; %s" % (design["method"], admissibility.SENSITIVITY_NOTE))
         entry = {"quantities": quantities, "sobol": idx, "shapley": sh, "threshold_evaluation": None,
                  "sensitivity_scale": {q: meta[q].scale for q in names}, "sobol_design": design,
                  "convergence": conv, "shapley_design": sh_design}
         if check and not sub.is_independent:
-            rec, _, _ = shapley.dependence_check(link_model(link), sub, names, np.random.default_rng(d_seq), **kw)
+            rec, _, _ = shapley.dependence_check(link_model(link, admissible), sub, names, np.random.default_rng(d_seq), **kw)
             agreement[link] = rec["rank_agreement"]
         out_links[link] = entry
         convergences.append(conv)
@@ -187,6 +210,7 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
         "refused": {lk: {q: m.as_dict() for q, m in d.items()} for lk, d in masses.items()
                     if lk in REFUSAL_GROUPS} or None,
         "dependence": joint.dependence_record(),
+        "admissibility": adm_rec,
         "dependence_check": {"alternative": "independent", "rank_agreement": agreement} if agreement else None,
         "convergence": {
             "target_ci_half_width": float(sc["target_ci_half_width"]),
@@ -307,7 +331,12 @@ def _provenance(root, cfg, cfg_path, rp_list, thresholds_path, dry):
     th = Path(root) / thresholds_path
     th_source = thr.split_copy(th.read_text(encoding="utf-8"))[0] if th.exists() else None
     gt = Path(root) / gaps.GAP_TABLE
+    am = [a for a in (gaps.load(gt).get("amendments") or []) if a.get("w3_admissibility_sha")] if gt.exists() else []
+    adm_cfg = (cfg.get("registrations") or {}).get("admissibility")
     return {"git_sha": sha, "git_dirty": dirty,
+            "session": SESSION,
+            "admissibility_sha": am[-1]["w3_admissibility_sha"] if am and adm_cfg else None,
+            "admissibility_rule": ("%s (gap table %s)" % (adm_cfg.get("rule"), am[-1]["id"])) if am and adm_cfg else None,
             "config_hash": summary.config_hash({"screen": cfg, "regimes": [r.regime for r in rp_list]}),
             "config_file": _rel(root, cfg_path), "config_file_hash": _sha256_file(cfg_path),
             "prior_file": _rel(root, prior_path), "prior_file_hash": rp_list[0].sha256,
@@ -348,13 +377,16 @@ def production_guard(root, rp_list, out_path, thresholds_path=THRESHOLDS):
         raise ProductionRefused("tag %s is missing: production screens need cp1, cp2 and cp3" % CHECKPOINT_TAG)
     if _inside(out_path, root / DRYRUN_DIR) or not _inside(out_path, root / SCREEN_DIR):
         raise ProductionRefused("production output belongs under %s, outside %s" % (SCREEN_DIR, DRYRUN_DIR))
+    if Path(out_path).exists():
+        raise ProductionRefused("%s exists: a production document is never overwritten (use a new run name)"
+                                % _rel(root, Path(out_path)))
 
 
 def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_run=True, allow_mock=False,
         config_path=CONFIG, independence=False, dependence_check=None, overrides=None, stability_path=None,
         cell_paths=None, controls=None, framing=None, prior_set="table", truncation=True, decide=True,
         decision_draws=None, truncation_sensitivity=False, conventions=None, bind=None, sensitivity=True,
-        run_label=None):
+        run_label=None, mechanism=False):
     """Run the screen and write the results document; returns (path, doc).
 
     The sensitivity analysis runs at the primary framing and the central design point. The
@@ -373,7 +405,9 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
     m_cos), labelled in the provenance; bind: {symbol: table key} overrides of the R-slurry
     bindings (a labelled sensitivity). sensitivity: False skips the Sobol and Shapley analysis
     (sweep runs). The decision layer runs under the sizing rule (study.evaluate_sized); the
-    sensitivity propagation then uses the sized draws per state.
+    sensitivity propagation then uses the sized draws per state. mechanism: write the admitted
+    versus refused draws of the admissibility rule per design point, framing and state under
+    extensions.p0-w4 (the report-only diagnostics of P0-W4.3b).
     """
     root = Path(root)
     out_path = Path(out_path)
@@ -400,6 +434,7 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
     seeds = np.random.SeedSequence(cfg["propagation"]["seed"]).spawn(len(params_adapter.REGIMES) + 1)
     seed_of = {r: int(s.generate_state(1)[0]) for r, s in zip(params_adapter.REGIMES, seeds)}
     claims = study_doc = None
+    mech = None
     if thresholds is not None and decide and "R-slurry" in regimes:
         rule = thresholds["rule"]
         resolver = decision.Resolver.from_table(yaml.safe_load(Path(params_path).read_text(encoding="utf-8")))
@@ -424,6 +459,7 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
             c2, s2, _ = study.evaluate(rule, resolver, params_path, cfg, allow_mock, prior_set, False, **kw)
             trunc["untruncated_sensitivity"] = changed_verdicts(claims, study_doc, c2, s2)
         study_doc["truncation"] = trunc or None
+        mech = extra.get("mechanism") if mechanism else None
         study_doc["gaps"] = _gaps(claims, extra)
         study_doc["overrides"] = {"conventions": conventions, "bind": bind, "independence": bool(independence)} \
             if (conventions or bind or independence) else None
@@ -448,11 +484,15 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
     prov["overrides"] = {"conventions": conventions, "bind": bind, "independence": bool(independence),
                          "truncation": bool(truncation)} if (conventions or bind or independence or not truncation) else None
     prov["run_label"] = run_label
+    ext = {"p0-w4": {"admissibility_mechanism": {
+        "label": "report-only diagnostic of the admissibility rule (D27): quantiles (5, 50, 95 %) of the admitted and "
+                 "refused draws per design point, framing and state; gamma_sl0 = gamma_sl_insitu + Pi_ads",
+        "by_design": mech}}} if mech is not None else None
     doc = summary.build(regimes_out or None, prov, mock=dry_run or any(rp.mock for rp in rp_list), claims=claims,
-                        study=study_doc)
+                        study=study_doc, extensions=ext)
     path = summary.write(doc, out_path)
     if not dry_run:
-        line = {"kind": "screen", "session": "P0-W4.3", "git_sha": prov["git_sha"], "git_dirty": prov["git_dirty"],
+        line = {"kind": "screen", "session": SESSION, "git_sha": prov["git_sha"], "git_dirty": prov["git_dirty"],
                 "config": prov["config_file"], "config_hash": prov["config_hash"],
                 "params_hash": prov["prior_file_hash"], "thresholds_hash": prov["thresholds_hash"],
                 "contract_sha": prov["contract_sha"], "mock": False,

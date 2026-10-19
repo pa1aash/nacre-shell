@@ -129,6 +129,12 @@ def read_table(path, allow_mock=False):
     return doc, "sha256:" + hashlib.sha256(raw).hexdigest()
 
 
+#: Contract symbols that the parameter table records under an older symbol (a name binding, no value):
+#: contract v4 names the second catechol dissociation constant pKa2; W1's key pka2_catechol carries
+#: the symbol pKa (configs/preprint/gap_resolution.yaml AM4, binding_corrections.pKa2).
+TABLE_SYMBOL_ALIASES = {"pKa2": ("pKa",)}
+
+
 def regime_priors(path, regime, allow_mock=False, bindings=None, absent="refuse", truncate=None, extra=()):
     """Joint prior of one regime's inputs from the parameter table at path.
 
@@ -157,7 +163,7 @@ def regime_priors(path, regime, allow_mock=False, bindings=None, absent="refuse"
                 unsampled[sym] = "gap: bound key %r is not in the table" % k
         bindings = {sym: k for sym, k in bindings.items() if k in doc["params"]}
         wrong = sorted("%s -> %s (%s)" % (sym, k, doc["params"][k].get("symbol")) for sym, k in bindings.items()
-                       if doc["params"][k].get("symbol") != sym)
+                       if doc["params"][k].get("symbol") not in (sym,) + TABLE_SYMBOL_ALIASES.get(sym, ()))
         if wrong:
             raise PriorFileError("%s: binding symbol differs from the table: %s" % (path, wrong))
         selected = [(k, doc["params"][k]) for k in dict.fromkeys(bindings.values())]
@@ -170,6 +176,9 @@ def regime_priors(path, regime, allow_mock=False, bindings=None, absent="refuse"
         symbol = entry.get("symbol")
         if not isinstance(symbol, str) or not symbol:
             raise PriorFileError("%s: 'symbol' is required" % where)
+        bound = [sym for sym, k in (bindings or {}).items() if k == key and symbol in TABLE_SYMBOL_ALIASES.get(sym, ())]
+        if bound:
+            symbol = bound[0]                     # the contract symbol of an aliased key (TABLE_SYMBOL_ALIASES)
         prior = entry.get("prior")
         if not isinstance(prior, dict):
             raise PriorFileError("%s: 'prior' must be a mapping" % where)

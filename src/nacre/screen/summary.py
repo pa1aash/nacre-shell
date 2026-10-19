@@ -34,11 +34,11 @@ def provenance(root, config, prior_set, contract_sha=None):
             "prior_file": rel, "prior_file_hash": prior_set.sha256, "contract_sha": contract_sha}
 
 
-SCHEMA_VERSION = "3"
+SCHEMA_VERSION = "4"
 
 
-def build(regimes, prov, mock, stability=None, required_precision=None, claims=None, study=None):
-    """Assemble a results document (schema v3); regimes and/or stability must be given."""
+def build(regimes, prov, mock, stability=None, required_precision=None, claims=None, study=None, extensions=None):
+    """Assemble a results document (schema v4); regimes and/or stability must be given."""
     doc = {"schema_version": SCHEMA_VERSION, "mock": bool(mock),
            "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "provenance": prov}
     if regimes is not None:
@@ -51,6 +51,8 @@ def build(regimes, prov, mock, stability=None, required_precision=None, claims=N
         doc["claims"] = claims
     if study is not None:
         doc["study"] = study
+    if extensions:
+        doc["extensions"] = extensions
     return doc
 
 

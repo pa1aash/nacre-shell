@@ -20,9 +20,10 @@ Before the links (derived inputs, contract v3 and the cp3 gap policy)
              term only when r_Ca is bound, the labelled analog sensitivity); a draw whose interval
              is empty is refused and counted. The analog caps of Gamma_s (rho_L d_layer, and
              1/(2 sqrt(3) N_A r_Ca^2) with r_Ca) flag draws and never refuse them (4a, analog_bounds).
-  analog     Delta_G_site from a solution binding constant K of the deprotonated site,
-             -R T (ln K + ln(c_max / c_std)) with c_max = Gamma_s / delta_s, so that the Langmuir
-             odds are K c_bulk / c_std over the deprotonation factor; gamma_pw = gamma_sl0
+  analog     Delta_G_site from a solution binding constant K of the catecholate (contract v4
+             Delta_G_site_from_K: -R T ln(K Gamma_s / (delta_s c_std)), the site-volume standard
+             state); with pKa2 bound the cycle charges both protons (Delta_G_seq_cycle_2H, thresholds
+             C2.analog_route, AM3), so that the Langmuir odds are x_bind_K; gamma_pw = gamma_sl0
              (ignorance_priors.md 1d). configs/preprint/gap_resolution.yaml registers each step.
 
 Links
@@ -31,7 +32,8 @@ Links
              gamma_ow + gamma_pw - gamma_op is the comparator (W_adh_wet_comparator), and a
              sampled W_adh_wet is a flagged analog (W_adh_wet_analog), both run beside it.
   sequester  C2: Ca2+ transfer free energy bulk -> binding layer Delta_G_seq (from the
-             site free energy and the protonation correction, or sampled directly), the
+             site free energy and the protonation correction of one proton, or of two protons
+             when pKa2 is bound (contract v4), or sampled directly), the
              enrichment factor E_enr and the Langmuir local concentration c_local (C2
              reporting quantities, which never feed Omega under contract v2), the site
              occupancy Theta, the Gibbs surface excess Gamma_Ca and the adsorption change of
@@ -44,7 +46,12 @@ Links
              (no template) and the heterogeneous barrier on the template, f(theta)
              Delta_G*_hom(Omega_bulk); the critical radius. With J0_het, t_proc and N_req in
              the table also the largest accessible barrier B_acc, the margin B_acc - DG_het
-             and the expected areal density of nuclei N_nuc.
+             and the expected areal density of nuclei N_nuc. With gamma_sl0 also the quantities of
+             the admissibility rule (contract v4, D27): Pi_ads, the floor gamma_sl0 - Pi_ads_max (gamma_sl0
+             where Delta_G_seq >= 0: such a template lowers nothing) and the validity ratio r_ads.
+             The chain itself never refuses an inadmissible gamma_sl: the restriction is applied by
+             the decision layer over the registered states (nacre.screen.admissibility), and by
+             sensitivity_model(..., admissible=True) for the sensitivity analysis.
 """
 from dataclasses import dataclass
 
@@ -52,7 +59,7 @@ import numpy as np
 
 from nacre.physics import adhesion, conformality, nucleation, sequestration, speciation, template, wetting
 from nacre.physics import supersaturation as sat
-from nacre.physics.constants import AVOGADRO, BOLTZMANN, GAS_CONSTANT
+from nacre.physics.constants import AVOGADRO, BOLTZMANN, GAS_CONSTANT, STANDARD_CONCENTRATION
 from nacre.screen.boundary import EMPTY, RefusedMass, clip_cos_theta
 
 
@@ -101,6 +108,9 @@ OUTPUTS = {
     "nucleate": {
         "Omega_bulk": Output("Omega_bulk", "1", "log10"),
         "gamma_sl_insitu": Output("gamma_sl (at the regime activities)", "J m^-2"),
+        "Pi_ads": Output("Pi_ads = -Delta_gamma_ads (lowering by adsorption)", "J m^-2", "none"),
+        "gamma_sl_floor": Output("gamma_sl0 - Pi_ads_max (lowest gamma_sl at any dose)", "J m^-2", "none"),
+        "r_ads": Output("r_ads = -Delta_gamma_ads / gamma_sl0 (validity ratio)", "1", "none"),
         "cos_theta": Output("cos(theta) (clipped to [-1, 1])", "1"),
         "f_theta": Output("f(theta)", "1"),
         "barrier_hom_bulk_kT": Output("Delta_G*_hom(Omega_bulk) / k_B T", "k_B T", "log10"),
@@ -116,6 +126,7 @@ OUTPUTS = {
         "branch_complete": Output("complete-wetting mass of the gamma_sn ignorance prior", "1", "none"),
         "branch_partial": Output("partial-wetting mass of the gamma_sn ignorance prior", "1", "none"),
         "branch_non": Output("non-wetting mass of the gamma_sn ignorance prior", "1", "none"),
+        "branch_favourable": Output("mass of gamma_sn <= gamma_sl under the gamma_sn ignorance prior", "1", "none"),
     },
 }
 
@@ -136,7 +147,7 @@ GEOMETRY = ("u_delta_s", ("d_layer", "Gamma_s", "V_m"))
 #: Analog of Delta_G_site from a solution binding constant (gap_resolution.yaml, delta_g_site).
 SITE_ANALOG = ("K_Ca_catecholate", ("Gamma_s", "delta_s", "T"))
 #: Standard concentration of a solution binding constant, 1 mol dm^-3 in mol m^-3 (exact by definition).
-C_STANDARD = 1000.0
+C_STANDARD = STANDARD_CONCENTRATION
 
 
 def ignorance_pairs(symbols):
@@ -151,6 +162,8 @@ def ignorance_pairs(symbols):
             out[target] = (u, pair)
     return out
 SEQ_CYCLE_INPUTS = ("Delta_G_site", "pKa", "pH", "T")
+#: The second proton of a catecholate (contract v4 Delta_G_seq_cycle_2H; bound only on the analog route).
+SEQ_CYCLE_2H = "pKa2"
 SEQ_LOCAL_INPUTS = ("T", "c_bulk", "Gamma_s", "delta_s")
 NUC_BASE = ("a_Ca", "a_CO3", "K_sp", "gamma_sn0", "Delta_gamma_w", "gamma_nl", "V_m", "T")
 ACCESS_INPUTS = ("J0_het", "t_proc", "N_req")
@@ -252,8 +265,7 @@ def derive(x):
     if SITE_ANALOG[0] in x and has(x, SITE_ANALOG[1]) and "Delta_G_site" not in x:
         k, gs, ds, t = (_arr(x, s, n) for s in (SITE_ANALOG[0],) + SITE_ANALOG[1])
         ok = _finite(k, gs, ds, t) & (k > 0) & (gs > 0) & (ds > 0) & (t > 0)
-        x["Delta_G_site"] = _apply(lambda k_, c_, t_: -GAS_CONSTANT * t_ * (np.log(k_) + np.log(c_ / C_STANDARD)),
-                                   ok, n, k, gs / np.where(ds > 0, ds, np.nan), t)
+        x["Delta_G_site"] = _apply(sequestration.site_free_energy_from_solution_constant, ok, n, k, gs, ds, t)
     spec, mass = None, None
     if has(x, SPECIATION_INPUTS) and not ("a_Ca" in x and "a_CO3" in x):
         v = {k: _arr(x, k, n) for k in SPECIATION_INPUTS}
@@ -306,7 +318,11 @@ def anchor(x):
 def sequester(x):
     n = _shape(x)
     t = _arr(x, "T", n)
-    if has(x, SEQ_CYCLE_INPUTS):
+    if has(x, SEQ_CYCLE_INPUTS) and SEQ_CYCLE_2H in x:
+        site, pka, pka2, ph = (_arr(x, k, n) for k in ("Delta_G_site", "pKa", SEQ_CYCLE_2H, "pH"))
+        ok = _finite(site, pka, pka2, ph, t) & (t > 0)
+        dg = _apply(sequestration.sequestration_free_energy_two_proton, ok, n, site, pka, pka2, ph, t)
+    elif has(x, SEQ_CYCLE_INPUTS):
         site, pka, ph = (_arr(x, k, n) for k in ("Delta_G_site", "pKa", "pH"))
         ok = _finite(site, pka, ph, t) & (t > 0)
         dg = _apply(sequestration.sequestration_free_energy, ok, n, site, pka, ph, t)
@@ -334,8 +350,12 @@ def nucleate(x, seq=None):
     """Nucleation link (contract v2); seq is the sequester output when gamma_sl0 is supplied."""
     n = _shape(x)
     a_ca, a_co3, ksp, sn0, dw, nl, vm, t = (_arr(x, k, n) for k in NUC_BASE)
+    adm = {q: np.full(n, np.nan) for q in ("Pi_ads", "gamma_sl_floor", "r_ads")}
     if template_energy_mode(x) == "ca_free":
-        sl = _arr(x, "gamma_sl0", n) + np.asarray(seq["Delta_gamma_ads"], dtype=float)   # added once
+        sl0 = _arr(x, "gamma_sl0", n)
+        sl = sl0 + np.asarray(seq["Delta_gamma_ads"], dtype=float)                          # added once
+        adm = admissibility_quantities(sl0, seq["Delta_gamma_ads"], seq["Delta_G_seq"], _arr(x, "Gamma_s", n),
+                                       _arr(x, "T", n))
     else:
         sl = np.array(_arr(x, "gamma_sl", n), dtype=float)                                  # nothing added
     ok = _finite(a_ca, a_co3, ksp) & (a_ca > 0) & (a_co3 > 0) & (ksp > 0)
@@ -354,8 +374,8 @@ def nucleate(x, seq=None):
     out = {"Omega_bulk": om, "gamma_sl_insitu": sl, "cos_theta": cos_t, "f_theta": f,
            "barrier_hom_bulk_kT": hom_kt, "barrier_het_template_kT": het_kt, "r_star": r, "S_spread": spread,
            "B_acc_kT": np.full(n, np.nan), "accessibility_margin_kT": np.full(n, np.nan), "N_nuc": np.full(n, np.nan),
-           "gamma_sl_minus_nl": sl - nl}
-    for b in ("branch_complete", "branch_partial", "branch_non"):
+           "gamma_sl_minus_nl": sl - nl, **adm}
+    for b in ("branch_complete", "branch_partial", "branch_non", "branch_favourable"):
         out[b] = np.full(n, np.nan)
     if has(x, ("gamma_p", "gamma_nv")) and "u_gamma_sn" in x:
         # conditional branch masses of gamma_sn ~ U[0, G], G = gamma_p + gamma_nv (properties of the prior)
@@ -364,6 +384,8 @@ def nucleate(x, seq=None):
             out["branch_complete"] = np.clip((sl - nl) / g, 0.0, 1.0)
             out["branch_non"] = np.clip(1.0 - (sl + nl) / g, 0.0, 1.0)
         out["branch_partial"] = 1.0 - out["branch_complete"] - out["branch_non"]
+        with np.errstate(divide="ignore", invalid="ignore"):
+            out["branch_favourable"] = np.clip(sl / g, 0.0, 1.0)     # ignorance_priors.md 2a at m_cos = 0
     if has(x, NUCLEI_INPUTS):
         j0, tp = (_arr(x, k, n) for k in NUCLEI_INPUTS)
         ok_n = _finite(j0, tp, t) & (j0 > 0) & (tp > 0) & (t > 0)
@@ -377,6 +399,34 @@ def nucleate(x, seq=None):
         out["B_acc_kT"] = b_acc / (BOLTZMANN * t)          # negative when J0 t_proc < N_req
         out["accessibility_margin_kT"] = out["B_acc_kT"] - het_kt
     return out, {"cos_theta": mass}
+
+
+def admissibility_quantities(gamma_sl0, Delta_gamma_ads, Delta_G_seq, Gamma_s, T):
+    """Pi_ads, gamma_sl_floor and r_ads per draw (contract v4); NaN where a draw is outside their domain.
+
+    gamma_sl_floor is gamma_sl0 - Pi_ads_max for a binding template (Delta_G_seq < 0) and gamma_sl0
+    otherwise: a template with Delta_G_seq >= 0 lowers nothing at any dose (contract Pi_ads_max note).
+    """
+    sl0, d_ads, dg, gs, t = (np.asarray(a, dtype=float) for a in (gamma_sl0, Delta_gamma_ads, Delta_G_seq, Gamma_s, T))
+    n = sl0.shape
+    ok = _finite(sl0, dg, gs, t) & (gs > 0) & (t > 0)
+    floor = np.full(n, np.nan)
+    floor[ok & (dg >= 0)] = sl0[ok & (dg >= 0)]
+    floor_b = _apply(template.template_liquid_energy_floor, ok & (dg < 0), n, sl0, gs, dg, t)
+    floor[ok & (dg < 0)] = floor_b[ok & (dg < 0)]
+    pi = -d_ads
+    with np.errstate(divide="ignore", invalid="ignore"):
+        r = np.where(np.isfinite(sl0) & (sl0 > 0) & np.isfinite(d_ads), pi / np.where(sl0 > 0, sl0, 1.0), np.nan)
+    return {"Pi_ads": pi, "gamma_sl_floor": floor, "r_ads": r}
+
+
+ADMISSIBILITY_QUANTITY = "gamma_sl_insitu"
+
+
+def admissible_mask(outputs):
+    """Per-draw admissibility of one state's nucleate outputs: gamma_sl_insitu >= 0 (NaN draws: False)."""
+    sl = np.asarray(outputs["nucleate"][ADMISSIBILITY_QUANTITY], dtype=float)
+    return np.isfinite(sl) & (sl >= 0)
 
 
 def evaluate(x, links=None):
@@ -416,12 +466,21 @@ def evaluate(x, links=None):
     return out, masses
 
 
-def sensitivity_model(link):
-    """The link as a model {symbol: array} -> {quantity: array on its sensitivity scale}."""
+def sensitivity_model(link, admissible=False):
+    """The link as a model {symbol: array} -> {quantity: array on its sensitivity scale}.
+
+    admissible: on the nucleate link, a draw with gamma_sl_insitu < 0 has no output (NaN), so the
+    analysis describes the joint prior restricted to the admissible set (AM3; the Shapley double
+    loop then samples the restricted conditionals by rejection).
+    """
     scales = {q: o.scale for q, o in OUTPUTS[link].items()}
 
     def model(x):
-        out = evaluate(x, [link])[0][link]
+        full = evaluate(x, [link])[0]
+        out = full[link]
+        if admissible and link == "nucleate":
+            keep = admissible_mask(full)
+            out = {q: np.where(keep, np.asarray(v, dtype=float), np.nan) for q, v in out.items()}
         res = {}
         for q, v in out.items():
             if scales[q] == "log10":

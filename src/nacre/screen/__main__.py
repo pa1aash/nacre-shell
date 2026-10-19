@@ -59,6 +59,8 @@ def main(argv=None):
                        help="override an R-slurry binding (a labelled sensitivity)")
         p.add_argument("--no-sensitivity", action="store_true", help="skip the Sobol and Shapley analysis (sweeps)")
         p.add_argument("--label", help="run label recorded in the provenance")
+        p.add_argument("--mechanism", action="store_true",
+                       help="write the admitted and refused draws of the admissibility rule (report-only diagnostic)")
     pr.add_argument("--independence", action="store_true", help="drop the stated correlations (dependence sweep)")
     th = sub.add_parser("thresholds", help="copy or check configs/preprint/thresholds.yaml")
     th.add_argument("action", choices=("copy", "check"))
@@ -88,7 +90,7 @@ def main(argv=None):
             kw = dict(prior_set=args.prior_set, truncation=not args.untruncated, controls=args.control,
                       conventions={k: float(v) for k, v in (c.split("=", 1) for c in args.convention)} or None,
                       bind=dict(b.split("=", 1) for b in args.bind) or None, sensitivity=not args.no_sensitivity,
-                      run_label=args.label,
+                      run_label=args.label, mechanism=args.mechanism,
                       truncation_sensitivity=args.truncation_sensitivity,
                       stability_path=(root / args.stability) if args.stability else None,
                       cell_paths=[root / c for c in args.cell], decision_draws=args.decision_draws,

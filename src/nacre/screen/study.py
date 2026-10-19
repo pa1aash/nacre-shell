@@ -25,7 +25,7 @@ import time
 import numpy as np
 import yaml
 
-from nacre.screen import chain, decision, params_adapter, propagate
+from nacre.screen import admissibility, chain, decision, params_adapter, propagate
 from nacre.screen import units
 from nacre.screen.priors import Prior
 
@@ -175,6 +175,8 @@ def bindings_for(cfg, regime, framing, state, prior_set, control=None):
             aux.append(_aux(chain.GEOMETRY[0]))
         for sym, key in (ps.get("analogs") or {}).items():
             bind[sym] = _by_framing(key, framing)
+        for sym, key in (ps.get("analog_route") or {}).items():     # AM3: the two-proton cycle (thresholds C2)
+            bind[sym] = _by_framing(key, framing)
         for sym in ps.get("drop") or ():
             bind.pop(sym, None)
     elif prior_set == "analog":
@@ -259,8 +261,11 @@ def state_samples(outputs):
         if link in outputs and name in outputs[link] and np.any(np.isfinite(outputs[link][name])):
             s[q] = outputs[link][name]
     if "nucleate" in outputs:
-        for q in ("cos_theta", "gamma_sl_minus_nl", "Omega_bulk"):
+        for q in ("cos_theta", "gamma_sl_minus_nl", "Omega_bulk", "gamma_sl_insitu", "Pi_ads", "gamma_sl_floor",
+                  "r_ads", "branch_favourable"):
             s[q] = outputs["nucleate"][q]
+    if "sequester" in outputs:
+        s["Theta_occ"] = outputs["sequester"]["Theta_occ"]
     return s
 
 
@@ -332,9 +337,16 @@ def c1_side_by_side(rule, resolver, states, registered, rng):
     return out
 
 
-def claims_at(rule, resolver, outs, registered, d_max=None, rng=None, loaded=None):
-    """C1 to C4 at one design point and framing ({state: (outputs, masses, rp)})."""
+def claims_at(rule, resolver, outs, registered, d_max=None, rng=None, loaded=None, admissible=False):
+    """C1 to C4 at one design point and framing ({state: (outputs, masses, rp)}).
+
+    admissible: apply the admissibility rule (thresholds block v4, decision.admissibility; AM3) to C3
+    and C4: their verdicts use the admitted draws, the unrestricted verdict on the same draws is kept
+    beside, and M_adm is printed (nacre.screen.admissibility).
+    """
     states = {sid: state_samples(o) for sid, (o, _, _) in outs.items()}
+    m = admissibility.mask(states) if admissible else None
+    adm = admissibility.summary(states, m, decision.credible_level(rule, resolver)) if m is not None else None
     claims = {}
     need = {"C1": {"W_adh_wet"}, "C3": {"f_theta", "N_nuc"}, "C4": {"S_spread", "N_nuc", "cos_theta"}}
     for claim, q in need.items():
@@ -345,8 +357,13 @@ def claims_at(rule, resolver, outs, registered, d_max=None, rng=None, loaded=Non
                              "gap": "not evaluable: no registered state supplies %s; missing inputs %s"
                                     % (missing, link_gaps(loaded or [], claim))}
             continue
-        claims[claim] = decision.evaluate_link(rule, claim, have, resolver, registered_states=registered,
-                                               d_max=d_max if claim == "C4" else None, rng=rng)
+        kw = dict(registered_states=registered, d_max=d_max if claim == "C4" else None, rng=rng)
+        if adm is not None and claim in ("C3", "C4"):
+            restricted = decision.evaluate_link(rule, claim, admissibility.restrict(have, m), resolver, **kw)
+            claims[claim] = admissibility.apply(restricted, decision.evaluate_link(rule, claim, have, resolver, **kw),
+                                                adm)
+            continue
+        claims[claim] = decision.evaluate_link(rule, claim, have, resolver, **kw)
     side = c1_side_by_side(rule, resolver, states, registered, rng)
     if side:
         claims["C1"]["side_by_side"] = side
@@ -358,6 +375,10 @@ def claims_at(rule, resolver, outs, registered, d_max=None, rng=None, loaded=Non
     claims["C2"] = decision.evaluate_c2(rule, seq, resolver) if seq else \
         {"verdict": "descriptor", "role": "descriptor", "tests": {}, "falsified_mass": None,
          "gap": "not evaluable: Delta_G_seq is not supplied; missing inputs %s" % link_gaps(loaded or [], "C2")}
+    if adm is not None and seq:
+        claims["C2"]["admissibility"] = dict(admissibility.descriptor(seq, m), M_adm=adm["M_adm"])
+    if adm is not None:
+        claims["_mechanism"] = admissibility.mechanism(states, m)
     return claims
 
 
@@ -392,7 +413,7 @@ def _median(v):
 
 def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="table", truncation=True,
              draws=None, seed=0, chunk=None, framings=None, stability=None, cells=None, controls=None,
-             d_max_rng_seed=1, independence=False):
+             d_max_rng_seed=1, independence=False, admissible=None):
     """Claims and the study verdict over the design points and framings; returns (claims, study, extra).
 
     controls: names of the deletion-test controls of screen.yaml ``controls`` (bare_oxide, PVDF),
@@ -403,6 +424,8 @@ def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="tabl
     half-width over every record (the sizing rule).
     """
     pc = cfg["propagation"]
+    if admissible is None:
+        admissible = bool((cfg.get("registrations") or {}).get("admissibility"))
     n = int(draws or pc["draws_per_regime"])
     chunk = int(chunk or pc["chunk"])
     framings = list(framings or (rule.get("study", {}).get("framings") or {}).get("registered")
@@ -429,7 +452,7 @@ def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="tabl
         states = load_point(params_path, cfg, fr, design, allow_mock, prior_set, truncation, control=control,
                             independence=independence)
         outs, notes = propagate_states(states, n, sd, chunk)
-        cl = claims_at(rule, resolver, outs, [sid for sid, _ in states], d_max, rng, states) if outs else \
+        cl = claims_at(rule, resolver, outs, [sid for sid, _ in states], d_max, rng, states, admissible) if outs else \
             {c: {"verdict": "inconclusive" if c != "C2" else "descriptor", "tests": {}, "falsified_mass": None,
                  "role": "gating" if c != "C2" else "descriptor",
                  "gap": "not evaluable; missing inputs %s" % link_gaps(states, c)} for c in ("C1", "C2", "C3", "C4")}
@@ -460,7 +483,11 @@ def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="tabl
                     ctl_claims[name]["_gap"] = msg
                     continue
                 ctl_claims[name] = run_point(fr, design, sd, spec)[3]
-            per_f[fr] = {"claims": cl, "controls": ctl_claims, "notes": notes, "unsampled": _unsampled(states)}
+            mech = cl.pop("_mechanism", None)
+            for cc in ctl_claims.values():
+                cc.pop("_mechanism", None)
+            per_f[fr] = {"claims": cl, "controls": ctl_claims, "notes": notes, "unsampled": _unsampled(states),
+                         "mechanism": mech}
             del outs
         by_point[pid] = {"axes": labels, "design": design, "framings": per_f}
     ctl = {}
@@ -474,7 +501,7 @@ def evaluate(rule, resolver, params_path, cfg, allow_mock=False, prior_set="tabl
             widths.append(ctl[name]["half_width"])
     omega = decision.omega_window(omega_pts, p, decision.control_outcomes(ctl), omega_sens) if omega_pts else None
     claims, study, extra = assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_set, cfg, gap,
-                                    d_flags)
+                                    d_flags, admissible)
     if claims["C1"].get("side_by_side"):
         claims["C1"]["side_by_side"]["gamma_pw_consistency"] = gamma_pw_consistency(cfg, resolver)
     ws = [w for w in widths if w is not None and np.isfinite(w)]
@@ -584,8 +611,25 @@ def _control(params_path, cfg, allow_mock, prior_set, truncation, n, chunk, seed
     return {"axes": labels, **om}
 
 
-def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_set, cfg, gap=None, d_flags=()):
-    """Reduce (states done) over framings then design points; C5 and the study per point and framing."""
+def _unrestricted_claims(claims):
+    """C3 and C4 replaced by their unrestricted records (the labelled sensitivity of the admissibility rule)."""
+    return {c: (r.get("_unrestricted") or r) if isinstance(r, dict) and c in ("C3", "C4") else r
+            for c, r in claims.items()}
+
+
+def _adm_brief(rec):
+    a = (rec or {}).get("admissibility") or {}
+    return {k: a.get(k) for k in ("M_adm", "inadmissible_inputs", "verdict_restricted", "verdict_unrestricted", "verdict")} \
+        if a else None
+
+
+def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_set, cfg, gap=None, d_flags=(),
+             admissible=False):
+    """Reduce (states done) over framings then design points; C5 and the study per point and framing.
+
+    admissible: the admissibility rule was applied (AM3); the unrestricted study verdicts on the same
+    draws are formed beside (a labelled sensitivity) and the retained masses are summarised.
+    """
     reg = cfg.get("registrations") or {}
     cell_reg = reg.get("R-cell") or {}
     p = decision.credible_level(rule, resolver)
@@ -599,9 +643,12 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
     point_ids = list(by_point)
     study_by_point, link_by_point = {}, {c: {} for c in ("C1", "C2", "C3", "C4", "C5")}
     by_design_c5 = {}
+    study_u_by_point, link_u_by_point = {}, {c: {} for c in ("C3", "C4")}
+    adm_by_point = {}
     for pid in point_ids:
         pbs = pourbaix_for(stability, by_point[pid].get("axes") or {})
         studies = {al: {} for al in pbs}
+        studies_u = {al: {} for al in pbs}
         c5s = {al: {} for al in pbs}
         for fr, fd in by_point[pid]["framings"].items():
             om_pt = (omega or {}).get("dose_window", {}).get("points", {}).get(pid) if omega else None
@@ -616,7 +663,25 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
                     ctl = {k: (dict(cc, C5=c5) if "_gap" not in cc else cc) for k, cc in fd["controls"].items()}
                     deletion = decision.deletion_test(rule, claims_al, ctl, resolver)
                 studies[al][fr] = decision.study_verdict(rule, claims_al, deletion)
+                if admissible:
+                    deletion_u = None
+                    if fd["controls"]:
+                        ctl_u = {k: (dict(_unrestricted_claims(cc), C5=c5) if "_gap" not in cc else cc)
+                                 for k, cc in fd["controls"].items()}
+                        deletion_u = decision.deletion_test(rule, _unrestricted_claims(claims_al), ctl_u, resolver)
+                    if deletion is not None:
+                        deletion["admissibility"] = {
+                            "template": _adm_brief(claims_al.get("C3")),
+                            "controls": {k: _adm_brief(cc.get("C3")) for k, cc in fd["controls"].items() if "_gap" not in cc},
+                            "unrestricted_holds": deletion_u["holds"] if deletion_u else None}
+                    studies_u[al][fr] = decision.study_verdict(rule, _unrestricted_claims(claims_al), deletion_u)
                 c5s[al][fr] = c5
+            if admissible:
+                adm_by_point.setdefault(pid, {})[fr] = {c: _adm_brief(fd["claims"].get(c)) for c in ("C3", "C4")}
+                for c in ("C3", "C4"):
+                    rec_u = (fd["claims"].get(c) or {}).get("_unrestricted")
+                    if rec_u is not None:
+                        link_u_by_point[c].setdefault(pid, {})[fr] = rec_u["verdict"]
             fd["claims"]["C5"] = c5s[next(iter(pbs))][fr]
             fd["c5_by_al"] = {al: decision.public(c5s[al][fr]) for al in pbs} if len(pbs) > 1 else None
             fd["claims"] = {c: decision.public(r) for c, r in fd["claims"].items()}
@@ -628,8 +693,17 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
                 {fr: by_point[pid]["framings"][fr]["claims"][c] for fr in by_point[pid]["framings"]}) if c != "C2" else \
                 {fr: (by_point[pid]["framings"][fr]["claims"]["C2"].get("finding") or {}).get("statement")
                  for fr in by_point[pid]["framings"]}
+        if admissible:
+            for c in ("C3", "C4"):
+                if c in link_by_point and pid in link_by_point[c]:
+                    link_by_point[c][pid]["admissibility_by_framing"] = {fr: (adm_by_point.get(pid) or {}).get(fr, {}).get(c)
+                                                                         for fr in by_point[pid]["framings"]}
+                if pid in link_u_by_point[c]:
+                    link_u_by_point[c][pid] = decision.combine_framings(link_u_by_point[c][pid])
         for al in pbs:
             key = pid if al is None else "%s; Al_T=%s" % (pid, al)
+            if admissible:
+                study_u_by_point[key] = decision.combine_framings(studies_u[al])["verdict"]
             link_by_point["C5"][key] = decision.combine_framings(c5s[al])
             study_by_point[key] = decision.combine_framings(studies[al])
             study_by_point[key]["deletion_by_framing"] = {fr: s.get("deletion_test") for fr, s in studies[al].items()}
@@ -649,6 +723,21 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
                      "by_design": link_by_point[c], "detail_point": primary, "detail_framing": framings[0],
                      "prior_set": prior_set,
                      "finding_eligible": eligible or c not in IGNORANCE_DEPENDENT}
+        if admissible and c in ("C3", "C4"):
+            blk = dict(claims[c].get("admissibility") or {})
+            masses = [b[c]["M_adm"] for pf in adm_by_point.values() for b in pf.values()
+                      if b.get(c) and b[c].get("M_adm") is not None]
+            head_u = decision.over_design({pid: r["verdict"] for pid, r in link_u_by_point[c].items()})
+            blk["over_design"] = {
+                "M_adm_min": min(masses) if masses else None, "M_adm_max": max(masses) if masses else None,
+                "n_inadmissible": sum(1 for pf in adm_by_point.values() for b in pf.values()
+                                      if b.get(c) and b[c].get("inadmissible_inputs")),
+                "n_point_framings": sum(len(pf) for pf in adm_by_point.values()),
+                "verdict_unrestricted": head_u["verdict"],
+                "unrestricted_by_design": {pid: r["verdict"] for pid, r in link_u_by_point[c].items()},
+                "differs": {pid: {"rule": link_by_point[c][pid]["verdict"], "unrestricted": r["verdict"]}
+                            for pid, r in link_u_by_point[c].items() if r["verdict"] != link_by_point[c][pid]["verdict"]}}
+            claims[c]["admissibility"] = blk
         if c == "C5" and omega is not None:
             claims[c]["dose_window"] = omega["dose_window"]
             claims[c]["omega_controls"] = omega.get("controls")
@@ -667,7 +756,23 @@ def assemble(rule, resolver, by_point, omega, stability, cells, framings, prior_
              "sequestration_premise": link_by_point["C2"].get(primary, {}).get(framings[0])}
     if any(d is not None and not d["holds"] for d in deletions):
         study["framing"] = "generic adhesion study"
+    if admissible:
+        head_u = decision.over_design(study_u_by_point)
+        study["admissibility"] = {
+            "label": admissibility.LABEL,
+            "rule": "thresholds block v4 decision.admissibility (D27; gap_resolution.yaml AM3)",
+            "C3": {k: claims["C3"]["admissibility"]["over_design"][k] for k in ("M_adm_min", "M_adm_max", "n_inadmissible",
+                                                                                  "n_point_framings")}
+            if (claims["C3"].get("admissibility") or {}).get("over_design") else None,
+            "by_design": adm_by_point,
+            "unrestricted": {"label": "unrestricted joint prior on the same draws (labelled sensitivity, never a verdict)",
+                             "verdict": head_u["verdict"], "design_dependent": head_u["design_dependent"],
+                             "by_design": study_u_by_point},
+            "differs": {k: {"rule": study_by_point[k]["verdict"], "unrestricted": v}
+                        for k, v in study_u_by_point.items() if v != study_by_point[k]["verdict"]}}
     extra = {"design_gap": gap, "d_max_flags": list(d_flags), "omega": omega, "points": point_ids,
+             "mechanism": {pid: {fr: fd.get("mechanism") for fr, fd in by_point[pid]["framings"].items()}
+                           for pid in point_ids} if admissible else None,
              "unsampled": {pid: {fr: fd["unsampled"] for fr, fd in by_point[pid]["framings"].items()}
                            for pid in point_ids}}
     return claims, study, extra
