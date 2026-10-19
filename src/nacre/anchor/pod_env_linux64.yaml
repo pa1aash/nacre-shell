@@ -1,0 +1,26 @@
+# Linux x86_64 environment of the anchor production run on the CPU pod (P0-W5.4; lane note N27).
+# Same tools as src/nacre/anchor/xtb_env.yaml (osx-arm64), with the linux-64 builds of conda-forge:
+#   xtb 6.6.1   build hf49bc11_0  (sha256 2be9a7e300bfdc376d555e4c294d61e9912db329ad97175a1bade0b69506dbcb)
+#   crest 2.12  build h9d67668_0  (md5 8ba9a8ea66b0b07178ea736a16d43f9a; the file API lists no sha256)
+# read from https://api.anaconda.org/package/conda-forge/<name>/files on 2026-10-19. The libgfortran5
+# runtime stays at 13.4.0, the runtime that ran xtb 6.6.1 on the laptops (xtb_env.yaml notes).
+# The compilers, cmake and OpenBLAS build PySCF 2.14.0 from its tagged source with -DENABLE_SMD=ON,
+# because the PyPI wheel and the conda-forge build both leave out the SMD CDS term (the conda-forge
+# recipe at pyscf-feedstock/recipe/recipe.yaml sets no ENABLE_SMD; pyscf/lib/CMakeLists.txt defaults
+# it to OFF). The exact solve is pinned in pod_env_linux64.lock (explicit URLs and hashes).
+name: nacre-pod
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - xtb=6.6.1=hf49bc11_0
+  - crest=2.12=h9d67668_0
+  - libgfortran5=13.4.0
+  - gcc=13.4.0
+  - gxx=13.4.0
+  - gfortran=13.4.0
+  - cmake=3.31.8
+  - make=4.4.1
+  - libblas=*=*openblas
+  - liblapack=*=*openblas
+  - libopenblas

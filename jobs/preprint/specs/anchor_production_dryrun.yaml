@@ -1,0 +1,19 @@
+# Dry run of the anchor production driver on the local transport (P0-W5.4). The same command as
+# anchor_production.yaml with the mock backend: the archive, the job venv, the parallel job layout,
+# the per-step checkpoint files, conformer selection, the binding cycle with its standard-state terms,
+# the manifest and the collection all run; no xtb, CREST or DFT is called and every record says mock.
+# The chemistry install (micromamba, the pod lock, the PySCF SMD build) is pod-only and is not run here.
+id: anchor-production-dryrun
+mock: true
+command: >-
+  "$JOBDIR/.jobenv/bin/python" -m nacre.anchor.production run --out "$OUTPUTS" --backend mock
+  --jobs 4 --threads 8 --max-memory-mb 24000 --max-conformers 5 --ewin-kcal 3.0
+outputs_dir: outputs
+heartbeat_s: 2
+stale_after_s: 120
+launcher: tmux
+packages: ["numpy==2.5.4", "scipy==1.18.1", "pyyaml==6.0.3", "ase==3.29.0"]
+install_command: >-
+  python3 -m venv .jobenv &&
+  .jobenv/bin/python -m pip install --quiet --disable-pip-version-check {packages} &&
+  .jobenv/bin/python -m pip install --quiet --no-deps -e src
