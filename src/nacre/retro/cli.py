@@ -37,6 +37,22 @@ def _run(args):
     return 0
 
 
+def _package_check(args):
+    from nacre import _util
+    from nacre.retro import package
+    errors, info = package.check(_util.repo_root(), release=args.release)
+    for e in errors:
+        print("ERROR: %s" % e)
+    print("package: %s" % ", ".join(info["files"]))
+    print("placeholders (%d):" % len(info["placeholders"]))
+    for path, value in info["placeholders"]:
+        print("  %s: %s" % (path, value))
+    if info["credit_missing"]:
+        print("CRediT roles missing: %s" % ", ".join(info["credit_missing"]))
+    print("package check: %s" % ("FAIL" if errors else "PASS"))
+    return 1 if errors else 0
+
+
 def register(subparsers):
     p = subparsers.add_parser("retro", help="retrodiction case checks (lane p0-w2)")
     sub = p.add_subparsers(dest="retro_command", required=True)
@@ -49,3 +65,6 @@ def register(subparsers):
     r.add_argument("--seed", type=int, default=0)
     r.add_argument("--perm", type=int, default=2000, help="permutations per null scheme")
     r.set_defaults(func=_run)
+    k = sub.add_parser("package-check", help="validate the ChemRxiv package in preprint/package/")
+    k.add_argument("--release", action="store_true", help="fail while any placeholder remains")
+    k.set_defaults(func=_package_check)
