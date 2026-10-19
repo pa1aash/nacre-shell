@@ -18,8 +18,8 @@ schema: chemrxiv-package/v1
 status: scaffold
 
 title:
-  working: 'Thermodynamic screening of a biomimetic calcium-carbonate barrier on aluminium current collectors:
-    governing parameters and the precision required for first-principles validation'
+  working: Thermodynamic screening of bone-inspired calcium phosphate barriers for aluminium current collectors
+    in fluorine-free lithium-ion cells
   working_source: ops/tracks/p0.yaml meta.title_working (rendered as \nacreTitle in preprint/generated/front.tex)
   final: TBD (W8, set after cp4; the working title above is not final)
 
