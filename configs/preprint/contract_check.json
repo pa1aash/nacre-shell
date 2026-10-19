@@ -1,7 +1,7 @@
 {
-  "checked_utc": "2026-10-17T10:58:39Z",
-  "contract_sha": "db872ae9190c3b729bc2b13898919fbfbe56815b",
-  "contract_version": 3,
+  "checked_utc": "2026-10-19T12:09:01Z",
+  "contract_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
+  "contract_version": 4,
   "coverage": [],
   "functions": {
     "A_carb_fn": {
@@ -68,6 +68,22 @@
       "points": 256,
       "status": "PASS"
     },
+    "Delta_G_seq_cycle_2H": {
+      "limit_cases": 2,
+      "max_rel_err": 8.155767690296684e-14,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Delta_G_site_from_K": {
+      "limit_cases": 0,
+      "max_rel_err": 1.9379972424323757e-15,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "Delta_Phi_r": {
       "limit_cases": 2,
       "max_rel_err": 2.776937321022886e-16,
@@ -80,7 +96,7 @@
       "status": "PASS"
     },
     "Delta_gamma_ads": {
-      "limit_cases": 2,
+      "limit_cases": 3,
       "max_rel_err": 1.0067734474666888e-12,
       "monotonicity_samples": 64,
       "notes": [
@@ -182,6 +198,26 @@
       "max_rel_err": 2.8180470109680253e-16,
       "monotonicity_samples": 64,
       "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Pi_ads": {
+      "limit_cases": 1,
+      "max_rel_err": 1.6175848014277366e-12,
+      "monotonicity_samples": 0,
+      "notes": [
+        "1 point(s) beyond rtol 1e-12 where the contract expression is ill-conditioned; the implementation is at least as accurate as its direct evaluation (max float-reference error 3.649e-09)"
+      ],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Pi_ads_max": {
+      "limit_cases": 2,
+      "max_rel_err": 6.925188345796899e-11,
+      "monotonicity_samples": 128,
+      "notes": [
+        "15 point(s) beyond rtol 1e-12 where the contract expression is ill-conditioned; the implementation is at least as accurate as its direct evaluation (max float-reference error 5.724e-06)"
+      ],
       "points": 256,
       "status": "PASS"
     },
@@ -368,10 +404,18 @@
       "points": 256,
       "status": "PASS"
     },
+    "gamma_sl_floor": {
+      "limit_cases": 0,
+      "max_rel_err": 7.835122868395976e-15,
+      "monotonicity_samples": 192,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "gamma_sl_insitu": {
-      "limit_cases": 1,
+      "limit_cases": 3,
       "max_rel_err": 2.074418938826375e-14,
-      "monotonicity_samples": 128,
+      "monotonicity_samples": 192,
       "notes": [],
       "points": 256,
       "status": "PASS"
@@ -424,6 +468,14 @@
       "points": 256,
       "status": "PASS"
     },
+    "r_ads": {
+      "limit_cases": 1,
+      "max_rel_err": 2.1689939045060496e-13,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "r_star": {
       "limit_cases": 2,
       "max_rel_err": 5.194737376758362e-16,
@@ -447,12 +499,20 @@
       "notes": [],
       "points": 256,
       "status": "PASS"
+    },
+    "x_bind_K": {
+      "limit_cases": 1,
+      "max_rel_err": 1.2535670171252149e-14,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
     }
   },
-  "implementation_sha": "3da2a16a7c984dcef3fba037c9c09a1c227c15d7",
+  "implementation_sha": "22498ed686be08fa668d745cc10f3c2be7c1b328",
   "points": 256,
-  "ref": "origin/preprint/p0-w3",
-  "ref_sha": "d27552a4f01a0f26710a884e275d14ddffc5e19a",
+  "ref": "fd5846f",
+  "ref_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
   "reference": "40-digit evaluation of the contract expression; a point beyond rtol passes only where the implementation is at least as accurate as the direct floating-point evaluation of the contract expression (ill-conditioned points, listed in notes)",
   "rtol": 1e-12,
   "seed": 0,
