@@ -65,6 +65,19 @@ amendments:                              # every change after the first commit, 
       delta_g_site: 'the analog route of thresholds C2.analog_route: Delta_G_site = Delta_G_site_from_K (the registered conversion, now a contract function) and the two-proton cycle Delta_G_seq_cycle_2H with pka_catechol and pka2_catechol (replaces the one-proton cycle; the pKa2 limitation is closed); see gaps.delta_g_site'
       thresholds_copy: 'configs/preprint/thresholds.yaml regenerated from block v4 (fd5846f), check EQUAL'
       unrestricted: 'the P0-W4.3 runs are the unrestricted labelled sensitivity (never a verdict); each rerun also prints the unrestricted verdicts on the same draws and the verdicts that differ'
+
+  - id: AM4
+    session: P0-W4.3b
+    reason: 'a name binding and the sizing reading needed by AM3, found when the AM3 bindings were first loaded in a dry run; recorded before any rerun output'
+    items:
+      pKa2: 'contract v4 symbol pKa2 (Delta_G_seq_cycle_2H) is supplied by W1''s pka2_catechol, which the table records under the symbol pKa (binding_corrections.pKa2): a name binding, no value'
+      sizing: >-
+        how the registered sizing rule (band-mass half-width <= 0.01, draws doubled from 2^14, caps 2^20 per
+        state and 6 h) reads the records the admissibility rule adds, decided before any rerun output and
+        without consulting any M_adm value: every mass that decides a verdict is sized. M_adm decides the
+        inadmissible-inputs test, so its half-width (on the evaluable draws) enters the rule; the restricted
+        band masses enter it on the admitted draws; where the inputs are inadmissible the restricted masses
+        decide nothing and are printed unsized (half_width_unsized). The rule and the caps are unchanged
 reporting:
   ignorance_is_finding: false            # ignorance_priors.md section 3.1
   admissibility_label: 'conditional on admissibility (M_adm printed beside)'   # AM3
@@ -332,6 +345,7 @@ admissibility:                           # AM3 (D27; thresholds decision.admissi
     output (NaN), so the Shapley double loop samples the restricted conditionals by rejection and treats the
     dependence the restriction induces (lane note N2); the Sobol indices of independent marginals over the
     admitted draws are approximate under that dependence and labelled so; the ranking reads the Shapley effects
+  sizing: 'AM4: M_adm is sized on the evaluable draws, the restricted masses on the admitted draws; unsized where the inputs are inadmissible'
   tuning: none (no prior, threshold, sweep or cap is changed after any rerun output)
 c4:
   closure_route: 'C4s reports gap (d_max); C4 cannot be falsified (a falsification needs both routes) and passes only through S_spread'
@@ -399,6 +413,7 @@ sizing:
 # ---------------------------------------------------------------- not gaps, recorded for completeness
 binding_corrections:                     # a binding of configs/preprint/screen.yaml named a key W1 spells otherwise
   A_DH: {was: davies_a, now: debye_huckel_a, reason: 'W1 key (params.debye_huckel_A); sourced, so no treatment is needed'}
+  pKa2: {key: pka2_catechol, table_symbol: pKa, reason: 'AM4: the table records the second dissociation constant under pKa; contract v4 names it pKa2 (sourced, no treatment needed)'}
   corundum: {w5_window: Al2O3, reason: 'AM2: W5''s window name for mp-1143'}
   boehmite: {w5_window: none, treatment: unresolved, effect: 'undetermined, never a pass (AM2)'}
 not_screen_inputs:                       # gap or computed keys of the table that no screen link reads
