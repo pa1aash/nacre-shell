@@ -28,7 +28,12 @@ nucleation prefactors and process times. Day 3 (P0-W1.3): T-K R-cell thermochemi
 and Li+ solvation and transfer, analog entropies for the Ca(ClO4)2 bound, uncertainties of the
 experimental route, charge cut-offs by cathode class, Li2CO3 oxidation against equilibrium); T-L the
 W3 contract-v3 keys (dry CaCO3 surface energies, speciation and activity-model constants, geometry,
-water activity, method errors); T-M the cp3 R8 registrations and the N16 drawing parameters.
+water activity, method errors); T-M the cp3 R8 registrations and the N16 drawing parameters. Day 3, ahead of day 4 (P0-W1.4, decision
+D30): T-N the post-cp3 keys (PVDF surface energy, A_patch bounds, template molar mass per group, the Ca2+
+radius, primary-drying water activity, stated correlations); T-O anodic stability of other biominerals'
+anions (Outlook evidence); T-P the Shapley-effects references and reference-audit support; T-Q the
+R-cell film keys (d_max) and the uncertainty budgets of the reduction limits, the solvated sink,
+Al(ClO4)3 and boehmite.
 
 ## Tools
 
@@ -53,7 +58,7 @@ location, then Europe PMC full-text XML. Paywalled works without an open copy ar
 | Column | Content and format |
 |---|---|
 | `row_id` | `<thread letter pair>-<three digits>`, unique: `TA-001`, `TB-014`. The prefix matches the thread. |
-| `thread` | `T-A` to `T-M`. |
+| `thread` | `T-A` to `T-Q`. |
 | `doi` | Bare DOI, lower case, `10.<registrant>/<suffix>`; no `https://doi.org/` prefix. |
 | `locator` | Where in the work the value is: `p. 155`, `Table 2`, `Fig. 3b`, `Eq. (12)`, `Section 3.2`, `SI Table S4`, `abstract`. Combine as needed (`p. 4, Table 2`). Use the printed page number when the text shows one, else `pdf p. N`. |
 | `quantity` | A lower-case slug. Target quantities use the vocabulary below; other quantities may use any descriptive slug. |

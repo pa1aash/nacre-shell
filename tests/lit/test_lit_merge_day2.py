@@ -26,7 +26,7 @@ def test_day2_threads_validate():
     for t in ("T-F", "T-G", "T-H", "T-I", "T-J"):
         rid = t.replace("-", "") + "-001"
         assert E.validate_row(good_row(row_id=rid, thread=t)) == []
-    assert E.validate_row(good_row(row_id="TN-001", thread="T-N"))
+    assert E.validate_row(good_row(row_id="TR-001", thread="T-R"))
 
 
 def test_day3_threads_validate():
@@ -34,6 +34,13 @@ def test_day3_threads_validate():
         rid = t.replace("-", "") + "-001"
         assert E.validate_row(good_row(row_id=rid, thread=t)) == []
     assert E.validate_row(good_row(row_id="TK-001", thread="T-L"))
+
+
+def test_day4_threads_validate():
+    for t in ("T-N", "T-O", "T-P", "T-Q"):
+        rid = t.replace("-", "") + "-001"
+        assert E.validate_row(good_row(row_id=rid, thread=t)) == []
+    assert E.validate_row(good_row(row_id="TR-001", thread="T-R"))
 
 
 def test_merge_skips_unstarted_threads_and_writes_ledger(tmp_path):
