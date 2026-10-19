@@ -58,7 +58,8 @@
   "gap_table_history": {
     "initial": "185b8b8ccdbc69bef1edc2ecb776dd252d3f6114",
     "AM1": "e22fedbb45b617705c06dc00f079b0d861513c23",
-    "AM2": "96797a9c1711e6664bc591dee324f3ab7443719d"
+    "AM2": "96797a9c1711e6664bc591dee324f3ab7443719d",
+    "AM3": "5123c994fc741d3404a885097acdc6693022bf46"
   },
   "thresholds_cp3b": {
     "source_sha": "22ef46446205f63fab6074ba971ee89e18d99489",
@@ -83,5 +84,14 @@
     "sens_acc_omega": "results/preprint/screen/sens_acc_omega/summary.json",
     "sens_gamma_sl0_untruncated": "results/preprint/screen/sens_gamma_sl0_untruncated/summary.json",
     "sens_gamma_sl0_untruncated_r2": "results/preprint/screen/sens_gamma_sl0_untruncated_r2/summary.json"
+  },
+  "gap_table_am3": "5123c994fc741d3404a885097acdc6693022bf46",
+  "admissibility_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
+  "admissibility": {
+    "w3_ready_commit": "f8139f0",
+    "poll": "ready at 12:00:54 UTC (fifth poll)",
+    "contract_version": 4,
+    "thresholds_block_version": 4,
+    "ignorance_block_version": 3
   }
 }
