@@ -49,8 +49,10 @@ def _ln_dianion_odds(pKa, pKa2, pH):
     """ln(1 + 10^(pKa2 - pH) + 10^(pKa + pKa2 - 2 pH)): minus ln of the dianion fraction of a two-proton group."""
     ln10 = np.log(10.0)
     terms = np.stack(np.broadcast_arrays(np.zeros_like(pH), (pKa2 - pH) * ln10, (pKa + pKa2 - 2.0 * pH) * ln10))
-    top = np.max(terms, axis=0)
-    return top + np.log(np.sum(np.exp(terms - top), axis=0))
+    ordered = np.sort(terms, axis=0)
+    top = ordered[-1]
+    # top + ln(1 + the two smaller exponentials): log1p keeps the small terms that ln(sum) rounds away
+    return top + np.log1p(np.exp(ordered[0] - top) + np.exp(ordered[1] - top))
 
 
 def sequestration_free_energy_two_proton(Delta_G_site, pKa, pKa2, pH, T):

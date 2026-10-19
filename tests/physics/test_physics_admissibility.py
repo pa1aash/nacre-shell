@@ -166,9 +166,11 @@ def test_two_proton_cycle_bounds(site, pka, gap, ph):
     pka2 = pka + gap
     two = seq.sequestration_free_energy_two_proton(site, pka, pka2, ph, T)
     assert two >= seq.sequestration_free_energy(site, pka2, ph, T) - 1e-9
-    if gap > 0:
-        assert two > seq.sequestration_free_energy(site, pka, ph, T)
+    one = seq.sequestration_free_energy(site, pka, ph, T)
     excess = RT * math.log((1 + 10 ** (pka2 - ph) + 10 ** (pka + pka2 - 2 * ph)) / (1 + 10 ** (pka - ph)))
+    assert two >= one
+    if gap > 0 and excess > 1e-12 * max(1.0, abs(two)):         # strict wherever the excess is representable
+        assert two > one
     assert two - seq.sequestration_free_energy(site, pka, ph, T) == pytest.approx(excess, rel=1e-9, abs=1e-9)
 
 
