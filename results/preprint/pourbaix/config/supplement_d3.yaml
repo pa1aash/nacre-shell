@@ -1,0 +1,105 @@
+# Day 3 supplement configuration, session P0-W5.4 (cell-regime data gaps; lane note N29). Not mock.
+#
+# Additive: every earlier document stays as it was. The outputs go to results/preprint/pourbaix/supplement_d3/.
+# Params: lit/params.yaml at params_sha, which equals the file at tag p0-cp3 (the run checks this); frozen in
+# results/preprint/pourbaix/inputs/params_8bc15c8.json. Data: the production cache (read only) plus the
+# supplement cache (results/preprint/pourbaix/supplement_d3/cache/, with the Li-Al-O-H Materials Project
+# entries kept local-only under .local/w5/cache_d3/ and recorded there by sha256).
+#
+# Run: uv run python -m nacre.pourbaix.supplement_d3 --config results/preprint/pourbaix/config/supplement_d3.yaml
+mock: false
+run: supplement_d3
+session: P0-W5.4
+params_sha: 8bc15c88f5f4a28e64d394186729836bac01cfec
+params_tag: p0-cp3
+
+R-cell:
+  question: >-
+    Between which potentials vs Li+/Li are boehmite (gamma-AlOOH), corundum and CaCO3 at equilibrium
+    against lithiation (Li-open grand potential) and against oxidation that releases O2 (and CO2 or H2O)
+    with the cation taken up by the anion of each registered electrolyte salt; which route governs each
+    limit (cp3 decision 3); and where is a limit undetermined, and why? (thermodynamic windows; no
+    kinetic statement)
+  temperature_K:
+    value: 298.15
+    source: choice
+    reason: >-
+      298.15 K lies inside the sourced cell range (key t_cell) and is the temperature of the benchmark and
+      of every tabulated free energy of the expt scheme.
+    cites: [t_cell]
+  E_min: {key: e_cell_min}
+  E_max: {key: e_cell_max}
+  window_margin: {key: window_margin}
+  m_expt:
+    keys: [window_margin_expt]
+    reaction: CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 1/2 O2 + 2 Li
+    reason: >-
+      thresholds C5c_ox margin_by_route: m_expt applies to the registered reaction only; an expt limit of any
+      other reaction or sink, and every reduction limit, needs its own budget key, and without one it is
+      undetermined (never passes, never falsifies).
+  budget_keys:
+    # keys W1 would register after p0-cp3 (lane note N29); read only if they exist at params_sha
+    reduction: [window_margin_red_caco3, window_margin_red_corundum, window_margin_red_boehmite]
+    solvated: [solvation_ca_vs_li, solvation_al_vs_li]
+  phases:
+    CaCO3: {material_id: mp-3953, cation: Ca, gases: [O2, CO2], lithiation_chemsys: Li-Ca-C-O, cache: production,
+            name: calcite, role: confirm (P0-W5.3 C5 values)}
+    Al2O3: {material_id: mp-1143, cation: Al, gases: [O2], lithiation_chemsys: Li-Al-O, cache: production,
+            name: corundum, role: confirm (P0-W5.3 C5 values)}
+    AlHO2:
+      material_id: mp-625054
+      cation: Al
+      gases: [O2, H2O]
+      lithiation_chemsys: Li-Al-O-H
+      cache: supplement
+      name: boehmite
+      role: new window (thresholds gated_phases R-cell; W4 AM2 left it undetermined)
+      identification: >-
+        gamma-AlOOH, the layered AlOOH polymorph: conventional cell 2.90 x 12.25 x 3.74 Angstrom, density
+        3.00 g cm^-3 (computed from the cached structure). Diaspore is mp-625152 (2.87 x 4.42 x 9.50 Angstrom,
+        3.30 g cm^-3), a comparator only.
+  water:
+    product_state: {primary: H2O(g) at p_H2O = 1 bar, sensitivity: H2O(l) at unit activity (key dfg_h2o_l)}
+    reason: >-
+      The gases of the oxidation reactions are taken at the 1 bar standard state of the benchmark (O2, CO2);
+      water released by boehmite is treated the same way. With the trace water of the electrolyte (key
+      electrolyte_water_content) the water activity is far below one; that lowers every onset by
+      (n_H2O/n_e) k T ln a_w, so both standard-state onsets bound the onset from above. a_w itself is not a
+      params key (the mass fraction does not give an activity without a solvation model), so the shift is
+      reported as a function, never applied.
+    janaf_gas: janaf_H2O.json
+    janaf_liquid_comparator: janaf_H2O_l.json
+  gas_pressure_bar: {O2: 1.0, CO2: 1.0, H2O: 1.0, source: choice, reason: standard state of the benchmark}
+  schemes: [janaf, mp, expt]
+  scheme_text:
+    janaf: CO2 and H2O dfH from NIST-JANAF (C-095, H-064); O2 dfH = 0 (MP2020-fitted reference); gas S(T) from JANAF; solids at MP formation energies, entropy neglected
+    mp: CO2 and H2O dfH from the MP molecular solids (no sublimation); O2 dfH = 0; gas S(T) from JANAF; solids at MP formation energies, entropy neglected
+    expt: W1 dfg keys, NIST-JANAF condensed and gas tables, NBS 1982 via the exchange enthalpy; gases at their tabulated free energies
+  expt_extra:
+    params: {AlHO2: dfg_boehmite, H2O_l: dfg_h2o_l}
+    janaf: {H2O: janaf_H2O.json, LiOH: janaf_LiOH.json, LiH: janaf_LiH.json, LiAlO2: janaf_LiAlO2.json}
+    elements_at_zero: [Li, Al, Ca, C, H2]
+  salts:
+    LiClO4: {li_source: LiClO4, products: {Ca: [Ca(ClO4)2], Al: [Al(ClO4)3]}}
+    LiBOB: {li_source: LiB(C2O4)2, products: {Ca: [CaB2C8O16], Al: [AlB3C12O24]},
+            note: "BOB = bis(oxalato)borate, B(C2O4)2-"}
+    LiPCP: {li_source: LiC8N5, products: {Ca: [Ca(C8N5)2], Al: [Al(C8N5)3]},
+            note: "PCP = pentacyanopropenide, C3(CN)5-"}
+  solvated:
+    keys: [solvation_ca_vs_li, solvation_al_vs_li]
+    reason: >-
+      The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent.
+      Both keys are gaps at the p0-cp3 params, so it stays a gap; no onset is derived from the aqueous analogs.
+  exchange:
+    reason: >-
+      Ca(ClO4)2 has a tabulated enthalpy of formation but no free energy and no DFT entry; it enters through
+      the exchange Ca + 2 LiClO4 -> Ca(ClO4)2 + 2 Li (as in P0-W5.2 and P0-W5.3).
+    salts: {Ca(ClO4)2: LiClO4}
+  comparators:
+    note: anions of salts that are not registered; reported, never part of a verdict
+    LiNO3: {li_source: LiNO3, products: {Ca: [Ca(NO3)2], Al: [Al(NO3)3]}}
+    Li2SO4: {li_source: Li2SO4, products: {Ca: [CaSO4], Al: [Al2(SO4)3]}}
+    LiCl: {li_source: LiCl, products: {Ca: [CaCl2], Al: [AlCl3]}}
+  previous:
+    scheme_table: results/preprint/pourbaix/c5/cell_scheme_table.json
+    summary: results/preprint/pourbaix/c5/cell_summary.json

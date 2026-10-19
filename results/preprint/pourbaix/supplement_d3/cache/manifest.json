@@ -1,0 +1,119 @@
+{
+ "client_versions": {
+  "emmet-core": "0.87.3",
+  "mp-api": "0.46.5",
+  "mpcontribs-client": null,
+  "pymatgen": "2026.9.24",
+  "requests": "2.34.2"
+ },
+ "files": [
+  {
+   "added_by": "P0-W5.4",
+   "bytes": 4456603,
+   "file": "mp_entries_cell_Li-Al-O-H.json",
+   "kind": "mp_entries",
+   "licences": [
+    "BY-C"
+   ],
+   "local_only": true,
+   "location": ".local/w5/cache_d3/mp_entries_cell_Li-Al-O-H.json",
+   "n": 307,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "H",
+     "Li",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-19T11:43:22Z",
+   "sha256": "sha256:c51928a342a9fc045e8fbd598a45ca6961bcb0ff0b31b19a3751135d208a6ce6"
+  },
+  {
+   "added_by": "P0-W5.4",
+   "file": "janaf_H2O.json",
+   "header": "Water (H2O)\tH2O1(g)",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/H-064.txt"
+   },
+   "retrieved_utc": "2026-10-19T11:43:25Z",
+   "sha256": "sha256:fa379d52e9fc070ada1df177497c6f8b6ccc63eef5117017b9aa6f784e72b1a5"
+  },
+  {
+   "added_by": "P0-W5.4",
+   "file": "janaf_H2O_l.json",
+   "header": "Water (H2O)\tH2O1(l)",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/H-063.txt"
+   },
+   "retrieved_utc": "2026-10-19T11:43:25Z",
+   "sha256": "sha256:c165cb114f8d8c83aacca7133c7325c12378c9b2646d82f23d0d80a636cd423e"
+  },
+  {
+   "added_by": "P0-W5.4",
+   "file": "janaf_LiOH.json",
+   "header": "Lithium Hydroxide (LiOH)\tH1Li1O1(cr)",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/H-018.txt"
+   },
+   "retrieved_utc": "2026-10-19T11:43:26Z",
+   "sha256": "sha256:1b6caebb6d22e1653f0083c34273d0a842510ade32dcd0eac704482d6d1f3f11"
+  },
+  {
+   "added_by": "P0-W5.4",
+   "file": "janaf_LiH.json",
+   "header": "Lithium Hydride (LiH)\tH1Li1(cr)",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/H-014.txt"
+   },
+   "retrieved_utc": "2026-10-19T11:43:28Z",
+   "sha256": "sha256:24b9e34eb8852fd0bcef5b796b361af16bf59d7cc6dbe4617b5098d152b1e416"
+  },
+  {
+   "added_by": "P0-W5.4",
+   "file": "janaf_LiAlO2.json",
+   "header": "Lithium Aluminum Oxide (LiAlO2)\tAl1Li1O2(cr)",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/Al-068.txt"
+   },
+   "retrieved_utc": "2026-10-19T11:43:29Z",
+   "sha256": "sha256:d7fefae7fcd26de49330b6a56ef800c8f0023dd10c79030b3ee3370963028118"
+  },
+  {
+   "added_by": "P0-W5.4",
+   "doi": "10.1007/BF00926423",
+   "file": "lit_krivtsov1973_al_clo4_3.json",
+   "kind": "literature_quote",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://link.springer.com/article/10.1007/BF00926423"
+   },
+   "retrieved_utc": "2026-10-19T11:49:50Z",
+   "sha256": "sha256:9d0e75df7e0ae9b3647c6bc356b9583a1770928dd2db77ac22bb738adf8e6391"
+  }
+ ],
+ "mp_database_version": "2026.04.13",
+ "note": "additive Day 3 cache; the production cache is not changed",
+ "session": "P0-W5.4",
+ "thermo_types": [
+  "GGA_GGA+U"
+ ]
+}
