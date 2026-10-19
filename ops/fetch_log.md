@@ -45,6 +45,8 @@ Rows from P0-W5.1, P0-W8.1, P0-W5.2, P0-W1.2, P0-W2.2, P0-W8.2, P0-W1.3, P0-W3.3
 
 Rows from P0-W1.4, P0-W2.4a, P0-W3.4b, P0-W4.3b and P0-W5.4 are copied from the reports and the records they cite (lit/corpus/T-N to T-Q sources.jsonl, preprint/package/fetch_index.yaml); a field a report does not state is marked as such.
 
+| Item | Source URL | Retrieved (UTC) | sha256 | HTTP |
+|---|---|---|---|---|
 | 10.1038/s41598-025-93813-9 (thread T-N, cc-by; route fulltext:europepmc-xml) (P0-W1.4) | PMC11930974 | 2026-10-19T11:42:36Z | a15b1ddba634f5b5dc86d599f82ec7f28064307a1f3a2be26870b3234909b1c8 | not recorded in P0-W1.4 |
 | 10.3390/ma14051146 (thread T-N, cc-by; route fulltext:unpaywall+wayback) (P0-W1.4) | https://web.archive.org/web/2026id_/https://www.mdpi.com/1996-1944/14/5/1146/pdf?version=1614826770 | 2026-10-19T11:44:12Z | 7fd803a988bc7715ecf18873a8a2758be3419e7c1fad857d00759732158b12da | not recorded in P0-W1.4 |
 | 10.3390/ma15113825 (thread T-N, cc-by; route fulltext:unpaywall+wayback) (P0-W1.4) | https://web.archive.org/web/2026id_/https://www.mdpi.com/1996-1944/15/11/3825/pdf?version=1653645813 | 2026-10-19T11:46:44Z | 46f06ce789fc6820371e85bb11200da31396816a8d0f1125587c1d3f67c3d717 | not recorded in P0-W1.4 |
