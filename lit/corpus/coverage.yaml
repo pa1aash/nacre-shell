@@ -1,4 +1,4 @@
-generated_utc: '2026-10-19T12:41:02Z'
+generated_utc: '2026-10-19T12:45:40Z'
 rule: 'covered: >=2 independent sources (distinct DOIs) with numeric rows; single-source: 1; gap: 0'
 rows: 1075
 duplicates_dropped:
