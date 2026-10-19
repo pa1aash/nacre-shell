@@ -1,4 +1,4 @@
-% SI derivation text (session P0-W3.4; contract v3, thresholds block v3, ignorance block v2).
+% SI derivation text (sessions P0-W3.4, P0-W3.4b; contract v4, thresholds block v4, ignorance block v3).
 % \input-able into the Supplementary Information in place of theory/derivation_body.tex, under the SI's
 % own \section{Full derivation}: this file starts at \subsection level and does not number sections.
 % Requirements of the including document: amsmath, array, and \input of theory/macros.tex.
@@ -363,6 +363,67 @@ counts the binding twice. Both exceed the exact driving force by $\kB T\ln(\cl/\
 $-\DGseq/\NA$ in the dilute limit, and both lower the barrier by the factor
 $[\ln\Omb/\ln\Omega_\mathrm{li}]^{2}$. A second application of $\dgw$ is the third double count. The
 implementation keeps these composites only as named demonstrations.
+
+%----------------------------------------------------------------------------------------------
+\subsection{Admissibility of the template--liquid energy}\label{thsi:sec:admissibility}
+
+\providecommand{\Pads}{\Pi_\mathrm{ads}}
+\providecommand{\KCaL}{K_\mathrm{CaL}}
+\providecommand{\cstd}{c^{\circ}}
+\textit{Physics.} An interfacial free energy is the work of making unit area of interface. A template
+film whose interface with water had a negative energy would lower its free energy by making more
+interface. It would swell or disperse until chain elasticity, crosslinks or anchoring stopped it, and the
+bounded interface that the cap free energy assumes would not exist. The adsorption term has no such
+limit built in, so the model must impose one.
+
+\paragraph{The requirement.} At every registered state,
+\begin{equation}\label{thsi:eq:adm}
+\gsl=\gslz+\dga\ge0 \un{J\,m^{-2}}.
+\end{equation}
+It is necessary, not sufficient, and an ultra-low positive $\gsl$ is admitted. With $\gsn\ge0$ and
+$\gnl>0$ it makes all three in-water energies non-negative. Its Ca-free case is $\gslz\ge0$. $\gslz$ must
+be the same interface without Ca$^{2+}$ at the regime temperature, pH and ionic strength. An energy
+measured with Ca$^{2+}$ at $c_\mathrm{ref}$ needs only $\dga(\cb)-\dga(c_\mathrm{ref})$ added; adding
+$\dga(\cb)$ in full double-counts. An energy measured in pure water or estimated from probe liquids on
+the dry film lacks the pH and ionic-strength terms. By the Lippmann relation those lower the energy of
+a film charged further from its point of zero charge, so the sourced value overstates the reference.
+The adsorption term is a small-change expansion about the Ca-free interface. Its validity ratio
+$r_\mathrm{ads}=-\dga/\gslz$ is reported, and Eq.~\eqref{thsi:eq:adm} is $r_\mathrm{ads}\le1$.
+
+\paragraph{A solution constant is not a site free energy.} With the site-volume standard state, a
+complexation constant $\KCaL$ referenced to $\cstd$ gives
+$\DGsite=-\Rg T\ln[\KCaL\Gs/(\ds\cstd)]$ and the Langmuir odds $x=\alpha_2\KCaL\cb/\cstd$. For a constant
+that refers to the catecholate dianion, the cycle must charge both protons:
+\begin{equation}\label{thsi:eq:cycle2}
+\DGseq=\DGsite+\Rg T\ln\!\big(1+10^{\,\mathrm{p}K_\mathrm{a2}-\mathrm{pH}}+10^{\,\mathrm{p}K_\mathrm{a}+\mathrm{p}K_\mathrm{a2}-2\mathrm{pH}}\big) \un{J\,mol^{-1}};
+\end{equation}
+the one-proton cycle overstates the binding. Lateral repulsion within a layer of fixed sites and
+competition by protons and cations lower the excess at every concentration. Because
+$\Pads=-\dga=\Rg T\int\GCa\,\dd\ln c$, the Langmuir term at a given affinity is an upper bound on the
+lowering with respect to them. Site geometry moves the affinity either way by an unknown amount, so a
+verdict built on the constant stays conditional on it.
+
+\paragraph{The bounds on $\Gs$ and $\ds$ do not cap the term below $\gslz$.} Since
+$\partial\Pads/\partial\cb=(\Rg T/\cb)\GCa$, the lowering is largest where the excess vanishes,
+$c_0=\cmax(1-1/\Eenr)$:
+\begin{equation}\label{thsi:eq:pimax}
+\Pads\le\Rg T\Gs\Big(\ln\Eenr-1+\frac{1}{\Eenr}\Big)<-\Gs\DGseq \un{J\,m^{-2}},
+\end{equation}
+independent of $\ds$ and of $\gslz$. With $\Gs=1/(\NA a_\mathrm{site})$, some dose overshoots once
+$\ln\Eenr-1+1/\Eenr>\gslz a_\mathrm{site}/\kB T$. For a hydrophilic film the right side is a fraction of
+one, so binding by a few $\kB T$ suffices.
+
+\paragraph{The rule and its consequences.} The joint prior of $(\gslz,\DGseq,\Gs,\ds)$ is restricted
+to Eq.~\eqref{thsi:eq:adm} at every state and design point. Refused draws are counted, and the retained
+mass is reported beside every verdict that uses $\gsl$. A saturating adsorption term is rejected: the
+lowering is bounded by the site layer, not by $\gslz$, and a floor at zero would invent a boundary state.
+Clipping $\cos\theta$ at $-1$ is rejected too, because it counts a non-existent interface as
+non-wetting. The admissible set is an upper set in $\DGseq$ ($\partial\gsl/\partial\DGseq=\Gs\Theta>0$),
+so the refused draws are the strongest binders. The single entry of the binding and its sign are
+unchanged. Finally, $f\le\tfrac12$ exactly when $\gsn\le\gsl$, and a binding template has
+$\gsl\le\gslz+\Rg T\ds\cb$. A favourable template therefore needs a crystal--template contact at least
+as favourable as the template--water contact. This holds under any prior, and binding narrows the
+region.
 
 %----------------------------------------------------------------------------------------------
 \subsection{Wetting branches, the spreading coefficient and the ignorance prior on $\gsn$}\label{thsi:sec:branches}

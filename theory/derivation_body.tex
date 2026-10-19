@@ -1,4 +1,4 @@
-% Derivation body (sessions P0-W3.1, P0-W3.2, P0-W3.3; contract v3). SI-ready: \input-able into the SI or the paper.
+% Derivation body (sessions P0-W3.1, P0-W3.2, P0-W3.3, P0-W3.4b; contract v4). SI-ready: \input-able into the SI or the paper.
 % Requirements of the including document: amsmath, array, and \input of theory/macros.tex.
 % Labels carry the prefix th: so they do not collide with the paper's labels.
 % Symbolic only: no literature value appears in this file. Numbers reach paper text only
@@ -706,6 +706,187 @@ is a rule for the supplied input, not a claim that $\GCasn=0$.
 \item The same rule governs R-slurry stability: dissolution of CaCO$_3$ is decided by $\Omb$, the quantity C3 uses (Section~\ref{th:sec:stability}). An
 evaluation at an ``enriched'' state is a non-equilibrium sensitivity, never an equilibrium result.
 \end{enumerate}
+
+\subsection{Admissibility of the template--liquid energy}\label{th:sec:admissibility}
+
+\providecommand{\Pads}{\Pi_\mathrm{ads}}
+\providecommand{\KCaL}{K_\mathrm{CaL}}
+\providecommand{\cstd}{c^{\circ}}
+\providecommand{\radm}{r_\mathrm{ads}}
+\providecommand{\Madm}{M_\mathrm{adm}}
+\textit{Physics.} An interfacial free energy is the reversible work of making unit area of interface
+at fixed temperature and chemical potentials. A template film whose interface with water had a
+negative energy would lower its free energy by making more interface. It would swell, roughen or
+break into dispersed fragments until something outside the capillary description stopped it: the
+elasticity of the chains, the crosslinked network or the anchoring. The state that
+Eqs.~\eqref{th:eq:grand} and \eqref{th:eq:young-ads} assume, a bounded template--water interface part of
+which the base of a cap replaces, would then not exist. The Ca$^{2+}$ adsorption term of
+Eq.~\eqref{th:eq:gibbs} has no such limit built in. Strong enough binding drives $\gsl$ below zero at
+any Ca$^{2+}$ concentration (decision D27 records that this happened on every draw with the
+binding-constant analog). This subsection states the requirement, the reference state it presumes, how
+a solution binding constant enters, the rule the screen follows, and what the requirement implies for
+C3 and C4. It was written from the physics and from the one fact D27 states; no other screen output
+was read.
+
+\paragraph{A1. Interface stability, a requirement on the model.} At fixed $T$ and chemical
+potentials the free energy of a film with interfacial area $A$ changes as $\dd G=\gsl\,\dd A$ when the
+area changes at fixed structure. With $\gsl<0$ the area grows spontaneously. Hence
+\begin{equation}\label{th:eq:adm}
+\gsl=\gslz+\dga\ge0 \un{J\,m^{-2}}
+\end{equation}
+is necessary for the interface the screen describes, at every registered state. Four limits apply.
+(a) It is necessary, not sufficient: a film with a small positive $\gsl$ may still swell through
+elastic terms the model does not contain. (b) An ultra-low but positive $\gsl$ is admitted. The
+capillary description stays defined, and the Young numerator is then dominated by $-\gsn$. (c) The
+same argument already gives $\gsn\ge0$ and $\gnl>0$ for the other two interfaces
+(Section~\ref{th:sec:conformality}; \texttt{theory/ignorance\_priors.md}).
+Eq.~\eqref{th:eq:adm} completes it, so every admitted state has three non-negative in-water energies.
+Its Ca-free case, $\cb\to0$, is the truncation $\gslz\ge0$ registered at cp3. (d) $\dga$ is a
+small-change expansion about the Ca-free interface (A2), so Eq.~\eqref{th:eq:adm} bounds where the
+model can be used at all. It does not certify the value of $\gsl$ close to the bound.
+
+\paragraph{A2. The reference state of $\gslz$.} Eq.~\eqref{th:eq:gibbs} integrates
+$\dd\gsl=-\GCa\,\dd\mu_\mathrm{Ca}$ with only the Ca$^{2+}$ potential changing. $\gslz$ must therefore
+be the same interface with no Ca$^{2+}$ at the sites, at the regime $T$, pH and ionic strength.
+Three departures matter.
+(i) \emph{Ca$^{2+}$ already present.} An energy measured at a Ca$^{2+}$ concentration $c_\mathrm{ref}$
+already contains $\dga(c_\mathrm{ref})$. The consistent value is
+$\gsl(\cb)=\gsl^\mathrm{meas}+\dga(\cb)-\dga(c_\mathrm{ref})$, and adding $\dga(\cb)$ in full counts
+the adsorption up to $c_\mathrm{ref}$ twice. At $c_\mathrm{ref}=\cb$ nothing is added (rule 2 of
+Section~\ref{th:sec:rule}).
+(ii) \emph{Another pH and ionic strength.} An energy measured in pure water is Ca-free, so there is no
+double count, but its reference state differs. The shift to the regime is a further Gibbs integral, over
+the proton and electrolyte potentials. For charging by potential-determining ions (protons at the
+coordinating groups), the Lippmann relation $\partial\gsl/\partial\psi_0=-\sigma$, with $\sigma=0$ at
+the point of zero charge and $\partial\sigma/\partial\psi_0>0$, makes $\gsl$ largest at zero charge. A
+film charged further from that point at the alkaline regime pH than in pure water has a lower Ca-free
+energy than the one measured. An estimate built from probe-liquid contact angles on the dry film
+describes yet another state (dry, unswollen, uncharged); the sourced template--water energy is of this
+kind. In the electrocapillary picture it overstates the regime reference, so Eq.~\eqref{th:eq:adm} is
+at least as restrictive as it appears with the sourced value. The size of the shift is not computed in
+P0.
+(iii) \emph{Changes that are not small.} The term evaluates the adsorption with the site density, site
+free energy and layer thickness of the Ca-free interface, and the neutral-solute form omits the change
+of the diffuse-layer free energy (Section~\ref{th:sec:template}). Both are first-order statements about
+an interface whose structure the adsorption leaves unchanged. The work per area that the adsorbed layer
+does, the spreading pressure $\Pads=-\dga$, is also the free-energy scale that drives restructuring:
+swelling, collapse by Ca$^{2+}$ bridges between neighbouring groups, release of counter-ions. The
+expansion is controlled only while
+\begin{equation}\label{th:eq:radm}
+\radm\equiv\frac{\Pads}{\gslz}=-\frac{\dga}{\gslz}\ll1 \un{1}.
+\end{equation}
+At $\radm\ge1$ the requirement A1 fails. Between, the state exists, but $\gsl$ carries an error the term
+does not control. $\radm$ is therefore reported, not used as a cut, because the size of the neglected
+terms is not known.
+
+\paragraph{A3. Site binding versus solution complexation.} The flagged input for $\DGsite$ is a
+stability constant of the Ca$^{2+}$--catecholate complex in solution, $\KCaL$, referenced to
+$\cstd$. With the standard-state relation~\eqref{th:eq:stdstate} and $\Vsite=\ds/(\NA\Gs)$,
+\begin{equation}\label{th:eq:x-analog}
+\begin{gathered}
+\DGsite=-\Rg T\ln\frac{\KCaL\,\Gs}{\ds\,\cstd},\qquad
+x=\frac{\alpha_2\KCaL\,\cb}{\cstd},\\
+\alpha_2=\frac{1}{1+10^{\,\mathrm{p}K_\mathrm{a2}-\mathrm{pH}}+10^{\,\mathrm{p}K_\mathrm{a}+\mathrm{p}K_\mathrm{a2}-2\mathrm{pH}}} \un{J\,mol^{-1};\ 1}.
+\end{gathered}
+\end{equation}
+$\Gs$ and $\ds$ drop out of the odds. The solution constant fixes the occupancy per bulk concentration
+directly, and $\Gs$ sets only how many sites carry it. Three differences separate a site from the free
+ligand.
+(1) \emph{Ligand form.} The constant refers to the dianion, with both catechol oxygens
+deprotonated. The cycle must therefore charge the free energy of producing that form at the regime pH:
+\begin{equation}\label{th:eq:cycle2}
+\DGseq=\DGsite+\Rg T\ln\!\big(1+10^{\,\mathrm{p}K_\mathrm{a2}-\mathrm{pH}}+10^{\,\mathrm{p}K_\mathrm{a}+\mathrm{p}K_\mathrm{a2}-2\mathrm{pH}}\big) \un{J\,mol^{-1}}.
+\end{equation}
+The one-proton cycle~\eqref{th:eq:cycle} charges only the first proton. With
+$\mathrm{p}K_\mathrm{a2}>\mathrm{p}K_\mathrm{a}$ it understates the cost, and so overstates the binding, by
+$\Rg T\ln[(1+10^{\mathrm{p}K_\mathrm{a2}-\mathrm{pH}}+10^{\mathrm{p}K_\mathrm{a}+\mathrm{p}K_\mathrm{a2}-2\mathrm{pH}})/(1+10^{\mathrm{p}K_\mathrm{a}-\mathrm{pH}})]>0$.
+This is largest where the regime pH lies below $\mathrm{p}K_\mathrm{a2}$. It is a correction the
+physics requires, not an uncertainty.
+(2) \emph{A layer of fixed sites.} Divalent ions bound to a layer of fixed sites repel one another, and
+protons and electrolyte cations compete for the same groups. Both lower the occupancy at every
+concentration below the Langmuir occupancy with the same zero-coverage affinity (Q3). Since
+$\Pads(\cb)=\Rg T\int_0^{\cb}\GCa\,\dd\ln c$, a lower excess at every concentration gives a smaller
+lowering. With respect to these effects, the Langmuir term at a given affinity is an upper bound on
+$\Pads$, so the admissibility rule needs no correction for them.
+(3) \emph{Geometry and environment.} Groups held rigidly, bidentate bridging by two neighbouring
+groups or a lower local dielectric constant can strengthen the zero-coverage affinity. Misorientation,
+steric hindrance and hydrogen bonds to neighbouring groups weaken it. Physics fixes neither the sign nor
+the size, and the single-source widening (a method error of computed transfer free energies) does not
+cover it. Every verdict that rests on the constant therefore stays conditional on the analog. The
+measurement that removes the analog is the Ca$^{2+}$ uptake isotherm $\GCa(c)$ of the template itself,
+which gives $\dga$ through Eq.~\eqref{th:eq:gibbs} without any binding constant.
+
+\emph{How far the bounds on $\Gs$ and $\ds$ cap the term.} Differentiating,
+$\partial\Pads/\partial\cb=(\Rg T/\cb)\GCa$. The lowering grows while the excess is positive and
+falls once it is negative. For a binding template ($\Eenr>1$) the excess $\Gs\Theta-\ds\cb$ vanishes
+at $c_0=\cmax(1-1/\Eenr)$, where $x=\Eenr-1$ and $\ln(1+x)=\ln\Eenr$. Hence, at every Ca$^{2+}$
+concentration,
+\begin{equation}\label{th:eq:pimax}
+\Pads\le\Pads^{\max}=\Rg T\Gs\Big(\ln\Eenr-1+\frac{1}{\Eenr}\Big)=\Gs\Big[-\DGseq-\Rg T\big(1-\e^{\DGseq/\Rg T}\big)\Big]<-\Gs\DGseq \un{J\,m^{-2}}.
+\end{equation}
+$\ds$ fixes where the maximum lies, not its height. The geometric cap
+$\Gs\le\Gamma_\mathrm{s}^\mathrm{geo}$ of the ignorance priors therefore limits the lowering only to
+$\Gamma_\mathrm{s}^\mathrm{geo}|\DGseq|$, the binding free energy of a full layer of sites. Nothing in that
+cap refers to $\gslz$. Writing $\Gs=1/(\NA a_\mathrm{site})$, some Ca$^{2+}$ dose overshoots $\gslz$
+exactly when
+\begin{equation}\label{th:eq:overshoot}
+\ln\Eenr-1+\frac{1}{\Eenr}>\frac{\gslz\,a_\mathrm{site}}{\kB T} \un{1}.
+\end{equation}
+The right side is the bare interfacial work of one site footprint in thermal units. The left side grows
+as $(\ln\Eenr)^{2}/2$ for weak binding and as $|\DGseq|/\Rg T$ for strong binding. For a hydrophilic film,
+$\gslz=\gp+\gw-W_\mathrm{pw}$ is the small residual of nearly cancelling terms, and its work per footprint
+is a fraction of $\kB T$. To leading order, binding stronger than
+$|\DGseq|\approx\Rg T\sqrt{2\gslz a_\mathrm{site}/\kB T}$ then overshoots at some dose. The overshoot
+is the generic outcome of the Gibbs--Langmuir term for a hydrophilic template that binds Ca$^{2+}$ by
+more than a few $\kB T$, not an artefact of one prior. The geometric bounds do not prevent it.
+
+\paragraph{A4. The rule.} Three encodings were weighed against the physics.
+(i) \emph{Restrict the joint prior.} Eq.~\eqref{th:eq:adm} is a condition on whether the described
+state exists. It is not a law that limits the binding term: A3 shows that the binding can exceed
+$\gslz$, and what then fails is the existence of the interface. The consistent encoding restricts the
+joint prior of $(\gslz,\DGseq,\Gs,\ds)$ to the admissible set, at every registered state and design
+point. Draws outside it are refused and counted. The retained mass $\Madm$ is printed beside every
+verdict that uses $\gsl$ as a property of the prior: it measures how far the inputs contradict the
+existence of the interface. This is the joint form of the cp3 truncation $\gslz\ge0$.
+(ii) \emph{A saturating adsorption term} that cannot overshoot $\gslz$ has no physical basis. The
+finite site count bounds the lowering by Eq.~\eqref{th:eq:pimax}, not by $\gslz$. A floor at $\gsl=0$
+would place the refused mass on a boundary state that the physics excludes, at
+$\cos\theta=-\gsn/\gnl$, as if a bounded interface existed there. Any particular saturating function
+would be a fit.
+(iii) \emph{A coupling of $\gslz$ and the binding.} It is physical: the same groups set the charge that
+lowers $\gslz$ (A2 (ii)) and bind Ca$^{2+}$. But no model of it exists in P0, so it is not registered
+as a function. The restriction (i) induces the statistical dependence it implies: retained draws pair
+deep binding with large $\gslz$.
+The screen registers (i). Clipping $\cos\theta$ at $-1$ for an inadmissible draw is also rejected: it
+counts a non-existent interface as non-wetting. Both rejected forms put such a draw on the bad side of
+C3 (a); sign test SF4 of the contract records this.
+
+\emph{Bookkeeping and sign.} The rule restricts inputs and adds no channel. The proof of
+Section~\ref{th:sec:template} is unchanged: $\DGseq$, $\Gs$ and $\ds$ still reach the barrier once,
+through $\dga$, and $\Om=\Omb$. Since $\partial\gsl/\partial\DGseq=\Gs\Theta>0$ and
+$\gsl\to-\infty$ as $\DGseq\to-\infty$, the admissible set is an upper set in $\DGseq$. The refused
+draws are the strongest binders, and on the admitted ones Eq.~\eqref{th:eq:young-ads} holds as before.
+Binding alone raises the barrier; the template helps only if $\gsn$ falls by more than $\gsl$ does.
+\emph{Branch masses.} The masses of the $\gsn$ prior are conditional on $\gsl$ and keep their form.
+On admitted draws the non-wetting cut $\gsl+\gnl\ge\gnl$, so the case in which the whole $\gsn$ range is
+non-wetting no longer occurs. The marginal masses are expectations over the restricted prior
+(\texttt{theory/ignorance\_priors.md}, Section 2a).
+
+\paragraph{A5. Consequences for C3 and C4.} With Young,
+\begin{equation}\label{th:eq:favourable}
+f(\theta)\le\tfrac12\iff\cos\theta=\frac{\gsl-\gsn}{\gnl}\ge0\iff\gsn\le\gsl,\qquad
+0\le\gsn\le\gsl\le\gslz+\Rg T\ds\cb \un{J\,m^{-2}},
+\end{equation}
+the second chain for a binding template on an admitted draw. With both energies non-negative, the
+favourable region of the $(\gsl,\gsn)$ plane is the wedge under the diagonal, and it shrinks to the
+point $\gsn=0$ as $\gsl\to0$. \textbf{A favourable template requires $\gsn\le\gsl$: the
+crystal--template contact must be at least as favourable as the template--water contact.} This is a
+statement about the physics and holds under any prior. Binding narrows the wedge, because it lowers
+the upper end $\gsl$. A very hydrophilic template, with $\gslz$ small, needs a crystal contact almost as
+cheap as zero. With a margin the condition reads $\gsn\le\gsl-m_{\cos}\gnl$. For C4 the spreading bound
+$\Ssp\le\gsl-\gnl$ (Eq.~\eqref{th:eq:spread-bound}) is unchanged. On an admitted draw a contact angle
+of $\pi$, which closes the coalescence route, needs $\gsn\ge\gsl+\gnl\ge\gnl$; it can no longer come
+from a negative $\gsl$.
 
 \section{Film conformality}\label{th:sec:conformality}
 

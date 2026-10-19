@@ -104,7 +104,7 @@ limit, so no sharp template-water interface would exist (interface stability,
 sensitivity, and the report prints the mass the truncation removed and every verdict that
 changes without it.
 
-**Admissibility of the template-liquid energy (D27, 2026-10-18; contract v4; derivation, Section 8).**
+**Admissibility of the template-liquid energy (D27, 2026-10-18; contract v4; derivation, Section 7 (Admissibility)).**
 - **Physics.** gamma_sl is the free energy per area of the template-water interface. If it were negative,
   the film would lower its free energy by creating more interface: it would swell, roughen or disperse
   until something outside the model (chain elasticity, the crosslinked network, the anchoring) stops it.
@@ -146,7 +146,7 @@ changes without it.
   Pi_ads_max = Gamma_s (-Delta_G_seq - R T (1 - exp(Delta_G_seq/(R T)))) <= -Gamma_s Delta_G_seq, the binding
   free energy of a full layer of sites, which has no relation to gamma_sl0. A form that cannot overshoot
   gamma_sl0 therefore has no physical basis, and any particular one would be a fit. gamma_sl0 and the
-  binding are physically coupled through the charge of the same groups (Section 8, A2), but no model of
+  binding are physically coupled through the charge of the same groups (Section 7 (Admissibility), A2), but no model of
   that coupling is registered. The restriction induces the statistical dependence: retained draws pair
   deep binding with large gamma_sl0. The sensitivity analysis must treat the restricted inputs as
   correlated (lane note N2).
@@ -325,7 +325,7 @@ kill criterion (cp2 ruling, fix F3).
 
   The finding is a statement about the mechanism. It does not enter the study verdict, which is
   carried by C3 through Delta_gamma_ads.
-- **Analog route (D27; derivation, Section 8, A3).** Where Delta_G_site is taken from the solution
+- **Analog route (D27; derivation, Section 7 (Admissibility), A3).** Where Delta_G_site is taken from the solution
   complexation constant `params.log10_k_ca_catecholate`, the following apply.
   - Delta_G_site = `Delta_G_site_from_K`, with the site-volume standard state.
   - The cycle is `Delta_G_seq_cycle_2H`, with pKa = `params.pka_catechol` and pKa2 =
@@ -369,7 +369,7 @@ C3 has two parts. Both must pass, as the charter's verdict bands require.
 - **Decision.** feasible if `P(f <= f_e) >= p`; falsified if `P(f > f_e) >= p`; inconclusive
   otherwise. The mass at the clipped boundaries (N2) is reported. Since D27 the masses are those of the
   admissible draws (Section 1), with M_adm printed.
-- **What a favourable template needs (D27; derivation, Section 8, A5).** f <= f_e is cos(theta) >= m_cos,
+- **What a favourable template needs (D27; derivation, Section 7 (Admissibility), A5).** f <= f_e is cos(theta) >= m_cos,
   that is gamma_sn <= gamma_sl - m_cos gamma_nl. With gamma_sl >= 0 and gamma_sn >= 0 the favourable region
   is the wedge 0 <= gamma_sn <= gamma_sl - m_cos gamma_nl. The crystal-template contact must be at least as
   favourable as the template-water contact (gamma_sn <= gamma_sl at m_cos = 0). For a binding template,
@@ -880,7 +880,7 @@ decision:
     gamma_sl0: {truncate_below: '0', reason: interface stability, sensitivity: untruncated prior, labelled,
                 report: [truncated mass, verdicts that change], params: params.gamma_sl0_template}
   admissibility:
-    reason: D27 (2026-10-18); derivation Section 8 (A1 to A5); theory/ignorance_priors.md Section 2a
+    reason: D27 (2026-10-18); derivation Section 7 (Admissibility) (A1 to A5); theory/ignorance_priors.md Section 2a
     condition: {quantity: gamma_sl_insitu, comparator: '>=', edge: '0'}
     physics: a negative template-liquid energy describes an interface that lowers its free energy by growing; the planar interface the model describes does not exist there
     joint_over: [gamma_sl0, Delta_G_seq, Gamma_s, delta_s]

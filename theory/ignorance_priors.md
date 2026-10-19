@@ -155,7 +155,7 @@ difference.
 
 ## 2a. Admissibility of the template-liquid energy and the branch masses (D27)
 
-Session P0-W3.4b, decision D27 (2026-10-18). Derived from the physics (derivation, Section 8) and from
+Session P0-W3.4b, decision D27 (2026-10-18). Derived from the physics (derivation, Section 7 (Admissibility)) and from
 the one fact D27 states; no other screen output was read.
 
 **Why the bound applies at the regime state.** The argument of 1a and 1d is about the interface that
@@ -204,7 +204,7 @@ gamma_nl. The formulas are unchanged; the restriction changes which values of ga
 
 **Single-source binding constants measured in solution.** The widening rule of Section 4 covers the
 method error of a transfer free energy. It does not cover the transfer of a solution complexation
-constant to a surface site, which is a different quantity (derivation, Section 8, A3). Such a constant
+constant to a surface site, which is a different quantity (derivation, Section 7 (Admissibility), A3). Such a constant
 reaches Delta_G_site only through the analog route of `theory/thresholds.md` (C2), flagged as an
 analog, and with the cycle that charges every proton its ligand form has lost.
 
