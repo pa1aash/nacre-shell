@@ -1,12 +1,16 @@
 {
-  "last_session": "P0-W5.3",
-  "status": "HOLD-P",
+  "last_session": "P0-W5.4",
+  "status": "DONE-PART1",
   "day": 3,
-  "hold_reason": "pod not started",
+  "hold": {
+    "part": "anchor (Part 2)",
+    "status": "HOLD-P",
+    "reason": "pod not started (YOU-1 answered later)",
+    "pod_jobs": []
+  },
   "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
-  "pod_jobs": [],
+  "params_tag": "p0-cp3",
   "mp_db_version": "2026.04.13",
-  "contract_sha": "5811a6b2b82565a2d7e991987eee6ab4f167959e",
   "artifacts": {
     "params_snapshot": "results/preprint/pourbaix/inputs/params_8bc15c8.json",
     "cache": "results/preprint/pourbaix/cache/",
@@ -29,7 +33,7 @@
     "dispatch": "jobs/preprint/",
     "dispatch_dry_run": "results/preprint/anchor/dispatch/dryrun-probe-d7e407c/",
     "ledger": "jobs/ledger/p0-w5.jsonl",
-    "report": "ops/reports/P0-W5.3.md",
+    "report": "ops/reports/P0-W5.4.md",
     "code": [
       "src/nacre/pourbaix/",
       "src/nacre/anchor/",
@@ -52,14 +56,33 @@
         "sha256": "997b3919d9dfede1d85f593123603dc8dc5b352affaef41aca047cf78e53e434"
       }
     },
-    "conformer_record": "src/nacre/anchor/conformers.json"
+    "conformer_record": "src/nacre/anchor/conformers.json",
+    "supplement_d3": {
+      "readme": "results/preprint/pourbaix/supplement_d3/README.md",
+      "documents": "results/preprint/pourbaix/supplement_d3/cell/",
+      "summary": "results/preprint/pourbaix/supplement_d3/cell_d3_summary.json",
+      "schema_checks": "results/preprint/pourbaix/supplement_d3/cell_schema_checks.json",
+      "extra_params_snapshot": "results/preprint/pourbaix/supplement_d3/inputs/params_8bc15c8_extra.json",
+      "cache": "results/preprint/pourbaix/supplement_d3/cache/",
+      "config": "results/preprint/pourbaix/config/supplement_d3.yaml",
+      "local_only": ".local/w5/cache_d3/mp_entries_cell_Li-Al-O-H.json (sha256 in the supplement manifest)"
+    },
+    "anchor_driver": {
+      "code": "src/nacre/anchor/production.py",
+      "pod_env": "src/nacre/anchor/pod_env_linux64.yaml",
+      "lock": "src/nacre/anchor/pod_env_linux64.lock",
+      "spec": "jobs/preprint/specs/anchor_production.yaml",
+      "dryrun_spec": "jobs/preprint/specs/anchor_production_dryrun.yaml",
+      "dryrun": "results/preprint/anchor/dispatch/anchor-production-dryrun-2b3a281/",
+      "local_smoke": "results/preprint/anchor/driver_smoke/"
+    }
   },
   "notes": [
-    "A (N19, N12): ledger lists only committed outputs (files > 1 MiB local_only, no SSH user/host/port); builder reads stored conformers in canonical order (Linux CI run 39025558495: anchor tests pass, only W6 Arial tests fail); Fig 7 schema check dropped, water lines in extensions.p0-w5.",
-    "B: NOTICE.md and attribution draft written; all 3715 cached entries (1280 ids) BY-C, live re-check BY-C; BY-NC excluded: none; loader admits BY-C only; key scan clean.",
-    "C1: 54 schema-v2 R-slurry baseline documents at 8bc15c8; Omega fixture dissolving log10 Omega -3.86 (margin 3.83), supersaturated +0.73; carbon-redox fraction above edge 0.806-0.847.",
-    "C2: CaCO3/LiClO4 governed by expt 3.938 V, m_expt 0.087 V (window_margin_expt): falsified for E_cell_max > 4.025 V; LFP inconclusive to falsified over 3.6-4.2 V, LCO, layered NMC/NCA, LMO, LNMO falsified; LiBOB, LiPCP, Al2O3 sinks undetermined; solvated sink gap (water analogs not convertible without gas-phase ion energies).",
-    "C rerun at W1 P0-W1.3 params 8bc15c8 (was 680a44b); R-slurry keys identical between the shas.",
-    "D not started: operator answered 'later' at YOU-1. Next pod session needs linux-64 xtb/CREST pins, the production driver and the SMD CDS check."
+    "Boehmite (mp-625054) window, expt governing: reduction 2.155 V (AlOOH + Li -> LiAlO2 + 1/2 H2), LiClO4 oxidation 4.751 V; BOB/PCP undetermined, solvated gap.",
+    "Corundum confirmed: Li-open reduction 1.221 V; LiClO4 sink now computed 4.706 V via Al(ClO4)3. CaCO3/LiClO4 3.938 V and class verdicts reproduced exactly; CaCO3 reduction now expt-governed 1.776 V.",
+    "Al(ClO4)3 dfH -571.1 +- 2.1 kJ/mol (Krivtsov et al. 1973, doi:10.1007/BF00926423): sourced value in the supplement, not yet a W1 params key (key request outstanding).",
+    "Al-phase LiClO4 onsets and every reduction limit have no budget key: undetermined (inconclusive, never a pass). Reduction and solvated budgets: gap (W1 post_cp3 not set over a one-hour poll).",
+    "Boehmite dehydration to corundum favoured below p(H2O) 2.9e-5 bar (expt; a_w 8.9e-4 liquid-referenced): a threshold, not a verdict; electrolyte water activity is not a sourced key.",
+    "Anchor driver ready: linux-64 lock (xtb 6.6.1 hf49bc11_0, CREST 2.12 h9d67668_0), PySCF 2.14.0 built with -DENABLE_SMD=ON for the CDS term; dry run on the local transport passed (anchor-production-dryrun-2b3a281). Remaining on the pod: install, CDS check, CREST/xtb/DFT on 10 species, the four binding free energies."
   ]
 }
