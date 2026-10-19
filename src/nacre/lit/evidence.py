@@ -13,13 +13,13 @@ COLUMNS = ["row_id", "thread", "doi", "locator", "quantity", "symbol", "value", 
            "range_or_uncertainty", "conditions", "method", "grade", "extraction_route", "retrieved_at",
            "contrary", "retro_candidate", "notes"]
 THREADS = ("T-A", "T-B", "T-C", "T-D", "T-E", "T-F", "T-G", "T-H", "T-I", "T-J", "T-K",
-           "T-L", "T-M")
+           "T-L", "T-M", "T-N", "T-O", "T-P", "T-Q")
 GRADES = ("A", "B", "C", "D")
 ROUTES = ("full text", "SI", "abstract")
 METHODS = ("experiment", "computation", "compilation")
 QUALITATIVE = "qualitative"
 
-_ROW_ID = re.compile(r"^T[A-M]-\d{3}$")
+_ROW_ID = re.compile(r"^T[A-Q]-\d{3}$")
 _DOI = re.compile(r"^10\.\d{4,9}/\S+$")
 _SLUG = re.compile(r"^[a-z][a-z0-9_]*$")
 _NUM = r"[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?"
@@ -283,6 +283,30 @@ TARGETS = [
      "slugs": ["w_adh_wet"], "rank": 10, "role": "C1 kill criterion; not in the nucleation barrier"},
     {"id": "incell_potential_range", "label": "in-cell potential range at the collector",
      "slugs": ["incell_potential"], "rank": 10, "role": "R-cell window (C5); not in the nucleation barrier"},
+    # day 4 targets (P0-W1.4): post-cp3 keys, d_max inputs, R-cell budgets and the Outlook evidence
+    {"id": "water_activity_drying_primary", "label": "water activity in primary (convective) film drying",
+     "slugs": ["water_activity_drying_primary"], "rank": 9, "role": "a_w of the primary drying state (F7) in ln S"},
+    {"id": "pvdf_surface_energy", "label": "dry surface free energy of PVDF", "slugs": ["pvdf_surface_energy_total"],
+     "rank": 10, "role": "PVDF control of the deletion test; not in the template's nucleation barrier"},
+    {"id": "cathode_particle_diameter", "label": "cathode secondary-particle diameter",
+     "slugs": ["cathode_particle_diameter", "cathode_particle_d50"], "rank": 10,
+     "role": "upper bound pi d_p^2/4 of A_patch (C3 b)"},
+    {"id": "asperity_contact_area", "label": "asperity contact area of a particle on the foil",
+     "slugs": ["asperity_contact_area", "particle_collector_contact_radius"], "rank": 10,
+     "role": "lower bound of A_patch (C3 b)"},
+    {"id": "template_mass_per_group", "label": "template molar mass per coordinating group",
+     "slugs": ["template_mass_per_group"], "rank": 10, "role": "stoichiometric bound on rho_L (Gamma_s cap)"},
+    {"id": "ca_ionic_radius", "label": "Ca2+ ionic radius", "slugs": ["ca_ionic_radius"], "rank": 10,
+     "role": "site footprint and the 2 r_Ca term of the delta_s bound"},
+    {"id": "film_tunnelling_inputs", "label": "CaCO3 film resistivity and tunnelling inputs",
+     "slugs": ["resistivity_caco3", "electron_affinity_caco3", "effective_mass_caco3", "tunnel_prefactor_j0"],
+     "rank": 10, "role": "d_max of the C4 closure route (R-cell)"},
+    {"id": "reduction_limit_thermochemistry", "label": "formation Gibbs energies of the reduction-limit products",
+     "slugs": ["dfg_li2co3", "dfg_lial5o8"], "rank": 10, "role": "C5c_red limits and their budget keys"},
+    {"id": "al_perchlorate_thermochemistry", "label": "Al(ClO4)3 formation enthalpy and Gibbs energy",
+     "slugs": ["dfh_al_clo4_3", "dfg_al_clo4_3"], "rank": 10, "role": "C5c_ox sink of corundum and boehmite"},
+    {"id": "anion_anodic_stability", "label": "anodic stability of other biominerals' anions",
+     "slugs": ["stability_window"], "rank": 11, "role": "Outlook sentence only; not a screen input"},
 ]
 
 

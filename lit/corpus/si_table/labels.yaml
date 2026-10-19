@@ -493,3 +493,56 @@ electrolyte_salts:
 electrolyte_solvents:
   label: registered solvents
   latex: \mathrm{solvent}
+gamma_pvdf:
+  label: dry surface free energy of PVDF
+  latex: \gamma_\mathrm{PVDF}
+gamma_pvdf_dispersive:
+  label: dry surface free energy of PVDF, dispersive part
+  latex: \gamma_\mathrm{PVDF}^\mathrm{d}
+gamma_pvdf_polar:
+  label: dry surface free energy of PVDF, polar part
+  latex: \gamma_\mathrm{PVDF}^\mathrm{p}
+cathode_particle_diameter:
+  label: cathode secondary-particle diameter
+asperity_contact_area:
+  label: asperity contact area, particle on foil
+template_mass_per_group_min:
+  label: least template mass per coordinating group
+ca_ionic_radius_cn6:
+  label: Ca2+ ionic radius at coordination number 6
+dfg_li2co3:
+  label: Gibbs energy of formation, Li2CO3
+  latex: \Delta_\mathrm{f}G
+dfg_lial5o8:
+  label: Gibbs energy of formation, LiAl5O8
+  latex: \Delta_\mathrm{f}G
+s_boehmite:
+  label: standard entropy of boehmite
+  latex: S^\circ
+nbs_last_digit_dfg_li2co3:
+  label: last printed figure, Gibbs energy of Li2CO3
+  latex: u_1
+u_tab_dfg_li2co3:
+  label: tabulated uncertainty, Gibbs energy of Li2CO3
+  latex: u
+nbs_last_digit_dfg_lial5o8:
+  label: last printed figure, Gibbs energy of LiAl5O8
+  latex: u_1
+u_tab_dfg_lial5o8:
+  label: tabulated uncertainty, Gibbs energy of LiAl5O8
+  latex: u
+u_tab_dfg_cao:
+  label: tabulated uncertainty, Gibbs energy of lime
+  latex: u
+u_tab_dfg_corundum:
+  label: tabulated uncertainty, Gibbs energy of corundum
+  latex: u
+window_margin_expt_red_caco3:
+  label: C5 reduction-limit margin of CaCO3, all-experimental route
+window_margin_expt_red_corundum:
+  label: C5 reduction-limit margin of corundum, all-experimental route
+work_function_al:
+  label: work function of clean aluminium
+  latex: W_\mathrm{Al}
+phi_b_caco3_li2co3_analog:
+  label: tunnelling barrier height, Li2CO3 on Li analog

@@ -260,3 +260,23 @@ give a fixed prior under P1 with all of them as sources; the width is still not 
 For each of m_W, m_S and m_E, the entry states one of two cases in `notes` and in `margin_case`:
 `evidence`, a value derived (D1) from fetched method-error rows; or `zero`, because the prior
 already carries the method error, with the reason.
+
+## 8. Post-cp3 supplements (rule version 3, P0-W1.4, 2026-10-19)
+
+Sections 1 to 7 are unchanged. After tag `p0-cp3` the parameter table changes only by addition
+(standing rule R7 of the track, decision D30): new evidence rows and new keys, each covered by a
+dated entry in `ops/tracks/p0_deviations.md` with "Re-audit: cp4". The production screens read the
+table at the tag and never see the additions.
+
+- **New keys** carry `added_in` (the session that added them). They follow sections 2 to 7 unchanged.
+- **A gap at the tag is never edited.** When new evidence supplies a prior for a key that was a gap at
+  `p0-cp3`, the prior goes to a new key that names the gap key in `fills`. The gap key keeps its entry
+  as it was at the tag, so a reader of the tag and a reader of the supplemented table agree on every
+  key the tag holds. `fills` must name a gap key with the same unit and transform, and the filling
+  key must have admitted evidence. Whether a consumer reads the filling key in place of the gap key
+  is decided at cp4, not here.
+- **One edit of an existing key is mandated:** `n_req` becomes N_req = ln(1/q_0)/A_patch with
+  q_0 = 1 - p_cred (cp3 R5), in place of 1/A_patch. Its value stays null while `patch_area` is a gap,
+  so no screen value changes; the edit is named in the deviation entry.
+- **Loader check.** `tests/lit/test_lit_params_post_cp3.py` compares every key of the tag's table with
+  the current table and fails if any differs, except `n_req` and the alias that copies it.

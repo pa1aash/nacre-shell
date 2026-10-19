@@ -1478,10 +1478,11 @@ params:
     unit: m^-2
     regimes: [R-slurry]
     status: registered
-    derive: {expr: "1 / A_patch", inputs: {A_patch: patch_area}, as: none}
+    derive: {expr: "log(1 / (1 - p_cred)) / A_patch", inputs: {p_cred: p_cred, A_patch: patch_area}, as: none}
     notes: >-
-      Registered rule N_req = 1/A_patch (cp2 fix F4, decision D14), derived per draw from patch_area. The Poisson
-      refinement ln(1/q_0)/A_patch (theory/cp2_brief.md D) is a cp3 proposal and is not applied here.
+      Registered rule N_req = ln(1/q_0)/A_patch with q_0 = 1 - p_cred (cp3 R5, decision D19), derived per draw from
+      patch_area and the registered p_cred (its sweep moves N_req). It replaces the cp2 rule 1/A_patch (fix F4,
+      decision D14) in P0-W1.4 (README section 8). Undetermined while patch_area is a gap.
   gas_reference_schemes: {symbol: gas_reference_schemes, unit: "1", regimes: [R-cell], status: registered, reason: "registration (cp3 packet decision 3); the ruling text on the scheme set is not in this table's inputs. cp3 R2 sets the margin of the all-experimental route (window_margin_expt); the benchmark drg_caco3_decomposition and W5's gas_reference.md bear on the choice"}
   al_phases: {symbol: al_phases, unit: "1", regimes: [R-cell], status: registered, reason: "registration named by theory/thresholds.md (C5 R-cell); no ruling text available to this table"}
   m_s:
@@ -1989,6 +1990,265 @@ params:
       - {label: ethyl isopropyl sulfone, sources: [TI-066]}
       - {label: "EC:EMC", sources: [TI-075]}
       - {label: DMC, sources: [TB-067]}
+
+  # ================================================================ post-cp3 (P0-W1.4, README section 8): deletion test, A_patch, geometry
+  gamma_pvdf:
+    added_in: P0-W1.4
+    symbol: gamma_pvdf
+    unit: J m^-2
+    regimes: [R-slurry]
+    distinct: true
+    conditions: dry PVDF homopolymer films against air, from contact angles of probe liquids (component analyses), room temperature
+    admit:
+      - {row: TN-001, original: szewczyk-2019-measured}
+      - {row: TN-004, original: wu-1982}
+      - {row: TN-007, original: langmuir-2023-vanoss}
+    comparators: [TN-013]
+    notes: >-
+      Total dry surface free energy of PVDF, the input of the PVDF control of the deletion test (the same bound rule as
+      the bare-oxide control, theory/ignorance_priors.md section 1a, with gamma_pvdf in place of gamma_o). TN-004 is
+      Wu 1982 read through the source of TN-001 (grade C). TN-013 (functionalised PVDF latices, method not stated per
+      latex) is a proxy. No PVDF-water interfacial free energy is printed in an open source (T-N gaps.md).
+  gamma_pvdf_dispersive:
+    added_in: P0-W1.4
+    symbol: gamma_pvdf_d
+    unit: J m^-2
+    regimes: [R-slurry]
+    distinct: true
+    conditions: dispersive component of the dry surface free energy of PVDF films (Owens-Wendt type split)
+    admit:
+      - {row: TN-002, original: szewczyk-2019-measured}
+      - {row: TN-005, original: wu-1982}
+    comparators: [TN-008, TN-014]
+    notes: TN-008 is the van Oss Lifshitz-van der Waals part, a different partition of the same total (E2).
+  gamma_pvdf_polar:
+    added_in: P0-W1.4
+    symbol: gamma_pvdf_p
+    unit: J m^-2
+    regimes: [R-slurry]
+    distinct: true
+    conditions: polar component of the dry surface free energy of PVDF films (Owens-Wendt type split)
+    admit:
+      - {row: TN-003, original: szewczyk-2019-measured}
+      - {row: TN-006, original: wu-1982}
+    comparators: [TN-009, TN-010, TN-011, TN-015]
+    notes: >-
+      The van Oss analysis of another film (TN-009 to TN-011) gives an acid-base part of zero with a non-zero electron-donor
+      parameter; it is a different partition and a comparator (lit/conflicts.md).
+  cathode_particle_diameter:
+    added_in: P0-W1.4
+    symbol: d_p
+    unit: m
+    regimes: [R-slurry]
+    distinct: true
+    conditions: >-
+      secondary-particle (agglomerate) diameters of cathode powders as used in electrodes: D50 by laser diffraction,
+      SEM estimates and micro-CT size peaks; layered (LCO, NMC, NCA), spinel (LMO) and LNMO
+    admit:
+      - {row: TL-086}
+      - {row: TN-016}
+      - {row: TN-017}
+      - {row: TN-018}
+      - {row: TN-019}
+      - {row: TN-020}
+      - {row: TN-021}
+      - {row: TN-022}
+      - {row: TN-023}
+      - {row: TN-024}
+      - {row: TN-027}
+    comparators: [TN-025, TN-026, TN-028]
+    notes: >-
+      d_p of the A_patch upper bound pi d_p^2/4 (theory/ignorance_priors.md 4a.1): the particle that touches the foil is
+      the secondary particle, so primary-particle sizes (TN-028) are comparators. No open printed size of a commercial
+      LFP powder was found; the lab-synthesised LFP sizes (TN-025, TN-026) are comparators. Medians and peaks are used as
+      printed; a D50 is not the projected-area-equivalent diameter of the largest particles.
+  asperity_contact_area:
+    added_in: P0-W1.4
+    symbol: a_asp
+    unit: m^2
+    regimes: [R-slurry]
+    status: gap
+    reason: >-
+      gap: no printed contact area, contact radius or asperity radius between a cathode particle and aluminium foil in an
+      open source (the one direct measurement, 10.1016/j.powtec.2025.122042, has no copy and no number in its abstract;
+      T-N gaps.md); foil roughness heights (TN-029 to TN-031) are not contact areas
+    comparators: [TN-029, TN-030, TN-031, TN-032]
+    notes: The lower bound of A_patch (4a.1); while it is a gap, A_patch stays a gap and N_req has only its lower bound 4 ln(1/q_0)/(pi d_p^2).
+  template_mass_per_group_min:
+    added_in: P0-W1.4
+    symbol: M_u
+    unit: kg mol^-1
+    regimes: [R-slurry]
+    status: gap
+    reason: >-
+      gap: no open source prints the molar mass of a polydopamine repeat unit (dopamine, DHI, DHICA or indolequinone units)
+      or the catechol content per mass; the open rows are the dopamine hydrochloride reagent (TN-033, includes HCl) and a
+      TOF-SIMS ion mass (TN-034); Liebscher 2013 and Dreyer 2012 are paywalled (T-N gaps.md)
+    comparators: [TN-033, TN-034]
+    notes: M_u of the stoichiometric bound rho_L <= rho_PDA/M_u (4a.3).
+  ca_ionic_radius_cn6:
+    added_in: P0-W1.4
+    fills: ca_ionic_radius
+    symbol: r_Ca
+    unit: m
+    regimes: [R-slurry]
+    distinct: true
+    conditions: Ca2+ ionic radius at coordination number 6, the lowest coordination number printed for Ca2+ in the source table
+    admit:
+      - {row: TN-035, unit: angstrom, original: shannon-1976}
+      - {row: TN-039, unit: angstrom, original: structure-survey}
+    comparators: [TN-036, TN-037, TN-038, TN-040, TN-041, TN-042]
+    notes: >-
+      Treatment of theory/ignorance_priors.md 4a.4: r_Ca at the lowest coordination number, here 6, because no coordination
+      number of the bound ion is registered and 6 is the lowest the source tabulates for Ca2+. Shannon 1976 is read through
+      an open source (grade C); the second value is that source's own survey of 41 structures. The radii at CN 7 to 9 are
+      comparators, as is the aqueous CN of 8 (TN-042, not a carboxylate or catecholate site). ca_ionic_radius stays the gap
+      it was at p0-cp3 (README section 8).
+
+  # ================================================================ post-cp3 (P0-W1.4, README section 8): R-cell budgets and film keys
+  dfg_li2co3:
+    added_in: P0-W1.4
+    symbol: G_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Li2CO3(cr), 298.15 K, NBS TN 270-8
+    admit:
+      - {row: TQ-003}
+    notes: >-
+      Product of the CaCO3 reduction limit CaCO3 + 4/3 Li -> 2/3 Li2CO3 + CaO + 1/3 C (W5's R-cell table). B2131 has no
+      Li2CO3; the JANAF lithium pages are image-only. The table flags the entry as having its G-H-S constraint relaxed.
+  dfg_lial5o8:
+    added_in: P0-W1.4
+    symbol: G_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: LiAl5O8(cr), 298.15 K, NBS TN 270-8
+    admit:
+      - {row: TQ-008}
+    comparators: [TQ-006, TQ-007, TQ-010]
+    notes: >-
+      Product of the corundum reduction limit Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al. The value was assigned to
+      LiAl5O8 by column order in a split extraction (grade C); the enthalpies of the same page agree with an independent
+      assessment (TQ-010), which supports the reading. The assessed enthalpies spread by about 90 kJ/mol across sources
+      (TQ-010; lit/conflicts.md).
+  s_boehmite:
+    added_in: P0-W1.4
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: boehmite (gamma-AlOOH), 298.15 K, 1 bar, USGS B2131 (2 sigma)
+    admit:
+      - {row: TQ-001, uncertainty: pm}
+    notes: Gated Al phase of the R-cell window (cp3 R8); B2131 cites Hemingway, Robie and Apps 1991 for the entropy.
+  nbs_last_digit_dfg_li2co3:
+    added_in: P0-W1.4
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: one unit of the last printed figure of DfG of Li2CO3 in NBS TN 270-8
+    admit:
+      - {row: TQ-003, take: last_digit}
+  u_tab_dfg_li2co3:
+    added_in: P0-W1.4
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    status: computed
+    derive: {expr: "n * d", inputs: {n: nbs_uncertainty_units.max, d: nbs_last_digit_dfg_li2co3}}
+    notes: The upper end of the NBS TN 270-8 convention (TK-031, 20 units of the last figure) applied to the printed figure of TQ-003.
+  nbs_last_digit_dfg_lial5o8:
+    added_in: P0-W1.4
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: one unit of the last printed figure of DfG of LiAl5O8 in NBS TN 270-8
+    admit:
+      - {row: TQ-008, take: last_digit}
+    notes: Both candidate values of the ambiguous column (TQ-006, TQ-008) print to 0.1 kcal/mol, so this digit does not depend on the assignment.
+  u_tab_dfg_lial5o8:
+    added_in: P0-W1.4
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    status: computed
+    derive: {expr: "n * d", inputs: {n: nbs_uncertainty_units.max, d: nbs_last_digit_dfg_lial5o8}}
+    notes: The upper end of the NBS TN 270-8 convention (TK-031) applied to the printed figure of TQ-008.
+  u_tab_dfg_cao:
+    added_in: P0-W1.4
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: tabulated uncertainty (2 sigma, USGS B2131) of DfG of lime
+    admit:
+      - {row: TI-006, take: uncertainty}
+  u_tab_dfg_corundum:
+    added_in: P0-W1.4
+    symbol: u_tab
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: tabulated uncertainty (2 sigma, USGS B2131) of DfG of corundum
+    admit:
+      - {row: TI-024, take: uncertainty}
+  window_margin_expt_red_caco3:
+    added_in: P0-W1.4
+    symbol: m_expt
+    unit: V
+    regimes: [R-cell]
+    margin_case: evidence
+    derive:
+      expr: "(2 / 3 * u_li2co3 + u_cao + u_caco3) / (4 / 3 * F)"
+      inputs: {u_li2co3: u_tab_dfg_li2co3, u_cao: u_tab_dfg_cao, u_caco3: u_tab_dfg_caco3}
+    notes: >-
+      Budget key of the CaCO3 reduction limit (theory/thresholds.md C5c_red: "a reduction limit needs its own budget
+      key") for CaCO3 + 4/3 Li -> 2/3 Li2CO3 + CaO + 1/3 C (4/3 electrons; Li and graphite are elements). The linear sum
+      of the tabulated uncertainties of the three formation Gibbs energies over (4/3) F, as for window_margin_expt; no
+      entropy term is needed because every species has a tabulated DfG.
+  window_margin_expt_red_corundum:
+    added_in: P0-W1.4
+    symbol: m_expt
+    unit: V
+    regimes: [R-cell]
+    margin_case: evidence
+    derive:
+      expr: "(0.375 * u_lial5o8 + u_al2o3) / (0.375 * F)"
+      inputs: {u_lial5o8: u_tab_dfg_lial5o8, u_al2o3: u_tab_dfg_corundum}
+    notes: >-
+      Budget key of the corundum reduction limit Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al (0.375 electrons), from the
+      tabulated uncertainties. The independent enthalpy assessments of LiAl5O8 spread by about 90 kJ/mol (TQ-010), far
+      beyond the tabulated convention; the budget is the table's own and that spread is recorded in lit/conflicts.md.
+  work_function_al:
+    added_in: P0-W1.4
+    symbol: W_f
+    unit: J
+    regimes: [R-cell]
+    distinct: true
+    conditions: clean aluminium single-crystal faces in UHV, (111), (100), (110); two experimental sets quoted by one source
+    admit:
+      - {row: TQ-013, unit: eV, original: wf-set-43-111}
+      - {row: TQ-014, unit: eV, original: wf-set-43-100}
+      - {row: TQ-015, unit: eV, original: wf-set-43-110}
+      - {row: TQ-016, unit: eV, original: wf-set-44-111}
+      - {row: TQ-017, unit: eV, original: wf-set-44-100}
+      - {row: TQ-018, unit: eV, original: wf-set-44-110}
+    comparators: [TQ-019, TQ-020, TQ-021]
+    notes: >-
+      Metal-side input of the tunnelling barrier phi_B (with the CaCO3 electron affinity, which is a gap, phi_b_caco3
+      stays a gap). Both experimental sets are read through one computational paper (grade C); the two sets order the
+      faces oppositely beyond their printed uncertainties. The in-cell aluminium is oxide-covered. QSGW values
+      (TQ-019 to TQ-021) are computed comparators.
+  phi_b_caco3_li2co3_analog:
+    added_in: P0-W1.4
+    role: analog
+    of: phi_b_caco3
+    symbol: phi_B
+    unit: J
+    regimes: [R-cell]
+    conditions: Li2CO3 film against Li metal, PBE, computed
+    admit:
+      - {row: TQ-026, unit: eV}
+    notes: >-
+      Analog (A1): the computed electron tunnelling barrier of a carbonate film (Li2CO3 on Li, PBE gap, which
+      underestimates the gap) for the gap phi_b_caco3 (CaCO3 on Al). d_max stays a gap: rho_e, m_eff and j_0 are gaps.
 
 correlation_groups:
   young_energies:

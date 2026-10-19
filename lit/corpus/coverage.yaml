@@ -1,6 +1,6 @@
-generated_utc: '2026-10-17T11:27:04Z'
+generated_utc: '2026-10-19T12:45:40Z'
 rule: 'covered: >=2 independent sources (distinct DOIs) with numeric rows; single-source: 1; gap: 0'
-rows: 954
+rows: 1075
 duplicates_dropped:
 - dropped: TB-011
   kept: TA-006
@@ -771,3 +771,271 @@ targets:
   independent_originals: 10
   caveat: Mixes upper cut-off potentials of cells (T-A) with Al onset potentials in LiBOB and LiClO4 (T-B); distinguish
     by symbol before use.
+- id: water_activity_drying_primary
+  label: water activity in primary (convective) film drying
+  slugs:
+  - water_activity_drying_primary
+  status: single-source
+  independent_sources: 1
+  grades:
+    A: 0
+    B: 2
+    C: 0
+    D: 0
+  best_grade: B
+  row_ids:
+  - TN-043
+  - TN-044
+  dois:
+  - 10.1002/ente.201900722
+  rank: 9
+  role: a_w of the primary drying state (F7) in ln S
+  independent_originals: 0
+  caveat: The rows (TN-043, TN-044) are dew points of the drying air for an aqueous anode on copper and a film temperature
+    (TN-045); no water activity or film-surface relative humidity is printed, so a_w_slurry (primary drying) stays
+    a gap.
+- id: pvdf_surface_energy
+  label: dry surface free energy of PVDF
+  slugs:
+  - pvdf_surface_energy_total
+  status: covered
+  independent_sources: 3
+  grades:
+    A: 0
+    B: 3
+    C: 1
+    D: 0
+  best_grade: B
+  row_ids:
+  - TN-001
+  - TN-004
+  - TN-007
+  - TN-013
+  dois:
+  - 10.1021/acs.langmuir.3c00587
+  - 10.1038/s41598-025-93813-9
+  - 10.3390/polym11010034
+  rank: 10
+  role: PVDF control of the deletion test; not in the template's nucleation barrier
+  independent_originals: null
+  caveat: null
+- id: cathode_particle_diameter
+  label: cathode secondary-particle diameter
+  slugs:
+  - cathode_particle_diameter
+  - cathode_particle_d50
+  status: covered
+  independent_sources: 7
+  grades:
+    A: 0
+    B: 11
+    C: 3
+    D: 0
+  best_grade: B
+  row_ids:
+  - TL-086
+  - TN-016
+  - TN-017
+  - TN-018
+  - TN-019
+  - TN-020
+  - TN-021
+  - TN-022
+  - TN-023
+  - TN-024
+  - TN-025
+  - TN-026
+  - TN-027
+  - TN-028
+  dois:
+  - 10.1002/advs.202515588
+  - 10.1002/open.202200065
+  - 10.1021/acsami.5c19071
+  - 10.1039/d6eb00099a
+  - 10.1149/2.0621916jes
+  - 10.1557/adv.2016.6
+  - 10.3390/nano14020134
+  rank: 10
+  role: upper bound pi d_p^2/4 of A_patch (C3 b)
+  independent_originals: null
+  caveat: null
+- id: asperity_contact_area
+  label: asperity contact area of a particle on the foil
+  slugs:
+  - asperity_contact_area
+  - particle_collector_contact_radius
+  status: gap
+  independent_sources: 0
+  grades:
+    A: 0
+    B: 0
+    C: 0
+    D: 0
+  best_grade: null
+  row_ids: []
+  dois: []
+  rank: 10
+  role: lower bound of A_patch (C3 b)
+  independent_originals: null
+  caveat: null
+- id: template_mass_per_group
+  label: template molar mass per coordinating group
+  slugs:
+  - template_mass_per_group
+  status: single-source
+  independent_sources: 1
+  grades:
+    A: 0
+    B: 0
+    C: 1
+    D: 0
+  best_grade: C
+  row_ids:
+  - TN-033
+  dois:
+  - 10.48550/arxiv.1404.2408
+  rank: 10
+  role: stoichiometric bound on rho_L (Gamma_s cap)
+  independent_originals: 0
+  caveat: The only row (TN-033) is the dopamine hydrochloride reagent, which includes HCl and is not a polydopamine
+    repeat unit; template_mass_per_group_min stays a gap.
+- id: ca_ionic_radius
+  label: Ca2+ ionic radius
+  slugs:
+  - ca_ionic_radius
+  status: single-source
+  independent_sources: 1
+  grades:
+    A: 0
+    B: 0
+    C: 7
+    D: 0
+  best_grade: C
+  row_ids:
+  - TN-035
+  - TN-036
+  - TN-037
+  - TN-038
+  - TN-039
+  - TN-040
+  - TN-041
+  dois:
+  - 10.1039/c8cp02244e
+  rank: 10
+  role: site footprint and the 2 r_Ca term of the delta_s bound
+  independent_originals: 2
+  caveat: One open source (10.1039/c8cp02244e) prints both the Shannon 1976 radii (original paywalled) and its own
+    survey of crystal structures; ca_ionic_radius_cn6 admits both at CN 6.
+- id: film_tunnelling_inputs
+  label: CaCO3 film resistivity and tunnelling inputs
+  slugs:
+  - resistivity_caco3
+  - electron_affinity_caco3
+  - effective_mass_caco3
+  - tunnel_prefactor_j0
+  status: gap
+  independent_sources: 0
+  grades:
+    A: 0
+    B: 0
+    C: 0
+    D: 0
+  best_grade: null
+  row_ids: []
+  dois: []
+  rank: 10
+  role: d_max of the C4 closure route (R-cell)
+  independent_originals: null
+  caveat: null
+- id: reduction_limit_thermochemistry
+  label: formation Gibbs energies of the reduction-limit products
+  slugs:
+  - dfg_li2co3
+  - dfg_lial5o8
+  status: single-source
+  independent_sources: 1
+  grades:
+    A: 0
+    B: 1
+    C: 1
+    D: 0
+  best_grade: B
+  row_ids:
+  - TQ-003
+  - TQ-008
+  dois:
+  - 10.6028/nbs.tn.270-8
+  rank: 10
+  role: C5c_red limits and their budget keys
+  independent_originals: 1
+  caveat: NBS TN 270-8 only; the LiAl5O8 Gibbs energy was assigned by column order in a split extraction (grade
+    C), and the independent enthalpy assessments spread by about 90 kJ/mol (TQ-010).
+- id: al_perchlorate_thermochemistry
+  label: Al(ClO4)3 formation enthalpy and Gibbs energy
+  slugs:
+  - dfh_al_clo4_3
+  - dfg_al_clo4_3
+  status: gap
+  independent_sources: 0
+  grades:
+    A: 0
+    B: 0
+    C: 0
+    D: 0
+  best_grade: null
+  row_ids: []
+  dois: []
+  rank: 10
+  role: C5c_ox sink of corundum and boehmite
+  independent_originals: null
+  caveat: null
+- id: anion_anodic_stability
+  label: anodic stability of other biominerals' anions
+  slugs:
+  - stability_window
+  status: covered
+  independent_sources: 7
+  grades:
+    A: 0
+    B: 20
+    C: 3
+    D: 1
+  best_grade: B
+  row_ids:
+  - TE-048
+  - TE-054
+  - TE-055
+  - TE-056
+  - TE-057
+  - TE-058
+  - TE-059
+  - TE-060
+  - TO-001
+  - TO-002
+  - TO-003
+  - TO-007
+  - TO-008
+  - TO-009
+  - TO-010
+  - TO-011
+  - TO-015
+  - TO-016
+  - TO-017
+  - TO-019
+  - TO-020
+  - TO-021
+  - TO-033
+  - TO-034
+  dois:
+  - 10.1016/j.joule.2019.02.006
+  - 10.1021/acsami.9b11001
+  - 10.1021/acsnano.7b02561
+  - 10.1039/c5ta08574h
+  - 10.1039/c9ta09401f
+  - 10.1149/1.1837443
+  - 10.3390/membranes12020124
+  rank: 11
+  role: Outlook sentence only; not a screen input
+  independent_originals: 7
+  caveat: Computed 0 K windows of lithium salts and phosphate solid electrolytes; no calcium phosphate, oxalate,
+    sulfate or silicate value was found (T-O gaps.md). Outlook evidence only.
