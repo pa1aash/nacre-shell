@@ -8,7 +8,10 @@
 #   sessions      id, lane, day, model, master_trace (master-plan session it traces, or none) and
 #                 requires (checkpoints that must be satisfied before it starts).
 #   checkpoints   id, day, title, packet, satisfied_by (tags; any one satisfies the checkpoint).
-#   post          operator items after day 5 (with optional requires).
+#   post          operator items after the last day (with optional requires).
+#   freeze        tag and path globs of the freeze rule (commits in <tag>..HEAD touching a path need a dated
+#                 deviation entry with a 'Re-audit:' line).
+#   retired       sessions removed from the plan (id, reason).
 #   rules         standing rules of the track (dry runs, threshold authority).
 #   decisions     dated rulings (id, date, decision, reason).
 #   lane_notes    dated notes for a day's lane sessions (id, date, day, lanes, note).
@@ -16,9 +19,8 @@
 #
 # Exactly one day is open. `nacre track open-day <n>` (integrator, on preprint/p0) closes day n-1 and
 # opens day n with the commit "ops(p0): open day <n>".
-meta: {title_working: 'Thermodynamic screening of a biomimetic calcium-carbonate barrier on aluminium
-    current collectors: governing parameters and the precision required for first-principles validation',
-  venue: ChemRxiv, base: preprint/p0}
+meta: {title_working: Thermodynamic screening of bone-inspired calcium phosphate barriers for aluminium
+    current collectors in fluorine-free lithium-ion cells, venue: ChemRxiv, base: preprint/p0}
 lanes:
 - {id: p0-w1, branch: preprint/p0-w1, worktree: ~/Desktop/nacre-shell-p-w1, model: Opus}
 - {id: p0-w2, branch: preprint/p0-w2, worktree: ~/Desktop/nacre-shell-p-w2, model: Opus; Sonnet from P0-W2.4}
@@ -273,7 +275,7 @@ days:
     model: Opus
     master_trace: S13
     requires: []
-  - id: P0-I3
+  - id: P0-I3R
     lane: p0-int
     day: 3
     model: Sonnet
@@ -285,31 +287,31 @@ days:
   closed_utc: null
   carried: []
   sessions:
-  - id: P0-W2.4
+  - id: PH-W1.1
+    lane: p0-w1
+    day: 4
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-W2.1
     lane: p0-w2
     day: 4
     model: Sonnet
     master_trace: none
     requires: []
-  - id: P0-W4.4
-    lane: p0-w4
+  - id: PH-W3.1
+    lane: p0-w3
     day: 4
     model: Opus
-    master_trace: none
-    requires: [cp3]
-  - id: P0-W6.4
-    lane: p0-w6
-    day: 4
-    model: Sonnet (execution) / Opus (design)
     master_trace: none
     requires: []
-  - id: P0-W8.4
-    lane: p0-w8
+  - id: PH-K1
+    lane: p0-w5
     day: 4
     model: Opus
     master_trace: none
-    requires: [cp3]
-  - id: P0-I4
+    requires: []
+  - id: PH-I4
     lane: p0-int
     day: 4
     model: Sonnet
@@ -321,57 +323,123 @@ days:
   closed_utc: null
   carried: []
   sessions:
-  - id: P0-W1.5
-    lane: p0-w1
-    day: 5
-    model: Opus
-    master_trace: none
-    requires: [cp4]
-  - id: P0-W2.5
-    lane: p0-w2
-    day: 5
-    model: Sonnet
-    master_trace: none
-    requires: [cp4]
-  - id: P0-W3.5
-    lane: p0-w3
-    day: 5
-    model: Opus
-    master_trace: none
-    requires: []
-  - id: P0-W4.5
-    lane: p0-w4
-    day: 5
-    model: Opus
-    master_trace: none
-    requires: []
-  - id: P0-W5.5
+  - id: PH-W5.1
     lane: p0-w5
     day: 5
     model: Opus
     master_trace: none
-    requires: []
-  - id: P0-W6.5
-    lane: p0-w6
-    day: 5
-    model: Sonnet (execution) / Opus (design)
-    master_trace: none
-    requires: []
-  - id: P0-W7.5
-    lane: p0-w7
-    day: 5
-    model: Opus (design) / Sonnet (renders)
-    master_trace: none
-    requires: []
-  - id: P0-W8.5
-    lane: p0-w8
+    requires: [cp4]
+  - id: PH-W4.1
+    lane: p0-w4
     day: 5
     model: Opus
     master_trace: none
     requires: [cp4]
-  - id: P0-I5
+  - id: PH-W1.2
+    lane: p0-w1
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: [cp4]
+  - id: PH-W3.2
+    lane: p0-w3
+    day: 5
+    model: Opus
+    master_trace: none
+    requires: [cp4]
+  - id: PH-W8.1
+    lane: p0-w8
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: [cp4]
+  - id: PH-I5
     lane: p0-int
     day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+- day: 6
+  status: pending
+  opened_utc: null
+  closed_utc: null
+  carried: []
+  sessions:
+  - id: PH-W4.2
+    lane: p0-w4
+    day: 6
+    model: Opus
+    master_trace: none
+    requires: [cp5]
+  - id: PH-W4.3
+    lane: p0-w4
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
+  - id: PH-W8.2
+    lane: p0-w8
+    day: 6
+    model: Opus
+    master_trace: none
+    requires: [cp4]
+  - id: PH-W6.1
+    lane: p0-w6
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp4]
+  - id: PH-W2.2
+    lane: p0-w2
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp4]
+  - id: PH-I6
+    lane: p0-int
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: []
+- day: 7
+  status: pending
+  opened_utc: null
+  closed_utc: null
+  carried: []
+  sessions:
+  - id: PH-W8.3
+    lane: p0-w8
+    day: 7
+    model: Opus
+    master_trace: none
+    requires: [cp5r]
+  - id: PH-W6.2
+    lane: p0-w6
+    day: 7
+    model: Sonnet
+    master_trace: none
+    requires: [cp5r]
+  - id: PH-W7.1
+    lane: p0-w7
+    day: 7
+    model: Sonnet
+    master_trace: none
+    requires: [cp5r]
+  - id: PH-W1.3
+    lane: p0-w1
+    day: 7
+    model: Sonnet
+    master_trace: none
+    requires: [cp5r]
+  - id: PH-W3.3
+    lane: p0-w3
+    day: 7
+    model: Opus
+    master_trace: none
+    requires: [cp5r]
+  - id: PH-I7
+    lane: p0-int
+    day: 7
     model: Sonnet
     master_trace: none
     requires: []
@@ -393,24 +461,36 @@ checkpoints:
   satisfied_by: [p0-cp3]
 - id: cp4
   day: 4
-  title: screen, retrodiction and anchor
+  title: design rulings frozen (claim register K1 to K4, candidate panel, regimes, K1 two-tier rule, thresholds
+    structure, scope guard)
   packet: ops/packets/p0-4.md
   satisfied_by: [p0-cp4]
 - id: cp5
   day: 5
-  title: final manuscript
+  title: FREEZE before the production screen (parameter table, benchmark, thresholds with numeric margins,
+    hashes)
   packet: ops/packets/p0-5.md
   satisfied_by: [p0-cp5]
+- id: cp5r
+  day: 6
+  title: RESULTS after the production screen
+  packet: ops/packets/p0-5r.md
+  satisfied_by: [p0-cp5r]
+- id: cp6
+  day: 7
+  title: manuscript
+  packet: ops/packets/p0-6.md
+  satisfied_by: [p0-cp6]
 post:
-  days: [6, 7, 8, 9]
+  days: [8, 9, 10, 11]
   owner: operator
   items:
   - id: C1
     title: consent and fixes
-    requires: [cp5]
+    requires: [cp6]
   - id: C2
     title: ChemRxiv submission
-    requires: [cp5]
+    requires: [cp6]
   - {id: C3, title: post-posting}
 inputs:
   heads_up: given 2026-10-15
@@ -437,12 +517,14 @@ rules:
   date: '2026-10-18'
   day: 3
   lanes: [p0-w7]
-  note: '(W7.4, D31, D32) Final hero render in composition B at publication resolution, plus the Fig 2 panel polish. The anchor render for Fig 8 is deferred with the anchor DFT (the pod is not used for P0).'
+  note: (W7.4, D31, D32) Final hero render in composition B at publication resolution, plus the Fig 2
+    panel polish. The anchor render for Fig 8 is deferred with the anchor DFT (the pod is not used for
+    P0).
 - id: N34
   date: '2026-10-18'
   day: 3
   lanes: [p0-w2]
-  note: '(W2.4a, D33) ChemRxiv package scaffold. P0-W2.4 (co-author pack) stays on day 4.'
+  note: (W2.4a, D33) ChemRxiv package scaffold. P0-W2.4 (co-author pack) stays on day 4.
 decisions:
 - {id: B1, date: '2026-10-16', decision: 'There is no master integration session I1. At C3 preprint/p0
     merges into main with --no-ff, and ops/ records that this merge satisfied the wave-1 integration;
@@ -577,22 +659,124 @@ decisions:
     prediction counts as a miss; the paper states that 11 of the 12 sources already report the input-outcome
     link.', reason: 'Planning ruling. A pass that a constant predictor can reach, or that survives a swapped
     label, would not test the physics, and the source count limits what a retrodiction can show.'}
-- {id: D18, date: '2026-10-17', decision: 'D13 is accepted as a temporary marker. P0-W4.3a removes it, together with the D11 markers, before any production screen.', reason: 'The strict marker on the threshold-copy equality test is the cheapest way to force the handshake to close; regenerating the copy earlier would break ten W4 decision tests.'}
-- {id: D19, date: '2026-10-17', decision: 'cp3 PASS with R1 to R12, 2026-10-17, with R9 applied by W2.3 before its run. As recorded in the lane reports and the integrator edits: R1 C5 R-slurry dissolution is decided by Omega_bulk >= 1 with the sourced calcite Ksp and the contract speciation (hull kept for competing solids and the Al baseline), and the C5 sentence "Stability against dissolution is the same question as S > 1" is restored in the charter without the old C2-enrichment continuation; R2 C5 R-cell: the all-experimental route governs wherever its inputs exist, DFT schemes are comparators, falsified if E_ox(expt) + m_expt < E_cell_max; R3 C4 is good on a draw if S_spread >= m_S or N_nuc >= N_s_closure, falsified only if both fail, with P(gamma_sl > gamma_nl) reported; R4 C2 residual charter fields (method, open_items, controls, kill_criterion, verdict_bands, threshold.status) are rewritten so that C2 is a binding descriptor, reports Theta_occ, Gamma_Ca and Delta_gamma_ads, computes no local supersaturation and does not gate; R5 N_req = ln(1/q0)/A_patch with q0 = 1 - p_cred; R6 calcite and ACC are both registered and run as whole chains (falsified only under every framing, feasible under at least one, named); R7 joint link masses draw by draw and every registered state propagated, a missing state leaves shortfalls inconclusive; R8 per-termination C1 verdicts with a flat Dirichlet ignorance mixture, R-cell gated phases CaCO3, corundum and boehmite (LiBOB and LiPCP sinks stay undetermined), gamma_sl0 truncated at 0 with the untruncated prior as a labelled sensitivity; R9 the retrodiction constant-predictor baseline is dropped, a permutation null is a descriptive control, the swap check stands (W2.3, before its run); R10 the parameter table spot-check passed; W1.3 fetches the Ca2+ and Al3+ solvation free energies and an entropy bound for Ca(ClO4)2 (solvation remains a gap; the entropy bound was found); R11 housekeeping accepted; W4.3a removes both xfail markers and shows the contract and thresholds checks pass before W4.3 (done); R12 the precision method is approved as described; its outputs are audited at cp4.', reason: 'The planning chat passed cp3 once these twelve rulings were applied.'}
-- {id: D20, date: '2026-10-17', decision: 'W1 pending registrations resolved by cp3: the scheme set (R2), the framings (R6) and the aluminium phases (R8). contact_area_definition is still pending for cp4.', reason: 'cp3 ruling.'}
-- {id: D21, date: '2026-10-17', decision: 'For cp4: (a) W1 judgement calls: speciation constants are flagged but not widened; the DFT window margin is 0.124 V against the experimental 0.087 V. (b) Chat P flag: truncating gamma_sl0 at 0 removes 89 % of its sourced prior mass, so an ignorance prior with physical bounds may be more honest. (c) W3 five interpretations (P0-W3.3) and three clarifications. (d) W4 reconciliation table (P0-W4.3a).', reason: 'Carried to the cp4 packet notes.'}
-- {id: D22, date: '2026-10-17', decision: 'P0-W5.3 result: CaCO3 with LiClO4 is falsified above 4.025 V (the experimental route plus m_expt), including the upper end of LFP''s cutoff range.', reason: 'P0-W5.3 C5 R-cell result under R2.'}
-- {id: D23, date: '2026-10-17', decision: 'Raw Materials Project entries pushed on Days 1 and 2 remain on the branch under CC BY 4.0, with results/preprint/pourbaix/cache/NOTICE.md now present. No further raw entries go to public branches. At C3 the raw cache is deposited in a Zenodo data record and git keeps only the manifest, hashes and the rebuild script. Also recorded in the cp4 packet notes for the planning chat.', reason: 'Every committed result records the cache hash, so the entries stay; P0-W5.3 B asked the integrator to rule.'}
-- {id: D24, date: '2026-10-17', decision: 'Integrator merges of P0-I2.5: no cross-lane mechanical fix was needed. The four merges (w3, w4, w1, w5) had no textual conflict, pyproject.toml needed no union edit, uv.lock was unchanged by uv lock, and no xfail marker remains (D11, D13 and D18 closed by W4.3a). C2 charter fields were applied from cp2_brief section C only for kill_criterion.statement; verdict_bands kept its key name because the schema and tests require it (spot-check file).', reason: 'Records the D8 precedent check.'}
-- {id: D25, date: '2026-10-17', decision: 'The cp3 tag test failure (production guard test depended on the tag being absent) was fixed by W4 in its lane (ddace06, d9735a1) and merged. nacre track check now reads the freeze rule from commits in p0-cp3..HEAD, not from a tree diff against the tag, so lanes behind or at the tag pass and only a lane commit to a frozen input after the tag needs a deviation entry.', reason: A tree diff against the tag flags a lane that has not yet received the tag's own changes.}
-- {id: D26, date: '2026-10-17', decision: 'P0-W3.4 moves from day 4 to day 3 in the ledger, after P0-W3.3, so that nacre track check passes for it. Lane note N22 and the P0-I2.5 prompt place it in wave 2 of day 3 (W3.4 and W2.3 first).', reason: The ledger listed it on day 4 while the lane notes and the next-step line schedule it on day 3; its requirement (cp2) is unchanged.}
-- {id: D27, date: '2026-10-18', decision: 'After P0-W4.3, W4 reported that with the flagged binding-constant analog the template-liquid energy gamma_sl is negative on every draw (median -0.039 J/m^2). A negative solid-liquid interfacial energy is not admissible for a stable interface, so the neutral-solute Gibbs-Langmuir term is outside its validity range there. P0-W3.4b derives the admissibility rule; P0-W4.3b reruns the production screens with it; the original runs stay committed as they came; the paper states the sequence in one plain sentence.', reason: The Gibbs-Langmuir term has a validity range that the registered screen did not state; the rule is derived from the physics and from the one fact above, with no other screen output consulted.}
-- {id: D28, date: '2026-10-18', decision: 'The integrator''s deviation entries (ops/tracks/p0_deviations.md, 2026-10-18) cover the cp3b registrations: theory/thresholds.md (P0-W3.4: A1 0fd2b59, A2 8ff2b53, A3 f338fe9, A4 22ef464; block v3 at fd29fcd) and configs/preprint/thresholds.yaml (regenerated by P0-W4.3 from block v3). Both Re-audit: cp4.', reason: Both changes were mandated by cp3 (lane note N22) and made before any production output; the freeze rule needs a dated entry for each.}
-- {id: D29, date: '2026-10-18', decision: 'Mechanical cross-lane fix inside the P0-W8.3 merge (D8): the record anchor of claim CL-T02 in preprint/claims.yaml quoted the first sentence of preprint/retrodiction/criterion.md as written in P0-W2.2, which P0-W2.3 reworded; the anchor now quotes the revised sentence (version 1 committed with cases.yaml before any run, af75ed0). The test test_repo_deviations_file_exists_with_header_only became test_repo_deviations_file_has_header_and_well_formed_entries, since the deviations file now carries entries.', reason: Two lanes touched one sentence; the edit changes no claim, only the quoted anchor.}
-- {id: D30, date: '2026-10-18', decision: 'P0-W1.4 and P0-W5.4 move from day 4 to day 3 in the ledger, before P0-I3, as P0-W3.4 did (D26). They supply cp4 inputs that need no checkpoint (new keys, outlook evidence and reference audit support from W1; cell-regime data gaps and the pod driver from W5) and run ahead of day 4. Their params and result supplements are additive documents after p0-cp3 and carry Re-audit: cp4 deviation entries; the production screens use params at p0-cp3. P0-W1.5 and P0-W5.5 stay on day 5.', reason: The inputs need no checkpoint and the lanes are free; the requirements of both sessions (none) are unchanged.}
-- {id: D31, date: '2026-10-18', decision: 'Hero composition B chosen by Palaash. W7.4 fixes: the nucleus must read as a cap with a visible base (denser packing, translucent surface or lighting); 2-3 bound Ca2+ plus the bridging ion in frame; keep the depth of field but keep the left chain and slab edge reasonably sharp.', reason: Palaash reviewed the three draft compositions of P0-W7.3.}
-- {id: D32, date: '2026-10-18', decision: 'The anchor DFT and the Fig 8 anchor render are deferred; no compute pod is used for P0. The paper states in one plain sentence that the anchor comparison was not run. The driver stays in the repository for the main study.', reason: No pod is used for P0.}
-- {id: D33, date: '2026-10-18', decision: 'P0-W7.4 and P0-W2.4a run ahead of day 4, as D26 and D30. P0-W7.4 moves from day 4 to day 3; P0-W2.4a (ChemRxiv package scaffold, lane w2, Opus, master trace S13) is added on day 3. P0-W2.4 (co-author pack) stays on day 4.', reason: They need no checkpoint and no result.}
+- {id: D18, date: '2026-10-17', decision: 'D13 is accepted as a temporary marker. P0-W4.3a removes it,
+    together with the D11 markers, before any production screen.', reason: The strict marker on the threshold-copy
+    equality test is the cheapest way to force the handshake to close; regenerating the copy earlier would
+    break ten W4 decision tests.}
+- {id: D19, date: '2026-10-17', decision: 'cp3 PASS with R1 to R12, 2026-10-17, with R9 applied by W2.3
+    before its run. As recorded in the lane reports and the integrator edits: R1 C5 R-slurry dissolution
+    is decided by Omega_bulk >= 1 with the sourced calcite Ksp and the contract speciation (hull kept
+    for competing solids and the Al baseline), and the C5 sentence "Stability against dissolution is the
+    same question as S > 1" is restored in the charter without the old C2-enrichment continuation; R2
+    C5 R-cell: the all-experimental route governs wherever its inputs exist, DFT schemes are comparators,
+    falsified if E_ox(expt) + m_expt < E_cell_max; R3 C4 is good on a draw if S_spread >= m_S or N_nuc
+    >= N_s_closure, falsified only if both fail, with P(gamma_sl > gamma_nl) reported; R4 C2 residual
+    charter fields (method, open_items, controls, kill_criterion, verdict_bands, threshold.status) are
+    rewritten so that C2 is a binding descriptor, reports Theta_occ, Gamma_Ca and Delta_gamma_ads, computes
+    no local supersaturation and does not gate; R5 N_req = ln(1/q0)/A_patch with q0 = 1 - p_cred; R6 calcite
+    and ACC are both registered and run as whole chains (falsified only under every framing, feasible
+    under at least one, named); R7 joint link masses draw by draw and every registered state propagated,
+    a missing state leaves shortfalls inconclusive; R8 per-termination C1 verdicts with a flat Dirichlet
+    ignorance mixture, R-cell gated phases CaCO3, corundum and boehmite (LiBOB and LiPCP sinks stay undetermined),
+    gamma_sl0 truncated at 0 with the untruncated prior as a labelled sensitivity; R9 the retrodiction
+    constant-predictor baseline is dropped, a permutation null is a descriptive control, the swap check
+    stands (W2.3, before its run); R10 the parameter table spot-check passed; W1.3 fetches the Ca2+ and
+    Al3+ solvation free energies and an entropy bound for Ca(ClO4)2 (solvation remains a gap; the entropy
+    bound was found); R11 housekeeping accepted; W4.3a removes both xfail markers and shows the contract
+    and thresholds checks pass before W4.3 (done); R12 the precision method is approved as described;
+    its outputs are audited at cp4.', reason: The planning chat passed cp3 once these twelve rulings were
+    applied.}
+- {id: D20, date: '2026-10-17', decision: 'W1 pending registrations resolved by cp3: the scheme set (R2),
+    the framings (R6) and the aluminium phases (R8). contact_area_definition is still pending for cp4.',
+  reason: cp3 ruling.}
+- {id: D21, date: '2026-10-17', decision: 'For cp4: (a) W1 judgement calls: speciation constants are flagged
+    but not widened; the DFT window margin is 0.124 V against the experimental 0.087 V. (b) Chat P flag:
+    truncating gamma_sl0 at 0 removes 89 % of its sourced prior mass, so an ignorance prior with physical
+    bounds may be more honest. (c) W3 five interpretations (P0-W3.3) and three clarifications. (d) W4
+    reconciliation table (P0-W4.3a).', reason: Carried to the cp4 packet notes.}
+- {id: D22, date: '2026-10-17', decision: 'P0-W5.3 result: CaCO3 with LiClO4 is falsified above 4.025
+    V (the experimental route plus m_expt), including the upper end of LFP''s cutoff range.', reason: P0-W5.3
+    C5 R-cell result under R2.}
+- {id: D23, date: '2026-10-17', decision: 'Raw Materials Project entries pushed on Days 1 and 2 remain
+    on the branch under CC BY 4.0, with results/preprint/pourbaix/cache/NOTICE.md now present. No further
+    raw entries go to public branches. At C3 the raw cache is deposited in a Zenodo data record and git
+    keeps only the manifest, hashes and the rebuild script. Also recorded in the cp4 packet notes for
+    the planning chat.', reason: 'Every committed result records the cache hash, so the entries stay;
+    P0-W5.3 B asked the integrator to rule.'}
+- {id: D24, date: '2026-10-17', decision: 'Integrator merges of P0-I2.5: no cross-lane mechanical fix
+    was needed. The four merges (w3, w4, w1, w5) had no textual conflict, pyproject.toml needed no union
+    edit, uv.lock was unchanged by uv lock, and no xfail marker remains (D11, D13 and D18 closed by W4.3a).
+    C2 charter fields were applied from cp2_brief section C only for kill_criterion.statement; verdict_bands
+    kept its key name because the schema and tests require it (spot-check file).', reason: Records the
+    D8 precedent check.}
+- {id: D25, date: '2026-10-17', decision: 'The cp3 tag test failure (production guard test depended on
+    the tag being absent) was fixed by W4 in its lane (ddace06, d9735a1) and merged. nacre track check
+    now reads the freeze rule from commits in p0-cp3..HEAD, not from a tree diff against the tag, so lanes
+    behind or at the tag pass and only a lane commit to a frozen input after the tag needs a deviation
+    entry.', reason: A tree diff against the tag flags a lane that has not yet received the tag's own
+    changes.}
+- {id: D26, date: '2026-10-17', decision: 'P0-W3.4 moves from day 4 to day 3 in the ledger, after P0-W3.3,
+    so that nacre track check passes for it. Lane note N22 and the P0-I2.5 prompt place it in wave 2 of
+    day 3 (W3.4 and W2.3 first).', reason: The ledger listed it on day 4 while the lane notes and the
+    next-step line schedule it on day 3; its requirement (cp2) is unchanged.}
+- {id: D27, date: '2026-10-18', decision: 'After P0-W4.3, W4 reported that with the flagged binding-constant
+    analog the template-liquid energy gamma_sl is negative on every draw (median -0.039 J/m^2). A negative
+    solid-liquid interfacial energy is not admissible for a stable interface, so the neutral-solute Gibbs-Langmuir
+    term is outside its validity range there. P0-W3.4b derives the admissibility rule; P0-W4.3b reruns
+    the production screens with it; the original runs stay committed as they came; the paper states the
+    sequence in one plain sentence.', reason: The Gibbs-Langmuir term has a validity range that the registered
+    screen did not state; the rule is derived from the physics and from the one fact above, with no other screen output consulted.: null}
+- {id: D28, date: '2026-10-18', decision: 'The integrator''s deviation entries (ops/tracks/p0_deviations.md,
+    2026-10-18) cover the cp3b registrations: theory/thresholds.md (P0-W3.4: A1 0fd2b59, A2 8ff2b53, A3
+    f338fe9, A4 22ef464; block v3 at fd29fcd) and configs/preprint/thresholds.yaml (regenerated by P0-W4.3
+    from block v3). Both Re-audit: cp4.', reason: Both changes were mandated by cp3 (lane note N22) and
+    made before any production output; the freeze rule needs a dated entry for each.}
+- {id: D29, date: '2026-10-18', decision: 'Mechanical cross-lane fix inside the P0-W8.3 merge (D8): the
+    record anchor of claim CL-T02 in preprint/claims.yaml quoted the first sentence of preprint/retrodiction/criterion.md
+    as written in P0-W2.2, which P0-W2.3 reworded; the anchor now quotes the revised sentence (version
+    1 committed with cases.yaml before any run, af75ed0). The test test_repo_deviations_file_exists_with_header_only
+    became test_repo_deviations_file_has_header_and_well_formed_entries, since the deviations file now
+    carries entries.', reason: Two lanes touched one sentence; the edit changes no claim, only the quoted anchor.: null}
+- {id: D30, date: '2026-10-18', decision: 'P0-W1.4 and P0-W5.4 move from day 4 to day 3 in the ledger,
+    before P0-I3, as P0-W3.4 did (D26). They supply cp4 inputs that need no checkpoint (new keys, outlook
+    evidence and reference audit support from W1; cell-regime data gaps and the pod driver from W5) and
+    run ahead of day 4. Their params and result supplements are additive documents after p0-cp3 and carry
+    Re-audit: cp4 deviation entries; the production screens use params at p0-cp3. P0-W1.5 and P0-W5.5
+    stay on day 5.', reason: The inputs need no checkpoint and the lanes are free; the requirements of
+    both sessions (none) are unchanged.}
+- {id: D31, date: '2026-10-18', decision: 'Hero composition B chosen by Palaash. W7.4 fixes: the nucleus
+    must read as a cap with a visible base (denser packing, translucent surface or lighting); 2-3 bound
+    Ca2+ plus the bridging ion in frame; keep the depth of field but keep the left chain and slab edge
+    reasonably sharp.', reason: Palaash reviewed the three draft compositions of P0-W7.3.}
+- {id: D32, date: '2026-10-18', decision: The anchor DFT and the Fig 8 anchor render are deferred; no
+    compute pod is used for P0. The paper states in one plain sentence that the anchor comparison was
+    not run. The driver stays in the repository for the main study., reason: No pod is used for P0.}
+- {id: D33, date: '2026-10-18', decision: 'P0-W7.4 and P0-W2.4a run ahead of day 4, as D26 and D30. P0-W7.4
+    moves from day 4 to day 3; P0-W2.4a (ChemRxiv package scaffold, lane w2, Opus, master trace S13) is
+    added on day 3. P0-W2.4 (co-author pack) stays on day 4.', reason: They need no checkpoint and no
+    result.}
+- {id: D34, date: '2026-10-20', decision: 'Preprint redirected from a CaCO3 barrier to a thermodynamic
+    screen of bone-inspired calcium-phosphate barriers on aluminium collectors in fluorine-free lithium-ion
+    cells; carbonate stays as the control. Old sessions retired, PH- sessions on days 4 to 7. P0-W7.4
+    carried as HOLD (halted; the final carbonate hero was not produced; scene system, rig, palette and
+    structure builders are reusable).', reason: The nucleation half failed its retrodiction (7 of 12 against
+    10); the carbonate barrier is negative above about 4 V vs Li.}
+- {id: D35, date: '2026-10-20', decision: The carbonate control is frozen at tag p0-carbonate-control
+    and inventoried in ops/reports/carbonate_control_inventory.md., reason: The paper cites the control
+    from one frozen source.}
+- {id: D36, date: '2026-10-20', decision: 'No pods, no compute spending; the anchor DFT stays deferred.
+    P0-W5.4 part 2 (pod) is not run, so status DONE-PART1 counts as passing when a day closes.', reason: Extends
+    D32.}
+- {id: D37, date: '2026-10-20', decision: 'The carbonate manuscript text is kept as the adaptable base;
+    briefs, claims and figures are rewritten by PH- sessions.', reason: Mineral-neutral parts carry over.}
+- {id: D38, date: '2026-10-20', decision: The P0-W2.4a package is kept as a scaffold to be retitled.,
+  reason: Its checker and metadata are mineral-neutral.}
+- {id: D39, date: '2026-10-20', decision: 'The freeze rule is data: the freeze: block of this ledger (tag,
+    paths) replaces the fixed p0-cp3 list.', reason: 'Phosphate work adds keys and files under lit/, theory/
+    and configs/ without entries.'}
+- {id: D40, date: '2026-10-20', decision: 'nacre verify --quick runs every check except the full pytest
+    run; lanes use it, integrators use verify --strict.', reason: Lanes run their own tests; one full
+    run per integration.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -725,11 +909,11 @@ lane_notes:
   date: '2026-10-17'
   day: 3
   lanes: [p0-w1, p0-w2, p0-w3, p0-w4, p0-w5, p0-w6, p0-w7, p0-w8]
-  note: '`nacre verify --strict` may fail on exactly one known item until P0-W5.3 lands: provenance, for W5 ledger
-    entries that list git-ignored *.log files. CI may fail on exactly two known items: W5''s anchor builder
-    determinism on Linux, and W6''s RDKit drawing tests needing Arial, until P0-W5.3, P0-W6.3 and the CI font
-    step (installed in .github/workflows/ci.yml) land. Lanes record these and do not chase them. Any other
-    failure counts as normal.'
+  note: '`nacre verify --strict` may fail on exactly one known item until P0-W5.3 lands: provenance, for
+    W5 ledger entries that list git-ignored *.log files. CI may fail on exactly two known items: W5''s
+    anchor builder determinism on Linux, and W6''s RDKit drawing tests needing Arial, until P0-W5.3, P0-W6.3
+    and the CI font step (installed in .github/workflows/ci.yml) land. Lanes record these and do not chase
+    them. Any other failure counts as normal.'
 - id: N18
   date: '2026-10-17'
   day: 3
@@ -741,80 +925,131 @@ lane_notes:
   date: '2026-10-17'
   day: 3
   lanes: [p0-w5]
-  note: 'First, before the pod run. (a) Provenance: the ledger lists only committed artefacts; logs are either
-    committed deliberately (git add -f under results/preprint/anchor/ with a size limit) or recorded by sha256
-    with a local_only flag, matching what `nacre verify`''s provenance check accepts (read its code). (b) Anchor
-    builder determinism on Linux: canonical atom ordering and a stored conformer read back, as W7 did, so the
-    regeneration test passes on Linux at a tolerance of 1e-2 Angstrom or tighter.'
+  note: 'First, before the pod run. (a) Provenance: the ledger lists only committed artefacts; logs are
+    either committed deliberately (git add -f under results/preprint/anchor/ with a size limit) or recorded
+    by sha256 with a local_only flag, matching what `nacre verify`''s provenance check accepts (read its
+    code). (b) Anchor builder determinism on Linux: canonical atom ordering and a stored conformer read
+    back, as W7 did, so the regeneration test passes on Linux at a tolerance of 1e-2 Angstrom or tighter.'
 - id: N20
   date: '2026-10-17'
   day: 3
   lanes: [p0-w2, p0-w3, p0-w6, p0-w7, p0-w8, p0-w4]
-  note: 'Day 3 has two extra sessions. P0-W4.3a (W4, Opus, requires cp1 and cp2, no production screen) implements
-    contract v3 and removes the D11 xfails; regenerates configs/preprint/thresholds.yaml from W3''s cp2 thresholds,
-    repairs the W4 decision tests and removes the D13 xfail; adds schema fields for the Fig 5 barrier prefactor
-    (reference gamma_nl, V_m, T) and the Fig 7 water-stability lines; aligns evaluate_c5_cell with F5; and makes
-    the retrodiction entry point available for W2.3. P0-I2.5 (integrator) then merges the wave-1 lanes and
-    fast-forwards all lanes. The wave-2 sessions P0-W2.3, P0-W3.4, P0-W6.3, P0-W7.3 and P0-W8.3 start after
-    P0-I2.5 has merged W4.3a, and keep their checkpoint requirements. For W4, the first three items of N13 move
-    to W4.3a; the sizing rule stays in W4.3, which is unchanged (requires cp1, cp2 and cp3).'
+  note: Day 3 has two extra sessions. P0-W4.3a (W4, Opus, requires cp1 and cp2, no production screen)
+    implements contract v3 and removes the D11 xfails; regenerates configs/preprint/thresholds.yaml from
+    W3's cp2 thresholds, repairs the W4 decision tests and removes the D13 xfail; adds schema fields for
+    the Fig 5 barrier prefactor (reference gamma_nl, V_m, T) and the Fig 7 water-stability lines; aligns
+    evaluate_c5_cell with F5; and makes the retrodiction entry point available for W2.3. P0-I2.5 (integrator)
+    then merges the wave-1 lanes and fast-forwards all lanes. The wave-2 sessions P0-W2.3, P0-W3.4, P0-W6.3,
+    P0-W7.3 and P0-W8.3 start after P0-I2.5 has merged W4.3a, and keep their checkpoint requirements.
+    For W4, the first three items of N13 move to W4.3a; the sizing rule stays in W4.3, which is unchanged
+    (requires cp1, cp2 and cp3).
 - id: N21
   date: '2026-10-17'
   day: 3
   lanes: [p0-w4]
-  note: '(W4.3) Before any production run, commit configs/preprint/gap_resolution.yaml: every key the screen needs that has no sourced prior, with its registered treatment (ignorance prior with bounds from theory/ignorance_priors.md; flagged analog prior run side by side; design axis over a registered grid; or unresolved, where the link reports "gap", counted as inconclusive). Poll W3 state "thresholds_cp3b" (the margin mapping and geometric bounds) before production. Then run production for both regimes, all registered framings, states and design axes, with the deletion-test controls (bare_oxide, PVDF), under the sizing rule and caps.'
+  note: '(W4.3) Before any production run, commit configs/preprint/gap_resolution.yaml: every key the
+    screen needs that has no sourced prior, with its registered treatment (ignorance prior with bounds
+    from theory/ignorance_priors.md; flagged analog prior run side by side; design axis over a registered
+    grid; or unresolved, where the link reports "gap", counted as inconclusive). Poll W3 state "thresholds_cp3b"
+    (the margin mapping and geometric bounds) before production. Then run production for both regimes,
+    all registered framings, states and design axes, with the deletion-test controls (bare_oxide, PVDF),
+    under the sizing rule and caps.'
 - id: N22
   date: '2026-10-17'
   day: 3
   lanes: [p0-w3]
-  note: '(W3.4) First, register in thresholds.md: the margin-to-scheme mapping (m_expt for the experimental route; m_E, the DFT margin, where no experimental route exists); the termination ignorance mixture as flat Dirichlet weights; geometric bounds for the contact patch area, site footprint, group density and the Ca2+ radius treatment. Push and mark "thresholds_cp3b" ready. Then the SI derivation text.'
+  note: '(W3.4) First, register in thresholds.md: the margin-to-scheme mapping (m_expt for the experimental
+    route; m_E, the DFT margin, where no experimental route exists); the termination ignorance mixture
+    as flat Dirichlet weights; geometric bounds for the contact patch area, site footprint, group density
+    and the Ca2+ radius treatment. Push and mark "thresholds_cp3b" ready. Then the SI derivation text.'
 - id: N23
   date: '2026-10-17'
   day: 3
   lanes: [p0-w2]
-  note: '(W2.3) Before the run, in one new fixed-before-run commit: (R9) drop the constant-predictor baseline; add the permutation null as a descriptive control; the swap check stands; map each case input to its interface; move RC11 to the contract-v3 bookkeeping. Then run through src/nacre/screen/retro.py and report the result as it comes out.'
+  note: '(W2.3) Before the run, in one new fixed-before-run commit: (R9) drop the constant-predictor baseline;
+    add the permutation null as a descriptive control; the swap check stands; map each case input to its
+    interface; move RC11 to the contract-v3 bookkeeping. Then run through src/nacre/screen/retro.py and
+    report the result as it comes out.'
 - id: N24
   date: '2026-10-17'
   day: 3
   lanes: [p0-w6]
-  note: '(W6.3) N18 font fallback; re-pin the owner schemas (N15). Build Fig 4 (retrodiction) and Fig 7 (R-slurry dose window; R-cell window against the E_cell_max classes) from real outputs as they land.'
+  note: (W6.3) N18 font fallback; re-pin the owner schemas (N15). Build Fig 4 (retrodiction) and Fig 7
+    (R-slurry dose window; R-cell window against the E_cell_max classes) from real outputs as they land.
 - id: N25
   date: '2026-10-17'
   day: 3
   lanes: [p0-w7]
-  note: '(W7.3) The hero fixes listed in P0-W7.2.md plus Palaash''s feedback; the Fig 2 renders.'
+  note: (W7.3) The hero fixes listed in P0-W7.2.md plus Palaash's feedback; the Fig 2 renders.
 - id: N26
   date: '2026-10-17'
   day: 3
   lanes: [p0-w8]
-  note: '(W8.3) Physical model and Methods. The N14 items; the MP attribution text from results/preprint/pourbaix/cache/attribution_for_paper.md; the reference DOIs W5 lists in P0-W5.3.md, added with `nacre bib add --bib preprint/paper/refs.bib`.'
+  note: (W8.3) Physical model and Methods. The N14 items; the MP attribution text from results/preprint/pourbaix/cache/attribution_for_paper.md;
+    the reference DOIs W5 lists in P0-W5.3.md, added with `nacre bib add --bib preprint/paper/refs.bib`.
 - id: N27
   date: '2026-10-17'
   day: 3
   lanes: [p0-w5]
-  note: '(W5, resume) When the pod exists: Linux x86_64 xtb/CREST pins, the production driver, confirm the SMD non-electrostatic term on the pod, then run the anchor set (P0-W5.3 resume).'
+  note: '(W5, resume) When the pod exists: Linux x86_64 xtb/CREST pins, the production driver, confirm
+    the SMD non-electrostatic term on the pod, then run the anchor set (P0-W5.3 resume).'
 - id: N28
   date: '2026-10-18'
   day: 4
   lanes: [p0-w1]
-  note: '(W1.4) The PVDF surface-energy key (for the deletion test). A_patch bound keys: the cathode particle diameter and the asperity contact area. The template molar mass per group, the Ca2+ radius and the film d_max keys. The primary-drying water activity. Evidence rows for the Shapley-effects references W8 cites. Make the n_req key ln(1/q0)/A_patch (cp3 R5). Anodic-stability evidence for other minerals (calcium phosphates) for the Outlook sentence. Stated correlations where the sources support them (every correlation group is currently "assumed independent").'
+  note: '(W1.4) The PVDF surface-energy key (for the deletion test). A_patch bound keys: the cathode particle
+    diameter and the asperity contact area. The template molar mass per group, the Ca2+ radius and the
+    film d_max keys. The primary-drying water activity. Evidence rows for the Shapley-effects references
+    W8 cites. Make the n_req key ln(1/q0)/A_patch (cp3 R5). Anodic-stability evidence for other minerals
+    (calcium phosphates) for the Outlook sentence. Stated correlations where the sources support them
+    (every correlation group is currently "assumed independent").'
 - id: N29
   date: '2026-10-18'
   day: 4
   lanes: [p0-w5]
-  note: '(W5.4, pod) The boehmite window; Al(ClO4)3; the reduction and solvated budget keys; the anchor DFT when the pod exists.'
+  note: (W5.4, pod) The boehmite window; Al(ClO4)3; the reduction and solvated budget keys; the anchor
+    DFT when the pod exists.
 - id: N30
   date: '2026-10-18'
   day: 4
   lanes: [p0-w8]
-  note: '(W8.4) Results, Discussion and Outlook foreground the physics: the voltage bound and the slurry dose window as results; the failed retrodiction reported plainly with its diagnosis (the input route, and the missing binding term at the crystal-template contact); the gamma_sl admissibility sequence in one plain sentence; the study verdict stated as it comes. No registration ceremony beyond one plain sentence in Methods.'
+  note: '(W8.4) Results, Discussion and Outlook foreground the physics: the voltage bound and the slurry
+    dose window as results; the failed retrodiction reported plainly with its diagnosis (the input route,
+    and the missing binding term at the crystal-template contact); the gamma_sl admissibility sequence
+    in one plain sentence; the study verdict stated as it comes. No registration ceremony beyond one plain
+    sentence in Methods.'
 - id: N31
   date: '2026-10-18'
   day: 3
   lanes: [p0-w3]
-  note: '(W3.4b, D27) Derive the physical admissibility rule for the Gibbs-Langmuir template-liquid energy; bump the contract; register it. No screen output is consulted beyond the facts in D27.'
+  note: (W3.4b, D27) Derive the physical admissibility rule for the Gibbs-Langmuir template-liquid energy;
+    bump the contract; register it. No screen output is consulted beyond the facts in D27.
 - id: N32
   date: '2026-10-18'
   day: 3
   lanes: [p0-w4]
-  note: '(W4.3b, D27) Rerun the production screens with the admissibility rule once W3.4b is ready. The original runs stay committed as they came.'
+  note: (W4.3b, D27) Rerun the production screens with the admissibility rule once W3.4b is ready. The
+    original runs stay committed as they came.
+freeze:
+  tag: p0-carbonate-control
+  paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
+retired:
+- {id: P0-W1.5, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-W2.4, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-W3.5, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-W4.4, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-W5.5, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-W6.4, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-W8.4, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-W8.5, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-I3, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-I4, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-I5, reason: 'D34 (redirect to calcium phosphate, 2026-10-20)'}
+- {id: P0-W2.5, reason: 'D34 (redirect to calcium phosphate, 2026-10-20); successor of retired sessions
+    on the retired days 4 and 5, not named in the redirect list'}
+- {id: P0-W4.5, reason: 'D34 (redirect to calcium phosphate, 2026-10-20); successor of retired sessions
+    on the retired days 4 and 5, not named in the redirect list'}
+- {id: P0-W6.5, reason: 'D34 (redirect to calcium phosphate, 2026-10-20); successor of retired sessions
+    on the retired days 4 and 5, not named in the redirect list'}
+- {id: P0-W7.5, reason: 'D34 (redirect to calcium phosphate, 2026-10-20); successor of retired sessions
+    on the retired days 4 and 5, not named in the redirect list'}
