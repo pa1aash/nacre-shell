@@ -1,5 +1,5 @@
 {
-  "last_session": "P0-W1.3",
+  "last_session": "P0-W1.4",
   "status": "DONE",
   "day": 3,
   "artifacts": [
@@ -20,6 +20,12 @@
     "lit/corpus/T-K/",
     "lit/corpus/T-L/",
     "lit/corpus/T-M/",
+    "lit/corpus/T-N/",
+    "lit/corpus/T-O/",
+    "lit/corpus/T-P/",
+    "lit/corpus/T-Q/",
+    "lit/corpus/audit/claims.yaml",
+    "lit/corpus/audit/reference_audit.csv",
     "lit/corpus/coverage.yaml",
     "lit/corpus/coverage_notes.yaml",
     "lit/corpus/gaps.md",
@@ -36,22 +42,28 @@
     "ops/reports/P0-W1.1.md",
     "ops/reports/P0-W1.2.md",
     "ops/reports/P0-W1.3.md",
+    "ops/reports/P0-W1.4.md",
     "src/nacre/lit/",
     "src/nacre/lit/build_params.py",
     "src/nacre/lit/ledger.py",
     "src/nacre/lit/params.py",
+    "src/nacre/lit/ref_audit.py",
     "src/nacre/lit/si_table.py",
     "tests/lit/"
   ],
-  "notes": "200 params keys (71 new; sourced 66, single-source 64, gap 33, computed 20, registered 11, design-input 6); rule version 2 (README section 7: roles, T1, W1, A1, I1, D1, R1, G1, M0). 214 new evidence rows (954 total). cp3 R2: m_expt = window_margin_expt 0.087 V; E_cell_max is a design axis by cathode class (LFP, layered NMC/NCA, LCO, LMO, LNMO); Li2CO3 onset 3.8-3.9 V against printed equilibrium 3.82 V. R8: catechol pKa from catechol at stated I (flag), pH primary/sensitivity, termination weights gap with per-termination plus ignorance-mixture rule, gamma_sl0 truncated at 0 with untruncated sensitivity; 10 analog keys. R10: Ca2+/Al3+ transfer energies into the registered solvents are a gap (aqueous analogs flagged); Ca(ClO4)2 entropy bounded by anion-exchange analogs (|dS_ex| <= 28.7 J/K/mol). Margins: m_W evidence 3.77 mJ/m2, m_S zero (prior carries it), m_E evidence 0.124 V (DFT), m_expt 0.087 V; m_seq excludes implicit solvation (sensitivity key). conflicts.md complete (34 sections, 33 table entries). SI table generated; early-read PDF built locally. Next: P0-W1.4 reference audit support.",
+  "notes": "P0-W1.4 (day 3 ahead of day 4, D30): 220 params keys (20 new, added_in P0-W1.4; README section 8 rule version 3: post-cp3 additions only, gaps filled through 'fills'); n_req = ln(1/q_0)/A_patch (cp3 R5), the one mandated edit. Found: PVDF surface energy and parts, cathode particle diameter (A_patch upper bound), Ca2+ radius at CN 6 (fills ca_ionic_radius), reduction-limit budgets m_expt 0.022 V (CaCO3) and 0.123 V (corundum), boehmite entropy, Li2CO3/LiAl5O8 Gibbs energies, Al work function. Gaps: asperity contact area, template mass per group, d_max film inputs, primary-drying a_w, solvated-sink and Al-phase oxidation budgets, Al(ClO4)3; no stated correlations. 121 new evidence rows (1075 total). Outlook: phosphate oxidises near 4.2 V (computed), no calcium-salt value. Reference audit: 44 keys, 43 cited, 10 cited without support, 0 unresolved DOIs, no update notices. Deviation entry for lit/params.yaml in ops/reports/P0-W1.4.md. Next: P0-W1.5 (day 5, cp4).",
   "params": {
     "status": "ready",
-    "sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+    "sha": "d28ecc9b0ef6629ac0d0eaca5895d18193edab15",
+    "post_cp3": true,
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
-    "rule": "lit/corpus/params_README.md (rule version 2, section 7)",
-    "keys": 200,
-    "w3_threshold_keys": "added (aliases under regimes.* and thresholds.*); cp2 fix-up keys added or recorded as gaps",
-    "cp3": "R2, R8, R10 applied"
+    "rule": "lit/corpus/params_README.md (rule version 3, section 8)",
+    "keys": 220,
+    "new_keys": 20,
+    "edited_keys": [
+      "n_req"
+    ],
+    "cp3_tag_table": "p0-cp3 (production screens)"
   }
 }
