@@ -9,7 +9,7 @@ meta:
   rule: lit/corpus/params_README.md
   rule_sha256: d9c84962a675d73e82bd843ed949faf8f76bf6a39419cdf3428c04ef5c77d598
   evidence_table_sha256: 4307316fc6d7f0e19d7314ca510ed803293bc6f65f3055418b4ae66ea43c6b53
-  generated_utc: '2026-10-19T12:47:05Z'
+  generated_utc: '2026-10-19T13:06:11Z'
   session: P0-W1.2
   inputs_from:
   - theory/derivation_body.tex section 11
@@ -6386,54 +6386,6 @@ params:
         u_lial5o8: u_tab_dfg_lial5o8
         u_al2o3: u_tab_dfg_corundum
     margin_case: evidence
-    added_in: P0-W1.4
-    role: primary
-    flags: []
-  window_margin_expt_solvated_caco3:
-    symbol: m_expt
-    transform: none
-    unit: V
-    regimes:
-    - R-cell
-    status: gap
-    value: null
-    range: null
-    range_reason: 'gap: the solvated-sink route needs the transfer Gibbs energies of Ca2+ (and Li+) from water into
-      the registered solvents with their uncertainties; none was found for Ca2+ (T-K, T-Q gaps.md), so the budget
-      has no input'
-    prior:
-      family: none
-    rule: X1
-    sources: []
-    best_grade: null
-    conditions: n.s.
-    correlation_group: null
-    notes: ''
-    method: no admitted row (X1)
-    added_in: P0-W1.4
-    role: primary
-    flags: []
-  window_margin_expt_ox_al_phases:
-    symbol: m_expt
-    transform: none
-    unit: V
-    regimes:
-    - R-cell
-    status: gap
-    value: null
-    range: null
-    range_reason: 'gap: the oxidation limits of corundum and boehmite with LiClO4 form Al(ClO4)3, whose formation
-      enthalpy and Gibbs energy were not found in a legible open table (dfg_al_clo4_3; TN 270-3 extracts as rotated
-      text, Wagman 1982 paywalled; T-Q gaps.md)'
-    prior:
-      family: none
-    rule: X1
-    sources: []
-    best_grade: null
-    conditions: n.s.
-    correlation_group: null
-    notes: ''
-    method: no admitted row (X1)
     added_in: P0-W1.4
     role: primary
     flags: []

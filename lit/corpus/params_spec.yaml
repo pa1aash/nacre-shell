@@ -2216,25 +2216,6 @@ params:
       Budget key of the corundum reduction limit Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al (0.375 electrons), from the
       tabulated uncertainties. The independent enthalpy assessments of LiAl5O8 spread by about 90 kJ/mol (TQ-010), far
       beyond the tabulated convention; the budget is the table's own and that spread is recorded in lit/conflicts.md.
-  window_margin_expt_solvated_caco3:
-    added_in: P0-W1.4
-    symbol: m_expt
-    unit: V
-    regimes: [R-cell]
-    status: gap
-    reason: >-
-      gap: the solvated-sink route needs the transfer Gibbs energies of Ca2+ (and Li+) from water into the registered
-      solvents with their uncertainties; none was found for Ca2+ (T-K, T-Q gaps.md), so the budget has no input
-  window_margin_expt_ox_al_phases:
-    added_in: P0-W1.4
-    symbol: m_expt
-    unit: V
-    regimes: [R-cell]
-    status: gap
-    reason: >-
-      gap: the oxidation limits of corundum and boehmite with LiClO4 form Al(ClO4)3, whose formation enthalpy and Gibbs
-      energy were not found in a legible open table (dfg_al_clo4_3; TN 270-3 extracts as rotated text, Wagman 1982
-      paywalled; T-Q gaps.md)
   work_function_al:
     added_in: P0-W1.4
     symbol: W_f

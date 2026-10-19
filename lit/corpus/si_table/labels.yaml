@@ -541,10 +541,6 @@ window_margin_expt_red_caco3:
   label: C5 reduction-limit margin of CaCO3, all-experimental route
 window_margin_expt_red_corundum:
   label: C5 reduction-limit margin of corundum, all-experimental route
-window_margin_expt_solvated_caco3:
-  label: C5 oxidation-limit margin of CaCO3, solvated sink
-window_margin_expt_ox_al_phases:
-  label: C5 oxidation-limit margin of corundum and boehmite
 work_function_al:
   label: work function of clean aluminium
   latex: W_\mathrm{Al}
