@@ -26,9 +26,13 @@ session: P0-W4.3
 written_before_production_output: true
 inputs:
   params: {file: lit/params.yaml, tag: p0-cp3, last_change: fbe252b23a5a80e9fff25db72d1d3b85e8454ce8}
-  thresholds: {file: configs/preprint/thresholds.yaml, source: theory/thresholds.md, block_version: 3,
-               source_sha: 22ef46446205f63fab6074ba971ee89e18d99489, cp3b_ready_at: c4bb9d7 (origin/preprint/p0-w3)}
-  bounds_authority: {file: theory/ignorance_priors.md, block_version: 2, sha: 'f338fe96ba09049a9bf835b2178bcb678c9903e7 (origin/preprint/p0-w3, cp3b A3)'}
+  thresholds: {file: configs/preprint/thresholds.yaml, source: theory/thresholds.md, block_version: 4,
+               source_sha: fd5846fd43d43e457566068f381a43ed96a8c1c3, admissibility_ready_at: f8139f0 (origin/preprint/p0-w3),
+               was: 'block 3 at 22ef46446205f63fab6074ba971ee89e18d99489 (P0-W4.3; AM3 moves it)'}
+  bounds_authority: {file: theory/ignorance_priors.md, block_version: 3, sha: 'fd5846fd43d43e457566068f381a43ed96a8c1c3 (origin/preprint/p0-w3, D27)',
+                     was: 'block 2 at f338fe96ba09049a9bf835b2178bcb678c9903e7 (cp3b A3)'}
+  contract: {file: theory/contract.yaml, version: 4, sha: fd5846fd43d43e457566068f381a43ed96a8c1c3, check: configs/preprint/contract_check.json,
+             was: 'version 3 at db872ae9190c3b729bc2b13898919fbfbe56815b'}
 amendments:                              # every change after the first commit, each before any production output
   - id: AM1
     reason: 'W3 thresholds_cp3b (block v3, ignorance block v2) refines treatments of this table (P0-W4.3 Task B)'
@@ -44,8 +48,26 @@ amendments:                              # every change after the first commit, 
       corundum: 'the block''s gated phase corundum is W5''s window Al2O3 (mp-1143, alpha-Al2O3): a name binding, no value'
       boehmite: 'no W5 R-cell window: undetermined, never a pass (unresolved)'
       benchmark_errors: 'the comparator rows read the per-electron benchmark errors of results/preprint/pourbaix/c5/cell_scheme_table.json (benchmark_error_V_per_electron); comparators never decide'
+
+  - id: AM3
+    session: P0-W4.3b
+    reason: >-
+      Decision D27 (2026-10-18): with the flagged binding-constant analog the template-liquid energy
+      gamma_sl came out negative on every draw of P0-W4.3, outside the interface-stability bound. W3
+      registered the admissibility rule (P0-W3.4b, theory at fd5846fd43d43e457566068f381a43ed96a8c1c3,
+      marked ready at f8139f0: contract v4, thresholds block v4, ignorance block v3). This amendment
+      applies that rule and nothing else; it is committed before any rerun output, and the P0-W4.3
+      documents stay committed as they came. Priors, thresholds (other than block v4 itself), sweeps,
+      sizing and caps are those of P0-W4.3.
+    w3_admissibility_sha: fd5846fd43d43e457566068f381a43ed96a8c1c3
+    items:
+      admissibility: 'the joint prior of (gamma_sl0, Delta_G_seq, Gamma_s, delta_s) is restricted to gamma_sl_insitu >= 0 (thresholds decision.admissibility); see the admissibility section below'
+      delta_g_site: 'the analog route of thresholds C2.analog_route: Delta_G_site = Delta_G_site_from_K (the registered conversion, now a contract function) and the two-proton cycle Delta_G_seq_cycle_2H with pka_catechol and pka2_catechol (replaces the one-proton cycle; the pKa2 limitation is closed); see gaps.delta_g_site'
+      thresholds_copy: 'configs/preprint/thresholds.yaml regenerated from block v4 (fd5846f), check EQUAL'
+      unrestricted: 'the P0-W4.3 runs are the unrestricted labelled sensitivity (never a verdict); each rerun also prints the unrestricted verdicts on the same draws and the verdicts that differ'
 reporting:
   ignorance_is_finding: false            # ignorance_priors.md section 3.1
+  admissibility_label: 'conditional on admissibility (M_adm printed beside)'   # AM3
   analog_label: 'conditional on the flagged analog <key>'
   unresolved_counts_as: inconclusive
   flip_values: P0-W4.4                   # where each unresolved or ignorance-bounded input flips a verdict
@@ -85,6 +107,10 @@ gaps:
     treatment: analog
     analog: log10_k_ca_catecholate
     conversion: 'Delta_G_site = -R_gas*T*(log(K_Ca_catecholate) + log(c_max/c_std)), c_max = Gamma_s/delta_s'
+    conversion_function: Delta_G_site_from_K      # AM3: the same expression, contract v4 (site-volume standard state)
+    cycle: {function: Delta_G_seq_cycle_2H, pKa: pka_catechol, pKa2: pka2_catechol,
+            reason: 'AM3 (thresholds C2.analog_route): the constant refers to the catecholate dianion, so both protons are charged',
+            was: 'Delta_G_seq_cycle (one proton, pka_catechol)'}
     conversion_reason: >-
       The analog is a solution complexation constant (standard concentration c_std, exact by
       definition) of Ca2+ with the deprotonated catecholate; Delta_G_site uses the site-volume
@@ -93,8 +119,12 @@ gaps:
       the conditional binding constant of the analog.
     flags: [single_source, widened]      # carried from the key (W1 rule W1)
     limitation: >-
-      The contract corrects for one coordinating group (pKa bound to pka_catechol); the second
-      catechol proton (pka2_catechol) is not in the contract and is reported as a limitation.
+      Closed by AM3: the second catechol proton (pka2_catechol) is charged through the contract v4
+      two-proton cycle. Was (P0-W4.3): the contract corrected for one coordinating group only.
+    direction: >-
+      thresholds C2.analog_route: lateral repulsion and site competition only lower the occupancy, so
+      the Langmuir term at the solution affinity is an upper bound on the lowering with respect to
+      those effects; site geometry moves the zero-coverage affinity either way
     reason: Delta_G_site is computed by the study's PMF, which P0 does not run (D15 (iii) - literature binding energies, flagged)
     beside: table set (C2, C3 and C4 not evaluable)
   delta_s:
@@ -282,6 +312,27 @@ c1:
       gamma_pw: 'the same quantity as gamma_sl0 (ignorance_priors.md 1d), with its cp3 R8 truncation; the consistency bound gamma_pw <= gamma_p + gamma_w is reported'
       flip: 'gamma_op* = gamma_ow + gamma_pw - m_W (ignorance_priors.md 1c), for P0-W4.4'
       label: ignorance (never a finding)
+admissibility:                           # AM3 (D27; thresholds decision.admissibility; ignorance_priors.md 2a)
+  condition: 'gamma_sl_insitu = gamma_sl0 + Delta_gamma_ads >= 0'
+  joint_over: [gamma_sl0, Delta_G_seq, Gamma_s, delta_s]
+  at: >-
+    every registered R-slurry state (slurry, drying) at each design point: the states share their
+    draws (common random numbers), and a draw is admitted only if the condition holds at every state
+  draws_outside: refused and counted (never clipped, never floored at zero)
+  retained_mass: 'M_adm = admitted / evaluable draws, per design point (joint over the states) and per state; never renormalised silently'
+  verdicts: 'C3, C4 and the deletion test on the admitted draws, labelled conditional on admissibility'
+  inadmissible_inputs: '1 - M_adm >= p_cred (the p_cred of the run, so it moves with the p_cred sweep): the link verdict is inconclusive, labelled inadmissible inputs, with the restricted verdict beside'
+  report: [M_adm, 'P(gamma_sl_floor >= 0) (gamma_sl_floor = gamma_sl0 where Delta_G_seq >= 0: such a template lowers nothing)',
+           r_ads quantiles over the admitted draws, unrestricted verdicts on the same draws, verdicts that differ]
+  in_situ_supply: 'a surface supplied at the regime activities (the bare_oxide control, gamma_sl ~ U[0, gamma_o + gamma_w]) is admissible on every draw by its bound; M_adm = 1 is printed, not assumed'
+  c2: 'C2 is a descriptor that does not use gamma_sl; it stays on the joint prior as registered, and its quantities over the admitted draws are printed beside'
+  c1: 'C1 does not use gamma_sl (the Dupre estimate uses gamma_pw = gamma_sl0, truncated at 0 as registered); unchanged'
+  sensitivity: >-
+    the nucleate link (C3, C4 quantities) is analysed on the admitted draws at its state: a refused draw has no
+    output (NaN), so the Shapley double loop samples the restricted conditionals by rejection and treats the
+    dependence the restriction induces (lane note N2); the Sobol indices of independent marginals over the
+    admitted draws are approximate under that dependence and labelled so; the ranking reads the Shapley effects
+  tuning: none (no prior, threshold, sweep or cap is changed after any rerun output)
 c4:
   closure_route: 'C4s reports gap (d_max); C4 cannot be falsified (a falsification needs both routes) and passes only through S_spread'
   report: [P(gamma_sl > gamma_nl) per state, N_nuc]
