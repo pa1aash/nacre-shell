@@ -51,6 +51,12 @@ Rule version 2 (README section 7, cp3), per key:
       axis: {classes: [{label, key}]}                                           G1
       margin_zero: {reason}                                                     M0 (margin zero, README 7.3)
       margin_case: evidence | zero                   copied to the entry
+
+Post-cp3 supplements (README section 8, P0-W1.4), per key:
+
+      added_in: <session>                            the session that added the key after tag p0-cp3
+      fills: <gap key>                               the cp3 gap key this key supplies a prior for; the gap
+                                                     key itself is left as it was at the tag
 """
 import argparse
 import ast
@@ -77,7 +83,7 @@ GRADE_ORDER = {"A": 0, "B": 1, "C": 2, "D": 3}
 
 
 STANDARD_T = 298.15  # K, the IUPAC standard temperature (a definition, README 7.2 W1)
-PASS_THROUGH = ("role", "of", "margin_case", "ionic_strength")
+PASS_THROUGH = ("role", "of", "margin_case", "ionic_strength", "fills", "added_in")
 DEFERRED = ("derive", "ignorance", "registered", "axis", "margin_zero")
 # exact SI constants only (README section 1)
 EXPR_CONSTANTS = {"N_A": SC.N_A, "k_B": SC.k, "e": SC.e, "F": SC.N_A * SC.e, "R": SC.N_A * SC.k,

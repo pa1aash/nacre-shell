@@ -327,6 +327,16 @@ def validate(params, root=None):
             bad("unknown flags %s" % unknown_flags)
         if role == "analog" and "analog" not in (e.get("flags") or []):
             bad("an analog key carries the flag analog (A1)")
+        if "fills" in e:
+            g = entries.get(e["fills"])
+            if not isinstance(g, dict) or g.get("status") != "gap":
+                bad("'fills' names a key of status gap (README 8)")
+            elif str(g.get("unit")) != str(e["unit"]) or g.get("transform") != e["transform"]:
+                bad("'fills' names a gap key with another unit or transform (README 8)")
+            if e["status"] == "gap" or not e.get("added_in"):
+                bad("a key that fills a gap has admitted evidence and an 'added_in' session (README 8)")
+        if "added_in" in e and not str(e["added_in"]).strip():
+            bad("'added_in' names the session that added the key")
         if e.get("rule") == "T1" and isinstance(e.get("truncation"), dict):
             sk = e["truncation"].get("sensitivity_key")
             if sk not in entries or entries[sk].get("role") != "sensitivity" or entries[sk].get("of") != key:

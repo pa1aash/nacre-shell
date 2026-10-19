@@ -1478,10 +1478,11 @@ params:
     unit: m^-2
     regimes: [R-slurry]
     status: registered
-    derive: {expr: "1 / A_patch", inputs: {A_patch: patch_area}, as: none}
+    derive: {expr: "log(1 / (1 - p_cred)) / A_patch", inputs: {p_cred: p_cred, A_patch: patch_area}, as: none}
     notes: >-
-      Registered rule N_req = 1/A_patch (cp2 fix F4, decision D14), derived per draw from patch_area. The Poisson
-      refinement ln(1/q_0)/A_patch (theory/cp2_brief.md D) is a cp3 proposal and is not applied here.
+      Registered rule N_req = ln(1/q_0)/A_patch with q_0 = 1 - p_cred (cp3 R5, decision D19), derived per draw from
+      patch_area and the registered p_cred (its sweep moves N_req). It replaces the cp2 rule 1/A_patch (fix F4,
+      decision D14) in P0-W1.4 (README section 8). Undetermined while patch_area is a gap.
   gas_reference_schemes: {symbol: gas_reference_schemes, unit: "1", regimes: [R-cell], status: registered, reason: "registration (cp3 packet decision 3); the ruling text on the scheme set is not in this table's inputs. cp3 R2 sets the margin of the all-experimental route (window_margin_expt); the benchmark drg_caco3_decomposition and W5's gas_reference.md bear on the choice"}
   al_phases: {symbol: al_phases, unit: "1", regimes: [R-cell], status: registered, reason: "registration named by theory/thresholds.md (C5 R-cell); no ruling text available to this table"}
   m_s:

@@ -7,9 +7,9 @@ meta:
   generated_by: uv run python -m nacre.lit.build_params
   spec: lit/corpus/params_spec.yaml
   rule: lit/corpus/params_README.md
-  rule_sha256: 6c78f4bf46dc55cd300b7b3cb7b8ffc1f00e5ba82d02eec8e48cd36f86e12734
+  rule_sha256: d9c84962a675d73e82bd843ed949faf8f76bf6a39419cdf3428c04ef5c77d598
   evidence_table_sha256: 90c034cb8b79c2f8161fca0d3f0824ae321189d57692cb47c66d9d70dfb93666
-  generated_utc: '2026-10-17T11:00:21Z'
+  generated_utc: '2026-10-19T11:51:15Z'
   session: P0-W1.2
   inputs_from:
   - theory/derivation_body.tex section 11
@@ -4482,7 +4482,7 @@ params:
     status: registered
     value: null
     range: null
-    range_reason: derived (D1) from patch_area; no value for patch_area
+    range_reason: derived (D1) from p_cred, patch_area; no value for patch_area
     prior: &id040
       family: none
     rule: X1
@@ -4491,11 +4491,13 @@ params:
     method: no admitted row (X1)
     conditions: n.s.
     correlation_group: null
-    notes: Registered rule N_req = 1/A_patch (cp2 fix F4, decision D14), derived per draw from patch_area. The Poisson
-      refinement ln(1/q_0)/A_patch (theory/cp2_brief.md D) is a cp3 proposal and is not applied here.
+    notes: Registered rule N_req = ln(1/q_0)/A_patch with q_0 = 1 - p_cred (cp3 R5, decision D19), derived per draw
+      from patch_area and the registered p_cred (its sweep moves N_req). It replaces the cp2 rule 1/A_patch (fix
+      F4, decision D14) in P0-W1.4 (README section 8). Undetermined while patch_area is a gap.
     derived: &id042
-      expr: 1 / A_patch
+      expr: log(1 / (1 - p_cred)) / A_patch
       inputs:
+        p_cred: p_cred
         A_patch: patch_area
     role: primary
     flags: &id043 []
@@ -6186,7 +6188,7 @@ thresholds:
       status: registered
       value: null
       range: null
-      range_reason: derived (D1) from patch_area; no value for patch_area
+      range_reason: derived (D1) from p_cred, patch_area; no value for patch_area
       prior: *id040
       rule: X1
       sources: *id041
@@ -6194,8 +6196,9 @@ thresholds:
       method: no admitted row (X1)
       conditions: n.s.
       correlation_group: null
-      notes: Registered rule N_req = 1/A_patch (cp2 fix F4, decision D14), derived per draw from patch_area. The
-        Poisson refinement ln(1/q_0)/A_patch (theory/cp2_brief.md D) is a cp3 proposal and is not applied here.
+      notes: Registered rule N_req = ln(1/q_0)/A_patch with q_0 = 1 - p_cred (cp3 R5, decision D19), derived per
+        draw from patch_area and the registered p_cred (its sweep moves N_req). It replaces the cp2 rule 1/A_patch
+        (fix F4, decision D14) in P0-W1.4 (README section 8). Undetermined while patch_area is a gap.
       derived: *id042
       role: primary
       flags: *id043
