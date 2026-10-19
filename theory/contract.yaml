@@ -32,9 +32,30 @@
 #   demonstrations      named composites that are wrong on purpose, implemented only to show
 #                       the size of an error (C3 item 13); never used for a verdict
 
-version: 3
-session: P0-W3.2 (cp2 fix-up)
+version: 4
+session: P0-W3.4b (D27)
 changes:
+  - version: 4
+    session: P0-W3.4b (D27)
+    reason: >-
+      Admissibility of the template-liquid energy (decision D27, 2026-10-18; derivation, Section 7 (Admissibility)).
+      A negative gamma_sl describes an interface that lowers its free energy by growing, so the planar
+      template-liquid interface the model describes does not exist there: gamma_sl = gamma_sl0 +
+      Delta_gamma_ads >= 0 is a condition on the state, registered as a restriction of the joint prior
+      with the retained mass reported (theory/thresholds.md, Section 1). Added: the largest lowering any
+      Ca2+ activity can produce (Pi_ads_max, at the zero-excess concentration) and the floor it implies,
+      the validity ratio of the small-change term, and the analog route from a solution complexation
+      constant (site-volume standard state, and the two-proton cycle for a constant that refers to the
+      catecholate dianion). No v3 expression changed.
+    added: [Delta_G_seq_cycle_2H, Delta_G_site_from_K, x_bind_K, Pi_ads, Pi_ads_max, gamma_sl_floor, r_ads]
+    changed:
+      - {name: conventions.adsorption, what: 'text: gamma_sl0 is the Ca-free interface at the regime T, pH and ionic strength; admissibility gamma_sl >= 0 (D27); the Gibbs-Langmuir term is a small-change expansion whose validity ratio r_ads is reported'}
+      - {name: gamma_sl_insitu, what: 'tests and validity only: limits c_bulk -> 0 and Delta_G_seq -> -oo, upper bound gamma_sl0 + R T delta_s c_bulk, decreasing in Gamma_s; admissible only where >= 0; expression unchanged'}
+      - {name: Delta_gamma_ads, what: 'note and a limit (c_bulk -> 0) only; expression unchanged'}
+      - {name: Gamma_Ca, what: 'identity only: the excess vanishes at c_bulk = c_max (1 - 1/E_enr); expression unchanged'}
+      - {name: Delta_G_seq_cycle, what: 'note only: a one-proton site; a two-proton site uses Delta_G_seq_cycle_2H; expression unchanged'}
+      - {name: SF4, what: 'new sign test (D27): the admissible set is an upper set in Delta_G_seq; the clipped and floored alternatives are rejected'}
+    removed: []
   - version: 3
     session: P0-W3.2 (cp2 fix-up)
     reason: >-
@@ -106,7 +127,15 @@ conventions:
   adsorption: >-
     gamma_sl = gamma_sl0 + Delta_gamma_ads, with Delta_gamma_ads = -R T (Gamma_s ln(1 + x)
     - delta_s c_bulk) from the Gibbs adsorption equation and the Langmuir isotherm, and
-    x = E_enr c_bulk / c_max. The Gibbs-Langmuir term is a neutral-solute approximation:
+    x = E_enr c_bulk / c_max. Reference state (contract v4, D27): gamma_sl0 is the same interface
+    with no Ca2+ at the sites at the regime T, pH and ionic strength; the Gibbs integral changes
+    the Ca2+ chemical potential only. A gamma_sl0 measured with Ca2+ present already contains the
+    adsorption (add nothing, or only the difference between the two Ca2+ activities); one measured
+    in pure water lacks the pH and ionic-strength terms. Admissibility (D27): gamma_sl >= 0 at every
+    registered state; a draw with gamma_sl < 0 describes an interface that would grow without
+    limit, is outside the model and is refused and counted, never clipped or floored. The term is a
+    small-change expansion about the Ca-free interface; its validity ratio r_ads =
+    -Delta_gamma_ads/gamma_sl0 is reported, and admissibility is r_ads <= 1. The Gibbs-Langmuir term is a neutral-solute approximation:
     Ca2+ adsorbs with its compensating charge. The cancellation of the mean potential in the
     ion product (derivation, Section 4 (ii)) does not cover the double-layer (electrocapillary)
     contribution to gamma_sl; the change of the diffuse-layer free energy with the surface
@@ -172,8 +201,9 @@ functions:
     unit: J mol^-1
     expression: Delta_G_site + R_gas*T*log(1 + 10**(pKa - pH))
     note: >-
-      single coordinating group that must be deprotonated to bind; the correction is the
-      free energy of finding the site deprotonated at the regime pH. Multi-site and
+      single coordinating group that must lose one proton to bind; the correction is the
+      free energy of finding the site deprotonated at the regime pH. A group that must lose two
+      protons (a catecholate) uses Delta_G_seq_cycle_2H (contract v4). Multi-site and
       ionic-strength forms are open question Q4.
     limits:
       - {limit: {var: pH, to: oo}, expected: Delta_G_site}
@@ -272,6 +302,10 @@ functions:
     limits:
       - {limit: {var: Delta_G_seq, to: oo}, expected: -delta_s*c_bulk}
       - {limit: {var: Delta_G_seq, to: -oo}, expected: Gamma_s - delta_s*c_bulk}
+    identities:
+      - note: 'the excess vanishes at the zero-excess concentration c_0 = c_max (1 - 1/E_enr), where gamma_sl is lowest (contract v4)'
+        subs: {c_bulk: (Gamma_s/delta_s)*(1 - exp(Delta_G_seq/(R_gas*T)))}
+        equals: '0'
     monotonicity:
       - {wrt: Delta_G_seq, direction: decreasing}
 
@@ -287,13 +321,16 @@ functions:
       charge as a neutral solute; the double-layer (electrocapillary) term is neglected (stated
       limitation, screened by ionic strength). Zero when gamma_sl is already
       evaluated at the regime activities. It is the only route by which Delta_G_seq, Gamma_s
-      and delta_s reach the barrier.
+      and delta_s reach the barrier. A small-change expansion about the Ca-free interface: valid
+      while -Delta_gamma_ads is small against gamma_sl0 (r_ads), admissible only while gamma_sl0 +
+      Delta_gamma_ads >= 0 (contract v4, D27).
     derivative_identities:
       - {wrt: Delta_G_seq, equals: 'Gamma_s*@Theta_occ', note: 'each site contributes its occupancy: d gamma_sl / d Delta_G_seq = Gamma_s Theta'}
       - {wrt: c_bulk, equals: '-(R_gas*T/c_bulk)*@Gamma_Ca', note: 'Gibbs adsorption equation: d gamma_sl / d mu_Ca = -Gamma_Ca, with d mu_Ca = R T d ln c_bulk'}
     limits:
       - {limit: {var: Delta_G_seq, to: oo}, expected: R_gas*T*delta_s*c_bulk, note: 'a repulsive template is depleted and its gamma_sl rises (negative adsorption)'}
       - {limit: {var: Gamma_s, to: '0', dir: '+'}, expected: R_gas*T*delta_s*c_bulk}
+      - {limit: {var: c_bulk, to: '0', dir: '+'}, expected: '0', note: 'the Ca-free reference state'}
     monotonicity:
       - {wrt: Delta_G_seq, direction: increasing}
 
@@ -303,11 +340,163 @@ functions:
     unit: J m^-2
     expression: gamma_sl0 + @Delta_gamma_ads
     note: template-liquid energy at the regime activities, built from the Ca-free energy
+    validity: >-
+      admissible only where gamma_sl_insitu >= 0 (contract v4, D27): a negative value describes an
+      interface that lowers its free energy by growing, so the film would swell or disperse and the
+      planar interface does not exist; such a draw is refused and counted, never clipped or floored
     limits:
       - {limit: {var: Delta_G_seq, to: oo}, expected: gamma_sl0 + R_gas*T*delta_s*c_bulk}
+      - {limit: {var: Delta_G_seq, to: -oo}, expected: -oo, note: 'strong enough binding overshoots every gamma_sl0'}
+      - {limit: {var: c_bulk, to: '0', dir: '+'}, expected: gamma_sl0, note: 'the Ca-free limit: admissibility reduces to gamma_sl0 >= 0 (cp3 R8)'}
+    inequalities:
+      - {expr: '@gamma_sl_insitu', relation: '<=', rhs: gamma_sl0 + R_gas*T*delta_s*c_bulk, note: 'adsorption can raise gamma_sl only by the bulk-depletion term'}
     monotonicity:
       - {wrt: gamma_sl0, direction: increasing}
       - {wrt: Delta_G_seq, direction: increasing}
+      - {wrt: Gamma_s, direction: decreasing, note: 'more sites at the same affinity lower gamma_sl further'}
+
+  # ------------------------------------------------------------------ admissibility of gamma_sl (v4, D27)
+  # Derivation, Section 7 (Admissibility). The planar template-liquid interface exists only while gamma_sl >= 0.
+  # Pi_ads is the lowering by adsorption (spreading pressure of the adsorbed layer); along the Ca2+
+  # axis it is largest where the Gibbs excess vanishes, and that maximum, Pi_ads_max, depends on
+  # Gamma_s and Delta_G_seq only. The analog route maps a solution complexation constant onto the
+  # site free energy with the site-volume standard state and the two-proton cycle.
+  - name: Pi_ads
+    claim: C3
+    regime: R-slurry
+    unit: J m^-2
+    expression: -@Delta_gamma_ads
+    note: >-
+      lowering of the template-liquid energy by Ca2+ adsorption at the regime activity: the
+      two-dimensional osmotic (spreading) pressure of the occupied sites, R T Gamma_s ln(1 + x), less
+      the bulk-depletion term R T delta_s c_bulk. Admissibility is Pi_ads <= gamma_sl0.
+    derivative_identities:
+      - {wrt: c_bulk, equals: '(R_gas*T/c_bulk)*@Gamma_Ca', note: 'Gibbs: Pi rises while the excess is positive and falls once it is negative'}
+    identities:
+      - note: 'at the zero-excess concentration c_0 = c_max (1 - 1/E_enr) the lowering reaches Pi_ads_max'
+        subs: {c_bulk: (Gamma_s/delta_s)*(1 - exp(Delta_G_seq/(R_gas*T)))}
+        equals: '@Pi_ads_max'
+        numeric: true
+    limits:
+      - {limit: {var: c_bulk, to: '0', dir: '+'}, expected: '0'}
+    inequalities:
+      - {expr: '@Pi_ads', relation: '<=', rhs: R_gas*T*Gamma_s*log(1 + @x_bind)}
+      - {expr: '@Pi_ads', relation: '<=', rhs: '@Pi_ads_max', domains: {Delta_G_seq: '(-oo, 0)'}, note: 'binding template: no Ca2+ activity lowers gamma_sl by more than Pi_ads_max'}
+
+  - name: Pi_ads_max
+    claim: C3
+    regime: R-slurry
+    unit: J m^-2
+    expression: Gamma_s*(-Delta_G_seq - R_gas*T*(1 - exp(Delta_G_seq/(R_gas*T))))
+    domains: {Delta_G_seq: '(-oo, 0)'}
+    note: >-
+      the largest lowering of the template-liquid energy by Ca2+ adsorption at any bulk Ca2+
+      concentration, for a binding template (Delta_G_seq < 0); it is reached where the Gibbs excess
+      vanishes, and with E_enr = exp(-Delta_G_seq/(R T)) it equals R T Gamma_s (ln E_enr - 1 + 1/E_enr).
+      It depends on Gamma_s and Delta_G_seq only (delta_s sets where the maximum lies, not its
+      height), never exceeds the binding free energy of a full layer of sites, -Gamma_s Delta_G_seq,
+      and has no relation to gamma_sl0. A template with Delta_G_seq >= 0 lowers nothing.
+    limits:
+      - {limit: {var: Delta_G_seq, to: '0', dir: '-'}, expected: '0'}
+      - {limit: {var: Delta_G_seq, to: -oo}, expected: oo}
+    inequalities:
+      - {expr: '@Pi_ads_max', relation: '>', rhs: '0'}
+      - {expr: '@Pi_ads_max', relation: '<', rhs: -Gamma_s*Delta_G_seq, note: 'at most the binding free energy of a full layer of sites'}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: decreasing}
+      - {wrt: Gamma_s, direction: increasing}
+
+  - name: gamma_sl_floor
+    claim: C3
+    regime: R-slurry
+    unit: J m^-2
+    expression: gamma_sl0 - @Pi_ads_max
+    domains: {Delta_G_seq: '(-oo, 0)'}
+    note: >-
+      the lowest template-liquid energy a binding template reaches at any bulk Ca2+ concentration;
+      gamma_sl_floor >= 0 is sufficient for admissibility at every Ca2+ activity, whatever the dose
+      (reported, not gating)
+    inequalities:
+      - {expr: '@gamma_sl_floor', relation: '<=', rhs: '@gamma_sl_insitu'}
+    monotonicity:
+      - {wrt: gamma_sl0, direction: increasing}
+      - {wrt: Delta_G_seq, direction: increasing}
+      - {wrt: Gamma_s, direction: decreasing}
+
+  - name: r_ads
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: -@Delta_gamma_ads/gamma_sl0
+    domains: {gamma_sl0: '(0, oo)'}
+    note: >-
+      validity ratio of the small-change Gibbs-Langmuir term: the lowering by adsorption over the
+      Ca-free energy. Admissible iff r_ads <= 1. The expansion assumes the adsorption leaves the
+      interface structure unchanged, so an admitted draw with r_ads near one carries an error the
+      term does not control; its distribution over admitted draws is reported (derivation, Section 7 (Admissibility))
+    identities:
+      - note: gamma_sl = gamma_sl0 (1 - r_ads)
+        equals: 1 - @gamma_sl_insitu/gamma_sl0
+    limits:
+      - {limit: {var: c_bulk, to: '0', dir: '+'}, expected: '0'}
+    monotonicity:
+      - {wrt: Delta_G_seq, direction: decreasing}
+
+  - name: Delta_G_seq_cycle_2H
+    claim: C2
+    regime: R-slurry
+    unit: J mol^-1
+    expression: Delta_G_site + R_gas*T*log(1 + 10**(pKa2 - pH) + 10**(pKa + pKa2 - 2*pH))
+    note: >-
+      a coordinating group that binds only after losing two protons (a catechol binding through both
+      oxygens), pKa the first and pKa2 the second dissociation constant; the correction is the free
+      energy of finding the group as the dianion at the regime pH, the ligand form a catecholate
+      complexation constant refers to (derivation, Section 7 (Admissibility))
+    limits:
+      - {limit: {var: pH, to: oo}, expected: Delta_G_site}
+      - {limit: {var: pKa, to: -oo}, expected: Delta_G_site + R_gas*T*log(1 + 10**(pKa2 - pH)), note: 'the first proton always gone: the one-proton cycle with pKa2'}
+    inequalities:
+      - {expr: '@Delta_G_seq_cycle_2H', relation: '>=', rhs: Delta_G_site + R_gas*T*log(1 + 10**(pKa2 - pH))}
+      - {expr: '@Delta_G_seq_cycle_2H', relation: '>', rhs: '@Delta_G_seq_cycle', subs: {pKa2: pKa + aux_u}, note: 'with pKa2 > pKa the two-proton cost exceeds the one-proton cost of the first proton'}
+    monotonicity:
+      - {wrt: pH, direction: decreasing}
+      - {wrt: pKa2, direction: increasing}
+
+  - name: Delta_G_site_from_K
+    claim: C2
+    regime: R-slurry
+    unit: J mol^-1
+    expression: -R_gas*T*log(K_Ca_L*Gamma_s/(delta_s*c_std))
+    note: >-
+      ANALOG MAPPING. The site transfer free energy assigned from a solution complexation constant
+      K_Ca_L (referenced to c_std) with the site-volume standard state V_site = delta_s/(N_A Gamma_s),
+      Eq. [th:eq:stdstate]. A solution constant is not a surface-site free energy (site geometry,
+      competition at the surface, coupling within a layer of fixed sites; derivation, Section 7 (Admissibility)), so a
+      verdict that rests on it is conditional on the analog
+    identities:
+      - note: 'Delta_G_bind = Delta_G_site - R T ln(N_A c_std V_site) with Delta_G_bind = -R T ln K_Ca_L and V_site = delta_s/(N_A Gamma_s)'
+        equals: -R_gas*T*log(K_Ca_L) + R_gas*T*log(N_A*c_std*delta_s/(N_A*Gamma_s))
+    monotonicity:
+      - {wrt: K_Ca_L, direction: decreasing}
+
+  - name: x_bind_K
+    claim: C2
+    regime: R-slurry
+    unit: '1'
+    expression: K_Ca_L*(c_bulk/c_std)/(1 + 10**(pKa2 - pH) + 10**(pKa + pKa2 - 2*pH))
+    note: >-
+      the Langmuir odds x_bind along the analog route: x = alpha_2 K_Ca_L c_bulk/c_std, with alpha_2
+      the dianion fraction. Gamma_s and delta_s drop out: the solution constant fixes the occupancy per
+      bulk concentration directly, and Gamma_s sets only how many sites carry it
+    identities:
+      - note: x_bind with Delta_G_seq = Delta_G_seq_cycle_2H and Delta_G_site = Delta_G_site_from_K
+        equals: exp(-(@Delta_G_site_from_K + R_gas*T*log(1 + 10**(pKa2 - pH) + 10**(pKa + pKa2 - 2*pH)))/(R_gas*T))*c_bulk*delta_s/Gamma_s
+        numeric: true
+    limits:
+      - {limit: {var: pH, to: oo}, expected: K_Ca_L*c_bulk/c_std}
+    monotonicity:
+      - {wrt: pH, direction: increasing}
+      - {wrt: c_bulk, direction: increasing}
 
   # ------------------------------------------------------------------ carbonate speciation (v3)
   # Activities of free Ca2+ and CO3^2- from pH, dissolved inorganic carbon C_T, total Ca_T and
@@ -945,6 +1134,28 @@ sign_flips:
       excess: ['1', '-1']
       gamma_nl: ['2', '3']
       expect: 'excess > 0: f(2) < f(3); excess < 0: f(2) > f(3)'
+  - id: SF4
+    kind: admissibility
+    parameter: Delta_G_seq
+    note: decision D27 (contract v4)
+    statement: >-
+      The admissible set gamma_sl0 + Delta_gamma_ads >= 0 is an upper set in Delta_G_seq:
+      d gamma_sl/d Delta_G_seq = Gamma_s Theta > 0, and gamma_sl -> -oo as Delta_G_seq -> -oo at any
+      c_bulk > 0, so strong enough binding overshoots every gamma_sl0 and the refused draws are the
+      strongest binders. Restricting the prior to the admissible set removes mass from the
+      strong-binding end only and cannot reverse SF2: on the admissible set d cos(theta)/d Delta_G_seq
+      = Gamma_s Theta/gamma_nl > 0 still. Rejected forms: (a) clipping cos(theta) at -1 for an
+      inadmissible gamma_sl (the unrestricted screen), which counts a non-existent interface as
+      non-wetting; (b) a saturating form that floors gamma_sl at zero, which places the refused draw on
+      the boundary as if a bounded interface existed there. Both put the draw on the bad side of C3 (a).
+    function: gamma_sl_insitu
+    dgamma_equals: Gamma_s*@Theta_occ
+    limit_strong_binding: -oo
+    witness:
+      values: {gamma_sl0: '1', Gamma_s: '1', delta_s: '1', c_bulk: '1', R_gas: '1', T: '1',
+               gamma_sn0: 1/2, Delta_gamma_w: '0', gamma_nl: '1'}
+      weak: '0'
+      strong: '-3'
 
 no_double_counting:
   statement: >-

@@ -143,3 +143,44 @@ the integrator is in `ops/reports/P0-W3.4.md`.
 - an a_site bound with the unit of a length;
 - A_patch marked evaluable while listed as a gap;
 - a Dupre support term with an added pure number.
+
+## D27 amendment: admissibility of the template-liquid energy (session P0-W3.4b)
+
+Decision D27 (2026-10-18). After P0-W4.3, W4 reported that with the flagged binding-constant analog
+the template-liquid energy gamma_sl is negative on every draw. The amendment was derived from the
+physics and from that one fact, as stated in D27 and in the C3 and gap sections of
+`ops/reports/P0-W4.3.md`. Nothing under `results/preprint/screen/` and no other screen output was
+read. Properties of the priors in `lit/params.yaml` were evaluated only after the rule was committed
+(`ops/reports/P0-W3.4b.md`). Contract v4, thresholds block v4, ignorance block v3. Every commit passes
+`theory/tools/check_contract.py`. Ready mark: `admissibility` at
+`fd5846fd43d43e457566068f381a43ed96a8c1c3`.
+
+| Item | Files, section | Commit | Summary |
+|---|---|---|---|
+| Checker defect | `theory/tools/check_contract.py` | `30f01ab` | The C1 P0-inputs block of `22ef464` (cp3b A4) ended the per-test loop, so from `22ef464` to `30f01ab` the edge, falsify, margin-route and single-state checks ran for C1 only. The cp3b A1 negative tests were run before `22ef464`. Restored; a planted C3a unit fault passes the old checker and fails the new one. Inequalities accept `subs`. |
+| Registration | `theory/contract.yaml` v4, `theory/symbols.yaml` (`pKa2`, `K_Ca_L`, `c_std`), `theory/thresholds.md` Section 1 "Admissibility", C2 "Analog route", C3 (a) "What a favourable template needs", C4, key table, block v4 (`decision.admissibility`, `links.C2.analog_route`); `theory/ignorance_priors.md` Section 2a and block v3; checker (SF4, admissibility, analog route, favourable mass, half-line domains, zero edges) | `6690b52` | gamma_sl = gamma_sl0 + Delta_gamma_ads >= 0 at every registered state and design point. The joint prior of (gamma_sl0, Delta_G_seq, Gamma_s, delta_s) is restricted to it. Refused draws are counted, never clipped or floored. M_adm is printed beside every verdict that uses gamma_sl. If 1 - M_adm >= p_cred, the link verdict is inconclusive ("inadmissible inputs"), with the restricted verdict beside it. The unrestricted run is a labelled sensitivity. New functions: Pi_ads, Pi_ads_max, gamma_sl_floor, r_ads, Delta_G_seq_cycle_2H, Delta_G_site_from_K, x_bind_K. |
+| Derivation | `theory/derivation_body.tex` Section 7 (Admissibility) A1 to A5, new labels th:eq:adm, radm, x-analog, cycle2, pimax, overshoot, favourable; `theory/si_derivation.tex` new subsection thsi:sec:admissibility; equation sheet section 2 | `fd5846f` | A1 stability; A2 reference state (double count, pH and ionic-strength shift by Lippmann, small-change validity ratio); A3 solution constant against site (two-proton correction; repulsion and competition make Langmuir an upper bound; geometry two-sided; Pi_ads_max = R T Gamma_s (ln E - 1 + 1/E) < -Gamma_s Delta_G_seq, independent of delta_s and gamma_sl0); A4 rule (i), (ii) and (iii) rejected with reasons; A5 favourable iff gamma_sn <= gamma_sl. |
+
+**Interpretations for the auditor (cp4).**
+- The "inadmissible inputs" clause (1 - M_adm >= p_cred gives an inconclusive verdict) goes beyond a
+  bare restriction of the prior. Reason: at that level the stability condition rejects the input set at
+  the same credibility the decision rule asks of any verdict, so a verdict built on the admissible
+  remainder cannot be credited. It applies to feasible and falsified verdicts alike.
+- A draw is admissible only if gamma_sl >= 0 at every registered state, because one film meets them all.
+  The path condition over Ca2+ doses (gamma_sl_floor >= 0) is reported, not gating: the order in which
+  Ca2+ meets the template is not a registered input.
+- The analog route charges two protons because W1 records the constant for the fully deprotonated
+  ligand (catecholate) and keys pka2_catechol for the dianion fraction. A one-proton reading of the same
+  constant overstates the binding.
+- The direction of the gamma_sl0 reference-state shift (pure water to the alkaline regime lowers it)
+  rests on the electrocapillary maximum at zero charge. It is a direction, not a magnitude, and is not
+  used in any rule.
+
+**Negative tests (scratch copies, one fault at a time).** Each fails the checker:
+- the sign of the R T term in Pi_ads_max;
+- the first-proton exponent in the two-proton cycle;
+- an admissibility edge with the unit of a molar energy;
+- an SF4 witness whose strong-binding draw is admissible;
+- a favourable mass with the margin's sign reversed;
+- the `unrestricted` field removed from the admissibility block;
+- the standard-state ratio inverted in Delta_G_site_from_K.
