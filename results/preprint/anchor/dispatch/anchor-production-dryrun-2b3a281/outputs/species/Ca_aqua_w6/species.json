@@ -1,0 +1,22 @@
+{
+ "G_star_J_per_mol": -997606249.9427596,
+ "G_star_ensemble_J_per_mol": -997606249.9427596,
+ "cds_active_all": true,
+ "charge": 2,
+ "conformers_considered": 2,
+ "conformers_ok": 2,
+ "kind": "reference",
+ "mock": true,
+ "name": "Ca_aqua_w6",
+ "selected_conformer": 0,
+ "selected_geometry": "selected.xyz",
+ "status": "ok",
+ "terms": {
+  "E_disp_J_per_mol": -49884.49315010409,
+  "E_el_disp_J_per_mol": -997713034.2149149,
+  "G_RRHO_J_per_mol": 513687.34497716324,
+  "G_star_J_per_mol": -997606249.9427596,
+  "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+  "dG_solv_J_per_mol": -414828.9430377483
+ }
+}

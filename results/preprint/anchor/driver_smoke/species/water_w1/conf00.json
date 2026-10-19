@@ -1,0 +1,98 @@
+{
+ "G": {
+  "E_disp_J_per_mol": 0.0,
+  "E_el_disp_J_per_mol": -200546693.58623028,
+  "G_RRHO_J_per_mol": 5371.62753695774,
+  "G_star_J_per_mol": -200573597.16907454,
+  "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+  "dG_solv_J_per_mol": -40201.08059715629
+ },
+ "conformer": 0,
+ "crest_E_Eh": null,
+ "geometry": [
+  [
+   "O",
+   [
+    1.09939038e-05,
+    -0.01700192642223,
+    2.963527e-08
+   ]
+  ],
+  [
+   "H",
+   [
+    -0.77428137100101,
+    -0.58874643556258,
+    3.73030454e-06
+   ]
+  ],
+  [
+   "H",
+   [
+    0.77507912824106,
+    -0.58769664226435,
+    -1.67983023e-06
+   ]
+  ]
+ ],
+ "mock": false,
+ "sp_gas": {
+  "E_Eh": -76.38420153278483,
+  "E_disp_Eh": null,
+  "auxbasis": "def2-universal-jkfit",
+  "basis": "def2-TZVP",
+  "cds": null,
+  "converged": true,
+  "disp": "none",
+  "n_electrons": 10,
+  "nao": 43,
+  "peak_rss_MB": 162.4,
+  "process_wall_s": 2.6,
+  "pyscf": "2.14.0",
+  "solvent": false,
+  "status": "ok",
+  "threads": 1,
+  "wall_s": 1.42,
+  "xc": "HSE06"
+ },
+ "sp_smd": {
+  "E_Eh": -76.39951331572803,
+  "E_disp_Eh": null,
+  "auxbasis": "def2-universal-jkfit",
+  "basis": "def2-TZVP",
+  "cds": {
+   "active": false,
+   "libsolvent_loaded": false,
+   "pyscf": "2.14.0",
+   "reason": "libsolvent not built (pyscf compiled without -DENABLE_SMD=ON)",
+   "utc": "2026-10-19T12:02:58Z"
+  },
+  "converged": true,
+  "disp": "none",
+  "n_electrons": 10,
+  "nao": 43,
+  "peak_rss_MB": 293.2,
+  "process_wall_s": 5.4,
+  "pyscf": "2.14.0",
+  "solvent": true,
+  "status": "ok",
+  "threads": 1,
+  "wall_s": 4.21,
+  "xc": "HSE06"
+ },
+ "status": "ok",
+ "xtb": {
+  "G_RRHO_Eh": 0.002045944877,
+  "attempts": [
+   {
+    "G_RRHO_Eh": 0.002045944877,
+    "command": "xtb in.xyz --ohess normal --gfn 2 --chrg 0 --uhf 0 --alpb water -P 1",
+    "n_imaginary": 0,
+    "returncode": 0,
+    "wall_s": 0.1
+   }
+  ],
+  "n_imaginary": 0,
+  "status": "ok"
+ }
+}

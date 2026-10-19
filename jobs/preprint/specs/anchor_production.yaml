@@ -1,24 +1,42 @@
-# DRAFT for P0-W5.3: the anchor production run on the CPU pod (>= 32 vCPU, >= 128 GB).
-# Packages are installed pinned at job start and logged (ruling B5: no image rebuild). The
-# chemistry stack mirrors the local protocol test: pyscf 2.14.0 with its Linux dispersion add-on,
-# xtb 6.6.1 and CREST 2.12 from src/nacre/anchor/xtb_env.yaml via micromamba. P0-W5.3 replaces
-# the command with the production driver once cp1 and cp2 are satisfied. Open item: xtb_env.yaml
-# pins osx-arm64 build strings; W5.3 adds linux-64 builds of xtb 6.6.1 and CREST 2.12 before launch.
+# The anchor production run on the CPU pod (>= 32 vCPU, >= 128 GB, Linux x86_64 with glibc >= 2.28,
+# outbound network, key-login SSH, tmux). Ready since P0-W5.4; the dry run is anchor_production_dryrun.yaml.
+#
+# Install at job start, logged to install.log (ruling B5: no image is rebuilt):
+#  1. glibc check (the lock needs >= 2.28, pod_env_linux64.lock header);
+#  2. micromamba 2.9.0, conda-forge linux-64 file, sha256 checked;
+#  3. the pod environment from the explicit lock src/nacre/anchor/pod_env_linux64.lock (xtb 6.6.1 hf49bc11_0,
+#     CREST 2.12 h9d67668_0, libgfortran5 13.4.0, the gcc/gfortran 13.4.0 compilers, cmake, OpenBLAS);
+#  4. a venv on that Python with the pinned PyPI packages below;
+#  5. PySCF 2.14.0 built from its tagged source (sha256 as in the conda-forge recipe) with -DENABLE_SMD=ON,
+#     so that SMD carries its CDS term; then the Linux dispersion add-on (no deps) and this repository;
+#  6. a log line saying whether the SMD library loaded. The run's env_check.json records the CDS check on a
+#     water molecule; if it is absent the run continues with the electrostatic part and flags it.
+# Job layout: 4 species at a time, 8 OpenMP threads each (32 vCPU), 24 GB per DFT process (128 GB).
 id: anchor-production
 mock: false
 command: >-
-  export PATH="$JOBDIR/.mamba/envs/xtb/bin:$PATH" &&
-  "$JOBDIR/.jobenv/bin/python" -m nacre.anchor.protocol_test run
+  export PATH="$JOBDIR/.mamba/envs/pod/bin:$PATH" &&
+  "$JOBDIR/.jobenv/bin/python" -m nacre.anchor.production run --out "$OUTPUTS" --backend real
+  --jobs 4 --threads 8 --max-memory-mb 24000 --max-conformers 5 --ewin-kcal 3.0
 outputs_dir: outputs
 heartbeat_s: 30
-stale_after_s: 600
+stale_after_s: 900
 launcher: tmux
-# pins = the versions of the laptop environment that ran the protocol test (P0-W5.2)
-packages: ["pyscf==2.14.0", "pyscf-dispersion==1.5.0", "pymatgen==2026.9.24", "pyyaml==6.0.3", "scipy==1.18.1",
-           "numpy==2.5.4", "rdkit==2026.9.1", "ase==3.29.0", "mp-api==0.46.5"]
+packages: ["numpy==2.5.4", "scipy==1.18.1", "h5py==3.16.0", "pyyaml==6.0.3", "ase==3.29.0",
+           "setuptools==84.0.0", "wheel==0.48.0"]
 install_command: >-
-  python3 -m venv .jobenv &&
+  python3 -c "import platform,sys;v=platform.libc_ver()[1];print('glibc',v);sys.exit(0 if tuple(map(int,v.split('.')[:2]))>=(2,28) else 1)" &&
+  curl -fsSL -o micromamba.tar.bz2 https://conda.anaconda.org/conda-forge/linux-64/micromamba-2.9.0-0.tar.bz2 &&
+  echo "8761c382127e6363bd9e0a2451aa3ef90d071a79133f736e2f759a3bf13040dd  micromamba.tar.bz2" | sha256sum -c - &&
+  tar -xjf micromamba.tar.bz2 bin/micromamba &&
+  MAMBA_ROOT_PREFIX="$PWD/.mamba" ./bin/micromamba create -y -n pod -f src/src/nacre/anchor/pod_env_linux64.lock &&
+  .mamba/envs/pod/bin/python -m venv .jobenv &&
   .jobenv/bin/python -m pip install --quiet --disable-pip-version-check {packages} &&
+  curl -fsSL -o pyscf-2.14.0.tar.gz https://github.com/pyscf/pyscf/archive/refs/tags/v2.14.0.tar.gz &&
+  echo "03c2e84ea8ce37ea1e029d219e57977a21df16c4e5ab2208389819e045c10939  pyscf-2.14.0.tar.gz" | sha256sum -c - &&
+  PATH="$PWD/.mamba/envs/pod/bin:$PATH" CC=gcc CXX=g++ FC=gfortran CMAKE_BUILD_PARALLEL_LEVEL=32
+  CMAKE_CONFIGURE_ARGS="-DENABLE_SMD=ON -DBLAS_LIBRARIES=$PWD/.mamba/envs/pod/lib/libopenblas.so"
+  .jobenv/bin/python -m pip install --no-build-isolation --disable-pip-version-check ./pyscf-2.14.0.tar.gz &&
+  .jobenv/bin/python -m pip install --quiet --no-deps --disable-pip-version-check pyscf-dispersion==1.5.0 &&
   .jobenv/bin/python -m pip install --quiet --no-deps -e src &&
-  curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/2.0.5 | tar -xj -C . bin/micromamba &&
-  MAMBA_ROOT_PREFIX=.mamba ./bin/micromamba create -y -n xtb -f src/src/nacre/anchor/xtb_env.yaml
+  .jobenv/bin/python -c "from pyscf.solvent import smd;print('SMD library loaded:', smd.libsolvent is not None)"

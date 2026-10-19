@@ -1,0 +1,28 @@
+{
+ "crossref": {
+  "authors": [
+   "N. V. Krivtsov",
+   "Z. K. Nikitina",
+   "V. Ya. Rosolovskii"
+  ],
+  "container": "Bulletin of the Academy of Sciences of the USSR Division of Chemical Science",
+  "issue": "11",
+  "page": "2560-2561",
+  "title": "Enthalpy of formation of anhydrous aluminum perchlorate",
+  "volume": "22",
+  "year": 1973
+ },
+ "doi": "10.1007/BF00926423",
+ "formula": "Al(ClO4)3",
+ "id": "krivtsov1973_al_clo4_3",
+ "kind": "literature_quote",
+ "page_sha256": "sha256:ac613ae17ca54f615562d34b2ed0121c5687103517daf423d3451d3fc72bae6b",
+ "quote": "The standard enthalpy for the formation of anhydrous aluminum perchlorate was determined (\u2212136.5 +-0.5 kcal/M).",
+ "request": {
+  "method": "HTTP GET",
+  "url": "https://link.springer.com/article/10.1007/BF00926423"
+ },
+ "retrieved_utc": "2026-10-19T11:49:50Z",
+ "value_pattern": "\\(([\u2212-]?\\d+(?:\\.\\d+)?)\\s*(?:\\+-|\u00b1)\\s*(\\d+(?:\\.\\d+)?)\\s*kcal/M\\)",
+ "what": "dfH of anhydrous Al(ClO4)3 (cr), Conclusions item 1 (free abstract page; full text not open)"
+}

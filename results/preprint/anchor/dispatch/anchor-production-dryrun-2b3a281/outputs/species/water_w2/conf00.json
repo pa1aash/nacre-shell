@@ -1,0 +1,107 @@
+{
+ "G": {
+  "E_disp_J_per_mol": -15752.997836874976,
+  "E_el_disp_J_per_mol": -315064387.1824294,
+  "G_RRHO_J_per_mol": 147776.16680567685,
+  "G_star_J_per_mol": -314940191.1410815,
+  "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+  "dG_solv_J_per_mol": -31505.995673751146
+ },
+ "conformer": 0,
+ "crest_E_Eh": -60.0,
+ "geometry": [
+  [
+   "O",
+   [
+    0.49872481,
+    0.83167838,
+    0.02201461
+   ]
+  ],
+  [
+   "H",
+   [
+    -0.26289414,
+    1.26812019,
+    -0.38837067
+   ]
+  ],
+  [
+   "H",
+   [
+    1.26396459,
+    1.27456359,
+    -0.37449695
+   ]
+  ],
+  [
+   "O",
+   [
+    -0.49872481,
+    -0.83167838,
+    -0.02201461
+   ]
+  ],
+  [
+   "H",
+   [
+    -1.40883979,
+    -0.54171371,
+    -0.18502435
+   ]
+  ],
+  [
+   "H",
+   [
+    -0.34334283,
+    -1.50695428,
+    -0.6993768
+   ]
+  ]
+ ],
+ "mock": true,
+ "sp_gas": {
+  "E_Eh": -120.0016874673541,
+  "E_disp_Eh": -0.006,
+  "cds": {
+   "active": false,
+   "e_cds_Eh": null,
+   "mock": true
+  },
+  "converged": true,
+  "mock": true,
+  "nao": 120,
+  "solvent": false,
+  "status": "ok",
+  "threads": 8,
+  "wall_s": 0.1
+ },
+ "sp_smd": {
+  "E_Eh": -120.0136874673541,
+  "E_disp_Eh": -0.006,
+  "cds": {
+   "active": true,
+   "e_cds_Eh": -0.003,
+   "mock": true
+  },
+  "converged": true,
+  "mock": true,
+  "nao": 120,
+  "solvent": true,
+  "status": "ok",
+  "threads": 8,
+  "wall_s": 0.1
+ },
+ "status": "ok",
+ "xtb": {
+  "G_RRHO_Eh": 0.056284969376340185,
+  "attempts": [
+   {
+    "command": "mock xtb",
+    "wall_s": 0.1
+   }
+  ],
+  "n_imaginary": 0,
+  "status": "ok"
+ }
+}

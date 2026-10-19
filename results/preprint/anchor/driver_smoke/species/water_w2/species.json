@@ -1,0 +1,22 @@
+{
+ "G_star_J_per_mol": -401135780.1874273,
+ "G_star_ensemble_J_per_mol": -401135780.1874273,
+ "cds_active_all": false,
+ "charge": 0,
+ "conformers_considered": 2,
+ "conformers_ok": 1,
+ "kind": "reference",
+ "mock": false,
+ "name": "water_w2",
+ "selected_conformer": 0,
+ "selected_geometry": "selected.xyz",
+ "status": "ok",
+ "terms": {
+  "E_disp_J_per_mol": 0.0,
+  "E_el_disp_J_per_mol": -401118248.9500849,
+  "G_RRHO_J_per_mol": 42471.34764591366,
+  "G_star_J_per_mol": -401135780.1874273,
+  "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+  "dG_solv_J_per_mol": -67928.45520426688
+ }
+}

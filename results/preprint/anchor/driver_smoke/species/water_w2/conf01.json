@@ -1,0 +1,20 @@
+{
+ "conformer": 1,
+ "crest_E_Eh": -10.17195189,
+ "mock": false,
+ "status": "failed",
+ "xtb": {
+  "G_RRHO_Eh": null,
+  "attempts": [
+   {
+    "G_RRHO_Eh": null,
+    "command": "xtb in.xyz --ohess normal --gfn 2 --chrg 0 --uhf 0 --alpb water -P 1",
+    "n_imaginary": null,
+    "returncode": -5,
+    "wall_s": 0.2
+   }
+  ],
+  "n_imaginary": null,
+  "status": "failed"
+ }
+}

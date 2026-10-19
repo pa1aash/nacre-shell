@@ -1,0 +1,129 @@
+{
+ "G": {
+  "E_disp_J_per_mol": 0.0,
+  "E_el_disp_J_per_mol": -401118248.9500849,
+  "G_RRHO_J_per_mol": 42471.34764591366,
+  "G_star_J_per_mol": -401135780.1874273,
+  "dG_1atm_to_1M_J_per_mol": 7925.870215947503,
+  "dG_solv_J_per_mol": -67928.45520426688
+ },
+ "conformer": 0,
+ "crest_E_Eh": -10.17352456,
+ "geometry": [
+  [
+   "O",
+   [
+    1.47237615319737,
+    -0.01654654861941,
+    0.06126192244158
+   ]
+  ],
+  [
+   "H",
+   [
+    0.50119432660729,
+    0.00977974741198,
+    0.0353856541638
+   ]
+  ],
+  [
+   "H",
+   [
+    1.7576039686821,
+    -0.12389366972283,
+    -0.85111859737654
+   ]
+  ],
+  [
+   "O",
+   [
+    -1.38199110652834,
+    0.00378839028897,
+    -0.04472596101529
+   ]
+  ],
+  [
+   "H",
+   [
+    -1.87770848308774,
+    0.74291168041803,
+    0.32183889450861
+   ]
+  ],
+  [
+   "H",
+   [
+    -1.85900354672142,
+    -0.80022788025426,
+    0.18541924272746
+   ]
+  ]
+ ],
+ "mock": false,
+ "sp_gas": {
+  "E_Eh": -152.777872416565,
+  "E_disp_Eh": null,
+  "auxbasis": "def2-universal-jkfit",
+  "basis": "def2-TZVP",
+  "cds": null,
+  "converged": true,
+  "disp": "none",
+  "n_electrons": 20,
+  "nao": 86,
+  "peak_rss_MB": 349.1,
+  "process_wall_s": 8.3,
+  "pyscf": "2.14.0",
+  "solvent": false,
+  "status": "ok",
+  "threads": 1,
+  "wall_s": 6.23,
+  "xc": "HSE06"
+ },
+ "sp_smd": {
+  "E_Eh": -152.80374499875197,
+  "E_disp_Eh": null,
+  "auxbasis": "def2-universal-jkfit",
+  "basis": "def2-TZVP",
+  "cds": {
+   "active": false,
+   "libsolvent_loaded": false,
+   "pyscf": "2.14.0",
+   "reason": "libsolvent not built (pyscf compiled without -DENABLE_SMD=ON)",
+   "utc": "2026-10-19T12:10:10Z"
+  },
+  "converged": true,
+  "disp": "none",
+  "n_electrons": 20,
+  "nao": 86,
+  "peak_rss_MB": 652.4,
+  "process_wall_s": 52.7,
+  "pyscf": "2.14.0",
+  "solvent": true,
+  "status": "ok",
+  "threads": 1,
+  "wall_s": 50.74,
+  "xc": "HSE06"
+ },
+ "status": "ok",
+ "xtb": {
+  "G_RRHO_Eh": 0.016176481995,
+  "attempts": [
+   {
+    "G_RRHO_Eh": 0.016950158864,
+    "command": "xtb in.xyz --ohess normal --gfn 2 --chrg 0 --uhf 0 --alpb water -P 1",
+    "n_imaginary": 1,
+    "returncode": 0,
+    "wall_s": 0.2
+   },
+   {
+    "G_RRHO_Eh": 0.016176481995,
+    "command": "xtb in.xyz --ohess tight --gfn 2 --chrg 0 --uhf 0 --alpb water -P 1",
+    "n_imaginary": 0,
+    "returncode": 0,
+    "wall_s": 0.1
+   }
+  ],
+  "n_imaginary": 0,
+  "status": "ok"
+ }
+}
