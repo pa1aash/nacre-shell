@@ -168,9 +168,9 @@ days:
     master_trace: none
     requires: []
 - day: 3
-  status: open
+  status: closed
   opened_utc: '2026-10-17T09:20:09Z'
-  closed_utc: null
+  closed_utc: '2026-10-19T22:29:19Z'
   carried: [P0-W2.2, P0-I2]
   sessions:
   - id: P0-W4.3a
@@ -282,10 +282,10 @@ days:
     master_trace: none
     requires: []
 - day: 4
-  status: pending
-  opened_utc: null
+  status: open
+  opened_utc: '2026-10-19T22:29:19Z'
   closed_utc: null
-  carried: []
+  carried: [P0-W7.4]
   sessions:
   - id: PH-W1.1
     lane: p0-w1
