@@ -1588,6 +1588,13 @@
             }
           },
           "additionalProperties": true
+        },
+        "half_width_unsized": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "v4: the half-width of a restricted band mass printed but not entering the sizing rule, because the link's inputs are inadmissible under the admissibility rule (gap table AM4)."
         }
       },
       "additionalProperties": false

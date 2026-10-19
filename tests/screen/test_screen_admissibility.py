@@ -175,3 +175,16 @@ def test_sizing_reads_m_adm_and_skips_the_masses_of_inadmissible_inputs():
     rec = admissibility.apply(r, dc.evaluate_link(RULE, "C3", st, synthetic_resolver()), adm)
     assert study.max_half_width(rec) == pytest.approx(adm["half_width"])
     assert rec["tests"]["C3a"]["half_width_unsized"] is not None and "half_width" not in rec["tests"]["C3a"]
+
+
+def test_an_inadmissible_headline_record_validates_against_the_schema():
+    import jsonschema
+    from nacre.screen import summary
+    sl = np.r_[np.full(5, 0.1), np.full(95, -0.1)]
+    st = {"s": _c3(np.full(100, 0.2), np.full(100, 20.0), sl)}
+    m = admissibility.mask(st)
+    adm = admissibility.summary(st, m, P)
+    r = dc.evaluate_link(RULE, "C3", admissibility.restrict(st, m), synthetic_resolver())
+    rec = dc.public(admissibility.apply(r, dc.evaluate_link(RULE, "C3", st, synthetic_resolver()), adm))
+    schema = summary.load_schema()
+    jsonschema.validate(rec, dict(schema["$defs"]["claim"], **{"$defs": schema["$defs"]}))
