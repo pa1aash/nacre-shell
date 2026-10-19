@@ -443,6 +443,9 @@ def check_function(ctx, f, rep):
 
     for q in f.get("inequalities", []):
         lhs, rhs = ctx.parse(q["expr"]), ctx.parse(q["rhs"])
+        if q.get("subs"):
+            # restrict the domain by reparametrisation, as for monotonicity
+            lhs, rhs = lhs.subs(ctx.subs_map(q["subs"])), rhs.subs(ctx.subs_map(q["subs"]))
         diff, want = (rhs - lhs, "nonnegative") if q["relation"] in ("<=", "<") else (lhs - rhs, "nonnegative")
         if q["relation"] in ("<", ">"):
             want = "positive"
@@ -719,25 +722,6 @@ def check_thresholds(ctx, contract, rep):
                 rep.add(False, "thresholds", "%s %s" % (link, test["id"]), "params symbol %s is not registered" % k)
             if test.get("mixture"):
                 keys.add(test["mixture"]["weights"])
-        p0 = spec.get("p0_inputs")
-        if p0:
-            # cp3b A4: the registered route and every side-by-side estimate compute the link's quantity,
-            # and a Dupre support has the unit of that quantity
-            q = (spec.get("tests") or [{}])[0].get("quantity")
-            reg = p0["registered_route"]
-            ok = reg["quantity"] in fnames and parse_unit(fnames[reg["quantity"]]["unit"]) == qdim(q)
-            for name, est in p0["side_by_side"].items():
-                ok = ok and est["quantity"] == q and (not est.get("function") or est["function"] in fnames)
-                if est.get("params"):
-                    keys.add(est["params"])
-                sup = est.get("support")
-                if isinstance(sup, dict):
-                    try:
-                        ok = ok and all(dimension(ctx.parse(str(sup[k])), ctx.dims) == qdim(q) for k in ("low", "high"))
-                    except DimError:
-                        ok = False
-            rep.add(bool(ok) and p0.get("both_reported") is True, "thresholds", "%s P0 inputs" % link,
-                    "registered route %s (%s); side by side %s" % (reg["quantity"], reg.get("verdict"), sorted(p0["side_by_side"])))
             if "edge" in test:
                 check_edge(link, test["id"], test["quantity"], test["edge"], params)
             for fr, edge in (test.get("edge_by_framing") or {}).items():
@@ -781,6 +765,25 @@ def check_thresholds(ctx, contract, rep):
                 ctx.parse(str(q))
             if test.get("cos_function") and test["cos_function"] not in fnames:
                 rep.add(False, "thresholds", "%s %s" % (link, test["id"]), "unknown cos_function")
+        p0 = spec.get("p0_inputs")
+        if p0:
+            # cp3b A4: the registered route and every side-by-side estimate compute the link's quantity,
+            # and a Dupre support has the unit of that quantity
+            q = (spec.get("tests") or [{}])[0].get("quantity")
+            reg = p0["registered_route"]
+            ok = reg["quantity"] in fnames and parse_unit(fnames[reg["quantity"]]["unit"]) == qdim(q)
+            for name, est in p0["side_by_side"].items():
+                ok = ok and est["quantity"] == q and (not est.get("function") or est["function"] in fnames)
+                if est.get("params"):
+                    keys.add(est["params"])
+                sup = est.get("support")
+                if isinstance(sup, dict):
+                    try:
+                        ok = ok and all(dimension(ctx.parse(str(sup[k])), ctx.dims) == qdim(q) for k in ("low", "high"))
+                    except DimError:
+                        ok = False
+            rep.add(bool(ok) and p0.get("both_reported") is True, "thresholds", "%s P0 inputs" % link,
+                    "registered route %s (%s); side by side %s" % (reg["quantity"], reg.get("verdict"), sorted(p0["side_by_side"])))
     keys.add(dec["credible_level"]["params"])
     keys.update(((dec.get("drying_states") or {}).get("params") or {}).values())
     keys.update((doc["study"]["deletion_test"].get("params") or {}).values())
