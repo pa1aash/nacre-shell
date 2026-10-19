@@ -522,7 +522,21 @@ def last_commit_at_tag(tag):
 
 def lane_ext(params, meta):
     man = sc.manifest()
-    return {"session": SESSION, "scope": R.SCOPE, "config": meta["path"], "supplement": True,
+    janaf = sorted({f["request"]["url"] for f in cache.manifest()["files"] if f["kind"] == "janaf_table"} |
+                   {f["request"]["url"] for f in man["files"] if f["kind"] == "janaf_table"})
+    sources = [
+        {"what": "Materials Project database %s (mp-api), GGA/GGA+U with MP2020 corrections; CC BY 4.0; Jain et al., "
+                 "APL Materials 1, 011002 (2013), doi:10.1063/1.4812323; GNoME (CC BY-NC) excluded"
+                 % cache.manifest()["mp_database_version"],
+         "files": "results/preprint/pourbaix/cache/ (production, read only) and .local/w5/cache_d3/ (Li-Al-O-H, local only)"},
+        {"what": "NIST-JANAF Thermochemical Tables", "urls": janaf},
+        {"what": "NBS tables 1982 (Wagman et al., J. Phys. Chem. Ref. Data 11, Suppl. 2), OCR of the scanned pages",
+         "files": "results/preprint/pourbaix/cache/nbs1982_ocr.json"},
+        {"what": "Krivtsov, Nikitina, Rosolovskii (1973), dfH of anhydrous Al(ClO4)3, doi:10.1007/BF00926423 "
+                 "(sourced value, not yet a W1 params key)",
+         "files": "results/preprint/pourbaix/supplement_d3/cache/lit_krivtsov1973_al_clo4_3.json"},
+        {"what": "W1 lit/params.yaml at the p0-cp3 params (keys cited per value)", "params_sha": params.sha}]
+    return {"session": SESSION, "scope": R.SCOPE, "config": meta["path"], "supplement": True, "sources": sources,
             "provenance_pourbaix": {"cache_hash": cache.cache_hash(), "mp_database_version": cache.manifest()["mp_database_version"],
                                     "supplement_cache_hash": sc.cache_hash(),
                                     "supplement_local_only": [{k: f[k] for k in ("file", "location", "sha256", "bytes", "n",
@@ -628,6 +642,7 @@ def main(argv=None):
     docs = documents(phases, cfg, prov, ext, b2, T)
     checks = validate_v3(docs)
     attempts = sink_attempts(params)
+    al_dfh = sc.literature_dfh_kj("krivtsov1973_al_clo4_3")
     sink_table = []
     for ph, po in phases.items():
         for sink, rec in po["by_sink"].items():
@@ -648,6 +663,29 @@ def main(argv=None):
         "E_cell_min": params.cite(cfg["E_min"]["key"]),
         "water": cfg["water"], "phases": phases, "sink_table": sink_table, "sink_thermo_attempts": attempts,
         "confirmation_vs_P0-W5.3": compare_previous(phases, cfg),
+        "sourced_values_not_params_keys": [{
+            "formula": "Al(ClO4)3", "state": "anhydrous crystalline solid", "quantity": "dfH (standard)",
+            "dfH_kJ_per_mol": al_dfh[0], "u_kJ_per_mol": al_dfh[1], "doi": "10.1007/BF00926423",
+            "citation": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, Bull. Acad. Sci. USSR Div. Chem. Sci. 22(11), "
+                        "2560-2561 (1973)",
+            "locator": al_dfh[2], "cache_file": _rel(sc.SUPP_CACHE / "lit_krivtsov1973_al_clo4_3.json"),
+            "converted_with": "thermochemical calorie (scipy.constants.calorie, J per cal = kJ per kcal)",
+            "status": "sourced (one fetched value); not yet a W1 params key",
+            "used_for": "the Al(ClO4)3 sink of corundum and boehmite through the exchange Al + 3 LiClO4 -> Al(ClO4)3 + 3 Li",
+            "limits": ["single source, seen in the free abstract only (full text not open)",
+                       "reference temperature not printed; read as 298.15 K",
+                       "no dfG or S: the exchange entropy is neglected and has no bound key for Al",
+                       "the Al onsets it gives have no budget key and decide no verdict"],
+            "request_for_W1": "register dfh_al_clo4_3 (and its uncertainty) from doi:10.1007/BF00926423, and a budget key "
+                              "for the expt route of the Al(ClO4)3 sink if the onsets are to decide a verdict"}],
+        "boehmite_dehydration": {
+            "reaction": "2 AlOOH -> Al2O3 + H2O (no electrochemistry)",
+            "reading": "a threshold, not a verdict: dehydration of boehmite to corundum is favoured below the water "
+                       "partial pressure (or liquid-referenced activity) given per scheme; the governing value is the expt "
+                       "route. The water activity in the electrolyte is not a sourced key (electrolyte_water_content is a "
+                       "mass fraction and gives no activity without a solvation model), so the threshold is not compared "
+                       "with any state of the cell.",
+            "by_scheme": phases["AlHO2"]["chemical_decomposition"]},
         "exchange_tables": {**{k: {"li_salt": v[0], "count": v[1], "dH_eV": v[2], "locators": v[3]} for k, v in ex.items()},
                             **{k: {"li_salt": v[0], "count": v[1], "dH_eV": v[2], "locators": v[3]}
                                for k, v in bks["expt"].exchange.items()}},
