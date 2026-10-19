@@ -1,0 +1,47 @@
+# Fetch index for the ChemRxiv package (session P0-W2.4a), in the format of ops/policy/p0/index.yaml.
+#
+# The policy pages fetched at P0-I0 carry no subject-category list (requirements.md T1, "Subject
+# categories ... Outstanding"). This session looked for one headlessly. Live chemrxiv.org still returns
+# HTTP 403, and the Wayback CDX API has no capture of the public-API categories endpoint, so the list
+# below comes from the newest status-200 capture of the browse page. Raw bytes are local-only; `sha256`
+# is of the stored bytes, which are the capture after gzip decoding.
+pages:
+- id: P1
+  target: T1
+  title: 'Browse | ChemRxiv (category tiles)'
+  url: https://chemrxiv.org/engage/chemrxiv/browse-dashboard
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20251221224246id_/https://chemrxiv.org/engage/chemrxiv/browse-dashboard
+  snapshot_timestamp: '20251221224246'
+  retrieved_at: '2026-10-19T15:40:00Z'
+  http_status: 200
+  content_type: text/html (gzip transfer, stored decoded)
+  sha256: a90daa7007fad2f897b4ce679a02fd5aa8cd19fbcc6cc02f0f37946ef6a10de5
+  bytes: 669097
+  local_path: .local/policy/p0-w2/browse.html
+  redistribution: local-only
+  extracted: main subject categories, the tile labels of the browse page (metadata.yaml `categories.offered`)
+  attempts:
+  - 'live https://chemrxiv.org/engage/chemrxiv/public-api/v1/categories: 403'
+  - 'wayback cdx chemrxiv.org/engage/chemrxiv/public-api/v1/categories*: no capture'
+  - 'wayback cdx chemrxiv.org/engage/chemrxiv/browse-dashboard*: 20251221224246'
+  - 'wayback fetch: 200'
+- id: P2
+  target: T1
+  title: 'Materials Chemistry | Early Research Outputs | ChemRxiv | Cambridge Open Engage'
+  url: https://chemrxiv.org/engage/chemrxiv/category-dashboard/60b63c9f57d3ab002262a6f7
+  via: wayback
+  snapshot_url: https://web.archive.org/web/20260111144837id_/https://chemrxiv.org/engage/chemrxiv/category-dashboard/60b63c9f57d3ab002262a6f7
+  snapshot_timestamp: '20260111144837'
+  retrieved_at: '2026-10-19T15:42:00Z'
+  http_status: 200
+  content_type: text/html
+  sha256: 8c19f8574e3633951d882d2939a3550cb4da60779459ea00e3e4fcc0b685b7e8
+  bytes: 727318
+  local_path: .local/policy/p0-w2/category.html
+  redistribution: local-only
+  extracted: nothing; the category page lists preprints, not subcategories. The subcategory list remains
+    unknown and is chosen in the live form.
+  attempts:
+  - 'wayback cdx chemrxiv.org/engage/chemrxiv/category-dashboard*: 20260111144837 (newest)'
+  - 'wayback fetch: 200'

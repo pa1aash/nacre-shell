@@ -1,0 +1,251 @@
+# ChemRxiv submission metadata for the P0 preprint (lane p0-w2, session P0-W2.4a). Scaffold.
+#
+# What Palaash enters in the ChemRxiv form at C2, gathered in one place and traced to its source.
+# Checked by `uv run nacre retro package-check` (src/nacre/retro/package.py).
+#
+# Conventions
+#   - A value that starts with "TBD" is a placeholder: who supplies it and when follow in brackets.
+#     The checker lists every placeholder; `--release` fails while any remains.
+#   - `source` lists requirement ids: T* and V-1 from ops/policy/p0/index.yaml (cited by
+#     ops/policy/p0/requirements.md), P* from preprint/package/fetch_index.yaml. Every one of them is
+#     a 2025 or 2026 Wayback capture, not the live page, so each sourced item carries
+#     `recheck_live: true` and is listed in preprint/package/requirements_recheck.md (ruling B8).
+#   - No result numbers and no email addresses. Numbers reach the paper only through generated
+#     macros; this file names macros, it does not hold their values. The co-author email addresses
+#     the form needs are in the local-only contact list, .local/p0/authors_contact.yaml.
+#   - The abstract is lane W8's (preprint/paper/sections/abstract.tex). This file points to it.
+schema: chemrxiv-package/v1
+status: scaffold
+
+title:
+  working: 'Thermodynamic screening of a biomimetic calcium-carbonate barrier on aluminium current collectors:
+    governing parameters and the precision required for first-principles validation'
+  working_source: ops/tracks/p0.yaml meta.title_working (rendered as \nacreTitle in preprint/generated/front.tex)
+  final: TBD (W8, set after cp4; the working title above is not final)
+
+content_type:
+  value: Working Paper
+  note: research article with new results; curators may reassign the type during screening
+  source: [T1-1]
+  recheck_live: true
+
+abstract:
+  pointer: preprint/paper/sections/abstract.tex (lane W8; brief preprint/paper/briefs/abstract.md)
+  text: TBD (W8, from the final manuscript; pasted into the form from the PDF, not written here)
+  limit: the word limit stated in requirements.md T1, "Abstract and metadata"
+  source: [T1-1]
+  recheck_live: true
+
+# Author order is the register's order (ops/tracks/p0_authors.yaml); the checker enforces the match.
+# The form asks for first and last name, email and institutions for every author [T1-1]; the email
+# column comes from the local-only contact list.
+authors_source: ops/tracks/p0_authors.yaml
+authors:
+- given_name: Palash
+  family_name: Bharti
+  affiliations: ['Jayshree Periwal International School']
+  orcid: 0009-0000-8926-5520
+  corresponding: false
+  credit_roles: TBD (Palaash)
+- given_name: Palaash
+  family_name: Gang
+  affiliations: ['Indus International School, Pune']
+  orcid: 0009-0006-7448-9488
+  corresponding: true
+  contact: institutional address as held in ops/tracks/p0_authors.yaml (not repeated here)
+  credit_roles: TBD (Palaash; draft list in charter/credit.yaml, status draft, not yet confirmed)
+- given_name: Ahaana
+  family_name: Goswamy
+  affiliations: ['Grainger College of Engineering, University of Illinois Urbana-Champaign']
+  orcid: 0009-0008-0448-1741
+  corresponding: false
+  credit_roles: TBD (Palaash)
+- given_name: Kabir
+  family_name: Agarwal
+  affiliations: ['Grainger College of Engineering, University of Illinois Urbana-Champaign']
+  orcid: 0009-0007-9790-9622
+  corresponding: false
+  credit_roles: TBD (Palaash)
+- given_name: Jayveer Sachin
+  family_name: Kochhar
+  affiliations: ['Stanford University']
+  orcid: 0009-0009-3497-1079
+  corresponding: false
+  credit_roles: TBD (Palaash)
+- given_name: Paul V.
+  family_name: Braun
+  affiliations: ['University of Illinois Urbana-Champaign']
+  department: TBD (Palaash; register field department_status to-confirm)
+  orcid: TBD (Palaash; candidates in ops/tracks/p0_authors.yaml orcid_candidates, none chosen)
+  corresponding: false
+  credit_roles: TBD (Palaash)
+
+credit:
+  taxonomy: charter/credit_taxonomy.md (fetched NISO CRediT role names)
+  renders_as: \nacreCredit (preprint/generated/credit.tex, from the register's credit_roles)
+
+ai_tools_as_authors:
+  rule: AI tools are never entered as authors, in the document or in the submission information
+  source: [T1-1, T1-2, T2-1]
+  recheck_live: true
+
+categories:
+  offered:
+  - Agriculture and Food Chemistry
+  - Analytical Chemistry
+  - Biological and Medicinal Chemistry
+  - Catalysis
+  - Chemical Education
+  - Chemical Engineering and Industrial Chemistry
+  - Earth, Space, and Environmental Chemistry
+  - Energy
+  - Inorganic Chemistry
+  - Materials Chemistry
+  - Materials Science
+  - Nanoscience
+  - Organic Chemistry
+  - Organometallic Chemistry
+  - Physical Chemistry
+  - Polymer Science
+  - Theoretical and Computational Chemistry
+  offered_source: [P1]
+  rule: main categories and subcategories are chosen in the form within the limits stated in requirements.md T1;
+    the first main category is the one shown on the preprint page
+  rule_source: [T1-1]
+  proposed_main: [Theoretical and Computational Chemistry, Physical Chemistry, Materials Science]
+  proposed_note: a proposal from the lane, ordered with the method first; Palaash chooses
+  chosen_main: TBD (Palaash at C2, from the live list)
+  subcategories: TBD (Palaash at C2; no capture lists them, see fetch_index.yaml P2)
+  recheck_live: true
+
+keywords:
+  proposed:
+  - calcium carbonate
+  - aluminium current collector
+  - biomimetic mineralisation
+  - heterogeneous nucleation
+  - classical nucleation theory
+  - Pourbaix analysis
+  - thermodynamic screening
+  - uncertainty propagation
+  - first-principles validation
+  proposed_note: taken from the working title and the model's named methods; checked against the scope guard
+  chosen: TBD (Palaash at C2, after the final title)
+  source: [T1-1]
+  recheck_live: true
+
+licence:
+  value: CC BY 4.0
+  offered: [CC BY 4.0, CC BY-NC 4.0, CC BY-NC-ND 4.0]
+  note: chosen by the corresponding author at upload; copyright is not transferred. CC BY 4.0 is also the
+    licence of the Materials Project data used, which asks for attribution only.
+  source: [T1-1, T1-2]
+  recheck_live: true
+
+funding:
+  statement: TBD (Palaash at W8.5)
+  renders_as: \nacreFunding (preprint/paper/declarations.yaml field funding)
+  form: '"Add Funder" step: funder name and grant number, if any'
+  rule: all relevant funding grants are declared
+  source: [T2-1, T1-1, T3-1]
+  recheck_live: true
+
+competing_interests:
+  statement: TBD (Palaash at W8.5; covers all authors)
+  renders_as: \nacreCompetingInterests (preprint/paper/declarations.yaml field competing_interests)
+  rule: a declaration covering all authors is required at submission and also appears within the content
+  source: [T2-1, T3-1, T1-1]
+  recheck_live: true
+
+ethics:
+  statement: not applicable; the study involves no research with humans or animals
+  source: [T2-1, T1-1]
+  recheck_live: true
+
+data_and_code_availability:
+  renders_in: preprint/paper/sections/declarations.tex, section "Data and code availability"
+  repository: \nacreRepoURL (filled at C3)
+  archive_doi: \nacreZenodoDOI (Zenodo DOI, filled at C3 at release)
+  si_doi: \nacreSIDOI (filled at C3)
+  code: no separate code policy is stated; code is linked through the repository and archive above
+  rule: a Data Availability Statement in the content; FAIR deposit encouraged
+  source: [T2-1, T1-1, T1-2]
+  recheck_live: true
+  materials_project:
+    source_file: results/preprint/pourbaix/cache/attribution_for_paper.md
+    read_from: origin/preprint/p0-w5 at 401ef6e (draft by P0-W5.3)
+    references: [doi:10.1063/1.4812323, doi:10.1103/PhysRevB.85.235438]
+    # The draft below is the lane W5 text with one change: its database version is replaced by the token
+    # {mp_database_version}. The W5 file says the version is an input for a macro, not text to paste.
+    statement_draft: >-
+      The Materials Project entries used in this work (database version {mp_database_version}) are
+      available from the Materials Project (https://materialsproject.org) under CC BY 4.0 [Jain2013];
+      the cached copy used for every calculation, its manifest with per-file SHA-256 hashes, and the
+      list of changes made to it are in the repository at `results/preprint/pourbaix/cache/` (see
+      `NOTICE.md` there). The aqueous ion reference data are from the MPContribs project "Aqueous Ion
+      Reference Data" (CC BY 4.0, owned by its contributors). No Materials Project endorsement is
+      implied.
+    macros_needed:
+      mp_database_version: TBD (W8, a generated macro from the cache manifest)
+    c3_revision: decision D23 moves the raw cache to a Zenodo data record at C3, with git keeping the
+      manifest, hashes and rebuild script; the "cached copy ... in the repository" clause is revised then.
+    must_survive_editing:
+    - credit to the Materials Project and Jain et al. 2013, with the database version
+    - the licence named and linked (CC BY 4.0)
+    - the changes stated (MP2020 corrections, aqueous adjustments, offline Pourbaix rebuild, ACC offset,
+      experimental-route corrections)
+    - no endorsement implied
+    - the ion reference project credited as contributed data owned by its contributors
+    - GNoME (CC BY-NC 4.0) data excluded
+
+acknowledgements:
+  pointer: preprint/paper/sections/declarations.tex, section "Acknowledgements"
+  contents: [\nacreFunding, \nacreCompute, the AI-use disclosure include]
+  compute: TBD (Palaash at W8.5; \nacreCompute)
+
+ai_use:
+  placement: one Acknowledgements sentence (ruling B4, ops/tracks/p0.yaml inputs.ai_disclosure)
+  wording_file: .local/p0/ai_ack.tex (local-only; written by Palaash at P0-W8.5; never committed)
+  wording: TBD (Palaash at W8.5, in the local-only file)
+  must:
+  - name the tool or tools
+  - state the method of use (ruling B4 - code, analysis scripts, drafting and editing)
+  - state that the authors verified the content and are accountable for it
+  - for the later RSC journal route, also the specific model or version (requirements.md T5)
+  must_not:
+  - list a tool as an author, in the document or in the form
+  source: [T1-2, T1-1, T2-1, T4-1]
+  release_build: stops if the include is missing (declarations brief, build behaviour)
+  form_field: none described in the captures; whether the live form has one is unverified (requirements.md
+    conflicts, item 3)
+  recheck_live: true
+
+files:
+  manuscript_pdf:
+    value: TBD (W8, the release build of preprint/paper/main.tex)
+    rule: one PDF with figures and tables embedded; figures at the recommended resolution in T1-1; no
+      copyediting, the approved upload is what appears
+    source: [T1-1, T1-2]
+    recheck_live: true
+  supplementary:
+    value: TBD (W8, the release build of preprint/paper/si/main_si.tex)
+    rule: uploaded as supporting material beside the main PDF, any format, or linked by weblink
+    source: [T1-1, T1-2]
+    recheck_live: true
+  size_limit:
+    value: TBD (Palaash at C2; no limit is stated on any captured page)
+    source: [T1-1]
+    recheck_live: true
+
+consent:
+  rule: every co-author receives the Terms of Submission in writing (email suffices) and authorises the
+    submission before upload; the submitter confirms this when accepting the terms
+  pack: P0-W2.4 co-author pack (Day 4, after the manuscript)
+  source: [T3-1, T2-1]
+  recheck_live: true
+
+prior_posting:
+  rule: not accepted or published after peer review, and not posted on another preprint server
+  journal_route: RSC journals accept a prior ChemRxiv preprint, disclosed at submission
+  source: [T1-2, T2-1, T4-5, T4-1]
+  recheck_live: true
