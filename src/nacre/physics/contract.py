@@ -1,8 +1,8 @@
-"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v3).
+"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v4).
 
 Maps every contract function name to the physics function that implements it and to the
 contract symbol ids of its arguments, in call order. Constants (k_B, N_A, R_gas, F_c, q_e,
-hbar, m_e, m_std) are never arguments: the implementation takes them from nacre.physics.constants.
+hbar, m_e, m_std, c_std) are never arguments: the implementation takes them from nacre.physics.constants.
 
 ``valid`` marks inputs where the contract expression is defined but the implementation
 rejects the point as outside the physical domain (it raises ValueError there); the
@@ -19,9 +19,9 @@ from nacre.physics import wetting
 from nacre.physics.devtools import wrong_variants
 
 #: Contract version this registry implements; the contract tests skip a different version.
-CONTRACT_VERSION = 3
+CONTRACT_VERSION = 4
 
-CONSTANT_IDS = {"k_B", "N_A", "R_gas", "F_c", "q_e", "hbar", "m_e", "m_std"}
+CONSTANT_IDS = {"k_B", "N_A", "R_gas", "F_c", "q_e", "hbar", "m_e", "m_std", "c_std"}
 
 
 @dataclass(frozen=True)
@@ -66,6 +66,16 @@ FUNCTIONS = {
     "Gamma_Ca": Entry(sequestration.calcium_surface_excess, BIND),
     "Delta_gamma_ads": Entry(sequestration.adsorption_interfacial_energy_change, BIND),
     "gamma_sl_insitu": Entry(template.template_liquid_energy_in_situ, ("gamma_sl0",) + BIND),
+    # admissibility of gamma_sl and the analog route (contract v4, D27)
+    "Pi_ads": Entry(template.adsorption_lowering, BIND),
+    "Pi_ads_max": Entry(template.maximum_adsorption_lowering, ("Gamma_s", "Delta_G_seq", "T")),
+    "gamma_sl_floor": Entry(template.template_liquid_energy_floor, ("gamma_sl0", "Gamma_s", "Delta_G_seq", "T")),
+    "r_ads": Entry(template.adsorption_validity_ratio, ("gamma_sl0",) + BIND),
+    "Delta_G_seq_cycle_2H": Entry(sequestration.sequestration_free_energy_two_proton,
+                                  ("Delta_G_site", "pKa", "pKa2", "pH", "T")),
+    "Delta_G_site_from_K": Entry(sequestration.site_free_energy_from_solution_constant,
+                                 ("K_Ca_L", "Gamma_s", "delta_s", "T")),
+    "x_bind_K": Entry(sequestration.binding_odds_from_solution_constant, ("K_Ca_L", "c_bulk", "pKa", "pKa2", "pH")),
     # carbonate speciation (contract v3)
     "gamma_act_1": Entry(speciation.activity_coefficient_charge_one, DAVIES, _davies_representable(1.0)),
     "gamma_act_2": Entry(speciation.activity_coefficient_charge_two, DAVIES, _davies_representable(4.0)),
