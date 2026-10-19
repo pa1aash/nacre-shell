@@ -77,7 +77,7 @@ def test_tiny_dry_run_writes_a_schema_conforming_mock_document():
     out = ROOT / "results" / "preprint" / "screen" / "dryrun" / "test" / "summary.json"
     path, doc = run.run(ROOT, out, params_path=MOCK, regimes=("R-slurry",), allow_mock=True, overrides=TINY)
     jsonschema.validate(json.loads(path.read_text(encoding="utf-8")), summary.load_schema())
-    assert doc["mock"] is True and doc["schema_version"] == "3"
+    assert doc["mock"] is True and doc["schema_version"] == "4"
     reg = doc["regimes"]["R-slurry"]
     assert set(reg["links"]) == {"anchor", "sequester", "nucleate"}
     assert reg["dependence"]["method"] == "gaussian_copula"

@@ -1,19 +1,19 @@
 {
-  "last_session": "P0-W4.3",
+  "last_session": "P0-W4.3b",
   "status": "DONE",
   "day": 3,
-  "contract_sha": "db872ae9190c3b729bc2b13898919fbfbe56815b",
-  "contract_checked_ref": "origin/preprint/p0-w3@d27552a4f01a0f26710a884e275d14ddffc5e19a",
+  "contract_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
+  "contract_checked_ref": "fd5846f (W3 admissibility, contract v4)",
   "artifacts": {
     "physics_core": "src/nacre/physics/",
     "contract_registry": "src/nacre/physics/contract.py",
     "contract_check_script": "src/nacre/physics/devtools/check_contract_equivalence.py",
     "contract_check_record": "configs/preprint/contract_check.json",
-    "results_schema": "configs/preprint/results_schema.json@fd35ae57823e219a4f91c18f811e975ce01e990a",
+    "results_schema": "configs/preprint/results_schema.json@41a2ada",
     "mock_priors": "configs/preprint/mock_priors.yaml",
     "mock_summary": "results/preprint/screen/mock/summary.json",
     "screen_scaffold": "src/nacre/screen/",
-    "report": "ops/reports/P0-W4.3.md",
+    "report": "ops/reports/P0-W4.3b.md",
     "screen_config": "configs/preprint/screen.yaml",
     "thresholds_copy": "configs/preprint/thresholds.yaml",
     "precision_method": "configs/preprint/precision_method.md",
@@ -30,23 +30,27 @@
     "gap_table": "configs/preprint/gap_resolution.yaml",
     "gap_table_loader": "src/nacre/screen/gaps.py",
     "production_dir": "results/preprint/screen/",
-    "ledger": "jobs/ledger/p0-w4.jsonl"
+    "ledger": "jobs/ledger/p0-w4.jsonl",
+    "admissibility": "src/nacre/screen/admissibility.py",
+    "report_w4_3": "ops/reports/P0-W4.3.md"
   },
   "notes": [
-    "14 production runs, 0 capped, 1.9 h total, peak 1.72 GB; sizing met at 2^14 draws per state in every run.",
-    "Study (registered, PMF route): C1 gap, cannot be feasible in P0; sourced-only set inconclusive.",
-    "Ignorance set with flagged analogs (not a finding): falsified via C3a under both framings at every design point; deletion test fails (PVDF control a gap, bare_oxide not degraded).",
-    "C5s dose window (sourced): feasible for Ca_T >= 1e-4 mol dm^-3, falsified at 1e-6 and at 1e-5 with C_T min; controls pass.",
-    "R-cell: CaCO3/LiClO4 falsified above 4.025 V; LFP inconclusive at min/value, falsified at max; other classes falsified.",
-    "track check refuses after the session: thresholds copy changed after p0-cp3 needs an integrator deviation entry.",
+    "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
+    "Retained prior mass M_adm (ignorance set, joint over states): 0.94-0.98 at Ca_T 1e-6 down to 0.002-0.004 at 0.1; lost at the strong-binding end of the analog with the small sourced gamma_sl0 (~2 mJ m^-2). P(gamma_sl_floor >= 0) ~ 0.001.",
+    "C3 (ignorance, conditional on the analog and admissibility): falsified on admitted draws at Ca_T <= 1e-3 (gamma_sl ~ 1 mJ m^-2, P(gamma_sn <= gamma_sl) ~ 0.002); inconclusive (inadmissible inputs) at Ca_T >= 1e-2. C4 inconclusive. C2 premise holds (two-proton cycle). C5 and R-cell unchanged.",
+    "Study: registered (PMF route) cannot be feasible; sourced-only inconclusive (unchanged). Ignorance counterpart (not a finding): design-dependent, inconclusive (falsified 72, inconclusive 36 of 108); W4.3 falsified 108.",
+    "Sensitivity: nucleate Sobol capped at 131072 base rows (half-width 0.098); Shapley carries the ranking.",
+    "sweep_pcred_0.6_adm first attempt failed schema validation before writing (no output); schema fix 41a2ada; rerun under the same name.",
+    "Two-proton log1p precision fix after the runs (7b54cc8): <= 9e-12 J/mol over the screen range; no rerun needed.",
+    "Integrator: deviation entries for the thresholds copy (block v4) and W3's theory/thresholds.md after p0-cp3 (D27).",
     ".venv is a symlink to ~/.nacre-venvs/p-w4."
   ],
   "schema": {
-    "version": "3",
-    "sha": "fd35ae57823e219a4f91c18f811e975ce01e990a",
+    "version": "4",
+    "sha": "41a2ada",
     "path": "configs/preprint/results_schema.json"
   },
-  "thresholds_sha": "22ef46446205f63fab6074ba971ee89e18d99489",
+  "thresholds_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
   "params_sha": "fbe252b23a5a80e9fff25db72d1d3b85e8454ce8",
   "thresholds_cp3": {
     "source_sha": "74ac69c2586c017e2bc08efecbfbc918b94f48ee",
@@ -54,11 +58,13 @@
     "equality": "EQUAL",
     "poll": "ready at 10:42 UTC (third poll)"
   },
-  "gap_table_sha": "96797a9c1711e6664bc591dee324f3ab7443719d",
+  "gap_table_sha": "ccb653d",
   "gap_table_history": {
     "initial": "185b8b8ccdbc69bef1edc2ecb776dd252d3f6114",
     "AM1": "e22fedbb45b617705c06dc00f079b0d861513c23",
-    "AM2": "96797a9c1711e6664bc591dee324f3ab7443719d"
+    "AM2": "96797a9c1711e6664bc591dee324f3ab7443719d",
+    "AM3": "5123c994fc741d3404a885097acdc6693022bf46",
+    "AM4": "ccb653d"
   },
   "thresholds_cp3b": {
     "source_sha": "22ef46446205f63fab6074ba971ee89e18d99489",
@@ -68,7 +74,24 @@
     "copy_commit": "4ed8fcfc3f560ee8dabbfa25a6df3185e6f89e51",
     "poll": "ready at 18:11 UTC (fourth poll)"
   },
-  "runs": {
+  "gap_table_am3": "5123c994fc741d3404a885097acdc6693022bf46",
+  "admissibility_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
+  "admissibility": {
+    "w3_ready_commit": "f8139f0",
+    "poll": "ready at 12:00:54 UTC (fifth poll)",
+    "contract_version": 4,
+    "thresholds_block_version": 4,
+    "ignorance_block_version": 3
+  },
+  "gap_table_am4": "ccb653d",
+  "thresholds_d27": {
+    "source_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
+    "w3_state_commit": "f8139f0",
+    "block_version": 4,
+    "equality": "EQUAL",
+    "copy_commit": "b2e5fd1"
+  },
+  "runs_w4_3": {
     "table": "results/preprint/screen/table/summary.json",
     "table_r2": "results/preprint/screen/table_r2/summary.json",
     "ignorance": "results/preprint/screen/ignorance/summary.json",
@@ -83,5 +106,22 @@
     "sens_acc_omega": "results/preprint/screen/sens_acc_omega/summary.json",
     "sens_gamma_sl0_untruncated": "results/preprint/screen/sens_gamma_sl0_untruncated/summary.json",
     "sens_gamma_sl0_untruncated_r2": "results/preprint/screen/sens_gamma_sl0_untruncated_r2/summary.json"
+  },
+  "runs": {
+    "diag_analog_binding_adm": "results/preprint/screen/diag_analog_binding_adm/summary.json",
+    "diag_sourced_only_adm": "results/preprint/screen/diag_sourced_only_adm/summary.json",
+    "ignorance_adm": "results/preprint/screen/ignorance_adm/summary.json",
+    "sens_acc_omega_adm": "results/preprint/screen/sens_acc_omega_adm/summary.json",
+    "sens_gamma_sl0_untruncated_adm": "results/preprint/screen/sens_gamma_sl0_untruncated_adm/summary.json",
+    "sens_gamma_sl0_untruncated_r2_adm": "results/preprint/screen/sens_gamma_sl0_untruncated_r2_adm/summary.json",
+    "sens_ph_modified_adm": "results/preprint/screen/sens_ph_modified_adm/summary.json",
+    "sens_rca_analog_adm": "results/preprint/screen/sens_rca_analog_adm/summary.json",
+    "sweep_independent_adm": "results/preprint/screen/sweep_independent_adm/summary.json",
+    "sweep_mcos_0.1_adm": "results/preprint/screen/sweep_mcos_0.1_adm/summary.json",
+    "sweep_mcos_0.2_adm": "results/preprint/screen/sweep_mcos_0.2_adm/summary.json",
+    "sweep_pcred_0.6_adm": "results/preprint/screen/sweep_pcred_0.6_adm/summary.json",
+    "sweep_pcred_0.99_adm": "results/preprint/screen/sweep_pcred_0.99_adm/summary.json",
+    "sweep_untruncated_adm": "results/preprint/screen/sweep_untruncated_adm/summary.json",
+    "table_adm": "results/preprint/screen/table_adm/summary.json"
   }
 }

@@ -16,9 +16,10 @@
       "enum": [
         "1",
         "2",
-        "3"
+        "3",
+        "4"
       ],
-      "description": "'3' for documents written since P0-W4.3a (contract v3, cp3 rulings); '2' since P0-W4.2; '1' documents keep the v1 rules (no stability section, no boundary mass)."
+      "description": "'4' for documents written since P0-W4.3b (contract v4, thresholds block v4: the admissibility rule of decision D27 with the retained prior mass M_adm); '3' since P0-W4.3a (contract v3, cp3 rulings); '2' since P0-W4.2; '1' documents keep the v1 rules (no stability section, no boundary mass)."
     },
     "mock": {
       "type": "boolean",
@@ -220,6 +221,28 @@
             "string",
             "null"
           ]
+        },
+        "session": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Session that wrote the document (P0-W4.3b on)."
+        },
+        "admissibility_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40}$",
+          "description": "Commit of the theory lane at which the admissibility rule (D27) was registered, as recorded by the gap-table amendment that applies it; null when the rule is not applied."
+        },
+        "admissibility_rule": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The registered rule and the gap-table amendment that applies it."
         }
       },
       "description": "Run provenance. A screen document also requires prior_file and prior_file_hash."
@@ -499,6 +522,13 @@
               "$ref": "#/$defs/refused_mass"
             }
           }
+        },
+        "admissibility": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Admissibility rule in the sensitivity analysis (v4 documents): the nucleate link is analysed on the admitted draws of its state; M_adm there and the method note."
         }
       }
     },
@@ -1517,6 +1547,54 @@
             "null"
           ],
           "description": "Labelled Omega sensitivities of C5s by design point (C5s_ACC: Omega_bulk with the ACC K_sp); never gating."
+        },
+        "admissibility": {
+          "type": "object",
+          "description": "Admissibility rule (D27; thresholds block v4 decision.admissibility; gap table AM3), v4 documents. C3 and C4: the retained prior mass M_adm (fraction of the evaluable draws with gamma_sl_insitu >= 0 at every registered state of the design point), per state, whether the inputs are inadmissible (1 - M_adm >= p_cred: verdict inconclusive), the restricted and the unrestricted verdicts (the latter a labelled sensitivity on the same draws, never a verdict), P(gamma_sl_floor >= 0) and the r_ads quantiles over the admitted draws; at the headline also over_design. C2: its quantities over the admitted draws beside the registered descriptor.",
+          "properties": {
+            "M_adm": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            },
+            "inadmissible_inputs": {
+              "type": "boolean"
+            },
+            "verdict_restricted": {
+              "enum": [
+                "feasible",
+                "inconclusive",
+                "falsified"
+              ]
+            },
+            "verdict_unrestricted": {
+              "enum": [
+                "feasible",
+                "inconclusive",
+                "falsified"
+              ]
+            },
+            "by_state": {
+              "type": "object"
+            },
+            "over_design": {
+              "type": "object"
+            },
+            "unrestricted": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": true
+        },
+        "half_width_unsized": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "v4: the half-width of a restricted band mass printed but not entering the sizing rule, because the link's inputs are inadmissible under the admissibility rule (gap table AM4)."
         }
       },
       "additionalProperties": false
@@ -1647,6 +1725,13 @@
             "null"
           ],
           "description": "C5 and the study verdict per (design point, total Al) where the competing-phase test depends on total Al."
+        },
+        "admissibility": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Admissibility rule (D27, v4 documents): retained masses by design point and framing, the unrestricted study verdict on the same draws (labelled sensitivity, never a verdict) and the verdicts that differ."
         }
       }
     },

@@ -16,11 +16,20 @@ At equilibrium the Ca2+ chemical potential is uniform, so E_enr and c_local are 
 quantities of C2 and never enter the driving force; the binding reaches the nucleation
 barrier only through Delta_gamma_ads in gamma_sl (contract no_double_counting).
 The saturation bound: c_local <= c_max and c_local <= E_enr c_bulk for every input.
+
+Analog route (contract v4, D27): a Ca2+ complexation constant K_Ca_L measured in solution
+(referenced to c_std) for a ligand that binds only as the dianion (a catecholate) reaches the
+chain through
+    Delta_G_site_from_K   = -R T ln(K_Ca_L Gamma_s / (delta_s c_std))   (site-volume standard state)
+    Delta_G_seq_cycle_2H  = Delta_G_site + R T ln(1 + 10^(pKa2 - pH) + 10^(pKa + pKa2 - 2 pH))
+    x_bind_K              = K_Ca_L (c_bulk / c_std) / (1 + 10^(pKa2 - pH) + 10^(pKa + pKa2 - 2 pH))
+A solution constant is not a site free energy: every verdict on this route is conditional on
+the analog.
 """
 import numpy as np
 
 from nacre.physics._domain import non_negative, positive, real, scalar_or_array
-from nacre.physics.constants import GAS_CONSTANT
+from nacre.physics.constants import GAS_CONSTANT, STANDARD_CONCENTRATION
 
 
 def sequestration_free_energy(Delta_G_site, pKa, pH, T):
@@ -34,6 +43,61 @@ def sequestration_free_energy(Delta_G_site, pKa, pH, T):
     ph = real("pH", pH)
     t = positive("T (temperature)", T)
     return scalar_or_array(g + GAS_CONSTANT * t * np.logaddexp(0.0, (pka - ph) * np.log(10.0)))
+
+
+def _ln_dianion_odds(pKa, pKa2, pH):
+    """ln(1 + 10^(pKa2 - pH) + 10^(pKa + pKa2 - 2 pH)): minus ln of the dianion fraction of a two-proton group."""
+    ln10 = np.log(10.0)
+    terms = np.stack(np.broadcast_arrays(np.zeros_like(pH), (pKa2 - pH) * ln10, (pKa + pKa2 - 2.0 * pH) * ln10))
+    ordered = np.sort(terms, axis=0)
+    top = ordered[-1]
+    # top + ln(1 + the two smaller exponentials): log1p keeps the small terms that ln(sum) rounds away
+    return top + np.log1p(np.exp(ordered[0] - top) + np.exp(ordered[1] - top))
+
+
+def sequestration_free_energy_two_proton(Delta_G_site, pKa, pKa2, pH, T):
+    """Ca2+ transfer free energy for a group that binds only after losing two protons (J mol^-1).
+
+    Delta_G_site + R T ln(1 + 10^(pKa2 - pH) + 10^(pKa + pKa2 - 2 pH)): the correction is the
+    free energy of finding the group as the dianion at the regime pH (a catechol binding through
+    both oxygens; the ligand form a catecholate complexation constant refers to). Never negative.
+    """
+    g = real("Delta_G_site (transfer free energy to the deprotonated site)", Delta_G_site)
+    pka = real("pKa (first dissociation constant)", pKa)
+    pka2 = real("pKa2 (second dissociation constant)", pKa2)
+    ph = real("pH", pH)
+    t = positive("T (temperature)", T)
+    return scalar_or_array(g + GAS_CONSTANT * t * _ln_dianion_odds(pka, pka2, ph))
+
+
+def site_free_energy_from_solution_constant(K_Ca_L, Gamma_s, delta_s, T):
+    """ANALOG MAPPING: Delta_G_site from a solution complexation constant (J mol^-1).
+
+    -R T ln(K_Ca_L Gamma_s / (delta_s c_std)), the site-volume standard state V_site =
+    delta_s / (N_A Gamma_s). A solution constant is not a surface-site free energy; a verdict
+    resting on it is conditional on the analog.
+    """
+    k = positive("K_Ca_L (Ca2+ complexation constant in solution)", K_Ca_L)
+    gs = positive("Gamma_s (areal binding-site density)", Gamma_s)
+    ds = positive("delta_s (binding-layer thickness)", delta_s)
+    t = positive("T (temperature)", T)
+    return scalar_or_array(-GAS_CONSTANT * t * (np.log(k) + np.log(gs) - np.log(ds * STANDARD_CONCENTRATION)))
+
+
+def binding_odds_from_solution_constant(K_Ca_L, c_bulk, pKa, pKa2, pH):
+    """Langmuir odds along the analog route, alpha_2 K_Ca_L c_bulk / c_std (dimensionless).
+
+    alpha_2 is the dianion fraction; Gamma_s and delta_s drop out (the solution constant fixes
+    the occupancy per bulk concentration directly).
+    """
+    k = positive("K_Ca_L (Ca2+ complexation constant in solution)", K_Ca_L)
+    cb = positive("c_bulk (bulk Ca2+ concentration)", c_bulk)
+    pka = real("pKa (first dissociation constant)", pKa)
+    pka2 = real("pKa2 (second dissociation constant)", pKa2)
+    ph = real("pH", pH)
+    with np.errstate(over="ignore"):
+        return scalar_or_array(np.exp(np.log(k) + np.log(cb / STANDARD_CONCENTRATION)
+                                      - _ln_dianion_odds(pka, pka2, ph)))
 
 
 def enrichment_factor(Delta_G_seq, T):

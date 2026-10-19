@@ -76,6 +76,10 @@ registrations:
   pKa: {key: pka_catechol, flag: 'stated at the ionic strength of its sources, not at the regime I; reported as a flag'}
   termination_weights: ignorance_mixture   # per-termination verdicts and the simplex, never a point weight
   truncate: {gamma_sl0: {low: 0.0}}   # gamma_sl0 >= 0; --untruncated reports the untruncated sensitivity
+  # D27 (P0-W4.3b, gap_resolution.yaml AM3; thresholds block v4 decision.admissibility): the joint prior of
+  # (gamma_sl0, Delta_G_seq, Gamma_s, delta_s) restricted to gamma_sl_insitu >= 0 at every registered state of a
+  # design point; refused draws counted, never clipped or floored; M_adm printed beside C3, C4 and the deletion test
+  admissibility: {rule: thresholds.decision.admissibility, links: [C3, C4], unrestricted_beside: true}
   R-cell:
     gated_phases: [CaCO3, corundum, boehmite]
     never_pass_sinks: [LiBOB, LiPCP]  # sink thermochemistry undetermined: never a pass
@@ -151,5 +155,7 @@ prior_sets:
       rho_L: template_group_density_site_analog       # the analog Gamma_s cap rho_L d_layer: flagged, never refused
       W_adh_wet: w_adh_wet_catechol_oxide_analog      # C1 side by side
     drop: [Delta_G_site]              # computed by the PMF study (absent); the analog supplies it
+    analog_route:                     # thresholds C2.analog_route (AM3): the two-proton cycle of the catecholate constant
+      pKa2: pka2_catechol
   analog:                             # flagged analog priors, run side by side; none registered yet
     bindings: {}

@@ -1,10 +1,11 @@
 """Physical constants used by the physics core, in SI units.
 
 None is typed here: each is read from sympy's unit system at import time. k_B, N_A, e and
-hbar are exact by the definition of the SI, and the standard molality is one mole per
-kilogram by the definition of the molal scale; the electron mass is the value sympy carries
-(it may be replaced by an effective tunnelling mass, theory open question Q10). The
-contract's constant relations R = N_A k_B and F = N_A e define R and F.
+hbar are exact by the definition of the SI, the standard molality is one mole per
+kilogram by the definition of the molal scale, and the standard concentration of a solution
+constant is one mole per cubic decimetre by its definition (contract v4); the electron mass
+is the value sympy carries (it may be replaced by an effective tunnelling mass, theory open
+question Q10). The contract's constant relations R = N_A k_B and F = N_A e define R and F.
 """
 from sympy.physics import units as _u
 from sympy.physics.units import convert_to as _convert
@@ -24,6 +25,7 @@ ELEMENTARY_CHARGE = _si(_u.elementary_charge, _u.coulomb)
 HBAR = _si(_u.hbar, _u.joule * _u.second)
 #: Standard molality m0 of the molal activity scale, mol kg^-1 (exact by definition).
 STANDARD_MOLALITY = _si(_u.mol / _u.kilogram, _u.mol / _u.kilogram)
+STANDARD_CONCENTRATION = _si(_u.mol / _u.liter, _u.mol / _u.meter ** 3)
 #: Electron rest mass m_e in kg.
 ELECTRON_MASS = _si(_u.electron_rest_mass, _u.kilogram)
 #: Molar gas constant R = N_A k_B in J mol^-1 K^-1.

@@ -70,4 +70,4 @@ def test_committed_copy_equals_theory_thresholds():
     sha, tree_sha = thr.check_against_authority(ROOT)
     assert sha and tree_sha
     rule = thr.load_thresholds(ROOT / thr.COPY)["rule"]
-    assert rule["version"] == 3 and rule["contract_version"] == 3
+    assert rule["version"] == 4 and rule["contract_version"] == 4

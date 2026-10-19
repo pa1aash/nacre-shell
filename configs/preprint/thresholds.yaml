@@ -2,8 +2,8 @@
 # Copied verbatim; the authority is theory/thresholds.md (rule R-thr). Do not edit:
 # after tag p0-cp3 a change goes through a dated entry in ops/tracks/p0_deviations.md.
 # source: theory/thresholds.md
-# source-sha: 22ef46446205f63fab6074ba971ee89e18d99489
-version: 3
+# source-sha: fd5846fd43d43e457566068f381a43ed96a8c1c3
+version: 4
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
@@ -12,7 +12,10 @@ revised_cp3: {session: P0-W3.3, ruling: planning chat 2026-10-17 (cp3), base_com
               log: theory/cp2_fixes.md (cp3 section), disclosures: [R1, R2, R6]}
 revised_cp3b: {session: P0-W3.4, rule: cp3-mandated registrations for production (lane note N22), base_commit: 227d997,
                items: [A1, A2, A3, A4], log: theory/cp2_fixes.md (cp3 section, cp3b registrations), screen_output_consulted: false}
-contract_version: 3
+revised_d27: {session: P0-W3.4b, decision: D27 (2026-10-18), date: 2026-10-19, rule: admissibility of the template-liquid energy,
+              facts_used: 'D27 only (gamma_sl negative on every draw with the binding analog, median as stated there)',
+              screen_output_consulted: false, log: theory/cp2_fixes.md (cp3 section, D27 amendment)}
+contract_version: 4
 decision:
   statistic: band_mass
   credible_level: {symbol: p_cred, params: thresholds.decision.credible_level}
@@ -57,6 +60,22 @@ decision:
   priors:
     gamma_sl0: {truncate_below: '0', reason: interface stability, sensitivity: untruncated prior, labelled,
                 report: [truncated mass, verdicts that change], params: params.gamma_sl0_template}
+  admissibility:
+    reason: D27 (2026-10-18); derivation Section 7 (Admissibility) (A1 to A5); theory/ignorance_priors.md Section 2a
+    condition: {quantity: gamma_sl_insitu, comparator: '>=', edge: '0'}
+    physics: a negative template-liquid energy describes an interface that lowers its free energy by growing; the planar interface the model describes does not exist there
+    joint_over: [gamma_sl0, Delta_G_seq, Gamma_s, delta_s]
+    at: every registered R-slurry state and every design point (c_bulk); a draw is admissible only if the condition holds at every registered state
+    draws_outside: refused and counted (never clipped, never floored at zero)
+    verdicts: on the admissible draws (the joint prior restricted to the admissible set), labelled conditional on admissibility
+    retained_mass_rule: 'M_adm (fraction of the joint prior in the admissible set) printed per design point and per state beside every verdict that uses gamma_sl (C3, C4, deletion test); never silently renormalised'
+    inadmissible_inputs: '1 - M_adm >= p_cred: link verdict inconclusive, labelled inadmissible inputs; the restricted verdict printed beside it (a statement about the inputs)'
+    report: [M_adm, 'P(gamma_sl_floor >= 0)', r_ads quantiles over admitted draws, verdicts that differ from the unrestricted run]
+    unrestricted: the run without the condition (P0-W4.3, committed as it came) is a labelled sensitivity, never a verdict
+    special_case: 'c_bulk -> 0 gives gamma_sl0 >= 0 (cp3 R8 truncation, unchanged)'
+    bookkeeping: restricts inputs only; Delta_G_seq still enters once through Delta_gamma_ads; Omega untouched
+    rejected: {saturating_form: no physical basis (the lowering is bounded by Pi_ads_max, not by gamma_sl0), coupling_function: physical (charge of the same groups) but unmodelled; the restriction induces the dependence}
+    params: {gamma_sl0: params.gamma_sl0_template, Gamma_s: params.gamma_s_site_density, c_bulk: params.c_bulk_slurry}
   omega: Omega_bulk
   forbidden_in_verdicts: [Omega_local_ideal, Delta_mu_local_ideal, DG_het_local_ideal, DG_het_double, E_enr, c_local,
                           Omega_bulk_hydrated]
@@ -108,6 +127,13 @@ links:
     gating: false
     regimes: [R-slurry]
     statement: C2 is a binding descriptor. It enters C3 only through Delta_gamma_ads and is not an independent kill criterion.
+    analog_route:
+      label: conditional on the analog (a solution complexation constant, not a surface-site free energy)
+      Delta_G_site: {function: Delta_G_site_from_K, params: {K_Ca_L: params.log10_k_ca_catecholate}, standard_state: site volume}
+      cycle: {function: Delta_G_seq_cycle_2H, params: {pKa: params.pka_catechol, pKa2: params.pka2_catechol},
+              reason: the constant refers to the catecholate dianion; both protons are charged}
+      x_bind: x_bind_K
+      direction: 'lateral repulsion and site competition only lower the occupancy (Langmuir at the solution affinity is an upper bound on the lowering); site geometry moves the zero-coverage affinity either way'
     enters: {link: C3, via: Delta_gamma_ads}
     report: [Delta_G_seq, Theta_occ, Gamma_Ca, Delta_gamma_ads]
     finding:
@@ -134,6 +160,9 @@ links:
         edge: (2 + m_cos)*(1 - m_cos)**2/4
         params: {m_cos: thresholds.C3.margin_cos_theta}
         deck_bands: replaced by the single edge at f = 1/2 (cos theta = m_cos); the deck upper edge is dropped
+        admissible_draws_only: true
+        favourable_requires: 'gamma_sn <= gamma_sl - m_cos*gamma_nl (with gamma_sl >= 0, gamma_sn >= 0); a binding template has gamma_sl <= gamma_sl0 + R_gas*T*delta_s*c_bulk'
+        report_beside: retained mass M_adm of the admissibility rule (decision.admissibility)
       - id: C3b
         aggregation: path_sum
         quantity: N_nuc
@@ -176,6 +205,7 @@ links:
       N_nuc: upper estimate of C3b (path sum); a pass through closure is optimistic and labelled
     report_mass: 'P(gamma_sl > gamma_nl) at every registered state'
     complete_wetting_excluded_when: 'gamma_sl <= gamma_nl (hydrophilic template): S_spread <= -gamma_sn for every admissible gamma_sn'
+    admissible_draws_only: true
   C5:
     regimes: [R-slurry, R-cell]
     tests:
