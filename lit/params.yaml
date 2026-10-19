@@ -9,7 +9,7 @@ meta:
   rule: lit/corpus/params_README.md
   rule_sha256: d9c84962a675d73e82bd843ed949faf8f76bf6a39419cdf3428c04ef5c77d598
   evidence_table_sha256: 4307316fc6d7f0e19d7314ca510ed803293bc6f65f3055418b4ae66ea43c6b53
-  generated_utc: '2026-10-19T12:45:44Z'
+  generated_utc: '2026-10-19T12:47:05Z'
   session: P0-W1.2
   inputs_from:
   - theory/derivation_body.tex section 11
@@ -6312,7 +6312,7 @@ params:
     flags:
     - single_source
   window_margin_expt_red_caco3:
-    symbol: m_E
+    symbol: m_expt
     transform: none
     unit: V
     regimes:
@@ -6352,7 +6352,7 @@ params:
     role: primary
     flags: []
   window_margin_expt_red_corundum:
-    symbol: m_E
+    symbol: m_expt
     transform: none
     unit: V
     regimes:
@@ -6390,7 +6390,7 @@ params:
     role: primary
     flags: []
   window_margin_expt_solvated_caco3:
-    symbol: m_E
+    symbol: m_expt
     transform: none
     unit: V
     regimes:
@@ -6414,7 +6414,7 @@ params:
     role: primary
     flags: []
   window_margin_expt_ox_al_phases:
-    symbol: m_E
+    symbol: m_expt
     transform: none
     unit: V
     regimes:
