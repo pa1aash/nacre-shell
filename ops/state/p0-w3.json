@@ -174,5 +174,24 @@
       "NumMexpt",
       "NumMwindow"
     ]
+  },
+  "admissibility": {
+    "status": "ready",
+    "sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
+    "decision": "D27",
+    "contract_version": 4,
+    "thresholds_block_version": 4,
+    "ignorance_block_version": 3,
+    "check_contract": "PASS",
+    "functions": 60,
+    "rule": "joint prior of (gamma_sl0, Delta_G_seq, Gamma_s, delta_s) restricted to gamma_sl_insitu >= 0 at every registered state and design point; refused draws counted, never clipped or floored; retained mass M_adm printed beside every verdict using gamma_sl; 1 - M_adm >= p_cred -> inconclusive (inadmissible inputs); unrestricted P0-W4.3 run is a labelled sensitivity",
+    "for_w4": [
+      "thresholds block v4 decision.admissibility and links.C2.analog_route",
+      "contract v4 functions: Pi_ads, Pi_ads_max, gamma_sl_floor, r_ads, Delta_G_seq_cycle_2H, Delta_G_site_from_K, x_bind_K",
+      "analog route: two-proton cycle with params.pka_catechol and params.pka2_catechol",
+      "report M_adm, P(gamma_sl_floor >= 0), r_ads quantiles",
+      "configs/preprint/thresholds.yaml regenerated from block v4"
+    ],
+    "screen_output_consulted": "none beyond D27 and the C3 and gap sections of ops/reports/P0-W4.3.md"
   }
 }
