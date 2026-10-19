@@ -1,4 +1,4 @@
-# Conflicts between sources (complete, P0-W1.3)
+# Conflicts between sources (complete, P0-W1.3; post-cp3 additions P0-W1.4, sections 35 to 38)
 
 Every input of `lit/params.yaml` whose admitted sources disagree beyond their stated uncertainties, or
 whose values differ by more than the sources' own scatter suggests: the sources, the values, the
@@ -371,6 +371,47 @@ can move the C-O distance to compensate for disorder, which a first-peak reading
 
 **Resolution.** U1 (1.27 to 1.32 Angstrom); the calcite value is its own key.
 
+## 35. Polar part of the PVDF surface energy (`gamma_pvdf_polar`, `gamma_pvdf`)
+
+An Owens-Wendt-type split of a PVDF film gives a polar part of 7.20 mJ m^-2 (TN-003), and Wu's values
+read through the same source give 7.00 (TN-006). A van Oss analysis of another, NMP-cast film gives an
+acid-base part of zero with a non-zero electron-donor parameter (TN-009 to TN-011). The two models
+partition the same total differently: the van Oss acid-base term is the geometric mean of an acceptor and a
+donor parameter and vanishes when either is zero, while the Owens-Wendt polar term has no such structure.
+The totals (24.2 to 30.3 mJ m^-2) also depend on the probe-liquid set (TN-001 against TN-004).
+
+**Resolution.** U1 over the Owens-Wendt-type rows for the polar key; the van Oss parts are comparators
+(E2). The total admits all three films (U1).
+
+## 36. Work function of aluminium faces (`work_function_al`)
+
+Two experimental sets quoted by one source order the faces oppositely: (100) is the highest face in one
+set (4.41 eV, TQ-014) and below (111) in the other (4.20 eV, TQ-017), a difference beyond the printed
+uncertainties. Work functions of clean faces are sensitive to surface preparation and residual adsorbates.
+The in-cell aluminium is oxide-covered, which neither set measures.
+
+**Resolution.** U1 over both sets and all three faces; the computed QSGW values are comparators.
+
+## 37. Formation of LiAl5O8 against the tabulated budget (`dfg_lial5o8`, `window_margin_expt_red_corundum`)
+
+NBS TN 270-8 prints the Gibbs energy of LiAl5O8 to 0.1 kcal mol^-1 (TQ-008), and its convention gives a
+budget of at most 20 units of that figure. Independent enthalpy assessments of the same phase spread by
+about 90 kJ mol^-1 (TQ-010), roughly ten times that budget. The assessments differ in the calorimetric data
+they retain. The Gibbs-energy column of the TN 270-8 page was assigned by row order in a split extraction
+(grade C).
+
+**Resolution.** The budget key uses the table's own convention, as `window_margin_expt` does; the spread
+is recorded here for cp4, which decides whether a reduction-limit verdict that rests on it is a finding.
+
+## 38. Ca2+ radius at coordination number 6 (`ca_ionic_radius_cn6`)
+
+Shannon's radius (1.00 Angstrom, TN-035) and the source's own survey of 41 structures (0.973 Angstrom,
+TN-039) differ by more than the 0.015 Angstrom agreement the source states for most alkaline-earth ions.
+The survey covers hydrates and oxygen-donor solvates, which differ from Shannon's oxide and fluoride
+crystals.
+
+**Resolution.** U1 over both values.
+
 ## Notes that are not conflicts
 
 - **Formation energies of calcite** (section 13): within the combined uncertainty.
@@ -381,6 +422,12 @@ can move the C-O distance to compensate for disorder, which a first-peak reading
   the scheme ruling rather than as a conflict between sources.
 - **LiClO4 formation enthalpy** (`dfh_liclo4`): JANAF and NBS agree within the JANAF uncertainty.
 - **Debye-Hueckel A**: a temperature span, not a disagreement (section 25).
+- **Anodic stability of phosphate** (Outlook evidence, T-O; no params key): the computed oxidation limit of
+  crystalline Li3PO4 is about 4.2 V vs Li+/Li (TO-001, TO-007), while LiPON is measured stable to 5.0 to
+  5.5 V (TO-020, TO-021) with a computed onset near 1.1 V (TO-015). The measured window is kinetic, so the
+  two do not contradict each other; they answer different questions.
+- **Cathode particle sizes** (`cathode_particle_diameter`): a span across cathode classes and particle
+  architectures (3 to 50 um), not a disagreement; the key is log-uniform (L1).
 
 ## Machine-readable block
 
@@ -550,4 +597,24 @@ can move the C-O distance to compensate for disorder, which a first-peak reading
   rows: [TM-032, TM-033]
   reason: A fitted structure model can move the bond length to absorb disorder, which a first-peak reading does not.
   resolution: Uniform over both (U1); calcite is a separate key.
+- title: Polar part of the PVDF surface energy
+  keys: [gamma_pvdf_polar, gamma_pvdf]
+  rows: [TN-001, TN-003, TN-004, TN-006, TN-007, TN-009, TN-010, TN-011]
+  reason: The van Oss acid-base term vanishes when the acceptor parameter is zero while the Owens-Wendt polar term does not; the totals depend on the probe liquids.
+  resolution: Uniform over the Owens-Wendt-type splits for the polar key and over all films for the total (U1); van Oss parts are comparators.
+- title: Work function of aluminium faces
+  keys: [work_function_al]
+  rows: [TQ-013, TQ-014, TQ-015, TQ-016, TQ-017, TQ-018]
+  reason: Two experimental sets order the faces oppositely; clean-face work functions depend on preparation and adsorbates, and the in-cell metal is oxide-covered.
+  resolution: Uniform over both sets and all faces (U1); computed values are comparators.
+- title: LiAl5O8 formation against the tabulated budget
+  keys: [dfg_lial5o8, window_margin_expt_red_corundum]
+  rows: [TQ-008, TQ-010, TK-031]
+  reason: Independent enthalpy assessments differ far beyond the table's last-figure convention because they retain different calorimetric data; the table column was assigned from a split extraction.
+  resolution: The budget follows the table's convention as the oxidation budget does; the spread is carried to cp4.
+- title: Ca2+ radius at the lowest tabulated coordination number
+  keys: [ca_ionic_radius_cn6]
+  rows: [TN-035, TN-039]
+  reason: The survey covers hydrates and oxygen-donor solvates, Shannon's radii oxide and fluoride crystals.
+  resolution: Uniform over both values (U1).
 ```
