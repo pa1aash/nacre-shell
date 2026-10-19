@@ -178,3 +178,11 @@ def test_targets_cover_the_session_list():
         assert need in ids
     slugs = [s for t in E.TARGETS for s in t["slugs"]]
     assert len(slugs) == len(set(slugs))
+
+
+def test_targets_cover_the_day4_list():
+    ids = {t["id"] for t in E.TARGETS}
+    for need in ("water_activity_drying_primary", "pvdf_surface_energy", "cathode_particle_diameter",
+                 "asperity_contact_area", "template_mass_per_group", "ca_ionic_radius", "film_tunnelling_inputs",
+                 "reduction_limit_thermochemistry", "al_perchlorate_thermochemistry", "anion_anodic_stability"):
+        assert need in ids

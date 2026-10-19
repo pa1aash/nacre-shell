@@ -1,0 +1,21 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-19T11:49:01Z,unpaywall,10.1346/ccmn.2000.0480611,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-19T11:49:51Z,unpaywall,10.1016/0016-7037(78)90024-8,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-19T11:49:51Z,unpaywall,10.1127/ejm/4/4/0767,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-19T11:50:03Z,abstracts,10.1016/0016-7037(78)90024-8,not_indexed,HTTP 404 https://api.semanticscholar.org/graph/v1/paper/DOI:10.1016/0016-7037%2878%2990024-8
+2026-10-19T11:50:03Z,abstracts,10.1016/0016-7037(78)90024-8,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-19T11:50:32Z,unpaywall,10.1007/s00269-007-0162-x,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-19T11:50:59Z,unpaywall,10.1080/0141159031000098233,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-19T11:51:04Z,abstracts,10.1007/s00269-007-0162-x,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-19T11:52:15Z,unpaywall,10.1039/d1cp02673a,http_error,HTTP 403 https://cris.unibo.it/bitstream/11585/844561/2/2021_Ulian_PCCP_23_18899.pdf
+2026-10-19T11:52:41Z,unpaywall,10.1039/d4tc04921g,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2025/tc/d4tc04921g
+2026-10-19T11:52:48Z,unpaywall+wayback,10.1039/d4tc04921g,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.rsc.org/en/content/articlepdf/2025/tc/d4tc04921g
+2026-10-19T11:52:48Z,fulltext,10.1039/d4tc04921g,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-19T11:52:53Z,direct,10.1039/d4tc04921g,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2025/tc/d4tc04921g
+2026-10-19T11:52:59Z,direct+wayback,10.1039/d4tc04921g,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pubs.rsc.org/en/content/articlepdf/2025/tc/d4tc04921g
+2026-10-19T11:54:04Z,unpaywall,10.1016/j.jpowsour.2016.01.078,http_error,HTTP 403 https://www.sciencedirect.com/science/article/am/pii/S0378775316300787
+2026-10-19T11:56:06Z,unpaywall,10.1016/j.jpowsour.2016.01.078,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1240017 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x1019fa420>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1240017)"
+2026-10-19T11:56:14Z,unpaywall+wayback,10.1016/j.jpowsour.2016.01.078,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://www.sciencedirect.com/science/article/am/pii/S0378775316300787
+2026-10-19T11:57:07Z,unpaywall,10.1116/1.4934685,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-19T11:57:10Z,unpaywall,10.1063/1.323539,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-19T11:57:58Z,unpaywall,10.22541/au.157660447.71970169,http_error,HTTP 403 https://www.authorea.com/doi/pdf/10.22541/au.157660447.71970169

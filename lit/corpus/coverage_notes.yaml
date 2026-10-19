@@ -90,3 +90,23 @@ site_density_organic:
   independent_originals: 2
   caveat: Carboxyl-terminated SAMs on gold only (ordered-SAM estimate TC-067, MHA TF-036, 4-mercaptobenzoic acid
     TF-038); no polydopamine, alginate or chitosan group density.
+water_activity_drying_primary:
+  independent_originals: 0
+  caveat: The rows (TN-043, TN-044) are dew points of the drying air for an aqueous anode on copper and a film temperature
+    (TN-045); no water activity or film-surface relative humidity is printed, so a_w_slurry (primary drying) stays a gap.
+template_mass_per_group:
+  independent_originals: 0
+  caveat: The only row (TN-033) is the dopamine hydrochloride reagent, which includes HCl and is not a polydopamine repeat
+    unit; template_mass_per_group_min stays a gap.
+ca_ionic_radius:
+  independent_originals: 2
+  caveat: One open source (10.1039/c8cp02244e) prints both the Shannon 1976 radii (original paywalled) and its own survey of
+    crystal structures; ca_ionic_radius_cn6 admits both at CN 6.
+reduction_limit_thermochemistry:
+  independent_originals: 1
+  caveat: NBS TN 270-8 only; the LiAl5O8 Gibbs energy was assigned by column order in a split extraction (grade C), and the
+    independent enthalpy assessments spread by about 90 kJ/mol (TQ-010).
+anion_anodic_stability:
+  independent_originals: 7
+  caveat: Computed 0 K windows of lithium salts and phosphate solid electrolytes; no calcium phosphate, oxalate, sulfate or
+    silicate value was found (T-O gaps.md). Outlook evidence only.
