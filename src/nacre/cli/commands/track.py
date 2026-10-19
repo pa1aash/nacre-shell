@@ -7,9 +7,9 @@ it), on a clean tree that contains the commit that opened the day, with every
 checkpoint it requires satisfied. Checkpoint cpN is satisfied by tag <track>-cpN;
 cp1 is also satisfied by tag g0.
 
-Freeze rule: once tag <track>-cp3 exists, a change since that tag to a frozen input (FROZEN_AFTER_CP3)
-fails the check unless <track>_deviations.md carries a dated entry that names the changed path and the
-outputs to re-audit.
+Freeze rule: the ledger's `freeze:` block (tag, paths) names a tag and path globs. Once the tag exists, a
+commit in <tag>..HEAD that touches a frozen path fails the check unless <track>_deviations.md carries a dated
+entry that names the changed path and the outputs to re-audit ('Re-audit:' line). No block, no rule.
 """
 import re
 
@@ -17,13 +17,10 @@ import yaml
 
 from nacre import _util
 
-PASSING = ("DONE", "HOLD-P", "GATE-C", "GATE-H")
+PASSING = ("DONE", "DONE-PART1", "HOLD-P", "GATE-C", "GATE-H")
 CHECKPOINT_ALIASES = {"cp1": ["g0"]}
 
 
-# Inputs frozen once checkpoint cp3 (parameter table and conflicts) is satisfied.
-FREEZE_CHECKPOINT = "cp3"
-FROZEN_AFTER_CP3 = ["lit/params.yaml", "configs/preprint/thresholds.yaml", "theory/thresholds.md"]
 _ENTRY = re.compile(r"^##\s+(\d{4}-\d{2}-\d{2})\b.*$", re.MULTILINE)
 
 
@@ -128,15 +125,26 @@ def deviation_entries(root, track):
     return out
 
 
+def freeze_rule(root, track):
+    """(tag, paths) of the ledger's freeze block, or None."""
+    try:
+        block = load_track(root, track).get("freeze") or {}
+    except Blocked:
+        return None
+    tag, paths = block.get("tag"), list(block.get("paths") or [])
+    return (tag, paths) if tag and paths else None
+
+
 def freeze_problems(root, track):
-    """Frozen inputs changed by commits in <track>-cp3..HEAD without a covering deviation entry."""
-    tag = "%s-%s" % (track, FREEZE_CHECKPOINT)
-    if not _util.tag_exists(root, tag):
+    """Frozen paths changed by commits in <tag>..HEAD without a covering deviation entry."""
+    rule = freeze_rule(root, track)
+    if rule is None or not _util.tag_exists(root, rule[0]):
         return []
+    tag, paths = rule
     # Commits reachable from HEAD but not from the tag: a branch behind the tag, or one fast-forwarded to it,
     # has none, and a tree diff against the tag would wrongly report the tag's own later changes.
     names = _util.git(root, "log", "--name-only", "--format=", "-z", "--no-renames", tag + "..HEAD", "--",
-                      *FROZEN_AFTER_CP3)
+                      *[":(glob)" + g for g in paths])
     changed = sorted({p for p in names.stdout.split("\0") if p.strip()})
     if not changed:
         return []
@@ -198,8 +206,8 @@ def check(root, track, session_id):
             ", ".join(missing), ", ".join(" or ".join(checkpoint_tags(track, cp)) for cp in missing)))
     frozen = freeze_problems(root, track)
     if frozen:
-        raise Blocked("frozen since %s-%s and changed without a dated entry in ops/tracks/%s_deviations.md "
-                      "naming the change and a 'Re-audit:' line: %s" % (track, FREEZE_CHECKPOINT, track, ", ".join(frozen)))
+        raise Blocked("frozen since %s and changed without a dated entry in ops/tracks/%s_deviations.md "
+                      "naming the change and a 'Re-audit:' line: %s" % (freeze_rule(root, track)[0], track, ", ".join(frozen)))
     return session, current
 
 

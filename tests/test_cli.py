@@ -269,3 +269,19 @@ def test_verify_provenance_latest_record_per_output_governs(tmp_path):
     ledger.write_text(json.dumps(new) + "\n" + json.dumps(old) + "\n")
     res = verify.check_provenance(root, True)
     assert res["status"] == "FAIL" and "hash mismatch" in res["detail"]
+
+
+def test_verify_quick_omits_only_the_test_run(monkeypatch):
+    from nacre.cli.commands import verify
+    seen = []
+    monkeypatch.setattr(verify, "CHECKS", [verify.check_tests, verify.check_identity])
+    monkeypatch.setattr(verify, "check_identity", lambda root, strict: seen.append("identity") or {"name": "i", "status": "PASS", "detail": ""})
+    monkeypatch.setattr(verify, "CHECKS", [verify.check_tests, verify.check_identity])
+    names = [r["name"] for r in verify.run_checks(".", quick=True)]
+    assert names == ["i"] and seen == ["identity"]
+
+
+def test_verify_quick_flag_is_parsed():
+    from nacre.cli import build_parser
+    args = build_parser().parse_args(["verify", "--quick"])
+    assert args.quick is True and args.strict is False

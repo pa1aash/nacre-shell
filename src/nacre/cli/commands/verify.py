@@ -240,8 +240,9 @@ CHECKS = [check_tests, check_attribution, check_identity, check_signatures,
           check_test_basenames]
 
 
-def run_checks(root, strict=False):
-    return [check(root, strict) for check in CHECKS]
+def run_checks(root, strict=False, quick=False):
+    """quick: every check except the full pytest run (for lanes, who run their own tests)."""
+    return [check(root, strict) for check in CHECKS if not (quick and check is check_tests)]
 
 
 def summary(results):
@@ -254,7 +255,7 @@ def summary(results):
 
 def _cmd(args):
     root = _util.repo_root()
-    results = run_checks(root, args.strict)
+    results = run_checks(root, args.strict, args.quick)
     if args.json:
         print(json.dumps({"summary": summary(results), "checks": results}, indent=2))
     else:
@@ -268,4 +269,5 @@ def register(subparsers):
     p = subparsers.add_parser("verify", help="run the repository checks")
     p.add_argument("--json", action="store_true", help="machine-readable output")
     p.add_argument("--strict", action="store_true", help="verify signatures against ops/allowed_signers")
+    p.add_argument("--quick", action="store_true", help="all checks except the full pytest run (lanes)")
     p.set_defaults(func=_cmd)

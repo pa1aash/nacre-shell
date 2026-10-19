@@ -30,6 +30,8 @@ def ledger():
         "checkpoints": [{"id": "cp1", "day": 0, "title": "G0 science", "packet": "ops/packets/p0-1.md"},
                         {"id": "cp2", "day": 2, "title": "equations", "packet": "ops/packets/p0-2.md"}],
         "inputs": {"mp_key": "absent"},
+        "freeze": {"tag": "p0-cp3", "paths": ["lit/params.yaml", "configs/preprint/thresholds.yaml",
+                                              "theory/thresholds.md"]},
     }
 
 
@@ -359,3 +361,62 @@ def test_freeze_rule_passes_for_a_branch_at_the_tag(frozen_repo, tagged_after_ch
     git(frozen_repo, "checkout", "-q", "-b", "preprint/p0-w9", tagged_after_change)
     git(frozen_repo, "merge", "-q", "--ff-only", "p0-cp3")
     assert track.freeze_problems(frozen_repo, "p0") == []
+
+
+# --- the freeze block is data -----------------------------------------------------------
+
+def _set_freeze(repo, tag, paths):
+    p = repo / "ops" / "tracks" / "p0.yaml"
+    data = yaml.safe_load(p.read_text())
+    data["freeze"] = {"tag": tag, "paths": paths}
+    p.write_text(HEADER + yaml.safe_dump(data, sort_keys=False))
+    commit_all(repo, "scratch: freeze block")
+
+
+@pytest.fixture
+def control_repo(repo):
+    _write(repo, {"results/preprint/a.json": "v1\n", "ops/reports/P0-W9.9.md": "v1\n", "lit/params.yaml": "k: 1\n"})
+    _set_freeze(repo, "p0-carbonate-control", ["results/preprint/**", "ops/reports/P0-W*.md"])
+    git(repo, "tag", "p0-carbonate-control")
+    return repo
+
+
+def test_freeze_block_untouched_frozen_path_passes(control_repo):
+    _write(control_repo, {"README.md": "other\n"})
+    commit_all(control_repo)
+    assert track.freeze_problems(control_repo, "p0") == []
+
+
+def test_freeze_block_unlisted_additive_key_passes(control_repo):
+    _write(control_repo, {"lit/params.yaml": "k: 1\nnew_key: 2\n", "theory/new.md": "x\n"})
+    commit_all(control_repo)
+    assert track.freeze_problems(control_repo, "p0") == []
+
+
+def test_freeze_block_frozen_path_needs_an_entry(control_repo):
+    _write(control_repo, {"results/preprint/a.json": "v2\n"})
+    commit_all(control_repo)
+    assert track.freeze_problems(control_repo, "p0") == ["results/preprint/a.json"]
+    assert "frozen since p0-carbonate-control" in blocked(track.check, control_repo, "p0", "P0-I0")
+    _write(control_repo, {"ops/tracks/p0_deviations.md":
+                          "# Deviations\n\n## %s results/preprint/a.json\nChange: x.\nRe-audit: cp5\n" % _today()})
+    commit_all(control_repo)
+    assert track.freeze_problems(control_repo, "p0") == []
+
+
+def test_freeze_block_glob_matches_reports_only_by_pattern(control_repo):
+    _write(control_repo, {"ops/reports/P0-W9.9.md": "v2\n", "ops/reports/PH-W1.1.md": "new\n"})
+    commit_all(control_repo)
+    assert track.freeze_problems(control_repo, "p0") == ["ops/reports/P0-W9.9.md"]
+
+
+def test_no_freeze_block_no_rule(repo):
+    p = repo / "ops" / "tracks" / "p0.yaml"
+    data = yaml.safe_load(p.read_text())
+    del data["freeze"]
+    p.write_text(HEADER + yaml.safe_dump(data, sort_keys=False))
+    commit_all(repo)
+    git(repo, "tag", "p0-cp3")
+    _write(repo, {"lit/params.yaml": "v2\n"})
+    commit_all(repo)
+    assert track.freeze_problems(repo, "p0") == []
