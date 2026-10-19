@@ -9,6 +9,10 @@ A template is figures/src/figN.py defining:
           parameter rows behind threshold contours, for example);
   build(data, root, aux) -> matplotlib Figure.
 
+A real input is either a path in this tree or "upstream:<key>", an owner's committed output
+document pinned by figures/src/schemas/pin_upstream.py (owner, path, commit and sha256 in
+figures/src/schemas/upstream.yaml); the manifest records it as input_source.
+
 Mock inputs carry "mock": true and render only into figures/out/mock/. Real inputs must not
 carry it and render into figures/out/. An aux file follows the same rule as the main input.
 
@@ -64,15 +68,35 @@ def load_template(path):
     return mod
 
 
+def input_ref(fig, mock):
+    """The input reference of a template: a repo path, or "upstream:<key>" for a pinned output."""
+    return fig["mock_input"] if mock else fig["input"]
+
+
 def load_input(root, mod, mock):
-    """Return (data, path) or (None, path) when a real input does not exist yet."""
+    """Return (data, path) or (None, path) when a real input does not exist yet.
+
+    A real input named "upstream:<key>" is an owner's committed output document read from its
+    pinned snapshot (nacre.figs.upstream, kind data); path is then the snapshot.
+    """
     fig = mod.FIGURE
-    path = Path(root) / (fig["mock_input"] if mock else fig["input"])
-    if not path.exists():
+    ref = input_ref(fig, mock)
+    if not mock and ref.startswith(schema.UPSTREAM):
+        key = ref[len(schema.UPSTREAM):]
+        e = upstream.entry(key, root)
+        if e.get("kind") != "data":
+            raise FigureError("%s: %s is not a pinned output document" % (fig["id"], ref))
+        path = Path(root) / e["snapshot"]
+        data = json.loads(upstream.snapshot_bytes(key, root))
+    else:
+        path = Path(root) / ref
+        data = None
+    if data is None and not path.exists():
         if mock:
             raise FigureError("%s: mock input %s missing" % (fig["id"], path))
         return None, path
-    data = json.loads(path.read_text())
+    if data is None:
+        data = json.loads(path.read_text())
     if mock and data.get("mock") is not True:
         raise FigureError("%s: mock input must carry \"mock\": true" % fig["id"])
     if not mock and data.get("mock") is True:
@@ -110,6 +134,16 @@ def load_aux(root, mod, mock):
             raise FigureError("%s: aux %s is marked mock" % (mod.FIGURE["id"], path))
         out[name] = (data, "%s sha256:%s" % (Path(path).resolve().relative_to(Path(root).resolve()), _sha(path)))
     return out
+
+
+def _source(root, fig, mock):
+    """Where the input was committed: the owner's path@commit for a pinned output, else the path."""
+    ref = input_ref(fig, mock)
+    if not mock and ref.startswith(schema.UPSTREAM):
+        key = ref[len(schema.UPSTREAM):]
+        e = upstream.entry(key, root)
+        return {"owner": e["owner"], "path": e["path"], "commit": e["commit"], "sha256": e["sha256"]}
+    return {"path": ref}
 
 
 def make_figure(root, mod, data, aux=None):
@@ -169,8 +203,10 @@ def render(root, mod, data, input_path, out_dir, tiff=False, cvd=True, aux=None)
         "size_cm": [round(w * style.CM_PER_IN, 2), round(h * style.CM_PER_IN, 2)],
         "input": str(Path(input_path).resolve().relative_to(root.resolve())),
         "input_sha256": _sha(input_path),
+        "input_source": _source(root, mod.FIGURE, is_mock),
         "schema": schema.resolve(mod.FIGURE["schema"], root)[1],
         "aux": {k: v[1] for k, v in sorted((aux or {}).items())},
+        "font": style.font_record(root),
         "outputs": {str(o.resolve().relative_to(root.resolve())): _sha(o) for o in outputs},
         "checker": "pass (artists and PDF text)",
     }
@@ -212,11 +248,14 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
             log("%s: FAIL %s" % (path.stem, exc))
     if records:
         manifest = out_dir / "manifest.json"
-        old = json.loads(manifest.read_text()) if manifest.exists() else {"figures": {}}
+        # figures/out/manifest.json also holds the schematics and structures (build_drawings):
+        # update only this section and keep the others.
+        old = json.loads(manifest.read_text()) if manifest.exists() else {}
         figs = old.get("figures", {})
         for r in records:
             figs[r["id"]] = r
-        manifest.write_text(json.dumps({"mock": mock, "figures": dict(sorted(figs.items()))}, indent=1) + "\n")
+        old.update({"mock": mock, "figures": dict(sorted(figs.items()))})
+        manifest.write_text(json.dumps(dict(sorted(old.items())), indent=1) + "\n")
     n_other, other_failures = build_drawings(root, only=only, cvd=cvd, log=log)
     failures += other_failures
     return records + [None] * n_other, failures
@@ -244,5 +283,6 @@ def build_drawings(root, only=None, cvd=True, log=print):
         old["rdkit"] = recs
         n += len(recs)
     manifest.parent.mkdir(parents=True, exist_ok=True)
-    manifest.write_text(json.dumps({k: dict(sorted(v.items())) for k, v in sorted(old.items())}, indent=1) + "\n")
+    manifest.write_text(json.dumps({k: dict(sorted(v.items())) if isinstance(v, dict) else v
+                                    for k, v in sorted(old.items())}, indent=1) + "\n")
     return n, failures

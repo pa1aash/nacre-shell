@@ -943,6 +943,7 @@ p0-w5 = [
 p0-w6 = [
     { name = "cmcrameri" },
     { name = "colorspacious" },
+    { name = "contourpy" },
     { name = "jsonschema" },
     { name = "matplotlib" },
     { name = "pymupdf" },
@@ -979,6 +980,7 @@ p0-w5 = [
 p0-w6 = [
     { name = "cmcrameri", specifier = "==1.10" },
     { name = "colorspacious", specifier = ">=1.1.2" },
+    { name = "contourpy", specifier = ">=1.4.0" },
     { name = "jsonschema", specifier = ">=4.26.0" },
     { name = "matplotlib", specifier = ">=3.11.2" },
     { name = "pymupdf", specifier = ">=1.28.2" },

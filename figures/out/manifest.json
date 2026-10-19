@@ -1,9 +1,124 @@
 {
+ "figures": {
+  "fig4": {
+   "id": "fig4",
+   "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",
+   "caption_key": "(a) One row per usable case, grouped by the interface its input acts on (the record's per-case interface): top group gamma_sn (crystal-template adhesion), then the net-energy case, then gamma_sl (Ca2+ binding and surface-energy cases); within a group by identifier (tick labels). Marker: median of the predicted difference Delta = DG*_het(test) - DG*_het(reference) over the Monte Carlo draws, in units of k_B T; bar: its 5 % to 95 % interval. Marker shape and colour give the verdict of the pass criterion: filled circle, correct; filled square, incorrect; open diamond, inconclusive (the interval contains zero; counted as a miss). Vertical line: Delta = 0. Horizontal axis linear within +-1 k_B T and logarithmic beyond. Narrow column: the observed ordering (right-pointing triangle, the test surface has the higher barrier). (b) Permutation null of the number of correct cases: the fraction of permutations giving each count, inputs shuffled within studies (solid outline) and across studies (dashed outline). Vertical line: the observed number correct. The swap check, N, the number correct, the registered pass count and the null's median and 95 % range are stated in the caption through macros.",
+   "mock": false,
+   "width": "single",
+   "size_cm": [
+    8.3,
+    10.0
+   ],
+   "input": "figures/src/data/upstream/retrodiction_results.json",
+   "input_sha256": "d3f1d35ca69acf769b998176cf9c8a8ae190c296933793337639f4f49065a404",
+   "input_source": {
+    "owner": "p0-w2",
+    "path": "preprint/retrodiction/results/results.json",
+    "commit": "2a1f38654a822d8bd2183f1163d9e4a0a43975d7",
+    "sha256": "d3f1d35ca69acf769b998176cf9c8a8ae190c296933793337639f4f49065a404"
+   },
+   "schema": "figures/src/schemas/retro_results_v1.schema.json",
+   "aux": {},
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig4.pdf": "56b71ab421366042a7dbad1bc3db1a6260dfb70c42cffed93e596506acee4317",
+    "figures/out/fig4.png": "808d50b5cdc0d009e13bc81b993fb33dd73a2f01acb149714f6359812f1338f7",
+    "figures/out/cvd/fig4_deuteranopia.png": "7d584def699bc7b397e195ca237c79dbe1807fed93faef4b914d4cf49bb5c674",
+    "figures/out/cvd/fig4_protanopia.png": "0cf16adf3b452d6a35ddd2bff22b3ec56bff168b6d429b5eae943aa61295363e",
+    "figures/out/cvd/fig4_tritanopia.png": "a31186a9c9eb370f18fadf9aa802fda8296694ed4055f9111e2e837dfa991466"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
+  "fig5": {
+   "id": "fig5",
+   "claim": "At equilibrium the template acts on the barrier only through the wetting angle: at a given bulk saturation ratio the barrier on the template falls as the angle closes, and only angles on the wetting side of the C3a edge halve it; the screen's ignorance prior sits on the non-wetting side.",
+   "caption_key": "Colour: DG*_het/k_B T = f(theta) DG*_hom(Omega_bulk)/k_B T on a logarithmic scale (colour bar), from the contract functions at the reference inputs of the record's barrier prefactor (reference nucleus-liquid energy, molar volume and temperature, the prior medians of the primary state); the template never changes Omega_bulk. Vertical black line: the C3a edge f(theta) = f at cos(theta) = m_cos (configs/preprint/thresholds.yaml, parameter table). The C3b absolute-barrier bound DG*_het = k_B T ln(J0_het t_proc A_patch / ln(1/(1 - p_cred))) is drawn as a black contour only when every input has a value; A_patch is a registered gap, so it is absent and the caption says so. Outlines: the central 90 % (5 % to 95 % quantiles) of the screen's draws in theta and Omega_bulk under the ignorance prior set, primary state solid, further states dashed in record order: a property of the prior, not a finding. The caption reports the cos(theta) boundary mass (draws clipped to theta = 180 deg and theta = 0) and the favourable-template condition gamma_sn < gamma_sl (model section).",
+   "mock": false,
+   "width": "single",
+   "size_cm": [
+    8.3,
+    7.0
+   ],
+   "input": "figures/src/data/upstream/screen_ignorance.json",
+   "input_sha256": "5f2b59d128479c4f3f66fb24608e4026fbff731b8c1ef2b374d689d3f85c7482",
+   "input_source": {
+    "owner": "p0-w4",
+    "path": "results/preprint/screen/ignorance/summary.json",
+    "commit": "eb6be52b5913e33c994968ee174110c91cc85a92",
+    "sha256": "5f2b59d128479c4f3f66fb24608e4026fbff731b8c1ef2b374d689d3f85c7482"
+   },
+   "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
+   "aux": {
+    "params": "lit/params.yaml sha256:2b0b5a13757cffc2c0747880320e1e109bf7e781af5f6d0f119b8d4a7360e9c6",
+    "thresholds": "configs/preprint/thresholds.yaml@4ed8fcf (p0-w4)"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig5.pdf": "f08bb9607a1961be8c27703ecf2379772bbdb66e4f69d8243efe6382110cefbc",
+    "figures/out/fig5.png": "c9d1a4a050653f7fd11b2b97e4075afc7ac36d5e184450c94c92ccaa766b3aef",
+    "figures/out/cvd/fig5_deuteranopia.png": "12321bc587b27a52b06cb87d272ea147f62a3c201f16a117ffd2cdde77046f61",
+    "figures/out/cvd/fig5_protanopia.png": "fbcd19066c81b8fc3c925a7c853775b41dd89f4ea8c169926d68455294f7bbfc",
+    "figures/out/cvd/fig5_tritanopia.png": "fa2f2c0c83d685b1820ea3f9039252de280fab4dbf53d2d999edf49c6b7ac510"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
+  "fig7": {
+   "id": "fig7",
+   "claim": "CaCO3 resists dissolution in the slurry only where the calcium dose and the dissolved carbonate keep the bulk supersaturated, and in the cell it is oxidised below the charge cutoffs of most cathode classes; the aluminium-oxide phases have no determined oxidation limit.",
+   "caption_key": "(a) R-slurry, C5 dissolution test (Omega_bulk >= 1 with the calcite K_sp and the contract speciation) at each design point: total calcium dose Ca_T (horizontal) by total dissolved carbonate C_T at the parameter table's minimum, value and maximum (vertical). Fill and hatching: verdict of the point (in the caption's order: feasible, plain; inconclusive, single hatching; falsified, cross hatching); the two water-activity points give the same verdict everywhere. Black line: Omega_bulk = 1 at the credible boundary P(Omega_bulk >= 1) = 1/2, interpolated in log Ca_T and C_T between the design points. (b) R-cell, potential vs Li+/Li, the sink of the C5 crossover (the caption names it and states that every other sink is undetermined under every scheme). One group of rows per gated phase (tick label), one row per gas-reference scheme: black, the all-experimental route (governing); blue, JANAF-based and vermillion, MP-based DFT schemes (comparators), dashed where corrected by the benchmark error. Left end: reduction limit; right end: oxidation limit; end tick, determined. An open circle at the axis edge: limit undetermined; an open square: no route for that limit (absent). Grey segment after the governing oxidation limit: the margin m_expt, ending at the falsification bound. Thin dashed vertical lines: the cathode classes' charge cutoffs E_cell_max (class values; the caption identifies them left to right). The 4.025 V bound is stated through a macro.",
+   "mock": false,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    7.0
+   ],
+   "input": "figures/src/data/upstream/screen_table_r2.json",
+   "input_sha256": "0a1fdceee22f1700f7263f80d006ebfb6d6cc61d9b86f275a089939c661b8735",
+   "input_source": {
+    "owner": "p0-w4",
+    "path": "results/preprint/screen/table_r2/summary.json",
+    "commit": "5766c18acbf7d22daddb83ba452e52badb03a205",
+    "sha256": "0a1fdceee22f1700f7263f80d006ebfb6d6cc61d9b86f275a089939c661b8735"
+   },
+   "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
+   "aux": {
+    "params": "lit/params.yaml sha256:2b0b5a13757cffc2c0747880320e1e109bf7e781af5f6d0f119b8d4a7360e9c6"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig7.pdf": "98afb16b2e5afff13cf1720f69a20bb519b7a56b1d8fffb2a4d0efc510eaad7a",
+    "figures/out/fig7.png": "cdcb4a70749dc1599de707e40d10cc2a52dea79d10615f7d589f9b49f40b2ded",
+    "figures/out/cvd/fig7_deuteranopia.png": "c599b229a3ee462c347dbbdedc694c6353209b2aeba9833fedbeaf32d7a0416c",
+    "figures/out/cvd/fig7_protanopia.png": "ddd454666c1a08c7ad4201bb4e4036dd7c13d6299d2fba0a32d4b4e75d59c3b1",
+    "figures/out/cvd/fig7_tritanopia.png": "9926119249fe668e0fbd2f2763ed729c0e7150ecb14d9c09fdb7d45088799043"
+   },
+   "checker": "pass (artists and PDF text)"
+  }
+ },
+ "mock": false,
  "rdkit": {
   "acetate": {
    "smiles": "CC(=O)[O-]",
    "source": "nacre.anchor.builders.LIGANDS['acetate']",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/acetate.svg": "839e55f0b39eeb1fc3795c69777cace72f381e3bd9ffa857d27b3570e757fc91",
     "figures/out/rdkit/acetate.pdf": "b60aeb649ca94d9cfd1fcee7b54c6a1b4e68ebfa1abe402e2ce07f2569d17e1d",
@@ -17,6 +132,11 @@
    "smiles": "C1=CC=C(C(=C1)O)O",
    "source": "PubChem CID 289 (figures/rdkit/sources)",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/catechol.svg": "d08cd17f0560c3e71ce6f854c9b94b4b93cd0dc636bc225bc562e1d49e079a3a",
     "figures/out/rdkit/catechol.pdf": "84d9126a8690ec66f221883e9af1a97e8b877c978ad7587284c486b918e6402c",
@@ -30,6 +150,11 @@
    "smiles": "[O-]c1ccccc1[O-]",
    "source": "nacre.anchor.builders.LIGANDS['catecholate_dianion']",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/catecholate_dianion.svg": "4ebe583739e1b663a3dc131f240a74c4ae52ba547afd03c8569e3eba6782f1c6",
     "figures/out/rdkit/catecholate_dianion.pdf": "8c88bb5ea5438c94187048dd6eb9f621a4043796e48db77345e47716379f9ecc",
@@ -43,6 +168,11 @@
    "smiles": "[O-]c1ccccc1O",
    "source": "nacre.anchor.builders.LIGANDS['catecholate_monoanion']",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/catecholate_monoanion.svg": "47396981ad1c94f504dec4d96d20c637c7d7ecd25899ce09fb1e044678e51d40",
     "figures/out/rdkit/catecholate_monoanion.pdf": "9fc2b39d33083e2a7277cfcf3d5d5f0e1b0db718964fc6ad09e8f70d783d700d",
@@ -56,6 +186,11 @@
    "smiles": "C([C@@H]1[C@H]([C@@H]([C@H]([C@@H](O1)O)N)O)O)O",
    "source": "PubChem CID 441477 (figures/rdkit/sources)",
    "derive": "beta_1_4_repeat_unit",
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/chitosan_unit.svg": "ef944d6f944c97fc8a215c56039f46f5b44b3d667c6ed0b989a0c491b4a2bf9c",
     "figures/out/rdkit/chitosan_unit.pdf": "d46026647391b0af32b0775688aaffabdbcfa2238489a08f3d19d104c6917a53",
@@ -69,6 +204,11 @@
    "smiles": "Oc1cc2cc(-c3c(O)c(O)cc4cc(-c5c(O)c(O)cc6cc(-c7c(O)c(O)cc8cc[nH]c78)[nH]c56)[nH]c34)[nH]c2cc1O",
    "source": "nacre.structures.oligomer.dhi_chain_smiles(4)",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/oligomer.svg": "d786903bddb07a4e58f8112d74d6f01a39c1c1672edbba3ae34d788ec1347195",
     "figures/out/rdkit/oligomer.pdf": "9592dbe8c0351e2a528001e8c391e377324de07d17ba548f2e8d3ea73580d8b8",
@@ -82,6 +222,11 @@
    "smiles": "Oc1cc2cc[nH]c2cc1O",
    "source": "nacre.structures.oligomer.dhi_chain_smiles(1)",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/oligomer_unit.svg": "be7aba0741ce1ad4c4b79e37e4cd80867f98857f10c04e468a4878c4fd9632b7",
     "figures/out/rdkit/oligomer_unit.pdf": "2b888806792b945db03c9d1a54e57b444ab5c2821d82fd9a56308748718ae99c",
@@ -95,6 +240,11 @@
    "smiles": "C1=CC(=O)C(=O)C=C1",
    "source": "PubChem CID 11421 (figures/rdkit/sources)",
    "derive": null,
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
    "outputs": {
     "figures/out/rdkit/quinone.svg": "76d1c0f88d76012c4c3c23625fbb01b71efe0353cb51b7bc8db9f810f00e07fe",
     "figures/out/rdkit/quinone.pdf": "3b30beaf5f40c3cecba3b0aefa8e3561e4ad0ef4ceb5d0116e0db280b66cbb5f",
@@ -114,6 +264,7 @@
    "source": "theory/derivation_body.tex Sections 2 (adhesion in water), 3 and 7 (sequestration, template), 8 (conformality)",
    "w3_commit": null,
    "checker": "pass (PDF: no text, strokes, page width)",
+   "font": "none (no text)",
    "outputs": {
     "figures/out/fig2.pdf": "b38689a7eccb715f3d33aca7d20cbb55b0382b084c0fa6655b56ee3afa3ce31d",
     "figures/out/fig2.png": "ea0b1a90321da643d5c2f0afb3c710a3569417b603517944cdb8076dee6b8cda",
@@ -128,30 +279,15 @@
    "caption": "figures/src/captions/fig3.md",
    "text_free": true,
    "source": "theory/derivation_body.tex Section 7 (lane p0-w3); commit in w3_commit",
-   "w3_commit": "db872ae9190c3b729bc2b13898919fbfbe56815b",
-   "checker": "pass (PDF: no text, strokes, page width)",
+   "w3_commit": "f23632d91c4a47fab4b7ff6dfa46e2315e6d4ea6",
+   "checker": "pass (PDF: no text, strokes, page width; arrows orthogonal)",
+   "font": "none (no text)",
    "outputs": {
-    "figures/out/fig3.pdf": "de24ceb8a43647ef9692ce57cf41efcd344e359d1d36b8f1cd3b4835eeefb0dc",
-    "figures/out/fig3.png": "332cc810a43ff8d8242ac7f2b81abaa221561084becef28d7d079f874957d8b8",
-    "figures/out/cvd/fig3_deuteranopia.png": "f7381ddefcc80bcc6e50710b15544cc8f50f7638a8380905e172e34545ec660e",
-    "figures/out/cvd/fig3_protanopia.png": "63fd0b4dcd242b685c3d8f7eda9729faab721f960505d239c76e42285aa02c99",
-    "figures/out/cvd/fig3_tritanopia.png": "9d41c40cba072c8d711e9a89f2440e6e398d5613e476ff944673a6b88fa2c4bd"
-   }
-  },
-  "fig3_symbols": {
-   "tex": "figures/tikz/variants/fig3_symbols.tex",
-   "claim": "as fig3",
-   "caption": "figures/src/captions/fig3.md",
-   "text_free": false,
-   "source": "as fig3",
-   "w3_commit": null,
-   "checker": "pass (PDF: text allowed, strokes, page width)",
-   "outputs": {
-    "figures/out/variants/fig3_symbols.pdf": "12b9ea65b991bef148d797ac6bc5072e293201f8d1f5018d067c6b5b753b618b",
-    "figures/out/variants/fig3_symbols.png": "4909327187ffd91e9a090673739e4557025118bc88f2b321f62c292fbe502502",
-    "figures/out/variants/cvd/fig3_symbols_deuteranopia.png": "838af6e67537920cd22bb7069b909e041edc8a27c95828f939aa78dab25913f0",
-    "figures/out/variants/cvd/fig3_symbols_protanopia.png": "95a654cfb2e5f446fc403b5be2cc09af7b8528a386b7a07680473cb60a9879ce",
-    "figures/out/variants/cvd/fig3_symbols_tritanopia.png": "c05bae0606e627b72a7a7a758825f04b8922fef70650e9a9878cccd92c632d3a"
+    "figures/out/fig3.pdf": "567d17bb6b55a34c4c798b7ad519a35b1bfe7a44515d50720aa0d07f3e9b6bc1",
+    "figures/out/fig3.png": "77180b3742d5a71cd9d7452c02f92cf5bf2808a0d0e6a5c4a6b7ec24c2704107",
+    "figures/out/cvd/fig3_deuteranopia.png": "79a5b143a75bebefe668d7a186c21b176e77100f34d2761a9dfd430e4238d0ab",
+    "figures/out/cvd/fig3_protanopia.png": "ef5efc4ec17c8e77d314ce19689b8c5e5f35cba41502116b9e9db8e8bd67c80b",
+    "figures/out/cvd/fig3_tritanopia.png": "651d3f1a5140ccf4c5a55c5cb07e0eb73fdfd9a0293e3024416eb8e943da1758"
    }
   }
  }

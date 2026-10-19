@@ -3,6 +3,15 @@ mock: true
 meta:
   note: 'MOCK: synthetic values to exercise the template; not a result'
   layout: lit/params.yaml (lane p0-w1)
+params:
+  dic_slurry:
+    key: dic_slurry
+    unit: mol m^-3
+    status: mock
+    value: 9.0
+    range:
+      min: 4.0
+      max: 16.0
 thresholds:
   C3:
     margin_cos_theta:
@@ -10,6 +19,13 @@ thresholds:
       unit: '1'
       status: mock
       value: 0.2
+      range: null
+  decision:
+    credible_level:
+      key: p_cred
+      unit: '1'
+      status: mock
+      value: 0.9
       range: null
 regimes:
   R-slurry:
@@ -30,6 +46,24 @@ regimes:
         range:
           min: -1.25
           max: -0.55
+      J0_het:
+        key: j0_het
+        unit: m^-2 s^-1
+        status: mock
+        value: 1.0e+18
+        range: null
+      t_proc:
+        key: t_proc_slurry
+        unit: s
+        status: mock
+        value: 3600.0
+        range: null
+      patch_area:
+        key: patch_area
+        unit: m^2
+        status: mock
+        value: 1.0e-10
+        range: null
   R-cell:
     parameters:
       E_min:

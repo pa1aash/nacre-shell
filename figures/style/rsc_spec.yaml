@@ -233,9 +233,14 @@ applied:
     rule: the stated minimum, used as the raster resolution of every PNG/TIFF export
   font_family:
     value: Arial
-    fallbacks: [Helvetica]
+    fallbacks: [Helvetica, Liberation Sans]
     from: values.structure_label_font
     rule: the only typeface the specification names, applied to all figure text and to mathtext
+    fallback_rule: lane note N18. The figure font is the first of value, then fallbacks, that is
+      installed, chosen explicitly (nacre.figs.style.font) and recorded in each figure's provenance.
+      Helvetica is the other face the specification names; Liberation Sans is the metric-compatible
+      substitute the Linux CI runner installs (fonts-liberation). Release figures use value only and
+      are built on the Mac.
   font_size:
     value: 7
     unit: pt

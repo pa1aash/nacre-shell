@@ -1,0 +1,58 @@
+# Number macros the figure captions use that preprint/generated/sources.yaml (lane p0-w8) does not
+# define yet. W8 adds them in its own lane; the specs follow sources.yaml's schema. Every source is
+# a committed owner output; the commit and sha256 the figures were built from are in
+# figures/src/schemas/upstream.yaml. Percent macros: the formatter must escape the % sign (or use
+# unit '\%' with a scaled value); W8 chooses.
+requests:
+  NumRetroCorrect:
+    source: preprint/retrodiction/results/results.json
+    key: summary/correct
+    format: d
+    figure: Fig 4
+  NumRetroNullMedian:
+    source: preprint/retrodiction/results/results.json
+    key: summary/permutation_null/within_study/median
+    format: g
+    figure: Fig 4
+  NumRetroNullLow:
+    source: preprint/retrodiction/results/results.json
+    key: summary/permutation_null/within_study/range95/0
+    format: g
+    figure: Fig 4
+  NumRetroNullHigh:
+    source: preprint/retrodiction/results/results.json
+    key: summary/permutation_null/within_study/range95/1
+    format: g
+    figure: Fig 4
+  NumBoundaryMassThetaPi:
+    source: results/preprint/screen/ignorance/summary.json
+    key: regimes/R-slurry/boundary_mass/nucleate/cos_theta/fraction_theta_180
+    format: .0%
+    figure: Fig 5
+  NumBoundaryMassThetaZero:
+    source: results/preprint/screen/ignorance/summary.json
+    key: regimes/R-slurry/boundary_mass/nucleate/cos_theta/fraction_theta_0
+    format: .0%
+    figure: Fig 5
+  NumFigFiveOutlineMass:
+    source: figures/src/fig5.py
+    pattern: '^OUTLINE_MASS = ([0-9.]+)'
+    format: .0%
+    figure: Fig 5
+  NumCellFalsifiedAbove:
+    source: results/preprint/screen/table_r2/summary.json
+    key: claims/C5/tests/C5c_ox/crossovers/CaCO3/LiClO4/falsified_above_V
+    format: .3f
+    unit: '\,\mathrm{V}'
+    figure: Fig 7
+  NumCellMarginExpt:
+    source: results/preprint/screen/table_r2/summary.json
+    key: claims/C5/tests/C5c_ox/margin_V
+    format: .3f
+    unit: '\,\mathrm{V}'
+    figure: Fig 7
+# Already defined by W8 (preprint/generated/sources.yaml on preprint/p0-w8, not yet merged into this
+# branch) and used as they are.
+defined_by_w8:
+  commit: 1fcca3dded878ffa945168e652e9c2ac7e1865c6
+  macros: [NumRetroUsableCases, NumRetroPassCount, NumRetroIntervalLevel, NumMcos]

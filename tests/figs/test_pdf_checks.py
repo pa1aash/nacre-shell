@@ -1,5 +1,6 @@
 """PDF-level checks: data figures hold only tick labels, axis titles, colour-bar text and panel
 letters; schematics hold no text at all. Every rule is exercised with a planted violation."""
+import re
 import shutil
 
 import pytest
@@ -140,20 +141,75 @@ def test_too_tall_page_rejected(tmp_path):
     assert any("exceeds" in p for p in _schematic_check(tmp_path / "s.pdf"))
 
 
-@pytest.mark.parametrize("sid", ["fig2", "fig3", "fig3_symbols"])
+@pytest.mark.parametrize("sid", ["fig2", "fig3"])
 def test_committed_schematics_pass(sid):
     entry = schematic.table(REPO)[sid]
     pdf = REPO / "figures/out" / entry["out"]
     assert schematic.check(REPO, pdf, entry) == []
 
 
-def test_default_schematics_are_text_free_and_the_variant_is_not():
+def test_default_schematics_are_text_free_and_the_variant_is_on_request_only():
     t = schematic.table(REPO)
     assert t["fig2"]["text_free"] and t["fig3"]["text_free"]
-    assert not t["fig3_symbols"]["text_free"] and t["fig3_symbols"]["variant_of"] == "fig3"
-    variant = REPO / "figures/out" / t["fig3_symbols"]["out"]
-    texts = {s for _p, s, _b in checker.pdf_text_spans(variant)}
-    assert texts and checker.check_pdf_no_text(variant)
+    v = t["fig3_symbols"]
+    assert not v["text_free"] and v["variant_of"] == "fig3" and v["deliverable"] is False
+    assert not (REPO / "figures/out" / v["out"]).exists()
+
+
+@pytest.mark.skipif(shutil.which("latexmk") is None or shutil.which("xelatex") is None,
+                    reason="latexmk or xelatex not installed")
+def test_symbol_variant_still_builds_with_text(tmp_path):
+    from nacre.figs import style
+    if not style.font(REPO)["release"]:
+        pytest.skip("the variant sets Arial through fontspec")
+    entry = schematic.table(REPO)["fig3_symbols"]
+    pdf = tmp_path / "v.pdf"
+    pdf.write_bytes(schematic.compile_pdf(REPO, entry))
+    assert schematic.check(REPO, pdf, entry) == []
+    assert {s for _p, s, _b in checker.pdf_text_spans(pdf)} and checker.check_pdf_no_text(pdf)
+
+
+# ------------------------------------------------------------- Fig 3 arrows (P0-W6.3 decision)
+
+FIG3_BODY = REPO / "figures/tikz/fig3_body.tex"
+
+
+def test_fig3_cycle_arrows_are_horizontal_and_vertical_only():
+    text = FIG3_BODY.read_text()
+    assert schematic.arrow_problems(text) == []
+    styles = [s for s, _p in schematic._DRAW_RE.findall("\n".join(l.split("%")[0] for l in text.splitlines()))]
+    assert styles.count("proc") == 3 and styles.count("force") == 3
+
+
+def test_fig3_checker_entry_names_the_body():
+    assert schematic.table(REPO)["fig3"]["orthogonal_arrows"] == "fig3_body.tex"
+
+
+def test_planted_diagonal_arrow_fails():
+    text = FIG3_BODY.read_text().replace("(11.1,2.75) -- (11.95,2.75)", "(11.1,2.75) -- (11.95,2.95)")
+    probs = schematic.arrow_problems(text)
+    assert len(probs) == 1 and "diagonal" in probs[0]
+
+
+@pytest.mark.parametrize("path", [
+    r"\draw[proc] (0,0) to[out=0, in=90] (3,3);",
+    r"\draw[proc] (0,0) -- ++(1,0);",
+    r"\draw[proc] (0,0) |- (1,1);",
+    r"\draw[proc, draw=okblue] (0,0) .. controls (1,0) .. (1,1);",
+])
+def test_curves_and_implicit_corners_fail(path):
+    assert schematic.arrow_problems(path)
+
+
+def test_force_vectors_keep_their_directions():
+    assert schematic.arrow_problems(r"\draw[force, draw=okblack] (16.0,1.6) -- ++(125:0.8);") == []
+
+
+def test_arrows_and_force_vectors_have_the_same_line_weight():
+    pre = (REPO / "figures/tikz/schematic_preamble.tex").read_text()
+    styles = dict(re.findall(r"^\s*(proc|force)/\.style=\{([^,}]+)", pre, re.M))
+    assert styles == {"proc": "bold", "force": "bold"}
+    assert not re.search(r"(proc|force)/\.style=\{[^}]*line width", pre)
 
 
 @pytest.mark.skipif(shutil.which("latexmk") is None, reason="latexmk not installed")

@@ -1,45 +1,62 @@
 {
-  "last_session": "P0-W6.2",
+  "last_session": "P0-W6.3",
   "status": "DONE",
-  "day": 2,
+  "day": 3,
   "palette_sha": "9307edcac3e6a014920e02ed8e8a855c4d56660e",
-  "upstream_pins": {
-    "results_schema": "p0-w4 configs/preprint/results_schema.json@16fe14d",
-    "thresholds": "p0-w4 configs/preprint/thresholds.yaml@884c487",
-    "retro_schema": "p0-w2 preprint/retrodiction/SCHEMA.md@af75ed0",
-    "retro_cases": "p0-w2 preprint/retrodiction/cases.yaml@af75ed0",
-    "symbols": "p0-w3 theory/symbols.yaml@db872ae"
+  "font": {
+    "chain": [
+      "Arial",
+      "Helvetica",
+      "Liberation Sans"
+    ],
+    "release": "Arial (Mac)",
+    "committed_outputs": "Arial"
   },
-  "fig3_w3_commit": "db872ae9190c3b729bc2b13898919fbfbe56815b",
+  "upstream_pins": {
+    "results_schema": "p0-w4 configs/preprint/results_schema.json@7cb8572 (v3)",
+    "thresholds": "p0-w4 configs/preprint/thresholds.yaml@4ed8fcf",
+    "retro_schema": "p0-w2 preprint/retrodiction/SCHEMA.md@4ded6c7",
+    "retro_cases": "p0-w2 preprint/retrodiction/cases.yaml@4ded6c7",
+    "symbols": "p0-w3 theory/symbols.yaml@4c0a3b0",
+    "retro_results": "p0-w2 preprint/retrodiction/results/results.json@2a1f386",
+    "screen_table_r2": "p0-w4 results/preprint/screen/table_r2/summary.json@5766c18",
+    "screen_ignorance": "p0-w4 results/preprint/screen/ignorance/summary.json@eb6be52",
+    "merged_tree": "origin/preprint/p0@227d997: I2.6 not landed, no owner file matches"
+  },
+  "fig3_w3_commit": "f23632d91c4a47fab4b7ff6dfa46e2315e6d4ea6",
   "artifacts": [
+    "figures/out/fig3.pdf",
+    "figures/out/fig4.pdf",
+    "figures/out/fig5.pdf",
+    "figures/out/fig7.pdf",
+    "figures/out/manifest.json",
+    "figures/out/cvd/",
     "figures/src/fig4.py",
     "figures/src/fig5.py",
-    "figures/src/fig6.py",
     "figures/src/fig7.py",
+    "figures/src/data/upstream/",
     "figures/src/schemas/upstream.yaml",
-    "figures/src/schemas/upstream/",
-    "figures/src/schemas/pin_upstream.py",
-    "figures/src/schemas/retro_results_v1.schema.json",
-    "figures/src/mock/",
-    "figures/src/captions/fig2.md",
     "figures/src/captions/fig3.md",
-    "figures/tikz/",
-    "figures/rdkit/",
-    "figures/out/fig2.pdf",
-    "figures/out/fig3.pdf",
-    "figures/out/variants/fig3_symbols.pdf",
-    "figures/out/rdkit/",
-    "figures/out/mock/",
-    "src/nacre/figs/",
-    "tests/figs/",
-    "ops/reports/P0-W6.2.md"
+    "figures/src/captions/fig4.md",
+    "figures/src/captions/fig5.md",
+    "figures/src/captions/fig7.md",
+    "figures/src/captions/macro_requests.yaml",
+    "figures/tikz/fig3_body.tex",
+    "src/nacre/figs/style.py",
+    "src/nacre/figs/schematic.py",
+    "src/nacre/figs/build.py",
+    "tests/figs/test_fig_captions.py",
+    "tests/figs/test_fig_provenance.py",
+    "ops/reports/P0-W6.3.md"
   ],
   "notes": [
-    "Templates conform to owner schemas on mock data: fig4 to W2 retro-results/v1, fig5/6 to W4 v2 screen regimes, fig7 to W4 v2 stability (C5)",
-    "Fig 3 text-free cycle from W3 Section 7 at db872ae (contract v3 ready); symbol variant awaits operator decision (YOU)",
-    "Fig 2 panels a-d with W7.3 placeholder slots; panel letters set by the manuscript layout",
-    "RDKit set: 8 structures, SMILES from shared code or logged PubChem fetches F6-F10",
-    "Checker reads the PDFs: schematics no text; data figures only tick labels, axis titles, colour-bar text, panel letters",
-    "W5 must drop the fig7 export check against the deleted W6 schema; W2 RC11 still uses Omega_local"
+    "N18 font fallback explicit and recorded in provenance; RDKit tests font-independent (Linux CI confirmation pending on this push)",
+    "Fig 3: single row, orthogonal cycle arrows checked in every build; symbol variant on request only (--only fig3_symbols)",
+    "Fig 4 from W2.3 record: 7 of 12 vs 10 required; nulls median 5, range 2 to 8",
+    "Fig 5 from W4.3 ignorance run: map from schema-v3 barrier prefactor; C3b contour absent while A_patch is a gap",
+    "Fig 7 from W4.3 table_r2 C5 (on W5.3 documents): dose window + R-cell scheme windows; 4.025 V bound",
+    "W8 must add the 9 macros in figures/src/captions/macro_requests.yaml",
+    "Re-pin after integration (pin_upstream.py drops copies that match the tree)",
+    "Fig 6 waits for P0-W4.4; Fig 8 for the pod"
   ]
 }

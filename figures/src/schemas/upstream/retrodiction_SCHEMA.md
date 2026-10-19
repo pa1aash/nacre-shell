@@ -1,8 +1,8 @@
 # Retrodiction case and outcome schema
 
-Session P0-W2.2, lane p0-w2. This file defines `preprint/retrodiction/cases.yaml` (the frozen cases) and the result record that the retrodiction run (P0-W2.3) writes. Figure 4 (lane p0-w6) and the run conform to it. `src/nacre/retro/cases.py` validates `cases.yaml` against it (`uv run nacre retro check`).
+Session P0-W2.2, lane p0-w2; revised in P0-W2.3 before the run (interface per input, contract-v3 bookkeeping, result record). This file defines `preprint/retrodiction/cases.yaml` (the frozen cases) and the result record that the retrodiction run (P0-W2.3) writes. Figure 4 (lane p0-w6) and the run conform to it. `src/nacre/retro/cases.py` validates `cases.yaml` against it (`uv run nacre retro check`).
 
-The pass rule is in `criterion.md`. Both files were fixed and committed together before any retrodiction run.
+The pass rule is in `criterion.md`. Both files, with this one, were fixed and committed together before any retrodiction run.
 
 ## 1. What a case is
 
@@ -79,7 +79,7 @@ cases:        [<case>]
 | `mineral`, `polymorph` | string | the observed phase |
 | `conditions` | mapping | overrides of the study conditions, if any |
 | `outcome` | outcome | see 3.3 |
-| `channel` | `theta`, `omega` | the barrier channel through which the inputs act (`theory/contract.yaml`, `no_double_counting`) |
+| `channel` | `theta`, `omega` | the barrier channel through which the inputs act (`theory/contract.yaml`, `no_double_counting`). Under contract v3 every template input acts through θ and Ω is the bulk value, so a usable case has `theta`; `omega` survives on excluded cases only |
 | `inputs` | list of input | see 3.4 |
 | `assumptions` | list of `{id, text}` | every modelling assumption of the case, ids `A-<case>-<n>` |
 | `evidence_rows` | list of `row_id` | rows of `lit/evidence_table.csv` behind the case, if any |
@@ -121,6 +121,8 @@ Consistency rules (checked by the validator):
 |---|---|
 | `symbol` | a `theory/symbols.yaml` id, or a case-level quantity named in `maps_to` |
 | `role` | `test`, `reference` or `shared` (shared inputs are drawn once per draw for both surfaces) |
+| `interface` | the interface the input acts on: `gamma_sn`, `gamma_sl`, `gamma_nl`, `net` (the net energy of a simulated nucleus), `bulk` (Ω, T, V_m, c_bulk) or `young` (a shared nuisance Young ratio); required on every usable input and on every shared prior |
+| `interface_mapping` | for a surface input (test or reference), the mapping that reaches its interface: `dupre` (→ γ_sn), `gibbs_langmuir` (→ γ_sl), `owrk` (→ γ_sl) or `net`; required for those symbols, absent otherwise |
 | `value` / `distribution` | a number (or a mapping of named numbers) with `unit`, or one of `{type: normal, mean, sd}`, `{type: uniform, low, high}`, `{type: loguniform, low, high}` (log of the value uniform), `{type: uniform_log, low_sigma, high_sigma}` (σ = ln Ω uniform; Ω = exp σ) |
 | `unit` | |
 | `doi`, `locator` | the source, **or** `params_key` (a `lit/params.yaml` key) |
@@ -136,26 +138,30 @@ Consistency rules (checked by the validator):
 
 ## 4. How the run maps inputs to the contract
 
-All mappings use the registered convention of `theory/contract.yaml`:
-- cos θ = (γ_sl − γ_sn0 − Δγ_w)/γ_nl;
-- ΔG*_het = f(θ) ΔG*_hom(Ω_local);
+All mappings use the registered convention of `theory/contract.yaml` (version 3):
+- cos θ = (γ_sl − γ_sn0 − Δγ_w)/γ_nl, with γ_sl = γ_sl0 + Δγ_ads;
+- ΔG*_het = f(θ) ΔG*_hom(Ω_bulk);
 - f(θ) = (2 + cos θ)(1 − cos θ)²/4.
+
+**Bookkeeping (contract v3).** At equilibrium the Ca²⁺ and CO3²⁻ electrochemical potentials are uniform, so the driving force at the template is the bulk one, k_B T ln Ω_bulk. Ca²⁺ binding enters the barrier only through Δγ_ads on γ_sl. A mapping through Ω_local is refused by the run code and by the validator.
 
 **Interfaces in water.** Interfacial energies obtained in water are full in-water free energies, so Δγ_w = 0. The contract says it must then not be added again.
 
-| Input kind | Mapping |
-|---|---|
-| Crystal–substrate binding free energy ΔG_b per contact area a (force spectroscopy, in water) | Young–Dupré: W = \|ΔG_b\|/a = γ_nl + γ_sl − γ_sn, so cos θ = W/γ_nl − 1. a is shared within a study |
-| Simulated net interfacial energy γ_net of the crystal–substrate–liquid system | Same nucleus shape for both surfaces: f(θ) = (γ_net/γ_nl)³ |
-| OWRK surface-energy components of the substrate (γ_s^d, γ_s^p) | γ_sl = γ_s + γ_w − 2(√(γ_s^d γ_w^d) + √(γ_s^p γ_w^p)). With γ_sn equal for both surfaces (declared assumption), cos θ_test = cos θ_ref + (γ_sl,test − γ_sl,ref)/γ_nl, where cos θ_ref is a shared nuisance |
-| Simulated interaction energy E of a CaCO3 cluster with the hydrated substrate | W = \|E\|/A_c with a common contact area A_c, then as for ΔG_b |
-| Near-surface Ca²⁺ concentration c_local against bulk c_bulk | Ω channel: Ω_local = (c_local/c_bulk) Ω_bulk, with θ equal for both surfaces (declared assumption) |
+| Input kind | Interface | Mapping (`interface_mapping`) |
+|---|---|---|
+| Crystal–template adhesion: binding free energy ΔG_b per contact area a (force spectroscopy of calcite on monolayers, in water) | γ_sn | Dupré (`dupre`): W = \|ΔG_b\|/a = γ_nl + γ_sl − γ_sn, so cos θ = W/γ_nl − 1. a is shared within a study |
+| Crystal–template adhesion: simulated interaction energy E of a CaCO3 cluster with the hydrated substrate | γ_sn | Dupré (`dupre`): W = \|E\|/A_c with a common contact area A_c, then as for ΔG_b |
+| Ca²⁺-binding data: near-surface Ca²⁺ concentration c_local against bulk c_bulk | γ_sl | Gibbs–Langmuir (`gibbs_langmuir`): Δγ_ads = −R T (Γ_s ln(1 + x) − δ_s c_bulk), x = c_local/(c_max − c_local), c_max = Γ_s/δ_s; cos θ = cos θ0 + Δγ_ads/γ_nl, with the Ca-free contact cos θ0 a shared nuisance (declared assumption). Γ_s and δ_s are shared |
+| Contact-angle surface energies: OWRK components of the substrate film measured in air (γ_s^d, γ_s^p) | γ_sl (against water) | OWRK (`owrk`): γ_sl = γ_s + γ_w − 2(√(γ_s^d γ_w^d) + √(γ_s^p γ_w^p)). With γ_sn equal for both surfaces (declared assumption), cos θ_test = cos θ_ref + (γ_sl,test − γ_sl,ref)/γ_nl, where cos θ_ref is a shared nuisance |
+| Simulated net interfacial energy γ_net of the crystal–substrate–liquid system | net | `net`: same nucleus shape for both surfaces, f(θ) = (γ_net/γ_nl)³ |
+
+Shared inputs name `bulk` (Ω, T, V_m, c_bulk, K_sp), `gamma_nl`, `young` (cos θ_ref, cos θ0), `gamma_sn` (the contact area of a Dupré mapping) or `gamma_sl` (Γ_s and δ_s of a Gibbs–Langmuir term; the water OWRK components).
 
 **Clipping.** cos θ outside [−1, 1] is clipped to θ = 0 or π, and the boundary mass is reported (lane note N2).
 
 ## 5. Result record (written by P0-W2.3)
 
-The file is `preprint/retrodiction/results.json`. Its schema id is `retro-results/v1`.
+The file is `preprint/retrodiction/results/results.json`. Its schema id is `retro-results/v1`. Fields beyond those below (per-case `mapping`, `interface`, `swap_check`, `nonfinite_fraction`; the summary's `undetermined`, `swap_check`, `permutation_null`, conclusive-only and study-level tallies) are added by the run and are additive.
 
 ```json
 {
@@ -164,7 +170,7 @@ The file is `preprint/retrodiction/results.json`. Its schema id is `retro-result
   "cases_sha256": "sha256:<hex of cases.yaml bytes>",
   "criterion_sha256": "sha256:<hex of criterion.md bytes>",
   "fixed_before_run_commit": "<40-hex>",
-  "provenance": {"git_sha": "<40-hex>", "git_dirty": false, "contract_sha": "<40-hex>", "params_file_hash": "sha256:<hex>"},
+  "provenance": {"git_sha": "<40-hex>", "git_dirty": false, "contract_sha": "<40-hex>", "params_tag": "p0-cp3", "params_file_hash": "sha256:<hex>", "criterion_sha": "<40-hex>"},
   "draws": 20000, "seed": 0,
   "cases": [{
     "id": "RC01",
@@ -177,9 +183,9 @@ The file is `preprint/retrodiction/results.json`. Its schema id is `retro-result
     "delta":             {"median": 0.0, "q05": 0.0, "q95": 0.0},
     "p_test_higher": 0.0,
     "boundary_mass": 0.0,
-    "verdict": "correct | incorrect | inconclusive"
+    "verdict": "correct | incorrect | inconclusive | undetermined"
   }],
-  "summary": {"N": 0, "correct": 0, "incorrect": 0, "inconclusive": 0, "k": 0, "chance_probability": 0.0, "pass": false}
+  "summary": {"N": 0, "correct": 0, "incorrect": 0, "inconclusive": 0, "undetermined": 0, "k": 0, "chance_probability": 0.0, "pass": false}
 }
 ```
 

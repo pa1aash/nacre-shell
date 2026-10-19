@@ -1,0 +1,628 @@
+{
+ "schema_version": "3",
+ "mock": true,
+ "generated_utc": "2026-10-17T00:00:00Z",
+ "provenance": {
+  "git_sha": "0000000000000000000000000000000000000000",
+  "git_dirty": false,
+  "config_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "contract_sha": null,
+  "schema_sha": "7cb8572af8ee4660cc2860e9f768121297820f10"
+ },
+ "claims": {
+  "C5": {
+   "verdict": "inconclusive",
+   "dose_window": {
+    "points": {
+     "Ca_T=1e-06; C_T=min; a_w=wet": {
+      "axes": {
+       "Ca_T": "1e-06 mol dm^-3",
+       "C_T": "dic_slurry@min",
+       "a_w": "wet"
+      },
+      "P_good": 0.014774,
+      "P_bad": 0.985226,
+      "half_width": 0.0,
+      "verdict": "falsified",
+      "state": "slurry"
+     },
+     "Ca_T=1e-06; C_T=min; a_w=dry": {
+      "axes": {
+       "Ca_T": "1e-06 mol dm^-3",
+       "C_T": "dic_slurry@min",
+       "a_w": "dry"
+      },
+      "P_good": 0.014774,
+      "P_bad": 0.985226,
+      "half_width": 0.0,
+      "verdict": "falsified",
+      "state": "slurry"
+     },
+     "Ca_T=1e-06; C_T=value; a_w=wet": {
+      "axes": {
+       "Ca_T": "1e-06 mol dm^-3",
+       "C_T": "dic_slurry@value",
+       "a_w": "wet"
+      },
+      "P_good": 0.0060598,
+      "P_bad": 0.99394,
+      "half_width": 0.0,
+      "verdict": "falsified",
+      "state": "slurry"
+     },
+     "Ca_T=1e-06; C_T=value; a_w=dry": {
+      "axes": {
+       "Ca_T": "1e-06 mol dm^-3",
+       "C_T": "dic_slurry@value",
+       "a_w": "dry"
+      },
+      "P_good": 0.0060598,
+      "P_bad": 0.99394,
+      "half_width": 0.0,
+      "verdict": "falsified",
+      "state": "slurry"
+     },
+     "Ca_T=1e-06; C_T=max; a_w=wet": {
+      "axes": {
+       "Ca_T": "1e-06 mol dm^-3",
+       "C_T": "dic_slurry@max",
+       "a_w": "wet"
+      },
+      "P_good": 0.00247262,
+      "P_bad": 0.997527,
+      "half_width": 0.0,
+      "verdict": "falsified",
+      "state": "slurry"
+     },
+     "Ca_T=1e-06; C_T=max; a_w=dry": {
+      "axes": {
+       "Ca_T": "1e-06 mol dm^-3",
+       "C_T": "dic_slurry@max",
+       "a_w": "dry"
+      },
+      "P_good": 0.00247262,
+      "P_bad": 0.997527,
+      "half_width": 0.0,
+      "verdict": "falsified",
+      "state": "slurry"
+     },
+     "Ca_T=1e-05; C_T=min; a_w=wet": {
+      "axes": {
+       "Ca_T": "1e-05 mol dm^-3",
+       "C_T": "dic_slurry@min",
+       "a_w": "wet"
+      },
+      "P_good": 0.231475,
+      "P_bad": 0.768525,
+      "half_width": 0.0,
+      "verdict": "inconclusive",
+      "state": "slurry"
+     },
+     "Ca_T=1e-05; C_T=min; a_w=dry": {
+      "axes": {
+       "Ca_T": "1e-05 mol dm^-3",
+       "C_T": "dic_slurry@min",
+       "a_w": "dry"
+      },
+      "P_good": 0.231475,
+      "P_bad": 0.768525,
+      "half_width": 0.0,
+      "verdict": "inconclusive",
+      "state": "slurry"
+     },
+     "Ca_T=1e-05; C_T=value; a_w=wet": {
+      "axes": {
+       "Ca_T": "1e-05 mol dm^-3",
+       "C_T": "dic_slurry@value",
+       "a_w": "wet"
+      },
+      "P_good": 0.109097,
+      "P_bad": 0.890903,
+      "half_width": 0.0,
+      "verdict": "inconclusive",
+      "state": "slurry"
+     },
+     "Ca_T=1e-05; C_T=value; a_w=dry": {
+      "axes": {
+       "Ca_T": "1e-05 mol dm^-3",
+       "C_T": "dic_slurry@value",
+       "a_w": "dry"
+      },
+      "P_good": 0.109097,
+      "P_bad": 0.890903,
+      "half_width": 0.0,
+      "verdict": "inconclusive",
+      "state": "slurry"
+     },
+     "Ca_T=1e-05; C_T=max; a_w=wet": {
+      "axes": {
+       "Ca_T": "1e-05 mol dm^-3",
+       "C_T": "dic_slurry@max",
+       "a_w": "wet"
+      },
+      "P_good": 0.0474259,
+      "P_bad": 0.952574,
+      "half_width": 0.0,
+      "verdict": "falsified",
+      "state": "slurry"
+     },
+     "Ca_T=1e-05; C_T=max; a_w=dry": {
+      "axes": {
+       "Ca_T": "1e-05 mol dm^-3",
+       "C_T": "dic_slurry@max",
+       "a_w": "dry"
+      },
+      "P_good": 0.0474259,
+      "P_bad": 0.952574,
+      "half_width": 0.0,
+      "verdict": "falsified",
+      "state": "slurry"
+     },
+     "Ca_T=0.0001; C_T=min; a_w=wet": {
+      "axes": {
+       "Ca_T": "0.0001 mol dm^-3",
+       "C_T": "dic_slurry@min",
+       "a_w": "wet"
+      },
+      "P_good": 0.858149,
+      "P_bad": 0.141851,
+      "half_width": 0.0,
+      "verdict": "inconclusive",
+      "state": "slurry"
+     },
+     "Ca_T=0.0001; C_T=min; a_w=dry": {
+      "axes": {
+       "Ca_T": "0.0001 mol dm^-3",
+       "C_T": "dic_slurry@min",
+       "a_w": "dry"
+      },
+      "P_good": 0.858149,
+      "P_bad": 0.141851,
+      "half_width": 0.0,
+      "verdict": "inconclusive",
+      "state": "slurry"
+     },
+     "Ca_T=0.0001; C_T=value; a_w=wet": {
+      "axes": {
+       "Ca_T": "0.0001 mol dm^-3",
+       "C_T": "dic_slurry@value",
+       "a_w": "wet"
+      },
+      "P_good": 0.71095,
+      "P_bad": 0.28905,
+      "half_width": 0.0,
+      "verdict": "inconclusive",
+      "state": "slurry"
+     },
+     "Ca_T=0.0001; C_T=value; a_w=dry": {
+      "axes": {
+       "Ca_T": "0.0001 mol dm^-3",
+       "C_T": "dic_slurry@value",
+       "a_w": "dry"
+      },
+      "P_good": 0.71095,
+      "P_bad": 0.28905,
+      "half_width": 0.0,
+      "verdict": "inconclusive",
+      "state": "slurry"
+     },
+     "Ca_T=0.0001; C_T=max; a_w=wet": {
+      "axes": {
+       "Ca_T": "0.0001 mol dm^-3",
+       "C_T": "dic_slurry@max",
+       "a_w": "wet"
+      },
+      "P_good": 0.5,
+      "P_bad": 0.5,
+      "half_width": 0.0,
+      "verdict": "inconclusive",
+      "state": "slurry"
+     },
+     "Ca_T=0.0001; C_T=max; a_w=dry": {
+      "axes": {
+       "Ca_T": "0.0001 mol dm^-3",
+       "C_T": "dic_slurry@max",
+       "a_w": "dry"
+      },
+      "P_good": 0.5,
+      "P_bad": 0.5,
+      "half_width": 0.0,
+      "verdict": "inconclusive",
+      "state": "slurry"
+     },
+     "Ca_T=0.001; C_T=min; a_w=wet": {
+      "axes": {
+       "Ca_T": "0.001 mol dm^-3",
+       "C_T": "dic_slurry@min",
+       "a_w": "wet"
+      },
+      "P_good": 0.991837,
+      "P_bad": 0.00816257,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.001; C_T=min; a_w=dry": {
+      "axes": {
+       "Ca_T": "0.001 mol dm^-3",
+       "C_T": "dic_slurry@min",
+       "a_w": "dry"
+      },
+      "P_good": 0.991837,
+      "P_bad": 0.00816257,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.001; C_T=value; a_w=wet": {
+      "axes": {
+       "Ca_T": "0.001 mol dm^-3",
+       "C_T": "dic_slurry@value",
+       "a_w": "wet"
+      },
+      "P_good": 0.98016,
+      "P_bad": 0.0198403,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.001; C_T=value; a_w=dry": {
+      "axes": {
+       "Ca_T": "0.001 mol dm^-3",
+       "C_T": "dic_slurry@value",
+       "a_w": "dry"
+      },
+      "P_good": 0.98016,
+      "P_bad": 0.0198403,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.001; C_T=max; a_w=wet": {
+      "axes": {
+       "Ca_T": "0.001 mol dm^-3",
+       "C_T": "dic_slurry@max",
+       "a_w": "wet"
+      },
+      "P_good": 0.952574,
+      "P_bad": 0.0474259,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.001; C_T=max; a_w=dry": {
+      "axes": {
+       "Ca_T": "0.001 mol dm^-3",
+       "C_T": "dic_slurry@max",
+       "a_w": "dry"
+      },
+      "P_good": 0.952574,
+      "P_bad": 0.0474259,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.01; C_T=min; a_w=wet": {
+      "axes": {
+       "Ca_T": "0.01 mol dm^-3",
+       "C_T": "dic_slurry@min",
+       "a_w": "wet"
+      },
+      "P_good": 0.99959,
+      "P_bad": 0.000409567,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.01; C_T=min; a_w=dry": {
+      "axes": {
+       "Ca_T": "0.01 mol dm^-3",
+       "C_T": "dic_slurry@min",
+       "a_w": "dry"
+      },
+      "P_good": 0.99959,
+      "P_bad": 0.000409567,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.01; C_T=value; a_w=wet": {
+      "axes": {
+       "Ca_T": "0.01 mol dm^-3",
+       "C_T": "dic_slurry@value",
+       "a_w": "wet"
+      },
+      "P_good": 0.998993,
+      "P_bad": 0.00100677,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.01; C_T=value; a_w=dry": {
+      "axes": {
+       "Ca_T": "0.01 mol dm^-3",
+       "C_T": "dic_slurry@value",
+       "a_w": "dry"
+      },
+      "P_good": 0.998993,
+      "P_bad": 0.00100677,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.01; C_T=max; a_w=wet": {
+      "axes": {
+       "Ca_T": "0.01 mol dm^-3",
+       "C_T": "dic_slurry@max",
+       "a_w": "wet"
+      },
+      "P_good": 0.997527,
+      "P_bad": 0.00247262,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     },
+     "Ca_T=0.01; C_T=max; a_w=dry": {
+      "axes": {
+       "Ca_T": "0.01 mol dm^-3",
+       "C_T": "dic_slurry@max",
+       "a_w": "dry"
+      },
+      "P_good": 0.997527,
+      "P_bad": 0.00247262,
+      "half_width": 0.0,
+      "verdict": "feasible",
+      "state": "slurry"
+     }
+    },
+    "feasible_points": [
+     "Ca_T=0.001; C_T=max; a_w=dry",
+     "Ca_T=0.001; C_T=max; a_w=wet",
+     "Ca_T=0.001; C_T=min; a_w=dry",
+     "Ca_T=0.001; C_T=min; a_w=wet",
+     "Ca_T=0.001; C_T=value; a_w=dry",
+     "Ca_T=0.001; C_T=value; a_w=wet",
+     "Ca_T=0.01; C_T=max; a_w=dry",
+     "Ca_T=0.01; C_T=max; a_w=wet",
+     "Ca_T=0.01; C_T=min; a_w=dry",
+     "Ca_T=0.01; C_T=min; a_w=wet",
+     "Ca_T=0.01; C_T=value; a_w=dry",
+     "Ca_T=0.01; C_T=value; a_w=wet"
+    ],
+    "falsified_points": [
+     "Ca_T=1e-05; C_T=max; a_w=dry",
+     "Ca_T=1e-05; C_T=max; a_w=wet",
+     "Ca_T=1e-06; C_T=max; a_w=dry",
+     "Ca_T=1e-06; C_T=max; a_w=wet",
+     "Ca_T=1e-06; C_T=min; a_w=dry",
+     "Ca_T=1e-06; C_T=min; a_w=wet",
+     "Ca_T=1e-06; C_T=value; a_w=dry",
+     "Ca_T=1e-06; C_T=value; a_w=wet"
+    ],
+    "inconclusive_points": [
+     "Ca_T=0.0001; C_T=max; a_w=dry",
+     "Ca_T=0.0001; C_T=max; a_w=wet",
+     "Ca_T=0.0001; C_T=min; a_w=dry",
+     "Ca_T=0.0001; C_T=min; a_w=wet",
+     "Ca_T=0.0001; C_T=value; a_w=dry",
+     "Ca_T=0.0001; C_T=value; a_w=wet",
+     "Ca_T=1e-05; C_T=min; a_w=dry",
+     "Ca_T=1e-05; C_T=min; a_w=wet",
+     "Ca_T=1e-05; C_T=value; a_w=dry",
+     "Ca_T=1e-05; C_T=value; a_w=wet"
+    ]
+   },
+   "tests": {
+    "C5s": {
+     "verdict": "inconclusive"
+    },
+    "C5c_ox": {
+     "verdict": "inconclusive",
+     "scheme_table": [
+      {
+       "phase": "CaCO3",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "expt",
+       "role": "governing",
+       "status": "ok",
+       "value_V": 3.8,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "CaCO3",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "janaf",
+       "role": "comparator",
+       "status": "ok",
+       "value_V": 4.2,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "CaCO3",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "janaf_corrected",
+       "role": "comparator",
+       "status": "ok",
+       "value_V": 3.8,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "CaCO3",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "mp",
+       "role": "comparator",
+       "status": "ok",
+       "value_V": 3.6,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "CaCO3",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "mp_corrected",
+       "role": "comparator",
+       "status": "ok",
+       "value_V": 3.8,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "corundum",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "expt",
+       "role": "governing",
+       "status": "undetermined",
+       "value_V": null,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "corundum",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "janaf",
+       "role": "comparator",
+       "status": "undetermined",
+       "value_V": null,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "CaCO3",
+       "sink": "mock-other",
+       "sink_kind": "solid_salt",
+       "scheme": "expt",
+       "role": "governing",
+       "status": "undetermined",
+       "value_V": null,
+       "benchmark_error_V": null
+      }
+     ],
+     "cutoff_axis": {
+      "class-A@min": {
+       "bound_V": 3.6,
+       "verdict": "inconclusive"
+      },
+      "class-A@value": {
+       "bound_V": 4.0,
+       "verdict": "falsified"
+      },
+      "class-A@max": {
+       "bound_V": 4.2,
+       "verdict": "falsified"
+      },
+      "class-B@min": {
+       "bound_V": 4.3,
+       "verdict": "falsified"
+      },
+      "class-B@value": {
+       "bound_V": 4.5,
+       "verdict": "falsified"
+      },
+      "class-B@max": {
+       "bound_V": 4.6,
+       "verdict": "falsified"
+      }
+     },
+     "margin_V": 0.09,
+     "crossovers": {
+      "CaCO3": {
+       "mock-salt": {
+        "falsified_above_V": 3.89,
+        "feasible_at_or_below_V": null
+       }
+      }
+     }
+    },
+    "C5c_red": {
+     "verdict": "inconclusive",
+     "scheme_table": [
+      {
+       "phase": "CaCO3",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "expt",
+       "role": "governing",
+       "status": "absent",
+       "value_V": null,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "CaCO3",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "janaf",
+       "role": "comparator",
+       "status": "ok",
+       "value_V": 1.6,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "CaCO3",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "janaf_corrected",
+       "role": "comparator",
+       "status": "ok",
+       "value_V": 1.3,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "CaCO3",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "mp",
+       "role": "comparator",
+       "status": "ok",
+       "value_V": 1.6,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "CaCO3",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "mp_corrected",
+       "role": "comparator",
+       "status": "ok",
+       "value_V": 1.8,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "corundum",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "expt",
+       "role": "governing",
+       "status": "absent",
+       "value_V": null,
+       "benchmark_error_V": null
+      },
+      {
+       "phase": "corundum",
+       "sink": "mock-salt",
+       "sink_kind": "solid_salt",
+       "scheme": "janaf",
+       "role": "comparator",
+       "status": "ok",
+       "value_V": 1.2,
+       "benchmark_error_V": null
+      }
+     ],
+     "cutoff_axis": {
+      "registered": {
+       "bound_V": 3.0,
+       "verdict": "inconclusive"
+      }
+     }
+    }
+   }
+  }
+ },
+ "extensions": {
+  "p0-w6": {
+   "note": "MOCK: synthetic values to exercise the template; not a result"
+  }
+ }
+}

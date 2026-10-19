@@ -1,0 +1,498 @@
+{
+ "schema": "retro-results/v1",
+ "mock": false,
+ "cases_sha256": "sha256:d8471c37bdb6965a1ca996237e50a550ad1de44805924aebf3a5e686a4a188c1",
+ "draws": 20000,
+ "seed": 0,
+ "levels": [
+  0.05,
+  0.5,
+  0.95
+ ],
+ "cases": [
+  {
+   "id": "RC01",
+   "termination": "thiol",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "dupre",
+   "interface": "gamma_sn",
+   "barrier_test": {
+    "q05": 16.17338956000663,
+    "median": 766.5408402327413,
+    "q95": 3722.9255348075067
+   },
+   "barrier_reference": {
+    "q05": 4.115421141699176,
+    "median": 686.7519665297204,
+    "q95": 3563.6443238537017
+   },
+   "delta": {
+    "q05": 9.22377407939406,
+    "median": 60.06862009667623,
+    "q95": 247.29205569721915
+   },
+   "p_test_higher": 0.99905,
+   "boundary_mass": 0.01145,
+   "verdict": "correct",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "C16-SH vs C16-COOH (S-HAMM2014)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC02",
+   "termination": "thiol",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "dupre",
+   "interface": "gamma_sn",
+   "barrier_test": {
+    "q05": 22.498395523722692,
+    "median": 774.7805369350849,
+    "q95": 3760.049559456536
+   },
+   "barrier_reference": {
+    "q05": 3.7821529181854063,
+    "median": 659.1336611088796,
+    "q95": 3548.6010274073565
+   },
+   "delta": {
+    "q05": 14.395299002053953,
+    "median": 81.72681996048857,
+    "q95": 329.375345512855
+   },
+   "p_test_higher": 1.0,
+   "boundary_mass": 0.011425,
+   "verdict": "correct",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "C11-SH vs C16-COOH (S-HAMM2014)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC03",
+   "termination": "phosphate",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "dupre",
+   "interface": "gamma_sn",
+   "barrier_test": {
+    "q05": 27.72930737415732,
+    "median": 822.9540862130825,
+    "q95": 3794.3822428614285
+   },
+   "barrier_reference": {
+    "q05": 3.9787579620470064,
+    "median": 687.2234401099553,
+    "q95": 3554.3067101388656
+   },
+   "delta": {
+    "q05": 18.002765959250745,
+    "median": 94.82484083815712,
+    "q95": 382.3675709942864
+   },
+   "p_test_higher": 1.0,
+   "boundary_mass": 0.0112,
+   "verdict": "correct",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "C11-PO4 vs C16-COOH (S-HAMM2014)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC04",
+   "termination": "amine",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "dupre",
+   "interface": "gamma_sn",
+   "barrier_test": {
+    "q05": 20.98016153974669,
+    "median": 653.0046058961454,
+    "q95": 3009.0180470838536
+   },
+   "barrier_reference": {
+    "q05": 18.61386694265943,
+    "median": 642.6830128004378,
+    "q95": 2992.1225506448677
+   },
+   "delta": {
+    "q05": -0.44009528036453377,
+    "median": 5.949467858437629,
+    "q95": 32.60120647277488
+   },
+   "p_test_higher": 0.93715,
+   "boundary_mass": 0.0,
+   "verdict": "inconclusive",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "NH2 SAM vs carboxyl SAM (S-NIELSEN2020)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC05",
+   "termination": "mixed",
+   "negative": true,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "dupre",
+   "interface": "gamma_sn",
+   "barrier_test": {
+    "q05": 22.755697440636727,
+    "median": 639.7946190739716,
+    "q95": 2996.2613596697793
+   },
+   "barrier_reference": {
+    "q05": 18.482536740743882,
+    "median": 625.1595552784152,
+    "q95": 2970.4358233644775
+   },
+   "delta": {
+    "q05": 1.991630783011579,
+    "median": 10.520510428255612,
+    "q95": 47.25706890894615
+   },
+   "p_test_higher": 0.9955,
+   "boundary_mass": 0.0,
+   "verdict": "correct",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "1:1 COOH/NH2 SAM vs carboxyl SAM (S-NIELSEN2020)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC06",
+   "termination": "carboxyl",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "net",
+   "interface": "f_theta",
+   "barrier_test": {
+    "q05": 32.47447528571503,
+    "median": 53.4589275514424,
+    "q95": 83.21233386629692
+   },
+   "barrier_reference": {
+    "q05": 4.733265162766564,
+    "median": 9.067162106929514,
+    "q95": 16.328498759461567
+   },
+   "delta": {
+    "q05": 23.75861208614574,
+    "median": 44.12001755065661,
+    "q95": 71.80835783157855
+   },
+   "p_test_higher": 1.0,
+   "boundary_mass": 0.0353,
+   "verdict": "correct",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "MUA (C11, odd parity) vs MHA (C16, even parity) (S-HU2012)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC07",
+   "termination": "polysaccharide",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "owrk",
+   "interface": "gamma_sl",
+   "barrier_test": {
+    "q05": 0.8187294653661749,
+    "median": 189.4484875003938,
+    "q95": 2308.904707790877
+   },
+   "barrier_reference": {
+    "q05": 1.881514063085408,
+    "median": 199.25239635720487,
+    "q95": 2336.3423948289283
+   },
+   "delta": {
+    "q05": -33.25431057960333,
+    "median": -7.68799562450566,
+    "q95": -0.560580446473211
+   },
+   "p_test_higher": 0.0,
+   "boundary_mass": 0.00935,
+   "verdict": "incorrect",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "heparin vs chitosan (S-GIUFFRE2013)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC08",
+   "termination": "polysaccharide",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "owrk",
+   "interface": "gamma_sl",
+   "barrier_test": {
+    "q05": 1.4028698377551478,
+    "median": 201.0729108905602,
+    "q95": 2376.2450015314816
+   },
+   "barrier_reference": {
+    "q05": 1.7814137994868606,
+    "median": 204.41598054346298,
+    "q95": 2383.6673074827454
+   },
+   "delta": {
+    "q05": -12.05309623315054,
+    "median": -2.8173576739678268,
+    "q95": -0.21336026834541105
+   },
+   "p_test_higher": 0.0,
+   "boundary_mass": 0.00315,
+   "verdict": "incorrect",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "LG alginate vs chitosan (S-GIUFFRE2013)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC09",
+   "termination": "polysaccharide",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "owrk",
+   "interface": "gamma_sl",
+   "barrier_test": {
+    "q05": 1.3278687020788371,
+    "median": 194.75265322399488,
+    "q95": 2333.180563864226
+   },
+   "barrier_reference": {
+    "q05": 1.7653397202947638,
+    "median": 198.6521931795607,
+    "q95": 2340.7455138067526
+   },
+   "delta": {
+    "q05": -12.773025372912548,
+    "median": -2.9830391642243796,
+    "q95": -0.22060360927636471
+   },
+   "p_test_higher": 0.0,
+   "boundary_mass": 0.0032,
+   "verdict": "incorrect",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "HG alginate vs chitosan (S-GIUFFRE2013)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC10",
+   "termination": "polysaccharide",
+   "negative": false,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "owrk",
+   "interface": "gamma_sl",
+   "barrier_test": {
+    "q05": 2.605009433682676,
+    "median": 208.78278577910152,
+    "q95": 2358.3225535883253
+   },
+   "barrier_reference": {
+    "q05": 1.9788808071639181,
+    "median": 203.68058368435305,
+    "q95": 2346.955482585637
+   },
+   "delta": {
+    "q05": 0.2836630083547384,
+    "median": 3.6960748076575705,
+    "q95": 15.50345733279289
+   },
+   "p_test_higher": 1.0,
+   "boundary_mass": 0.003975,
+   "verdict": "correct",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "hyaluronate vs chitosan (S-GIUFFRE2013)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC11",
+   "termination": "methyl",
+   "negative": true,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "gibbs_langmuir",
+   "interface": "gamma_sl",
+   "barrier_test": {
+    "q05": 7.022388469991665,
+    "median": 929.792432747556,
+    "q95": 22669.988850479334
+   },
+   "barrier_reference": {
+    "q05": 7.125986876583199,
+    "median": 930.6133123147638,
+    "q95": 22679.188770233653
+   },
+   "delta": {
+    "q05": -4.310760858191884,
+    "median": -0.14591473439419644,
+    "q95": -0.0038588584203379825
+   },
+   "p_test_higher": 0.0,
+   "boundary_mass": 0.000125,
+   "verdict": "incorrect",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "CH3 SAM vs COOH SAM (S-DENG2015)",
+   "nonfinite_fraction": 0.0
+  },
+  {
+   "id": "RC12",
+   "termination": "catechol",
+   "negative": true,
+   "observed_relation": "test_higher_barrier",
+   "mapping": "dupre",
+   "interface": "gamma_sn",
+   "barrier_test": {
+    "q05": 27.094923125455985,
+    "median": 960.1950937574675,
+    "q95": 19836.078712526425
+   },
+   "barrier_reference": {
+    "q05": 0.0,
+    "median": 0.0,
+    "q95": 3375.5712049594417
+   },
+   "delta": {
+    "q05": 26.434224067802,
+    "median": 690.7456122575882,
+    "q95": 14936.256159565459
+   },
+   "p_test_higher": 1.0,
+   "boundary_mass": 0.3611,
+   "verdict": "correct",
+   "swap_check": {
+    "max_abs_sum": 0.0,
+    "holds": true
+   },
+   "label": "PDA coating vs bare carbon steel (S-YU2023)",
+   "nonfinite_fraction": 0.0
+  }
+ ],
+ "summary": {
+  "N": 12,
+  "correct": 7,
+  "incorrect": 4,
+  "inconclusive": 1,
+  "undetermined": 0,
+  "k": 10,
+  "chance_probability": 0.019287109375,
+  "pass": false,
+  "conclusive_only": {
+   "n": 11,
+   "correct": 7,
+   "descriptive": true
+  },
+  "study_level": {
+   "studies": 6,
+   "all_correct": 3,
+   "descriptive": true
+  },
+  "swap_check": {
+   "holds": true,
+   "max_abs_sum": 0.0
+  },
+  "permutation_null": {
+   "within_study": {
+    "n_perm": 2000,
+    "median": 5.0,
+    "range95": [
+     2.0,
+     8.0
+    ],
+    "mean": 4.593,
+    "fraction_ge_observed": 0.1045,
+    "counts": [
+     6,
+     33,
+     130,
+     324,
+     469,
+     466,
+     363,
+     147,
+     52,
+     8,
+     2,
+     0,
+     0
+    ],
+    "descriptive": true
+   },
+   "across_studies": {
+    "n_perm": 2000,
+    "median": 5.0,
+    "range95": [
+     2.0,
+     8.0
+    ],
+    "mean": 4.977,
+    "fraction_ge_observed": 0.173,
+    "counts": [
+     2,
+     17,
+     111,
+     231,
+     421,
+     478,
+     394,
+     224,
+     86,
+     32,
+     4,
+     0,
+     0
+    ],
+    "descriptive": true
+   },
+   "rule": "cp3 R9: descriptive control, does not gate (criterion.md section 4.5)"
+  },
+  "misses": 5,
+  "misses_by_case": {
+   "RC04": "inconclusive",
+   "RC07": "incorrect",
+   "RC08": "incorrect",
+   "RC09": "incorrect",
+   "RC11": "incorrect"
+  }
+ },
+ "criterion_sha256": "sha256:49367df488e7053ce560f0c8a9608e9b4244f5562c888614841fd7921f91aaba",
+ "fixed_before_run_commit": "4ded6c789c9eb66c385db8d41e51ea15a48a28b9",
+ "provenance": {
+  "git_sha": "4ded6c789c9eb66c385db8d41e51ea15a48a28b9",
+  "git_dirty": false,
+  "criterion_sha": "4ded6c789c9eb66c385db8d41e51ea15a48a28b9",
+  "contract_sha": "db872ae9190c3b729bc2b13898919fbfbe56815b",
+  "contract_sha256": "sha256:86c0010675fab57dd4923ee2159a02ffc38180a889e8248186f53ef5a1cc8bd2",
+  "params_tag": "p0-cp3",
+  "params_tag_sha": "a62e4f8dfb4aac281558bda1206d2792fb7eb2dd",
+  "params_file_hash": "sha256:2b0b5a13757cffc2c0747880320e1e109bf7e781af5f6d0f119b8d4a7360e9c6"
+ },
+ "session": "P0-W2.3"
+}
