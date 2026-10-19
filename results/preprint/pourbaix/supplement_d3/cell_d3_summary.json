@@ -1,0 +1,5937 @@
+{
+ "E_cell_min": {
+  "key": "e_cell_min",
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+  "sources": [
+   "TJ-106",
+   "TJ-107",
+   "TJ-108"
+  ],
+  "status": "sourced"
+ },
+ "boehmite_dehydration": {
+  "by_scheme": {
+   "expt": {
+    "delta_g_ev_per_AlOOH": 0.134310570475503,
+    "p_H2O_bar_below_which_dehydration_is_favoured": 2.8798034652601265e-05,
+    "reaction": "AlHO2 -> 0.5 Al2O3 + 0.5 H2O"
+   },
+   "expt_H2O_l": {
+    "a_w_below_which_dehydration_is_favoured": 0.0008946473632719873,
+    "delta_g_ev_per_AlOOH": 0.09016914600948223,
+    "reaction": "AlHO2 -> 0.5 Al2O3 + 0.5 H2O"
+   },
+   "janaf": {
+    "delta_g_ev_per_AlOOH": 0.47295105062083165,
+    "p_H2O_bar_below_which_dehydration_is_favoured": 1.0255218294377556e-16,
+    "reaction": "AlHO2 -> 0.5 Al2O3 + 0.5 H2O"
+   },
+   "mp": {
+    "delta_g_ev_per_AlOOH": -0.19631889618153986,
+    "p_H2O_bar_below_which_dehydration_is_favoured": 4334634.426318721,
+    "reaction": "AlHO2 -> 0.5 Al2O3 + 0.5 H2O"
+   },
+   "question": "is boehmite stable against dehydration to corundum, 2 AlOOH -> Al2O3 + H2O, without electrochemistry? Delta_G at the water standard state, and the water pressure (or activity) below which dehydration is favoured: thermodynamics only, no rate"
+  },
+  "reaction": "2 AlOOH -> Al2O3 + H2O (no electrochemistry)",
+  "reading": "a threshold, not a verdict: dehydration of boehmite to corundum is favoured below the water partial pressure (or liquid-referenced activity) given per scheme; the governing value is the expt route. The water activity in the electrolyte is not a sourced key (electrolyte_water_content is a mass fraction and gives no activity without a solvation model), so the threshold is not compared with any state of the cell."
+ },
+ "budgets": {
+  "reduction": {
+   "keys": {
+    "window_margin_red_boehmite": {
+     "exists": false,
+     "status": "absent at the p0-cp3 params"
+    },
+    "window_margin_red_caco3": {
+     "exists": false,
+     "status": "absent at the p0-cp3 params"
+    },
+    "window_margin_red_corundum": {
+     "exists": false,
+     "status": "absent at the p0-cp3 params"
+    }
+   },
+   "status": "gap"
+  },
+  "solvated": {
+   "keys": {
+    "solvation_al_vs_li": {
+     "exists": true,
+     "key": "solvation_al_vs_li",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+     "sources": [],
+     "status": "gap",
+     "value": null
+    },
+    "solvation_ca_vs_li": {
+     "exists": true,
+     "key": "solvation_ca_vs_li",
+     "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+     "sources": [],
+     "status": "gap",
+     "value": null
+    }
+   },
+   "status": "gap"
+  }
+ },
+ "cathode_classes": {
+  "LiCoO2": {
+   "E_cell_max_V": {
+    "max": 4.6,
+    "min": 4.2,
+    "value": 4.5
+   },
+   "key": "e_cell_max_lco",
+   "lower_bound": false,
+   "rows": [
+    "TJ-041",
+    "TJ-042",
+    "TK-044",
+    "TK-046",
+    "TK-047",
+    "TK-048",
+    "TK-049"
+   ],
+   "status": "sourced"
+  },
+  "LiFePO4": {
+   "E_cell_max_V": {
+    "max": 4.2,
+    "min": 3.6,
+    "value": 4.0
+   },
+   "key": "e_cell_max_lfp",
+   "lower_bound": false,
+   "rows": [
+    "TJ-038",
+    "TK-041",
+    "TK-042"
+   ],
+   "status": "sourced"
+  },
+  "LiMn2O4": {
+   "E_cell_max_V": {
+    "max": 4.5,
+    "min": 4.3,
+    "value": 4.5
+   },
+   "key": "e_cell_max_lmo",
+   "lower_bound": false,
+   "rows": [
+    "TA-052",
+    "TK-056",
+    "TK-057"
+   ],
+   "status": "sourced"
+  },
+  "LiNi0.5Mn1.5O4": {
+   "E_cell_max_V": {
+    "max": 5.0,
+    "min": 4.9,
+    "value": 4.9
+   },
+   "key": "e_cell_max_lnmo",
+   "lower_bound": false,
+   "rows": [
+    "TA-047",
+    "TA-048",
+    "TA-049",
+    "TJ-040"
+   ],
+   "status": "sourced"
+  },
+  "layered NMC/NCA": {
+   "E_cell_max_V": {
+    "max": 4.5,
+    "min": 4.25,
+    "value": 4.3
+   },
+   "key": "e_cell_max_layered",
+   "lower_bound": false,
+   "rows": [
+    "TA-050",
+    "TA-051",
+    "TA-052",
+    "TJ-036",
+    "TJ-037",
+    "TJ-039",
+    "TK-043",
+    "TK-050",
+    "TK-051",
+    "TK-052",
+    "TK-053",
+    "TK-054",
+    "TK-055"
+   ],
+   "status": "sourced"
+  }
+ },
+ "confirmation_vs_P0-W5.3": [
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "expt",
+   "sink": "LiBOB",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "janaf",
+   "sink": "LiBOB",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "mp",
+   "sink": "LiBOB",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": 4.706297389185894,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "expt",
+   "sink": "LiClO4",
+   "status_change": true
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": 4.670044371254867,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "janaf",
+   "sink": "LiClO4",
+   "status_change": true
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": 4.670044371254867,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "mp",
+   "sink": "LiClO4",
+   "status_change": true
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "expt",
+   "sink": "LiPCP",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "janaf",
+   "sink": "LiPCP",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "mp",
+   "sink": "LiPCP",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "expt",
+   "sink": "solvated",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "janaf",
+   "sink": "solvated",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "Al2O3",
+   "scheme": "mp",
+   "sink": "solvated",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "CaCO3",
+   "scheme": "expt",
+   "sink": "LiBOB",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "CaCO3",
+   "scheme": "janaf",
+   "sink": "LiBOB",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "CaCO3",
+   "scheme": "mp",
+   "sink": "LiBOB",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": 3.9378161596047305,
+   "P0-W5.4_V": 3.9378161596047305,
+   "abs_diff_V": 0.0,
+   "phase": "CaCO3",
+   "scheme": "expt",
+   "sink": "LiClO4",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": 4.320073231543534,
+   "P0-W5.4_V": 4.320073231543534,
+   "abs_diff_V": 0.0,
+   "phase": "CaCO3",
+   "scheme": "janaf",
+   "sink": "LiClO4",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": 3.7051136896293344,
+   "P0-W5.4_V": 3.7051136896293344,
+   "abs_diff_V": 0.0,
+   "phase": "CaCO3",
+   "scheme": "mp",
+   "sink": "LiClO4",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "CaCO3",
+   "scheme": "expt",
+   "sink": "LiPCP",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "CaCO3",
+   "scheme": "janaf",
+   "sink": "LiPCP",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "CaCO3",
+   "scheme": "mp",
+   "sink": "LiPCP",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "CaCO3",
+   "scheme": "expt",
+   "sink": "solvated",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "CaCO3",
+   "scheme": "janaf",
+   "sink": "solvated",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": null,
+   "P0-W5.4_V": null,
+   "abs_diff_V": null,
+   "phase": "CaCO3",
+   "scheme": "mp",
+   "sink": "solvated",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": 1.6234127807173644,
+   "P0-W5.4_V": 1.6234127807173644,
+   "abs_diff_V": 0.0,
+   "phase": "CaCO3",
+   "scheme": "DFT",
+   "sink": "reduction (Li-open)",
+   "status_change": false
+  },
+  {
+   "P0-W5.3_V": 1.2211214425000823,
+   "P0-W5.4_V": 1.2211214425000823,
+   "abs_diff_V": 0.0,
+   "phase": "Al2O3",
+   "scheme": "DFT",
+   "sink": "reduction (Li-open)",
+   "status_change": false
+  }
+ ],
+ "documents": [
+  "results/preprint/pourbaix/supplement_d3/cell/LiClO4.json",
+  "results/preprint/pourbaix/supplement_d3/cell/LiBOB.json",
+  "results/preprint/pourbaix/supplement_d3/cell/LiPCP.json",
+  "results/preprint/pourbaix/supplement_d3/cell/solvated.json"
+ ],
+ "exchange_tables": {
+  "Al(ClO4)3": {
+   "count": 3,
+   "dH_eV": 5.919200229005828,
+   "li_salt": "LiClO4",
+   "locators": {
+    "li_salt": "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K",
+    "salt": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, doi:10.1007/BF00926423, dfH of anhydrous Al(ClO4)3 (cr), Conclusions item 1 (free abstract page; full text not open); quote: 'The standard enthalpy for the formation of anhydrous aluminum perchlorate was determined (\u2212136.5 +-0.5 kcal/M).'",
+    "temperature_note": "the quoted dfH is a standard enthalpy; its reference temperature is not printed in the open text and is read as 298.15 K",
+    "u_salt_kJ_per_mol": 2.092
+   }
+  },
+  "Ca(ClO4)2": {
+   "count": 2,
+   "dH_eV": 0.2562876600600517,
+   "li_salt": "LiClO4",
+   "locators": [
+    "https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf, pdf p. 276 (2-268), OCR line 'Ca(ClO,), \u2018 cr 238.9812 _ -736.76 \u2014 ~ _ _'; printed p. 2-268; dfH printed, dfG and S blank (checked against the page image)",
+    "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K"
+   ]
+  }
+ },
+ "extensions": {
+  "config": "results/preprint/pourbaix/config/supplement_d3.yaml",
+  "provenance_pourbaix": {
+   "cache_hash": "sha256:a143176fd20e15dd8c7a2b8381cc0e3a8e71b23a1230ad5179571f174282f7ce",
+   "library_versions": {
+    "ase": "3.29.0",
+    "emmet-core": "0.87.3",
+    "mp-api": "0.46.5",
+    "numpy": "2.5.4",
+    "pymatgen": "2026.9.24",
+    "pyyaml": "6.0.3",
+    "rdkit": "2026.9.1",
+    "scipy": "1.18.1"
+   },
+   "mp_database_version": "2026.04.13",
+   "params_blob": "cc68303ff6cad6d45b77bfc776e28e210f8c2553",
+   "params_extra_snapshot": {
+    "absent_keys": [
+     "window_margin_red_caco3",
+     "window_margin_red_corundum",
+     "window_margin_red_boehmite"
+    ],
+    "path": "results/preprint/pourbaix/supplement_d3/inputs/params_8bc15c8_extra.json"
+   },
+   "params_snapshot": "results/preprint/pourbaix/inputs/params_8bc15c8.json",
+   "supplement_cache_hash": "sha256:1d00c351f041328ece324f20727c5a21c234a95ebc77f4a91845e3806747d1e2",
+   "supplement_local_only": [
+    {
+     "bytes": 4456603,
+     "file": "mp_entries_cell_Li-Al-O-H.json",
+     "licences": [
+      "BY-C"
+     ],
+     "location": ".local/w5/cache_d3/mp_entries_cell_Li-Al-O-H.json",
+     "n": 307,
+     "sha256": "sha256:c51928a342a9fc045e8fbd598a45ca6961bcb0ff0b31b19a3751135d208a6ce6"
+    }
+   ]
+  },
+  "scope": "Thermodynamic proxies only: a stability domain, a decomposition energy or a window says which state is at equilibrium, never how fast anything corrodes, dissolves or decomposes.",
+  "session": "P0-W5.4",
+  "sources": [
+   {
+    "files": "results/preprint/pourbaix/cache/ (production, read only) and .local/w5/cache_d3/ (Li-Al-O-H, local only)",
+    "what": "Materials Project database 2026.04.13 (mp-api), GGA/GGA+U with MP2020 corrections; CC BY 4.0; Jain et al., APL Materials 1, 011002 (2013), doi:10.1063/1.4812323; GNoME (CC BY-NC) excluded"
+   },
+   {
+    "urls": [
+     "https://janaf.nist.gov/tables/Al-025.txt",
+     "https://janaf.nist.gov/tables/Al-068.txt",
+     "https://janaf.nist.gov/tables/C-076.txt",
+     "https://janaf.nist.gov/tables/C-090.txt",
+     "https://janaf.nist.gov/tables/C-095.txt",
+     "https://janaf.nist.gov/tables/Ca-009.txt",
+     "https://janaf.nist.gov/tables/Ca-027.txt",
+     "https://janaf.nist.gov/tables/Cl-041.txt",
+     "https://janaf.nist.gov/tables/Cl-046.txt",
+     "https://janaf.nist.gov/tables/H-014.txt",
+     "https://janaf.nist.gov/tables/H-018.txt",
+     "https://janaf.nist.gov/tables/H-063.txt",
+     "https://janaf.nist.gov/tables/H-064.txt",
+     "https://janaf.nist.gov/tables/Li-014.txt",
+     "https://janaf.nist.gov/tables/Na-012.txt",
+     "https://janaf.nist.gov/tables/O-029.txt"
+    ],
+    "what": "NIST-JANAF Thermochemical Tables"
+   },
+   {
+    "files": "results/preprint/pourbaix/cache/nbs1982_ocr.json",
+    "what": "NBS tables 1982 (Wagman et al., J. Phys. Chem. Ref. Data 11, Suppl. 2), OCR of the scanned pages"
+   },
+   {
+    "files": "results/preprint/pourbaix/supplement_d3/cache/lit_krivtsov1973_al_clo4_3.json",
+    "what": "Krivtsov, Nikitina, Rosolovskii (1973), dfH of anhydrous Al(ClO4)3, doi:10.1007/BF00926423 (sourced value, not yet a W1 params key)"
+   },
+   {
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+    "what": "W1 lit/params.yaml at the p0-cp3 params (keys cited per value)"
+   }
+  ],
+  "supplement": true
+ },
+ "generated_utc": "2026-10-19T12:46:30Z",
+ "limitations": [
+  "The electrolyte's own anodic limit (anion or solvent oxidation) is not assessed; it may lie below every limit here.",
+  "Solid entropies are neglected in every scheme; for the Al(ClO4)3 exchange there is no entropy bound key (W1's exchange_entropy_bound is stated for Ca(ClO4)2).",
+  "The Al(ClO4)3 dfH is one fetched value from a free abstract page; it is not a params key, and its reference temperature is not printed (read as 298.15 K).",
+  "Water released by boehmite is taken at 1 bar; trace water in the electrolyte lowers the onsets (water_sensitivity), by an amount that needs a water activity that is not a params key.",
+  "Reduction limits use 0 K energies (Li-open); the expt cross-check governs where every product is tabulated."
+ ],
+ "params_at_tag": {
+  "equal": true,
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+  "tag": "p0-cp3"
+ },
+ "phases": {
+  "Al2O3": {
+   "by_sink": {
+    "Li2SO4": {
+     "benchmark_corrected_V": {},
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": 4.22689864899653,
+        "product": "Al2(SO4)3",
+        "reaction": "Al2O3 + 3 Li2SO4 -> Al2(SO4)3 + 1.5 O2 + 6 Li",
+        "reason": "",
+        "species": {
+         "Al2(SO4)3": {
+          "G_eV": -32.1354544962065,
+          "coefficient": 0.9999999999999982,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_al2_so4_3",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-036"
+           ],
+           "status": "single-source"
+          }
+         },
+         "Al2O3": {
+          "G_eV": -16.399383877103638,
+          "coefficient": -1.0,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_corundum",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-024"
+           ],
+           "status": "single-source"
+          }
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 5.999999999999986,
+          "kind": "reference"
+         },
+         "Li2SO4": {
+          "G_eV": -13.699154171027333,
+          "coefficient": -2.9999999999999942,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_li2so4",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-046"
+           ],
+           "status": "single-source"
+          }
+         },
+         "O2": {
+          "G_eV": 0.0,
+          "coefficient": 1.499999999999997,
+          "kind": "gas"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": 4.170708094502915,
+        "product": "Al2(SO4)3",
+        "reaction": "Al2O3 + 3 Li2SO4 -> Al2(SO4)3 + 1.5 O2 + 6 Li",
+        "reason": "",
+        "species": {
+         "Al2(SO4)3": {
+          "G_eV": -39.697113869375,
+          "coefficient": 0.9999999999999982,
+          "kind": "solid",
+          "material_id": "mp-4417"
+         },
+         "Al2O3": {
+          "G_eV": -17.132755040000003,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-1143"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 5.999999999999986,
+          "kind": "reference"
+         },
+         "Li2SO4": {
+          "G_eV": -16.179832222291665,
+          "coefficient": -2.9999999999999942,
+          "kind": "solid",
+          "material_id": "mp-4556"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 1.499999999999997,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": 4.170708094502915,
+        "product": "Al2(SO4)3",
+        "reaction": "Al2O3 + 3 Li2SO4 -> Al2(SO4)3 + 1.5 O2 + 6 Li",
+        "reason": "",
+        "species": {
+         "Al2(SO4)3": {
+          "G_eV": -39.697113869375,
+          "coefficient": 0.9999999999999982,
+          "kind": "solid",
+          "material_id": "mp-4417"
+         },
+         "Al2O3": {
+          "G_eV": -17.132755040000003,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-1143"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 5.999999999999986,
+          "kind": "reference"
+         },
+         "Li2SO4": {
+          "G_eV": -16.179832222291665,
+          "coefficient": -2.9999999999999942,
+          "kind": "solid",
+          "material_id": "mp-4556"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 1.499999999999997,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ]
+     },
+     "governing_V": {
+      "expt": 4.22689864899653
+     },
+     "governing_route": "expt",
+     "group": "comparator",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": 25.361391893979118,
+       "delta_n_li": 5.999999999999986,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 3 Li2SO4 -> Al2(SO4)3 + 1.5 O2 + 6 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.22689864899653
+      },
+      "janaf": {
+       "delta_g_ev": 25.02424856701743,
+       "delta_n_li": 5.999999999999986,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 3 Li2SO4 -> Al2(SO4)3 + 1.5 O2 + 6 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.170708094502915
+      },
+      "mp": {
+       "delta_g_ev": 25.02424856701743,
+       "delta_n_li": 5.999999999999986,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 3 Li2SO4 -> Al2(SO4)3 + 1.5 O2 + 6 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.170708094502915
+      }
+     },
+     "products": [
+      "Al2(SO4)3"
+     ],
+     "reaction": "Al2O3 + 3 Li2SO4 -> Al2(SO4)3 + 1.5 O2 + 6 Li",
+     "reason": "",
+     "sink_kind": "solid_salt",
+     "status": "ok",
+     "water_sensitivity": []
+    },
+    "LiBOB": {
+     "benchmark_corrected_V": {},
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lco",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "key": "e_cell_max_lnmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "key": "e_cell_max_layered",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TA-052",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": null,
+        "product": "AlB3C12O24",
+        "reaction": "Al2O3 + 6 LiB(CO2)4 -> 2 AlB3(CO2)12 + 1.5 O2 + 6 Li",
+        "reason": "phase LiB(C2O4)2 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": null,
+        "product": "AlB3C12O24",
+        "reaction": "Al2O3 + 6 LiB(CO2)4 -> 2 AlB3(CO2)12 + 1.5 O2 + 6 Li",
+        "reason": "phase AlB3C12O24 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": null,
+        "product": "AlB3C12O24",
+        "reaction": "Al2O3 + 6 LiB(CO2)4 -> 2 AlB3(CO2)12 + 1.5 O2 + 6 Li",
+        "reason": "phase AlB3C12O24 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ]
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "registered",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no governing route",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiB(CO2)4 -> 2 AlB3(CO2)12 + 1.5 O2 + 6 Li",
+       "reason": "phase LiB(C2O4)2 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "janaf": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiB(CO2)4 -> 2 AlB3(CO2)12 + 1.5 O2 + 6 Li",
+       "reason": "phase AlB3C12O24 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "mp": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiB(CO2)4 -> 2 AlB3(CO2)12 + 1.5 O2 + 6 Li",
+       "reason": "phase AlB3C12O24 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      }
+     },
+     "products": [
+      "AlB3C12O24"
+     ],
+     "reaction": "",
+     "reason": "phase AlB3C12O24 absent from the cached data; phase LiB(C2O4)2 absent from the cached data",
+     "sink_kind": "solid_salt",
+     "status": "undetermined",
+     "water_sensitivity": []
+    },
+    "LiCl": {
+     "benchmark_corrected_V": {},
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": 4.540532089445198,
+        "product": "AlCl3",
+        "reaction": "Al2O3 + 6 LiCl -> 2 AlCl3 + 1.5 O2 + 6 Li",
+        "reason": "",
+        "species": {
+         "Al2O3": {
+          "G_eV": -16.399383877103638,
+          "coefficient": -1.0,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_corundum",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-024"
+           ],
+           "status": "single-source"
+          }
+         },
+         "AlCl3": {
+          "G_eV": -6.529676440298982,
+          "coefficient": 1.9999999999999984,
+          "kind": "expt",
+          "source": "https://janaf.nist.gov/tables/Al-025.txt"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 6.0,
+          "kind": "reference"
+         },
+         "LiCl": {
+          "G_eV": -3.9838602566942525,
+          "coefficient": -5.9999999999999964,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_licl",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-040"
+           ],
+           "status": "single-source"
+          }
+         },
+         "O2": {
+          "G_eV": 0.0,
+          "coefficient": 1.4999999999999998,
+          "kind": "gas"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": 4.34974213825291,
+        "product": "AlCl3",
+        "reaction": "Al2O3 + 6 LiCl -> 2 AlCl3 + 1.5 O2 + 6 Li",
+        "reason": "",
+        "species": {
+         "Al2O3": {
+          "G_eV": -17.132755040000003,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-1143"
+         },
+         "AlCl3": {
+          "G_eV": -7.863252175000001,
+          "coefficient": 1.9999999999999984,
+          "kind": "solid",
+          "material_id": "mp-25469"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 6.0,
+          "kind": "reference"
+         },
+         "LiCl": {
+          "G_eV": -4.273848568333333,
+          "coefficient": -5.9999999999999964,
+          "kind": "solid",
+          "material_id": "mp-1185319"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 1.4999999999999998,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": 4.34974213825291,
+        "product": "AlCl3",
+        "reaction": "Al2O3 + 6 LiCl -> 2 AlCl3 + 1.5 O2 + 6 Li",
+        "reason": "",
+        "species": {
+         "Al2O3": {
+          "G_eV": -17.132755040000003,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-1143"
+         },
+         "AlCl3": {
+          "G_eV": -7.863252175000001,
+          "coefficient": 1.9999999999999984,
+          "kind": "solid",
+          "material_id": "mp-25469"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 6.0,
+          "kind": "reference"
+         },
+         "LiCl": {
+          "G_eV": -4.273848568333333,
+          "coefficient": -5.9999999999999964,
+          "kind": "solid",
+          "material_id": "mp-1185319"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 1.4999999999999998,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ]
+     },
+     "governing_V": {
+      "expt": 4.540532089445198
+     },
+     "governing_route": "expt",
+     "group": "comparator",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": 27.243192536671188,
+       "delta_n_li": 6.0,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiCl -> 2 AlCl3 + 1.5 O2 + 6 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.540532089445198
+      },
+      "janaf": {
+       "delta_g_ev": 26.098452829517456,
+       "delta_n_li": 6.0,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiCl -> 2 AlCl3 + 1.5 O2 + 6 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.34974213825291
+      },
+      "mp": {
+       "delta_g_ev": 26.098452829517456,
+       "delta_n_li": 6.0,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiCl -> 2 AlCl3 + 1.5 O2 + 6 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.34974213825291
+      }
+     },
+     "products": [
+      "AlCl3"
+     ],
+     "reaction": "Al2O3 + 6 LiCl -> 2 AlCl3 + 1.5 O2 + 6 Li",
+     "reason": "",
+     "sink_kind": "solid_salt",
+     "status": "ok",
+     "water_sensitivity": []
+    },
+    "LiClO4": {
+     "benchmark_corrected_V": {},
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lco",
+       "margin_that_would_decide_V": 0.10629738918589471,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "governing value exists but its budget key is absent (never passes, never falsifies)",
+       "rows": [
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "margin_that_would_decide_V": 0.5062973891858942,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "governing value exists but its budget key is absent (never passes, never falsifies)",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "margin_that_would_decide_V": 0.20629738918589435,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "governing value exists but its budget key is absent (never passes, never falsifies)",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "key": "e_cell_max_lnmo",
+       "margin_that_would_decide_V": 0.193702610814106,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "governing value exists but its budget key is absent (never passes, never falsifies)",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "key": "e_cell_max_layered",
+       "margin_that_would_decide_V": 0.20629738918589435,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "governing value exists but its budget key is absent (never passes, never falsifies)",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TA-052",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": 4.706297389185894,
+        "product": "Al(ClO4)3",
+        "reaction": "Al2O3 + 6 LiClO4 -> 2 Al(ClO4)3 + 1.5 O2 + 6 Li",
+        "reason": "",
+        "species": {
+         "Al(ClO4)3": {
+          "G_eV": -1.975605989067727,
+          "coefficient": 1.9999999999999905,
+          "exchange_dH_eV": 5.919200229005828,
+          "kind": "derived",
+          "locator": {
+           "li_salt": "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K",
+           "salt": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, doi:10.1007/BF00926423, dfH of anhydrous Al(ClO4)3 (cr), Conclusions item 1 (free abstract page; full text not open); quote: 'The standard enthalpy for the formation of anhydrous aluminum perchlorate was determined (\u2212136.5 +-0.5 kcal/M).'",
+           "temperature_note": "the quoted dfH is a standard enthalpy; its reference temperature is not printed in the open text and is read as 298.15 K",
+           "u_salt_kJ_per_mol": 2.092
+          }
+         },
+         "Al2O3": {
+          "G_eV": -16.399383877103638,
+          "coefficient": -1.0,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_corundum",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-024"
+           ],
+           "status": "single-source"
+          }
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 5.999999999999975,
+          "kind": "reference"
+         },
+         "LiClO4": {
+          "G_eV": -2.631602072691185,
+          "coefficient": -5.999999999999974,
+          "kind": "expt",
+          "source": "https://janaf.nist.gov/tables/Cl-046.txt"
+         },
+         "O2": {
+          "G_eV": 0.0,
+          "coefficient": 1.4999999999999951,
+          "kind": "gas"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": 4.670044371254867,
+        "product": "Al(ClO4)3",
+        "reaction": "Al2O3 + 6 LiClO4 -> 2 Al(ClO4)3 + 1.5 O2 + 6 Li",
+        "reason": "",
+        "species": {
+         "Al(ClO4)3": {
+          "G_eV": -12.225085343494182,
+          "coefficient": 1.9999999999999905,
+          "exchange_dH_eV": 5.919200229005828,
+          "kind": "derived",
+          "locator": {
+           "li_salt": "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K",
+           "salt": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, doi:10.1007/BF00926423, dfH of anhydrous Al(ClO4)3 (cr), Conclusions item 1 (free abstract page; full text not open); quote: 'The standard enthalpy for the formation of anhydrous aluminum perchlorate was determined (\u2212136.5 +-0.5 kcal/M).'",
+           "temperature_note": "the quoted dfH is a standard enthalpy; its reference temperature is not printed in the open text and is read as 298.15 K",
+           "u_salt_kJ_per_mol": 2.092
+          }
+         },
+         "Al2O3": {
+          "G_eV": -17.132755040000003,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-1143"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 5.999999999999975,
+          "kind": "reference"
+         },
+         "LiClO4": {
+          "G_eV": -6.048095190833337,
+          "coefficient": -5.999999999999974,
+          "kind": "solid",
+          "material_id": "mp-30301"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 1.4999999999999951,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": 4.670044371254867,
+        "product": "Al(ClO4)3",
+        "reaction": "Al2O3 + 6 LiClO4 -> 2 Al(ClO4)3 + 1.5 O2 + 6 Li",
+        "reason": "",
+        "species": {
+         "Al(ClO4)3": {
+          "G_eV": -12.225085343494182,
+          "coefficient": 1.9999999999999905,
+          "exchange_dH_eV": 5.919200229005828,
+          "kind": "derived",
+          "locator": {
+           "li_salt": "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K",
+           "salt": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, doi:10.1007/BF00926423, dfH of anhydrous Al(ClO4)3 (cr), Conclusions item 1 (free abstract page; full text not open); quote: 'The standard enthalpy for the formation of anhydrous aluminum perchlorate was determined (\u2212136.5 +-0.5 kcal/M).'",
+           "temperature_note": "the quoted dfH is a standard enthalpy; its reference temperature is not printed in the open text and is read as 298.15 K",
+           "u_salt_kJ_per_mol": 2.092
+          }
+         },
+         "Al2O3": {
+          "G_eV": -17.132755040000003,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-1143"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 5.999999999999975,
+          "kind": "reference"
+         },
+         "LiClO4": {
+          "G_eV": -6.048095190833337,
+          "coefficient": -5.999999999999974,
+          "kind": "solid",
+          "material_id": "mp-30301"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 1.4999999999999951,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ]
+     },
+     "governing_V": {
+      "expt": 4.706297389185894
+     },
+     "governing_route": "expt",
+     "group": "registered",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": 28.237784335115247,
+       "delta_n_li": 5.999999999999975,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiClO4 -> 2 Al(ClO4)3 + 1.5 O2 + 6 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.706297389185894
+      },
+      "janaf": {
+       "delta_g_ev": 28.020266227529085,
+       "delta_n_li": 5.999999999999975,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiClO4 -> 2 Al(ClO4)3 + 1.5 O2 + 6 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.670044371254867
+      },
+      "mp": {
+       "delta_g_ev": 28.020266227529085,
+       "delta_n_li": 5.999999999999975,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiClO4 -> 2 Al(ClO4)3 + 1.5 O2 + 6 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.670044371254867
+      }
+     },
+     "products": [
+      "Al(ClO4)3"
+     ],
+     "reaction": "Al2O3 + 6 LiClO4 -> 2 Al(ClO4)3 + 1.5 O2 + 6 Li",
+     "reason": "",
+     "sink_kind": "solid_salt",
+     "status": "ok",
+     "water_sensitivity": []
+    },
+    "LiNO3": {
+     "benchmark_corrected_V": {},
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": null,
+        "product": "Al(NO3)3",
+        "reaction": "Al2O3 + 6 LiNO3 -> 2 Al(NO3)3 + 1.5 O2 + 6 Li",
+        "reason": "phase Al(NO3)3 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": null,
+        "product": "Al(NO3)3",
+        "reaction": "Al2O3 + 6 LiNO3 -> 2 Al(NO3)3 + 1.5 O2 + 6 Li",
+        "reason": "phase Al(NO3)3 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": null,
+        "product": "Al(NO3)3",
+        "reaction": "Al2O3 + 6 LiNO3 -> 2 Al(NO3)3 + 1.5 O2 + 6 Li",
+        "reason": "phase Al(NO3)3 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ]
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "comparator",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no governing route",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiNO3 -> 2 Al(NO3)3 + 1.5 O2 + 6 Li",
+       "reason": "phase Al(NO3)3 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "janaf": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiNO3 -> 2 Al(NO3)3 + 1.5 O2 + 6 Li",
+       "reason": "phase Al(NO3)3 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "mp": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiNO3 -> 2 Al(NO3)3 + 1.5 O2 + 6 Li",
+       "reason": "phase Al(NO3)3 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      }
+     },
+     "products": [
+      "Al(NO3)3"
+     ],
+     "reaction": "",
+     "reason": "phase Al(NO3)3 absent from the cached data",
+     "sink_kind": "solid_salt",
+     "status": "undetermined",
+     "water_sensitivity": []
+    },
+    "LiPCP": {
+     "benchmark_corrected_V": {},
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lco",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "key": "e_cell_max_lnmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "key": "e_cell_max_layered",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TA-052",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": null,
+        "product": "Al(C8N5)3",
+        "reaction": "Al2O3 + 6 LiC8N5 -> 2 Al(C8N5)3 + 1.5 O2 + 6 Li",
+        "reason": "phase LiC8N5 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": null,
+        "product": "Al(C8N5)3",
+        "reaction": "Al2O3 + 6 LiC8N5 -> 2 Al(C8N5)3 + 1.5 O2 + 6 Li",
+        "reason": "phase LiC8N5 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": null,
+        "product": "Al(C8N5)3",
+        "reaction": "Al2O3 + 6 LiC8N5 -> 2 Al(C8N5)3 + 1.5 O2 + 6 Li",
+        "reason": "phase LiC8N5 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ]
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "registered",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no governing route",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiC8N5 -> 2 Al(C8N5)3 + 1.5 O2 + 6 Li",
+       "reason": "phase LiC8N5 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "janaf": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiC8N5 -> 2 Al(C8N5)3 + 1.5 O2 + 6 Li",
+       "reason": "phase LiC8N5 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "mp": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "Al2O3 + 6 LiC8N5 -> 2 Al(C8N5)3 + 1.5 O2 + 6 Li",
+       "reason": "phase LiC8N5 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      }
+     },
+     "products": [
+      "Al(C8N5)3"
+     ],
+     "reaction": "",
+     "reason": "phase LiC8N5 absent from the cached data",
+     "sink_kind": "solid_salt",
+     "status": "undetermined",
+     "water_sensitivity": []
+    },
+    "solvated": {
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "registered",
+     "missing_keys": [
+      {
+       "key": "solvation_ca_vs_li",
+       "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+       "sources": [],
+       "status": "gap"
+      },
+      {
+       "key": "solvation_al_vs_li",
+       "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+       "sources": [],
+       "status": "gap"
+      }
+     ],
+     "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent. Both keys are gaps at the p0-cp3 params, so it stays a gap; no onset is derived from the aqueous analogs.",
+     "sink_kind": "solvated",
+     "status": "undetermined"
+    }
+   },
+   "chemical_decomposition": {},
+   "identification": null,
+   "material_id": "mp-1143",
+   "name": "corundum",
+   "reduction": {
+    "E_cell_min_V": {
+     "max": 3.0,
+     "min": 2.8,
+     "source": {
+      "key": "e_cell_min",
+      "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+      "sources": [
+       "TJ-106",
+       "TJ-107",
+       "TJ-108"
+      ],
+      "status": "sourced"
+     }
+    },
+    "budget_key": null,
+    "dft_li_open": {
+     "delta_g_ev": -0.4579205409375309,
+     "delta_n_li": -0.375,
+     "method": "Li-open grand potential, first lithiation reaction on the hull",
+     "reaction": "Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al",
+     "reason": "",
+     "status": "ok",
+     "value_V": 1.2211214425000823
+    },
+    "expt_crosscheck": {
+     "reaction": "Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al",
+     "reason": "LiAl5O8 not tabulated in the fetched sources",
+     "status": "undetermined",
+     "value_V": null
+    },
+    "governing": {
+     "delta_g_ev": -0.4579205409375309,
+     "delta_n_li": -0.375,
+     "method": "Li-open grand potential, first lithiation reaction on the hull",
+     "reaction": "Al2O3 + 0.375 Li -> 0.375 LiAl5O8 + 0.125 Al",
+     "reason": "",
+     "status": "ok",
+     "value_V": 1.2211214425000823
+    },
+    "governing_route": "DFT (Li-open)",
+    "li_open_hull": {
+     "chemsys": "Li-Al-O",
+     "e_above_hull_eV_per_atom": 0.0,
+     "entry_id": "mp-aaaaabrz-GGA",
+     "excluded_by_licence": [],
+     "n_entries": 196,
+     "polymorphs_e_above_hull_eV_per_atom": [
+      [
+       "mp-1143",
+       0.0
+      ],
+      [
+       "mp-7048",
+       0.009381222000000022
+      ],
+      [
+       "mp-2254",
+       0.01688704075000036
+      ],
+      [
+       "mp-776475",
+       0.029764636750000406
+      ],
+      [
+       "mp-32570",
+       0.03241043399999999
+      ],
+      [
+       "mp-759943",
+       0.03513531687500038
+      ]
+     ]
+    },
+    "margin_V": null,
+    "margin_that_would_decide_V": 1.5788785574999176,
+    "verdict": "inconclusive",
+    "verdict_reason": "no budget key for the reduction limit (thresholds C5c_red; never passes, never falsifies)"
+   },
+   "role": "confirm (P0-W5.3 C5 values)"
+  },
+  "AlHO2": {
+   "by_sink": {
+    "Li2SO4": {
+     "benchmark_corrected_V": {},
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": 4.271668839155024,
+        "product": "Al2(SO4)3",
+        "reaction": "AlHO2 + 1.5 Li2SO4 -> 0.5 Al2(SO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "",
+        "species": {
+         "Al2(SO4)3": {
+          "G_eV": -32.1354544962065,
+          "coefficient": 0.5000000000000003,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_al2_so4_3",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-036"
+           ],
+           "status": "single-source"
+          }
+         },
+         "AlHO2": {
+          "G_eV": -9.51854525231118,
+          "coefficient": -1.0,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_boehmite",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-026"
+           ],
+           "status": "single-source"
+          }
+         },
+         "H2O": {
+          "G_eV": -2.36908548656772,
+          "coefficient": 0.5000000000000001,
+          "kind": "expt",
+          "source": "https://janaf.nist.gov/tables/H-064.txt, row(s) bracketing T = 298.15 K",
+          "state": "H2O(g)"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 3.0000000000000027,
+          "kind": "reference"
+         },
+         "Li2SO4": {
+          "G_eV": -13.699154171027333,
+          "coefficient": -1.500000000000002,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_li2so4",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-046"
+           ],
+           "status": "single-source"
+          }
+         },
+         "O2": {
+          "G_eV": 0.0,
+          "coefficient": 0.7500000000000003,
+          "kind": "gas"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": 4.328358444709853,
+        "product": "Al2(SO4)3",
+        "reaction": "AlHO2 + 1.5 Li2SO4 -> 0.5 Al2(SO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "",
+        "species": {
+         "Al2(SO4)3": {
+          "G_eV": -39.697113869375,
+          "coefficient": 0.5000000000000003,
+          "kind": "solid",
+          "material_id": "mp-4417"
+         },
+         "AlHO2": {
+          "G_eV": -10.58426214,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-625054"
+         },
+         "H2O": {
+          "G_eV": -3.089867138758339,
+          "coefficient": 0.5000000000000001,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/H-064.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "janaf"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 3.0000000000000027,
+          "kind": "reference"
+         },
+         "Li2SO4": {
+          "G_eV": -16.179832222291665,
+          "coefficient": -1.500000000000002,
+          "kind": "solid",
+          "material_id": "mp-4556"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.7500000000000003,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": 4.105268462442396,
+        "product": "Al2(SO4)3",
+        "reaction": "AlHO2 + 1.5 Li2SO4 -> 0.5 Al2(SO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "",
+        "species": {
+         "Al2(SO4)3": {
+          "G_eV": -39.697113869375,
+          "coefficient": 0.5000000000000003,
+          "kind": "solid",
+          "material_id": "mp-4417"
+         },
+         "AlHO2": {
+          "G_eV": -10.58426214,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-625054"
+         },
+         "H2O": {
+          "G_eV": -4.428407032363083,
+          "coefficient": 0.5000000000000001,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/H-064.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 3.0000000000000027,
+          "kind": "reference"
+         },
+         "Li2SO4": {
+          "G_eV": -16.179832222291665,
+          "coefficient": -1.500000000000002,
+          "kind": "solid",
+          "material_id": "mp-4556"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.7500000000000003,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ]
+     },
+     "governing_V": {
+      "expt": 4.271668839155024
+     },
+     "governing_route": "expt",
+     "group": "comparator",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": 12.815006517465083,
+       "delta_n_li": 3.0000000000000027,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 1.5 Li2SO4 -> 0.5 Al2(SO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.271668839155024
+      },
+      "janaf": {
+       "delta_g_ev": 12.98507533412957,
+       "delta_n_li": 3.0000000000000027,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 1.5 Li2SO4 -> 0.5 Al2(SO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.328358444709853
+      },
+      "mp": {
+       "delta_g_ev": 12.315805387327199,
+       "delta_n_li": 3.0000000000000027,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 1.5 Li2SO4 -> 0.5 Al2(SO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.105268462442396
+      }
+     },
+     "products": [
+      "Al2(SO4)3"
+     ],
+     "reaction": "AlHO2 + 1.5 Li2SO4 -> 0.5 Al2(SO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+     "reason": "",
+     "sink_kind": "solid_salt",
+     "status": "ok",
+     "water_sensitivity": [
+      {
+       "onset_H2O_g_1bar_V": 4.271668839155024,
+       "onset_H2O_l_unit_activity_V": 4.256955030999683,
+       "product": "Al2(SO4)3",
+       "reading": "a water activity a_w < 1 (trace water) lowers the onset by the slope times |ln a_w|; a_w is not a params key, so the shift is not applied",
+       "slope_V_per_ln_a_w": 0.004282096520180972
+      }
+     ]
+    },
+    "LiBOB": {
+     "benchmark_corrected_V": {},
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lco",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "key": "e_cell_max_lnmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "key": "e_cell_max_layered",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TA-052",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": null,
+        "product": "AlB3C12O24",
+        "reaction": "AlHO2 + 3 LiB(CO2)4 -> AlB3(CO2)12 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "phase LiB(C2O4)2 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": null,
+        "product": "AlB3C12O24",
+        "reaction": "AlHO2 + 3 LiB(CO2)4 -> AlB3(CO2)12 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "phase AlB3C12O24 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": null,
+        "product": "AlB3C12O24",
+        "reaction": "AlHO2 + 3 LiB(CO2)4 -> AlB3(CO2)12 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "phase AlB3C12O24 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ]
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "registered",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no governing route",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiB(CO2)4 -> AlB3(CO2)12 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "phase LiB(C2O4)2 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "janaf": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiB(CO2)4 -> AlB3(CO2)12 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "phase AlB3C12O24 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "mp": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiB(CO2)4 -> AlB3(CO2)12 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "phase AlB3C12O24 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      }
+     },
+     "products": [
+      "AlB3C12O24"
+     ],
+     "reaction": "",
+     "reason": "phase AlB3C12O24 absent from the cached data; phase LiB(C2O4)2 absent from the cached data",
+     "sink_kind": "solid_salt",
+     "status": "undetermined",
+     "water_sensitivity": []
+    },
+    "LiCl": {
+     "benchmark_corrected_V": {},
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": 4.585302279603701,
+        "product": "AlCl3",
+        "reaction": "AlHO2 + 3 LiCl -> AlCl3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "",
+        "species": {
+         "AlCl3": {
+          "G_eV": -6.529676440298982,
+          "coefficient": 0.9999999999999996,
+          "kind": "expt",
+          "source": "https://janaf.nist.gov/tables/Al-025.txt"
+         },
+         "AlHO2": {
+          "G_eV": -9.51854525231118,
+          "coefficient": -1.0,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_boehmite",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-026"
+           ],
+           "status": "single-source"
+          }
+         },
+         "H2O": {
+          "G_eV": -2.36908548656772,
+          "coefficient": 0.5000000000000003,
+          "kind": "expt",
+          "source": "https://janaf.nist.gov/tables/H-064.txt, row(s) bracketing T = 298.15 K",
+          "state": "H2O(g)"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.9999999999999982,
+          "kind": "reference"
+         },
+         "LiCl": {
+          "G_eV": -3.9838602566942525,
+          "coefficient": -2.9999999999999987,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_licl",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-040"
+           ],
+           "status": "single-source"
+          }
+         },
+         "O2": {
+          "G_eV": 0.0,
+          "coefficient": 0.7499999999999982,
+          "kind": "gas"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": 4.507392488459855,
+        "product": "AlCl3",
+        "reaction": "AlHO2 + 3 LiCl -> AlCl3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "",
+        "species": {
+         "AlCl3": {
+          "G_eV": -7.863252175000001,
+          "coefficient": 0.9999999999999996,
+          "kind": "solid",
+          "material_id": "mp-25469"
+         },
+         "AlHO2": {
+          "G_eV": -10.58426214,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-625054"
+         },
+         "H2O": {
+          "G_eV": -3.089867138758339,
+          "coefficient": 0.5000000000000003,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/H-064.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "janaf"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.9999999999999982,
+          "kind": "reference"
+         },
+         "LiCl": {
+          "G_eV": -4.273848568333333,
+          "coefficient": -2.9999999999999987,
+          "kind": "solid",
+          "material_id": "mp-1185319"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.7499999999999982,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": 4.284302506192398,
+        "product": "AlCl3",
+        "reaction": "AlHO2 + 3 LiCl -> AlCl3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "",
+        "species": {
+         "AlCl3": {
+          "G_eV": -7.863252175000001,
+          "coefficient": 0.9999999999999996,
+          "kind": "solid",
+          "material_id": "mp-25469"
+         },
+         "AlHO2": {
+          "G_eV": -10.58426214,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-625054"
+         },
+         "H2O": {
+          "G_eV": -4.428407032363083,
+          "coefficient": 0.5000000000000003,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/H-064.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.9999999999999982,
+          "kind": "reference"
+         },
+         "LiCl": {
+          "G_eV": -4.273848568333333,
+          "coefficient": -2.9999999999999987,
+          "kind": "solid",
+          "material_id": "mp-1185319"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.7499999999999982,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ]
+     },
+     "governing_V": {
+      "expt": 4.585302279603701
+     },
+     "governing_route": "expt",
+     "group": "comparator",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": 13.755906838811093,
+       "delta_n_li": 2.9999999999999982,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiCl -> AlCl3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.585302279603701
+      },
+      "janaf": {
+       "delta_g_ev": 13.522177465379558,
+       "delta_n_li": 2.9999999999999982,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiCl -> AlCl3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.507392488459855
+      },
+      "mp": {
+       "delta_g_ev": 12.852907518577185,
+       "delta_n_li": 2.9999999999999982,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiCl -> AlCl3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.284302506192398
+      }
+     },
+     "products": [
+      "AlCl3"
+     ],
+     "reaction": "AlHO2 + 3 LiCl -> AlCl3 + 0.75 O2 + 0.5 H2O + 3 Li",
+     "reason": "",
+     "sink_kind": "solid_salt",
+     "status": "ok",
+     "water_sensitivity": [
+      {
+       "onset_H2O_g_1bar_V": 4.585302279603701,
+       "onset_H2O_l_unit_activity_V": 4.57058847144836,
+       "product": "AlCl3",
+       "reading": "a water activity a_w < 1 (trace water) lowers the onset by the slope times |ln a_w|; a_w is not a params key, so the shift is not applied",
+       "slope_V_per_ln_a_w": 0.00428209652018098
+      }
+     ]
+    },
+    "LiClO4": {
+     "benchmark_corrected_V": {},
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lco",
+       "margin_that_would_decide_V": 0.1510675793443852,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "governing value exists but its budget key is absent (never passes, never falsifies)",
+       "rows": [
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "margin_that_would_decide_V": 0.5510675793443847,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "governing value exists but its budget key is absent (never passes, never falsifies)",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "margin_that_would_decide_V": 0.25106757934438484,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "governing value exists but its budget key is absent (never passes, never falsifies)",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "key": "e_cell_max_lnmo",
+       "margin_that_would_decide_V": 0.14893242065561552,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "governing value exists but its budget key is absent (never passes, never falsifies)",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "key": "e_cell_max_layered",
+       "margin_that_would_decide_V": 0.25106757934438484,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "governing value exists but its budget key is absent (never passes, never falsifies)",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TA-052",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": 4.751067579344385,
+        "product": "Al(ClO4)3",
+        "reaction": "AlHO2 + 3 LiClO4 -> Al(ClO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "",
+        "species": {
+         "Al(ClO4)3": {
+          "G_eV": -1.975605989067727,
+          "coefficient": 0.9999999999999989,
+          "exchange_dH_eV": 5.919200229005828,
+          "kind": "derived",
+          "locator": {
+           "li_salt": "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K",
+           "salt": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, doi:10.1007/BF00926423, dfH of anhydrous Al(ClO4)3 (cr), Conclusions item 1 (free abstract page; full text not open); quote: 'The standard enthalpy for the formation of anhydrous aluminum perchlorate was determined (\u2212136.5 +-0.5 kcal/M).'",
+           "temperature_note": "the quoted dfH is a standard enthalpy; its reference temperature is not printed in the open text and is read as 298.15 K",
+           "u_salt_kJ_per_mol": 2.092
+          }
+         },
+         "AlHO2": {
+          "G_eV": -9.51854525231118,
+          "coefficient": -1.0,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_boehmite",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-026"
+           ],
+           "status": "single-source"
+          }
+         },
+         "H2O": {
+          "G_eV": -2.36908548656772,
+          "coefficient": 0.5000000000000002,
+          "kind": "expt",
+          "source": "https://janaf.nist.gov/tables/H-064.txt, row(s) bracketing T = 298.15 K",
+          "state": "H2O(g)"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.999999999999998,
+          "kind": "reference"
+         },
+         "LiClO4": {
+          "G_eV": -2.631602072691185,
+          "coefficient": -2.9999999999999973,
+          "kind": "expt",
+          "source": "https://janaf.nist.gov/tables/Cl-046.txt"
+         },
+         "O2": {
+          "G_eV": 0.0,
+          "coefficient": 0.7499999999999997,
+          "kind": "gas"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": 4.827694721461798,
+        "product": "Al(ClO4)3",
+        "reaction": "AlHO2 + 3 LiClO4 -> Al(ClO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "",
+        "species": {
+         "Al(ClO4)3": {
+          "G_eV": -12.225085343494182,
+          "coefficient": 0.9999999999999989,
+          "exchange_dH_eV": 5.919200229005828,
+          "kind": "derived",
+          "locator": {
+           "li_salt": "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K",
+           "salt": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, doi:10.1007/BF00926423, dfH of anhydrous Al(ClO4)3 (cr), Conclusions item 1 (free abstract page; full text not open); quote: 'The standard enthalpy for the formation of anhydrous aluminum perchlorate was determined (\u2212136.5 +-0.5 kcal/M).'",
+           "temperature_note": "the quoted dfH is a standard enthalpy; its reference temperature is not printed in the open text and is read as 298.15 K",
+           "u_salt_kJ_per_mol": 2.092
+          }
+         },
+         "AlHO2": {
+          "G_eV": -10.58426214,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-625054"
+         },
+         "H2O": {
+          "G_eV": -3.089867138758339,
+          "coefficient": 0.5000000000000002,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/H-064.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "janaf"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.999999999999998,
+          "kind": "reference"
+         },
+         "LiClO4": {
+          "G_eV": -6.048095190833337,
+          "coefficient": -2.9999999999999973,
+          "kind": "solid",
+          "material_id": "mp-30301"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.7499999999999997,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": 4.6046047391943405,
+        "product": "Al(ClO4)3",
+        "reaction": "AlHO2 + 3 LiClO4 -> Al(ClO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "",
+        "species": {
+         "Al(ClO4)3": {
+          "G_eV": -12.225085343494182,
+          "coefficient": 0.9999999999999989,
+          "exchange_dH_eV": 5.919200229005828,
+          "kind": "derived",
+          "locator": {
+           "li_salt": "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K",
+           "salt": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, doi:10.1007/BF00926423, dfH of anhydrous Al(ClO4)3 (cr), Conclusions item 1 (free abstract page; full text not open); quote: 'The standard enthalpy for the formation of anhydrous aluminum perchlorate was determined (\u2212136.5 +-0.5 kcal/M).'",
+           "temperature_note": "the quoted dfH is a standard enthalpy; its reference temperature is not printed in the open text and is read as 298.15 K",
+           "u_salt_kJ_per_mol": 2.092
+          }
+         },
+         "AlHO2": {
+          "G_eV": -10.58426214,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-625054"
+         },
+         "H2O": {
+          "G_eV": -4.428407032363083,
+          "coefficient": 0.5000000000000002,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/H-064.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.999999999999998,
+          "kind": "reference"
+         },
+         "LiClO4": {
+          "G_eV": -6.048095190833337,
+          "coefficient": -2.9999999999999973,
+          "kind": "solid",
+          "material_id": "mp-30301"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.7499999999999997,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ]
+     },
+     "governing_V": {
+      "expt": 4.751067579344385
+     },
+     "governing_route": "expt",
+     "group": "registered",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": 14.253202738033144,
+       "delta_n_li": 2.999999999999998,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiClO4 -> Al(ClO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.751067579344385
+      },
+      "janaf": {
+       "delta_g_ev": 14.483084164385383,
+       "delta_n_li": 2.999999999999998,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiClO4 -> Al(ClO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.827694721461798
+      },
+      "mp": {
+       "delta_g_ev": 13.813814217583012,
+       "delta_n_li": 2.999999999999998,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiClO4 -> Al(ClO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.6046047391943405
+      }
+     },
+     "products": [
+      "Al(ClO4)3"
+     ],
+     "reaction": "AlHO2 + 3 LiClO4 -> Al(ClO4)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+     "reason": "",
+     "sink_kind": "solid_salt",
+     "status": "ok",
+     "water_sensitivity": [
+      {
+       "onset_H2O_g_1bar_V": 4.751067579344385,
+       "onset_H2O_l_unit_activity_V": 4.736353771189044,
+       "product": "Al(ClO4)3",
+       "reading": "a water activity a_w < 1 (trace water) lowers the onset by the slope times |ln a_w|; a_w is not a params key, so the shift is not applied",
+       "slope_V_per_ln_a_w": 0.00428209652018098
+      }
+     ]
+    },
+    "LiNO3": {
+     "benchmark_corrected_V": {},
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": null,
+        "product": "Al(NO3)3",
+        "reaction": "AlHO2 + 3 LiNO3 -> Al(NO3)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "phase Al(NO3)3 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": null,
+        "product": "Al(NO3)3",
+        "reaction": "AlHO2 + 3 LiNO3 -> Al(NO3)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "phase Al(NO3)3 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": null,
+        "product": "Al(NO3)3",
+        "reaction": "AlHO2 + 3 LiNO3 -> Al(NO3)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "phase Al(NO3)3 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ]
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "comparator",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no governing route",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiNO3 -> Al(NO3)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "phase Al(NO3)3 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "janaf": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiNO3 -> Al(NO3)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "phase Al(NO3)3 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "mp": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiNO3 -> Al(NO3)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "phase Al(NO3)3 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      }
+     },
+     "products": [
+      "Al(NO3)3"
+     ],
+     "reaction": "",
+     "reason": "phase Al(NO3)3 absent from the cached data",
+     "sink_kind": "solid_salt",
+     "status": "undetermined",
+     "water_sensitivity": []
+    },
+    "LiPCP": {
+     "benchmark_corrected_V": {},
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lco",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "key": "e_cell_max_lnmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "key": "e_cell_max_layered",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TA-052",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": null,
+        "product": "Al(C8N5)3",
+        "reaction": "AlHO2 + 3 LiC8N5 -> Al(C8N5)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "phase LiC8N5 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": null,
+        "product": "Al(C8N5)3",
+        "reaction": "AlHO2 + 3 LiC8N5 -> Al(C8N5)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "phase LiC8N5 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": null,
+        "product": "Al(C8N5)3",
+        "reaction": "AlHO2 + 3 LiC8N5 -> Al(C8N5)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+        "reason": "phase LiC8N5 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ]
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "registered",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no governing route",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiC8N5 -> Al(C8N5)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "phase LiC8N5 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "janaf": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiC8N5 -> Al(C8N5)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "phase LiC8N5 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "mp": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "AlHO2 + 3 LiC8N5 -> Al(C8N5)3 + 0.75 O2 + 0.5 H2O + 3 Li",
+       "reason": "phase LiC8N5 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      }
+     },
+     "products": [
+      "Al(C8N5)3"
+     ],
+     "reaction": "",
+     "reason": "phase LiC8N5 absent from the cached data",
+     "sink_kind": "solid_salt",
+     "status": "undetermined",
+     "water_sensitivity": []
+    },
+    "solvated": {
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "registered",
+     "missing_keys": [
+      {
+       "key": "solvation_ca_vs_li",
+       "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+       "sources": [],
+       "status": "gap"
+      },
+      {
+       "key": "solvation_al_vs_li",
+       "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+       "sources": [],
+       "status": "gap"
+      }
+     ],
+     "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent. Both keys are gaps at the p0-cp3 params, so it stays a gap; no onset is derived from the aqueous analogs.",
+     "sink_kind": "solvated",
+     "status": "undetermined"
+    }
+   },
+   "chemical_decomposition": {
+    "expt": {
+     "delta_g_ev_per_AlOOH": 0.134310570475503,
+     "p_H2O_bar_below_which_dehydration_is_favoured": 2.8798034652601265e-05,
+     "reaction": "AlHO2 -> 0.5 Al2O3 + 0.5 H2O"
+    },
+    "expt_H2O_l": {
+     "a_w_below_which_dehydration_is_favoured": 0.0008946473632719873,
+     "delta_g_ev_per_AlOOH": 0.09016914600948223,
+     "reaction": "AlHO2 -> 0.5 Al2O3 + 0.5 H2O"
+    },
+    "janaf": {
+     "delta_g_ev_per_AlOOH": 0.47295105062083165,
+     "p_H2O_bar_below_which_dehydration_is_favoured": 1.0255218294377556e-16,
+     "reaction": "AlHO2 -> 0.5 Al2O3 + 0.5 H2O"
+    },
+    "mp": {
+     "delta_g_ev_per_AlOOH": -0.19631889618153986,
+     "p_H2O_bar_below_which_dehydration_is_favoured": 4334634.426318721,
+     "reaction": "AlHO2 -> 0.5 Al2O3 + 0.5 H2O"
+    },
+    "question": "is boehmite stable against dehydration to corundum, 2 AlOOH -> Al2O3 + H2O, without electrochemistry? Delta_G at the water standard state, and the water pressure (or activity) below which dehydration is favoured: thermodynamics only, no rate"
+   },
+   "identification": "gamma-AlOOH, the layered AlOOH polymorph: conventional cell 2.90 x 12.25 x 3.74 Angstrom, density 3.00 g cm^-3 (computed from the cached structure). Diaspore is mp-625152 (2.87 x 4.42 x 9.50 Angstrom, 3.30 g cm^-3), a comparator only.",
+   "material_id": "mp-625054",
+   "name": "boehmite",
+   "reduction": {
+    "E_cell_min_V": {
+     "max": 3.0,
+     "min": 2.8,
+     "source": {
+      "key": "e_cell_min",
+      "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+      "sources": [
+       "TJ-106",
+       "TJ-107",
+       "TJ-108"
+      ],
+      "status": "sourced"
+     }
+    },
+    "budget_key": null,
+    "dft_li_open": {
+     "delta_g_ev": -1.747269785833333,
+     "delta_n_li": -1.0,
+     "method": "Li-open grand potential, first lithiation reaction on the hull",
+     "reaction": "AlHO2 + Li -> LiAlO2 + 0.5 H2",
+     "reason": "",
+     "status": "ok",
+     "value_V": 1.747269785833333
+    },
+    "expt_crosscheck": {
+     "method": "Li-open lithiation reaction with tabulated free energies (elements at 0)",
+     "reaction": "AlHO2 + Li -> LiAlO2 + 0.5 H2",
+     "reason": "",
+     "status": "ok",
+     "value_V": 2.1547627543458763
+    },
+    "governing": {
+     "method": "Li-open lithiation reaction with tabulated free energies (elements at 0)",
+     "reaction": "AlHO2 + Li -> LiAlO2 + 0.5 H2",
+     "reason": "",
+     "status": "ok",
+     "value_V": 2.1547627543458763
+    },
+    "governing_route": "expt",
+    "li_open_hull": {
+     "chemsys": "Li-Al-O-H",
+     "e_above_hull_eV_per_atom": 0.0,
+     "entry_id": "mp-aaabjoqo-GGA",
+     "excluded_by_licence": [],
+     "n_entries": 307,
+     "polymorphs_e_above_hull_eV_per_atom": [
+      [
+       "mp-625054",
+       0.0
+      ],
+      [
+       "mp-625152",
+       0.005892130624999936
+      ],
+      [
+       "mp-625404",
+       0.018160709375000472
+      ],
+      [
+       "mp-625420",
+       0.026626933750000248
+      ],
+      [
+       "mp-23807",
+       0.03432267124999999
+      ],
+      [
+       "mp-1078520",
+       0.044032941250000235
+      ]
+     ]
+    },
+    "margin_V": null,
+    "margin_that_would_decide_V": 0.6452372456541235,
+    "verdict": "inconclusive",
+    "verdict_reason": "no budget key for the reduction limit (thresholds C5c_red; never passes, never falsifies)"
+   },
+   "role": "new window (thresholds gated_phases R-cell; W4 AM2 left it undetermined)"
+  },
+  "CaCO3": {
+   "by_sink": {
+    "Li2SO4": {
+     "benchmark_corrected_V": {
+      "janaf": 3.892307316658045,
+      "mp": 3.8923073166580444
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": 3.8095035992647084,
+        "product": "CaSO4",
+        "reaction": "CaCO3 + Li2SO4 -> CaSO4 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -4.087667952429801,
+          "coefficient": 0.9999999999999998,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_co2_g",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-008"
+           ],
+           "status": "single-source"
+          }
+         },
+         "CaCO3": {
+          "G_eV": -11.70701261157922,
+          "coefficient": -1.0,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_caco3_calcite",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-002",
+            "TI-056"
+           ],
+           "status": "sourced"
+          }
+         },
+         "CaSO4": {
+          "G_eV": -13.69949163164734,
+          "coefficient": 0.9999999999999996,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_caso4",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-034"
+           ],
+           "status": "single-source"
+          }
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 1.9999999999999978,
+          "kind": "reference"
+         },
+         "Li2SO4": {
+          "G_eV": -13.699154171027333,
+          "coefficient": -0.9999999999999993,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_li2so4",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-046"
+           ],
+           "status": "single-source"
+          }
+         },
+         "O2": {
+          "G_eV": 0.0,
+          "coefficient": 0.49999999999999967,
+          "kind": "gas"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": 4.27456438859685,
+        "product": "CaSO4",
+        "reaction": "CaCO3 + Li2SO4 -> CaSO4 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -4.739217549312127,
+          "coefficient": 0.9999999999999998,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "janaf"
+         },
+         "CaCO3": {
+          "G_eV": -13.440039442500002,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-3953"
+         },
+         "CaSO4": {
+          "G_eV": -16.014562248125,
+          "coefficient": 0.9999999999999996,
+          "kind": "solid",
+          "material_id": "mp-4406"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 1.9999999999999978,
+          "kind": "reference"
+         },
+         "Li2SO4": {
+          "G_eV": -16.179832222291665,
+          "coefficient": -0.9999999999999993,
+          "kind": "solid",
+          "material_id": "mp-4556"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.49999999999999967,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": 3.6596048466826505,
+        "product": "CaSO4",
+        "reaction": "CaCO3 + Li2SO4 -> CaSO4 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -5.969136633140525,
+          "coefficient": 0.9999999999999998,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp"
+         },
+         "CaCO3": {
+          "G_eV": -13.440039442500002,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-3953"
+         },
+         "CaSO4": {
+          "G_eV": -16.014562248125,
+          "coefficient": 0.9999999999999996,
+          "kind": "solid",
+          "material_id": "mp-4406"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 1.9999999999999978,
+          "kind": "reference"
+         },
+         "Li2SO4": {
+          "G_eV": -16.179832222291665,
+          "coefficient": -0.9999999999999993,
+          "kind": "solid",
+          "material_id": "mp-4556"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.49999999999999967,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ]
+     },
+     "governing_V": {
+      "expt": 3.8095035992647084
+     },
+     "governing_route": "expt",
+     "group": "comparator",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": 7.619007198529408,
+       "delta_n_li": 1.9999999999999978,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + Li2SO4 -> CaSO4 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 3.8095035992647084
+      },
+      "janaf": {
+       "delta_g_ev": 8.54912877719369,
+       "delta_n_li": 1.9999999999999978,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + Li2SO4 -> CaSO4 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.27456438859685
+      },
+      "mp": {
+       "delta_g_ev": 7.319209693365293,
+       "delta_n_li": 1.9999999999999978,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + Li2SO4 -> CaSO4 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 3.6596048466826505
+      }
+     },
+     "products": [
+      "CaSO4"
+     ],
+     "reaction": "CaCO3 + Li2SO4 -> CaSO4 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink_kind": "solid_salt",
+     "status": "ok",
+     "water_sensitivity": []
+    },
+    "LiBOB": {
+     "benchmark_corrected_V": {},
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lco",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "key": "e_cell_max_lnmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "key": "e_cell_max_layered",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TA-052",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": null,
+        "product": "CaB2C8O16",
+        "reaction": "CaCO3 + 2 LiB(CO2)4 -> CaB2(CO2)8 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "phase LiB(C2O4)2 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": null,
+        "product": "CaB2C8O16",
+        "reaction": "CaCO3 + 2 LiB(CO2)4 -> CaB2(CO2)8 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "phase CaB2C8O16 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": null,
+        "product": "CaB2C8O16",
+        "reaction": "CaCO3 + 2 LiB(CO2)4 -> CaB2(CO2)8 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "phase CaB2C8O16 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ]
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "registered",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no governing route",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiB(CO2)4 -> CaB2(CO2)8 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "phase LiB(C2O4)2 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "janaf": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiB(CO2)4 -> CaB2(CO2)8 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "phase CaB2C8O16 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "mp": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiB(CO2)4 -> CaB2(CO2)8 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "phase CaB2C8O16 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      }
+     },
+     "products": [
+      "CaB2C8O16"
+     ],
+     "reaction": "",
+     "reason": "phase CaB2C8O16 absent from the cached data; phase LiB(C2O4)2 absent from the cached data",
+     "sink_kind": "solid_salt",
+     "status": "undetermined",
+     "water_sensitivity": []
+    },
+    "LiCl": {
+     "benchmark_corrected_V": {
+      "janaf": 3.878273982908046,
+      "mp": 3.8782739829080457
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": 3.9188503752753516,
+        "product": "CaCl2",
+        "reaction": "CaCO3 + 2 LiCl -> CaCl2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -4.087667952429801,
+          "coefficient": 0.9999999999999996,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_co2_g",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-008"
+           ],
+           "status": "single-source"
+          }
+         },
+         "CaCO3": {
+          "G_eV": -11.70701261157922,
+          "coefficient": -1.0,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_caco3_calcite",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-002",
+            "TI-056"
+           ],
+           "status": "sourced"
+          }
+         },
+         "CaCl2": {
+          "G_eV": -7.749364421987228,
+          "coefficient": 0.9999999999999993,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_cacl2",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-032"
+           ],
+           "status": "single-source"
+          }
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 1.9999999999999973,
+          "kind": "reference"
+         },
+         "LiCl": {
+          "G_eV": -3.9838602566942525,
+          "coefficient": -1.9999999999999978,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_licl",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-040"
+           ],
+           "status": "single-source"
+          }
+         },
+         "O2": {
+          "G_eV": 0.0,
+          "coefficient": 0.5000000000000003,
+          "kind": "gas"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": 4.260531054846851,
+        "product": "CaCl2",
+        "reaction": "CaCO3 + 2 LiCl -> CaCl2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -4.739217549312127,
+          "coefficient": 0.9999999999999996,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "janaf"
+         },
+         "CaCO3": {
+          "G_eV": -13.440039442500002,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-3953"
+         },
+         "CaCl2": {
+          "G_eV": -8.41049383,
+          "coefficient": 0.9999999999999993,
+          "kind": "solid",
+          "material_id": "mp-22904"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 1.9999999999999973,
+          "kind": "reference"
+         },
+         "LiCl": {
+          "G_eV": -4.273848568333333,
+          "coefficient": -1.9999999999999978,
+          "kind": "solid",
+          "material_id": "mp-1185319"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.5000000000000003,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": 3.645571512932652,
+        "product": "CaCl2",
+        "reaction": "CaCO3 + 2 LiCl -> CaCl2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -5.969136633140525,
+          "coefficient": 0.9999999999999996,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp"
+         },
+         "CaCO3": {
+          "G_eV": -13.440039442500002,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-3953"
+         },
+         "CaCl2": {
+          "G_eV": -8.41049383,
+          "coefficient": 0.9999999999999993,
+          "kind": "solid",
+          "material_id": "mp-22904"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 1.9999999999999973,
+          "kind": "reference"
+         },
+         "LiCl": {
+          "G_eV": -4.273848568333333,
+          "coefficient": -1.9999999999999978,
+          "kind": "solid",
+          "material_id": "mp-1185319"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.5000000000000003,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ]
+     },
+     "governing_V": {
+      "expt": 3.9188503752753516
+     },
+     "governing_route": "expt",
+     "group": "comparator",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": 7.837700750550693,
+       "delta_n_li": 1.9999999999999973,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiCl -> CaCl2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 3.9188503752753516
+      },
+      "janaf": {
+       "delta_g_ev": 8.521062109693691,
+       "delta_n_li": 1.9999999999999973,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiCl -> CaCl2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.260531054846851
+      },
+      "mp": {
+       "delta_g_ev": 7.291143025865294,
+       "delta_n_li": 1.9999999999999973,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiCl -> CaCl2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 3.645571512932652
+      }
+     },
+     "products": [
+      "CaCl2"
+     ],
+     "reaction": "CaCO3 + 2 LiCl -> CaCl2 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink_kind": "solid_salt",
+     "status": "ok",
+     "water_sensitivity": []
+    },
+    "LiClO4": {
+     "benchmark_corrected_V": {
+      "janaf": 3.9378161596047296,
+      "mp": 3.9378161596047283
+     },
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lco",
+       "margin_that_would_decide_V": 0.26218384039526965,
+       "oxidation_verdict": "falsified",
+       "oxidation_verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       },
+       "reason": "",
+       "rows": [
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
+       ],
+       "verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "margin_that_would_decide_V": 0.26218384039526965,
+       "oxidation_verdict": "inconclusive to falsified",
+       "oxidation_verdict_at": {
+        "max": "falsified",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict_at": {
+        "max": "falsified",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "margin_that_would_decide_V": 0.3621838403952693,
+       "oxidation_verdict": "falsified",
+       "oxidation_verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       },
+       "reason": "",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "key": "e_cell_max_lnmo",
+       "margin_that_would_decide_V": 0.9621838403952698,
+       "oxidation_verdict": "falsified",
+       "oxidation_verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       },
+       "reason": "",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "key": "e_cell_max_layered",
+       "margin_that_would_decide_V": 0.3121838403952695,
+       "oxidation_verdict": "falsified",
+       "oxidation_verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       },
+       "reason": "",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TA-052",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
+       ],
+       "verdict_at": {
+        "max": "falsified",
+        "min": "falsified",
+        "value": "falsified"
+       }
+      }
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": 3.9378161596047305,
+        "product": "Ca(ClO4)2",
+        "reaction": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -4.087667952429801,
+          "coefficient": 1.0000000000000018,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_co2_g",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-008"
+           ],
+           "status": "single-source"
+          }
+         },
+         "Ca(ClO4)2": {
+          "G_eV": -5.006916485322319,
+          "coefficient": 0.9999999999999993,
+          "exchange_dH_eV": 0.2562876600600517,
+          "kind": "derived",
+          "locator": [
+           "https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf, pdf p. 276 (2-268), OCR line 'Ca(ClO,), \u2018 cr 238.9812 _ -736.76 \u2014 ~ _ _'; printed p. 2-268; dfH printed, dfG and S blank (checked against the page image)",
+           "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K"
+          ]
+         },
+         "CaCO3": {
+          "G_eV": -11.70701261157922,
+          "coefficient": -1.0,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_caco3_calcite",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-002",
+            "TI-056"
+           ],
+           "status": "sourced"
+          }
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.000000000000001,
+          "kind": "reference"
+         },
+         "LiClO4": {
+          "G_eV": -2.631602072691185,
+          "coefficient": -1.9999999999999987,
+          "kind": "expt",
+          "source": "https://janaf.nist.gov/tables/Cl-046.txt"
+         },
+         "O2": {
+          "G_eV": 0.0,
+          "coefficient": 0.4999999999999978,
+          "kind": "gas"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": 4.320073231543534,
+        "product": "Ca(ClO4)2",
+        "reaction": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -4.739217549312127,
+          "coefficient": 1.0000000000000018,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "janaf"
+         },
+         "Ca(ClO4)2": {
+          "G_eV": -11.839902721606622,
+          "coefficient": 0.9999999999999993,
+          "exchange_dH_eV": 0.2562876600600517,
+          "kind": "derived",
+          "locator": [
+           "https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf, pdf p. 276 (2-268), OCR line 'Ca(ClO,), \u2018 cr 238.9812 _ -736.76 \u2014 ~ _ _'; printed p. 2-268; dfH printed, dfG and S blank (checked against the page image)",
+           "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K"
+          ]
+         },
+         "CaCO3": {
+          "G_eV": -13.440039442500002,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-3953"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.000000000000001,
+          "kind": "reference"
+         },
+         "LiClO4": {
+          "G_eV": -6.048095190833337,
+          "coefficient": -1.9999999999999987,
+          "kind": "solid",
+          "material_id": "mp-30301"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.4999999999999978,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": 3.7051136896293344,
+        "product": "Ca(ClO4)2",
+        "reaction": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -5.969136633140525,
+          "coefficient": 1.0000000000000018,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp"
+         },
+         "Ca(ClO4)2": {
+          "G_eV": -11.839902721606622,
+          "coefficient": 0.9999999999999993,
+          "exchange_dH_eV": 0.2562876600600517,
+          "kind": "derived",
+          "locator": [
+           "https://srd.nist.gov/JPCRD/jpcrdS2Vol11.pdf, pdf p. 276 (2-268), OCR line 'Ca(ClO,), \u2018 cr 238.9812 _ -736.76 \u2014 ~ _ _'; printed p. 2-268; dfH printed, dfG and S blank (checked against the page image)",
+           "NIST-JANAF https://janaf.nist.gov/tables/Cl-046.txt, T = 298.15 K"
+          ]
+         },
+         "CaCO3": {
+          "G_eV": -13.440039442500002,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-3953"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.000000000000001,
+          "kind": "reference"
+         },
+         "LiClO4": {
+          "G_eV": -6.048095190833337,
+          "coefficient": -1.9999999999999987,
+          "kind": "solid",
+          "material_id": "mp-30301"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.4999999999999978,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ]
+     },
+     "governing_V": {
+      "expt": 3.9378161596047305
+     },
+     "governing_route": "expt",
+     "group": "registered",
+     "margin_V": 0.0869778018619,
+     "margin_keys": [
+      "window_margin_expt"
+     ],
+     "margin_reason": "m_expt of the registered reaction",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": 7.875632319209465,
+       "delta_n_li": 2.000000000000001,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 3.9378161596047305
+      },
+      "janaf": {
+       "delta_g_ev": 8.640146463087072,
+       "delta_n_li": 2.000000000000001,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.320073231543534
+      },
+      "mp": {
+       "delta_g_ev": 7.410227379258672,
+       "delta_n_li": 2.000000000000001,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 3.7051136896293344
+      }
+     },
+     "products": [
+      "Ca(ClO4)2"
+     ],
+     "reaction": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink_kind": "solid_salt",
+     "status": "ok",
+     "water_sensitivity": []
+    },
+    "LiNO3": {
+     "benchmark_corrected_V": {
+      "janaf": 3.8921970979080425,
+      "mp": 3.892197097908043
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": 3.911888902632631,
+        "product": "Ca(NO3)2",
+        "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -4.087667952429801,
+          "coefficient": 0.9999999999999994,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_co2_g",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-008"
+           ],
+           "status": "single-source"
+          }
+         },
+         "Ca(NO3)2": {
+          "G_eV": -7.696506646740291,
+          "coefficient": 0.9999999999999987,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_ca_no3_2",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-030"
+           ],
+           "status": "single-source"
+          }
+         },
+         "CaCO3": {
+          "G_eV": -11.70701261157922,
+          "coefficient": -1.0,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_caco3_calcite",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-002",
+            "TI-056"
+           ],
+           "status": "sourced"
+          }
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.000000000000001,
+          "kind": "reference"
+         },
+         "LiNO3": {
+          "G_eV": -3.9504698964280656,
+          "coefficient": -1.999999999999998,
+          "kind": "expt",
+          "source": {
+           "key": "dfg_lino3",
+           "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+           "sources": [
+            "TI-048"
+           ],
+           "status": "single-source"
+          }
+         },
+         "O2": {
+          "G_eV": 0.0,
+          "coefficient": 0.5000000000000008,
+          "kind": "gas"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": 4.274454169846847,
+        "product": "Ca(NO3)2",
+        "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -4.739217549312127,
+          "coefficient": 0.9999999999999994,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "janaf"
+         },
+         "Ca(NO3)2": {
+          "G_eV": -13.706141090000003,
+          "coefficient": 0.9999999999999987,
+          "kind": "solid",
+          "material_id": "mp-3142"
+         },
+         "CaCO3": {
+          "G_eV": -13.440039442500002,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-3953"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.000000000000001,
+          "kind": "reference"
+         },
+         "LiNO3": {
+          "G_eV": -6.935595313333334,
+          "coefficient": -1.999999999999998,
+          "kind": "solid",
+          "material_id": "mp-8180"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.5000000000000008,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": 3.659494627932649,
+        "product": "Ca(NO3)2",
+        "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "",
+        "species": {
+         "CO2": {
+          "G_eV": -5.969136633140525,
+          "coefficient": 0.9999999999999994,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/C-095.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp"
+         },
+         "Ca(NO3)2": {
+          "G_eV": -13.706141090000003,
+          "coefficient": 0.9999999999999987,
+          "kind": "solid",
+          "material_id": "mp-3142"
+         },
+         "CaCO3": {
+          "G_eV": -13.440039442500002,
+          "coefficient": -1.0,
+          "kind": "solid",
+          "material_id": "mp-3953"
+         },
+         "Li": {
+          "G_eV": 0.0,
+          "coefficient": 2.000000000000001,
+          "kind": "reference"
+         },
+         "LiNO3": {
+          "G_eV": -6.935595313333334,
+          "coefficient": -1.999999999999998,
+          "kind": "solid",
+          "material_id": "mp-8180"
+         },
+         "O2": {
+          "G_eV": -0.6339261803216945,
+          "coefficient": 0.5000000000000008,
+          "kind": "gas",
+          "locator": "https://janaf.nist.gov/tables/O-029.txt, row(s) bracketing T = 298.15 K",
+          "scheme": "mp_fitted_reference"
+         }
+        },
+        "status": "finite"
+       }
+      ]
+     },
+     "governing_V": {
+      "expt": 3.911888902632631
+     },
+     "governing_route": "expt",
+     "group": "comparator",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": 7.823777805265266,
+       "delta_n_li": 2.000000000000001,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 3.911888902632631
+      },
+      "janaf": {
+       "delta_g_ev": 8.548908339693698,
+       "delta_n_li": 2.000000000000001,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 4.274454169846847
+      },
+      "mp": {
+       "delta_g_ev": 7.318989255865302,
+       "delta_n_li": 2.000000000000001,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "",
+       "status": "ok",
+       "value_V": 3.659494627932649
+      }
+     },
+     "products": [
+      "Ca(NO3)2"
+     ],
+     "reaction": "CaCO3 + 2 LiNO3 -> Ca(NO3)2 + 0.5 O2 + CO2 + 2 Li",
+     "reason": "",
+     "sink_kind": "solid_salt",
+     "status": "ok",
+     "water_sensitivity": []
+    },
+    "LiPCP": {
+     "benchmark_corrected_V": {},
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lco",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-041",
+        "TJ-042",
+        "TK-044",
+        "TK-046",
+        "TK-047",
+        "TK-048",
+        "TK-049"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "key": "e_cell_max_lfp",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TJ-038",
+        "TK-041",
+        "TK-042"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "key": "e_cell_max_lmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-052",
+        "TK-056",
+        "TK-057"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "key": "e_cell_max_lnmo",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-047",
+        "TA-048",
+        "TA-049",
+        "TJ-040"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "key": "e_cell_max_layered",
+       "margin_that_would_decide_V": null,
+       "oxidation_verdict": "inconclusive",
+       "oxidation_verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       },
+       "reason": "no governing value (undetermined never passes)",
+       "rows": [
+        "TA-050",
+        "TA-051",
+        "TA-052",
+        "TJ-036",
+        "TJ-037",
+        "TJ-039",
+        "TK-043",
+        "TK-050",
+        "TK-051",
+        "TK-052",
+        "TK-053",
+        "TK-054",
+        "TK-055"
+       ],
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "candidates": {
+      "expt": [
+       {
+        "onset_V": null,
+        "product": "Ca(C8N5)2",
+        "reaction": "CaCO3 + 2 LiC8N5 -> Ca(C8N5)2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "phase LiC8N5 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "janaf": [
+       {
+        "onset_V": null,
+        "product": "Ca(C8N5)2",
+        "reaction": "CaCO3 + 2 LiC8N5 -> Ca(C8N5)2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "phase LiC8N5 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ],
+      "mp": [
+       {
+        "onset_V": null,
+        "product": "Ca(C8N5)2",
+        "reaction": "CaCO3 + 2 LiC8N5 -> Ca(C8N5)2 + 0.5 O2 + CO2 + 2 Li",
+        "reason": "phase LiC8N5 absent from the cached data",
+        "species": {},
+        "status": "undetermined"
+       }
+      ]
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "registered",
+     "margin_V": null,
+     "margin_keys": [],
+     "margin_reason": "no governing route",
+     "oxidation_by_scheme": {
+      "expt": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiC8N5 -> Ca(C8N5)2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "phase LiC8N5 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "janaf": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiC8N5 -> Ca(C8N5)2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "phase LiC8N5 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      },
+      "mp": {
+       "delta_g_ev": null,
+       "delta_n_li": null,
+       "method": "explicit oxidation reaction",
+       "reaction": "CaCO3 + 2 LiC8N5 -> Ca(C8N5)2 + 0.5 O2 + CO2 + 2 Li",
+       "reason": "phase LiC8N5 absent from the cached data",
+       "status": "undetermined",
+       "value_V": null
+      }
+     },
+     "products": [
+      "Ca(C8N5)2"
+     ],
+     "reaction": "",
+     "reason": "phase LiC8N5 absent from the cached data",
+     "sink_kind": "solid_salt",
+     "status": "undetermined",
+     "water_sensitivity": []
+    },
+    "solvated": {
+     "by_cathode_class": {
+      "LiCoO2": {
+       "E_cell_max_V": {
+        "max": 4.6,
+        "min": 4.2,
+        "value": 4.5
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiFePO4": {
+       "E_cell_max_V": {
+        "max": 4.2,
+        "min": 3.6,
+        "value": 4.0
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiMn2O4": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.3,
+        "value": 4.5
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "LiNi0.5Mn1.5O4": {
+       "E_cell_max_V": {
+        "max": 5.0,
+        "min": 4.9,
+        "value": 4.9
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      },
+      "layered NMC/NCA": {
+       "E_cell_max_V": {
+        "max": 4.5,
+        "min": 4.25,
+        "value": 4.3
+       },
+       "oxidation_verdict": "inconclusive",
+       "reason": "undetermined never passes",
+       "verdict_at": {
+        "max": "inconclusive",
+        "min": "inconclusive",
+        "value": "inconclusive"
+       }
+      }
+     },
+     "governing_V": {},
+     "governing_route": null,
+     "group": "registered",
+     "missing_keys": [
+      {
+       "key": "solvation_ca_vs_li",
+       "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+       "sources": [],
+       "status": "gap"
+      },
+      {
+       "key": "solvation_al_vs_li",
+       "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+       "sources": [],
+       "status": "gap"
+      }
+     ],
+     "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent. Both keys are gaps at the p0-cp3 params, so it stays a gap; no onset is derived from the aqueous analogs.",
+     "sink_kind": "solvated",
+     "status": "undetermined"
+    }
+   },
+   "chemical_decomposition": {
+    "expt": {
+     "delta_g_ev": 1.3666844182230093,
+     "reaction": "CaCO3 -> CaO + CO2"
+    },
+    "janaf": {
+     "delta_g_ev": 2.0887831081878723,
+     "reaction": "CaCO3 -> CaO + CO2"
+    },
+    "mp": {
+     "delta_g_ev": 0.858864024359475,
+     "reaction": "CaCO3 -> CaO + CO2"
+    }
+   },
+   "identification": null,
+   "material_id": "mp-3953",
+   "name": "calcite",
+   "reduction": {
+    "E_cell_min_V": {
+     "max": 3.0,
+     "min": 2.8,
+     "source": {
+      "key": "e_cell_min",
+      "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+      "sources": [
+       "TJ-106",
+       "TJ-107",
+       "TJ-108"
+      ],
+      "status": "sourced"
+     }
+    },
+    "budget_key": null,
+    "dft_li_open": {
+     "delta_g_ev": -2.1645503742357053,
+     "delta_n_li": -1.3333333333,
+     "method": "Li-open grand potential, first lithiation reaction on the hull",
+     "reaction": "CaCO3 + 1.333 Li -> 0.6667 Li2CO3 + CaO + 0.3333 C",
+     "reason": "",
+     "status": "ok",
+     "value_V": 1.6234127807173644
+    },
+    "expt_crosscheck": {
+     "method": "Li-open lithiation reaction with tabulated free energies (elements at 0)",
+     "reaction": "CaCO3 + 1.333 Li -> 0.6667 Li2CO3 + CaO + 0.3333 C",
+     "reason": "",
+     "status": "ok",
+     "value_V": 1.7760342036341572
+    },
+    "governing": {
+     "method": "Li-open lithiation reaction with tabulated free energies (elements at 0)",
+     "reaction": "CaCO3 + 1.333 Li -> 0.6667 Li2CO3 + CaO + 0.3333 C",
+     "reason": "",
+     "status": "ok",
+     "value_V": 1.7760342036341572
+    },
+    "governing_route": "expt",
+    "li_open_hull": {
+     "chemsys": "Li-Ca-C-O",
+     "e_above_hull_eV_per_atom": 0.0,
+     "entry_id": "mp-aaaaafwb-GGA",
+     "excluded_by_licence": [],
+     "n_entries": 247,
+     "polymorphs_e_above_hull_eV_per_atom": [
+      [
+       "mp-3953",
+       0.0
+      ],
+      [
+       "mp-2717324",
+       0.0014116720000005856
+      ],
+      [
+       "mp-556235",
+       0.0019254220000011202
+      ],
+      [
+       "mp-561412",
+       0.007197419333333954
+      ],
+      [
+       "mp-560265",
+       0.008068315000000936
+      ],
+      [
+       "mp-1197939",
+       0.00815612200000082
+      ]
+     ]
+    },
+    "margin_V": null,
+    "margin_that_would_decide_V": 1.0239657963658426,
+    "verdict": "inconclusive",
+    "verdict_reason": "no budget key for the reduction limit (thresholds C5c_red; never passes, never falsifies)"
+   },
+   "role": "confirm (P0-W5.3 C5 values)"
+  }
+ },
+ "provenance": {
+  "config_file": "results/preprint/pourbaix/config/supplement_d3.yaml",
+  "config_file_hash": "sha256:d77b3446d21dcecaeda38166dada972c80987a2357dd9032067d36e519ec7e74",
+  "config_hash": "sha256:66a2a3d7d5f621b2155549a1f63444214b59a3243f613d53a5bdffd1768b4674",
+  "contract_sha": "db872ae9190c3b729bc2b13898919fbfbe56815b",
+  "git_dirty": false,
+  "git_sha": "1e42ff53c2a8dd61a65470e7d71bd67ff6a3d5e2",
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+  "params_sha_at_tag": "fbe252b23a5a80e9fff25db72d1d3b85e8454ce8",
+  "params_tag": "p0-cp3",
+  "run_label": "supplement_d3",
+  "schema_sha": "7cb8572af8ee4660cc2860e9f768121297820f10",
+  "thresholds_file": "configs/preprint/thresholds.yaml",
+  "thresholds_hash": "sha256:beaa008239ff0fe2ba77de0cf923978c57176c0014d1746f97e97205f7efb832",
+  "thresholds_source_sha": "22ef46446205f63fab6074ba971ee89e18d99489"
+ },
+ "question": "Between which potentials vs Li+/Li are boehmite (gamma-AlOOH), corundum and CaCO3 at equilibrium against lithiation (Li-open grand potential) and against oxidation that releases O2 (and CO2 or H2O) with the cation taken up by the anion of each registered electrolyte salt; which route governs each limit (cp3 decision 3); and where is a limit undetermined, and why? (thermodynamic windows; no kinetic statement)",
+ "rule": "thresholds C5c_ox / C5c_red (block v3, cp3b): expt governs wherever its inputs exist; m_expt belongs to the registered reaction; any other reaction and every reduction limit needs its own budget key and is undetermined without one (never passes, never falsifies)",
+ "scope": "Thermodynamic proxies only: a stability domain, a decomposition energy or a window says which state is at equilibrium, never how fast anything corrodes, dissolves or decomposes.",
+ "session": "P0-W5.4",
+ "sink_table": [
+  {
+   "governing_V": {
+    "expt": 3.9378161596047305
+   },
+   "governing_route": "expt",
+   "margin_V": 0.0869778018619,
+   "phase": "CaCO3",
+   "reason": "m_expt of the registered reaction",
+   "sink": "LiClO4",
+   "status": "computed",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "falsified",
+     "min": "falsified",
+     "value": "falsified"
+    },
+    "LiFePO4": {
+     "max": "falsified",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "falsified",
+     "min": "falsified",
+     "value": "falsified"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "falsified",
+     "min": "falsified",
+     "value": "falsified"
+    },
+    "layered NMC/NCA": {
+     "max": "falsified",
+     "min": "falsified",
+     "value": "falsified"
+    }
+   }
+  },
+  {
+   "governing_V": {},
+   "governing_route": null,
+   "margin_V": null,
+   "phase": "CaCO3",
+   "reason": "phase CaB2C8O16 absent from the cached data; phase LiB(C2O4)2 absent from the cached data",
+   "sink": "LiBOB",
+   "status": "undetermined",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  },
+  {
+   "governing_V": {},
+   "governing_route": null,
+   "margin_V": null,
+   "phase": "CaCO3",
+   "reason": "phase LiC8N5 absent from the cached data",
+   "sink": "LiPCP",
+   "status": "undetermined",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  },
+  {
+   "governing_V": {},
+   "governing_route": null,
+   "margin_V": null,
+   "phase": "CaCO3",
+   "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent. Both keys are gaps at the p0-cp3 params, so it stays a gap; no onset is derived from the aqueous analogs.",
+   "sink": "solvated",
+   "status": "undetermined",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  },
+  {
+   "governing_V": {
+    "expt": 4.706297389185894
+   },
+   "governing_route": "expt",
+   "margin_V": null,
+   "phase": "Al2O3",
+   "reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+   "sink": "LiClO4",
+   "status": "computed",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  },
+  {
+   "governing_V": {},
+   "governing_route": null,
+   "margin_V": null,
+   "phase": "Al2O3",
+   "reason": "phase AlB3C12O24 absent from the cached data; phase LiB(C2O4)2 absent from the cached data",
+   "sink": "LiBOB",
+   "status": "undetermined",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  },
+  {
+   "governing_V": {},
+   "governing_route": null,
+   "margin_V": null,
+   "phase": "Al2O3",
+   "reason": "phase LiC8N5 absent from the cached data",
+   "sink": "LiPCP",
+   "status": "undetermined",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  },
+  {
+   "governing_V": {},
+   "governing_route": null,
+   "margin_V": null,
+   "phase": "Al2O3",
+   "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent. Both keys are gaps at the p0-cp3 params, so it stays a gap; no onset is derived from the aqueous analogs.",
+   "sink": "solvated",
+   "status": "undetermined",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  },
+  {
+   "governing_V": {
+    "expt": 4.751067579344385
+   },
+   "governing_route": "expt",
+   "margin_V": null,
+   "phase": "AlOOH",
+   "reason": "no budget key for this expt reaction (thresholds C5c_ox: an expt limit of any other reaction or sink needs its own budget key; undetermined, never passes or falsifies)",
+   "sink": "LiClO4",
+   "status": "computed",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  },
+  {
+   "governing_V": {},
+   "governing_route": null,
+   "margin_V": null,
+   "phase": "AlOOH",
+   "reason": "phase AlB3C12O24 absent from the cached data; phase LiB(C2O4)2 absent from the cached data",
+   "sink": "LiBOB",
+   "status": "undetermined",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  },
+  {
+   "governing_V": {},
+   "governing_route": null,
+   "margin_V": null,
+   "phase": "AlOOH",
+   "reason": "phase LiC8N5 absent from the cached data",
+   "sink": "LiPCP",
+   "status": "undetermined",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  },
+  {
+   "governing_V": {},
+   "governing_route": null,
+   "margin_V": null,
+   "phase": "AlOOH",
+   "reason": "The solvated sink needs the free energy of Ca2+ and Al3+ relative to Li+ in the electrolyte solvent. Both keys are gaps at the p0-cp3 params, so it stays a gap; no onset is derived from the aqueous analogs.",
+   "sink": "solvated",
+   "status": "undetermined",
+   "verdict_by_class": {
+    "LiCoO2": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiFePO4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiMn2O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "LiNi0.5Mn1.5O4": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    },
+    "layered NMC/NCA": {
+     "max": "inconclusive",
+     "min": "inconclusive",
+     "value": "inconclusive"
+    }
+   }
+  }
+ ],
+ "sink_thermo_attempts": [
+  {
+   "formula": "Al(ClO4)3",
+   "materials_project": "absent from MP 2026.04.13 (cached element systems)",
+   "routes": [
+    {
+     "result": "no table",
+     "route": "NIST-JANAF formula index (https://janaf.nist.gov/formula.html)"
+    },
+    {
+     "date": "2026-10-17",
+     "result": "formula not found",
+     "route": "NIST Chemistry WebBook formula search"
+    },
+    {
+     "date": "2026-10-17",
+     "result": "HTTP 524 and connection resets; not retrieved",
+     "route": "NIST data release of the NBS tables, doi:10.18434/M32124 (CSV)"
+    },
+    {
+     "result": "not tabulated in the Al table (pdf pp. 135-138, OCR searched)",
+     "route": "NBS tables 1982, scanned PDF at srd.nist.gov, OCR"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "dfH of anhydrous Al(ClO4)3 printed; full text not open (no dfG, no S, reference temperature not printed)",
+     "route": "Krivtsov, Nikitina, Rosolovskii, Bull. Acad. Sci. USSR Div. Chem. Sci. 22, 2560 (1973), doi:10.1007/BF00926423, free abstract page (Conclusions)"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "aqueous-solution rows only (water standard state); no crystalline row; not used (an aqueous value is not a solid-salt sink)",
+     "route": "Glushko, Thermal Constants of Substances (TKV) online, chem.msu.ru, entry 1109"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "melting points only",
+     "route": "TKV entries 1110-1112 (hydrates 6, 9, 15 H2O)"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "no Al(ClO4)3 row",
+     "route": "NBS Technical Note 270-3 (1968), Table 29 (Al), pp. 209-211, rendered and read"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "only the 1973 paper; citing works not open and carry no new value",
+     "route": "OpenAlex search 'aluminum perchlorate enthalpy' and the citing works"
+    }
+   ],
+   "status": "dfH only (exchange route); single fetched source, not a params key",
+   "value": {
+    "dfH_kJ_per_mol": -571.116,
+    "locator": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, doi:10.1007/BF00926423, dfH of anhydrous Al(ClO4)3 (cr), Conclusions item 1 (free abstract page; full text not open); quote: 'The standard enthalpy for the formation of anhydrous aluminum perchlorate was determined (\u2212136.5 +-0.5 kcal/M).'",
+    "u_kJ_per_mol": 2.092
+   },
+   "w1_key": {
+    "key": "dfg_al_clo4_3",
+    "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+    "sources": [],
+    "status": "gap"
+   },
+   "w1_reason": "gap - Al(ClO4)3 not found in a legible fetched table"
+  },
+  {
+   "formula": "CaB2C8O16",
+   "materials_project": "absent from MP (systems Li-Ca-B-C-O, Li-Al-B-C-O, Li-Ca-C-N, Li-Al-C-N fetched)",
+   "name": "Ca(BOB)2",
+   "routes": [
+    {
+     "result": "no table",
+     "route": "NIST-JANAF formula index"
+    },
+    {
+     "result": "organic anions beyond C2 are outside the tables",
+     "route": "NBS tables 1982"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "no entry",
+     "route": "TKV online (chem.msu.ru) formula search"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "formula not found",
+     "route": "NIST Chemistry WebBook formula search (C4BLiO8, C8LiN5, C8N5)"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "electrolyte, structure and synthesis papers only; no thermochemistry",
+     "route": "OpenAlex keyword searches (enthalpy of formation, calorimetry)"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "HTTP 429; not completed",
+     "route": "Semantic Scholar API"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "decomposition heats or hydrolysis energies only; no dfH of the Li salt or the sink",
+     "route": "LiBOB calorimetry papers (Adv. Mater. Res. 455-456, 947; J. Electrochem. Soc. 169, 070523; Thermochim. Acta 2007)"
+    }
+   ],
+   "salt": "LiBOB",
+   "status": "undetermined"
+  },
+  {
+   "formula": "AlB3C12O24",
+   "materials_project": "absent from MP (systems Li-Ca-B-C-O, Li-Al-B-C-O, Li-Ca-C-N, Li-Al-C-N fetched)",
+   "name": "Al(BOB)3",
+   "routes": [
+    {
+     "result": "no table",
+     "route": "NIST-JANAF formula index"
+    },
+    {
+     "result": "organic anions beyond C2 are outside the tables",
+     "route": "NBS tables 1982"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "no entry",
+     "route": "TKV online (chem.msu.ru) formula search"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "formula not found",
+     "route": "NIST Chemistry WebBook formula search (C4BLiO8, C8LiN5, C8N5)"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "electrolyte, structure and synthesis papers only; no thermochemistry",
+     "route": "OpenAlex keyword searches (enthalpy of formation, calorimetry)"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "HTTP 429; not completed",
+     "route": "Semantic Scholar API"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "decomposition heats or hydrolysis energies only; no dfH of the Li salt or the sink",
+     "route": "LiBOB calorimetry papers (Adv. Mater. Res. 455-456, 947; J. Electrochem. Soc. 169, 070523; Thermochim. Acta 2007)"
+    }
+   ],
+   "salt": "LiBOB",
+   "status": "undetermined"
+  },
+  {
+   "formula": "Ca(C8N5)2",
+   "materials_project": "absent from MP (systems Li-Ca-B-C-O, Li-Al-B-C-O, Li-Ca-C-N, Li-Al-C-N fetched)",
+   "name": "Ca(PCP)2",
+   "routes": [
+    {
+     "result": "no table",
+     "route": "NIST-JANAF formula index"
+    },
+    {
+     "result": "organic anions beyond C2 are outside the tables",
+     "route": "NBS tables 1982"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "no entry",
+     "route": "TKV online (chem.msu.ru) formula search"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "formula not found",
+     "route": "NIST Chemistry WebBook formula search (C4BLiO8, C8LiN5, C8N5)"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "electrolyte, structure and synthesis papers only; no thermochemistry",
+     "route": "OpenAlex keyword searches (enthalpy of formation, calorimetry)"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "HTTP 429; not completed",
+     "route": "Semantic Scholar API"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "decomposition heats or hydrolysis energies only; no dfH of the Li salt or the sink",
+     "route": "LiPCP/NaPCP electrolyte papers (e.g. PMC5220368); DETHERM lists a different cyanocarbon anion"
+    }
+   ],
+   "salt": "LiPCP",
+   "status": "undetermined"
+  },
+  {
+   "formula": "Al(C8N5)3",
+   "materials_project": "absent from MP (systems Li-Ca-B-C-O, Li-Al-B-C-O, Li-Ca-C-N, Li-Al-C-N fetched)",
+   "name": "Al(PCP)3",
+   "routes": [
+    {
+     "result": "no table",
+     "route": "NIST-JANAF formula index"
+    },
+    {
+     "result": "organic anions beyond C2 are outside the tables",
+     "route": "NBS tables 1982"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "no entry",
+     "route": "TKV online (chem.msu.ru) formula search"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "formula not found",
+     "route": "NIST Chemistry WebBook formula search (C4BLiO8, C8LiN5, C8N5)"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "electrolyte, structure and synthesis papers only; no thermochemistry",
+     "route": "OpenAlex keyword searches (enthalpy of formation, calorimetry)"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "HTTP 429; not completed",
+     "route": "Semantic Scholar API"
+    },
+    {
+     "date": "2026-10-19",
+     "result": "decomposition heats or hydrolysis energies only; no dfH of the Li salt or the sink",
+     "route": "LiPCP/NaPCP electrolyte papers (e.g. PMC5220368); DETHERM lists a different cyanocarbon anion"
+    }
+   ],
+   "salt": "LiPCP",
+   "status": "undetermined"
+  }
+ ],
+ "sourced_values_not_params_keys": [
+  {
+   "cache_file": "results/preprint/pourbaix/supplement_d3/cache/lit_krivtsov1973_al_clo4_3.json",
+   "citation": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, Bull. Acad. Sci. USSR Div. Chem. Sci. 22(11), 2560-2561 (1973)",
+   "converted_with": "thermochemical calorie (scipy.constants.calorie, J per cal = kJ per kcal)",
+   "dfH_kJ_per_mol": -571.116,
+   "doi": "10.1007/BF00926423",
+   "formula": "Al(ClO4)3",
+   "limits": [
+    "single source, seen in the free abstract only (full text not open)",
+    "reference temperature not printed; read as 298.15 K",
+    "no dfG or S: the exchange entropy is neglected and has no bound key for Al",
+    "the Al onsets it gives have no budget key and decide no verdict"
+   ],
+   "locator": "N. V. Krivtsov, Z. K. Nikitina, V. Ya. Rosolovskii, doi:10.1007/BF00926423, dfH of anhydrous Al(ClO4)3 (cr), Conclusions item 1 (free abstract page; full text not open); quote: 'The standard enthalpy for the formation of anhydrous aluminum perchlorate was determined (\u2212136.5 +-0.5 kcal/M).'",
+   "quantity": "dfH (standard)",
+   "request_for_W1": "register dfh_al_clo4_3 (and its uncertainty) from doi:10.1007/BF00926423, and a budget key for the expt route of the Al(ClO4)3 sink if the onsets are to decide a verdict",
+   "state": "anhydrous crystalline solid",
+   "status": "sourced (one fetched value); not yet a W1 params key",
+   "u_kJ_per_mol": 2.092,
+   "used_for": "the Al(ClO4)3 sink of corundum and boehmite through the exchange Al + 3 LiClO4 -> Al(ClO4)3 + 3 Li"
+  }
+ ],
+ "temperature_K": 298.15,
+ "w1_post_cp3_poll": {
+  "consequence": "while no post-cp3 key is found the budgets are read from the p0-cp3 params only and stay gaps; a found key would be read at W1's post-cp3 params sha as a labelled additive input",
+  "polls": [
+   {
+    "head": "f72eb6d",
+    "last_session": "P0-W1.3",
+    "note": "poll 1 by hand at about 17:15 IST; time approximate, head is the branch head then (f72eb6d)",
+    "post_cp3": "none",
+    "ref": "origin/preprint/p0-w1",
+    "utc_approx": "2026-10-19T11:45Z"
+   },
+   {
+    "head": "023633735b65641189f2258e07f8e149f92579bd",
+    "last_session": "P0-W1.3",
+    "post_cp3": "none",
+    "ref": "origin/preprint/p0-w1",
+    "utc": "2026-10-19T11:55:48Z"
+   },
+   {
+    "head": "023633735b65641189f2258e07f8e149f92579bd",
+    "last_session": "P0-W1.3",
+    "post_cp3": "none",
+    "ref": "origin/preprint/p0-w1",
+    "utc": "2026-10-19T12:42:24Z"
+   }
+  ],
+  "post_cp3_found": false,
+  "rule": "poll origin/preprint/p0-w1 ops/state/p0-w1.json for post_cp3: true, for at most 1 hour"
+ },
+ "water": {
+  "janaf_gas": "janaf_H2O.json",
+  "janaf_liquid_comparator": "janaf_H2O_l.json",
+  "product_state": {
+   "primary": "H2O(g) at p_H2O = 1 bar",
+   "sensitivity": "H2O(l) at unit activity (key dfg_h2o_l)"
+  },
+  "reason": "The gases of the oxidation reactions are taken at the 1 bar standard state of the benchmark (O2, CO2); water released by boehmite is treated the same way. With the trace water of the electrolyte (key electrolyte_water_content) the water activity is far below one; that lowers every onset by (n_H2O/n_e) k T ln a_w, so both standard-state onsets bound the onset from above. a_w itself is not a params key (the mass fraction does not give an activity without a solvation model), so the shift is reported as a function, never applied."
+ }
+}
