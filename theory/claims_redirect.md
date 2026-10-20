@@ -378,7 +378,8 @@ The carbonate structure is reused unchanged; only the mineral enters through the
 
 ## 6. What this file does not decide
 
-Numeric margins, priors' parameter values and the sweep grids (PH-W3.2); the benchmark status of phosphate
+Numeric margins (set at PH-W3.2 in the generated entry `margins_v6` of the thresholds block, `theory/thresholds.md`
+Section 7; never typed here), priors' parameter values and the sweep grids; the benchmark status of phosphate
 thermochemistry (W5); which tier 2 records exist (W2); the code (W4). A statement of the form "phosphate X passes" is
 not made anywhere in this file.
 
@@ -657,3 +658,9 @@ Section 2g).
   never changes the mineral's verdict; a row is falsified at E_c only through the mineral's own K1.
 - **I16.** F4: a cell-stage row inherits K2 to K4 only through its conversion-step row; no film is reported with K1
   from one stage and K2 to K4 from another.
+- **I17.** (PH-W3.2, margins.) The falsifying side of an amorphous row needs no glass data. E_ub,glass = E_ub,crystal -
+  DeltaG_g->c/(Delta_n_Li F) with DeltaG_g->c >= 0 (the glass is metastable with respect to its crystal), so E_ub,glass +
+  m <= E_ub,crystal + m for the margin of the crystalline row. An amorphous row whose correction is a gap is therefore
+  falsified wherever its crystalline row is falsified, labelled `falsified (bound)`, and stays undetermined everywhere
+  else. It can never pass this way. For the nucleus framings (ACP versus apatite) this makes "falsified under every
+  framing" decidable from the crystalline row alone, on the falsifying side only.
