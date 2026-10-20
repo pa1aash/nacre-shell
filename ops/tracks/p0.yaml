@@ -409,6 +409,7 @@ days:
     model: Sonnet
     master_trace: none
     requires: [cp5]
+    note: 'First step (D57): commit the gap-table treatments for the 72 pending keys and the 11 symbol bindings before any output.'
   - id: PH-W4.3
     lane: p0-w4
     day: 6
@@ -866,6 +867,13 @@ decisions:
     (block v6).', reason: Margins registered at W3 block v6.}
 - {id: D55, date: '2026-10-21', decision: 'K1 margins are registered at W3 block v6; the F2 bracket cannot yet give
     a pass (transfer data gaps).', reason: Result of PH-W3.2 and PH-W3.2a.}
+- {id: D56, date: '2026-10-21', decision: 'The cp5a freeze packet is built (ops/packets/p0-5a.md, bundle
+    .local/packets/p0-5a.zip). Tag p0-cp5 is created only after the planning chat replies PASS; nothing starts
+    production before it.', reason: Freeze audit before the production screen.}
+- {id: D57, date: '2026-10-21', decision: 'PH-W4.2 commits the gap-table treatments for the 72 pending keys and
+    the 11 W1-to-contract symbol bindings as its first step, before any output (as PH-W4.3 did with AM1 to AM4),
+    using only the registered treatment rules (ignorance prior, flagged analog, design axis, unresolved).',
+  reason: 'PH-W4.2b report (72 keys, 11 bindings); decision 6 of the cp5a packet.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
