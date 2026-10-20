@@ -12,7 +12,7 @@ INTRO = paths.paper(REPO) / "sections" / "introduction.tex"
 SCOPE_SENTENCES = (
     "This paper does not claim that the barrier works.",
     "This paper does not claim any corrosion rate, capacity or device performance.",
-    "This paper does not claim any result from the full first-principles or machine-learned-potential calculations.",
+    "This paper does not claim any result from the full ab initio or machine-learned-potential calculations.",
 )
 # Wording the Introduction must not use (prompt P0-W8.2, lane notes N4 and N5, lit/novelty.md U1 to U12).
 FORBIDDEN = {

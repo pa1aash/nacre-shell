@@ -27,7 +27,7 @@ NS7_QUALIFIERS = ("in situ", "crosslinked", "water-insoluble", "aluminium foil",
 REQUIRED_NOT_CLAIMED = [
     "This paper does not claim that the barrier works.",
     "This paper does not claim any corrosion rate, capacity or device performance.",
-    "This paper does not claim any result from the full first-principles or machine-learned-potential calculations.",
+    "This paper does not claim any result from the full ab initio or machine-learned-potential calculations.",
 ]
 
 

@@ -72,7 +72,7 @@ def test_charter_patterns_are_loaded():
 
 
 def test_warn_block_is_loaded_from_the_charter():
-    assert [rid for rid, _ in lint_scope.warn_rules(REPO)] == ["SG17W"]
+    assert [rid for rid, _ in lint_scope.warn_rules(REPO)] == ["SG17W", "SG26W", "SG27W"]
     assert "SG17W" not in [rid for rid, _ in lint_scope.rules(REPO)]
 
 
@@ -100,3 +100,41 @@ def test_sg17w_applies_to_claim_statements(tmp_path):
     problems = lint_scope.lint(root)
     assert any("CL-R98" in p and "SG17W" in p for p in problems)
     assert not any("CL-R97" in p for p in problems)
+
+
+def test_sg26w_fails_novel_or_first_without_audit(tmp_path):
+    f = write(tmp_path / "t.tex", "This is a novel interface.\n")
+    assert any("SG26W" in p for p in lint_scope.lint(REPO, [f]))
+    g = write(tmp_path / "g.tex", "The first experiment tests the film.\n")
+    assert any("SG26W" in p for p in lint_scope.lint(REPO, [g]))
+
+
+def test_sg26w_passes_when_the_sentence_rests_on_the_audit(tmp_path):
+    f = write(tmp_path / "t.tex", "Within the audited scan, no earlier report of the combination is found, and the claim is novel only in that sense.\n")
+    assert lint_scope.lint(REPO, [f]) == []
+    g = write(tmp_path / "g.tex", "The novelty audit found it. This is novel.\n")
+    assert len(lint_scope.lint(REPO, [g])) == 1       # another sentence does not count
+
+
+def test_sg27w_fails_self_heal_without_hypothesis_or_criterion(tmp_path):
+    f = write(tmp_path / "t.tex", "The film is self-healing at a pit.\n")
+    assert any("SG27W" in p for p in lint_scope.lint(REPO, [f]))
+
+
+def test_sg27w_passes_with_hypothesis_or_criterion(tmp_path):
+    f = write(tmp_path / "t.tex", "Self-healing is a design hypothesis, not a result.\n")
+    assert lint_scope.lint(REPO, [f]) == []
+    g = write(tmp_path / "g.tex", "The criterion for a self-healing film is stated in Section 2.\n")
+    assert lint_scope.lint(REPO, [g]) == []
+
+
+def test_allow_marker_skips_only_the_nacre_pattern(tmp_path):
+    bare = write(tmp_path / "a.tex", "The start is nacre-inspired.\n")
+    assert any("SG19" in p for p in lint_scope.lint(REPO, [bare]))
+    marked = write(tmp_path / "b.tex", "<!-- sg:allow nacre -->\nThe start is nacre-inspired.\n")
+    assert lint_scope.lint(REPO, [marked]) == []
+    other = write(tmp_path / "c.tex", "<!-- sg:allow nacre -->\nThe nacre-inspired film protects the foil.\n")
+    problems = lint_scope.lint(REPO, [other])
+    assert problems and not any("SG19" in p for p in problems)
+    unmarked_next = write(tmp_path / "d.tex", "<!-- sg:allow nacre -->\nA.\n\nThe start is nacre-inspired.\n")
+    assert any("SG19" in p for p in lint_scope.lint(REPO, [unmarked_next]))
