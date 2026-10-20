@@ -19,7 +19,7 @@ def copy_tree(tmp):
     root = Path(tmp) / "repo"
     root.mkdir()
     shutil.copytree(REPO / "preprint", root / "preprint", ignore=_ignore)
-    for rel in ("charter/scope_guard.md", "charter/credit_taxonomy.md", "charter/venue/template.yaml",
+    for rel in ("charter/scope_guard.md", "charter/venue/template.yaml",
                 "ops/tracks/p0.yaml", "ops/tracks/p0_authors.yaml"):
         (root / rel).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(REPO / rel, root / rel)

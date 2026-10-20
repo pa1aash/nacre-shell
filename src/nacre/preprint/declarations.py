@@ -1,15 +1,15 @@
-"""Generated front and end matter: title, author block, CRediT statement and declarations.
+"""Generated front and end matter: title, author block and declarations.
 
 Inputs are never retyped into the manuscript:
   - title          ops/tracks/p0.yaml meta.title_working;
   - author block   ops/tracks/p0_authors.yaml (author order, affiliations, corresponding author);
-  - CRediT         the same register (credit_roles), checked against charter/credit_taxonomy.md;
   - declarations   preprint/paper/declarations.yaml (repository, Zenodo DOI, competing
                    interests, funding and compute), filled at W8.5 and C3.
 
 A value that is TBD, or a field marked `<field>_status: to-confirm`, or an author whose status
 is not `given`, is wrapped in \\nacrePlaceholder or \\nacrePending. Both render visibly in a
 draft build and stop a release build (nacre-preamble.tex); the release guard also refuses them.
+ChemRxiv does not require a CRediT statement, so none is generated (PH-W8.1); the author list is kept.
 """
 import re
 from pathlib import Path
@@ -57,13 +57,6 @@ def _header(root, src, fields, consumed):
             "%% Consumed fields: %s. Consumed content digest %s.\n") % (rel, fields, digest(consumed))
 
 
-def credit_roles(root):
-    """Role names from the fetched taxonomy (the `### <role>` headings)."""
-    text = paths.credit_taxonomy(root).read_text(encoding="utf-8")
-    part = text.split("## Roles and definitions", 1)[-1]
-    return [m.group(1).strip() for m in re.finditer(r"^### (.+)$", part, re.M)]
-
-
 def load_authors(root, path=None):
     path = Path(path) if path else paths.authors_yaml(root)
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
@@ -88,7 +81,6 @@ def _field(author, name):
 
 AUTHOR_KEYS = ("given_name", "family_name", "email", "affiliation", "corresponding", "status")
 AUTHOR_FIELDS = "authors[].{given_name, family_name, email, affiliation, corresponding, status, *_status} in order"
-CREDIT_FIELDS = "authors[].{given_name, family_name, credit_roles} in order"
 
 
 def _consumed_authors(authors, keys=AUTHOR_KEYS):
@@ -129,29 +121,6 @@ def author_block(root, path=None):
     out += "\\newcommand{\\nacreAuthors}{%s}\n" % joined
     out += "\\newcommand{\\nacreAffiliations}{%%\n  %s}\n" % "%\n  ".join(foot)
     return out
-
-
-def credit_statement(root, path=None):
-    path = Path(path) if path else paths.authors_yaml(root)
-    authors = load_authors(root, path)
-    allowed = set(credit_roles(root))
-    parts, problems = [], []
-    for a in authors:
-        name = "%s %s" % (esc(a.get("given_name")), esc(a.get("family_name")))
-        roles = a.get("credit_roles")
-        if is_tbd(roles):
-            text = placeholder("CRediT roles TBD")
-        else:
-            roles = [roles] if isinstance(roles, str) else list(roles)
-            bad = [r for r in roles if r not in allowed]
-            if bad:
-                problems.append("%s: roles not in the taxonomy: %s" % (name, ", ".join(bad)))
-            text = ", ".join(esc(r) for r in roles)
-        parts.append("\\textbf{%s}: %s." % (name, text))
-    if problems:
-        raise DeclarationsError("CRediT:\n  " + "\n  ".join(problems))
-    consumed = _consumed_authors(authors, ("given_name", "family_name", "credit_roles"))
-    return _header(root, path, CREDIT_FIELDS, consumed) + "\\newcommand{\\nacreCredit}{%%\n  %s}\n" % "\n  ".join(parts)
 
 
 def front_matter(root):
@@ -195,7 +164,6 @@ def declarations(root, path=None):
 GENERATED = {
     "front.tex": front_matter,
     "authors.tex": author_block,
-    "credit.tex": credit_statement,
     "declarations.tex": declarations,
 }
 

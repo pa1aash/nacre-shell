@@ -98,7 +98,7 @@ def register(subparsers):
     q = sub.add_parser("macros", help="write preprint/generated/numbers.tex from sources.yaml")
     q.add_argument("--check", action="store_true", help="only report whether numbers.tex is up to date")
     q.set_defaults(func=_macros)
-    q = sub.add_parser("declarations", help="write the generated title, author, CRediT and declaration files")
+    q = sub.add_parser("declarations", help="write the generated title, author and declaration files")
     q.set_defaults(func=_declarations)
     q = sub.add_parser("lint-numbers", help="fail on digits in prose and captions outside macros")
     q.add_argument("files", nargs="*", help="files to check (default: the manuscript sources)")

@@ -36,7 +36,9 @@ def test_guard_refuses_placeholders_and_tbd(tmp_path):
     problems = build.guard(root)
     assert any("nacrePlaceholder remains" in p for p in problems)
     assert any("nacrePending remains" in p for p in problems)
-    assert any("TBD remains" in p for p in problems)
+    assert not any("CRediT" in p for p in problems)          # ChemRxiv needs no CRediT statement
+    write(paths.generated(root) / "declarations.tex", "\\newcommand{\\nacreFunding}{TBD}\n")
+    assert any("declarations.tex:1: TBD remains" in p for p in build.guard(root))
 
 
 def test_guard_passes_a_clean_manuscript_and_refuses_mock_use(tmp_path):
@@ -106,11 +108,11 @@ def test_release_build_fails_while_placeholders_or_the_ai_file_are_missing():
                     reason="needs zsh, latexmk and the local-only template")
 def test_draft_build_compiles():
     gen = paths.generated(REPO)
-    for f in ("numbers", "front", "authors", "credit", "declarations"):
+    for f in ("numbers", "front", "authors", "declarations"):
         (gen / (f + ".tex")).unlink(missing_ok=True)       # the build must regenerate them itself
     p = subprocess.run(["zsh", str(BUILD_SH), "draft"], capture_output=True, text=True)
     assert p.returncode == 0, (p.stdout + p.stderr)[-3000:]
-    assert all((gen / (f + ".tex")).is_file() for f in ("numbers", "front", "authors", "credit", "declarations"))
+    assert all((gen / (f + ".tex")).is_file() for f in ("numbers", "front", "authors", "declarations"))
     assert (paths.build(REPO) / "draft" / "main.pdf").is_file()
     assert (paths.build(REPO) / "draft" / "si" / "main_si.pdf").is_file()
     assert "lint-numbers: PASS" in p.stdout and "lint-scope: PASS" in p.stdout
@@ -126,7 +128,7 @@ def test_generate_replaces_stale_files(tmp_path):
     root = copy_tree(tmp_path)
     gen = paths.generated(root)
     fresh = {f.name: f.read_text(encoding="utf-8") for f in gen.glob("*.tex")}
-    assert set(fresh) == {"numbers.tex", "front.tex", "authors.tex", "credit.tex", "declarations.tex"}
+    assert set(fresh) == {"numbers.tex", "front.tex", "authors.tex", "declarations.tex"}
     for f in gen.glob("*.tex"):
         f.write_text("stale\n", encoding="utf-8")
     (gen / "front.tex").unlink()

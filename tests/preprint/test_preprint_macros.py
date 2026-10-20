@@ -21,7 +21,7 @@ def test_generated_files_are_git_ignored_not_tracked():
                              capture_output=True, text=True, check=True).stdout.split()
     assert not [f for f in tracked if f.endswith(".tex")]
     assert "preprint/generated/sources.yaml" in tracked
-    for name in ("numbers", "front", "authors", "credit", "declarations"):
+    for name in ("numbers", "front", "authors", "declarations"):
         p = subprocess.run(["git", "-C", str(REPO), "check-ignore", "-q", "preprint/generated/%s.tex" % name])
         assert p.returncode == 0, name
 
