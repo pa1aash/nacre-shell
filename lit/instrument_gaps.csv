@@ -714,3 +714,13 @@ utc,source,query_or_id,failure_kind,detail
 2026-10-19T12:15:59Z,unpaywall,10.1016/j.marchem.2018.10.006,http_error,HTTP 403 https://www.sciencedirect.com/science/article/am/pii/S030442031830149X?via%3Dihub
 2026-10-19T12:16:37Z,unpaywall,10.1016/j.marchem.2018.10.006,http_error,HTTP 403 https://www.sciencedirect.com/science/article/am/pii/S030442031830149X?via%3Dihub
 2026-10-19T12:18:52Z,openalex,calcite heterogeneous nucleation rate fit interfacial energy kinetic prefactor ln A correlated compensation,not_indexed,no results
+2026-10-20T04:00:00Z,ph-w1.1,Li3PO4 DfG and S0,no_source,no open thermochemistry source after 4 searches; only DfH in NBS TN 270-8
+2026-10-20T04:00:00Z,ph-w1.1,Al(PO3)3 thermochemistry and solubility,no_source,2 searches and NBS TN 270-3 page check found nothing
+2026-10-20T04:00:00Z,ph-w1.1,Ca(PO3)2 DfH DfG; Ca2P2O7 second source,paywalled,10.1016/j.jct.2006.01.018 no open copy no abstract
+2026-10-20T04:00:00Z,ph-w1.1,first-principles oxidation windows of Ca phosphates,no_source,openalex x3 crossref arxiv (429): none found
+2026-10-20T04:00:00Z,ph-w1.1,monetite and OCP Ksp second source; AlPO4 Ksp,paywalled,full texts paywalled; abstract-only rows entered for variscite and AlPO4.1.5H2O
+2026-10-20T04:00:00Z,ph-w1.1,Al-borate and Al-oxalate solubility,no_source,2 searches; only film-identity statements found
+2026-10-20T04:00:00Z,ph-w1.1,US 10734641 and US 10243206 (tier 2 class B),no_doi,text read from patents.google.com; no DOI so no table rows; findings in lit/corpus/T-R/gaps.md
+2026-10-20T04:00:00Z,ph-w1.1,ALD AlPO4 on LNMO (Western 2017),no_source,thesis found concerns ALD solid electrolytes; host unresolved; Deng 2017 closed
+2026-10-20T04:00:00Z,ph-w1.1,10.1039/d3nr01251d and 10.1149/1.1723495,paywalled,abstract-only (D); cutoff for Ji 2023 not stated
+2026-10-20T04:00:00Z,ph-w1.1,KIT slides pH 4 to 8.5,no_doi,no retrievable text; replaced by 10.1039/c6cc03969c
