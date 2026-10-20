@@ -32,9 +32,30 @@
 #   demonstrations      named composites that are wrong on purpose, implemented only to show
 #                       the size of an error (C3 item 13); never used for a verdict
 
-version: 4
-session: P0-W3.4b (D27)
+version: 5
+session: PH-W3.1 (redirect D34 to D40)
 changes:
+  - version: 5
+    session: PH-W3.1 (redirect D34 to D40)
+    reason: >-
+      Stoichiometric generalisation and phosphate speciation for the redirected screen
+      (ops/tracks/redirect_plan.md; theory/claims_redirect.md). A mineral with nu ions per formula unit has
+      IAP = a_Ca^nu_Ca a_X^nu_X a_Y^nu_Y a_w^n and Omega = IAP/K_sp; the driving force is k_B T ln Omega per
+      FORMULA UNIT and V_m is the molar volume of the formula unit. The per-ion form (k_B T ln Omega / nu) is
+      forbidden in the barrier (demonstrated as DG_hom_per_ion, a factor nu^2 too large for the homogeneous
+      barrier). Calcite is the nu = 2 case and reproduces the carbonate functions exactly (identities on
+      Omega_nu, Delta_mu_fu, DG_hom_mineral). Phosphate speciation: H3PO4 pKa1 to pKa3, ion pairs CaHPO4(aq),
+      CaH2PO4+ and CaPO4-, Davies activity coefficients for charges one to three, one positive root of the
+      same quadratic as the carbonate system (each pair holds one Ca and one phosphate). No v4 expression
+      changed; the carbonate functions are untouched.
+    added: [nu_ions, IAP, Omega_nu, Delta_mu_fu, V_m_fu, n_star_fu, DG_hom_mineral, DG_het_mineral,
+            ln_Omega_exponent_error, DG_hom_per_ion, a_OH_fn, gamma_act_3, m_PT_fn, A_phos_fn, P_pair_phos_fn,
+            a_PO4_speciation, a_Ca_speciation_phos, a_HPO4_speciation, f_PO4_acidbase, f_PO4_free, f_HPO4_free,
+            f_H2PO4_free, f_H3PO4_free, f_pairs_phos, f_phos_closure]
+    changed:
+      - {name: conventions.supersaturation, what: 'text: one definition for a mineral with nu ions per formula unit, Omega = IAP/K_sp with exponents nu_i and a_w^n; per-formula-unit driving force and V_m; the per-ion form is forbidden; calcite is the nu = 2 case'}
+      - {name: conventions.speciation_phosphate, what: 'new convention: the phosphate speciation functions (pK1 to pK3 of H3PO4, pairs CaHPO4(aq), CaH2PO4+, CaPO4-) alongside the carbonate ones; Davies for charges one to three'}
+      - {name: conventions.stoichiometry, what: 'new convention: nu_Ca, nu_X, nu_Y, the two anion slots, structural water through a_w^n only, V_m per formula unit'}
   - version: 4
     session: P0-W3.4b (D27)
     reason: >-
@@ -113,10 +134,12 @@ conventions:
     use the bare gamma_nl, because gamma_nl multiplies the cap area in the free energy whose
     factorisation gives Delta_G*_het = f(theta) Delta_G*_hom.
   supersaturation: >-
-    One definition: Omega = IAP / K_sp = a_Ca a_CO3 / K_sp for the registered framing, with
-    bulk activities; Delta_mu = k_B T ln Omega per CaCO3 formula unit, and V_m per CaCO3
-    formula unit. The charter's S (F3: S = IAP/K_sp) is this Omega; the per-ion square root
-    never appears.
+    One definition: Omega = IAP / K_sp for the registered framing, with bulk activities and one
+    formula unit as the unit of amount. For CaCO3 IAP = a_Ca a_CO3; Delta_mu = k_B T ln Omega per
+    formula unit, and V_m per formula unit. The charter's S (F3: S = IAP/K_sp) is this Omega; the
+    per-ion square root never appears. Contract v5: for a mineral with nu_Ca Ca ions and nu_X, nu_Y
+    ions of two anion types per formula unit, IAP = a_Ca^nu_Ca a_X^nu_X a_Y^nu_Y a_w^n (Omega_nu), see
+    conventions.stoichiometry; CaCO3 is nu = 2 and reduces to the line above exactly.
   bookkeeping: >-
     Uniform chemical potential (contract v2). At equilibrium the electrochemical potentials
     of Ca2+ and CO3^2- are the same in the bulk, in the interfacial layer and at the binding
@@ -158,6 +181,25 @@ conventions:
     species, valid for I_ionic <= I_val (fetched), never beyond its turning point; neutral
     species take activity coefficient one; a draw with I_ionic > I_val is refused and counted.
     c_bulk of the C2 relations is the free Ca2+ concentration c_Ca_free, not Ca_T.
+  stoichiometry: >-
+    Contract v5. A mineral has nu = nu_Ca + nu_X + nu_Y ions per formula unit (for example calcite
+    1 + 1 + 0 = 2, hydroxyapatite Ca5(PO4)3OH 5 + 3 + 1 = 9, octacalcium phosphate
+    Ca8(HPO4)2(PO4)4.5H2O 8 + 4 + 2 = 14 with n = 5). Omega = IAP/K_sp, IAP = a_Ca^nu_Ca a_X^nu_X
+    a_Y^nu_Y a_w^n, K_sp written for the same formula unit. Structural water enters only through
+    a_w^n. The driving force of a nucleus of n_star formula units is n_star k_B T ln Omega at the
+    uniform chemical potential; V_m is the molar volume of the formula unit. The per-ion forms
+    k_B T ln Omega / nu and V_m / nu are forbidden in r_star, DG_hom and DG_het, whose expressions
+    are unchanged and take Omega = Omega_nu and V_m = V_m_fu. A wrong nu is an exponent error in the
+    IAP (ln_Omega_exponent_error), not a rescaling, and a per-ion driving force overstates the
+    homogeneous barrier by nu^2 (DG_hom_per_ion).
+  speciation_phosphate: >-
+    Contract v5. a_PO4 and a_Ca are the free-ion activities of the phosphate speciation at the
+    registered pH, P_T, Ca_T and I, with ion pairs CaHPO4(aq), CaH2PO4+, CaPO4- and CaOH+ (D_Ca of the
+    carbonate system). Davies for charged species (charges one to three), valid for I_ionic <= I_val, a
+    draw above it refused and counted; neutral species take activity coefficient one. Each pair holds
+    one Ca and one phosphate, so the same positive root as the carbonate system closes both balances.
+    The Davies equation is the least reliable at charge three: the validity bound is the registered
+    one, and the sensitivity to it is reported, not absorbed.
 
 functions:
   # ------------------------------------------------------------------ C1, adhesion in water
@@ -1052,6 +1094,363 @@ functions:
     monotonicity:
       - {wrt: j_0, direction: increasing}
       - {wrt: j_req, direction: decreasing}
+
+  # ------------------------------------------------------------------ stoichiometric generalisation (v5)
+  # A mineral with nu ions per formula unit: IAP = a_Ca^nu_Ca a_X^nu_X a_Y^nu_Y a_w^n, Omega = IAP/K_sp, the
+  # driving force k_B T ln Omega per formula unit and V_m per formula unit. Calcite (nu = 2) reduces to the
+  # carbonate functions above exactly. r_star, DG_hom and DG_het keep their expressions and take Omega_nu
+  # and V_m_fu; DG_hom_mineral and DG_het_mineral write that composition out for the implementation.
+  - name: nu_ions
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: nu_Ca + nu_X + nu_Y
+    note: ions per formula unit; the exponent bookkeeping of the IAP sums to it
+    limits:
+      - {at: {nu_Ca: '1', nu_X: '1', nu_Y: '0'}, expected: '2', note: 'calcite'}
+      - {at: {nu_Ca: '5', nu_X: '3', nu_Y: '1'}, expected: '9', note: 'hydroxyapatite Ca5(PO4)3OH'}
+      - {at: {nu_Ca: '8', nu_X: '4', nu_Y: '2'}, expected: '14', note: 'octacalcium phosphate Ca8(HPO4)2(PO4)4.5H2O (X = PO4, Y = HPO4)'}
+    monotonicity:
+      - {wrt: nu_Ca, direction: increasing}
+      - {wrt: nu_Y, direction: increasing}
+
+  - name: IAP
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_Ca**nu_Ca*a_X**nu_X*a_Y**nu_Y*a_w**n_hyd
+    note: >-
+      ion activity product of one formula unit; every ion enters with its stoichiometric exponent and
+      structural water through a_w^n (a_w = 1 in the slurry, below one at drying states)
+    limits:
+      - {at: {nu_Ca: '1', nu_X: '1', nu_Y: '0', n_hyd: '0'}, expected: a_Ca*a_X, note: 'one cation and one anion: the carbonate form'}
+      - {at: {a_w: '1'}, expected: a_Ca**nu_Ca*a_X**nu_X*a_Y**nu_Y, note: 'slurry water activity: no water factor'}
+      - {at: {n_hyd: '0', nu_Y: '0'}, expected: a_Ca**nu_Ca*a_X**nu_X}
+    monotonicity:
+      - {wrt: a_Ca, direction: increasing}
+      - {wrt: a_X, direction: increasing}
+      - {wrt: a_Y, direction: nondecreasing}
+      - {wrt: a_w, direction: nondecreasing}
+
+  - name: Omega_nu
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: '@IAP/K_sp'
+    note: >-
+      saturation ratio of a mineral with nu ions per formula unit (K_sp written for the same formula unit);
+      the Omega of the screen for every candidate (contract v5)
+    identities:
+      - note: 'equivalence: calcite (nu = 2, X = CO3, no Y, no water) is Omega_bulk exactly'
+        subs: {nu_Ca: '1', nu_X: '1', nu_Y: '0', n_hyd: '0', a_X: a_CO3}
+        equals: '@Omega_bulk'
+      - note: 'equivalence: a hydrated calcite framing is Omega_bulk_hydrated exactly'
+        subs: {nu_Ca: '1', nu_X: '1', nu_Y: '0', a_X: a_CO3}
+        equals: '@Omega_bulk_hydrated'
+      - note: 'hydroxyapatite: IAP = a_Ca^5 a_PO4^3 a_OH (nu = 9), no structural water'
+        subs: {nu_Ca: '5', nu_X: '3', nu_Y: '1', n_hyd: '0', a_X: a_PO4, a_Y: a_OH}
+        equals: a_Ca**5*a_PO4**3*a_OH/K_sp
+      - note: 'octacalcium phosphate: IAP = a_Ca^8 a_PO4^4 a_HPO4^2 a_w^5 (nu = 14)'
+        subs: {nu_Ca: '8', nu_X: '4', nu_Y: '2', n_hyd: '5', a_X: a_PO4, a_Y: a_HPO4}
+        equals: a_Ca**8*a_PO4**4*a_HPO4**2*a_w**5/K_sp
+    limits:
+      - {at: {K_sp: '@IAP'}, expected: '1', note: 'saturation: IAP = K_sp'}
+    monotonicity:
+      - {wrt: a_Ca, direction: increasing}
+      - {wrt: a_X, direction: increasing}
+      - {wrt: K_sp, direction: decreasing}
+
+  - name: Delta_mu_fu
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: k_B*T*log(@Omega_nu)
+    note: >-
+      driving force per FORMULA UNIT (nu ions), the quantity multiplied by the number of formula units in a
+      nucleus; the per-ion value is Delta_mu_fu / nu and never enters a barrier
+    identities:
+      - note: 'equivalence: calcite reduces to the carbonate Delta_mu at Omega_bulk'
+        subs: {nu_Ca: '1', nu_X: '1', nu_Y: '0', n_hyd: '0', a_X: a_CO3}
+        equals: k_B*T*log(a_Ca*a_CO3/K_sp)
+      - note: 'sum over ions: the formula-unit driving force is the stoichiometric sum of the ion terms'
+        equals: k_B*T*(nu_Ca*log(a_Ca) + nu_X*log(a_X) + nu_Y*log(a_Y) + n_hyd*log(a_w) - log(K_sp))
+    limits:
+      - {at: {K_sp: '@IAP'}, expected: '0', note: 'saturation'}
+    monotonicity:
+      - {wrt: a_Ca, direction: increasing}
+      - {wrt: K_sp, direction: decreasing}
+
+  - name: V_m_fu
+    claim: C3
+    regime: R-slurry
+    unit: m^3 mol^-1
+    expression: M_fu/rho_s
+    note: molar volume of the formula unit of the registered framing (the input V_m of the barrier); V_m/nu never appears
+    monotonicity:
+      - {wrt: M_fu, direction: increasing}
+      - {wrt: rho_s, direction: decreasing}
+
+  - name: n_star_fu
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 32*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(@Omega_nu))**3)
+    note: formula units in the critical nucleus, (4 pi/3) r_star^3 N_A / V_m with r_star at Omega_nu
+    identities:
+      - note: nucleus volume over the volume of a formula unit
+        equals: 4*pi*(2*gamma_nl*V_m/(N_A*k_B*T*log(@Omega_nu)))**3*N_A/(3*V_m)
+
+  - name: DG_hom_mineral
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(@Omega_nu))**2)
+    note: DG_hom with Omega = Omega_nu and V_m the molar volume of the formula unit (valid where Omega_nu > 1)
+    identities:
+      - note: 'equivalence: calcite is DG_hom at Omega_bulk exactly'
+        subs: {nu_Ca: '1', nu_X: '1', nu_Y: '0', n_hyd: '0', a_X: a_CO3}
+        equals: 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(a_Ca*a_CO3/K_sp))**2)
+      - note: half the work of forming the critical nucleus from its formula units
+        equals: '@n_star_fu*@Delta_mu_fu/2'
+
+  - name: DG_het_mineral
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: '@f_theta*@DG_hom_mineral'
+    domains: {theta: '[0, pi]'}
+    limits:
+      - {at: {theta: '0'}, expected: '0'}
+      - {at: {theta: pi}, expected: '@DG_hom_mineral'}
+      - {at: {theta: pi/2}, expected: '@DG_hom_mineral/2'}
+    inequalities:
+      - {expr: '@DG_het_mineral', relation: '<=', rhs: '@DG_hom_mineral', note: 'holds for every theta in [0, pi]'}
+    monotonicity:
+      - {wrt: theta, direction: nondecreasing}
+
+  - name: ln_Omega_exponent_error
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: log(@Omega_nu) - log(a_Ca*a_X/K_sp)
+    demonstration: true
+    note: >-
+      DEMONSTRATION ONLY (the error of a wrong nu): ln Omega of the right stoichiometry less ln Omega of the
+      calcite form (nu = 2) at the same activities and K_sp. It is the exponent bookkeeping error, not a rescaling:
+      (nu_Ca - 1) ln a_Ca + (nu_X - 1) ln a_X + nu_Y ln a_Y + n ln a_w. Never used for a verdict.
+    identities:
+      - note: exponent bookkeeping
+        equals: (nu_Ca - 1)*log(a_Ca) + (nu_X - 1)*log(a_X) + nu_Y*log(a_Y) + n_hyd*log(a_w)
+    limits:
+      - {at: {nu_Ca: '1', nu_X: '1', nu_Y: '0', n_hyd: '0'}, expected: '0', note: 'calcite: no error'}
+      - {at: {nu_Ca: '5', nu_X: '3', nu_Y: '1', n_hyd: '0', a_X: a_Ca, a_Y: a_Ca}, expected: 7*log(a_Ca), note: 'hydroxyapatite (nu = 9) at equal ion activities a: the calcite form misses (nu - 2) ln a = 7 ln a, that is 7 decades of Omega per decade of activity'}
+
+  - name: DG_hom_per_ion
+    claim: C3
+    regime: R-slurry
+    unit: J
+    expression: 16*pi*gamma_nl**3*V_m**2/(3*N_A**2*(k_B*T*log(@Omega_nu)/nu)**2)
+    demonstration: true
+    note: >-
+      DEMONSTRATION ONLY (forbidden form): the homogeneous barrier with a per-ion driving force
+      k_B T ln Omega / nu used where the formula unit belongs. It overstates the barrier by nu^2: a factor 81
+      for hydroxyapatite (nu = 9), 4 for calcite. Never used for a verdict.
+    identities:
+      - note: the per-ion form is nu^2 times the formula-unit barrier
+        equals: nu**2*@DG_hom_mineral
+    limits:
+      - {at: {nu: '9'}, expected: 81*@DG_hom_mineral, note: 'hydroxyapatite: 81 times the formula-unit barrier'}
+      - {at: {nu: '1'}, expected: '@DG_hom_mineral'}
+    monotonicity:
+      - {wrt: nu, direction: nondecreasing}
+
+  - name: a_OH_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_w*10**(pH - pKw)
+    note: hydroxide activity from the autoprotolysis constant K_w = a_H a_OH / a_w with a_H = 10^-pH
+    limits:
+      - {at: {pH: pKw}, expected: a_w, note: 'a_H = K_w: neutral water'}
+    monotonicity:
+      - {wrt: pH, direction: nondecreasing}
+      - {wrt: a_w, direction: nondecreasing}
+
+  # ------------------------------------------------------------------ phosphate speciation (v5)
+  # Activities of free Ca2+, HPO4 2- and PO4 3- from pH, total phosphate P_T, total Ca_T and ionic strength I,
+  # with ion pairs CaHPO4(aq), CaH2PO4+, CaPO4- and CaOH+. Same structure as the carbonate system: a mass balance
+  # for phosphate and one for calcium close on the pair factor P_pair_phos (each pair holds one of each), giving the
+  # carbonate quadratic with C_T replaced by P_T; one positive root, in the cancellation-free form.
+  - name: gamma_act_3
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 10**(-9*A_DH*(sqrt(I_ionic/m_std)/(1 + sqrt(I_ionic/m_std)) - b_D*I_ionic/m_std))
+    note: Davies activity coefficient of a triply charged ion (output g_3); z^2 = 9
+    validity: 'I_ionic <= I_val (registered bound of the activity model, below the Davies turning point); the least reliable of the three charges'
+    identities:
+      - note: the charge-three coefficient is the ninth power of the charge-one coefficient
+        equals: '@gamma_act_1**9'
+    limits:
+      - {at: {I_ionic: '0'}, expected: '1', note: 'I -> 0 gives ideal activities'}
+      - {at: {A_DH: '0'}, expected: '1'}
+
+  - name: m_PT_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: P_T/(rho_water*m_std)
+    note: total dissolved phosphate in standard molalities (output m_PT)
+
+  - name: A_phos_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: >-
+      1/g_3 + 10**(pK3_phosphoric - pH)/g_2 + 10**(pK3_phosphoric + pK2_phosphoric - 2*pH)/g_1
+      + 10**(pK1_phosphoric + pK2_phosphoric + pK3_phosphoric - 3*pH)
+    note: >-
+      free phosphate species per unit PO4 3- activity (output A_phos): PO4 3-, HPO4 2-, H2PO4- and H3PO4 (activity
+      coefficient one), from a_HPO4 = a_H a_PO4 / K_3, a_H2PO4 = a_H a_HPO4 / K_2 and a_H3PO4 = a_H a_H2PO4 / K_1
+      with a_H = 10^-pH
+    limits:
+      - {at: {g_1: '1', g_2: '1', g_3: '1'}, expected: 1 + 10**(pK3_phosphoric - pH) + 10**(pK3_phosphoric + pK2_phosphoric - 2*pH) + 10**(pK1_phosphoric + pK2_phosphoric + pK3_phosphoric - 3*pH), note: 'ideal activities'}
+      - {limit: {var: pH, to: oo}, expected: 1/g_3, note: 'high pH: only PO4 3- remains'}
+    monotonicity:
+      - {wrt: pH, direction: decreasing, note: 'acidification shifts phosphate from PO4 3- to HPO4 2-, H2PO4- and H3PO4'}
+
+  - name: P_pair_phos_fn
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: >-
+      K_CaHPO4_aq*10**(pK3_phosphoric - pH) + K_CaH2PO4*10**(pK3_phosphoric + pK2_phosphoric - 2*pH)/g_1 + K_CaPO4/g_1
+    note: >-
+      Ca-phosphate ion pairs per unit product a_Ca a_PO4 (output P_pair_phos): CaHPO4(aq) neutral, CaH2PO4+ and CaPO4-
+      singly charged; the same factor appears in the calcium and in the phosphate balance
+    limits:
+      - {at: {K_CaHPO4_aq: '0', K_CaH2PO4: '0', K_CaPO4: '0'}, expected: '0', note: 'no ion pairs'}
+
+  - name: a_PO4_speciation
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: >-
+      2*m_PT*D_Ca/(A_phos*D_Ca + P_pair_phos*(m_CaT - m_PT)
+      + sqrt((A_phos*D_Ca + P_pair_phos*(m_CaT - m_PT))**2 + 4*A_phos*P_pair_phos*m_PT*D_Ca))
+    note: >-
+      free phosphate activity (output a_PO4): the positive root of A P y^2 + (A D + P (m_CaT - m_PT)) y - m_PT D = 0,
+      which follows from the phosphate balance m_PT = A y + P y a_Ca and the calcium balance
+      m_CaT = a_Ca (D + P y). The product of the roots is -m_PT D / (A P) < 0, so exactly one root is positive
+      (the cancellation-free form is the same as for the carbonate system).
+    validity: 'Davies range I_ionic <= I_val; closed system at fixed P_T; solution not yet precipitated'
+    limits:
+      - {at: {P_pair_phos: '0'}, expected: m_PT/A_phos, note: 'no ion pairs: the phosphate acid-base system alone'}
+      - {at: {m_CaT: '0'}, expected: m_PT/A_phos, note: 'no Ca: the phosphate acid-base system alone'}
+      - {at: {m_PT: '0'}, expected: '0'}
+    identities:
+      - note: 'phosphate balance: m_PT = y (A + P a_Ca) with a_Ca = m_CaT/(D + P y)'
+        equals: m_PT/(A_phos + P_pair_phos*m_CaT/(D_Ca + P_pair_phos*@a_PO4_speciation))
+        numeric: true
+    inequalities:
+      - {expr: '@a_PO4_speciation', relation: '<=', rhs: m_PT/A_phos, note: 'ion pairs can only lower the free phosphate'}
+    monotonicity:
+      - {wrt: m_PT, direction: increasing}
+      - {wrt: m_CaT, direction: decreasing}
+
+  - name: a_Ca_speciation_phos
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: m_CaT/(D_Ca + P_pair_phos*a_PO4)
+    note: free Ca2+ activity (output a_Ca) from the calcium balance, at the a_PO4 of a_PO4_speciation
+    limits:
+      - {at: {m_CaT: '0'}, expected: '0', note: 'no Ca'}
+      - {at: {P_pair_phos: '0', D_Ca: '1'}, expected: m_CaT, note: 'no pairs, no hydrolysis, ideal: all calcium is free'}
+    monotonicity:
+      - {wrt: m_CaT, direction: increasing}
+      - {wrt: a_PO4, direction: decreasing}
+
+  - name: a_HPO4_speciation
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_PO4*10**(pK3_phosphoric - pH)
+    note: free HPO4 2- activity (output a_HPO4) from the third dissociation, at the a_PO4 of a_PO4_speciation
+    limits:
+      - {limit: {var: pH, to: oo}, expected: '0', note: 'high pH: PO4 3- only'}
+    monotonicity:
+      - {wrt: pH, direction: decreasing}
+      - {wrt: a_PO4, direction: increasing}
+
+  - name: f_PO4_acidbase
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: 1/(g_3*@A_phos_fn)
+    note: fraction of the total phosphate that is free PO4 3- when no calcium is present (phosphate acid-base only)
+    limits:
+      - {limit: {var: pH, to: oo}, expected: '1', note: 'high pH gives PO4 3-'}
+      - {at: {g_1: '1', g_2: '1', g_3: '1'}, expected: 1/(1 + 10**(pK3_phosphoric - pH) + 10**(pK3_phosphoric + pK2_phosphoric - 2*pH) + 10**(pK1_phosphoric + pK2_phosphoric + pK3_phosphoric - 3*pH))}
+    inequalities:
+      - {expr: '@f_PO4_acidbase', relation: '<=', rhs: '1'}
+    monotonicity:
+      - {wrt: pH, direction: increasing}
+
+  - name: f_PO4_free
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_PO4/(g_3*m_PT)
+    note: fraction of the total phosphate that is free PO4 3- (molality a_PO4/g_3 over m_PT), at the registered state
+    limits:
+      - {at: {a_PO4: '0'}, expected: '0'}
+
+  - name: f_HPO4_free
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_HPO4/(g_2*m_PT)
+    note: fraction of the total phosphate that is free HPO4 2-
+
+  - name: f_H2PO4_free
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_PO4*10**(pK3_phosphoric + pK2_phosphoric - 2*pH)/(g_1*m_PT)
+    note: fraction of the total phosphate that is free H2PO4-
+
+  - name: f_H3PO4_free
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_PO4*10**(pK1_phosphoric + pK2_phosphoric + pK3_phosphoric - 3*pH)/m_PT
+    note: fraction of the total phosphate that is H3PO4(aq)
+
+  - name: f_pairs_phos
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: a_Ca*a_PO4*P_pair_phos/m_PT
+    note: fraction of the total phosphate held in Ca ion pairs
+    limits:
+      - {at: {a_Ca: '0'}, expected: '0', note: 'no free Ca: no pairs'}
+      - {at: {P_pair_phos: '0'}, expected: '0'}
+
+  - name: f_phos_closure
+    claim: C3
+    regime: R-slurry
+    unit: '1'
+    expression: (A_phos + a_Ca*P_pair_phos)*a_PO4/m_PT - 1
+    note: >-
+      closure residual of the phosphate fractions: the free species (A_phos a_PO4, the four terms of A_phos_fn, which
+      are f_PO4_free, f_HPO4_free, f_H2PO4_free and f_H3PO4_free times m_PT) plus the pairs (f_pairs_phos), over m_PT,
+      less one; zero at the speciation solution
+    identities:
+      - note: 'the five fractions sum to one at the speciation solution'
+        subs: {a_PO4: '@a_PO4_speciation', a_Ca: 'm_CaT/(D_Ca + P_pair_phos*@a_PO4_speciation)'}
+        equals: '0'
+        numeric: true
 
 constant_relations:
   - {lhs: R_gas, rhs: N_A*k_B}
