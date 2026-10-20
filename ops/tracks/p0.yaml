@@ -362,6 +362,24 @@ days:
     day: 5
     model: Opus
     master_trace: none
+    requires: []
+  - id: PH-W1.3
+    lane: p0-w1
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-W4.2a
+    lane: p0-w4
+    day: 5
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: PH-W6.1
+    lane: p0-w6
+    day: 5
+    model: Sonnet
+    master_trace: none
     requires: [cp4]
   - id: PH-I5
     lane: p0-int
@@ -391,12 +409,6 @@ days:
     lane: p0-w8
     day: 6
     model: Opus
-    master_trace: none
-    requires: [cp4]
-  - id: PH-W6.1
-    lane: p0-w6
-    day: 6
-    model: Sonnet
     master_trace: none
     requires: [cp4]
   - id: PH-W2.2
@@ -435,7 +447,7 @@ days:
     model: Sonnet
     master_trace: none
     requires: [cp5r]
-  - id: PH-W1.3
+  - id: PH-W1.4
     lane: p0-w1
     day: 7
     model: Sonnet
@@ -800,6 +812,10 @@ decisions:
 - {id: D46, date: '2026-10-20', decision: 'The route layer (R1 to R3, K1 to K4 route forms, Al-salt ladder, baselines, first experiment) is recorded in ops/tracks/redirect_plan.md as a draft pending ruling by the planning chat.', reason: 'No session may treat an unruled layer as binding; the plan file is amended when ruled.'}
 - {id: D47, date: '2026-10-20', decision: 'PH-W1.2 absorbed the route-key work (185 keys); there is no PH-W1.3 route session. PH-W1.3 stays as the day-7 reference audit.', reason: 'The route keys landed in the parameter session; a second session would duplicate it.'}
 - {id: D48, date: '2026-10-20', decision: 'PH-W4.2 and PH-W4.3 run on Sonnet (requires unchanged).', reason: 'Model assignment revised by the integrator brief PH-I4b.'}
+- {id: D49, date: '2026-10-20', decision: 'cp4 PASS with fixes F1-F9 and route rulings C1 to C6 (hydrolysis descriptor, formation criteria, liquid wetting, framings, baselines, matrix rungs) with their evidence consequences; recorded in ops/tracks/redirect_plan.md. Tag p0-cp4. The route layer is ruled, no longer a draft (supersedes D46).', reason: 'Planning-chat rulings of 2026-10-20.'}
+- {id: D50, date: '2026-10-20', decision: 'The old reference audit PH-W1.3 is renamed PH-W1.4 (day 7). New PH-W1.3 (Sonnet, day 5, requires []) closes gaps: hydration free energies of Ca2+, Al3+ and ClO4-; glass-to-crystal correction; Al(PO3)3 data; coacervate gamma_nl magnitudes; Al-polyphosphate complexation constants and Ksp. Narrows D47.', reason: 'The hydration bracket and route gaps need a fetch session before PH-W5.1 and PH-W3.2.'}
+- {id: D51, date: '2026-10-20', decision: 'PH-W4.2a added (lane w4, Opus, day 5, requires []): route evaluators, started after PH-W3.2a END BLOCK. PH-W4.2 production stays Sonnet (D48). PH-W3.2a requires [] (cp4 PASS). PH-W6.1 moves to day 5.', reason: 'Route evaluators depend on contract v6, not on the production screen.'}
+- {id: D52, date: '2026-10-20', decision: 'GO/NO-GO at the cp5 freeze: if no condensed phosphate has a lower-bound onset above 4.3 V, the headline is the design rule (condense the phosphate; bone mineral fails near 4.1 V) plus the gap map, and the abstract says so; the operator is told plainly and decides whether to post; the route layer stays as a design hypothesis with its screened thermodynamics.', reason: 'Route ruling evidence consequence 3.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1072,7 +1088,22 @@ lane_notes:
   date: '2026-10-20'
   day: 7
   lanes: [p0-w1]
-  note: (PH-W1.3) W1.2 absorbed the route-key work (D47), so no PH-W1.3 route session exists; PH-W1.3 stays as the day-7 reference audit.
+  note: (PH-W1.4) The day-7 reference audit, renamed from PH-W1.3 at PH-I4c (D50).
+- id: N39
+  date: '2026-10-20'
+  day: 5
+  lanes: [p0-w1]
+  note: (PH-W1.3) Gap closing - hydration free energies of Ca2+, Al3+ and ClO4-; glass-to-crystal correction; Al(PO3)3 data; coacervate gamma_nl magnitudes; Al-polyphosphate complexation constants and Ksp. Added at PH-I4c (D50).
+- id: N40
+  date: '2026-10-20'
+  day: 5
+  lanes: [p0-w4]
+  note: (PH-W4.2a) Route evaluators (Opus); starts after PH-W3.2a's END BLOCK, no polling. PH-W4.2 production stays Sonnet (D51).
+- id: N41
+  date: '2026-10-20'
+  day: 5
+  lanes: [p0-w3, p0-w5, p0-w8, p0-w6]
+  note: (PH-W3.2a) Contract v6 and route derivations, requires [] since cp4 is PASS. (PH-W3.2) Numeric margins; vets the bracket; stays after PH-W5.1. (PH-W5.1) Benchmark, Al-O-H passivation window, amorphous K1 rows, lower-bound sink bracket when the keys exist, matrix rungs as tier-2 rows. (PH-W8.1, PH-W6.1) Sonnet, day 5. Route rulings C1 to C6 in ops/tracks/redirect_plan.md (D49).
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
