@@ -133,3 +133,38 @@ Nothing. Items marked "to be fetched" are for the lanes.
 ## NOTICE TO CO-AUTHORS
 
 Palaash sends the scope-change notice and collects consent for the new scope now, in parallel. One line asks Prof. Braun whether his lab could run the first test.
+
+## ROUTE LAYER (draft, pending ruling by the planning chat; amend this file when ruled)
+
+Recorded 2026-10-20 (PH-I4b). Draft only; no session may treat it as ruled.
+
+**Routes.**
+- R1: interfacial gelation triggered by Al3+. Soluble Li or Na polyphosphate plus chitosan, pH 5 to 8.5. Al3+ released at the oxide crosslinks the polyphosphate into an insoluble Al-polyphosphate gel; self-limiting.
+- R2: Ca-polyphosphate coacervate (liquid precursor) wets the foil and dries to an amorphous Ca-polyphosphate glass.
+- R3: dry-trapped Ca-polyphosphate (Ca added last, fast drying).
+- Constraint: Ca2+ and Al-oxide surfaces accelerate polyphosphate hydrolysis toward orthophosphate (the low-ceiling phase). Every route is a kinetic race against hydrolysis; this extends the two-stage logic of the cp4 candidate decision.
+
+**Claims.**
+- K1: the amorphous framing is registered beside the crystalline framing for Ca-polyphosphate glass and Al-polyphosphate. Glass thermochemistry (DfH, S0, glass-to-crystal correction) enters the tier-1 route.
+- K2: solubility of crosslinked Ca- and Al-polyphosphate, plus a hydrolysis descriptor (half-life against t_proc from literature rates with Ca2+ and Al-oxide dependence). It gates only where rate data show a half-life shorter than t_proc; otherwise it is reported.
+- K3 route form: R2 is the coacervate binodal region in (Ca:polyP, pH, ionic strength) from literature, undetermined if absent. R1 is a thermodynamic criterion only: the Al-polyphosphate IAP at the interface exceeds Ksp, with a(Al3+) at the foil from our own Al-O-H Pourbaix over pH 5 to 8.5. Kinetics of gelation versus hydrolysis is a labelled hypothesis.
+- K4 route form: liquid-precursor wetting S_spread = gamma_sl - gamma_sn - gamma_nl, with gamma_nl the coacervate-water tension. The design rule is the condition on gamma_nl. Self-limiting thickness is a descriptor. The insulating bound stays.
+
+**Al-salt ladder.** Promote Al(PO3)3 and Al-polyphosphate rungs (both framings). Organic-matrix rungs: chitosan, polydopamine and the chitosan-polyphosphate complex (oxidation limits from literature, tier 2 only). Polydopamine is a stated K1 risk, contrary B4.
+
+**Baselines** (comparator rows through K1, K2 and K4 only; no performance claims).
+- Tsinghua/Hon Hai baked aluminophosphate (US 8,252,463; 8,821,969).
+- Hydro-Quebec Li polyphosphate film (US 6,485,866; 6,844,114; aqueous Li polyphosphate, soluble).
+
+**Scope-guard additions** (record only; applied at the cp5 freeze).
+- `self-heal(s)` outside hypothesis wording
+- `(insoluble|crosslinked) .* film (forms|assembles) (on|at) (aluminium|the foil)`
+- `coacervate (wets|forms) on aluminium`
+- `(outperforms|better than) (baked|plain|conventional) (coating|aluminophosphate)`
+- `polyphosphate (film|gel|glass) (protects|prevents|is stable)`
+
+**First experiment** (replaces the earlier version). Route R1 or R2 film against baked aluminophosphate, hydroxyapatite, bare and carbon-coated foil: (a) water insolubility and aqueous-slurry immersion; (b) anodic potential hold at 4.3 to 4.5 V in a fluorine-free electrolyte. Conditional predictions: hydroxyapatite fails near 4.1 V; condensed phases survive; the gelled or coacervate film resists water where Li polyphosphate dissolves.
+
+**Cut order for the route layer.** R3 first (one sentence); matrix rungs beyond chitosan; the R2 criterion (kept as "undetermined, literature gap" if no binodal data); hero render; beta-TCP and OCP. Never cut: the carbonate control, the K1 ladder in both framings, K2 solubility, the baselines through K1 K2 K4, the required-precision map, the R1 thermodynamic test, the predictions.
+
+**Evidence status** (from the PH-W1.2 report). Hydrolysis rates exist only for gamma-Al2O3 at room temperature. Coacervate gamma_nl, binodal, matrix oxidation limits, Al(PO3)3 and the glass-to-crystal correction are gaps. All tier-2 records are in LiPF6 electrolyte. Undetermined verdicts are expected and are reported as such.
