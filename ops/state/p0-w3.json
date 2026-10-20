@@ -184,5 +184,16 @@
     "version": 5,
     "functions": 85,
     "check_contract": "PASS"
+  },
+  "cp4_fixes": {
+    "status": "ready",
+    "sha": "9454a261161c127f69f46853b9df3746efc2d19d",
+    "items": {
+      "F1": "56bed9f",
+      "F2": "a777589",
+      "F4": "9454a26"
+    },
+    "F2_vetting": "holds in corrected form, conditionally (relative transfer premise; anion cancels in salt form)",
+    "check_contract": "PASS"
   }
 }
