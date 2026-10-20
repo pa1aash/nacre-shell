@@ -568,3 +568,92 @@ Dgamma = gamma_nl cos theta directly).
   regime pH relative to the point of zero charge and is not assumed.
 - **Descriptors.** The self-limiting thickness of the R1 gel and of the dried R2 film is a descriptor. The insulating
   bound d_max of K4 stays for every route.
+
+### 9d. Framings (ruling C4)
+
+- **In-situ routes R1 to R3.** The products are amorphous (gel or glass), so the **amorphous framing governs** their K1,
+  K2 and K3 verdicts. The crystalline framing is an optimistic upper reference: the glass has the higher free energy,
+  DeltaG_g->c = G_glass - G_crystal >= 0 per formula unit (`glass_crystal_correction_<P>`), so its oxidation onset is
+  lower and its solubility higher:
+
+      E_ox,glass = E_ox,crystal - DeltaG_g->c / (Delta_n_Li F)      (function `E_window_glass`)
+      Omega_glass = Omega_crystal exp(-DeltaG_g->c / (R T))          (function `Omega_glass`)
+
+  Glass thermochemistry enters the tier-1 route as DfG_glass = DfH_glass - T (S0_glass - sum of elemental S0) where the
+  glass data exist (`glass_dfh_<P>_glass`, `glass_s0_<P>_glass`), otherwise as the crystalline value plus the bounded,
+  labelled correction DeltaG_g->c with its inflated uncertainty (cp4 F3).
+- **Labels.** Crystalline pass with amorphous fail: `requires crystallisation` (the route as run does not give a passing
+  film; a crystallisation step would). Amorphous pass: the crystalline row is printed beside it and adds nothing.
+  Both fail: falsified under the governing framing.
+- **Baked baselines** (unspecified structure): both framings are reported, neither governs; the row carries
+  `structure unspecified`.
+- **Nucleus framings unchanged.** For the Ca orthophosphate nucleus framings (ACP versus apatite), "falsified only if
+  falsified under every framing" stays (Section 3d). The governing rule above applies to the route products only.
+
+### 9e. Matrix and baseline rules (rulings C5, C6)
+
+| # | Matrix rung (chitosan, PDA, chitosan-polyphosphate) | Matrix K1 entry |
+|---|---|---|
+| M1 | tier 2 class A or B below the cutoff (E_svc < E_c - m_svc) | reported as the film's ceiling (`matrix ceiling, class X`) beside the mineral's K1; the mineral's verdict is unchanged |
+| M2 | tier 2 class A or B at or above the cutoff | no ceiling from the matrix; printed beside |
+| M3 | class C only, or no record (gap) | matrix-risk flag; no ceiling; never gating alone |
+| M4 | a registered thermal budget could remove the matrix | both variants reported (with and without the matrix) |
+
+The matrix has no tier 1 (an organic polymer has no meaningful thermodynamic onset here); it never gates by itself:
+a row is never falsified on a matrix entry alone. Polydopamine carries the stated K1 risk (contrary B4). Tier-2 rows in
+LiPF6 are context only and can counter-indicate but not support (evidence consequence 1).
+
+| # | Baseline row (K1, K2, K4 only; no K3, no performance claim) | Rule |
+|---|---|---|
+| L1 | K2, a literature solubility for the composition exists | used, labelled `composition-based` |
+| L2 | K2, no such value | undetermined |
+| L3 | Hydro-Quebec Li polyphosphate film | solubility labelled `inference from chemistry` (water-soluble Li polyphosphate), never a patent statement; K2 undetermined unless L1 applies |
+| L4 | K1 | the bracket of Section 2f under both framings (9d) |
+| L5 | K4 | the insulating bound with the patent thickness keys (`matrix_baseline_*_film_thickness`) |
+
+### 9f. Thresholds structure (symbolic; PH-W3.2 sets the numbers)
+
+- **K2** (unchanged): Omega >= 1 per framing; the amorphous framing governs the route products (9d).
+- **K2h** (conditional gate): table H1 to H4 with f_min; margins none beyond tau_k (the transfer range is the margin).
+- **K3 route forms**: R1 table F1r to F4r (edge Omega_AlPP against 1, falsifying side only); R2 table B1 to B4.
+- **K4 route form**: S_coac >= m_S, with the closure route of Section 3c as the alternative; falsified only if both
+  fail on the same draw.
+- **K1 amorphous row**: the bracket of Section 2f evaluated with the glass onset; edges E_lb,glass >= E_c + m_1 and
+  E_ub,glass < E_c - m_1. Per row the margins are m_1 (m_expt or m_E), m_svc, m_S; no value is set here.
+
+The machine form is the `screen_ph` entry of the `thresholds` block of `theory/thresholds.md` (block version 5).
+
+### 9g. New keys for W1 (names only)
+
+`hydration_free_energy_clo4`, `hydration_transfer_ca_water_carbonate`, `hydration_transfer_al_water_carbonate`,
+`hydration_transfer_salt_ca_clo4_2_water_carbonate`, `hydrolysis_a_w_dry`, `hydrolysis_t_wet_r1`, `hydrolysis_t_wet_r2`,
+`hydrolysis_t_wet_r3`, `hydrolysis_transfer_factor`, `hydrolysis_f_min`, `hydrolysis_temperature_tolerance`,
+`polyp_al_activity_pit`, `polyp_al_log_k_oxide`, `polyp_ads_alumina_gamma_max`, `polyp_ads_alumina_k_langmuir`,
+`polyp_ads_alumina_layer_thickness`, `coacervate_binodal_map`, `coacervate_gamma_s0_dilute`,
+`coacervate_gamma_s0_dense`, `coacervate_contact_angle_alumina`, `glass_dfh_alpp_gel`, `glass_crystal_correction_alpp`,
+`matrix_service_limit_chitosan`, `matrix_service_limit_pda`, `matrix_service_limit_chitosan_polyp`,
+`matrix_thermal_budget`, `matrix_baseline_tsinghua_cure_range`, `hydration_a_w_star_<pair>`,
+`hydration_conversion_temperature_<pair>` (pair: brushite-monetite, monetite-capp, and each precursor-to-cell-stage pair of
+Section 2g).
+
+### 9h. Interpretations for the audit
+
+- **I8.** Rule 2d (F1): "proceeding" does not change the K1 column; an inconclusive K1 never makes a candidate barrier.
+- **I9.** F2: the argument as worded fails; the bracket holds with the relative transfer premise; without transfer data
+  for the product ion a tier-1 pass is inconclusive (`conditional on the transfer premise`), so the rule is
+  solid-salt-only for that row.
+- **I10.** F2: a reaction that consumes a solvated anion has no E_lb; E_lb > E_ub flags a data inconsistency.
+- **I11.** C1: first-order loss in the condensed fraction; coverage includes interpolation in pH between the two measured
+  values and nothing else; with Ca2+ present only the Ca rows bracket the state.
+- **I12.** C2: with the oxide present a(Al3+) is pinned by the oxide equilibrium, so polyphosphate complexation acts on
+  the free ligand; a complexation gap is evaluated at f_PP,free = 1 and flagged (falsification stands, not-excluded
+  labelled optimistic).
+- **I13.** C3: at coexistence the Gibbs-Langmuir site and exclusion terms cancel in gamma_sl - gamma_sn; the substrate
+  preference is the site-free contact difference (a gap) and the R2 K4 route form is undetermined until it or a contact
+  angle exists. The ideal-dilute two-concentration form is a rejected demonstration.
+- **I14.** C4: the K1 amorphous row uses the bracket of Section 2f with the glass correction; `requires
+  crystallisation` is a label, not a verdict.
+- **I15.** C6: a matrix ceiling (M1) is printed as a statement about the composite film beside the mineral's K1 and
+  never changes the mineral's verdict; a row is falsified at E_c only through the mineral's own K1.
+- **I16.** F4: a cell-stage row inherits K2 to K4 only through its conversion-step row; no film is reported with K1
+  from one stage and K2 to K4 from another.

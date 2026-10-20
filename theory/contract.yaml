@@ -44,10 +44,12 @@ changes:
       falsifying-only criterion Omega_AlPP with the oxide-pinned a(Al3+) and the complexed free ligand (C2); the
       coacervate spreading coefficient and the Gibbs-Langmuir energies of the oxide against the coexisting phases,
       whose site and exclusion terms cancel in the difference (C3), with the ideal-dilute two-concentration form as a
-      rejected, reported-only function. No v5 expression changed.
+      rejected, reported-only function; the framings of the route products (ruling C4): the glass lies
+      Delta_G_gc >= 0 above the crystal, so its onset is lower and its saturation ratio smaller (E_window_glass,
+      E_lb_glass, E_ub_glass, Omega_glass). No v5 expression changed.
     added: [E_ub, E_lb, E_solv, Delta_G_tr_rel_born, k_hyd_eff, t_half_hyd_fn, f_cond, t_wet_max, a_Al_oxide_eq,
             a_PP_free, IAP_AlPP, Omega_AlPP, gamma_al_l_ads, gamma_al_n_ads, Dgamma_coac, S_coac, cos_theta_coac,
-            Dgamma_coac_ideal]
+            Dgamma_coac_ideal, E_window_glass, E_lb_glass, E_ub_glass, Omega_glass]
     changed: []
     removed: []
   - version: 5
@@ -1731,6 +1733,58 @@ functions:
       forbids, and credits the binding constant with a wetting preference
     limits:
       - {at: {c_n: c_l}, expected: '0', note: 'equal concentrations: the only case consistent with the ideal-dilute isotherm at equal activity'}
+
+  # ------------------------------------------------------------------ framings of the route products (v6; ruling C4)
+  - name: E_window_glass
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: (Delta_G_r - Delta_G_gc)/(Delta_n_Li*F_c)
+    note: >-
+      onset of a reaction that consumes the amorphous (glass) form: the glass lies Delta_G_gc = G_glass - G_crystal >= 0
+      above the crystal per formula unit, so its onset is lower; the governing row of the in-situ routes R1 to R3
+    limits:
+      - {at: {Delta_G_gc: '0'}, expected: '@E_window', note: 'no glass-to-crystal free energy: the crystalline onset'}
+    inequalities:
+      - {expr: '@E_window_glass', relation: '<=', rhs: '@E_window', domains: {Delta_G_gc: '[0, oo)', Delta_n_Li: '(0, oo)'},
+         note: 'the crystalline framing is the optimistic upper reference'}
+    monotonicity:
+      - {wrt: Delta_G_gc, direction: decreasing, subs: {Delta_n_Li: aux_u}}
+
+  - name: E_lb_glass
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: (Delta_G_r_aq - Delta_G_gc)/(Delta_n_Li*F_c)
+    note: lower end of the K1 bracket for the amorphous framing (the K1 amorphous row)
+    limits:
+      - {at: {Delta_G_gc: '0'}, expected: '@E_lb'}
+
+  - name: E_ub_glass
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: (Delta_G_r_ss - Delta_G_gc)/(Delta_n_Li*F_c)
+    note: upper end of the K1 bracket for the amorphous framing (the K1 amorphous row)
+    limits:
+      - {at: {Delta_G_gc: '0'}, expected: '@E_ub'}
+
+  - name: Omega_glass
+    claim: K2
+    regime: R-slurry
+    unit: '1'
+    expression: '@Omega_nu*exp(-Delta_G_gc/(R_gas*T))'
+    note: >-
+      saturation ratio against the glass: K_sp,glass = K_sp exp(Delta_G_gc / (R T)) for the same formula unit, so the
+      glass is more soluble; the governing K2 framing of the route products
+    limits:
+      - {at: {Delta_G_gc: '0'}, expected: '@Omega_nu'}
+    inequalities:
+      - {expr: '@Omega_glass', relation: '<=', rhs: '@Omega_nu', domains: {Delta_G_gc: '[0, oo)'},
+         subs: {K_sp: 'a_Ca**nu_Ca*a_X**nu_X*a_Y**nu_Y*a_w**n_hyd/aux_u'},
+         note: 'exact reparametrisation: the activity prefactor IAP/K_sp is one positive symbol'}
+    monotonicity:
+      - {wrt: Delta_G_gc, direction: decreasing, subs: {K_sp: 'a_Ca**nu_Ca*a_X**nu_X*a_Y**nu_Y*a_w**n_hyd/aux_u'}}
 
 constant_relations:
   - {lhs: R_gas, rhs: N_A*k_B}

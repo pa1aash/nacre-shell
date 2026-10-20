@@ -1204,6 +1204,50 @@ screen_ph:
                 params: [params.hydration_transfer_ca_water_carbonate, params.hydration_transfer_al_water_carbonate,
                          params.transfer_free_energy_li_water_pc]}
       class_rule: 'per class: feasible at sup C, falsified at inf C, otherwise partial with crossovers E_lb - m and E_ub + m'
+    K1_amorphous:
+      role: governing K1 row of the in-situ routes R1 to R3 (ruling C4); the crystalline K1 row is the optimistic upper reference
+      regime: R-cell
+      tests:
+        - id: K1am_pass
+          quantity: E_lb_glass
+          comparator: '>='
+          edge: E_c + m_expt
+          requires: transfer premise supported (as K1_pass)
+          params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.C5.window_margin_expt}
+          where_expt_missing: {edge: E_c + m_E, label: DFT-decided, params: {m_E: thresholds.C5.window_margin}}
+        - id: K1am_falsify
+          quantity: E_ub_glass
+          comparator: '<'
+          edge: E_c - m_expt
+          params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.C5.window_margin_expt}
+          where_expt_missing: {edge: E_c - m_E, label: DFT-decided, params: {m_E: thresholds.C5.window_margin}}
+      labels: {crystalline_pass_amorphous_fail: requires crystallisation, baked_baselines: both framings reported, structure unspecified}
+      nucleus_framings: unchanged (falsified only if falsified under every framing; ACP versus apatite)
+    K2_route:
+      role: K2 of the route products under the governing amorphous framing (ruling C4)
+      regime: R-slurry
+      tests:
+        - id: K2_route_glass
+          quantity: Omega_glass
+          comparator: '>='
+          edge: '1'
+          params: {}
+      crystalline: Omega_nu reported beside as the optimistic reference
+    matrix:
+      role: tier 2 only, never gating alone (ruling C6); claims_redirect Section 9e rows M1 to M4
+      tests:
+        - id: matrix_ceiling
+          quantity: E_svc
+          comparator: '<'
+          edge: E_c - m_svc
+          rule: class A or B only; reported as the film ceiling beside the mineral K1, never changes the mineral verdict
+          params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_svc: thresholds.K1.margin_service}
+      class_C_or_gap: matrix-risk flag
+      thermal_budget: both variants reported
+    baselines:
+      rows: [K1, K2, K4]
+      no: [K3, performance claims]
+      K2: composition-based literature solubility, else undetermined; Hydro-Quebec film solubility labelled inference from chemistry
     K2h:
       role: conditional gate (ruling C1); gates a route row only through H2
       regime: R-slurry
