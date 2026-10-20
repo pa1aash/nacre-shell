@@ -334,13 +334,11 @@ days:
     day: 5
     model: Opus
     master_trace: none
-    requires: [cp4]
   - id: PH-W1.2
     lane: p0-w1
     day: 5
     model: Sonnet
     master_trace: none
-    requires: [cp4]
   - id: PH-W3.2
     lane: p0-w3
     day: 5
@@ -784,6 +782,7 @@ decisions:
 - {id: D42, date: '2026-10-20', decision: 'PH report names are carved out for each lane: lane p0-wN may write
     ops/reports/PH-WN.*.md, and p0-w5 also ops/reports/PH-K1.md.', reason: 'The ownership hook rejected the
     PH report names; the lanes had to use the P0-WN.PH-WN.1.md form.'}
+- {id: D43, date: '2026-10-20', decision: 'PH-W1.2 and PH-W4.1 no longer require cp4: the data and code sessions proceed on assumed PASS. They touch no verdict rule, threshold, prior or K1 number. Every other session keeps its gating. The cp4 tag p0-cp4 is created after PASS.', reason: 'Data extraction and generalised screen code with dry runs carry no verdict content (plan: lanes proceed on assumed PASS for mechanical work).'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
