@@ -80,3 +80,25 @@ def double_counted_water_barrier(gamma_sl0, gamma_sn0, Delta_gamma_w, gamma_nl, 
     theta = wetting.contact_angle_young(sl, gamma_sn0, Delta_gamma_w, g_eff)
     omega = sat.saturation_ratio_bulk(a_Ca, a_CO3, K_sp)
     return nucleation.heterogeneous_barrier_from_saturation(theta, g_eff, V_m, omega, T)
+
+
+# ------------------------------------------------------------------ contract v5 demonstrations
+def ln_omega_exponent_error(a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp):
+    """DEMONSTRATION (ln_Omega_exponent_error): ln Omega of the stoichiometry less the calcite form (nu = 2)."""
+    ln_om = sat.ln_saturation_ratio_mineral(a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp)
+    ln_calcite = np.log(positive("a_Ca", a_Ca) * positive("a_X", a_X) / positive("K_sp", K_sp))
+    return scalar_or_array(ln_om - ln_calcite)
+
+
+def homogeneous_barrier_per_ion(gamma_nl, V_m, nu, a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp, T):
+    """FORBIDDEN (DG_hom_per_ion): driving force k_B T ln Omega / nu in the homogeneous barrier; nu^2 too large."""
+    from nacre.physics.constants import AVOGADRO
+    g = positive("gamma_nl", gamma_nl)
+    vm = positive("V_m", V_m)
+    n = positive("nu", nu)
+    ln_om = sat.ln_saturation_ratio_mineral(a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp)
+    if np.any(ln_om <= 0.0):
+        raise ValueError("omega (saturation ratio) must exceed 1: the nucleation barrier is undefined "
+                         "without supersaturation")
+    dmu = BOLTZMANN * positive("T", T) * ln_om / n
+    return scalar_or_array(16.0 * np.pi * g ** 3 * vm ** 2 / (3.0 * AVOGADRO ** 2 * dmu ** 2))

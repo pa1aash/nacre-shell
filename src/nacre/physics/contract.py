@@ -1,4 +1,4 @@
-"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v4).
+"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v5).
 
 Maps every contract function name to the physics function that implements it and to the
 contract symbol ids of its arguments, in call order. Constants (k_B, N_A, R_gas, F_c, q_e,
@@ -19,7 +19,7 @@ from nacre.physics import wetting
 from nacre.physics.devtools import wrong_variants
 
 #: Contract version this registry implements; the contract tests skip a different version.
-CONTRACT_VERSION = 4
+CONTRACT_VERSION = 5
 
 CONSTANT_IDS = {"k_B", "N_A", "R_gas", "F_c", "q_e", "hbar", "m_e", "m_std", "c_std"}
 
@@ -50,6 +50,16 @@ YOUNG = ("gamma_sl", "gamma_sn0", "Delta_gamma_w", "gamma_nl")
 CNT = ("gamma_nl", "V_m", "Omega", "T")
 BIND = ("Delta_G_seq", "T", "c_bulk", "Gamma_s", "delta_s")
 DAVIES = ("A_DH", "I_ionic", "b_D")
+
+MINERAL = ("a_Ca", "a_X", "a_Y", "nu_Ca", "nu_X", "nu_Y", "a_w", "n_hyd")
+PHOS_A = ("pK1_phosphoric", "pK2_phosphoric", "pK3_phosphoric", "pH", "g_1", "g_2", "g_3")
+
+
+def _supersaturated_mineral(**kw):
+    """Validity filter of the mineral barriers: Omega_nu > 1 (the barrier is undefined below it)."""
+    with np.errstate(all="ignore"):
+        return sat.ln_saturation_ratio_mineral(*[kw[n] for n in MINERAL + ("K_sp",)]) > 0
+
 
 FUNCTIONS = {
     # C1 adhesion in water
@@ -112,6 +122,40 @@ FUNCTIONS = {
                             lambda gamma_sl, gamma_sn0, gamma_nl, Delta_gamma_w: gamma_nl - Delta_gamma_w > 0),
     "cos_theta_young_at0": Entry(wetting.contact_angle_cosine_young_uncorrected,
                                  ("gamma_sl", "gamma_sn0", "gamma_nl")),
+    # stoichiometric generalisation (contract v5)
+    "nu_ions": Entry(sat.ions_per_formula_unit, ("nu_Ca", "nu_X", "nu_Y")),
+    "IAP": Entry(sat.ion_activity_product, MINERAL),
+    "Omega_nu": Entry(sat.saturation_ratio_mineral, MINERAL + ("K_sp",)),
+    "Delta_mu_fu": Entry(sat.driving_force_formula_unit, MINERAL + ("K_sp", "T")),
+    "V_m_fu": Entry(sat.molar_volume_formula_unit, ("M_fu", "rho_s")),
+    "n_star_fu": Entry(nucleation.critical_formula_units, ("gamma_nl", "V_m") + MINERAL + ("K_sp", "T"),
+                       _supersaturated_mineral),
+    "DG_hom_mineral": Entry(nucleation.homogeneous_barrier_mineral, ("gamma_nl", "V_m") + MINERAL + ("K_sp", "T"),
+                            _supersaturated_mineral),
+    "DG_het_mineral": Entry(nucleation.heterogeneous_barrier_mineral,
+                            ("theta", "gamma_nl", "V_m") + MINERAL + ("K_sp", "T"), _supersaturated_mineral),
+    "ln_Omega_exponent_error": Entry(wrong_variants.ln_omega_exponent_error, MINERAL + ("K_sp",)),
+    "DG_hom_per_ion": Entry(wrong_variants.homogeneous_barrier_per_ion,
+                            ("gamma_nl", "V_m", "nu") + MINERAL + ("K_sp", "T"), _supersaturated_mineral),
+    "a_OH_fn": Entry(sat.hydroxide_activity, ("a_w", "pH", "pKw")),
+    # phosphate speciation (contract v5)
+    "gamma_act_3": Entry(speciation.activity_coefficient_charge_three, DAVIES, _davies_representable(9.0)),
+    "m_PT_fn": Entry(speciation.total_phosphate_molal, ("P_T", "rho_water")),
+    "A_phos_fn": Entry(speciation.phosphate_speciation_factor, PHOS_A),
+    "P_pair_phos_fn": Entry(speciation.phosphate_ion_pair_factor,
+                            ("K_CaHPO4_aq", "K_CaH2PO4", "K_CaPO4", "pK2_phosphoric", "pK3_phosphoric", "pH", "g_1")),
+    "a_PO4_speciation": Entry(speciation.phosphate_activity, ("m_PT", "D_Ca", "A_phos", "P_pair_phos", "m_CaT")),
+    "a_Ca_speciation_phos": Entry(speciation.calcium_activity_phosphate, ("m_CaT", "D_Ca", "P_pair_phos", "a_PO4")),
+    "a_HPO4_speciation": Entry(speciation.hydrogen_phosphate_activity, ("a_PO4", "pK3_phosphoric", "pH")),
+    "f_PO4_acidbase": Entry(speciation.phosphate_fraction_acidbase, ("g_3",) + PHOS_A[:4] + ("g_1", "g_2")),
+    "f_PO4_free": Entry(speciation.fraction_po4_free, ("a_PO4", "g_3", "m_PT")),
+    "f_HPO4_free": Entry(speciation.fraction_hpo4_free, ("a_HPO4", "g_2", "m_PT")),
+    "f_H2PO4_free": Entry(speciation.fraction_h2po4_free,
+                          ("a_PO4", "pK2_phosphoric", "pK3_phosphoric", "pH", "g_1", "m_PT")),
+    "f_H3PO4_free": Entry(speciation.fraction_h3po4,
+                          ("a_PO4", "pK1_phosphoric", "pK2_phosphoric", "pK3_phosphoric", "pH", "m_PT")),
+    "f_pairs_phos": Entry(speciation.fraction_pairs_phosphate, ("a_Ca", "a_PO4", "P_pair_phos", "m_PT")),
+    "f_phos_closure": Entry(speciation.phosphate_closure_residual, ("A_phos", "a_Ca", "P_pair_phos", "a_PO4", "m_PT")),
     # C4 conformality
     "S_spread": Entry(conformality.spreading_coefficient, YOUNG),
     "h_c": Entry(conformality.coalescence_thickness, ("theta", "N_s")),
