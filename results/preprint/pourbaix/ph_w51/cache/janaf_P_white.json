@@ -1,0 +1,12 @@
+{
+ "kind": "janaf_table",
+ "locator": "NIST-JANAF Thermochemical Tables, table for P_white (Phosphorus, White (P)\tP1(cr)), row T=298.15 K and neighbours",
+ "request": {
+  "method": "HTTP GET",
+  "url": "https://janaf.nist.gov/tables/P-002.txt"
+ },
+ "retrieved_utc": "2026-10-20T14:19:39Z",
+ "species": "P_white",
+ "text": "Phosphorus, White (P)\tP1(cr)\nT(K)\tCp\tS\t-[G-H(Tr)]/T\tH-H(Tr)\tdelta-f H\tdelta-f G\tlog Kf\n0\t0.\t0.\tINFINITE\t-5.360\t0.\t0.\t0.\n100\t13.728\t17.688\t62.415\t-4.473\t0.\t0.\t0.\n195.400\t21.117\t28.969\t43.439\t-2.827\tALPHA <--> BETA\n195.400\t20.941\t31.637\t43.439\t-2.306\tTRANSITION\n200\t21.092\t32.126\t43.173\t-2.209\t0.\t0.\t0.\n250\t22.564\t36.992\t41.463\t-1.118\t0.\t0.\t0.\n298.15\t23.825\t41.077\t41.077\t0.\t0.\t0.\t0.\n300\t23.870\t41.225\t41.078\t0.044\t0.\t0.\t0.\n317.300\t24.351\t42.574\t41.123\t0.460\tBETA <--> LIQUID\n350\t24.731\t44.981\t41.372\t1.263\t0.717 0.071  0.011\n400\t25.313\t48.321\t42.036\t2.514\t-0.782\t0.188\t-0.025\n450\t25.997\t51.344\t42.905\t3.798\t-0.815\t0.312\t-0.036\n500\t26.485\t54.110\t43.889\t5.110\t-0.818\t0.437\t-0.046\n600\t26.485\t58.939\t46.007\t7.759\t-0.802\t0.687\t-0.060\n700\t26.485\t63.021\t48.154\t10.407\t-0.786\t0.934\t-0.070\n800\t26.485\t66.558\t50.238\t13.056\t-0.771\t1.179\t-0.077\n900\t26.485\t69.677\t52.228\t15.704\t-0.755\t1.422\t-0.083\n1000\t26.485\t72.468\t54.115\t18.353\t-0.739\t1.662\t-0.087\n",
+ "text_sha256": "sha256:bfe643af76d2d4c1ff8ef220a9c226cc1668263e035e3e3794c3daafdc0786f7"
+}

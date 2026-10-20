@@ -1,0 +1,12 @@
+{
+ "kind": "janaf_table",
+ "locator": "NIST-JANAF Thermochemical Tables, table for Li_cr (Lithium (Li)\tLi1(cr)), row T=298.15 K and neighbours",
+ "request": {
+  "method": "HTTP GET",
+  "url": "https://janaf.nist.gov/tables/Li-002.txt"
+ },
+ "retrieved_utc": "2026-10-20T14:19:41Z",
+ "species": "Li_cr",
+ "text": "Lithium (Li)\tLi1(cr)\nT(K)\tCp\tS\t-[G-H(Tr)]/T\tH-H(Tr)\tdelta-f H\tdelta-f G\tlog Kf\n0\t0.\t0.\tINFINITE\t-4.622\t0.\t0.\t0.\n100\t13.360\t7.342\t48.615\t-4.127\t0.\t0.\t0.\n107.250\t16.491\t8.370\t45.859\t-4.021\tCp HUMP MAXIMUM\n107.250\t16.494\t8.370\t45.859\t-4.021\tTRANSITION\n200\t21.573\t19.826\t31.255\t-2.286\t0.\t0.\t0.\n250\t23.406\t24.854\t29.484\t-1.157\t0.\t0.\t0.\n298.15\t24.623\t29.085\t29.085\t0.\t0.\t0.\t0.\n300\t24.669\t29.237\t29.085\t0.046\t0.\t0.\t0.\n350\t25.930\t33.128\t29.390\t1.308\t0.\t0.\t0.\n400\t27.610\t36.698\t30.083\t2.646\t0.\t0.\t0.\n450\t29.280\t40.049\t31.006\t4.069\t0.\t0.\t0.\n453.690\t29.387\t40.288\t31.080\t4.178\tCRYSTAL <--> LIQUID\n500\t30.217\t43.188\t32.069\t5.559\t3.020 0.308  0.032\n600\t30.380\t48.714\t34.396\t8.591\t-2.972\t0.970\t-0.084\n700\t30.384\t53.397\t36.785\t11.629\t-2.859\t1.619\t-0.121\n800\t30.384\t57.455\t39.121\t14.667\t-2.716\t2.249\t-0.147\n900\t30.384\t61.033\t41.360\t17.706\t-2.569\t2.860\t-0.166\n1000\t30.384\t64.235\t43.491\t20.744\t-2.417\t3.456\t-0.180\n",
+ "text_sha256": "sha256:715f53da363bb8c48b22d0d6102103f4b76d5042988aabc3d03ddbb7d3191a0e"
+}

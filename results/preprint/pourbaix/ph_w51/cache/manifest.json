@@ -1,0 +1,113 @@
+{
+ "client_versions": {
+  "emmet-core": "0.87.3",
+  "mp-api": "0.46.5",
+  "mpcontribs-client": null,
+  "pymatgen": "2026.9.24",
+  "requests": "2.34.2"
+ },
+ "files": [
+  {
+   "added_by": "PH-W5.1",
+   "bytes": 3939613,
+   "file": "mp_entries_w51_Al-O-H.json",
+   "kind": "mp_entries",
+   "licences": [
+    "BY-C"
+   ],
+   "local_only": true,
+   "location": ".local/w5/cache_ph/mp_entries_w51_Al-O-H.json",
+   "n": 242,
+   "n_admitted_by_c": 242,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "H",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-20T14:19:34Z",
+   "sha256": "sha256:a0d90b9d426a8133a9ed89c6244105472f45add1519e1f40f4e80d88d70273e8"
+  },
+  {
+   "added_by": "PH-W5.1",
+   "bytes": 1705596,
+   "file": "mp_entries_w51_Ca-C-O.json",
+   "kind": "mp_entries",
+   "licences": [
+    "BY-C"
+   ],
+   "local_only": true,
+   "location": ".local/w5/cache_ph/mp_entries_w51_Ca-C-O.json",
+   "n": 176,
+   "n_admitted_by_c": 176,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "C",
+     "Ca",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-20T14:19:38Z",
+   "sha256": "sha256:3d9e8e6821b100e434e7ebe9931eae12f2058801e3d7cf42ef841802e962a236"
+  },
+  {
+   "added_by": "PH-W5.1",
+   "file": "janaf_P_white.json",
+   "header": "Phosphorus, White (P)\tP1(cr)",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/P-002.txt"
+   },
+   "retrieved_utc": "2026-10-20T14:19:39Z",
+   "sha256": "sha256:6da3941f7e9ce8af44f63e03ff47e256fc6b8dd665e485f5fceac07a56877890"
+  },
+  {
+   "added_by": "PH-W5.1",
+   "file": "janaf_Ca_alpha.json",
+   "header": "Calcium, Alpha (Ca)\tCa1(cr)",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/Ca-002.txt"
+   },
+   "retrieved_utc": "2026-10-20T14:19:40Z",
+   "sha256": "sha256:6830b4aff84d29b48b7bfd60db08165e2e569c181329e2a09dffb7569a191309"
+  },
+  {
+   "added_by": "PH-W5.1",
+   "file": "janaf_Li_cr.json",
+   "header": "Lithium (Li)\tLi1(cr)",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/Li-002.txt"
+   },
+   "retrieved_utc": "2026-10-20T14:19:41Z",
+   "sha256": "sha256:15536556d9a7e8145f62ce3010a6c99d62e5d0fe0fedc5c0cc7a854b47922f9a"
+  }
+ ],
+ "mp_database_version": "2026.09.28",
+ "note": "additive to the PH-K1 cache (same database version, checked at fetch)",
+ "session": "PH-W5.1",
+ "thermo_types": [
+  "GGA_GGA+U"
+ ]
+}
