@@ -66,9 +66,10 @@ construction and is never a second confirmation. Phosphate DFT numbers are unben
 benchmark on tabulated formation data passes (W5): until then they are labelled `unbenchmarked` and cannot pass or
 falsify. Every number in the per-reaction table carries one of `expt`, `dft-benchmarked`, `dft-unbenchmarked`.
 
-**Solvated sink.** A pass needs the oxidation products to leave into the electrolyte as solvated species
-(solvation free energies from `params`, one scheme per row). A solid-salt sink gives an upper bound on the onset:
-a falsification stands, a pass is inconclusive.
+**Solvated sink and the bracket (cp4 F2).** Tier 1 is a bracket [E_lb, E_ub] per reaction (Section 2f): E_ub is the
+onset with the solid-salt (LiClO4) sink, an upper bound on the onset (a falsification on it stands); E_lb is the onset
+with the most favourable sink, every ion aqueous from tabulated standard data, a lower bound under the transfer premise
+of Section 2f. A pass needs E_lb; a falsification needs E_ub. One scheme per row.
 
 **Margins.** m_1 = m_expt (`thresholds.C5.window_margin_expt`, one budget per reaction and sink) on the
 experimental route; m_E (`thresholds.C5.window_margin`) only where the experimental route is missing and the row is
@@ -91,16 +92,16 @@ transferred to the fluorine-free regime.
 
 ### 2c. Verdict table (per phase, per E_c)
 
-T1 = tier 1 (E_ox against E_c, margin m_1), T2 = the best available tier 2 record at E_c (class A or B outranks C).
+T1 = tier 1 (the bracket [E_lb, E_ub] of Section 2f against E_c, margin m_1; "below" means E_ub below), T2 = the best available tier 2 record at E_c (class A or B outranks C).
 
 | # | Tier 1 | Tier 2 | K1 verdict at E_c | Label | Symbolic example |
 |---|---|---|---|---|---|
-| 1 | pass: E_ox >= E_c + m_1, benchmarked route, solvated sink | any or none | feasible | `tier 1`; if T2 is below, `service limit below cutoff, class X` printed beside | E_ox = E_c + 2 m_1 |
-| 2 | below: E_ox < E_c - m_1 | available and below: E_svc < E_c - m_svc | **falsified at E_c** | `tier 1 and tier 2 (class X)` | E_ox = E_c - 2 m_1, E_svc = E_c - 2 m_svc |
+| 1 | pass: E_lb >= E_c + m_1 (Section 2f), benchmarked route, transfer premise supported | any or none | feasible | `tier 1`; if T2 is below, `service limit below cutoff, class X` printed beside | E_ox = E_c + 2 m_1 |
+| 2 | below: E_ub < E_c - m_1 (Section 2f) | available and below: E_svc < E_c - m_svc | **falsified at E_c** | `tier 1 and tier 2 (class X)` | E_ox = E_c - 2 m_1, E_svc = E_c - 2 m_svc |
 | 3 | below | none | falsified at E_c | `tier 1 only` (no tier 2 exists) | E_ox = E_c - 2 m_1 |
 | 4 | below | class A or B, E_svc >= E_c + m_svc | **not excluded, kinetically stabilised** | label carries the class (A or B) | E_ox = E_c - 2 m_1, E_svc = E_c + 2 m_svc |
 | 5 | below | class C only, E_svc >= E_c + m_svc | inconclusive | `bulk-phase LSV only; not evidence for a film` | as row 4 with class C |
-| 6 | within margin: E_c - m_1 <= E_ox < E_c + m_1 | any | inconclusive | tier 2 printed beside | E_ox = E_c |
+| 6 | within the bracket: neither E_lb >= E_c + m_1 nor E_ub < E_c - m_1 | any | inconclusive | tier 2 printed beside; E_lb, E_ub printed | E_lb < E_c < E_ub |
 | 7 | undetermined (Section 2a) | any | inconclusive | `undetermined never passes`; tier 2 printed beside | E_r unsourced |
 
 Rule behind the table: falsified at E_c only if tier 1 and the available tier 2 both fall below it; tier 1 only if
@@ -132,8 +133,107 @@ never reported as a candidate barrier.
 The pass set is a down-set in E_c: a pass at E_c is a pass at every lower cutoff; a falsification at E_c is a
 falsification at every higher cutoff. A class verdict is therefore: **feasible for the class** if feasible at
 sup C; **falsified for the class** if falsified at inf C; otherwise **partial**, with the two crossovers reported:
-E_x+ = E_ox - m_1 (feasible at or below) and E_x- = E_ox + m_1 (falsified above), for tier 1; the tier 2 crossovers
+E_x+ = E_lb - m_1 (feasible at or below) and E_x- = E_ub + m_1 (falsified above), for tier 1 (Section 2f); the tier 2 crossovers
 E_svc - m_svc and E_svc + m_svc likewise. Outcome frames (A), (B), (C) of the plan are read off these class rows.
+
+### 2f. The bracketed onset (cp4 F2) and its vetting
+
+**Rule.** For each registered reaction r of a phase P, two onsets are computed with the same reaction, the same
+reactant phase and the same Li count Delta_n_Li (contract v6, functions `E_ub`, `E_lb`):
+
+- **E_ub**, the onset with the solid-salt sink: the oxidised cation leaves as its solid perchlorate and the Li comes
+  from solid LiClO4 (the registered exchange route of the carbonate control, sink `LiClO4`). Inputs: `dfg_<P>`,
+  `dfh_` and `s_` of the solid salts (`dfh_ca_clo4_2`, `s_ca_clo4_2` or its analog bounds, `dfg_al_clo4_3`,
+  `dfh_liclo4`, `s_liclo4`).
+- **E_lb**, the onset with the most favourable sink: every ionic product and the Li+ that is consumed are taken as
+  aqueous ions at their standard states, from tabulated standard formation data (`dfg_ca2_aq`, `dfg_al3_aq`,
+  `dfg_li_aq`, and for a reaction that releases protons the proton convention of the same table). The cations Ca2+
+  and Al3+ and the anion enter from the same table; the absolute single-ion hydration energies
+  (`hydration_free_energy_ca`, `hydration_free_energy_al`, `hydration_free_energy_li`,
+  `hydration_free_energy_clo4`) are used only in the vetting below and in the cross-check of a Born-Haber route,
+  never mixed with the conventional formation values in one row (one scheme per row).
+
+Verdict of tier 1 at a cutoff E_c with the margin m_1 of the row (m_expt or m_E, Section 2a):
+
+| Tier 1 | Condition | Note |
+|---|---|---|
+| pass | E_lb >= E_c + m_1 | needs the transfer premise below to be `supported` |
+| below (falsifying side) | E_ub < E_c - m_1 | tier 2 then decides as already ruled (Section 2c, rows 2 to 5) |
+| inconclusive | otherwise (the cutoff lies inside [E_lb - m_1, E_ub + m_1]) | both ends and the bracket width printed |
+| undetermined | E_ub and E_lb both missing; or E_lb missing and E_ub >= E_c - m_1 | never passes (Section 2a) |
+
+E_lb missing with E_ub < E_c - m_1 is still on the falsifying side (a solid-salt onset below the cutoff is enough).
+E_lb > E_ub is impossible for a consistent row (the solid salt is one of the sinks the minimum runs over, see the
+cycle); a row with E_lb > E_ub is flagged as a data inconsistency and counted undetermined. The class verdicts of
+Section 2e use the crossovers E_lb - m_1 (feasible at or below) and E_ub + m_1 (falsified above).
+
+**Thermodynamic cycle.** Write a cation-releasing oxidation for a phase that holds the cation M with charge z per
+formula unit (M = Ca, z = 2; M = Al, z = 3), with n_e = z electrons and the Li counter electrode:
+
+    P(s) + z Li+(S) -> M(z+)(S) + (neutral products: O2, condensed P-oxide) + z Li(s)      [solvated sink, solvent S]
+    P(s) + z LiClO4(s) -> M(ClO4)z(s) + (same neutral products) + z Li(s)                  [solid-salt sink]
+
+The perchlorate is a spectator in the solvated form: z ClO4- are in solution before and after. The onset vs Li+/Li
+in the same solvent S is E_S = Delta_G_S/(z F) with
+
+    Delta_G_S = Delta_G_gas-ion terms + [DG_solv(M, S) - z DG_solv(Li+, S)],
+
+and the solvent enters only through the charge-balanced combination in brackets. Taking S = water gives E_lb; the
+difference is
+
+    E_S - E_lb = [DG_tr(M, w->S) - z DG_tr(Li+, w->S)] / (z F) = Delta_G_tr_rel / (Delta_n_Li F)   (function `E_solv`).
+
+So E_lb is a lower bound on the onset in the carbonate solvent iff the **transfer premise** holds:
+
+    Delta_G_tr_rel = DG_tr(M, w->S) - z DG_tr(Li+, w->S) >= 0     for every ionic product M (and for H+ in r3).
+
+The solid-salt sink is one of the product states the oxidation can reach, so the thermodynamic onset with every sink
+available is min(E_S, E_ub) <= E_ub: E_ub is an upper bound whatever the solvent.
+
+**Vetting.**
+
+1. *The argument as worded fails.* "Hard cations are not better solvated in an organic carbonate than in water"
+   gives DG_tr(M, w->S) >= 0 for the product cation. It says nothing about the sign of Delta_G_tr_rel, because the
+   reactant Li+ is also a hard cation transferred from water to S, and its transfer term enters with the weight z.
+   A single-ion statement cannot bound a charge-balanced combination.
+2. *Li-reference consistency.* The bracket is consistent only when every ion of the reaction is taken in the same
+   medium: E_lb is the onset vs Li+/Li in water with Ca2+ (or Al3+) and Li+ both aqueous, and E_S is the onset vs
+   Li+/Li in S. Mixing an aqueous product with Li+ in S, or with solid LiClO4, compares potentials across a liquid
+   junction and is refused. With the conventional table (H+ reference) the H+ convention cancels because the
+   combination M(z+) - z Li+ is neutral; the absolute single-ion hydration energies, which rest on an
+   extra-thermodynamic assumption, are not needed for E_lb.
+3. *The anion term.* With the electrolyte anion a spectator, the anion cancels exactly between the two sides; written
+   with neutral salts, Delta_G_tr_rel = DG_tr(M(ClO4)z, w->S) - z DG_tr(LiClO4, w->S), and the anion's own transfer
+   energy cancels as well. The anion is therefore not a source of error in E_lb, and its hydration key enters only
+   (i) in a Born-Haber cross-check through the solid salts, where the same anion value must be used on both sides,
+   and (ii) in a registered reaction that consumes or releases a solvated anion. Water solvates anions far better
+   than an aprotic carbonate (no hydrogen-bond donation), so an anion released as a product moves E_lb down (the
+   bound survives), while an anion consumed from solution moves it up (the bound fails): a reaction that consumes a
+   solvated anion has no E_lb and stays solid-salt-only.
+4. *The corrected premise.* With the relative form, the physical reading is: per unit charge, the product cation loses
+   at least as much solvation on leaving water as Li+ does. In the Born continuum, DG_tr(i) = z_i^2 B_S / r_i with
+   B_S >= 0 when the permittivity of S is below that of water (function `Delta_G_tr_rel_born`), and the premise
+   reduces to z/r_M >= 1/r_Li: a cation of higher charge density than Li+ loses more. This holds for the radii of Ca2+
+   and Al3+ against Li+ and for H+, but the Born form is a plausibility statement only: specific donor solvation and
+   ion pairing in the low-permittivity carbonate (contact pairs with the anion stabilise the multivalent product
+   more than Li+) act in the opposite direction and are not bounded by it. Ion pairing is inside the salt-form
+   premise above when Delta_G_tr_rel is taken from salt data (solubilities in water and in S).
+5. *Water is a solvation medium only.* E_lb uses water to solvate ions; it never lets water react. A product that
+   would hydrolyse in water (a condensed P-oxide to phosphoric acid, Al3+ to its hydroxo complexes) is taken in its
+   unhydrolysed form; a reaction that consumes water is evaluated with the cell water activity of Section 2a only.
+
+**Verdict of the vetting: holds in corrected form, conditionally.** The bracket rule stands with the transfer premise
+as a registered condition, evaluated per row:
+
+| Premise status | Evidence | Effect on a tier-1 pass (E_lb >= E_c + m_1) |
+|---|---|---|
+| supported | measured transfer or salt-solubility data (water and the cell solvent class) give Delta_G_tr_rel >= 0 for the product ion (`hydration_transfer_ca_water_carbonate`, `hydration_transfer_al_water_carbonate`, with `transfer_free_energy_li_water_pc`) | pass stands, labelled `bracket, premise measured` |
+| plausible only | no transfer data for the product ion; Born scaling satisfied | inconclusive, labelled `pass conditional on the transfer premise`; E_lb and E_ub printed |
+| violated | data give Delta_G_tr_rel < 0 | E_lb is replaced by E_solv (the onset in S), and the row is decided with E_solv in place of E_lb |
+
+The falsifying side (E_ub < E_c - m_1) does not depend on the premise. Where the premise is only plausible, no
+tier-1 pass is possible and the rule is the solid-salt-only rule of Section 2a for that row; the required transfer
+data are listed as gaps.
 
 ## 3. K2, K3, K4
 
@@ -258,6 +358,10 @@ hydrated forms, `n_hyd_<P>`). Speciation: `pka1_h3po4`, `pka2_h3po4`, `pka3_h3po
 activity of the electrolyte, `electrolyte_water_content`), tier 2 records as evidence rows with class A, B or C, electrolyte,
 temperature, cutoff and duration. Al-salt ladder: `log10_ksp_el_<F>` (F in alpo4, al_pmeta3, al_borate, al_oxalate,
 al2o3 as hydroxide or oxide form), `sigma_corr_<F>`, `dv_film`, `j_corr_max`, `t_max_corr`, `s_tol`, `rho_film_<F>`.
+K1 bracket (cp4 F2, new): `hydration_free_energy_clo4`, `hydration_transfer_ca_water_carbonate`,
+`hydration_transfer_al_water_carbonate`, `hydration_transfer_salt_ca_clo4_2_water_carbonate` (salt form, anion cancels);
+existing keys used: `dfg_ca2_aq`, `dfg_al3_aq`, `dfg_li_aq`, `hydration_free_energy_ca`, `hydration_free_energy_al`,
+`hydration_free_energy_li`, `transfer_free_energy_li_water_pc`.
 
 ## 8. Interpretations for the cp4 audit
 

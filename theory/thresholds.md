@@ -809,6 +809,8 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `params.log10_k_ca_catecholate` | K_Ca_L (log10) | literature (single source; a solution constant, flagged analog for Delta_G_site) | C2 analog route (D27) |
 | `params.pka_catechol` | pKa | literature | C2 analog route, first proton (D27) |
 | `params.pka2_catechol` | pKa2 | literature | C2 analog route, second proton (D27) |
+| `regimes.R-cell.parameters.cutoff_classes` | E_c | design axis (cutoff classes) | screen_ph K1 (redirect) |
+| `thresholds.K1.margin_service` | m_svc | literature (reading uncertainty of a tier-2 record) | screen_ph K1 tier 2 |
 
 The C2-to-C3 inputs that the thresholds consume through Delta_gamma_ads are the existing priors
 `Gamma_s`, `delta_s`, `c_bulk` and `gamma_sl0`. `gamma_sl0` is new in contract v2 and replaces a
@@ -822,7 +824,7 @@ checks that every expression parses, that only registered ids appear, and that e
 unit of its quantity.
 
 ```thresholds
-version: 4
+version: 5
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
@@ -834,6 +836,8 @@ revised_cp3b: {session: P0-W3.4, rule: cp3-mandated registrations for production
 revised_d27: {session: P0-W3.4b, decision: D27 (2026-10-18), date: 2026-10-19, rule: admissibility of the template-liquid energy,
               facts_used: 'D27 only (gamma_sl negative on every draw with the binding analog, median as stated there)',
               screen_output_consulted: false, log: theory/cp2_fixes.md (cp3 section, D27 amendment)}
+revised_ph: {session: PH-W3.2a, rule: 'cp4 fixes F2 and F4 and the route layer (rulings C1 to C6), added as screen_ph beside the carbonate links; no carbonate link, edge or value changed',
+             authority: theory/claims_redirect.md (Sections 2f, 2g, 9), screen_output_consulted: false}
 contract_version: 5
 decision:
   statistic: band_mass
@@ -1157,4 +1161,70 @@ study:
     c1_alone_counts: false
     on_failure: framing_generic_adhesion
     reported_not_gating: [catechol_only, chitosan_only, carboxylate_substituted]
+screen_ph:
+  authority: theory/claims_redirect.md (Sections 1 to 3, 2f, 2g, 9)
+  margins: symbolic; PH-W3.2 sets the numbers at the cp5 freeze
+  proceed_rule: 'K3 and K4 run unless the K1 verdict is falsified at every registered cutoff class (cp4 F1)'
+  links:
+    K1:
+      regime: R-cell
+      per: [phase, reaction, cutoff E_c, framing]
+      bracket: {upper: 'E_ub (solid-salt LiClO4 sink)', lower: 'E_lb (every ion aqueous, tabulated standard data)', reason: cp4 F2}
+      tests:
+        - id: K1_pass
+          quantity: E_lb
+          comparator: '>='
+          edge: E_c + m_expt
+          requires: 'transfer premise Delta_G_tr_rel >= 0 supported by data; plausible only -> inconclusive (pass conditional on the transfer premise); violated -> E_solv replaces E_lb'
+          params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.C5.window_margin_expt}
+          where_expt_missing: {edge: E_c + m_E, label: DFT-decided, params: {m_E: thresholds.C5.window_margin}}
+        - id: K1_falsify
+          quantity: E_ub
+          comparator: '<'
+          edge: E_c - m_expt
+          tier2: 'claims_redirect Section 2c rows 2 to 5 (falsified only if the available tier 2 is also below)'
+          params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.C5.window_margin_expt}
+          where_expt_missing: {edge: E_c - m_E, label: DFT-decided, params: {m_E: thresholds.C5.window_margin}}
+        - id: K1_tier2_pass
+          quantity: E_svc
+          comparator: '>='
+          edge: E_c + m_svc
+          params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_svc: thresholds.K1.margin_service}
+        - id: K1_tier2_below
+          quantity: E_svc
+          comparator: '<'
+          edge: E_c - m_svc
+          params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_svc: thresholds.K1.margin_service}
+      otherwise: inconclusive
+      undetermined: never_passes
+      inconsistent: 'E_lb > E_ub flags a data inconsistency; counted undetermined'
+      anion_consumed: 'a reaction that consumes a solvated anion has no E_lb (solid-salt-only)'
+      premise: {quantity: Delta_G_tr_rel, comparator: '>=', edge: '0', status: [supported, plausible_only, violated],
+                params: [params.hydration_transfer_ca_water_carbonate, params.hydration_transfer_al_water_carbonate,
+                         params.transfer_free_energy_li_water_pc]}
+      class_rule: 'per class: feasible at sup C, falsified at inf C, otherwise partial with crossovers E_lb - m and E_ub + m'
+  rows:
+    stage: [slurry, cell, conversion]
+    slurry: {phases: [brushite, ACP, HAp], conditions: [K2, K3, K4]}
+    cell: {phases: [Ca2P2O7, Ca(PO3)2, AlPO4, Al(PO3)3], conditions: [K1]}
+    conversion: {per: precursor-to-cell-stage pair, fields: [a_w_star, T_conv_lit, T_cure_baseline, hydrolysis, status], conditions: none}
+    film_id: shared by the rows of one film across stages
+    one_film_rule: 'never K1 of a cell-stage phase and K2 to K4 of a slurry-stage phase as one film (cp4 F4)'
 ```
+
+## 6. K1 of the redirected screen (cp4 F2; PH-W3.2a)
+
+The phosphate screen (`theory/claims_redirect.md`) keeps its decision rules in that file and its machine form in the
+`screen_ph` entry of the block above; the carbonate links C1 to C5 are unchanged. K1 is a bracket per reaction and
+cutoff: E_ub is the onset with the solid-salt (LiClO4) sink and E_lb the onset with the most favourable sink, the
+aqueous hydration of the cations (Ca2+, Al3+) and the anion from tabulated standard data. At a cutoff E_c with margin
+m (m_expt on the experimental route, m_E where it is missing):
+
+- **pass** if E_lb >= E_c + m, and only when the transfer premise of `claims_redirect.md` Section 2f is supported by data;
+- **falsified** if E_ub < E_c - m and the available tier 2 is also below (tier 2 as already ruled);
+- **inconclusive** otherwise; **undetermined never passes**.
+
+The vetting of the lower end (thermodynamic cycle, Li-reference consistency, the anion term, and the verdict "holds in
+corrected form, conditionally") is in `claims_redirect.md` Section 2f. Without transfer data for the product ion the
+rule is solid-salt-only for that row: no tier-1 pass is possible there.
+

@@ -874,6 +874,28 @@ def check_thresholds(ctx, contract, rep):
         rep.add(ok, "thresholds", "sizing rule", "band half-width <= %s, Sobol half-width <= %s, caps: %s; %s" % (
             sz.get("band_mass_half_width_max"), sz.get("sobol_total_order_half_width_max"), sz.get("draw_cap"),
             sz.get("wall_clock_cap")))
+    # PH-W3.2a: the redirected screen (K1 to K4, route forms) lives beside the carbonate links in `screen_ph`;
+    # every test edge is checked like a link edge, and its params keys join the Section 4 table check
+    ph = doc.get("screen_ph") or {}
+    for link, spec in (ph.get("links") or {}).items():
+        for test in spec.get("tests") or []:
+            params = test.get("params") or {}
+            keys.update(v for v in params.values())
+            bad = [k for k in params if k not in ctx.entries]
+            if bad:
+                rep.add(False, "thresholds", "screen_ph %s %s" % (link, test["id"]), "params symbols not registered: %s" % bad)
+            check_edge("screen_ph " + link, test["id"], test["quantity"], test["edge"], params)
+            miss = test.get("where_expt_missing")
+            if isinstance(miss, dict) and "edge" in miss:
+                check_edge("screen_ph " + link, test["id"] + " (no expt route)", test["quantity"], miss["edge"],
+                           dict(params, **(miss.get("params") or {})))
+                keys.update((miss.get("params") or {}).values())
+    if ph:
+        forb = set(dec.get("forbidden_in_verdicts", []))
+        used = {t["quantity"] for s in ph["links"].values() for t in s.get("tests") or []}
+        rep.add(not (used & forb), "thresholds", "screen_ph quantities",
+                "%d tests over %s" % (sum(len(s.get("tests") or []) for s in ph["links"].values()), sorted(used))
+                if not used & forb else "forbidden quantities used: %s" % sorted(used & forb))
     study = doc["study"]
     gating = [k for k, s in doc["links"].items() if s.get("gating", True)]
     descr = [k for k, s in doc["links"].items() if not s.get("gating", True)]
