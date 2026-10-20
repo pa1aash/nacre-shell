@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W2.1",
+  "last_session": "PH-W2.2a",
   "status": "DONE",
   "day": 4,
   "retro_schema": {
@@ -15,7 +15,10 @@
     "src/nacre/retro/package.py",
     "src/nacre/retro/cli.py",
     "tests/retro/test_retro_package.py",
-    "ops/reports/P0-W2.4a.md"
+    "ops/reports/P0-W2.4a.md",
+    "lit/novelty.md",
+    "lit/contrary.md",
+    "ops/reports/PH-W2.2a.md"
   ],
   "notes": [
     "ChemRxiv package scaffold: metadata.yaml (schema chemrxiv-package/v1), submission_checklist.md in form order, requirements_recheck.md; every captured requirement marked re-check live (B8).",
@@ -23,6 +26,7 @@
     "Main categories from a 2025-12-21 browse-page capture (fetch_index.yaml P1); subcategories never captured, chosen live.",
     "Needs from Palaash: CRediT roles (all six authors), Braun department and ORCID, funding, competing interests, compute, AI-use wording (.local/p0/ai_ack.tex), category and keyword choice at C2, live policy re-check.",
     "Needs from W8: abstract, final title after cp4, release PDF and SI, a generated macro for the Materials Project database version.",
-    "P0-W2.3 retrodiction results unchanged (results_sha above)."
+    "P0-W2.3 retrodiction results unchanged (results_sha above).",
+    "PH-W2.2a: route-layer prior art (8 rows), NS7 supported only as scan-limited negative, baseline patent facts, contrary B21 to B24; patent keyword search remains a gap."
   ]
 }

@@ -475,3 +475,43 @@ Five entries for the phosphate redirect (`ops/tracks/redirect_plan.md`), numbere
 - **Regime.** No. Differentiation rests on the fluorine-free regime, the quantitative design rule and the screen, not on performance. "Outperforms" wording is not supported.
 - **Placement.** Introduction and Discussion.
 - **Severity.** Material.
+
+## Route-layer entries (PH-W2.2a, 2026-10-20)
+
+Four entries for the draft route layer (`ops/tracks/redirect_plan.md`, "ROUTE LAYER", draft), numbered after B20. Sources are logged in `lit/novelty.md`, section "Route-layer prior art". Locators: "Full" = full text read, "Abs." = abstract only. Regime field: whether the plan avoids the argument.
+
+### B21. Polyphosphate hydrolysis outruns film formation (K2, K3 route form; R1 to R3)
+
+- **Sources.** 10.1021/acs.est.9b01876 (Wan 2019, results text pdf pp. 5 to 11 plus abstract; pp. 1 to 4 blank); 10.1038/s41598-018-35512-2 (Morsch 2018, Full); EP1582608 and US 8,163,105 (Kurita, Full).
+- **Evidence.** On gamma-Al2O3 at pH 6 to 8 all divalent cations sped polyP hydrolysis, Ca2+ most; Ca2+ raised the orthophosphate share about 3.5-fold at pH 6 and 8.5-fold at pH 8 after 9 d, and with Ca2+ at pH 8 the main surface species was amorphous Ca phosphate (Wan). On steel, polyphosphate reverts to orthophosphate under alkaline cathode conditions (local pH above 10) and polyP precipitates only after inhibition has lowered the local pH (Morsch). The Kurita text states pyrophosphate degrades to orthophosphate by hydrolysis and requires the pH to end at 7 or more for the Ca layer to form.
+- **Condition.** Ca2+ present, an Al-oxide surface, pH 6 to 8 (Wan); local pH above 10 (Morsch). Wan used mM suspensions of oxide nanoparticles; rate constants were not read.
+- **Regime.** Partly. The plan states every route is a race against hydrolysis and gates K2 only where a rate shows half-life shorter than t_proc. Rate data are gamma-Al2O3 at room temperature only; none for Al foil or a gel. Gelation kinetics is a labelled hypothesis.
+- **Placement.** Results (K2) and Limits.
+- **Severity.** Material.
+
+### B22. Soluble Li polyphosphate dissolves in the aqueous slurry (K2; baseline row BL1)
+
+- **Sources.** US 6,485,866 and US 6,844,114 (Full; film made from an aqueous (LiPO3)n solution, described "in solution in water"); 10.1021/acs.est.9b01876 (Wan 2019: about half the dissolved phosphate remained as polyphosphate after 9 d with oxide and Ca2+ present).
+- **Evidence.** The Hydro-Quebec coating is prepared and applied from water and dried at 150 C; the patents print no solubility for the dried coating. Whether a dried alkali polyphosphate layer survives a later aqueous slurry is therefore not shown by any source read. In the Wan suspensions a large share of polyP stayed dissolved rather than binding the oxide.
+- **Condition.** Wet coating of a soluble alkali polyphosphate, then contact with an aqueous slurry (pH 10 to 13 for NMC-type cathodes, B16 and B20 context).
+- **Regime.** Partly. The plan makes soluble Li polyphosphate the baseline for K2 and predicts the gelled or coacervate film resists water where it dissolves. That prediction has no sourced solubility to rest on: the baseline label "soluble" comes from the plan, not a printed value. Not avoided if a Ca or Al crosslink fails to form.
+- **Placement.** Results (K2 baseline) and Limits.
+- **Severity.** Material.
+
+### B23. Chitosan or polydopamine may oxidise below the phosphate limit (K1; matrix rungs)
+
+- **Sources.** B4 above (PDA redox over about 2.5 to 4.1 V vs Li; dopamine oxidised on cathodes up to 4.5 V); 10.1002/batt.201900140 (Kuenzel 2019, Abs.: chitosan binder in LiNi0.5Mn1.5O4 cathodes, stable capacities above 130 and 120 mAh/g at C/3 and 1 C); B19 above (computed Li3PO4 window to about 4.21 V).
+- **Evidence.** PDA oxidises inside the charge window, below or near the computed phosphate limit, so a PDA matrix would not be the stable part of a phosphate film. For chitosan the evidence is mixed: it is cycled as a binder to high voltage (abstract; electrolyte and cell conditions not read), but no oxidation potential for a chitosan film on Al was found in 3 searches. The chitosan-polyphosphate complex has no oxidation datum at all.
+- **Condition.** Matrix retained in the film at charge cutoffs of 4.3 to 4.5 V; electrolyte contact.
+- **Regime.** Partly. The plan lists PDA as a stated K1 risk and takes matrix oxidation limits from tier-2 literature only; an undetermined limit never passes. Not avoided for PDA in R-cell (B4); open for chitosan.
+- **Placement.** Results (K1 matrix rungs) and Limits.
+- **Severity.** Material.
+
+### B24. Incumbents already deliver a corrosion benefit by phosphate or polyphosphate inhibitors (all routes)
+
+- **Sources.** 10.2172/4312114 (Troutner 1957, Abs.); 10.1038/s41598-018-35512-2 (Morsch 2018, Full); US 6,485,866 (Full, claims 1, 12, 16); US 8,252,463 (Full); 10.3390/coatings9100649 (Lu 2019, Abs.); EP1582608 (Full). Extends B20.
+- **Evidence.** Phosphate inhibited uniform Al corrosion in water at pH 4 to 7 (1957). Polyphosphate pigments inhibit steel through a Zn or Sr polyP film (2018) and Al tripolyphosphate pigment protects a Mg alloy (2019). In batteries, an alkali polyphosphate glass on Al (1999) and a baked aluminophosphate film on Al foil of 10 to 200 nm (2010) are patented. None of these needs a matrix, a crosslinker or an in-situ gel.
+- **Condition.** Aqueous inhibitor dosing (steel, Al, Mg) or an ex-situ coating (battery foil).
+- **Regime.** No. Differentiation rests on the in-situ, matrix-mediated, insoluble character and the quantitative design rule, stated as hypotheses, not on performance. "Outperforms" and "first" wording is not supported (`lit/novelty.md` NU13, NU14).
+- **Placement.** Introduction and Discussion.
+- **Severity.** Material.

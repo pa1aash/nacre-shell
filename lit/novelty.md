@@ -556,3 +556,87 @@ Unsupported (do not write):
 Counts: supported 5, unsupported 10.
 
 **Patent-search gap.** No keyword, classification or citation search of patent databases was possible (no Lens token). Only named Google Patents pages (I1 to I7) and incidental hits from web search were read. Not covered: other Hydro-Québec family members, JP/KR/CN filings beyond I7, phosphate conversion-coating patents for foil, claims text of I5 and I6 beyond claim 1.
+
+## Route-layer prior art (PH-W2.2a, 2026-10-20)
+
+Scope: routes R1 to R3 of the draft route layer (`ops/tracks/redirect_plan.md`, "ROUTE LAYER", draft, not ruled). Target of comparison: an in-situ, matrix-mediated, crosslinked, water-insoluble polyphosphate film on Al foil. Fetched headless on 2026-10-20: Google Patents pages, Crossref, OpenAlex, Europe PMC, NSF PAR, Nature PDF. Patents were read as open full-text pages only. "Abs." = abstract only (full text refused or blank); "Full" = full text read. Attempts per source are at most 3 (retrieval rule); refusals are listed under "Gaps".
+
+### R-P1. Prior-art table
+
+| ID | Identity | Assignee or authors | Year | What it shows | Route or K-test touched | How the target differs | Read |
+|---|---|---|---|---|---|---|---|
+| PA1 | EP1582608 A2 and US 8,163,105 B2, "Corrosion inhibition method" (EP B1 address returned 404; A2 and A3 pages open) | Kurita Water Industries (Yoneda, Iseri, Mori) | 2004 (priority 2004-03-31) | Pyrophosphate dosed into cooling water at initial pH 5 to <7 (end pH >=7) builds a two-layer film on carbon steel: iron pyrophosphate, then a Ca-phosphate layer needing 30 to 150 mg CaCO3/L hardness; the text says pyrophosphate hydrolyses to orthophosphate | R2 and R3 (Ca-phosphate film from dosed Ca and P-O-P phosphate); K2 hydrolysis | Iron substrate and dosed solution, not Al foil; first layer is substrate-derived Fe pyrophosphate; no matrix, no crosslinker, no battery, no fluorine-free test; insolubility not a design criterion | Full (patent text) |
+| PA2a | Troutner, "Uniform aqueous corrosion of aluminum: effects of various ions", OSTI 4312114 | V. H. Troutner (Hanford) | 1957 | In distilled water, phosphate ion was one of two specific-ion effects on uniform Al corrosion: phosphate inhibited, citrate increased; 10 ppm phosphate inhibited at pH 4 to 7 with up to 2 ppm dichromate | Incumbent phosphate benefit on Al (K4 context) | Orthophosphate dosed to water; no film characterised, no polyphosphate, no battery | Abs. |
+| PA2b | Zou, thesis "Corrosion inhibition of Al alloy with CaSiO3/gluconate based pigments", OhioLink ETD | Y. Zou | 2016 | CaSiO3/Ca-phosphate and Zn-phosphate pigment (heat treated 300 to 400 C) inhibits AA6061 in gluconic acid and 1 % NaCl; an adherent calcium-hydroxyl, glassy silicate/phosphate film forms; the effect needs oxygen | Ca-phosphate on an Al alloy | Orthophosphate pigment leachate, not polyphosphate; thesis; no crosslinking, no battery | Abs. |
+| PA2c | Lu et al., Coatings 9, 649 (2019), 10.3390/coatings9100649 | X. Lu et al. | 2019 | Mg-rich primer with aluminium tripolyphosphate pigment gave about 49 days of cathodic protection of AZ91D in simulated acid rain; pigment releases phosphate and H+, giving Mg phosphate films | Polyphosphate pigment as inhibitor source | Mg alloy, galvanic primer, pigment leachate; not Al, not in situ crosslinking | Abs. |
+| PA3 | Morsch et al., Sci. Rep. 8, 17450 (2018), 10.1038/s41598-018-35512-2 | Morsch, Emad, Farren, Goodall, Lyon, Gibbon | 2018 | Strontium aluminium polyphosphate (SAPP) on steel coupled to zinc in 3.5 % NaCl: a gel-like film within 1 h; film is zinc carbonate first, then (poly)phosphate after >6 h; polyP bands (1244, 1352 cm-1) at 24 h; polyP precipitates only after inhibition lowers local pH; hydrolysis to orthophosphate under alkaline cathode conditions (local pH >10) | K2 hydrolysis versus film formation (the race); R1 (insoluble Zn and Sr polyP forms from dissolved polyP plus cations) | Steel and zinc, pigment leachate; no matrix, no foil, no battery; film insolubility not tested | Full |
+| PA4 | Wang et al., J. Mater. Chem. B 2024, 10.1039/d4tb01080a ("Liquid-liquid phase transition ... skin repair") | Wang, Neufurth, Schepler, Munoz-Espi, Ushijima, Schroder and others | 2024 | Na-polyP plus Ca2+ (from nacre aragonite in wound exudate) gives liquid-liquid phase separation into an aqueous Ca-polyP coacervate, a stronger porous gel; Ca-polyP nanoparticles enhance it | R2 (a Ca-polyP coacervate exists in physiological media) | Biomedical; coacervate made from aragonite in exudate, no metal, no wetting, no drying to a glass; no pH or binodal data in the abstract | Abs. |
+| PA5 | Son et al., RSC Adv. 2017, 10.1039/c6ra28808a ("CaCO3 thin-film formation mediated by a synthetic protein-lysozyme coacervate") | Son, Kim, Bahn, Cha, Choi | 2017 | W1.2's reading is confirmed: the coacervate is a protein (synthetic protein plus lysozyme) complex coacervate; a planar, poorly crystalline CaCO3 film forms at the coacervate-phase interface | R2 precedent (coacervate-guided mineral film), carbonate not phosphate | Protein matrix, CaCO3, no polyphosphate, no metal substrate | Abs. |
+| PA6 | US 12,478,560 B2, "Calcium coacervates for remineralization and for demineralization inhibition" (Google Patents page opened, HTTP 200, on retry) | Muhlbauer Technology GmbH (Paris, Gruber, Colfen, Bulgun, Prause) | 2019 (priority 2019-04-10; granted 2025-11-25) | Claim 1: caries method applying a Ca coacervate, made by mixing a polyanion solution with a Ca solution, to enamel; polyacrylic acid preferred; polyphosphates named once among possible polyanions | R2 (Ca coacervate as mineralising liquid precursor) | Dental enamel, polyacrylic acid not polyphosphate, no metal, no film, no battery | Full (claims and description) |
+| PA7 | Wan, Huang, Diaz, Tang, Environ. Sci. Technol. 2019, 10.1021/acs.est.9b01876 (PAR 10109357) | Wan, Huang, Diaz, Tang | 2019 | polyP on gamma-Al2O3 (5, 35, 70 nm) at pH 6 to 8: all divalent cations speed hydrolysis, Ca2+ most; with Ca2+ the orthophosphate share rises about 3.5-fold (pH 6) and 8.5-fold (pH 8) after 9 d; with Ca2+ at pH 8 the main surface species is amorphous Ca phosphate; hydrolysis rate falls as particle size grows; Al polyphosphate precipitate was ruled out as the dominant species | K2 hydrolysis descriptor; R1 and R2 race; K1 amorphous Ca phosphate | Dilute mM suspensions of oxide nanoparticles, no film, no matrix, no crosslinking; rate-constant Table 1 not read (see Gaps) | Abs. plus results text (pdf pp. 5 to 11) |
+
+Closest to the route among rows read: PA1 and PA3 for an in-situ polyphosphate film built from dosed polyP and Ca or other cations (both on steel, both show hydrolysis competing with film formation); PA7 for the same chemistry at an Al-oxide surface (it forms no film); I7 (US 8,252,463, section P1) remains the closest Al-foil phosphate film in a battery. No row shows a matrix-mediated, crosslinked, water-insoluble polyphosphate film on Al.
+
+Polyphosphate corrosion inhibitors for Al components: 5 searches (OpenAlex, 2026-10-20) found only PA2a to PA2c (phosphate or polyphosphate pigments for Al or Mg alloys, abstract level) and steel-based work (SAPP and zinc aluminium polyphosphate on steel). No paper on an Al-foil polyphosphate film, and none in a battery. Absence in 5 searches does not establish priority.
+
+### R-P2. Biomineralisation link (supports the bio-inspired framing only; no claim)
+
+Result: found. Polyphosphate is documented in mineralising tissue as a hypothesised or co-located phosphate store and precursor. All rows are abstract level (OpenAlex or Crossref text); none was read in full.
+
+| ID | Source | Sourced statement | Strength |
+|---|---|---|---|
+| BM1 | Omelon et al., PLoS ONE 4, e5634 (2009), 10.1371/journal.pone.0005634 | polyP co-located with mineralising cartilage and resorbing bone (DAPI); amorphous Ca-polyP complexes lower free Ca and phosphate; alkaline phosphatase cleaves orthophosphate from polyP, favouring apatite. The authors "hypothesize" this as the control mechanism | Hypothesis with co-location data |
+| BM2 | Omelon et al., Acta Biomater. 2014, 10.1016/j.actbio.2014.06.008 | In elasmobranch tesserae, alkaline phosphatase activity is co-located with polyP at the mineralisation front; exogenous ALP removed polyP and produced orthophosphate in uncalcified cartilage; "proposed" regulated apatite mineralisation | Measured co-location in a cartilaginous skeleton |
+| BM3 | Wang et al., BioMed Res. Int. 2019, 10.1155/2019/5141204 (review) | polyP exposure raises cytokines that drive mesenchymal-stem-cell differentiation to osteoblasts and "accelerates the osteoblast mineralization process" | Review statement |
+| BM4 | Docampo et al., Phil. Trans. R. Soc. B 365 (2010), 10.1098/rstb.2009.0179 | Acidocalcisomes are acidic electron-dense organelles rich in polyP complexed with Ca and other cations (eukaryotic microbes) | Cell biology, not bone |
+| BM5 | Boonrungsiman et al., PNAS 109 (2012), 10.1073/pnas.1208916109 | Calcium phosphate sits in osteoblast mitochondrial granules and vesicles that carry it to the matrix. The abstract does not name polyP, so a polyP precursor in bone is not shown by this source | Calcium phosphate transport; polyP not identified |
+| BM6 | Wan 2019 (PA7) | Abiotic: polyP hydrolysis with Ca2+ at an Al oxide gives amorphous Ca phosphate, which the authors expect could age to hydroxyapatite over months (their inference) | Inference |
+| BM7 | Wang 2024 (PA4) | Nacre aragonite plus Na-polyP in Ca-containing medium gives a Ca-polyP coacervate | Abstract result |
+
+### R-P3. Baseline facts printed in the patents (for the baseline rows; no performance claim)
+
+| Row | Patent | Composition as printed | Thickness as printed | Solubility as printed | Processing as printed |
+|---|---|---|---|---|---|
+| BL1 | US 6,485,866 B1 (Hydro-Quebec; priority 1999-04-07) | Vitreous or partly vitreous binder of an alkali-metal phosphate or polyphosphate (claims 1, 12, 16); example (LiPO3)n with Ketjenblack carbon at 8 vol % of the glass; a KOH-neutralised variant is mentioned | Example: about 3 um after drying on 13 um Al; mixed carbon plus iron phosphate coating about 4 um; "a few microns", preferably under 10 um, more preferably under 4 um | None stated for the coating. The binder is prepared and applied from aqueous solution and is described "in solution in water" | (HPO3)n neutralised with Li2O, LiOH or Li2CO3 to pH 4 to 9 (example near 7); coat; dry at 150 C; cell cycled at 60 C with a polyethylene-oxide electrolyte and LiTFSI |
+| BL2 | US 6,844,114 B2 (same family, filed 2002-09-24) | Claims recite alkali-metal borate or polyborate with a conduction additive; phosphate and (LiPO3)n appear in the description only | Same description as BL1: about 3 um example; under 10 um, preferably under 4 um | None stated | Same description as BL1 |
+| BL3 | US 8,252,463 B2 (Tsinghua University and Hon Hai Precision; priority 2010-08-27) | Claim 1: film consisting of AlxMyPO4, M one of Cr, Zn, Mg, Zr, Mo, V, Nb, Ta, 3x + ky = 3; the abstract also names AlxMy(PO3)3. Example: 85 % H3PO4 plus Al(OH)3 plus CrO3 in water | 10 to 200 nm; 50 to 60 nm preferred; example 52 nm on 20 um Al foil | Film solubility not stated. The background states AlPO4 particles are water-insoluble | Stir at 80 C, react 2 h each step; dilute with water and Triton; dip coat; dry 80 C for 0.5 h; heat treat 200 C for 1 h (range 100 to 350 C, reaction above 100 C); modifier solvent water or NMP |
+| BL4 | US 8,821,969 B2 (same family; method claims) | Method: phosphate source, trivalent Al source and a metal oxide react to a clear solution; coat; heat treat to a protective film | Same description as BL3 | Same as BL3 | Same as BL3 |
+
+Baseline facts: ok. Gap: neither family states the water solubility of the finished film, so the K2 baseline rows must carry "not stated in the patent" for the cured aluminophosphate and for the Li polyphosphate coating, and the "soluble Li polyphosphate" label in the plan rests on the plan's own description, not on a printed solubility value.
+
+### R-P4. Novelty wording for the route layer
+
+Supported by this scan (acknowledge as prior art, or narrow claims):
+
+| # | Wording | Support |
+|---|---|---|
+| NS6 | In-situ phosphate or polyphosphate films from dosed solution plus Ca or other cations are prior art on steel, including the finding that polyphosphate precipitates and hydrolyses to orthophosphate in competition | PA1, PA3 |
+| NS7 | Among the open sources scanned (patent keyword search not possible), none reports a crosslinked, water-insoluble polyphosphate film formed in situ on Al foil in a fluorine-free battery electrode context. The sentence stays true only with all four qualifiers; dropping "in situ" brings in I7 and BL3 (a baked Al(PO3)3-type film on Al foil, solubility not stated), dropping "fluorine-free" brings in I1 (Li polyphosphate on Al, polymer cells, imide salt) | P1 to P5; R-P1 to R-P3 |
+
+Unsupported (do not write):
+
+| # | Wording | Why |
+|---|---|---|
+| NU13 | "first" or "novel" in any form for the polyphosphate film, the coacervate route, or the combination (NS7 included) | No priority search possible (SG14); patent keyword search not possible |
+| NU14 | "Polyphosphate films on aluminium are new" | I1 and I7 are prior Al-foil phosphate and polyphosphate films; PA2a to PA2c show phosphate inhibitors on Al alloys |
+| NU15 | "A Ca-polyphosphate coacervate has not been applied to a metal" | Only 2 searches; PA6 shows Ca coacervates are patented for enamel; no metal search was run as such |
+| NU16 | "The route avoids hydrolysis" or "a crosslinked film forms before hydrolysis" | PA3 and PA7 show hydrolysis competing with film formation; kinetics of gelation versus hydrolysis is a labelled hypothesis |
+| NU17 | "Polyphosphate drives bone mineralisation" | BM1 and BM2 are hypotheses with co-location data; BM5 does not identify polyP |
+
+Counts for this section: supported 2 (NS6, NS7), unsupported 5.
+
+**NS7 verdict: supported only as a scan-limited negative.** It is a statement about what the scanned open sources contain, not about the world. It carries the patent-search gap.
+
+**Patent-search gap (unchanged).** No keyword, classification or citation search of patent databases was possible (no Lens token, rule 3). Read as open full-text pages: EP1582608 A2 and A3, US 8,163,105, US 6,485,866, US 6,844,114, US 8,252,463, US 8,821,969, US 12,478,560. Not covered: other Hydro-Quebec members, Kurita family members beyond EP and US, JP, KR and CN filings, polyphosphate or coacervate coatings on metal foil, and any claim text beyond claim 1 of US 8,252,463 and US 8,821,969.
+
+### R-P5. Gaps in this scan
+
+| Gap | Detail |
+|---|---|
+| RSC full texts | PA4 and PA5: HTTP 403 on the article page, the pdf address and the DOI link (3 attempts each); abstract-level only. pH, Ca:polyP ratio, binodal data and any gamma_nl for the coacervate are therefore not extracted |
+| Wan 2019 | NSF PAR PDF has blank pages 1 to 4 (abstract, methods, Table 1 not readable; 3 attempts: page text, image render, Europe PMC and OpenAlex abstracts). Rate constants (Table 1) and Table S2 are not read; only the text values quoted above |
+| Patents | Keyword search impossible (see above); EP1582608 B1 address returned 404 |
+| Al polyphosphate inhibitors | 5 searches; no Al-foil or battery polyphosphate film paper found; PA2a to PA2c are abstract level, PA2b is an unreviewed thesis |
+| Biomineralisation | Abstract level only; no full text read |
+| Chitosan oxidation limit | See `lit/contrary.md` B23; no numeric oxidation potential found in 3 searches |
+| Li polyphosphate solubility | No numeric solubility of (LiPO3)n found in 1 search (PA-level); only the Hydro-Quebec text |
