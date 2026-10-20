@@ -1,7 +1,7 @@
 {
-  "last_session": "P0-W3.4b",
+  "last_session": "PH-W3.1",
   "status": "DONE",
-  "day": 3,
+  "day": 4,
   "equation_sheet": {
     "status": "ready",
     "sha": "4d03ab0a3db0e866825ebc99684a7bf7203f0f2a",
@@ -175,5 +175,12 @@
   "ph_structure": {
     "status": "ready",
     "sha": "07e4e2d77e509d1fdf74262b13b883adc1414809"
+  },
+  "contract_v5": {
+    "status": "ready",
+    "sha": "b21dbf0ab8660b50961a06a480c0dd505df785b8",
+    "version": 5,
+    "functions": 85,
+    "check_contract": "PASS"
   }
 }
