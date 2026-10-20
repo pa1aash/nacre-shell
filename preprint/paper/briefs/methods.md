@@ -1,22 +1,45 @@
 # Brief: Methods
 
 - **File:** `sections/methods.tex`.
-- **Written:** P0-W8.3, after cp3; values that depend on production outputs are reported in Results (P0-W8.4), not here.
-- **Length:** about 2300 words in eight paragraphs, plus the thresholds table (`tab:thresholds`, the ledger's Table 2). The Day 1 target (600 to 800 words) predates the cp3 rulings and the P0-W8.3 order; the overrun is recorded in `ops/reports/P0-W8.3.md`.
+- **Written:** PH-W8.2 (day 6) for the neutral and new paragraphs; carbonate-specific paragraphs are marked `carbonate control (frozen)` in the file and shrink or move to the SI.
+- **Length target:** 1900 to 2400 words, nine paragraphs plus `tab:thresholds`, `tab:parameters` and `tab:thermo`.
 
-## Order (P0-W8.3, Task C)
+## Purpose
 
-1. **Priors.** The construction rule (`lit/corpus/params_README.md`), grades, correlation groups, single-source widening; ignorance priors for unmeasured interfacial energies, with P(feasible) under them never reported as a finding; flagged analog priors side by side; design axes. Claims: CL-M01, CL-M02.
-2. **Propagation and sensitivity.** Monte Carlo per registered state with copula correlations; Sobol indices for independent inputs, Shapley effects for correlated ones; the sizing rule and its caps (macros); required precision. Claim: CL-M03.
-3. **Thresholds and the decision rule** (Table 2). Each edge from the physics; p_cred, its sweep, m_cos and its sweeps, p_deg and q_0 through macros; joint masses, states; gating links, the C2 finding, the deletion test; the framing rule; frozen at cp3 (rule R-thr). Claims: CL-M04, CL-M05, CL-P02.
-4. **Retrodiction.** Case selection, interface mapping, correctness and pass rules, swap check and permutation null, fixed before the run; the limits, including the sources that already report the link (ruling D17). Claim: CL-T02.
-5. **Pourbaix and window settings.** The Materials Project data with the attribution text of `results/preprint/pourbaix/cache/attribution_for_paper.md` (version, licence, changes, no endorsement, ion reference data, GNoME excluded); the Omega controls; the gas-reference benchmark; the experimental route and its margin. Claim: CL-M06.
-6. **Compute anchor.** The protocol of `src/nacre/anchor/PROTOCOL.md`, a pipeline check that is not a screen input. Claim: CL-M07.
-7. **Reproducibility.** One short paragraph. Claim: CL-M09.
-8. **Disclosures.** N5 (the earlier rough calcite estimate; framings chosen on literature grounds), cp3 R2 (cell scheme values seen before the rule), cp3 R1 (slurry Omega values seen before the dissolution rule); the thresholds were set before any screen output, not before every calculation. Claim: CL-M08.
+State how every verdict is produced: sources, onset pipeline and its benchmark, solubility and window construction, thresholds and the decision rule, and the freeze. Procedure stays in the repository except one reproducibility paragraph. No result is stated.
+
+## Order
+
+1. **Sourced parameters** (`tab:parameters`). Every value from a fetched source with DOI and locator; gaps stay gaps; undetermined never passes. CL-M11, with the carbonate-era CL-B01 to CL-B03 (sourced inputs, conflicts, open ranges) folded in.
+2. **Priors** (neutral, adapted). Construction rule, grades, correlation groups, ignorance priors never reported as a pass probability. CL-M01, CL-M02.
+3. **Onset pipeline and its benchmark** (`tab:thermo`). Experimental route governs; DFT is a comparator with its measured benchmark error; phosphate DFT stays unbenchmarked until a phosphate benchmark on tabulated data passes; staged reactions as the minimum over registered reactions; glass-to-crystal correction labelled; the hydration bracket and its vetting. CL-M10, CL-M12, CL-D08.
+4. **Solubility, speciation and the aluminium window.** Sourced solubility products and speciation (K2); the Al-O-H Pourbaix construction on benchmarked experimental ion data, cross-checked against the published window, both reported. CL-M13. Carbonate-era Pourbaix settings are marked frozen.
+5. **Thresholds and the decision rule** (`tab:thresholds`, frozen at cp5). Numeric margins; the proceed rule; the framing rule. CL-P02, CL-M04, CL-M05, CL-D10.
+6. **Propagation and sensitivity.** Monte Carlo, Sobol and Shapley indices, sizing rule; used for the required-precision map. CL-M03.
+7. **Baselines and the carbonate control.** Baselines as comparator rows through K1, K2 and K4 only; the control from the frozen tag only, with the same-database DFT extra. CL-M14, CL-M16.
+8. **Retrodiction** (carbonate control, frozen): the registered rule and its outcome as pre-registered; detail in the SI. CL-T02.
+9. **Reproducibility** (one paragraph) and **Disclosures** (carbonate-era N5 and cp3 disclosures stay; the freeze rule: any change after the cp5 freeze is a dated deviation). CL-M09, CL-M08, CL-M15.
+
+## Figures and tables
+
+- `tab:parameters` (sourced parameters; full provenance in SI).
+- `tab:thermo` (thermochemistry benchmark: computed against tabulated formation data, error per reaction).
+- `tab:thresholds` (thresholds and decision criteria, existing, frozen).
+
+## Macros needed
+
+Registered: `NumPcred`, `NumPcredSweepLow`, `NumPcredSweepHigh`, `NumMcos`, `NumPdeg`, `NumSizingDrawCap`, `NumRetroPassCount`, `NumRetroUsableCases`, `NumMpDatabaseVersion` and the other Methods conventions already in `sources.yaml`. Planned: margins at the cp5 freeze (`NumMarginOx`), hydration-bracket inputs (PH-W1.3), cure range (`NumCureLow`, `NumCureHigh`, from the baseline rows).
+
+## Claims carried
+
+CL-M10 to CL-M16; carbonate era: CL-M01 to CL-M09, CL-P02, CL-T02, CL-B01 to CL-B03.
+
+## Supplying lanes
+
+- p0-w8 writes it; p0-w1 (parameter table, hydration data); p0-w3 (contract, thresholds); p0-w5 (onset pipeline, benchmark, window); p0-w4 (screen settings).
 
 ## Cautions
 
-- Never "engineered out"; never a claim that the thresholds were set before the calculation in a broader sense than is true (N5).
-- No software walkthroughs, file names or command lines in the text, except the one reproducibility paragraph.
-- The AI-use statement is in the Acknowledgements (track decision B4), not in Methods.
+- No claim that the thresholds were set before every calculation (carbonate-era note N5 stands).
+- No file names or command lines outside the one reproducibility paragraph.
+- The AI-use statement is in the Acknowledgements, not here.
