@@ -144,14 +144,19 @@ PHASES = [
         ("r1s", "r1 lattice O2 release (staged, to Ca2P2O7)", SINK_CA, ["Ca2P2O7", "Ca(ClO4)2", "O2", "Li"])]},
     {"id": "OCP", "role": "candidate", "reactions": [
         ("r1", "r1 lattice O2 release (to P2O5, lattice water released)", SINK_CA,
-         ["Ca(ClO4)2", "P2O5", "H2O", "O2", "Li"])]},
+         ["Ca(ClO4)2", "P2O5", "H2O", "O2", "Li"]),
+        ("r1s", "r1 lattice O2 release (staged, to Ca2P2O7, lattice water released)", SINK_CA,
+         ["Ca2P2O7", "Ca(ClO4)2", "H2O", "O2", "Li"])]},
     {"id": "brushite", "role": "precursor", "reactions": [
         ("r1", "r1 lattice O2 release (to P2O5, lattice water released)", SINK_CA,
          ["Ca(ClO4)2", "P2O5", "H2O", "O2", "Li"]),
+        ("r1s", "r1 lattice O2 release (staged, to Ca(PO3)2, lattice water released)", SINK_CA,
+         ["Ca(PO3)2", "Ca(ClO4)2", "H2O", "O2", "Li"]),
         ("r3", "r3 water oxidation in the hydrate (to H3PO4, protons taken up by the phosphate)", SINK_CA,
          ["Ca(ClO4)2", "H3PO4", "H2O", "O2", "Li"])]},
     {"id": "monetite", "role": "precursor", "reactions": [
-        ("r1", "r1 lattice O2 release (to P2O5)", SINK_CA, ["Ca(ClO4)2", "P2O5", "H2O", "O2", "Li"])]},
+        ("r1", "r1 lattice O2 release (to P2O5)", SINK_CA, ["Ca(ClO4)2", "P2O5", "H2O", "O2", "Li"]),
+        ("r1s", "r1 lattice O2 release (staged, to Ca(PO3)2)", SINK_CA, ["Ca(PO3)2", "Ca(ClO4)2", "H2O", "O2", "Li"])]},
     {"id": "Ca2P2O7", "role": "candidate", "reactions": [
         ("r1", "r1 lattice O2 release (to P2O5)", SINK_CA, ["Ca(ClO4)2", "P2O5", "O2", "Li"]),
         ("r1s", "r1 lattice O2 release (staged, to Ca(PO3)2)", SINK_CA, ["Ca(PO3)2", "Ca(ClO4)2", "O2", "Li"])]},
@@ -287,7 +292,8 @@ class ExptBook:
 
     route = "expt"
 
-    def __init__(self, ctx):
+    def __init__(self, ctx, provisional=False):
+        self.provisional = provisional  # True: admit rows that stand alone (DfG only) as provisional values
         self.ctx = ctx
         self.T = ctx.T
         self.kT = K_B_EV * ctx.T
@@ -335,6 +341,9 @@ class ExptBook:
                                        (spec["z"], sid, spec["z"], spec["z"]), "locator": ex["locator"]},
                         note="" if ds is not None else "no entropy bound key for this exchange")
         if kind == "row":
+            if spec.get("dfg_only") and not self.provisional:
+                raise Missing("%s: DfG only (%s), no DfH or S to cross-check it; undetermined by rule (lit/corpus/T-R/gaps.md)"
+                              % (sid, spec["dfg"]))
             val, u, ubasis = row_kj(spec["dfg"])
             return Term(val / KJ_PER_MOL_PER_EV, u, meta={"row": row_cite(spec["dfg"]), "u_basis": ubasis})
         raise ValueError(sid)
@@ -531,12 +540,16 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("gate")
     sub.add_parser("run")
+    sub.add_parser("ledger", help="append the provenance record of the current outputs")
     args = ap.parse_args(argv)
     if args.cmd == "gate":
         g = gate()
         print(json.dumps(g, indent=1))
         return 0 if g["passed"] else 1
     from nacre.pourbaix import ph_k1_run
+    if args.cmd == "ledger":
+        print(json.dumps({"appended": len(ph_k1_run.ledger()["outputs"])}))
+        return 0
     return ph_k1_run.run()
 
 

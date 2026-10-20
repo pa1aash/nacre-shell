@@ -1,0 +1,5827 @@
+{
+ "session": "PH-K1",
+ "generated_utc": "2026-10-20T09:13:51Z",
+ "git_sha": "240617afa29aaf9dc581b880dccd0488fb4dab3c",
+ "question": "PH-K1 run: the tier-1 oxidation-limit ladder of every candidate (outputs under results/preprint/pourbaix/ph_k1/).",
+ "rule": "claims_redirect.md 2a/2c: E_ox = min over registered oxidation reactions; undetermined never passes; a solid-salt sink bounds the onset from above (a falsification stands, a pass is inconclusive).",
+ "gate": {
+  "value_V": 3.937816159604733,
+  "frozen_V_inventory": 3.938,
+  "frozen_V_full_precision": 3.9378161596047305,
+  "difference_to_inventory_mV": -0.1838403952669765,
+  "difference_to_full_precision_mV": 2.6645352591003757e-12,
+  "tolerance_mV": 1.0,
+  "budget_V": 0.08697780186189082,
+  "frozen_budget_V": 0.0869778018619,
+  "budget_difference_V": -9.18709552877317e-15,
+  "reaction": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 0.5 O2 + 2 Li",
+  "n_e": 2.0000000000000004,
+  "passed": true
+ },
+ "inputs": {
+  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+  "evidence_table_sha256": "b7317976cafdc3c87baf5fb8090d8ef8d290a9c80b0e804b3143080da462b0ba",
+  "evidence_table_git_blob": "4476207724aadd261a7f3c8e0b66d8952c291cc5",
+  "ph_cache_manifest_sha256": "sha256:84a5065d77b8e85a9d8d1f5620134f80a3059176e34d26b31e7b9904ed3f42c9",
+  "production_cache_manifest_sha256": "sha256:a143176fd20e15dd8c7a2b8381cc0e3a8e71b23a1230ad5179571f174282f7ce",
+  "supplement_cache_manifest_sha256": "sha256:1d00c351f041328ece324f20727c5a21c234a95ebc77f4a91845e3806747d1e2",
+  "mp_database_version_ph_cache": "2026.09.28",
+  "mp_database_version_production_cache": "2026.04.13",
+  "mp_licence_filter": "BY-C only; excluded entries: none",
+  "lit_params_corpus_note": "lit/corpus/phosphate_coverage.yaml named in the brief does not exist on any branch; the row ids come from lit/evidence_table.csv (TR-001..TR-119) and lit/corpus/T-R/gaps.md"
+ },
+ "conventions": {
+  "T_K": 298.15,
+  "sink": "solid-salt LiClO4 (Ca(ClO4)2 and Al(ClO4)3 through the tabulated exchange enthalpy, solid entropy of the exchange neglected and bounded); solvated sink: gap",
+  "water": "H2O(l) at activity a_w on the experimental route; DFT water is H2O(g) at p = a_w x p_sat(0.0317 bar)",
+  "a_w_grid": [
+   1.0,
+   0.01,
+   0.0001,
+   1e-06
+  ],
+  "a_oh_grid": [
+   1.0,
+   0.5,
+   0.1,
+   0.01
+  ],
+  "a_oh_reading": "activity of the OH-site (HAp) component in the lattice; lowering it raises the onset",
+  "budget": "linear sum of the row uncertainties (2 sigma USGS as printed; NBS rows 20 units of the last figure) plus T x the exchange entropy bound, divided by n_e F: the recipe of window_margin_expt, which it reproduces for the carbonate reaction",
+  "cutoff_classes": {
+   "LFP-class": {
+    "inf_V": 3.65,
+    "sup_V": 3.65
+   },
+   "4.2-4.3 V": {
+    "inf_V": 4.2,
+    "sup_V": 4.3
+   },
+   "4.4-4.5 V": {
+    "inf_V": 4.4,
+    "sup_V": 4.5
+   }
+  },
+  "status_rule": "below: onset < inf - m; above: onset >= sup + m and every reaction determined; undetermined: a reaction lacks data and the determined subset is not below; else within budget",
+  "polymorph_pins": {
+   "LiClO4": "mp-30301",
+   "CaCO3": "mp-3953",
+   "P2O5": "mp-562613",
+   "H3PO4": "mp-23902",
+   "HAp": "mp-41472",
+   "b-TCP": "mp-531132",
+   "a-TCP": "mp-1197377",
+   "OCP": "mp-1229154",
+   "brushite": "mp-24389",
+   "monetite": "mp-24390",
+   "Ca2P2O7": "mp-3531",
+   "Ca(PO3)2": "mp-5680",
+   "AlPO4": "mp-5331",
+   "Al(PO3)3": "mp-1019377",
+   "Li3PO4": "mp-2878",
+   "Li4P2O7": "mp-28450",
+   "CaSiO3": "mp-4429",
+   "Ca2SiO4": "mp-4481",
+   "Li2SiO3": "mp-5012"
+  }
+ },
+ "mp_entries": {
+  "LiClO4": {
+   "material_id": "mp-30301",
+   "entry_id": "mp-aaaabsvl-GGA",
+   "space_group": "Pnma",
+   "space_group_number": 62,
+   "n_sites": 24,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "P2O5": {
+   "material_id": "mp-562613",
+   "entry_id": "mp-aaabgagz-GGA",
+   "space_group": "R3c",
+   "space_group_number": 161,
+   "n_sites": 28,
+   "above_lowest_same_formula_eV_per_atom": 0.010443091071429045,
+   "licence": "BY-C"
+  },
+  "H3PO4": {
+   "material_id": "mp-23902",
+   "entry_id": "mp-aaaabjji-GGA",
+   "space_group": "P2_1/c",
+   "space_group_number": 14,
+   "n_sites": 32,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "SiO2": {
+   "material_id": "mp-6930",
+   "entry_id": "mp-aaaaakgo-GGA",
+   "space_group": "P3_221",
+   "space_group_number": 154,
+   "n_sites": 9,
+   "above_lowest_same_formula_eV_per_atom": 0.010482008888889283,
+   "licence": "BY-C"
+  },
+  "HAp": {
+   "material_id": "mp-41472",
+   "entry_id": "mp-aaaacjjc-GGA",
+   "space_group": "P6_3",
+   "space_group_number": 173,
+   "n_sites": 44,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "b-TCP": {
+   "material_id": "mp-531132",
+   "entry_id": "mp-aaabefse-GGA",
+   "space_group": "R3",
+   "space_group_number": 146,
+   "n_sites": 91,
+   "above_lowest_same_formula_eV_per_atom": 0.0033306135622712674,
+   "licence": "BY-C"
+  },
+  "a-TCP": {
+   "material_id": "mp-1197377",
+   "entry_id": "mp-aaacqdgz-GGA",
+   "space_group": "P2_1/c",
+   "space_group_number": 14,
+   "n_sites": 312,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "OCP": {
+   "material_id": "mp-1229154",
+   "entry_id": "mp-aaacryhe-GGA",
+   "space_group": "P-1",
+   "space_group_number": 2,
+   "n_sites": 110,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "brushite": {
+   "material_id": "mp-24389",
+   "entry_id": "mp-aaaabkcb-GGA",
+   "space_group": "Cc",
+   "space_group_number": 9,
+   "n_sites": 26,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "monetite": {
+   "material_id": "mp-24390",
+   "entry_id": "mp-aaaabkcc-GGA",
+   "space_group": "P1",
+   "space_group_number": 1,
+   "n_sites": 28,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "Ca2P2O7": {
+   "material_id": "mp-3531",
+   "entry_id": "mp-aaaaaffv-GGA",
+   "space_group": "P4_1",
+   "space_group_number": 76,
+   "n_sites": 88,
+   "above_lowest_same_formula_eV_per_atom": 0.0036955028409098034,
+   "licence": "BY-C"
+  },
+  "Ca(PO3)2": {
+   "material_id": "mp-5680",
+   "entry_id": "mp-aaaaaikm-GGA",
+   "space_group": "P2_1/c",
+   "space_group_number": 14,
+   "n_sites": 72,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "AlPO4": {
+   "material_id": "mp-5331",
+   "entry_id": "mp-aaaaahxb-GGA",
+   "space_group": "P3_121",
+   "space_group_number": 152,
+   "n_sites": 18,
+   "above_lowest_same_formula_eV_per_atom": 0.009205573888888985,
+   "licence": "BY-C"
+  },
+  "Al(PO3)3": {
+   "material_id": "mp-1019377",
+   "entry_id": "mp-aaacfzyv-GGA",
+   "space_group": "P2_1/c",
+   "space_group_number": 14,
+   "n_sites": 52,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "Li3PO4": {
+   "material_id": "mp-2878",
+   "entry_id": "mp-aaaaaegs-GGA",
+   "space_group": "Pnma",
+   "space_group_number": 62,
+   "n_sites": 32,
+   "above_lowest_same_formula_eV_per_atom": 0.0010569356249998663,
+   "licence": "BY-C"
+  },
+  "Li4P2O7": {
+   "material_id": "mp-28450",
+   "entry_id": "mp-aaaabqcg-GGA",
+   "space_group": "P-1",
+   "space_group_number": 2,
+   "n_sites": 26,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "CaSiO3": {
+   "material_id": "mp-4429",
+   "entry_id": "mp-aaaaagoj-GGA",
+   "space_group": "P-1",
+   "space_group_number": 2,
+   "n_sites": 30,
+   "above_lowest_same_formula_eV_per_atom": 7.4300000010296685e-06,
+   "licence": "BY-C"
+  },
+  "Ca2SiO4": {
+   "material_id": "mp-4481",
+   "entry_id": "mp-aaaaagqj-GGA",
+   "space_group": "Pnma",
+   "space_group_number": 62,
+   "n_sites": 28,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  },
+  "Li2SiO3": {
+   "material_id": "mp-5012",
+   "entry_id": "mp-aaaaahku-GGA",
+   "space_group": "Cmc2_1",
+   "space_group_number": 36,
+   "n_sites": 12,
+   "above_lowest_same_formula_eV_per_atom": 0.0,
+   "licence": "BY-C"
+  }
+ },
+ "phases": {
+  "HAp": {
+   "name": "hydroxyapatite Ca5(PO4)3OH",
+   "role": "candidate",
+   "formula": "Ca5(PO4)3OH",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "HAp": -1.0,
+      "LiClO4": -10.0,
+      "Ca(ClO4)2": 5.0,
+      "P2O5": 1.5,
+      "H2O": 0.5,
+      "O2": 2.5,
+      "Li": 10.0
+     },
+     "text": "Ca5(PO4)3OH [HAp] + 10 LiClO4 -> 5 Ca(ClO4)2 + 1.5 P2O5 + 0.5 H2O + 2.5 O2 + 10 Li",
+     "n_e": 9.999999999999961,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 4.456418302529974,
+       "n_e": 9.999999999999961,
+       "budget_V": 0.08474948388579469,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 39.033999999999914,
+        "entropy_bound": 42.73682099999988
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": 1.0,
+         "onset_V": 4.456418302529974
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.5,
+         "onset_V": 4.458199176407882
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.1,
+         "onset_V": 4.46233423749845
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.01,
+         "onset_V": 4.468250172466929
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 1.0,
+         "onset_V": 4.450502367561496
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.5,
+         "onset_V": 4.452283241439404
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.1,
+         "onset_V": 4.456418302529972
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.01,
+         "onset_V": 4.462334237498451
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 1.0,
+         "onset_V": 4.4445864325930176
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.5,
+         "onset_V": 4.4463673064709255
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.1,
+         "onset_V": 4.450502367561494
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.01,
+         "onset_V": 4.456418302529973
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 1.0,
+         "onset_V": 4.438670497624539
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.5,
+         "onset_V": 4.440451371502448
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.1,
+         "onset_V": 4.444586432593016
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.01,
+         "onset_V": 4.450502367561494
+        }
+       ],
+       "onset_grid_min_V": 4.438670497624539,
+       "sources": [
+        "TR-009",
+        "TR-012"
+       ],
+       "terms": {
+        "HAp": {
+         "coefficient": -0.9999999999999999,
+         "G_eV": -65.67941323869903,
+         "u_basis": "as printed, 5.0",
+         "u_kJ": 5.0,
+         "row_id": "TR-009"
+        },
+        "LiClO4": {
+         "coefficient": -9.999999999999973,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 4.999999999999987,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "P2O5": {
+         "coefficient": 1.4999999999999978,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "H2O": {
+         "coefficient": 0.49999999999999956,
+         "G_eV": -2.4573683354997615,
+         "state": "H2O(l), unit activity",
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 2.5,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 9.999999999999961,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.351509196937309,
+       "n_e": 9.999999999999961,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": 1.0,
+         "onset_V": 4.351509196937309
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.5,
+         "onset_V": 4.353290070815218
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.1,
+         "onset_V": 4.357425131905786
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.01,
+         "onset_V": 4.3633410668742645
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 1.0,
+         "onset_V": 4.3455932619688316
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.5,
+         "onset_V": 4.3473741358467395
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.1,
+         "onset_V": 4.351509196937307
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.01,
+         "onset_V": 4.357425131905787
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 1.0,
+         "onset_V": 4.339677327000353
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.5,
+         "onset_V": 4.341458200878261
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.1,
+         "onset_V": 4.345593261968829
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.01,
+         "onset_V": 4.351509196937308
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 1.0,
+         "onset_V": 4.3337613920318745
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.5,
+         "onset_V": 4.335542265909782
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.1,
+         "onset_V": 4.33967732700035
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.01,
+         "onset_V": 4.34559326196883
+        }
+       ],
+       "onset_grid_min_V": 4.3337613920318745,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.284582202257072,
+       "n_e": 9.999999999999961,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": 1.0,
+         "onset_V": 4.284582202257072
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.5,
+         "onset_V": 4.28636307613498
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.1,
+         "onset_V": 4.290498137225548
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.01,
+         "onset_V": 4.296414072194027
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 1.0,
+         "onset_V": 4.278666267288593
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.5,
+         "onset_V": 4.280447141166501
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.1,
+         "onset_V": 4.28458220225707
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.01,
+         "onset_V": 4.290498137225549
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 1.0,
+         "onset_V": 4.272750332320115
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.5,
+         "onset_V": 4.274531206198024
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.1,
+         "onset_V": 4.278666267288592
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.01,
+         "onset_V": 4.28458220225707
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 1.0,
+         "onset_V": 4.266834397351637
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.5,
+         "onset_V": 4.268615271229545
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.1,
+         "onset_V": 4.272750332320113
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.01,
+         "onset_V": 4.2786662672885925
+        }
+       ],
+       "onset_grid_min_V": 4.266834397351637,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": -0.10490910559266453,
+      "mp": -0.17183610027290186
+     },
+     "class": "r1 lattice O2 release (to P2O5)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r1s": {
+     "stoichiometry": {
+      "HAp": -1.0,
+      "LiClO4": -4.0,
+      "Ca2P2O7": 1.5,
+      "Ca(ClO4)2": 2.0,
+      "H2O": 0.5,
+      "O2": 1.0,
+      "Li": 4.0
+     },
+     "text": "Ca5(PO4)3OH [HAp] + 4 LiClO4 -> 1.5 Ca2P2O7 + 2 Ca(ClO4)2 + 0.5 H2O + O2 + 4 Li",
+     "n_e": 3.999999999999999,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 4.067437934487741,
+       "n_e": 3.999999999999999,
+       "budget_V": 0.12442390812996623,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 30.925600000000003,
+        "entropy_bound": 17.0947284
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": 1.0,
+         "onset_V": 4.067437934487741
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.5,
+         "onset_V": 4.071890119182515
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.1,
+         "onset_V": 4.0822277719089355
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.01,
+         "onset_V": 4.097017609330133
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 1.0,
+         "onset_V": 4.052648097066546
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.5,
+         "onset_V": 4.05710028176132
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.1,
+         "onset_V": 4.0674379344877405
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.01,
+         "onset_V": 4.082227771908938
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 1.0,
+         "onset_V": 4.0378582596453505
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.5,
+         "onset_V": 4.042310444340124
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.1,
+         "onset_V": 4.052648097066545
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.01,
+         "onset_V": 4.067437934487742
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 1.0,
+         "onset_V": 4.023068422224155
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.5,
+         "onset_V": 4.027520606918928
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.1,
+         "onset_V": 4.037858259645349
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.01,
+         "onset_V": 4.052648097066546
+        }
+       ],
+       "onset_grid_min_V": 4.023068422224155,
+       "sources": [
+        "TR-009",
+        "TR-029"
+       ],
+       "terms": {
+        "HAp": {
+         "coefficient": -1.0,
+         "G_eV": -65.67941323869903,
+         "u_basis": "as printed, 5.0",
+         "u_kJ": 5.0,
+         "row_id": "TR-009"
+        },
+        "LiClO4": {
+         "coefficient": -3.9999999999999987,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca2P2O7": {
+         "coefficient": 1.5000000000000002,
+         "G_eV": -32.46236843541218,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-029"
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 2.0,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "H2O": {
+         "coefficient": 0.5000000000000004,
+         "G_eV": -2.4573683354997615,
+         "state": "H2O(l), unit activity",
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 0.9999999999999967,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 3.999999999999999,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.0572319235125756,
+       "n_e": 3.999999999999999,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": 1.0,
+         "onset_V": 4.0572319235125756
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.5,
+         "onset_V": 4.061684108207346
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.1,
+         "onset_V": 4.072021760933766
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.01,
+         "onset_V": 4.086811598354964
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 1.0,
+         "onset_V": 4.042442086091381
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.5,
+         "onset_V": 4.046894270786151
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.1,
+         "onset_V": 4.057231923512571
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.01,
+         "onset_V": 4.072021760933769
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 1.0,
+         "onset_V": 4.027652248670185
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.5,
+         "onset_V": 4.032104433364955
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.1,
+         "onset_V": 4.042442086091375
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.01,
+         "onset_V": 4.057231923512573
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 1.0,
+         "onset_V": 4.012862411248989
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.5,
+         "onset_V": 4.017314595943759
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.1,
+         "onset_V": 4.027652248670179
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.01,
+         "onset_V": 4.042442086091377
+        }
+       ],
+       "onset_grid_min_V": 4.012862411248989,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.8899144368119827,
+       "n_e": 3.999999999999999,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": 1.0,
+         "onset_V": 3.8899144368119827
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.5,
+         "onset_V": 3.894366621506753
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.1,
+         "onset_V": 3.9047042742331732
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.01,
+         "onset_V": 3.919494111654371
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 1.0,
+         "onset_V": 3.875124599390787
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.5,
+         "onset_V": 3.879576784085557
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.1,
+         "onset_V": 3.8899144368119773
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.01,
+         "onset_V": 3.904704274233175
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 1.0,
+         "onset_V": 3.860334761969591
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.5,
+         "onset_V": 3.864786946664361
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.1,
+         "onset_V": 3.8751245993907815
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.01,
+         "onset_V": 3.889914436811979
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 1.0,
+         "onset_V": 3.845544924548396
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.5,
+         "onset_V": 3.849997109243166
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.1,
+         "onset_V": 3.8603347619695865
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.01,
+         "onset_V": 3.875124599390784
+        }
+       ],
+       "onset_grid_min_V": 3.845544924548396,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": -0.010206010975165825,
+      "mp": -0.1775234976757587
+     },
+     "class": "r1 lattice O2 release (staged, to Ca2P2O7)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r2": {
+     "stoichiometry": {
+      "HAp": -1.0,
+      "LiClO4": -1.0,
+      "b-TCP": 1.5,
+      "Ca(ClO4)2": 0.5,
+      "H2O": 0.5,
+      "O2": 0.25,
+      "Li": 1.0
+     },
+     "text": "Ca5(PO4)3OH [HAp] + LiClO4 -> 1.5 Ca3(PO4)2 [b-TCP] + 0.5 Ca(ClO4)2 + 0.5 H2O + 0.25 O2 + Li",
+     "n_e": 0.9999999999999967,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 4.202856445389511,
+       "n_e": 0.9999999999999967,
+       "budget_V": 0.2092761838057853,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 15.9184,
+        "entropy_bound": 4.2736821
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": 1.0,
+         "onset_V": 4.202856445389511
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.5,
+         "onset_V": 4.220665184168606
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.1,
+         "onset_V": 4.262015795074287
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.01,
+         "onset_V": 4.321175144759078
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 1.0,
+         "onset_V": 4.143697095704729
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.5,
+         "onset_V": 4.161505834483824
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.1,
+         "onset_V": 4.202856445389505
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.01,
+         "onset_V": 4.262015795074296
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 1.0,
+         "onset_V": 4.0845377460199455
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.5,
+         "onset_V": 4.102346484799041
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.1,
+         "onset_V": 4.143697095704723
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.01,
+         "onset_V": 4.202856445389513
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 1.0,
+         "onset_V": 4.025378396335163
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.5,
+         "onset_V": 4.043187135114258
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.1,
+         "onset_V": 4.084537746019939
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.01,
+         "onset_V": 4.143697095704731
+        }
+       ],
+       "onset_grid_min_V": 4.025378396335163,
+       "sources": [
+        "TR-006",
+        "TR-009"
+       ],
+       "terms": {
+        "HAp": {
+         "coefficient": -1.0,
+         "G_eV": -65.67941323869903,
+         "u_basis": "as printed, 5.0",
+         "u_kJ": 5.0,
+         "row_id": "TR-009"
+        },
+        "LiClO4": {
+         "coefficient": -0.9999999999999961,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "b-TCP": {
+         "coefficient": 1.5,
+         "G_eV": -40.25067763705978,
+         "u_basis": "as printed, 5.0",
+         "u_kJ": 5.0,
+         "row_id": "TR-006"
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 0.5,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "H2O": {
+         "coefficient": 0.5,
+         "G_eV": -2.4573683354997615,
+         "state": "H2O(l), unit activity",
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 0.24999999999999167,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 0.9999999999999967,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.494624964290769,
+       "n_e": 0.9999999999999967,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": 1.0,
+         "onset_V": 4.494624964290769
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.5,
+         "onset_V": 4.512433703069864
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.1,
+         "onset_V": 4.553784313975545
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.01,
+         "onset_V": 4.612943663660336
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 1.0,
+         "onset_V": 4.435465614605987
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.5,
+         "onset_V": 4.4532743533850825
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.1,
+         "onset_V": 4.494624964290764
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.01,
+         "onset_V": 4.553784313975554
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 1.0,
+         "onset_V": 4.376306264921204
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.5,
+         "onset_V": 4.394115003700299
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.1,
+         "onset_V": 4.435465614605981
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.01,
+         "onset_V": 4.494624964290772
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 1.0,
+         "onset_V": 4.317146915236421
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.5,
+         "onset_V": 4.334955654015516
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.1,
+         "onset_V": 4.3763062649211975
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.01,
+         "onset_V": 4.435465614605989
+        }
+       ],
+       "onset_grid_min_V": 4.317146915236421,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.8253550174883952,
+       "n_e": 0.9999999999999967,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": 1.0,
+         "onset_V": 3.8253550174883952
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.5,
+         "onset_V": 3.8431637562674905
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.1,
+         "onset_V": 3.8845143671731717
+        },
+        {
+         "a_w": 1.0,
+         "a_oh": 0.01,
+         "onset_V": 3.9436737168579628
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 1.0,
+         "onset_V": 3.7661956678036126
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.5,
+         "onset_V": 3.784004406582708
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.1,
+         "onset_V": 3.8253550174883895
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": 0.01,
+         "onset_V": 3.8845143671731805
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 1.0,
+         "onset_V": 3.70703631811883
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.5,
+         "onset_V": 3.724845056897925
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.1,
+         "onset_V": 3.7661956678036064
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": 0.01,
+         "onset_V": 3.8253550174883975
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 1.0,
+         "onset_V": 3.6478769684340473
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.5,
+         "onset_V": 3.6656857072131426
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.1,
+         "onset_V": 3.707036318118824
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": 0.01,
+         "onset_V": 3.766195667803615
+        }
+       ],
+       "onset_grid_min_V": 3.6478769684340473,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": 0.2917685189012582,
+      "mp": -0.3775014279011155
+     },
+     "class": "r2 structural OH oxidation (to beta-TCP)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r1",
+     "r1s",
+     "r2"
+    ],
+    "expt_undetermined": [],
+    "expt": {
+     "onset_V": 4.067437934487741,
+     "limiting": "r1s",
+     "budget_V": 0.12442390812996623,
+     "budget_complete": true,
+     "onset_grid_min_V": 4.023068422224155,
+     "complete": true
+    },
+    "janaf": {
+     "onset_V": 4.0572319235125756,
+     "limiting": "r1s"
+    },
+    "mp": {
+     "onset_V": 3.8253550174883952,
+     "limiting": "r2"
+    }
+   }
+  },
+  "b-TCP": {
+   "name": "beta-TCP Ca3(PO4)2",
+   "role": "candidate",
+   "formula": "Ca3(PO4)2",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "b-TCP": -1.0,
+      "LiClO4": -6.0,
+      "Ca(ClO4)2": 3.0,
+      "P2O5": 1.0,
+      "O2": 1.5,
+      "Li": 6.0
+     },
+     "text": "Ca3(PO4)2 [b-TCP] + 6 LiClO4 -> 3 Ca(ClO4)2 + P2O5 + 1.5 O2 + 6 Li",
+     "n_e": 5.999999999999999,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 4.484591842212237,
+       "n_e": 5.999999999999999,
+       "budget_V": 0.08818696665512146,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 25.410399999999978,
+        "entropy_bound": 25.642092599999973
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.484591842212237
+        }
+       ],
+       "onset_grid_min_V": 4.484591842212237,
+       "sources": [
+        "TR-006",
+        "TR-012"
+       ],
+       "terms": {
+        "b-TCP": {
+         "coefficient": -1.0,
+         "G_eV": -40.25067763705978,
+         "u_basis": "as printed, 5.0",
+         "u_kJ": 5.0,
+         "row_id": "TR-006"
+        },
+        "LiClO4": {
+         "coefficient": -5.999999999999994,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 2.9999999999999973,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "P2O5": {
+         "coefficient": 0.999999999999996,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "O2": {
+         "coefficient": 1.5000000000000067,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 5.999999999999999,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.335607445009136,
+       "n_e": 5.999999999999999,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.335607445009136
+        }
+       ],
+       "onset_grid_min_V": 4.335607445009136,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.335607445009136,
+       "n_e": 5.999999999999999,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.335607445009136
+        }
+       ],
+       "onset_grid_min_V": 4.335607445009136,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": -0.14898439720310108,
+      "mp": -0.14898439720310108
+     },
+     "class": "r1 lattice O2 release (to P2O5)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r1s": {
+     "stoichiometry": {
+      "b-TCP": -1.0,
+      "LiClO4": -2.0,
+      "Ca2P2O7": 1.0,
+      "Ca(ClO4)2": 1.0,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "Ca3(PO4)2 [b-TCP] + 2 LiClO4 -> Ca2P2O7 + Ca(ClO4)2 + 0.5 O2 + 2 Li",
+     "n_e": 2.0000000000000013,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 4.022298430853825,
+       "n_e": 2.0000000000000013,
+       "budget_V": 0.14796116451933747,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 20.0048,
+        "entropy_bound": 8.547364200000002
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.022298430853825
+        }
+       ],
+       "onset_grid_min_V": 4.022298430853825,
+       "sources": [
+        "TR-006",
+        "TR-029"
+       ],
+       "terms": {
+        "b-TCP": {
+         "coefficient": -1.0,
+         "G_eV": -40.25067763705978,
+         "u_basis": "as printed, 5.0",
+         "u_kJ": 5.0,
+         "row_id": "TR-006"
+        },
+        "LiClO4": {
+         "coefficient": -2.0,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca2P2O7": {
+         "coefficient": 0.9999999999999999,
+         "G_eV": -32.46236843541218,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-029"
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 1.0000000000000002,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "O2": {
+         "coefficient": 0.49999999999999795,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 2.0000000000000013,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 3.9114342432531752,
+       "n_e": 2.0000000000000013,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.9114342432531752
+        }
+       ],
+       "onset_grid_min_V": 3.9114342432531752,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.9114342432531752,
+       "n_e": 2.0000000000000013,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.9114342432531752
+        }
+       ],
+       "onset_grid_min_V": 3.9114342432531752,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": -0.11086418760064953,
+      "mp": -0.11086418760064953
+     },
+     "class": "r1 lattice O2 release (staged, to Ca2P2O7)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r1",
+     "r1s"
+    ],
+    "expt_undetermined": [],
+    "expt": {
+     "onset_V": 4.022298430853825,
+     "limiting": "r1s",
+     "budget_V": 0.14796116451933747,
+     "budget_complete": true,
+     "onset_grid_min_V": 4.022298430853825,
+     "complete": true
+    },
+    "janaf": {
+     "onset_V": 3.9114342432531752,
+     "limiting": "r1s"
+    },
+    "mp": {
+     "onset_V": 3.9114342432531752,
+     "limiting": "r1s"
+    }
+   }
+  },
+  "a-TCP": {
+   "name": "alpha-TCP Ca3(PO4)2",
+   "role": "candidate",
+   "formula": "Ca3(PO4)2",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "a-TCP": -1.0,
+      "LiClO4": -6.0,
+      "Ca(ClO4)2": 3.0,
+      "P2O5": 1.0,
+      "O2": 1.5,
+      "Li": 6.0
+     },
+     "text": "Ca3(PO4)2 [a-TCP] + 6 LiClO4 -> 3 Ca(ClO4)2 + P2O5 + 1.5 O2 + 6 Li",
+     "n_e": 5.999999999999999,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 4.470840529232308,
+       "n_e": 5.999999999999999,
+       "budget_V": 0.09400477668883662,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 28.77839999999998,
+        "entropy_bound": 25.642092599999973
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.470840529232308
+        }
+       ],
+       "onset_grid_min_V": 4.470840529232308,
+       "sources": [
+        "TR-012",
+        "TR-026"
+       ],
+       "terms": {
+        "a-TCP": {
+         "coefficient": -1.0,
+         "G_eV": -40.16816975918021,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-026"
+        },
+        "LiClO4": {
+         "coefficient": -5.999999999999994,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 2.9999999999999973,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "P2O5": {
+         "coefficient": 0.999999999999996,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "O2": {
+         "coefficient": 1.5000000000000067,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 5.999999999999999,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.342823774394057,
+       "n_e": 5.999999999999999,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.342823774394057
+        }
+       ],
+       "onset_grid_min_V": 4.342823774394057,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.342823774394057,
+       "n_e": 5.999999999999999,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.342823774394057
+        }
+       ],
+       "onset_grid_min_V": 4.342823774394057,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": -0.12801675483825026,
+      "mp": -0.12801675483825026
+     },
+     "class": "r1 lattice O2 release (to P2O5)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r1s": {
+     "stoichiometry": {
+      "a-TCP": -1.0,
+      "LiClO4": -2.0,
+      "Ca2P2O7": 1.0,
+      "Ca(ClO4)2": 1.0,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "Ca3(PO4)2 [a-TCP] + 2 LiClO4 -> Ca2P2O7 + Ca(ClO4)2 + 0.5 O2 + 2 Li",
+     "n_e": 2.0000000000000013,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 3.981044491914039,
+       "n_e": 2.0000000000000013,
+       "budget_V": 0.16541459462048297,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 23.372799999999998,
+        "entropy_bound": 8.547364200000002
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.981044491914039
+        }
+       ],
+       "onset_grid_min_V": 3.981044491914039,
+       "sources": [
+        "TR-026",
+        "TR-029"
+       ],
+       "terms": {
+        "a-TCP": {
+         "coefficient": -1.0,
+         "G_eV": -40.16816975918021,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-026"
+        },
+        "LiClO4": {
+         "coefficient": -2.0,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca2P2O7": {
+         "coefficient": 0.9999999999999999,
+         "G_eV": -32.46236843541218,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-029"
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 1.0000000000000002,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "O2": {
+         "coefficient": 0.49999999999999795,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 2.0000000000000013,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 3.933083231407941,
+       "n_e": 2.0000000000000013,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.933083231407941
+        }
+       ],
+       "onset_grid_min_V": 3.933083231407941,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.933083231407941,
+       "n_e": 2.0000000000000013,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.933083231407941
+        }
+       ],
+       "onset_grid_min_V": 3.933083231407941,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": -0.04796126050609795,
+      "mp": -0.04796126050609795
+     },
+     "class": "r1 lattice O2 release (staged, to Ca2P2O7)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r1",
+     "r1s"
+    ],
+    "expt_undetermined": [],
+    "expt": {
+     "onset_V": 3.981044491914039,
+     "limiting": "r1s",
+     "budget_V": 0.16541459462048297,
+     "budget_complete": true,
+     "onset_grid_min_V": 3.981044491914039,
+     "complete": true
+    },
+    "janaf": {
+     "onset_V": 3.933083231407941,
+     "limiting": "r1s"
+    },
+    "mp": {
+     "onset_V": 3.933083231407941,
+     "limiting": "r1s"
+    }
+   }
+  },
+  "OCP": {
+   "name": "octacalcium phosphate Ca8H2(PO4)6.5H2O",
+   "role": "candidate",
+   "formula": "Ca8P6H12O29",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "OCP": -1.0,
+      "LiClO4": -16.0,
+      "Ca(ClO4)2": 8.0,
+      "P2O5": 3.0,
+      "H2O": 6.0,
+      "O2": 4.0,
+      "Li": 16.0
+     },
+     "text": "Ca8P6H12O29 [OCP] + 16 LiClO4 -> 8 Ca(ClO4)2 + 3 P2O5 + 6 H2O + 4 O2 + 16 Li",
+     "n_e": 16.000000000000025,
+     "routes": {
+      "expt": {
+       "status": "undetermined",
+       "onset_V": null,
+       "n_e": 16.000000000000025,
+       "missing": [
+        {
+         "species": "OCP",
+         "reason": "OCP: DfG only (TR-039), no DfH or S to cross-check it; undetermined by rule (lit/corpus/T-R/gaps.md)"
+        }
+       ],
+       "sources": [
+        "TR-012"
+       ],
+       "terms": {
+        "LiClO4": {
+         "coefficient": -16.00000000000002,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 8.000000000000007,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "P2O5": {
+         "coefficient": 3.0000000000000036,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "H2O": {
+         "coefficient": 6.000000000000005,
+         "G_eV": -2.4573683354997615,
+         "state": "H2O(l), unit activity",
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 4.000000000000024,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 16.000000000000025,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.604434564388484,
+       "n_e": 16.000000000000025,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 4.604434564388484
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 4.560065052124897
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.51569553986131
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.471326027597724
+        }
+       ],
+       "onset_grid_min_V": 4.471326027597724,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.102482104286706,
+       "n_e": 16.000000000000025,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 4.102482104286706
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 4.058112592023119
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.013743079759532
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 3.9693735674959454
+        }
+       ],
+       "onset_grid_min_V": 3.9693735674959454,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {},
+     "class": "r1 lattice O2 release (to P2O5, lattice water released)",
+     "provisional_dfg_only": {
+      "onset_V": 4.504394506768782,
+      "budget_V": 0.0858558696716005,
+      "used_for_status": false,
+      "why": "one NBS DfG row (TR-039), no DfH or S to cross-check it: undetermined by rule, the value is shown for information only"
+     },
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r1s": {
+     "stoichiometry": {
+      "OCP": -1.0,
+      "LiClO4": -4.0,
+      "Ca2P2O7": 3.0,
+      "Ca(ClO4)2": 2.0,
+      "H2O": 6.0,
+      "O2": 1.0,
+      "Li": 4.0
+     },
+     "text": "Ca8P6H12O29 [OCP] + 4 LiClO4 -> 3 Ca2P2O7 + 2 Ca(ClO4)2 + 6 H2O + O2 + 4 Li",
+     "n_e": 4.000000000000013,
+     "routes": {
+      "expt": {
+       "status": "undetermined",
+       "onset_V": null,
+       "n_e": 4.000000000000013,
+       "missing": [
+        {
+         "species": "OCP",
+         "reason": "OCP: DfG only (TR-039), no DfH or S to cross-check it; undetermined by rule (lit/corpus/T-R/gaps.md)"
+        }
+       ],
+       "sources": [
+        "TR-029"
+       ],
+       "terms": {
+        "LiClO4": {
+         "coefficient": -4.000000000000007,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca2P2O7": {
+         "coefficient": 3.000000000000002,
+         "G_eV": -32.46236843541218,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-029"
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 2.0000000000000067,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "H2O": {
+         "coefficient": 5.999999999999998,
+         "G_eV": -2.4573683354997615,
+         "state": "H2O(l), unit activity",
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 0.9999999999999927,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 4.000000000000013,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.774656119892642,
+       "n_e": 4.000000000000013,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 4.774656119892642
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 4.597178070838296
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.4197000217839495
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.242221972729603
+        }
+       ],
+       "onset_grid_min_V": 4.242221972729603,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 2.766846279485534,
+       "n_e": 4.000000000000013,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 2.766846279485534
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 2.5893682304311887
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 2.411890181376841
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 2.2344121323224946
+        }
+       ],
+       "onset_grid_min_V": 2.2344121323224946,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {},
+     "class": "r1 lattice O2 release (staged, to Ca2P2O7, lattice water released)",
+     "provisional_dfg_only": {
+      "onset_V": 3.8703623834008503,
+      "budget_V": 0.16852387551736148,
+      "used_for_status": false,
+      "why": "one NBS DfG row (TR-039), no DfH or S to cross-check it: undetermined by rule, the value is shown for information only"
+     },
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [],
+    "expt_undetermined": [
+     "r1",
+     "r1s"
+    ],
+    "expt": null,
+    "janaf": {
+     "onset_V": 4.604434564388484,
+     "limiting": "r1"
+    },
+    "mp": {
+     "onset_V": 2.766846279485534,
+     "limiting": "r1s"
+    }
+   }
+  },
+  "brushite": {
+   "name": "brushite CaHPO4.2H2O",
+   "role": "precursor",
+   "formula": "CaPH5O6",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "brushite": -1.0,
+      "LiClO4": -2.0,
+      "Ca(ClO4)2": 1.0,
+      "P2O5": 0.5,
+      "H2O": 2.5,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "CaPH5O6 [brushite] + 2 LiClO4 -> Ca(ClO4)2 + 0.5 P2O5 + 2.5 H2O + 0.5 O2 + 2 Li",
+     "n_e": 1.9999999999999951,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 4.6946928619274315,
+       "n_e": 1.9999999999999951,
+       "budget_V": 0.12593709149978058,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 15.754799999999985,
+        "entropy_bound": 8.54736419999998
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 4.6946928619274315
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 4.546794487715476
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.398896113503519
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.250997739291563
+        }
+       ],
+       "onset_grid_min_V": 4.250997739291563,
+       "sources": [
+        "TR-012",
+        "TR-037"
+       ],
+       "terms": {
+        "brushite": {
+         "coefficient": -1.0,
+         "G_eV": -22.332513684527484,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-037"
+        },
+        "LiClO4": {
+         "coefficient": -1.9999999999999938,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 0.9999999999999978,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "P2O5": {
+         "coefficient": 0.49999999999999967,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "H2O": {
+         "coefficient": 2.500000000000001,
+         "G_eV": -2.4573683354997615,
+         "state": "H2O(l), unit activity",
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 0.5000000000000006,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 1.9999999999999951,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 5.290674728391751,
+       "n_e": 1.9999999999999951,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 5.290674728391751
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 5.142776354179794
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.994877979967838
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.846979605755881
+        }
+       ],
+       "onset_grid_min_V": 4.846979605755881,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.6174998613858165,
+       "n_e": 1.9999999999999951,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 3.6174998613858165
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 3.4696014871738607
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 3.3217031129619032
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 3.1738047387499475
+        }
+       ],
+       "onset_grid_min_V": 3.1738047387499475,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": 0.595981866464319,
+      "mp": -1.077193000541615
+     },
+     "class": "r1 lattice O2 release (to P2O5, lattice water released)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r1s": {
+     "stoichiometry": {
+      "brushite": -1.0,
+      "LiClO4": -1.0,
+      "Ca(PO3)2": 0.5,
+      "Ca(ClO4)2": 0.5,
+      "H2O": 2.5,
+      "O2": 0.25,
+      "Li": 1.0
+     },
+     "text": "CaPH5O6 [brushite] + LiClO4 -> 0.5 Ca(PO3)2 + 0.5 Ca(ClO4)2 + 2.5 H2O + 0.25 O2 + Li",
+     "n_e": 0.9999999999999983,
+     "routes": {
+      "expt": {
+       "status": "undetermined",
+       "onset_V": null,
+       "n_e": 0.9999999999999983,
+       "missing": [
+        {
+         "species": "Ca(PO3)2",
+         "reason": "Ca(PO3)2: no DfG and no crystalline DfH (TR-031 gives S only, TR-032 the glass DfH); lit/corpus/T-R/gaps.md"
+        }
+       ],
+       "sources": [
+        "TR-037"
+       ],
+       "terms": {
+        "brushite": {
+         "coefficient": -1.0,
+         "G_eV": -22.332513684527484,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-037"
+        },
+        "LiClO4": {
+         "coefficient": -0.9999999999999967,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 0.49999999999999817,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "H2O": {
+         "coefficient": 2.5,
+         "G_eV": -2.4573683354997615,
+         "state": "H2O(l), unit activity",
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 0.2500000000000009,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 0.9999999999999983,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 5.737625577458884,
+       "n_e": 0.9999999999999983,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 5.737625577458884
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 5.441828829034971
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 5.14603208061106
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.850235332187147
+        }
+       ],
+       "onset_grid_min_V": 4.850235332187147,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 2.391275843447019,
+       "n_e": 0.9999999999999983,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 2.391275843447019
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 2.095479095023108
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 1.799682346599195
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 1.5038855981752821
+        }
+       ],
+       "onset_grid_min_V": 1.5038855981752821,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {},
+     "class": "r1 lattice O2 release (staged, to Ca(PO3)2, lattice water released)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r3": {
+     "stoichiometry": {
+      "brushite": -1.0,
+      "LiClO4": -2.0,
+      "Ca(ClO4)2": 1.0,
+      "H3PO4": 1.0,
+      "H2O": 1.0,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "CaPH5O6 [brushite] + 2 LiClO4 -> Ca(ClO4)2 + H3PO4 + H2O + 0.5 O2 + 2 Li",
+     "n_e": 2.000000000000002,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 4.265767562203007,
+       "n_e": 2.000000000000002,
+       "budget_V": 0.1664510215861091,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 23.572800000000004,
+        "entropy_bound": 8.547364200000002
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 4.265767562203007
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 4.2066082125182245
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.147448862833443
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.08828951314866
+        }
+       ],
+       "onset_grid_min_V": 4.08828951314866,
+       "sources": [
+        "TR-037",
+        "TR-119"
+       ],
+       "terms": {
+        "brushite": {
+         "coefficient": -1.0,
+         "G_eV": -22.332513684527484,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-037"
+        },
+        "LiClO4": {
+         "coefficient": -2.0,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 1.0000000000000002,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "H3PO4": {
+         "coefficient": 1.0000000000000004,
+         "G_eV": -11.59989788468175,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-119"
+        },
+        "H2O": {
+         "coefficient": 0.9999999999999988,
+         "G_eV": -2.4573683354997615,
+         "state": "H2O(l), unit activity",
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 0.5000000000000002,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 2.000000000000002,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.403450231076446,
+       "n_e": 2.000000000000002,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 4.403450231076446
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 4.3442908813916645
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.285131531706882
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.2259721820221
+        }
+       ],
+       "onset_grid_min_V": 4.2259721820221,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.734180284274076,
+       "n_e": 2.000000000000002,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 3.734180284274076
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 3.675020934589294
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 3.6158615849045117
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 3.5567022352197295
+        }
+       ],
+       "onset_grid_min_V": 3.5567022352197295,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": 0.13768266887343916,
+      "mp": -0.531587277928931
+     },
+     "class": "r3 water oxidation in the hydrate (to H3PO4, protons taken up by the phosphate)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r1",
+     "r3"
+    ],
+    "expt_undetermined": [
+     "r1s"
+    ],
+    "expt": {
+     "onset_V": 4.265767562203007,
+     "limiting": "r3",
+     "budget_V": 0.1664510215861091,
+     "budget_complete": true,
+     "onset_grid_min_V": 4.08828951314866,
+     "complete": false
+    },
+    "janaf": {
+     "onset_V": 4.403450231076446,
+     "limiting": "r3"
+    },
+    "mp": {
+     "onset_V": 2.391275843447019,
+     "limiting": "r1s"
+    }
+   }
+  },
+  "monetite": {
+   "name": "monetite CaHPO4",
+   "role": "precursor",
+   "formula": "CaHPO4",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "monetite": -1.0,
+      "LiClO4": -2.0,
+      "Ca(ClO4)2": 1.0,
+      "P2O5": 0.5,
+      "H2O": 0.5,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "CaHPO4 [monetite] + 2 LiClO4 -> Ca(ClO4)2 + 0.5 P2O5 + 0.5 H2O + 0.5 O2 + 2 Li",
+     "n_e": 1.9999999999999996,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 4.698303358904877,
+       "n_e": 1.9999999999999996,
+       "budget_V": 0.08483654375090714,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 7.8235999999999954,
+        "entropy_bound": 8.547364199999995
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 4.698303358904877
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 4.668723684062486
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.639144009220095
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.609564334377703
+        }
+       ],
+       "onset_grid_min_V": 4.609564334377703,
+       "sources": [
+        "TR-012",
+        "TR-034"
+       ],
+       "terms": {
+        "monetite": {
+         "coefficient": -1.0,
+         "G_eV": -17.42499800748287,
+         "u_basis": "NBS convention, 20 units of the last figure (0.01 kcal/mol)",
+         "u_kJ": 0.8368000000000001,
+         "row_id": "TR-034"
+        },
+        "LiClO4": {
+         "coefficient": -1.9999999999999987,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 0.9999999999999993,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "P2O5": {
+         "coefficient": 0.5000000000000002,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "H2O": {
+         "coefficient": 0.4999999999999999,
+         "G_eV": -2.4573683354997615,
+         "state": "H2O(l), unit activity",
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 0.4999999999999989,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 1.9999999999999996,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.727198304888026,
+       "n_e": 1.9999999999999996,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 4.727198304888026
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 4.697618630045635
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.668038955203244
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.638459280360853
+        }
+       ],
+       "onset_grid_min_V": 4.638459280360853,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.392563331486841,
+       "n_e": 1.9999999999999996,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 4.392563331486841
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 4.36298365664445
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.333403981802058
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.303824306959667
+        }
+       ],
+       "onset_grid_min_V": 4.303824306959667,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": 0.02889494598314979,
+      "mp": -0.30574002741803596
+     },
+     "class": "r1 lattice O2 release (to P2O5)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r1s": {
+     "stoichiometry": {
+      "monetite": -1.0,
+      "LiClO4": -1.0,
+      "Ca(PO3)2": 0.5,
+      "Ca(ClO4)2": 0.5,
+      "H2O": 0.5,
+      "O2": 0.25,
+      "Li": 1.0
+     },
+     "text": "CaHPO4 [monetite] + LiClO4 -> 0.5 Ca(PO3)2 + 0.5 Ca(ClO4)2 + 0.5 H2O + 0.25 O2 + Li",
+     "n_e": 1.0000000000000029,
+     "routes": {
+      "expt": {
+       "status": "undetermined",
+       "onset_V": null,
+       "n_e": 1.0000000000000029,
+       "missing": [
+        {
+         "species": "Ca(PO3)2",
+         "reason": "Ca(PO3)2: no DfG and no crystalline DfH (TR-031 gives S only, TR-032 the glass DfH); lit/corpus/T-R/gaps.md"
+        }
+       ],
+       "sources": [
+        "TR-034"
+       ],
+       "terms": {
+        "monetite": {
+         "coefficient": -1.0,
+         "G_eV": -17.42499800748287,
+         "u_basis": "NBS convention, 20 units of the last figure (0.01 kcal/mol)",
+         "u_kJ": 0.8368000000000001,
+         "row_id": "TR-034"
+        },
+        "LiClO4": {
+         "coefficient": -1.0000000000000013,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 0.5000000000000006,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "H2O": {
+         "coefficient": 0.5000000000000002,
+         "G_eV": -2.4573683354997615,
+         "state": "H2O(l), unit activity",
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 0.2500000000000009,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 1.0000000000000029,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.610672730451439,
+       "n_e": 1.0000000000000029,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 4.610672730451439
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 4.551513380766657
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 4.492354031081875
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 4.433194681397093
+        }
+       ],
+       "onset_grid_min_V": 4.433194681397093,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.9414027836490697,
+       "n_e": 1.0000000000000029,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": 1.0,
+         "a_oh": null,
+         "onset_V": 3.9414027836490697
+        },
+        {
+         "a_w": 0.01,
+         "a_oh": null,
+         "onset_V": 3.8822434339642884
+        },
+        {
+         "a_w": 0.0001,
+         "a_oh": null,
+         "onset_V": 3.8230840842795053
+        },
+        {
+         "a_w": 1e-06,
+         "a_oh": null,
+         "onset_V": 3.7639247345947235
+        }
+       ],
+       "onset_grid_min_V": 3.7639247345947235,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {},
+     "class": "r1 lattice O2 release (staged, to Ca(PO3)2)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r1"
+    ],
+    "expt_undetermined": [
+     "r1s"
+    ],
+    "expt": {
+     "onset_V": 4.698303358904877,
+     "limiting": "r1",
+     "budget_V": 0.08483654375090714,
+     "budget_complete": true,
+     "onset_grid_min_V": 4.609564334377703,
+     "complete": false
+    },
+    "janaf": {
+     "onset_V": 4.610672730451439,
+     "limiting": "r1s"
+    },
+    "mp": {
+     "onset_V": 3.9414027836490697,
+     "limiting": "r1s"
+    }
+   }
+  },
+  "Ca2P2O7": {
+   "name": "calcium pyrophosphate Ca2P2O7",
+   "role": "candidate",
+   "formula": "Ca2P2O7",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "Ca2P2O7": -1.0,
+      "LiClO4": -4.0,
+      "Ca(ClO4)2": 2.0,
+      "P2O5": 1.0,
+      "O2": 1.0,
+      "Li": 4.0
+     },
+     "text": "Ca2P2O7 + 4 LiClO4 -> 2 Ca(ClO4)2 + P2O5 + O2 + 4 Li",
+     "n_e": 3.9999999999999973,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 4.715738547891433,
+       "n_e": 3.9999999999999973,
+       "budget_V": 0.10166397196481446,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 22.14159999999999,
+        "entropy_bound": 17.09472839999999
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.715738547891433
+        }
+       ],
+       "onset_grid_min_V": 4.715738547891433,
+       "sources": [
+        "TR-012",
+        "TR-029"
+       ],
+       "terms": {
+        "Ca2P2O7": {
+         "coefficient": -1.0,
+         "G_eV": -32.46236843541218,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-029"
+        },
+        "LiClO4": {
+         "coefficient": -3.9999999999999964,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 1.9999999999999987,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "P2O5": {
+         "coefficient": 0.9999999999999991,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "O2": {
+         "coefficient": 0.9999999999999998,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 3.9999999999999973,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.547694045887103,
+       "n_e": 3.9999999999999973,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.547694045887103
+        }
+       ],
+       "onset_grid_min_V": 4.547694045887103,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.547694045887103,
+       "n_e": 3.9999999999999973,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.547694045887103
+        }
+       ],
+       "onset_grid_min_V": 4.547694045887103,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": -0.16804450200432974,
+      "mp": -0.16804450200432974
+     },
+     "class": "r1 lattice O2 release (to P2O5)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r1s": {
+     "stoichiometry": {
+      "Ca2P2O7": -1.0,
+      "LiClO4": -2.0,
+      "Ca(PO3)2": 1.0,
+      "Ca(ClO4)2": 1.0,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "Ca2P2O7 + 2 LiClO4 -> Ca(PO3)2 + Ca(ClO4)2 + 0.5 O2 + 2 Li",
+     "n_e": 1.9999999999999982,
+     "routes": {
+      "expt": {
+       "status": "undetermined",
+       "onset_V": null,
+       "n_e": 1.9999999999999982,
+       "missing": [
+        {
+         "species": "Ca(PO3)2",
+         "reason": "Ca(PO3)2: no DfG and no crystalline DfH (TR-031 gives S only, TR-032 the glass DfH); lit/corpus/T-R/gaps.md"
+        }
+       ],
+       "sources": [
+        "TR-029"
+       ],
+       "terms": {
+        "Ca2P2O7": {
+         "coefficient": -1.0,
+         "G_eV": -32.46236843541218,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-029"
+        },
+        "LiClO4": {
+         "coefficient": -1.9999999999999987,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 1.0,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "O2": {
+         "coefficient": 0.49999999999999495,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 1.9999999999999982,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.251664212449598,
+       "n_e": 1.9999999999999982,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.251664212449598
+        }
+       ],
+       "onset_grid_min_V": 4.251664212449598,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.251664212449598,
+       "n_e": 1.9999999999999982,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.251664212449598
+        }
+       ],
+       "onset_grid_min_V": 4.251664212449598,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {},
+     "class": "r1 lattice O2 release (staged, to Ca(PO3)2)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r1"
+    ],
+    "expt_undetermined": [
+     "r1s"
+    ],
+    "expt": {
+     "onset_V": 4.715738547891433,
+     "limiting": "r1",
+     "budget_V": 0.10166397196481446,
+     "budget_complete": true,
+     "onset_grid_min_V": 4.715738547891433,
+     "complete": false
+    },
+    "janaf": {
+     "onset_V": 4.251664212449598,
+     "limiting": "r1s"
+    },
+    "mp": {
+     "onset_V": 4.251664212449598,
+     "limiting": "r1s"
+    }
+   }
+  },
+  "Ca(PO3)2": {
+   "name": "calcium metaphosphate Ca(PO3)2",
+   "role": "candidate",
+   "formula": "Ca(PO3)2",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "Ca(PO3)2": -1.0,
+      "LiClO4": -2.0,
+      "Ca(ClO4)2": 1.0,
+      "P2O5": 1.0,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "Ca(PO3)2 + 2 LiClO4 -> Ca(ClO4)2 + P2O5 + 0.5 O2 + 2 Li",
+     "n_e": 2.000000000000002,
+     "routes": {
+      "expt": {
+       "status": "undetermined",
+       "onset_V": null,
+       "n_e": 2.000000000000002,
+       "missing": [
+        {
+         "species": "Ca(PO3)2",
+         "reason": "Ca(PO3)2: no DfG and no crystalline DfH (TR-031 gives S only, TR-032 the glass DfH); lit/corpus/T-R/gaps.md"
+        }
+       ],
+       "sources": [
+        "TR-012"
+       ],
+       "terms": {
+        "LiClO4": {
+         "coefficient": -2.0000000000000013,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 1.0000000000000002,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "P2O5": {
+         "coefficient": 1.0000000000000004,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "O2": {
+         "coefficient": 0.5000000000000018,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 2.000000000000002,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.843723879324592,
+       "n_e": 2.000000000000002,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.843723879324592
+        }
+       ],
+       "onset_grid_min_V": 4.843723879324592,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.843723879324592,
+       "n_e": 2.000000000000002,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.843723879324592
+        }
+       ],
+       "onset_grid_min_V": 4.843723879324592,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {},
+     "class": "r1 lattice O2 release (to P2O5)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [],
+    "expt_undetermined": [
+     "r1"
+    ],
+    "expt": null,
+    "janaf": {
+     "onset_V": 4.843723879324592,
+     "limiting": "r1"
+    },
+    "mp": {
+     "onset_V": 4.843723879324592,
+     "limiting": "r1"
+    }
+   }
+  },
+  "AlPO4": {
+   "name": "aluminium phosphate AlPO4 (berlinite)",
+   "role": "candidate",
+   "formula": "AlPO4",
+   "reactions": {
+    "r4": {
+     "stoichiometry": {
+      "AlPO4": -1.0,
+      "LiClO4": -3.0,
+      "Al(ClO4)3": 1.0,
+      "P2O5": 0.5,
+      "O2": 0.75,
+      "Li": 3.0
+     },
+     "text": "AlPO4 + 3 LiClO4 -> Al(ClO4)3 + 0.5 P2O5 + 0.75 O2 + 3 Li",
+     "n_e": 2.999999999999973,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 5.210519107963078,
+       "n_e": 2.999999999999973,
+       "budget_V": 0.055421204608586114,
+       "budget_complete": false,
+       "budget_terms_kJ": {
+        "tabulated": 16.04199999999991,
+        "entropy_bound": 0.0
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 5.210519107963078
+        }
+       ],
+       "onset_grid_min_V": 5.210519107963078,
+       "sources": [
+        "TR-003",
+        "TR-012"
+       ],
+       "terms": {
+        "AlPO4": {
+         "coefficient": -1.0,
+         "G_eV": -16.76835187686657,
+         "u_basis": "as printed, 5.0",
+         "u_kJ": 5.0,
+         "row_id": "TR-003"
+        },
+        "LiClO4": {
+         "coefficient": -2.999999999999974,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Al(ClO4)3": {
+         "coefficient": 0.9999999999999918,
+         "G_eV": -1.975605989067727,
+         "basis": "exchange M + 3 LiClO4 -> Al(ClO4)3 + 3 Li: 3 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 10.792,
+         "note": "no entropy bound key for this exchange"
+        },
+        "P2O5": {
+         "coefficient": 0.4999999999999978,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "O2": {
+         "coefficient": 0.7499999999999949,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 2.999999999999973,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 5.204622254727117,
+       "n_e": 2.999999999999973,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 5.204622254727117
+        }
+       ],
+       "onset_grid_min_V": 5.204622254727117,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 5.204622254727117,
+       "n_e": 2.999999999999973,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 5.204622254727117
+        }
+       ],
+       "onset_grid_min_V": 5.204622254727117,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": -0.005896853235960897,
+      "mp": -0.005896853235960897
+     },
+     "class": "r4 Al-phase oxidation (Al3+ to the sink, anion to P2O5)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r4s": {
+     "stoichiometry": {
+      "AlPO4": -1.0,
+      "LiClO4": -2.0,
+      "Al(PO3)3": 0.333333,
+      "Al(ClO4)3": 0.666667,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "AlPO4 + 2 LiClO4 -> 0.3333 Al(PO3)3 + 0.6667 Al(ClO4)3 + 0.5 O2 + 2 Li",
+     "n_e": 1.9999999999999984,
+     "routes": {
+      "expt": {
+       "status": "undetermined",
+       "onset_V": null,
+       "n_e": 1.9999999999999984,
+       "missing": [
+        {
+         "species": "Al(PO3)3",
+         "reason": "Al(PO3)3: no DfH, DfG, S or solubility found (lit/corpus/T-R/gaps.md)"
+        }
+       ],
+       "sources": [
+        "TR-003"
+       ],
+       "terms": {
+        "AlPO4": {
+         "coefficient": -1.0,
+         "G_eV": -16.76835187686657,
+         "u_basis": "as printed, 5.0",
+         "u_kJ": 5.0,
+         "row_id": "TR-003"
+        },
+        "LiClO4": {
+         "coefficient": -1.9999999999999991,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Al(ClO4)3": {
+         "coefficient": 0.6666666666666665,
+         "G_eV": -1.975605989067727,
+         "basis": "exchange M + 3 LiClO4 -> Al(ClO4)3 + 3 Li: 3 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 10.792,
+         "note": "no entropy bound key for this exchange"
+        },
+        "O2": {
+         "coefficient": 0.4999999999999994,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 1.9999999999999984,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.9924532858381845,
+       "n_e": 1.9999999999999984,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.9924532858381845
+        }
+       ],
+       "onset_grid_min_V": 4.9924532858381845,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.9924532858381845,
+       "n_e": 1.9999999999999984,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.9924532858381845
+        }
+       ],
+       "onset_grid_min_V": 4.9924532858381845,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {},
+     "class": "r4 Al-phase oxidation (staged, to Al(PO3)3)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r4"
+    ],
+    "expt_undetermined": [
+     "r4s"
+    ],
+    "expt": {
+     "onset_V": 5.210519107963078,
+     "limiting": "r4",
+     "budget_V": 0.055421204608586114,
+     "budget_complete": false,
+     "onset_grid_min_V": 5.210519107963078,
+     "complete": false
+    },
+    "janaf": {
+     "onset_V": 4.9924532858381845,
+     "limiting": "r4s"
+    },
+    "mp": {
+     "onset_V": 4.9924532858381845,
+     "limiting": "r4s"
+    }
+   }
+  },
+  "Al(PO3)3": {
+   "name": "aluminium metaphosphate Al(PO3)3",
+   "role": "candidate",
+   "formula": "Al(PO3)3",
+   "reactions": {
+    "r4": {
+     "stoichiometry": {
+      "Al(PO3)3": -1.0,
+      "LiClO4": -3.0,
+      "Al(ClO4)3": 1.0,
+      "P2O5": 1.5,
+      "O2": 0.75,
+      "Li": 3.0
+     },
+     "text": "Al(PO3)3 + 3 LiClO4 -> Al(ClO4)3 + 1.5 P2O5 + 0.75 O2 + 3 Li",
+     "n_e": 2.999999999999996,
+     "routes": {
+      "expt": {
+       "status": "undetermined",
+       "onset_V": null,
+       "n_e": 2.999999999999996,
+       "missing": [
+        {
+         "species": "Al(PO3)3",
+         "reason": "Al(PO3)3: no DfH, DfG, S or solubility found (lit/corpus/T-R/gaps.md)"
+        }
+       ],
+       "sources": [
+        "TR-012"
+       ],
+       "terms": {
+        "LiClO4": {
+         "coefficient": -2.9999999999999964,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Al(ClO4)3": {
+         "coefficient": 1.0000000000000002,
+         "G_eV": -1.975605989067727,
+         "basis": "exchange M + 3 LiClO4 -> Al(ClO4)3 + 3 Li: 3 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 10.792,
+         "note": "no entropy bound key for this exchange"
+        },
+        "P2O5": {
+         "coefficient": 1.5000000000000004,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "O2": {
+         "coefficient": 0.7499999999999938,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 2.999999999999996,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 5.628960192504858,
+       "n_e": 2.999999999999996,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 5.628960192504858
+        }
+       ],
+       "onset_grid_min_V": 5.628960192504858,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 5.628960192504858,
+       "n_e": 2.999999999999996,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 5.628960192504858
+        }
+       ],
+       "onset_grid_min_V": 5.628960192504858,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {},
+     "class": "r4 Al-phase oxidation (Al3+ to the sink, anion to P2O5)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [],
+    "expt_undetermined": [
+     "r4"
+    ],
+    "expt": null,
+    "janaf": {
+     "onset_V": 5.628960192504858,
+     "limiting": "r4"
+    },
+    "mp": {
+     "onset_V": 5.628960192504858,
+     "limiting": "r4"
+    }
+   }
+  },
+  "Li3PO4": {
+   "name": "lithium phosphate Li3PO4",
+   "role": "competing",
+   "formula": "Li3PO4",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "Li3PO4": -1.0,
+      "P2O5": 0.5,
+      "O2": 0.75,
+      "Li": 3.0
+     },
+     "text": "Li3PO4 -> 0.5 P2O5 + 0.75 O2 + 3 Li",
+     "n_e": 2.999999999999999,
+     "routes": {
+      "expt": {
+       "status": "undetermined",
+       "onset_V": null,
+       "n_e": 2.999999999999999,
+       "missing": [
+        {
+         "species": "Li3PO4",
+         "reason": "Li3PO4: only DfH (TR-040); DfG and S not found (lit/corpus/T-R/gaps.md)"
+        }
+       ],
+       "sources": [
+        "TR-012"
+       ],
+       "terms": {
+        "P2O5": {
+         "coefficient": 0.5000000000000001,
+         "G_eV": -14.111989563966576,
+         "u_basis": "as printed, 0.5",
+         "u_kJ": 0.5,
+         "row_id": "TR-012"
+        },
+        "O2": {
+         "coefficient": 0.7499999999999986,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 2.999999999999999,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.348207126169577,
+       "n_e": 2.999999999999999,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.348207126169577
+        }
+       ],
+       "onset_grid_min_V": 4.348207126169577,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.348207126169577,
+       "n_e": 2.999999999999999,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.348207126169577
+        }
+       ],
+       "onset_grid_min_V": 4.348207126169577,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {},
+     "class": "r1 lattice O2 release (to P2O5, Li-open)",
+     "sink": "none (Li-open: Li+ leaves as Li)",
+     "sink_kind": "Li-open (no salt)"
+    },
+    "r1s": {
+     "stoichiometry": {
+      "Li3PO4": -1.0,
+      "Li4P2O7": 0.5,
+      "O2": 0.25,
+      "Li": 1.0
+     },
+     "text": "Li3PO4 -> 0.5 Li4P2O7 + 0.25 O2 + Li",
+     "n_e": 1.0000000000000013,
+     "routes": {
+      "expt": {
+       "status": "undetermined",
+       "onset_V": null,
+       "n_e": 1.0000000000000013,
+       "missing": [
+        {
+         "species": "Li3PO4",
+         "reason": "Li3PO4: only DfH (TR-040); DfG and S not found (lit/corpus/T-R/gaps.md)"
+        },
+        {
+         "species": "Li4P2O7",
+         "reason": "Li4P2O7: no tabulated formation data in the corpus"
+        }
+       ],
+       "sources": [],
+       "terms": {
+        "O2": {
+         "coefficient": 0.24999999999999936,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 1.0000000000000013,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 4.025975508252882,
+       "n_e": 1.0000000000000013,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.025975508252882
+        }
+       ],
+       "onset_grid_min_V": 4.025975508252882,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 4.025975508252882,
+       "n_e": 1.0000000000000013,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 4.025975508252882
+        }
+       ],
+       "onset_grid_min_V": 4.025975508252882,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {},
+     "class": "r1 lattice O2 release (staged, to Li4P2O7, Li-open)",
+     "sink": "none (Li-open: Li+ leaves as Li)",
+     "sink_kind": "Li-open (no salt)"
+    }
+   },
+   "summary": {
+    "expt_determined": [],
+    "expt_undetermined": [
+     "r1",
+     "r1s"
+    ],
+    "expt": null,
+    "janaf": {
+     "onset_V": 4.025975508252882,
+     "limiting": "r1s"
+    },
+    "mp": {
+     "onset_V": 4.025975508252882,
+     "limiting": "r1s"
+    }
+   }
+  },
+  "CaSiO3": {
+   "name": "wollastonite CaSiO3",
+   "role": "comparator",
+   "formula": "CaSiO3",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "CaSiO3": -1.0,
+      "LiClO4": -2.0,
+      "Ca(ClO4)2": 1.0,
+      "SiO2": 1.0,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "CaSiO3 + 2 LiClO4 -> Ca(ClO4)2 + SiO2 + 0.5 O2 + 2 Li",
+     "n_e": 2.0000000000000004,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 3.717067580196006,
+       "n_e": 2.0000000000000004,
+       "budget_V": 0.0859413748962646,
+       "budget_complete": false,
+       "budget_terms_kJ": {
+        "tabulated": 8.036799999999992,
+        "entropy_bound": 8.54736419999999
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.717067580196006
+        }
+       ],
+       "onset_grid_min_V": 3.717067580196006,
+       "sources": [
+        "TR-018"
+       ],
+       "terms": {
+        "CaSiO3": {
+         "coefficient": -1.0,
+         "G_eV": -16.05425369755011,
+         "u_basis": "as printed, 1.4",
+         "u_kJ": 1.4,
+         "row_id": "TR-018"
+        },
+        "LiClO4": {
+         "coefficient": -1.999999999999998,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 0.9999999999999988,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "SiO2": {
+         "coefficient": 1.0000000000000004,
+         "G_eV": -8.876406197218145,
+         "note": "JANAF prints no uncertainty; budget term missing",
+         "u_kJ": 0.0
+        },
+        "O2": {
+         "coefficient": 0.499999999999999,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 2.0000000000000004,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 3.7046757299496034,
+       "n_e": 2.0000000000000004,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.7046757299496034
+        }
+       ],
+       "onset_grid_min_V": 3.7046757299496034,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.7046757299496034,
+       "n_e": 2.0000000000000004,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.7046757299496034
+        }
+       ],
+       "onset_grid_min_V": 3.7046757299496034,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": -0.012391850246402658,
+      "mp": -0.012391850246402658
+     },
+     "class": "r1 lattice O2 release (to SiO2)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r1"
+    ],
+    "expt_undetermined": [],
+    "expt": {
+     "onset_V": 3.717067580196006,
+     "limiting": "r1",
+     "budget_V": 0.0859413748962646,
+     "budget_complete": false,
+     "onset_grid_min_V": 3.717067580196006,
+     "complete": true
+    },
+    "janaf": {
+     "onset_V": 3.7046757299496034,
+     "limiting": "r1"
+    },
+    "mp": {
+     "onset_V": 3.7046757299496034,
+     "limiting": "r1"
+    }
+   }
+  },
+  "Ca2SiO4": {
+   "name": "calcium orthosilicate Ca2SiO4",
+   "role": "comparator",
+   "formula": "Ca2SiO4",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "Ca2SiO4": -1.0,
+      "LiClO4": -4.0,
+      "Ca(ClO4)2": 2.0,
+      "SiO2": 1.0,
+      "O2": 1.0,
+      "Li": 4.0
+     },
+     "text": "Ca2SiO4 + 4 LiClO4 -> 2 Ca(ClO4)2 + SiO2 + O2 + 4 Li",
+     "n_e": 4.000000000000003,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 3.5865891984259064,
+       "n_e": 4.000000000000003,
+       "budget_V": 0.08257298725797958,
+       "budget_complete": false,
+       "budget_terms_kJ": {
+        "tabulated": 14.773600000000021,
+        "entropy_bound": 17.094728400000026
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.5865891984259064
+        }
+       ],
+       "onset_grid_min_V": 3.5865891984259064,
+       "sources": [
+        "TR-021"
+       ],
+       "terms": {
+        "Ca2SiO4": {
+         "coefficient": -1.0,
+         "G_eV": -22.710187670801673,
+         "u_basis": "as printed, 1.5",
+         "u_kJ": 1.5,
+         "row_id": "TR-021"
+        },
+        "LiClO4": {
+         "coefficient": -4.000000000000006,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 2.000000000000003,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "SiO2": {
+         "coefficient": 0.9999999999999996,
+         "G_eV": -8.876406197218145,
+         "note": "JANAF prints no uncertainty; budget term missing",
+         "u_kJ": 0.0
+        },
+        "O2": {
+         "coefficient": 1.0000000000000027,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 4.000000000000003,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 3.611240842241268,
+       "n_e": 4.000000000000003,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.611240842241268
+        }
+       ],
+       "onset_grid_min_V": 3.611240842241268,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.611240842241268,
+       "n_e": 4.000000000000003,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.611240842241268
+        }
+       ],
+       "onset_grid_min_V": 3.611240842241268,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": 0.024651643815361446,
+      "mp": 0.024651643815361446
+     },
+     "class": "r1 lattice O2 release (to SiO2)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    },
+    "r1s": {
+     "stoichiometry": {
+      "Ca2SiO4": -1.0,
+      "LiClO4": -2.0,
+      "CaSiO3": 1.0,
+      "Ca(ClO4)2": 1.0,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "Ca2SiO4 + 2 LiClO4 -> CaSiO3 + Ca(ClO4)2 + 0.5 O2 + 2 Li",
+     "n_e": 1.9999999999999925,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 3.4561108166558117,
+       "n_e": 1.9999999999999925,
+       "budget_V": 0.09371457713846168,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 9.536799999999998,
+        "entropy_bound": 8.547364199999995
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.4561108166558117
+        }
+       ],
+       "onset_grid_min_V": 3.4561108166558117,
+       "sources": [
+        "TR-018",
+        "TR-021"
+       ],
+       "terms": {
+        "Ca2SiO4": {
+         "coefficient": -1.0,
+         "G_eV": -22.710187670801673,
+         "u_basis": "as printed, 1.5",
+         "u_kJ": 1.5,
+         "row_id": "TR-021"
+        },
+        "LiClO4": {
+         "coefficient": -1.9999999999999947,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "CaSiO3": {
+         "coefficient": 1.0000000000000004,
+         "G_eV": -16.05425369755011,
+         "u_basis": "as printed, 1.4",
+         "u_kJ": 1.4,
+         "row_id": "TR-018"
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 0.9999999999999996,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "O2": {
+         "coefficient": 0.49999999999998945,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 1.9999999999999925,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 3.517805954532934,
+       "n_e": 1.9999999999999925,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.517805954532934
+        }
+       ],
+       "onset_grid_min_V": 3.517805954532934,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.517805954532934,
+       "n_e": 1.9999999999999925,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.517805954532934
+        }
+       ],
+       "onset_grid_min_V": 3.517805954532934,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": 0.06169513787712244,
+      "mp": 0.06169513787712244
+     },
+     "class": "r1 lattice O2 release (staged, to CaSiO3)",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r1",
+     "r1s"
+    ],
+    "expt_undetermined": [],
+    "expt": {
+     "onset_V": 3.4561108166558117,
+     "limiting": "r1s",
+     "budget_V": 0.09371457713846168,
+     "budget_complete": true,
+     "onset_grid_min_V": 3.4561108166558117,
+     "complete": true
+    },
+    "janaf": {
+     "onset_V": 3.517805954532934,
+     "limiting": "r1s"
+    },
+    "mp": {
+     "onset_V": 3.517805954532934,
+     "limiting": "r1s"
+    }
+   }
+  },
+  "Li2SiO3": {
+   "name": "lithium metasilicate Li2SiO3",
+   "role": "comparator",
+   "formula": "Li2SiO3",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "Li2SiO3": -1.0,
+      "SiO2": 1.0,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "Li2SiO3 -> SiO2 + 0.5 O2 + 2 Li",
+     "n_e": 2.0,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 3.631856700790081,
+       "n_e": 2.0,
+       "budget_V": 0.04336410424180094,
+       "budget_complete": false,
+       "budget_terms_kJ": {
+        "tabulated": 8.368,
+        "entropy_bound": 0.0
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.631856700790081
+        }
+       ],
+       "onset_grid_min_V": 3.631856700790081,
+       "sources": [
+        "TR-044"
+       ],
+       "terms": {
+        "Li2SiO3": {
+         "coefficient": -1.0,
+         "G_eV": -16.140119598798307,
+         "u_basis": "NBS convention, 20 units of the last figure (0.1 kcal/mol)",
+         "u_kJ": 8.368,
+         "row_id": "TR-044"
+        },
+        "SiO2": {
+         "coefficient": 1.0,
+         "G_eV": -8.876406197218145,
+         "note": "JANAF prints no uncertainty; budget term missing",
+         "u_kJ": 0.0
+        },
+        "O2": {
+         "coefficient": 0.4999999999999994,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 2.0,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "onset_V": 3.605150386586245,
+       "n_e": 2.0,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.605150386586245
+        }
+       ],
+       "onset_grid_min_V": 3.605150386586245,
+       "benchmark_status": "dft-unbenchmarked"
+      },
+      "mp": {
+       "status": "finite",
+       "onset_V": 3.605150386586245,
+       "n_e": 2.0,
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.605150386586245
+        }
+       ],
+       "onset_grid_min_V": 3.605150386586245,
+       "benchmark_status": "dft-unbenchmarked"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": -0.02670631420383618,
+      "mp": -0.02670631420383618
+     },
+     "class": "r1 lattice O2 release (to SiO2, Li-open)",
+     "sink": "none (Li-open: Li+ leaves as Li)",
+     "sink_kind": "Li-open (no salt)"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r1"
+    ],
+    "expt_undetermined": [],
+    "expt": {
+     "onset_V": 3.631856700790081,
+     "limiting": "r1",
+     "budget_V": 0.04336410424180094,
+     "budget_complete": false,
+     "onset_grid_min_V": 3.631856700790081,
+     "complete": true
+    },
+    "janaf": {
+     "onset_V": 3.605150386586245,
+     "limiting": "r1"
+    },
+    "mp": {
+     "onset_V": 3.605150386586245,
+     "limiting": "r1"
+    }
+   }
+  },
+  "CaCO3": {
+   "name": "calcite CaCO3 (control)",
+   "role": "control",
+   "formula": "CaCO3",
+   "reactions": {
+    "r1": {
+     "stoichiometry": {
+      "CaCO3": -1.0,
+      "LiClO4": -2.0,
+      "Ca(ClO4)2": 1.0,
+      "CO2": 1.0,
+      "O2": 0.5,
+      "Li": 2.0
+     },
+     "text": "CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + CO2 + 0.5 O2 + 2 Li",
+     "n_e": 2.0000000000000004,
+     "routes": {
+      "expt": {
+       "status": "finite",
+       "onset_V": 3.937816159604733,
+       "n_e": 2.0000000000000004,
+       "budget_V": 0.08697780186189082,
+       "budget_complete": true,
+       "budget_terms_kJ": {
+        "tabulated": 8.236799999999992,
+        "entropy_bound": 8.54736419999999
+       },
+       "missing": [],
+       "grid": [
+        {
+         "a_w": null,
+         "a_oh": null,
+         "onset_V": 3.937816159604733
+        }
+       ],
+       "onset_grid_min_V": 3.937816159604733,
+       "sources": [
+        "TI-002",
+        "TI-008"
+       ],
+       "terms": {
+        "CaCO3": {
+         "coefficient": -1.0,
+         "G_eV": -11.70701261157922,
+         "u_kJ": 1.4
+        },
+        "LiClO4": {
+         "coefficient": -1.999999999999998,
+         "G_eV": -2.631602072691185,
+         "u_kJ": 0.0
+        },
+        "Ca(ClO4)2": {
+         "coefficient": 0.9999999999999988,
+         "G_eV": -5.006916485322319,
+         "basis": "exchange M + 2 LiClO4 -> Ca(ClO4)2 + 2 Li: 2 x G(LiClO4) plus the tabulated exchange enthalpy; solid entropy of the exchange neglected",
+         "u_kJ": 6.6368
+        },
+        "CO2": {
+         "coefficient": 1.0000000000000004,
+         "G_eV": -4.087667952429801,
+         "u_kJ": 0.2
+        },
+        "O2": {
+         "coefficient": 0.499999999999999,
+         "G_eV": 0.0,
+         "basis": "element in its reference state, p = 1 bar",
+         "u_kJ": 0.0
+        },
+        "Li": {
+         "coefficient": 2.0000000000000004,
+         "G_eV": 0.0,
+         "basis": "Li metal, the Li+/Li reference",
+         "u_kJ": 0.0
+        }
+       },
+       "benchmark_status": "expt (tabulated rows)"
+      },
+      "janaf": {
+       "status": "finite",
+       "benchmark_status": "dft, frozen production value",
+       "onset_V": 4.320073231543534,
+       "source": "frozen production value (database 2026.04.13)"
+      },
+      "mp": {
+       "status": "finite",
+       "benchmark_status": "dft, frozen production value",
+       "onset_V": 3.7051136896293344,
+       "source": "frozen production value (database 2026.04.13)"
+      }
+     },
+     "dft_minus_expt_V": {
+      "janaf": 0.3822570719388012,
+      "mp": -0.23270246997539878
+     },
+     "class": "r1 lattice O2 release (to CO2); the registered carbonate reaction",
+     "sink": "LiClO4 (solid salt)",
+     "sink_kind": "solid-salt upper bound"
+    }
+   },
+   "summary": {
+    "expt_determined": [
+     "r1"
+    ],
+    "expt_undetermined": [],
+    "expt": {
+     "onset_V": 3.937816159604733,
+     "limiting": "r1",
+     "budget_V": 0.08697780186189082,
+     "budget_complete": true,
+     "onset_grid_min_V": 3.937816159604733,
+     "complete": true
+    },
+    "janaf": {
+     "onset_V": 4.320073231543534,
+     "limiting": "r1"
+    },
+    "mp": {
+     "onset_V": 3.7051136896293344,
+     "limiting": "r1"
+    }
+   }
+  }
+ },
+ "ladder": [
+  {
+   "phase": "HAp",
+   "name": "hydroxyapatite Ca5(PO4)3OH",
+   "role": "candidate",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 4.067437934487741,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.12442390812996623,
+   "margin_complete": true,
+   "distance_to_inf_V": 0.41743793448774147,
+   "distance_to_sup_V": 0.41743793448774147,
+   "status": "above",
+   "note": "upper bound only (solid-salt sink): not a pass until a solvated sink exists",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 4.023068422224155,
+   "dft_janaf_V": 4.0572319235125756,
+   "dft_mp_V": 3.8253550174883952,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "HAp",
+   "name": "hydroxyapatite Ca5(PO4)3OH",
+   "role": "candidate",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 4.067437934487741,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.12442390812996623,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.1325620655122588,
+   "distance_to_sup_V": -0.23256206551225844,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 4.023068422224155,
+   "dft_janaf_V": 4.0572319235125756,
+   "dft_mp_V": 3.8253550174883952,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "HAp",
+   "name": "hydroxyapatite Ca5(PO4)3OH",
+   "role": "candidate",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 4.067437934487741,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.12442390812996623,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.332562065512259,
+   "distance_to_sup_V": -0.4325620655122586,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 4.023068422224155,
+   "dft_janaf_V": 4.0572319235125756,
+   "dft_mp_V": 3.8253550174883952,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "b-TCP",
+   "name": "beta-TCP Ca3(PO4)2",
+   "role": "candidate",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 4.022298430853825,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.14796116451933747,
+   "margin_complete": true,
+   "distance_to_inf_V": 0.37229843085382486,
+   "distance_to_sup_V": 0.37229843085382486,
+   "status": "above",
+   "note": "upper bound only (solid-salt sink): not a pass until a solvated sink exists",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 4.022298430853825,
+   "dft_janaf_V": 3.9114342432531752,
+   "dft_mp_V": 3.9114342432531752,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "b-TCP",
+   "name": "beta-TCP Ca3(PO4)2",
+   "role": "candidate",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 4.022298430853825,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.14796116451933747,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.1777015691461754,
+   "distance_to_sup_V": -0.27770156914617505,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 4.022298430853825,
+   "dft_janaf_V": 3.9114342432531752,
+   "dft_mp_V": 3.9114342432531752,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "b-TCP",
+   "name": "beta-TCP Ca3(PO4)2",
+   "role": "candidate",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 4.022298430853825,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.14796116451933747,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.3777015691461756,
+   "distance_to_sup_V": -0.47770156914617523,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 4.022298430853825,
+   "dft_janaf_V": 3.9114342432531752,
+   "dft_mp_V": 3.9114342432531752,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "a-TCP",
+   "name": "alpha-TCP Ca3(PO4)2",
+   "role": "candidate",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 3.981044491914039,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.16541459462048297,
+   "margin_complete": true,
+   "distance_to_inf_V": 0.3310444919140392,
+   "distance_to_sup_V": 0.3310444919140392,
+   "status": "above",
+   "note": "upper bound only (solid-salt sink): not a pass until a solvated sink exists",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.981044491914039,
+   "dft_janaf_V": 3.933083231407941,
+   "dft_mp_V": 3.933083231407941,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "a-TCP",
+   "name": "alpha-TCP Ca3(PO4)2",
+   "role": "candidate",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 3.981044491914039,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.16541459462048297,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.2189555080859611,
+   "distance_to_sup_V": -0.31895550808596074,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.981044491914039,
+   "dft_janaf_V": 3.933083231407941,
+   "dft_mp_V": 3.933083231407941,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "a-TCP",
+   "name": "alpha-TCP Ca3(PO4)2",
+   "role": "candidate",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 3.981044491914039,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.16541459462048297,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.41895550808596127,
+   "distance_to_sup_V": -0.5189555080859609,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.981044491914039,
+   "dft_janaf_V": 3.933083231407941,
+   "dft_mp_V": 3.933083231407941,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "OCP",
+   "name": "octacalcium phosphate Ca8H2(PO4)6.5H2O",
+   "role": "candidate",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r1,r1s",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 4.604434564388484,
+   "dft_mp_V": 2.766846279485534,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "OCP",
+   "name": "octacalcium phosphate Ca8H2(PO4)6.5H2O",
+   "role": "candidate",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r1,r1s",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 4.604434564388484,
+   "dft_mp_V": 2.766846279485534,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "OCP",
+   "name": "octacalcium phosphate Ca8H2(PO4)6.5H2O",
+   "role": "candidate",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r1,r1s",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 4.604434564388484,
+   "dft_mp_V": 2.766846279485534,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "brushite",
+   "name": "brushite CaHPO4.2H2O",
+   "role": "precursor",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 4.265767562203007,
+   "limiting_reaction": "r3",
+   "route": "expt",
+   "margin_V": 0.1664510215861091,
+   "margin_complete": true,
+   "distance_to_inf_V": 0.6157675622030072,
+   "distance_to_sup_V": 0.6157675622030072,
+   "status": "undetermined",
+   "note": "reactions r1s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r1s",
+   "onset_grid_min_V": 4.08828951314866,
+   "dft_janaf_V": 4.403450231076446,
+   "dft_mp_V": 2.391275843447019,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "brushite",
+   "name": "brushite CaHPO4.2H2O",
+   "role": "precursor",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 4.265767562203007,
+   "limiting_reaction": "r3",
+   "route": "expt",
+   "margin_V": 0.1664510215861091,
+   "margin_complete": true,
+   "distance_to_inf_V": 0.06576756220300695,
+   "distance_to_sup_V": -0.0342324377969927,
+   "status": "undetermined",
+   "note": "reactions r1s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r1s",
+   "onset_grid_min_V": 4.08828951314866,
+   "dft_janaf_V": 4.403450231076446,
+   "dft_mp_V": 2.391275843447019,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "brushite",
+   "name": "brushite CaHPO4.2H2O",
+   "role": "precursor",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 4.265767562203007,
+   "limiting_reaction": "r3",
+   "route": "expt",
+   "margin_V": 0.1664510215861091,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.13423243779699323,
+   "distance_to_sup_V": -0.23423243779699288,
+   "status": "undetermined",
+   "note": "reactions r1s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r1s",
+   "onset_grid_min_V": 4.08828951314866,
+   "dft_janaf_V": 4.403450231076446,
+   "dft_mp_V": 2.391275843447019,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "monetite",
+   "name": "monetite CaHPO4",
+   "role": "precursor",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 4.698303358904877,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.08483654375090714,
+   "margin_complete": true,
+   "distance_to_inf_V": 1.0483033589048767,
+   "distance_to_sup_V": 1.0483033589048767,
+   "status": "undetermined",
+   "note": "reactions r1s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r1s",
+   "onset_grid_min_V": 4.609564334377703,
+   "dft_janaf_V": 4.610672730451439,
+   "dft_mp_V": 3.9414027836490697,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "monetite",
+   "name": "monetite CaHPO4",
+   "role": "precursor",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 4.698303358904877,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.08483654375090714,
+   "margin_complete": true,
+   "distance_to_inf_V": 0.4983033589048764,
+   "distance_to_sup_V": 0.3983033589048768,
+   "status": "undetermined",
+   "note": "reactions r1s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r1s",
+   "onset_grid_min_V": 4.609564334377703,
+   "dft_janaf_V": 4.610672730451439,
+   "dft_mp_V": 3.9414027836490697,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "monetite",
+   "name": "monetite CaHPO4",
+   "role": "precursor",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 4.698303358904877,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.08483654375090714,
+   "margin_complete": true,
+   "distance_to_inf_V": 0.29830335890487625,
+   "distance_to_sup_V": 0.1983033589048766,
+   "status": "undetermined",
+   "note": "reactions r1s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r1s",
+   "onset_grid_min_V": 4.609564334377703,
+   "dft_janaf_V": 4.610672730451439,
+   "dft_mp_V": 3.9414027836490697,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Ca2P2O7",
+   "name": "calcium pyrophosphate Ca2P2O7",
+   "role": "candidate",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 4.715738547891433,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.10166397196481446,
+   "margin_complete": true,
+   "distance_to_inf_V": 1.0657385478914327,
+   "distance_to_sup_V": 1.0657385478914327,
+   "status": "undetermined",
+   "note": "reactions r1s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r1s",
+   "onset_grid_min_V": 4.715738547891433,
+   "dft_janaf_V": 4.251664212449598,
+   "dft_mp_V": 4.251664212449598,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Ca2P2O7",
+   "name": "calcium pyrophosphate Ca2P2O7",
+   "role": "candidate",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 4.715738547891433,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.10166397196481446,
+   "margin_complete": true,
+   "distance_to_inf_V": 0.5157385478914325,
+   "distance_to_sup_V": 0.41573854789143283,
+   "status": "undetermined",
+   "note": "reactions r1s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r1s",
+   "onset_grid_min_V": 4.715738547891433,
+   "dft_janaf_V": 4.251664212449598,
+   "dft_mp_V": 4.251664212449598,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Ca2P2O7",
+   "name": "calcium pyrophosphate Ca2P2O7",
+   "role": "candidate",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 4.715738547891433,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.10166397196481446,
+   "margin_complete": true,
+   "distance_to_inf_V": 0.3157385478914323,
+   "distance_to_sup_V": 0.21573854789143265,
+   "status": "undetermined",
+   "note": "reactions r1s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r1s",
+   "onset_grid_min_V": 4.715738547891433,
+   "dft_janaf_V": 4.251664212449598,
+   "dft_mp_V": 4.251664212449598,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Ca(PO3)2",
+   "name": "calcium metaphosphate Ca(PO3)2",
+   "role": "candidate",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r1",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 4.843723879324592,
+   "dft_mp_V": 4.843723879324592,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Ca(PO3)2",
+   "name": "calcium metaphosphate Ca(PO3)2",
+   "role": "candidate",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r1",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 4.843723879324592,
+   "dft_mp_V": 4.843723879324592,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Ca(PO3)2",
+   "name": "calcium metaphosphate Ca(PO3)2",
+   "role": "candidate",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r1",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 4.843723879324592,
+   "dft_mp_V": 4.843723879324592,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "AlPO4",
+   "name": "aluminium phosphate AlPO4 (berlinite)",
+   "role": "candidate",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 5.210519107963078,
+   "limiting_reaction": "r4",
+   "route": "expt",
+   "margin_V": 0.055421204608586114,
+   "margin_complete": false,
+   "distance_to_inf_V": 1.5605191079630782,
+   "distance_to_sup_V": 1.5605191079630782,
+   "status": "undetermined",
+   "note": "reactions r4s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r4s",
+   "onset_grid_min_V": 5.210519107963078,
+   "dft_janaf_V": 4.9924532858381845,
+   "dft_mp_V": 4.9924532858381845,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "AlPO4",
+   "name": "aluminium phosphate AlPO4 (berlinite)",
+   "role": "candidate",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 5.210519107963078,
+   "limiting_reaction": "r4",
+   "route": "expt",
+   "margin_V": 0.055421204608586114,
+   "margin_complete": false,
+   "distance_to_inf_V": 1.010519107963078,
+   "distance_to_sup_V": 0.9105191079630783,
+   "status": "undetermined",
+   "note": "reactions r4s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r4s",
+   "onset_grid_min_V": 5.210519107963078,
+   "dft_janaf_V": 4.9924532858381845,
+   "dft_mp_V": 4.9924532858381845,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "AlPO4",
+   "name": "aluminium phosphate AlPO4 (berlinite)",
+   "role": "candidate",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 5.210519107963078,
+   "limiting_reaction": "r4",
+   "route": "expt",
+   "margin_V": 0.055421204608586114,
+   "margin_complete": false,
+   "distance_to_inf_V": 0.8105191079630778,
+   "distance_to_sup_V": 0.7105191079630782,
+   "status": "undetermined",
+   "note": "reactions r4s undetermined; the determined subset is not below the class",
+   "undetermined_reactions": "r4s",
+   "onset_grid_min_V": 5.210519107963078,
+   "dft_janaf_V": 4.9924532858381845,
+   "dft_mp_V": 4.9924532858381845,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Al(PO3)3",
+   "name": "aluminium metaphosphate Al(PO3)3",
+   "role": "candidate",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r4",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 5.628960192504858,
+   "dft_mp_V": 5.628960192504858,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Al(PO3)3",
+   "name": "aluminium metaphosphate Al(PO3)3",
+   "role": "candidate",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r4",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 5.628960192504858,
+   "dft_mp_V": 5.628960192504858,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Al(PO3)3",
+   "name": "aluminium metaphosphate Al(PO3)3",
+   "role": "candidate",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r4",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 5.628960192504858,
+   "dft_mp_V": 5.628960192504858,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Li3PO4",
+   "name": "lithium phosphate Li3PO4",
+   "role": "competing",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r1,r1s",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 4.025975508252882,
+   "dft_mp_V": 4.025975508252882,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Li3PO4",
+   "name": "lithium phosphate Li3PO4",
+   "role": "competing",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r1,r1s",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 4.025975508252882,
+   "dft_mp_V": 4.025975508252882,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Li3PO4",
+   "name": "lithium phosphate Li3PO4",
+   "role": "competing",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": null,
+   "limiting_reaction": null,
+   "route": "none",
+   "margin_V": null,
+   "margin_complete": null,
+   "distance_to_inf_V": null,
+   "distance_to_sup_V": null,
+   "status": "undetermined",
+   "note": "no determined reaction on the experimental route",
+   "undetermined_reactions": "r1,r1s",
+   "onset_grid_min_V": null,
+   "dft_janaf_V": 4.025975508252882,
+   "dft_mp_V": 4.025975508252882,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "CaSiO3",
+   "name": "wollastonite CaSiO3",
+   "role": "comparator",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 3.717067580196006,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.0859413748962646,
+   "margin_complete": false,
+   "distance_to_inf_V": 0.06706758019600612,
+   "distance_to_sup_V": 0.06706758019600612,
+   "status": "within budget",
+   "note": "onset within the budget of the class",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.717067580196006,
+   "dft_janaf_V": 3.7046757299496034,
+   "dft_mp_V": 3.7046757299496034,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "CaSiO3",
+   "name": "wollastonite CaSiO3",
+   "role": "comparator",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 3.717067580196006,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.0859413748962646,
+   "margin_complete": false,
+   "distance_to_inf_V": -0.48293241980399415,
+   "distance_to_sup_V": -0.5829324198039938,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.717067580196006,
+   "dft_janaf_V": 3.7046757299496034,
+   "dft_mp_V": 3.7046757299496034,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "CaSiO3",
+   "name": "wollastonite CaSiO3",
+   "role": "comparator",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 3.717067580196006,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.0859413748962646,
+   "margin_complete": false,
+   "distance_to_inf_V": -0.6829324198039943,
+   "distance_to_sup_V": -0.782932419803994,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.717067580196006,
+   "dft_janaf_V": 3.7046757299496034,
+   "dft_mp_V": 3.7046757299496034,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Ca2SiO4",
+   "name": "calcium orthosilicate Ca2SiO4",
+   "role": "comparator",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 3.4561108166558117,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.09371457713846168,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.19388918334418825,
+   "distance_to_sup_V": -0.19388918334418825,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.4561108166558117,
+   "dft_janaf_V": 3.517805954532934,
+   "dft_mp_V": 3.517805954532934,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Ca2SiO4",
+   "name": "calcium orthosilicate Ca2SiO4",
+   "role": "comparator",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 3.4561108166558117,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.09371457713846168,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.7438891833441885,
+   "distance_to_sup_V": -0.8438891833441882,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.4561108166558117,
+   "dft_janaf_V": 3.517805954532934,
+   "dft_mp_V": 3.517805954532934,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Ca2SiO4",
+   "name": "calcium orthosilicate Ca2SiO4",
+   "role": "comparator",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 3.4561108166558117,
+   "limiting_reaction": "r1s",
+   "route": "expt",
+   "margin_V": 0.09371457713846168,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.9438891833441887,
+   "distance_to_sup_V": -1.0438891833441883,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.4561108166558117,
+   "dft_janaf_V": 3.517805954532934,
+   "dft_mp_V": 3.517805954532934,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Li2SiO3",
+   "name": "lithium metasilicate Li2SiO3",
+   "role": "comparator",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 3.631856700790081,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.04336410424180094,
+   "margin_complete": false,
+   "distance_to_inf_V": -0.01814329920991886,
+   "distance_to_sup_V": -0.01814329920991886,
+   "status": "within budget",
+   "note": "onset within the budget of the class",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.631856700790081,
+   "dft_janaf_V": 3.605150386586245,
+   "dft_mp_V": 3.605150386586245,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Li2SiO3",
+   "name": "lithium metasilicate Li2SiO3",
+   "role": "comparator",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 3.631856700790081,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.04336410424180094,
+   "margin_complete": false,
+   "distance_to_inf_V": -0.5681432992099191,
+   "distance_to_sup_V": -0.6681432992099188,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.631856700790081,
+   "dft_janaf_V": 3.605150386586245,
+   "dft_mp_V": 3.605150386586245,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "Li2SiO3",
+   "name": "lithium metasilicate Li2SiO3",
+   "role": "comparator",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 3.631856700790081,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.04336410424180094,
+   "margin_complete": false,
+   "distance_to_inf_V": -0.7681432992099193,
+   "distance_to_sup_V": -0.868143299209919,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.631856700790081,
+   "dft_janaf_V": 3.605150386586245,
+   "dft_mp_V": 3.605150386586245,
+   "dft_status": "dft-unbenchmarked"
+  },
+  {
+   "phase": "CaCO3",
+   "name": "calcite CaCO3 (control)",
+   "role": "control",
+   "class": "LFP-class",
+   "cutoff_inf_V": 3.65,
+   "cutoff_sup_V": 3.65,
+   "tier1_onset_V": 3.937816159604733,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.08697780186189082,
+   "margin_complete": true,
+   "distance_to_inf_V": 0.2878161596047333,
+   "distance_to_sup_V": 0.2878161596047333,
+   "status": "above",
+   "note": "upper bound only (solid-salt sink): not a pass until a solvated sink exists",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.937816159604733,
+   "dft_janaf_V": 4.320073231543534,
+   "dft_mp_V": 3.7051136896293344,
+   "dft_status": "frozen production comparator"
+  },
+  {
+   "phase": "CaCO3",
+   "name": "calcite CaCO3 (control)",
+   "role": "control",
+   "class": "4.2-4.3 V",
+   "cutoff_inf_V": 4.2,
+   "cutoff_sup_V": 4.3,
+   "tier1_onset_V": 3.937816159604733,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.08697780186189082,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.262183840395267,
+   "distance_to_sup_V": -0.36218384039526663,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.937816159604733,
+   "dft_janaf_V": 4.320073231543534,
+   "dft_mp_V": 3.7051136896293344,
+   "dft_status": "frozen production comparator"
+  },
+  {
+   "phase": "CaCO3",
+   "name": "calcite CaCO3 (control)",
+   "role": "control",
+   "class": "4.4-4.5 V",
+   "cutoff_inf_V": 4.4,
+   "cutoff_sup_V": 4.5,
+   "tier1_onset_V": 3.937816159604733,
+   "limiting_reaction": "r1",
+   "route": "expt",
+   "margin_V": 0.08697780186189082,
+   "margin_complete": true,
+   "distance_to_inf_V": -0.46218384039526716,
+   "distance_to_sup_V": -0.5621838403952668,
+   "status": "below",
+   "note": "falsifies at tier 1 (the solid-salt onset bounds E_ox from above)",
+   "undetermined_reactions": "",
+   "onset_grid_min_V": 3.937816159604733,
+   "dft_janaf_V": 4.320073231543534,
+   "dft_mp_V": 3.7051136896293344,
+   "dft_status": "frozen production comparator"
+  }
+ ],
+ "benchmark": [
+  {
+   "species": "LiClO4",
+   "formula": "LiClO4",
+   "material_id": "mp-30301",
+   "mp_Ef_kJ_per_mol": -583.5524732009486,
+   "atoms_per_formula": 6.0,
+   "expt_dfG_kJ_per_mol": -253.911,
+   "expt_dfG_row": "https://janaf.nist.gov/tables/Cl-046.txt",
+   "expt_dfH_kJ_per_mol": -380.744,
+   "expt_dfH_row": "https://janaf.nist.gov/tables/Cl-046.txt",
+   "dft_minus_dfG_kJ_per_mol": -329.6414732009486,
+   "dft_minus_dfH_kJ_per_mol": -202.80847320094858,
+   "dft_minus_dfG_kJ_per_atom": -54.940245533491435,
+   "flag": ""
+  },
+  {
+   "species": "P2O5",
+   "formula": "P2O5",
+   "material_id": "mp-562613",
+   "mp_Ef_kJ_per_mol": -1640.1462450270953,
+   "atoms_per_formula": 7.0,
+   "expt_dfG_kJ_per_mol": -1361.6,
+   "expt_dfG_row": "TR-012",
+   "expt_u_kJ_per_mol": 0.5,
+   "expt_dfH_kJ_per_mol": -1504.9,
+   "expt_dfH_row": "TR-011",
+   "dft_minus_dfG_kJ_per_mol": -278.54624502709544,
+   "dft_minus_dfH_kJ_per_mol": -135.24624502709526,
+   "dft_minus_dfG_kJ_per_atom": -39.79232071815649,
+   "flag": ""
+  },
+  {
+   "species": "H3PO4",
+   "formula": "H3PO4",
+   "material_id": "mp-23902",
+   "mp_Ef_kJ_per_mol": -1451.310208746352,
+   "atoms_per_formula": 8.0,
+   "expt_dfG_kJ_per_mol": -1119.22,
+   "expt_dfG_row": "TR-119",
+   "expt_u_kJ_per_mol": 8.368,
+   "dft_minus_dfG_kJ_per_mol": -332.0902087463519,
+   "dft_minus_dfG_kJ_per_atom": -41.511276093293986,
+   "flag": ""
+  },
+  {
+   "species": "HAp",
+   "formula": "Ca5(PO4)3OH",
+   "material_id": "mp-41472",
+   "mp_Ef_kJ_per_mol": -6841.401842256968,
+   "atoms_per_formula": 22.0,
+   "expt_dfG_kJ_per_mol": -6337.1,
+   "expt_dfG_row": "TR-009",
+   "expt_u_kJ_per_mol": 5.0,
+   "expt_dfH_kJ_per_mol": -6738.5,
+   "expt_dfH_row": "TR-008",
+   "dft_minus_dfG_kJ_per_mol": -504.3018422569676,
+   "dft_minus_dfH_kJ_per_mol": -102.90184225696794,
+   "dft_minus_dfG_kJ_per_atom": -22.922811011680345,
+   "flag": ""
+  },
+  {
+   "species": "b-TCP",
+   "formula": "Ca3(PO4)2",
+   "material_id": "mp-531132",
+   "mp_Ef_kJ_per_mol": -4167.644257830101,
+   "atoms_per_formula": 13.0,
+   "expt_dfG_kJ_per_mol": -3883.6,
+   "expt_dfG_row": "TR-006",
+   "expt_u_kJ_per_mol": 5.0,
+   "expt_dfH_kJ_per_mol": -4120.8,
+   "expt_dfH_row": "TR-005",
+   "dft_minus_dfG_kJ_per_mol": -284.0442578301013,
+   "dft_minus_dfH_kJ_per_mol": -46.844257830101014,
+   "dft_minus_dfG_kJ_per_atom": -21.849558294623176,
+   "flag": ""
+  },
+  {
+   "species": "a-TCP",
+   "formula": "Ca3(PO4)2",
+   "material_id": "mp-1197377",
+   "mp_Ef_kJ_per_mol": -4171.821877454594,
+   "atoms_per_formula": 13.0,
+   "expt_dfG_kJ_per_mol": -3875.6392,
+   "expt_dfG_row": "TR-026",
+   "expt_u_kJ_per_mol": 8.368,
+   "expt_dfH_kJ_per_mol": -4109.9432,
+   "expt_dfH_row": "TR-025",
+   "dft_minus_dfG_kJ_per_mol": -296.1826774545939,
+   "dft_minus_dfH_kJ_per_mol": -61.87867745459425,
+   "dft_minus_dfG_kJ_per_atom": -22.783282881122606,
+   "flag": ""
+  },
+  {
+   "species": "OCP",
+   "formula": "Ca8P6H12O29",
+   "material_id": "mp-1229154",
+   "mp_Ef_kJ_per_mol": -13915.554560842442,
+   "atoms_per_formula": 55.0,
+   "expt_dfG_kJ_per_mol": -12263.304,
+   "expt_dfG_row": "TR-039",
+   "expt_u_kJ_per_mol": 8.368,
+   "dft_minus_dfG_kJ_per_mol": -1652.2505608424417,
+   "dft_minus_dfG_kJ_per_atom": -30.040919288044396,
+   "flag": ""
+  },
+  {
+   "species": "brushite",
+   "formula": "CaPH5O6",
+   "material_id": "mp-24389",
+   "mp_Ef_kJ_per_mol": -2613.587070939108,
+   "atoms_per_formula": 13.0,
+   "expt_dfG_kJ_per_mol": -2154.76,
+   "expt_dfG_row": "TR-037",
+   "expt_u_kJ_per_mol": 8.368,
+   "expt_dfH_kJ_per_mol": -2403.58248,
+   "expt_dfH_row": "TR-036",
+   "dft_minus_dfG_kJ_per_mol": -458.82707093910767,
+   "dft_minus_dfH_kJ_per_mol": -210.00459093910786,
+   "dft_minus_dfG_kJ_per_atom": -35.294390072239054,
+   "flag": ""
+  },
+  {
+   "species": "monetite",
+   "formula": "CaHPO4",
+   "material_id": "mp-24390",
+   "mp_Ef_kJ_per_mol": -1891.4809370082867,
+   "atoms_per_formula": 7.0,
+   "expt_dfG_kJ_per_mol": -1681.25672,
+   "expt_dfG_row": "TR-034",
+   "expt_u_kJ_per_mol": 0.8368000000000001,
+   "expt_dfH_kJ_per_mol": -1814.3916,
+   "expt_dfH_row": "TR-033",
+   "dft_minus_dfG_kJ_per_mol": -210.2242170082866,
+   "dft_minus_dfH_kJ_per_mol": -77.08933700828675,
+   "dft_minus_dfG_kJ_per_atom": -30.0320310011838,
+   "flag": ""
+  },
+  {
+   "species": "Ca2P2O7",
+   "formula": "Ca2P2O7",
+   "material_id": "mp-3531",
+   "mp_Ef_kJ_per_mol": -3406.99790472756,
+   "atoms_per_formula": 11.0,
+   "expt_dfG_kJ_per_mol": -3132.1424,
+   "expt_dfG_row": "TR-029",
+   "expt_u_kJ_per_mol": 8.368,
+   "expt_dfH_kJ_per_mol": -3338.8320000000003,
+   "expt_dfH_row": "TR-028",
+   "dft_minus_dfG_kJ_per_mol": -274.85550472755995,
+   "dft_minus_dfH_kJ_per_mol": -68.16590472755979,
+   "dft_minus_dfG_kJ_per_atom": -24.986864066141813,
+   "flag": ""
+  },
+  {
+   "species": "AlPO4",
+   "formula": "AlPO4",
+   "material_id": "mp-5331",
+   "mp_Ef_kJ_per_mol": -1801.339676522185,
+   "atoms_per_formula": 6.0,
+   "expt_dfG_kJ_per_mol": -1617.9,
+   "expt_dfG_row": "TR-003",
+   "expt_u_kJ_per_mol": 5.0,
+   "expt_dfH_kJ_per_mol": -1733.8,
+   "expt_dfH_row": "TR-002",
+   "dft_minus_dfG_kJ_per_mol": -183.43967652218498,
+   "dft_minus_dfH_kJ_per_mol": -67.53967652218512,
+   "dft_minus_dfG_kJ_per_atom": -30.573279420364162,
+   "flag": ""
+  },
+  {
+   "species": "CaSiO3",
+   "formula": "CaSiO3",
+   "material_id": "mp-4429",
+   "mp_Ef_kJ_per_mol": -1663.4199142934021,
+   "atoms_per_formula": 5.0,
+   "expt_dfG_kJ_per_mol": -1549.0,
+   "expt_dfG_row": "TR-018",
+   "expt_u_kJ_per_mol": 1.4,
+   "expt_dfH_kJ_per_mol": -1634.8,
+   "expt_dfH_row": "TR-017",
+   "dft_minus_dfG_kJ_per_mol": -114.41991429340214,
+   "dft_minus_dfH_kJ_per_mol": -28.61991429340219,
+   "dft_minus_dfG_kJ_per_atom": -22.88398285868043,
+   "flag": ""
+  },
+  {
+   "species": "Ca2SiO4",
+   "formula": "Ca2SiO4",
+   "material_id": "mp-4481",
+   "mp_Ef_kJ_per_mol": -2348.107555055338,
+   "atoms_per_formula": 7.0,
+   "expt_dfG_kJ_per_mol": -2191.2,
+   "expt_dfG_row": "TR-021",
+   "expt_u_kJ_per_mol": 1.5,
+   "expt_dfH_kJ_per_mol": -2306.7,
+   "expt_dfH_row": "TR-020",
+   "dft_minus_dfG_kJ_per_mol": -156.90755505533798,
+   "dft_minus_dfH_kJ_per_mol": -41.40755505533798,
+   "dft_minus_dfG_kJ_per_atom": -22.415365007905425,
+   "flag": ""
+  },
+  {
+   "species": "Li2SiO3",
+   "formula": "Li2SiO3",
+   "material_id": "mp-5012",
+   "mp_Ef_kJ_per_mol": -1668.942442675202,
+   "atoms_per_formula": 6.0,
+   "expt_dfG_kJ_per_mol": -1557.2848,
+   "expt_dfG_row": "TR-044",
+   "expt_u_kJ_per_mol": 8.368,
+   "expt_dfH_kJ_per_mol": -1648.0776,
+   "expt_dfH_row": "TR-043",
+   "dft_minus_dfG_kJ_per_mol": -111.65764267520217,
+   "dft_minus_dfH_kJ_per_mol": -20.864842675202,
+   "dft_minus_dfG_kJ_per_atom": -18.609607112533695,
+   "flag": ""
+  }
+ ],
+ "dehydration_threshold": {
+  "reaction": "CaHPO4.2H2O -> CaHPO4 + 2 H2O (liquid at activity a_w)",
+  "dG_kJ_per_mol_a_w_1": -0.6967199999998779,
+  "u_kJ_per_mol": 9.604800000000001,
+  "a_w_star": 1.1508799697594647,
+  "a_w_star_range": [
+   0.16583872576620065,
+   7.986823937979724
+  ],
+  "reading": "the hydrate is the stable form only above a_w*; a_w* >= 1 within the row uncertainties means brushite is not stable against monetite at unit water activity (a precursor, reported not decided)",
+  "sources": [
+   "TR-037",
+   "TR-034",
+   "dfg_h2o_l"
+  ]
+ },
+ "upper_bound_above": {
+  "LFP-class": [
+   "HAp",
+   "b-TCP",
+   "a-TCP",
+   "CaCO3"
+  ],
+  "4.2-4.3 V": [],
+  "4.4-4.5 V": []
+ },
+ "undetermined_phases": [
+  "OCP",
+  "brushite",
+  "monetite",
+  "Ca2P2O7",
+  "Ca(PO3)2",
+  "AlPO4",
+  "Al(PO3)3",
+  "Li3PO4"
+ ],
+ "key_requests": [
+  {
+   "key": "a_w_electrolyte",
+   "why": "a_w of the carbonate electrolyte (trace water); a_w_slurry is a slurry-only gap. Until then a_w is reported over the grid [1.0, 0.01, 0.0001, 1e-06]."
+  },
+  {
+   "key": "a_oh_site",
+   "why": "activity (site fraction) of OH in a carbonated or substituted apatite; reported over the grid [1.0, 0.5, 0.1, 0.01]."
+  },
+  {
+   "key": "solvation_ca_vs_li, solvation_al_vs_li (organic carbonate solvent)",
+   "why": "gaps at this params sha: without a solvated sink every onset is a solid-salt upper bound and no phase can pass at tier 1"
+  },
+  {
+   "key": "exchange_entropy_bound_al_clo4_3",
+   "why": "entropy bound of the Al + 3 LiClO4 exchange (W1's bound is for Ca(ClO4)2 only); the Al-phase budgets lack this term"
+  },
+  {
+   "key": "dfg_li3po4, s_li3po4",
+   "why": "Li3PO4 DfG and S (only DfH, TR-040): its experimental route is undetermined"
+  },
+  {
+   "key": "dfh_al_po3_3, dfg_al_po3_3, s_al_po3_3",
+   "why": "Al(PO3)3 has no thermochemistry: AlPO4's staged reaction and Al(PO3)3 itself are undetermined"
+  },
+  {
+   "key": "dfh_ca_po3_2, dfg_ca_po3_2",
+   "why": "crystalline Ca(PO3)2 (only S, and the glass DfH); needed for Ca(PO3)2 and for the staged Ca2P2O7 reaction (Sandstrom 2006 EMF is paywalled)"
+  },
+  {
+   "key": "dfh_ocp, s_ocp",
+   "why": "OCP DfH and S (only DfG, TR-039): no cross-check of the OCP value and no dehydration threshold"
+  },
+  {
+   "key": "u_tab_dfg_sio2_quartz",
+   "why": "tabulated uncertainty of the quartz formation free energy (the JANAF text prints none); silicate budgets lack this term"
+  },
+  {
+   "key": "window_margin_expt per reaction",
+   "why": "thresholds C5c_ox grants m_expt to the registered carbonate reaction only; the per-reaction budgets computed here by the same recipe (provisional) need registered keys"
+  },
+  {
+   "key": "tier-2 records (class A or B) for Ca phosphates",
+   "why": "none found for Ca phosphates; Li3PO4 and AlPO4 have class B sources (W2)"
+  }
+ ]
+}

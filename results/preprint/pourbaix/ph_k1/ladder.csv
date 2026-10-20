@@ -1,0 +1,48 @@
+# PH-K1 tier 1 ladder. The margin_V column is PROVISIONAL: a per-reaction budget by the recipe of window_margin_expt (not yet a registered key). Tier 2 is added later.
+# Onsets are vs Li+/Li at a_w = 1, a_OH = 1 on the experimental route with the solid-salt LiClO4 sink (an upper bound): 'below' stands, 'above' is not a pass. DFT columns are comparators.
+phase,role,class,cutoff_inf_V,cutoff_sup_V,tier1_onset_V,limiting_reaction,route,margin_V,margin_complete,distance_to_inf_V,distance_to_sup_V,status,note,undetermined_reactions,onset_grid_min_V,dft_janaf_V,dft_mp_V,dft_status
+HAp,candidate,LFP-class,3.65,3.65,4.0674,r1s,expt,0.1244,True,0.4174,0.4174,above,upper bound only (solid-salt sink): not a pass until a solvated sink exists,,4.0231,4.0572,3.8254,dft-unbenchmarked
+HAp,candidate,4.2-4.3 V,4.2,4.3,4.0674,r1s,expt,0.1244,True,-0.1326,-0.2326,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,4.0231,4.0572,3.8254,dft-unbenchmarked
+HAp,candidate,4.4-4.5 V,4.4,4.5,4.0674,r1s,expt,0.1244,True,-0.3326,-0.4326,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,4.0231,4.0572,3.8254,dft-unbenchmarked
+b-TCP,candidate,LFP-class,3.65,3.65,4.0223,r1s,expt,0.1480,True,0.3723,0.3723,above,upper bound only (solid-salt sink): not a pass until a solvated sink exists,,4.0223,3.9114,3.9114,dft-unbenchmarked
+b-TCP,candidate,4.2-4.3 V,4.2,4.3,4.0223,r1s,expt,0.1480,True,-0.1777,-0.2777,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,4.0223,3.9114,3.9114,dft-unbenchmarked
+b-TCP,candidate,4.4-4.5 V,4.4,4.5,4.0223,r1s,expt,0.1480,True,-0.3777,-0.4777,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,4.0223,3.9114,3.9114,dft-unbenchmarked
+a-TCP,candidate,LFP-class,3.65,3.65,3.9810,r1s,expt,0.1654,True,0.3310,0.3310,above,upper bound only (solid-salt sink): not a pass until a solvated sink exists,,3.9810,3.9331,3.9331,dft-unbenchmarked
+a-TCP,candidate,4.2-4.3 V,4.2,4.3,3.9810,r1s,expt,0.1654,True,-0.2190,-0.3190,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.9810,3.9331,3.9331,dft-unbenchmarked
+a-TCP,candidate,4.4-4.5 V,4.4,4.5,3.9810,r1s,expt,0.1654,True,-0.4190,-0.5190,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.9810,3.9331,3.9331,dft-unbenchmarked
+OCP,candidate,LFP-class,3.65,3.65,,,none,,,,,undetermined,no determined reaction on the experimental route,"r1,r1s",,4.6044,2.7668,dft-unbenchmarked
+OCP,candidate,4.2-4.3 V,4.2,4.3,,,none,,,,,undetermined,no determined reaction on the experimental route,"r1,r1s",,4.6044,2.7668,dft-unbenchmarked
+OCP,candidate,4.4-4.5 V,4.4,4.5,,,none,,,,,undetermined,no determined reaction on the experimental route,"r1,r1s",,4.6044,2.7668,dft-unbenchmarked
+brushite,precursor,LFP-class,3.65,3.65,4.2658,r3,expt,0.1665,True,0.6158,0.6158,undetermined,reactions r1s undetermined; the determined subset is not below the class,r1s,4.0883,4.4035,2.3913,dft-unbenchmarked
+brushite,precursor,4.2-4.3 V,4.2,4.3,4.2658,r3,expt,0.1665,True,0.0658,-0.0342,undetermined,reactions r1s undetermined; the determined subset is not below the class,r1s,4.0883,4.4035,2.3913,dft-unbenchmarked
+brushite,precursor,4.4-4.5 V,4.4,4.5,4.2658,r3,expt,0.1665,True,-0.1342,-0.2342,undetermined,reactions r1s undetermined; the determined subset is not below the class,r1s,4.0883,4.4035,2.3913,dft-unbenchmarked
+monetite,precursor,LFP-class,3.65,3.65,4.6983,r1,expt,0.0848,True,1.0483,1.0483,undetermined,reactions r1s undetermined; the determined subset is not below the class,r1s,4.6096,4.6107,3.9414,dft-unbenchmarked
+monetite,precursor,4.2-4.3 V,4.2,4.3,4.6983,r1,expt,0.0848,True,0.4983,0.3983,undetermined,reactions r1s undetermined; the determined subset is not below the class,r1s,4.6096,4.6107,3.9414,dft-unbenchmarked
+monetite,precursor,4.4-4.5 V,4.4,4.5,4.6983,r1,expt,0.0848,True,0.2983,0.1983,undetermined,reactions r1s undetermined; the determined subset is not below the class,r1s,4.6096,4.6107,3.9414,dft-unbenchmarked
+Ca2P2O7,candidate,LFP-class,3.65,3.65,4.7157,r1,expt,0.1017,True,1.0657,1.0657,undetermined,reactions r1s undetermined; the determined subset is not below the class,r1s,4.7157,4.2517,4.2517,dft-unbenchmarked
+Ca2P2O7,candidate,4.2-4.3 V,4.2,4.3,4.7157,r1,expt,0.1017,True,0.5157,0.4157,undetermined,reactions r1s undetermined; the determined subset is not below the class,r1s,4.7157,4.2517,4.2517,dft-unbenchmarked
+Ca2P2O7,candidate,4.4-4.5 V,4.4,4.5,4.7157,r1,expt,0.1017,True,0.3157,0.2157,undetermined,reactions r1s undetermined; the determined subset is not below the class,r1s,4.7157,4.2517,4.2517,dft-unbenchmarked
+Ca(PO3)2,candidate,LFP-class,3.65,3.65,,,none,,,,,undetermined,no determined reaction on the experimental route,r1,,4.8437,4.8437,dft-unbenchmarked
+Ca(PO3)2,candidate,4.2-4.3 V,4.2,4.3,,,none,,,,,undetermined,no determined reaction on the experimental route,r1,,4.8437,4.8437,dft-unbenchmarked
+Ca(PO3)2,candidate,4.4-4.5 V,4.4,4.5,,,none,,,,,undetermined,no determined reaction on the experimental route,r1,,4.8437,4.8437,dft-unbenchmarked
+AlPO4,candidate,LFP-class,3.65,3.65,5.2105,r4,expt,0.0554,False,1.5605,1.5605,undetermined,reactions r4s undetermined; the determined subset is not below the class,r4s,5.2105,4.9925,4.9925,dft-unbenchmarked
+AlPO4,candidate,4.2-4.3 V,4.2,4.3,5.2105,r4,expt,0.0554,False,1.0105,0.9105,undetermined,reactions r4s undetermined; the determined subset is not below the class,r4s,5.2105,4.9925,4.9925,dft-unbenchmarked
+AlPO4,candidate,4.4-4.5 V,4.4,4.5,5.2105,r4,expt,0.0554,False,0.8105,0.7105,undetermined,reactions r4s undetermined; the determined subset is not below the class,r4s,5.2105,4.9925,4.9925,dft-unbenchmarked
+Al(PO3)3,candidate,LFP-class,3.65,3.65,,,none,,,,,undetermined,no determined reaction on the experimental route,r4,,5.6290,5.6290,dft-unbenchmarked
+Al(PO3)3,candidate,4.2-4.3 V,4.2,4.3,,,none,,,,,undetermined,no determined reaction on the experimental route,r4,,5.6290,5.6290,dft-unbenchmarked
+Al(PO3)3,candidate,4.4-4.5 V,4.4,4.5,,,none,,,,,undetermined,no determined reaction on the experimental route,r4,,5.6290,5.6290,dft-unbenchmarked
+Li3PO4,competing,LFP-class,3.65,3.65,,,none,,,,,undetermined,no determined reaction on the experimental route,"r1,r1s",,4.0260,4.0260,dft-unbenchmarked
+Li3PO4,competing,4.2-4.3 V,4.2,4.3,,,none,,,,,undetermined,no determined reaction on the experimental route,"r1,r1s",,4.0260,4.0260,dft-unbenchmarked
+Li3PO4,competing,4.4-4.5 V,4.4,4.5,,,none,,,,,undetermined,no determined reaction on the experimental route,"r1,r1s",,4.0260,4.0260,dft-unbenchmarked
+CaSiO3,comparator,LFP-class,3.65,3.65,3.7171,r1,expt,0.0859,False,0.0671,0.0671,within budget,onset within the budget of the class,,3.7171,3.7047,3.7047,dft-unbenchmarked
+CaSiO3,comparator,4.2-4.3 V,4.2,4.3,3.7171,r1,expt,0.0859,False,-0.4829,-0.5829,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.7171,3.7047,3.7047,dft-unbenchmarked
+CaSiO3,comparator,4.4-4.5 V,4.4,4.5,3.7171,r1,expt,0.0859,False,-0.6829,-0.7829,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.7171,3.7047,3.7047,dft-unbenchmarked
+Ca2SiO4,comparator,LFP-class,3.65,3.65,3.4561,r1s,expt,0.0937,True,-0.1939,-0.1939,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.4561,3.5178,3.5178,dft-unbenchmarked
+Ca2SiO4,comparator,4.2-4.3 V,4.2,4.3,3.4561,r1s,expt,0.0937,True,-0.7439,-0.8439,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.4561,3.5178,3.5178,dft-unbenchmarked
+Ca2SiO4,comparator,4.4-4.5 V,4.4,4.5,3.4561,r1s,expt,0.0937,True,-0.9439,-1.0439,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.4561,3.5178,3.5178,dft-unbenchmarked
+Li2SiO3,comparator,LFP-class,3.65,3.65,3.6319,r1,expt,0.0434,False,-0.0181,-0.0181,within budget,onset within the budget of the class,,3.6319,3.6052,3.6052,dft-unbenchmarked
+Li2SiO3,comparator,4.2-4.3 V,4.2,4.3,3.6319,r1,expt,0.0434,False,-0.5681,-0.6681,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.6319,3.6052,3.6052,dft-unbenchmarked
+Li2SiO3,comparator,4.4-4.5 V,4.4,4.5,3.6319,r1,expt,0.0434,False,-0.7681,-0.8681,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.6319,3.6052,3.6052,dft-unbenchmarked
+CaCO3,control,LFP-class,3.65,3.65,3.9378,r1,expt,0.0870,True,0.2878,0.2878,above,upper bound only (solid-salt sink): not a pass until a solvated sink exists,,3.9378,4.3201,3.7051,frozen production comparator
+CaCO3,control,4.2-4.3 V,4.2,4.3,3.9378,r1,expt,0.0870,True,-0.2622,-0.3622,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.9378,4.3201,3.7051,frozen production comparator
+CaCO3,control,4.4-4.5 V,4.4,4.5,3.9378,r1,expt,0.0870,True,-0.4622,-0.5622,below,falsifies at tier 1 (the solid-salt onset bounds E_ox from above),,3.9378,4.3201,3.7051,frozen production comparator

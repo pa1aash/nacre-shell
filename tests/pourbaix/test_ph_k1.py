@@ -68,3 +68,79 @@ def test_row_uncertainty_follows_the_printed_value_or_the_nbs_convention():
     assert v == pytest.approx(-6337.1) and u == pytest.approx(5.0)
     v, u, basis = k1.row_kj("TR-037")  # NBS brushite, none printed: 20 x 0.01 kcal
     assert v == pytest.approx(-515.0 * 4.184) and u == pytest.approx(20 * 0.1 * 4.184) and "NBS" in basis
+
+
+# ----------------------------------------------------------------------------- run helpers and outputs
+import csv  # noqa: E402
+import json  # noqa: E402
+
+from nacre.pourbaix import ph_cache, ph_k1_run as run  # noqa: E402
+from nacre.pourbaix.paths import REPO  # noqa: E402
+
+OUT = REPO / "results" / "preprint" / "pourbaix" / "ph_k1"
+
+
+def _summ(onset, m, complete=True, undetermined=()):
+    return {"expt": {"onset_V": onset, "budget_V": m, "budget_complete": True, "complete": complete,
+                     "limiting": "r1", "onset_grid_min_V": onset} if onset is not None else None,
+            "expt_undetermined": list(undetermined)}
+
+
+def test_class_status_below_above_within_and_undetermined():
+    assert run.class_status(_summ(3.9, 0.1), 4.2, 4.3)[0] == "below"
+    assert run.class_status(_summ(4.5, 0.1), 4.2, 4.3)[0] == "above"
+    assert run.class_status(_summ(4.25, 0.1), 4.2, 4.3)[0] == "within budget"
+    assert run.class_status(_summ(None, 0.0), 4.2, 4.3)[0] == "undetermined"
+
+
+def test_a_determined_subset_falsifies_but_never_passes():
+    # E_ox is a minimum: a determined reaction below the class falsifies even if another is undetermined,
+    # a determined reaction above it cannot pass while another reaction is undetermined
+    assert run.class_status(_summ(3.9, 0.1, complete=False, undetermined=["r1s"]), 4.2, 4.3)[0] == "below"
+    assert run.class_status(_summ(4.9, 0.1, complete=False, undetermined=["r1s"]), 4.2, 4.3)[0] == "undetermined"
+
+
+def test_ph_cache_admits_only_by_c_entries():
+    man = ph_cache.manifest()
+    assert man["files"] and all(f["local_only"] for f in man["files"] if f["kind"] == "mp_entries")
+    assert all(not f["location"].startswith("results/") for f in man["files"] if f["kind"] == "mp_entries")
+
+
+def test_outputs_are_consistent_and_carry_the_provisional_margin_note():
+    if not (OUT / "ph_k1.json").is_file():
+        pytest.skip("outputs not generated")
+    doc = json.loads((OUT / "ph_k1.json").read_text(encoding="utf-8"))
+    assert doc["gate"]["passed"]
+    rows = [r for r in (OUT / "ladder.csv").read_text(encoding="utf-8").splitlines()]
+    assert rows[0].startswith("#") and "PROVISIONAL" in rows[0]
+    body = list(csv.DictReader(r for r in rows if not r.startswith("#")))
+    assert {r["class"] for r in body} == set(k1.CUTOFF_CLASSES)
+    for r in body:
+        assert r["status"] in ("below", "above", "within budget", "undetermined")
+        if r["status"] == "above":
+            assert r["undetermined_reactions"] == ""  # an upper bound above needs the whole registered set determined
+        if r["route"] == "none":
+            assert r["status"] == "undetermined"
+    assert len((OUT / "ph_k1.md").read_text(encoding="utf-8").splitlines()) <= 60
+
+
+def test_no_phase_passes_without_a_solvated_sink():
+    if not (OUT / "ph_k1.json").is_file():
+        pytest.skip("outputs not generated")
+    doc = json.loads((OUT / "ph_k1.json").read_text(encoding="utf-8"))
+    assert all(r["status"] != "pass" for r in doc["ladder"])
+    assert all(r["sink"].startswith(("LiClO4", "none")) for ph in doc["phases"].values() for r in ph["reactions"].values())
+
+
+def test_outputs_contain_no_api_key():
+    key = None
+    env = REPO / ".env"
+    if env.is_file():
+        for line in env.read_text(encoding="utf-8").splitlines():
+            if line.startswith("MP_API_KEY="):
+                key = line.split("=", 1)[1].strip()
+    if not key:
+        pytest.skip("no key in .env")
+    for p in list(OUT.rglob("*")) + [REPO / "src/nacre/pourbaix/ph_k1.py", REPO / "src/nacre/pourbaix/ph_cache.py"]:
+        if p.is_file():
+            assert key not in p.read_text(encoding="utf-8", errors="ignore"), p.name
