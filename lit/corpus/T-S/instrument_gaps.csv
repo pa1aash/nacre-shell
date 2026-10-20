@@ -1,0 +1,16 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-20T10:06:33Z,unpaywall,10.1016/j.nanoen.2017.02.015,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T10:06:33Z,unpaywall,10.1016/j.ensm.2021.01.031,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T10:06:33Z,unpaywall,10.1002/cssc.202001907,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/cssc.202001907
+2026-10-20T10:06:33Z,unpaywall,10.1002/advs.201500022,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/advs.201500022
+2026-10-20T10:06:34Z,europepmc,10.1002/cssc.202001907,http_error,HTTP 403 https://europepmc.org/articles/PMC7756629?pdf=render
+2026-10-20T10:06:34Z,europepmc,10.1002/advs.201500022,http_error,HTTP 403 https://europepmc.org/articles/PMC5115369?pdf=render
+2026-10-20T10:06:36Z,unpaywall+wayback,10.1002/cssc.202001907,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/cssc.202001907
+2026-10-20T10:06:38Z,europepmc+wayback,10.1002/cssc.202001907,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC7756629?pdf=render
+2026-10-20T10:06:42Z,unpaywall+wayback,10.1002/advs.201500022,http_error,HTTP 403 https://web.archive.org/web/2026id_/https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/advs.201500022
+2026-10-20T10:06:44Z,europepmc+wayback,10.1002/advs.201500022,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC5115369?pdf=render
+2026-10-20T10:07:56Z,abstracts,10.1016/j.jct.2006.01.018,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-20T10:07:58Z,abstracts,10.1016/j.nanoen.2017.02.015,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-20T10:08:17Z,unpaywall,10.1016/j.mtla.2021.101107,http_error,HTTP 403 https://www.sciencedirect.com/science/article/pii/S2589152921001101/pdf
+2026-10-20T10:08:20Z,unpaywall+wayback,10.1016/j.mtla.2021.101107,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.sciencedirect.com/science/article/pii/S2589152921001101/pdf
+2026-10-20T10:08:20Z,fulltext,10.1016/j.mtla.2021.101107,not_indexed,"1 candidate location(s), none retrieved"

@@ -1,0 +1,11 @@
+# T-S gaps (session PH-W1.2, Part A: tier-2 extraction and retries)
+
+Rows TS-001 to TS-016 are tier-2 records (class and electrolyte in each row's conditions; every record read is in a LiPF6 carbonate electrolyte, so every one carries the fluorinated-electrolyte label). TS-017 to TS-022 are the USGS B2131 volumes and formula weights of berlinite, whitlockite and hydroxyapatite (read from the page image), and TS-023 is pKw.
+
+- **T3 (Li-Al-phosphate coated LiCoO2, 10.1016/j.ensm.2021.01.031):** full text paywalled (1 attempt, open copies: none); abstract read (2 attempts). Rows are grade D; the electrolyte is not stated.
+- **T4 (ALD AlPO4 on Li1.2Mn0.54Co0.13Ni0.13O2, 10.1016/j.nanoen.2017.02.015):** closed, no open copy and no abstract (3 attempts: open full text, abstract, metadata). No row. Recorded as a gap.
+- **T7 (Li3PO4 and in situ LiPO3 ALD film, theoretical window 0.69 to 4.21 V and up to 5.00 V):** the only record is a repository page without a DOI (kms.shanghaitech.edu.cn/handle/2MSLDSTB/345791) that PH-W2.1 could not read; the schema needs a DOI, so no row. The DFT windows of Li3PO4 and LiPO3 are already in T-O (TO-001, TO-003).
+- **T8 (LiPON, about 5 V):** several records, one calculated, none with a DOI named in lit/novelty.md; not extracted.
+- **No tier-2 record exists for a Ca phosphate, Al(PO3)3, Al borate or Al oxalate** in the sources read; the three class A and B papers read for AlPO4, FePO4 and Li3PO4 all use LiPF6 carbonate electrolytes, so no fluorine-free class A or B record for a phosphate exists in this table (the fluorine-free LiBOB records on air-formed Al oxide, TB-060 to TB-065, are for the oxide, not a phosphate).
+- **Hold times and current criteria:** Ma 2017 and Gao 2018 give potentials of the holds in the text but the current criterion j_svc and the hold duration of the coated Al are in figures only; no number is entered (j_svc and t_svc_min stay registered keys without a value).
+- **Part A retries (one query set each, no new source):** Li3PO4 DfG and S0 (openalex, two queries); Al(PO3)3 thermochemistry (openalex); Ca(PO3)2 DfH and DfG (openalex; Sandstrom 2006, 10.1016/j.jct.2006.01.018, no abstract and no full text); OCP DfH and S0 (openalex); ACP structural water (openalex; Eden 2021, 10.1016/j.mtla.2021.101107, no retrievable copy). All remain gaps.

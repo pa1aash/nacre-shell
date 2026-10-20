@@ -546,3 +546,464 @@ work_function_al:
   latex: W_\mathrm{Al}
 phi_b_caco3_li2co3_analog:
   label: tunnelling barrier height, Li2CO3 on Li analog
+log10_ksp_hap:
+  label: solubility product, hydroxyapatite
+log10_ksp_acp:
+  label: solubility product, ACP
+log10_ksp_ocp:
+  label: solubility product, OCP
+log10_ksp_btcp:
+  label: solubility product, beta-TCP
+log10_ksp_capp:
+  label: solubility product, Ca pyrophosphate
+log10_ksp_cameta:
+  label: solubility product, Ca metaphosphate
+v_m_hap:
+  label: molar volume, hydroxyapatite
+v_m_acp:
+  label: molar volume, ACP
+v_m_ocp:
+  label: molar volume, OCP
+v_m_btcp:
+  label: molar volume, beta-TCP
+v_m_capp:
+  label: molar volume, Ca pyrophosphate
+v_m_cameta:
+  label: molar volume, Ca metaphosphate
+molar_mass_hap:
+  label: formula weight, hydroxyapatite
+density_hap:
+  label: crystal density, hydroxyapatite
+molar_mass_acp:
+  label: formula weight, ACP
+density_acp:
+  label: crystal density, ACP
+molar_mass_ocp:
+  label: formula weight, OCP
+density_ocp:
+  label: crystal density, OCP
+molar_mass_btcp:
+  label: formula weight, beta-TCP
+density_btcp:
+  label: crystal density, beta-TCP
+molar_mass_capp:
+  label: formula weight, Ca pyrophosphate
+density_capp:
+  label: crystal density, Ca pyrophosphate
+molar_mass_cameta:
+  label: formula weight, Ca metaphosphate
+density_cameta:
+  label: crystal density, Ca metaphosphate
+gamma_nl_hap:
+  label: mineral-water interfacial free energy, hydroxyapatite
+gamma_nv_hap:
+  label: mineral-vacuum surface free energy, hydroxyapatite
+gamma_nl_acp:
+  label: mineral-water interfacial free energy, ACP
+gamma_nv_acp:
+  label: mineral-vacuum surface free energy, ACP
+gamma_nl_ocp:
+  label: mineral-water interfacial free energy, OCP
+gamma_nv_ocp:
+  label: mineral-vacuum surface free energy, OCP
+gamma_nl_btcp:
+  label: mineral-water interfacial free energy, beta-TCP
+gamma_nv_btcp:
+  label: mineral-vacuum surface free energy, beta-TCP
+gamma_nl_capp:
+  label: mineral-water interfacial free energy, Ca pyrophosphate
+gamma_nv_capp:
+  label: mineral-vacuum surface free energy, Ca pyrophosphate
+gamma_nl_cameta:
+  label: mineral-water interfacial free energy, Ca metaphosphate
+gamma_nv_cameta:
+  label: mineral-vacuum surface free energy, Ca metaphosphate
+nu_ca_hap:
+  label: calcium count per formula unit, hydroxyapatite
+nu_x_hap:
+  label: first anion count per formula unit, hydroxyapatite
+nu_y_hap:
+  label: second anion count per formula unit, hydroxyapatite
+n_hyd_hap:
+  label: structural water per formula unit, hydroxyapatite
+nu_ca_acp:
+  label: calcium count per formula unit, ACP
+nu_x_acp:
+  label: first anion count per formula unit, ACP
+nu_y_acp:
+  label: second anion count per formula unit, ACP
+n_hyd_acp:
+  label: structural water per formula unit, ACP
+nu_ca_ocp:
+  label: calcium count per formula unit, OCP
+nu_x_ocp:
+  label: first anion count per formula unit, OCP
+nu_y_ocp:
+  label: second anion count per formula unit, OCP
+n_hyd_ocp:
+  label: structural water per formula unit, OCP
+nu_ca_btcp:
+  label: calcium count per formula unit, beta-TCP
+nu_x_btcp:
+  label: first anion count per formula unit, beta-TCP
+nu_y_btcp:
+  label: second anion count per formula unit, beta-TCP
+n_hyd_btcp:
+  label: structural water per formula unit, beta-TCP
+nu_ca_capp:
+  label: calcium count per formula unit, Ca pyrophosphate
+nu_x_capp:
+  label: first anion count per formula unit, Ca pyrophosphate
+nu_y_capp:
+  label: second anion count per formula unit, Ca pyrophosphate
+n_hyd_capp:
+  label: structural water per formula unit, Ca pyrophosphate
+nu_ca_cameta:
+  label: calcium count per formula unit, Ca metaphosphate
+nu_x_cameta:
+  label: first anion count per formula unit, Ca metaphosphate
+nu_y_cameta:
+  label: second anion count per formula unit, Ca metaphosphate
+n_hyd_cameta:
+  label: structural water per formula unit, Ca metaphosphate
+pka1_h3po4:
+  label: first dissociation constant of H3PO4
+pka2_h3po4:
+  label: second dissociation constant of H3PO4
+pka3_h3po4:
+  label: third dissociation constant of H3PO4
+log10_k_cahpo4_aq:
+  label: CaHPO4(aq) ion-pair constant
+log10_k_cah2po4:
+  label: CaH2PO4+ ion-pair constant
+log10_k_capo4:
+  label: CaPO4- ion-pair constant
+pkw:
+  label: ionic product of water (pKw)
+p_total_slurry:
+  label: total phosphate of the slurry (design axis)
+ph_slurry_acid_adjusted:
+  label: slurry pH set with phosphoric acid
+al_passivation_window:
+  label: pH window of the air-formed oxide on Al
+cutoff_classes:
+  label: charge cutoff classes of K1
+margin_service:
+  label: tier 2 service margin
+  latex: m_\mathrm{svc}
+t_svc_min:
+  label: minimum service time of a tier 2 record
+  latex: t_\mathrm{svc,min}
+j_svc:
+  label: service current-density criterion
+  latex: j_\mathrm{svc}
+dfg_hap:
+  label: Gibbs energy of formation, hydroxyapatite
+  latex: \Delta_\mathrm{f}G
+dfh_hap:
+  label: enthalpy of formation, hydroxyapatite
+  latex: \Delta_\mathrm{f}H
+s_hap:
+  label: standard entropy, hydroxyapatite
+  latex: S^\circ
+dfg_btcp:
+  label: Gibbs energy of formation, beta-TCP
+  latex: \Delta_\mathrm{f}G
+dfh_btcp:
+  label: enthalpy of formation, beta-TCP
+  latex: \Delta_\mathrm{f}H
+s_btcp:
+  label: standard entropy, beta-TCP
+  latex: S^\circ
+dfg_ocp:
+  label: Gibbs energy of formation, OCP
+  latex: \Delta_\mathrm{f}G
+dfh_ocp:
+  label: enthalpy of formation, OCP
+  latex: \Delta_\mathrm{f}H
+s_ocp:
+  label: standard entropy, OCP
+  latex: S^\circ
+dfg_capp:
+  label: Gibbs energy of formation, Ca pyrophosphate
+  latex: \Delta_\mathrm{f}G
+dfh_capp:
+  label: enthalpy of formation, Ca pyrophosphate
+  latex: \Delta_\mathrm{f}H
+s_capp:
+  label: standard entropy, Ca pyrophosphate
+  latex: S^\circ
+dfg_cameta:
+  label: Gibbs energy of formation, Ca metaphosphate
+  latex: \Delta_\mathrm{f}G
+dfh_cameta:
+  label: enthalpy of formation, Ca metaphosphate
+  latex: \Delta_\mathrm{f}H
+s_cameta:
+  label: standard entropy, Ca metaphosphate
+  latex: S^\circ
+dfg_acp:
+  label: Gibbs energy of formation, ACP
+  latex: \Delta_\mathrm{f}G
+dfh_acp:
+  label: enthalpy of formation, ACP
+  latex: \Delta_\mathrm{f}H
+s_acp:
+  label: standard entropy, ACP
+  latex: S^\circ
+dfg_alpo4:
+  label: Gibbs energy of formation, AlPO4 (berlinite)
+  latex: \Delta_\mathrm{f}G
+dfh_alpo4:
+  label: enthalpy of formation, AlPO4 (berlinite)
+  latex: \Delta_\mathrm{f}H
+s_alpo4:
+  label: standard entropy, AlPO4 (berlinite)
+  latex: S^\circ
+dfg_al_pmeta3:
+  label: Gibbs energy of formation, Al(PO3)3
+  latex: \Delta_\mathrm{f}G
+dfh_al_pmeta3:
+  label: enthalpy of formation, Al(PO3)3
+  latex: \Delta_\mathrm{f}H
+s_al_pmeta3:
+  label: standard entropy, Al(PO3)3
+  latex: S^\circ
+dfg_li3po4:
+  label: Gibbs energy of formation, Li3PO4
+  latex: \Delta_\mathrm{f}G
+dfh_li3po4:
+  label: enthalpy of formation, Li3PO4
+  latex: \Delta_\mathrm{f}H
+s_li3po4:
+  label: standard entropy, Li3PO4
+  latex: S^\circ
+dfg_po4_aq:
+  label: Gibbs energy of formation, PO4(3-) aq
+  latex: \Delta_\mathrm{f}G
+dfh_po4_aq:
+  label: enthalpy of formation, PO4(3-) aq
+  latex: \Delta_\mathrm{f}H
+s_po4_aq:
+  label: standard entropy, PO4(3-) aq
+  latex: S^\circ
+dfg_hpo4_aq:
+  label: Gibbs energy of formation, HPO4(2-) aq
+  latex: \Delta_\mathrm{f}G
+dfh_hpo4_aq:
+  label: enthalpy of formation, HPO4(2-) aq
+  latex: \Delta_\mathrm{f}H
+s_hpo4_aq:
+  label: standard entropy, HPO4(2-) aq
+  latex: S^\circ
+dfg_h2po4_aq:
+  label: Gibbs energy of formation, H2PO4(-) aq
+  latex: \Delta_\mathrm{f}G
+dfh_h2po4_aq:
+  label: enthalpy of formation, H2PO4(-) aq
+  latex: \Delta_\mathrm{f}H
+s_h2po4_aq:
+  label: standard entropy, H2PO4(-) aq
+  latex: S^\circ
+dfg_h3po4_aq:
+  label: Gibbs energy of formation, H3PO4 aq
+  latex: \Delta_\mathrm{f}G
+dfh_h3po4_aq:
+  label: enthalpy of formation, H3PO4 aq
+  latex: \Delta_\mathrm{f}H
+s_h3po4_aq:
+  label: standard entropy, H3PO4 aq
+  latex: S^\circ
+solvation_po4_vs_li:
+  label: solvation free energy of PO4(3-) against Li+
+  latex: \Delta G_\mathrm{solv}
+solvation_hpo4_vs_li:
+  label: solvation free energy of HPO4(2-) against Li+
+  latex: \Delta G_\mathrm{solv}
+solvation_h2po4_vs_li:
+  label: solvation free energy of H2PO4(-) against Li+
+  latex: \Delta G_\mathrm{solv}
+a_oh_range:
+  label: hydroxide activity range of the cell (design axis)
+a_w_cell:
+  label: water activity of the cell electrolyte (design axis)
+log10_ksp_el_alpo4:
+  label: solubility product in the electrolyte, AlPO4
+sigma_corr_alpo4:
+  label: ionic conductivity of the film, AlPO4
+  latex: \sigma
+rho_film_alpo4:
+  label: film density, AlPO4
+log10_ksp_el_al_pmeta3:
+  label: solubility product in the electrolyte, Al(PO3)3
+sigma_corr_al_pmeta3:
+  label: ionic conductivity of the film, Al(PO3)3
+  latex: \sigma
+rho_film_al_pmeta3:
+  label: film density, Al(PO3)3
+log10_ksp_el_al_borate:
+  label: solubility product in the electrolyte, Al borate
+sigma_corr_al_borate:
+  label: ionic conductivity of the film, Al borate
+  latex: \sigma
+rho_film_al_borate:
+  label: film density, Al borate
+log10_ksp_el_al_oxalate:
+  label: solubility product in the electrolyte, Al oxalate
+sigma_corr_al_oxalate:
+  label: ionic conductivity of the film, Al oxalate
+  latex: \sigma
+rho_film_al_oxalate:
+  label: film density, Al oxalate
+log10_ksp_el_al2o3:
+  label: solubility product in the electrolyte, Al2O3
+sigma_corr_al2o3:
+  label: ionic conductivity of the film, Al2O3
+  latex: \sigma
+rho_film_al2o3:
+  label: film density, Al2O3
+dv_film:
+  label: relative volume change of the Al-salt film
+  latex: \Delta V_\mathrm{film}
+j_corr_max:
+  label: maximum tolerable Al-dissolution current density
+  latex: j_\mathrm{diss}
+t_max_corr:
+  label: service time of the Al-dissolution criterion
+  latex: t_\mathrm{diss}
+s_tol:
+  label: ranking tolerance of the ladder
+  latex: s_\mathrm{tol}
+hydrolysis_polyp_k_ph6:
+  label: polyphosphate hydrolysis constant on Al2O3, pH 6
+  latex: k_\mathrm{hyd}
+hydrolysis_polyp_k_ph6_ca1mm:
+  label: polyphosphate hydrolysis constant on Al2O3, pH 6, 1 mM Ca2+
+  latex: k_\mathrm{hyd}
+hydrolysis_polyp_k_ph8:
+  label: polyphosphate hydrolysis constant on Al2O3, pH 8
+  latex: k_\mathrm{hyd}
+hydrolysis_polyp_k_ph8_ca1mm:
+  label: polyphosphate hydrolysis constant on Al2O3, pH 8, 1 mM Ca2+
+  latex: k_\mathrm{hyd}
+hydrolysis_polyp_half_life_ph6:
+  label: polyphosphate half-life on Al2O3, pH 6
+  latex: t_{1/2}
+hydrolysis_polyp_half_life_ph6_ca1mm:
+  label: polyphosphate half-life on Al2O3, pH 6, 1 mM Ca2+
+  latex: t_{1/2}
+hydrolysis_polyp_half_life_ph8:
+  label: polyphosphate half-life on Al2O3, pH 8
+  latex: t_{1/2}
+hydrolysis_polyp_half_life_ph8_ca1mm:
+  label: polyphosphate half-life on Al2O3, pH 8, 1 mM Ca2+
+  latex: t_{1/2}
+hydrolysis_ca_enhancement_ph6:
+  label: Ca2+ rate enhancement of polyphosphate hydrolysis, pH 6
+  latex: f_\mathrm{Ca}
+hydrolysis_ca_enhancement_ph8:
+  label: Ca2+ rate enhancement of polyphosphate hydrolysis, pH 8
+  latex: f_\mathrm{Ca}
+hydrolysis_pp_half_life_100c_ph10:
+  label: pyrophosphate half-life, 100 C, pH 10 (analog)
+  latex: t_{1/2}
+hydrolysis_polyp_25c_literature_halflife:
+  label: polyphosphate half-life at 25 C against T, pH, Ca2+, Al oxide
+  latex: t_{1/2}
+polyp_al_log_beta1_cyclo_p3:
+  label: Al3+ binding to cyclo-triphosphate (pH 3)
+  latex: \beta_1
+polyp_al_log_beta1_cyclo_p4:
+  label: Al3+ binding to cyclo-tetraphosphate (pH 3)
+  latex: \beta_1
+polyp_al_log_beta1_cyclo_p6:
+  label: Al3+ binding to cyclo-hexaphosphate (pH 3)
+  latex: \beta_1
+polyp_al_log_beta1_cyclo_p8:
+  label: Al3+ binding to cyclo-octaphosphate (pH 3)
+  latex: \beta_1
+polyp_al_log_beta1_linear:
+  label: Al3+ binding to linear polyphosphate, pH 5 to 8.5
+  latex: \beta_1
+polyp_chain_length_material:
+  label: average polyphosphate chain length of the studied material
+  latex: n_\mathrm{chain}
+polyp_chain_distribution:
+  label: polyphosphate chain-length distribution
+  latex: n_\mathrm{chain}
+polyp_log10_ksp_cameta:
+  label: solubility product, Ca polyphosphate
+polyp_log10_ksp_al:
+  label: solubility product, Al polyphosphate
+polyp_al_speciation_ph5_85:
+  label: Al3+ speciation, pH 5 to 8.5 (computed)
+  latex: K_\mathrm{h}
+coacervate_ca_threshold:
+  label: Ca2+ at which Na-polyP coacervates
+coacervate_pH_window:
+  label: pH window of Ca-polyP coacervate
+coacervate_onset_volume:
+  label: CaCl2 volume at coacervate onset
+  latex: V_\mathrm{CaCl_2}
+coacervate_ca_to_polyp_ratio:
+  label: Ca to polyP molar ratio of the preparation
+  latex: r_\mathrm{Ca:P}
+coacervate_viscosity:
+  label: Ca-polyP coacervate viscosity
+  latex: \eta
+coacervate_gamma_nl:
+  label: Ca-polyP coacervate-water interfacial tension
+coacervate_gamma_analog:
+  label: polyelectrolyte coacervate-water tension (analog)
+matrix_chitosan_pka:
+  label: pKa of chitosan amino groups
+matrix_chitosan_polyp_complex:
+  label: chitosan-polyphosphate binding
+  latex: K_\mathrm{c}
+matrix_oxidation_onset_chitosan:
+  label: oxidation onset of chitosan film
+matrix_oxidation_onset_pda:
+  label: oxidation onset of polydopamine film
+glass_dfh_cameta_glass:
+  label: enthalpy of formation, Ca(PO3)2 glass
+  latex: \Delta_\mathrm{f}H
+glass_dfh_lipo3_glass:
+  label: enthalpy of formation, LiPO3 glass
+  latex: \Delta_\mathrm{f}H
+glass_dfh_lipo3_crystal:
+  label: enthalpy of formation, LiPO3 crystal
+  latex: \Delta_\mathrm{f}H
+glass_crystal_correction_lipo3:
+  label: glass-to-crystal correction, LiPO3
+  latex: \Delta_\mathrm{f}H
+glass_dfh_napo3_glass:
+  label: enthalpy of formation, NaPO3 glass
+  latex: \Delta_\mathrm{f}H
+glass_dfh_napo3_crystal:
+  label: enthalpy of formation, NaPO3 crystal
+  latex: \Delta_\mathrm{f}H
+glass_crystal_correction_napo3:
+  label: glass-to-crystal correction, NaPO3
+  latex: \Delta_\mathrm{f}H
+glass_dfh_kpo3_glass:
+  label: enthalpy of formation, KPO3 glass
+  latex: \Delta_\mathrm{f}H
+glass_s0_cameta_glass:
+  label: entropy, Ca(PO3)2 glass
+  latex: S^\circ
+glass_crystal_correction_cameta:
+  label: glass-to-crystal correction, Ca(PO3)2
+  latex: \Delta_\mathrm{f}H
+glass_dfh_alpmeta3_glass:
+  label: enthalpy of formation, Al(PO3)3 glass
+  latex: \Delta_\mathrm{f}H
+glass_s0_alpmeta3_glass:
+  label: entropy, Al(PO3)3 glass
+  latex: S^\circ
+glass_crystal_correction_alpmeta3:
+  label: glass-to-crystal correction, Al(PO3)3
+  latex: \Delta_\mathrm{f}H
+matrix_baseline_hq_film_thickness:
+  label: film thickness, Hydro-Quebec Li polyphosphate (patent)
+matrix_baseline_tsinghua_film_thickness:
+  label: film thickness, Tsinghua aluminophosphate (patent)

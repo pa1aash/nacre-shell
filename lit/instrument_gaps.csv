@@ -724,3 +724,17 @@ utc,source,query_or_id,failure_kind,detail
 2026-10-20T04:00:00Z,ph-w1.1,ALD AlPO4 on LNMO (Western 2017),no_source,thesis found concerns ALD solid electrolytes; host unresolved; Deng 2017 closed
 2026-10-20T04:00:00Z,ph-w1.1,10.1039/d3nr01251d and 10.1149/1.1723495,paywalled,abstract-only (D); cutoff for Ji 2023 not stated
 2026-10-20T04:00:00Z,ph-w1.1,KIT slides pH 4 to 8.5,no_doi,no retrievable text; replaced by 10.1039/c6cc03969c
+2026-10-20T10:30:00Z,ph-w1.2,10.1016/j.nanoen.2017.02.015,paywalled,"closed, no abstract (3 attempts); tier-2 source T4 not extracted"
+2026-10-20T10:30:00Z,ph-w1.2,10.1016/j.ensm.2021.01.031,paywalled,full text closed; abstract only (grade D)
+2026-10-20T10:30:00Z,ph-w1.2,kms.shanghaitech.edu.cn/handle/2MSLDSTB/345791,no_doi,tier-2 T7 record has no DOI; not extracted
+2026-10-20T10:30:00Z,ph-w1.2,Electrochim. Acta 2016 LiPON (tier-2 T8),no_doi,no DOI named in lit/novelty.md; not extracted
+2026-10-20T10:30:00Z,ph-w1.2,10.1016/j.jct.2006.01.018,paywalled,"Ca2P2O7/Ca(PO3)2 EMF Gibbs energies; no abstract, no full text (retry)"
+2026-10-20T10:30:00Z,ph-w1.2,10.1016/j.mtla.2021.101107,no_copy,ACP structural water; no retrievable copy (retry)
+2026-10-20T10:30:00Z,ph-w1.2,Li3PO4 DfG and S0; Al(PO3)3 thermochemistry; OCP DfH and S0,no_source,openalex queries returned no thermochemistry source (retry)
+2026-10-20T10:30:00Z,ph-w1.2,10.1039/b911541b,no_copy,coacervate-water interfacial tension (Spruijt 2010); no retrievable copy
+2026-10-20T10:30:00Z,ph-w1.2,10.1246/bcsj.47.2048 and 10.1246/bcsj.48.3593,paywalled,polyphosphate hydrolysis mechanism (Watanabe); no open copy
+2026-10-20T10:30:00Z,ph-w1.2,10.1139/v59-161,paywalled,hydrolysis of condensed phosphates (Smith 1959); no open copy
+2026-10-20T10:30:00Z,ph-w1.2,10.1016/j.geoderma.2022.116281 and 10.1021/acs.jafc.4c11909,paywalled,polyphosphate hydrolysis on soil minerals; no open copy
+2026-10-20T10:30:00Z,ph-w1.2,10.13036/17533562.59.5.018,paywalled,Na-Ca polyphosphate glass dissolution (Corning 2018); no open copy
+2026-10-20T10:30:00Z,ph-w1.2,"US 12,478,560",not_indexed,"three Google Patents addresses returned HTTP 404 (3 attempts); no DOI for a row"
+2026-10-20T10:30:00Z,ph-w1.2,"US 6,485,866 / 6,844,114 / 8,252,463 / 8,821,969 baselines",no_doi,"solubility, thickness and composition only from the patent texts read by PH-W2.1; no rows, recorded as gap keys"
