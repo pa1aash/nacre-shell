@@ -30,7 +30,8 @@ P_bad >= p_cred, **inconclusive** otherwise, evaluated draw by draw on the same 
 | K3 | window W_3(P) along the dose axis D | R-slurry | DG_het(D) <= B_acc and DG_hom(D) > B_acc, with C3a: f <= 1/2 edge | exists a dose with P_good >= p_cred (feasible); every dose with P_bad >= p_cred (falsified) | gate (deletion test) |
 | K4 | S_spread, and N_nuc against N_s_closure | R-slurry (wetting), R-cell (thickness) | S_spread >= m_S OR N_nuc >= N_s_closure(theta, d_max) | feasible if P(either) >= p_cred; falsified only if P(both fail) >= p_cred | gate (deletion test) |
 
-K3 and K4 run for any phase that passes K1 at ANY registered cutoff class (Section 2d). A phase is falsified only
+K3 and K4 run for every phase whose K1 verdict is not falsified at EVERY registered cutoff class (Section 2d, cp4 F1).
+A phase is falsified only
 if falsified under every registered framing; feasible under at least one framing, which is named, with the other
 reported beside it; inconclusive otherwise. The study table has one row per phase, columns K1 per class, K2, K3,
 K4, and the carbonate row is the control run through the same pipeline.
@@ -112,11 +113,19 @@ falsified at the classes where its experimental onset is below E_c, because a me
 thermodynamic onset puts it in row 2. K1 is evaluated for carbonate only through the table; no carbonate result is
 recomputed here.
 
-### 2d. Which phases proceed
+### 2d. Which phases proceed (cp4 F1)
 
-A phase proceeds to K3 and K4 if its K1 verdict is feasible or not excluded (kinetically stabilised, class A or B)
-at ANY registered cutoff class, with the class named. Otherwise K3 and K4 are not run for it and its row says so.
-K2 is evaluated for every phase (it is a property of the slurry) and gates the study row, not the decision to run K3.
+A phase proceeds to K3 and K4 unless its K1 verdict is falsified at EVERY registered cutoff class. A phase that is
+inconclusive or undetermined at any class proceeds, and its K1 status is shown in its row.
+
+Equivalently: K3 and K4 are skipped only for a phase whose class verdict (Section 2e) is `falsified for the class`
+for C_lo, C_mid and C_hi alike; its row then says so. A phase that is feasible or not excluded (kinetically
+stabilised, class A or B) at some class proceeds with that class named; a phase that is only inconclusive,
+undetermined or partial proceeds with its per-class K1 status printed in its row beside K2 to K4. The reason (cp4
+ruling): while the solvated sink is a gap no phase can pass K1, and the earlier rule (proceed only on a pass) would
+have run nothing. K2 is evaluated for every phase (it is a property of the slurry) and gates the study row, not the
+decision to run K3. Proceeding is not passing: the K1 column keeps its verdict, and a row with K1 inconclusive is
+never reported as a candidate barrier.
 
 ### 2e. Cutoff classes
 
@@ -258,7 +267,8 @@ al2o3 as hydroxide or oxide form), `sigma_corr_<F>`, `dv_film`, `j_corr_max`, `t
   falsifies only when both fall below. A tier 2 record of class A below the cutoff is flagged for the audit.
 - **I3.** Rows 6 and 7: within the margin band, or undetermined tier 1, is inconclusive even where tier 2 is above or
   below; the plan's falsification needs tier 1 below.
-- **I4.** "Passes K1 at any class" (Section 2d) includes the not-excluded, kinetically stabilised verdict with class A or B.
+- **I4.** Superseded by cp4 F1 (Section 2d): the test is no longer "passes at any class" but "not falsified at every
+  class"; the not-excluded, kinetically stabilised verdict (class A or B) is one of the statuses that proceed.
 - **I5.** Tier 2 records logged with a fluoride-containing electrolyte are kept, labelled F_el, and not excluded; the
   plan asks only that the electrolyte be logged.
 - **I6.** The bulk-precipitation competition in K3 uses the same absolute criterion B_acc for the homogeneous
