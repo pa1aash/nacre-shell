@@ -186,3 +186,38 @@ Neither patent family prints a film solubility, so baseline K2 rows are undeterm
 **Title.** The working wording is unchanged; it is unfrozen and final at cp6.
 
 **Evidence status** (from the PH-W1.2 report). Hydrolysis rates exist only for gamma-Al2O3 at room temperature. Coacervate gamma_nl, binodal, matrix oxidation limits, Al(PO3)3 and the glass-to-crystal correction are gaps. All tier-2 records are in LiPF6 electrolyte. Undetermined verdicts are expected and are reported as such.
+
+## CP4 FIXES (planning chat verdict, 2026-10-20: PASS once applied)
+
+Nothing starts production until F1 to F5 are applied and the freeze packet goes to the planning chat.
+
+**F1** (W3.2a; W4.2a implements). Verdict rule "2d" in theory/claims_redirect.md becomes: "A phase proceeds to K3 and K4 unless its K1 verdict is falsified at EVERY registered cutoff class. A phase that is inconclusive or undetermined at any class proceeds, and its K1 status is shown in its row." (With the solvated sink a gap no phase can pass K1, so the old rule would run nothing.)
+
+**F2** (W3.2a writes the rule and vets the argument; W1.3 supplies hydration data; W5.1 computes; W3.2 sets numbers). K1 becomes a bracket: E_ub = onset with the solid-salt (LiClO4) sink; E_lb = onset with the most favourable sink, aqueous hydration of the cations (Ca2+, Al3+) and the anion from tabulated standard data. Argument to vet: hard cations are not better solvated in an organic carbonate than in water, so the hydration value cannot overstate the onset. Verdict at cutoff E_c with margin m: PASS if E_lb >= E_c + m; FALSIFIED if E_ub < E_c - m (tier 2 as already ruled); otherwise inconclusive. The vetting must confirm Li-reference consistency (Li+/Li in the same solvent) and the anion term; if the argument fails, W3 says why and the solid-salt-only rule stays (no pass possible).
+
+**F3** (W1.3 data; W5.1 thermochemistry). Determine staged-reaction products as experimentally as possible: (a) Ca(PO3)2 DfG = DfH(glass) - T*DfS, S0 from the one source plus elemental entropies, plus a bounded glass-to-crystal correction with inflated, labelled uncertainty; (b) Al(PO3)3: search calorimetric or phase-equilibrium data (AlPO4 + P2O5 to Al(PO3)3), else undetermined. Staged routes stay registered; E_ox is the minimum over registered reactions; a DFT comparator never turns an undetermined staged reaction into a determined one.
+
+**F4** (W3.2a spec; W5.1 rows; W8.1 table spec). Every results row carries a STAGE field: slurry-stage (brushite, ACP, HAp; K2, K3, K4 apply) or cell-stage (Ca2P2O7, Ca(PO3)2, AlPO4, Al(PO3)3; K1 applies). Add a conversion-step row per precursor-to-cell-stage pair with thermodynamic dehydration and condensation thresholds (a_w*) and literature conversion temperatures (brushite to monetite to pyrophosphate) beside the 100 to 350 C cure range of US 8,252,463. The table never presents K1 for a condensed phase and K2 to K4 for an orthophosphate as one film.
+
+**F5** (W5.1 comparator row; W4.2a panel). Add (LiPO3)n as a comparator (Hydro-Quebec chemistry; expected K2 fail, water-soluble); Ca orthophosphates run K2 to K4 for the low-cutoff class; optional: Ca-modified aluminophosphate if data permit; silicate stays the first item to cut.
+
+**F6** (this session; W8.1 briefs). Title unfrozen, working title unchanged; the Abstract and Introduction state plainly that bone mineral (HAp) and the tricalcium phosphates sit at 3.98 to 4.07 V, near carbonate; frame C applies to the Ca orthophosphates only; condensed and Al phosphates decide A, B or C; final title at cp6.
+
+**F7** (W5.1). Add the carbonate DFT comparator computed from the 2026.09.28 database book as a labelled extra in the K1 table so every row shares one database version; the frozen production value stays for the control gate.
+
+**F8** (W2.2b; W8.1 Introduction brief). State plainly that Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 films on Al foil are claimed prior art (US 8,252,463; US 8,821,969); add candidate wording NS6 "no scanned source gives an oxidation-limit ladder across phosphate condensation states", unsupported until verified; record the performance data and electrolyte stated in those patents; the patent search stays a logged gap.
+
+**F9** (this session; W8.1 implements the lint). charter/scope_guard.md gets a warn pattern: `stable (up to|above|to) [0-9.]+ ?V`, flagged unless "thermodynamic" appears in the same sentence.
+
+**Packet decision rulings.**
+1. Agree (margin at the cp5 freeze).
+2. Add F2.
+3. Agree, with priority F3.
+4. Amend F1 plus F4: Ca phases proceed for K2 to K4; AlPO4, Al(PO3)3 and Li3PO4 follow the Al-salt ladder.
+5. Add F5.
+6. Amend F6.
+7. Agree. The DFT spread (47 to 210 kJ/mol and -1.08 to +0.60 V on the same reaction) is itself a reportable finding: SI table, DFT never unlabelled.
+8. Agree plus F7.
+9. Add F8; confirm NS1 to NS5 and NU1 to NU10.
+10. Agree. W1 key list adds: hydration free energies of Ca2+, Al3+, ClO4-; water-to-carbonate transfer data if any; Ca(PO3)2 glass DfH, S0 and crystallisation enthalpy; Al(PO3)3 data; polyphosphate hydrolysis rates near pH 7 to 13; conversion temperatures.
+11. Agree plus F9.

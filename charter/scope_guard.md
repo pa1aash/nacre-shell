@@ -66,3 +66,8 @@ SG14  \b(the )?first (ever )?(report|demonstration|study) of\b
 SG15  \b(barrier|layer|film|coating|interface) (is|are) (thermodynamically )?(feasible|viable|effective)\b
 SG16  \b(demonstrate|show|establish|prove)s? (the )?feasibility\b
 ```
+
+```scope-guard-warn
+# flagged unless the word 'thermodynamic' appears in the same sentence; lint-scope implements this in PH-W8.1
+SG17W  \bstable (up to|above|to) [0-9.]+ ?V\b
+```
