@@ -12,11 +12,18 @@ from preprint_helpers import REPO
 TYPES = {"physical relation": "R", "parameter bound": "B", "governing parameter": "G",
          "required precision": "P", "proxy result": "X", "retrodiction outcome": "T",
          "outlook": "O", "limitation": "LN", "background": "K", "novelty": "V",
-         "contrary evidence": "E", "method": "M"}
+         "contrary evidence": "E", "method": "M", "design rule": "D",
+         "screen result": "S", "prediction": "Q"}
 LIT_RECORDS = ("lit/novelty.md", "lit/contrary.md")
-FIGURES = {"Fig %d" % n for n in range(1, 9)} | {"Fig 2%s" % p for p in "abcd"}
-TABLES = {"Table %d" % n for n in range(1, 4)}
-CHECKPOINTS = {"cp1", "cp2", "cp3", "cp4", "cp5", "none"}
+# Legacy ids belong to the carbonate-era claims; the labels are those of the redirected paper (briefs).
+FIGURES = ({"Fig %d" % n for n in range(1, 9)} | {"Fig 2%s" % p for p in "abcd"}
+           | {"fig:" + n for n in ("hero", "pathway", "conditions", "ladder", "phmap", "nucmap", "precision",
+                                   "heatmap", "alsalt", "k1panel")})
+TABLES = ({"Table %d" % n for n in range(1, 4)}
+          | {"tab:" + n for n in ("candidates", "thresholds", "parameters", "thermo", "baselines", "retrodiction")})
+CHECKPOINTS = {"cp1", "cp2", "cp3", "cp4", "cp5", "cp5r", "cp6", "none"}
+STAGES = {"slurry", "cell", "conversion"}
+NS7_QUALIFIERS = ("in situ", "crosslinked", "water-insoluble", "aluminium foil", "fluorine-free")
 REQUIRED_NOT_CLAIMED = [
     "This paper does not claim that the barrier works.",
     "This paper does not claim any corrosion rate, capacity or device performance.",
@@ -35,14 +42,22 @@ def test_fields_and_vocabulary(claims):
         for key in ("id", "statement", "section", "type", "polarity", "evidence", "checkpoint",
                     "supplier", "scope_check", "status"):
             assert c.get(key), (c.get("id"), key)
-        assert re.fullmatch(r"CL-[RBGPXTOLNKVEM]\d{2}", c["id"]), c["id"]
+        assert re.fullmatch(r"CL-[RBGPXTOLNKVEMDSQ]\d{2}", c["id"]), c["id"]
         assert c["type"] in TYPES, c["id"]
         assert c["id"][3] in TYPES[c["type"]], c["id"]
         assert c["section"] in sections, c["id"]
         assert c["polarity"] in ("claims", "does-not-claim")
         assert c["checkpoint"] in CHECKPOINTS, c["id"]
         assert c["status"] in ("planned", "drafted", "verified", "withdrawn")
-        assert not re.search(r"\d", c["statement"].replace("2020", "").replace("Ca2+", "")), c["id"]
+        assert not re.search(r"\d", _without_identifiers(c["statement"])), c["id"]
+
+
+_IDENT = re.compile(r"\b[A-Z][A-Za-z]*\d[A-Za-z0-9()+]*|\b[A-Z][a-z]?\([A-Za-z0-9]+\)\d*[A-Za-z0-9]*|\b2020\b")
+
+
+def _without_identifiers(statement):
+    """Statement text without identifiers that contain digits: K1, NS7, Ca2+, AlPO4, Al(PO3)3 and the year 2020."""
+    return _IDENT.sub("", statement)
 
 
 def test_ids_unique(claims):
@@ -155,3 +170,56 @@ def test_literature_claims_trace_to_a_row_or_a_doi(claims):
         elif c["type"] == "novelty":
             assert any(ev["kind"] == "dossier" and ev["ref"].startswith("lit/novelty.md#")
                        for ev in c["evidence"]), c["id"]
+
+
+def test_origin_stage_and_conditional_fields(claims):
+    for c in claims:
+        assert c["origin"] in ("redirect", "carbonate control (frozen)"), c["id"]
+        if "stage" in c:
+            assert c["stage"] in STAGES, c["id"]
+        if c.get("conditional"):
+            assert c.get("depends_on"), (c["id"], "a conditional claim names what it depends on")
+        if c["origin"] == "redirect" and c["section"] in ("results", "predictions") and c["polarity"] == "claims":
+            assert c.get("conditional") or c["type"] in ("retrodiction outcome",) or c["id"] in ("CL-S03",), c["id"]
+
+
+def test_new_ledger_has_conditional_predictions_and_does_not_claim_entries(claims):
+    new = [c for c in claims if c["origin"] == "redirect"]
+    assert sum(1 for c in new if c["type"] == "prediction" and c.get("conditional")) >= 3
+    assert sum(1 for c in new if c["polarity"] == "does-not-claim") >= 6
+    first = next(c for c in claims if c["id"] == "CL-Q01")
+    text = " ".join(first["statement"].split())
+    for part in ("route one or route two", "baked aluminophosphate", "hydroxyapatite", "bare foil",
+                 "carbon-coated foil", "water insolubility", "aqueous-slurry immersion", "anodic potential hold",
+                 r"\NumHoldLow", r"\NumHoldHigh", "fluorine-free electrolyte"):
+        assert part in text, part
+
+
+def test_ns7_is_stated_only_with_its_four_qualifiers(claims):
+    for c in claims:
+        refs_ns7 = any(ev["kind"] == "dossier" and ev["ref"].endswith("#NS7") for ev in c["evidence"])
+        if refs_ns7:
+            text = " ".join(c["statement"].split()).lower()
+            for q in NS7_QUALIFIERS:
+                assert q in text, (c["id"], q)
+            assert len(c.get("qualifiers", [])) == 4 and c.get("conditional"), c["id"]
+
+
+def test_priority_wording_is_absent_from_new_statements(claims):
+    for c in claims:
+        if c["origin"] == "redirect" and c["polarity"] == "claims":
+            assert not re.search(r"\b(first|novel|unprecedented|pioneering)\b", c["statement"], re.I), c["id"]
+
+
+def test_stage_rule_is_carried_by_the_stage_claim(claims):
+    c = next(c for c in claims if c["id"] == "CL-D11")
+    text = " ".join(c["statement"].split())
+    assert "STAGE" in text and "slurry-stage" in text and "cell-stage" in text and "conversion-step" in text
+    assert "never shown as one film" in text
+
+
+def test_bone_mineral_framing_is_in_the_ledger(claims):
+    by_id = {c["id"]: c for c in claims}
+    assert "hydroxyapatite" in by_id["CL-S01"]["statement"] and "near that of carbonate" in by_id["CL-S01"]["statement"]
+    assert "calcium orthophosphates only" in by_id["CL-D02"]["statement"]
+    assert "prior art" in by_id["CL-V03"]["statement"] and "aluminium foil" in by_id["CL-V03"]["statement"]

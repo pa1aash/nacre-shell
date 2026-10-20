@@ -1,5 +1,7 @@
 % Methods. Brief: briefs/methods.md. Claims carried: the entries of ../claims.yaml with section methods.
-% Prose: P0-W8.3. Authorities: lit/corpus/params_README.md (prior rule), theory/ignorance_priors.md,
+% Prose: P0-W8.3 (carbonate-era; the neutral paragraphs are adapted and the new phosphate paragraphs
+% are added at PH-W8.2, see briefs/methods.md; paragraphs marked `carbonate control (frozen)` are
+% carbonate-specific). Authorities: lit/corpus/params_README.md (prior rule), theory/ignorance_priors.md,
 % theory/thresholds.md through configs/preprint/thresholds.yaml (rule R-thr), configs/preprint/screen.yaml,
 % configs/preprint/precision_method.md, preprint/retrodiction/criterion.md, results/preprint/pourbaix
 % (gas_reference.md, cache/attribution_for_paper.md) and src/nacre/anchor/PROTOCOL.md.
@@ -61,6 +63,7 @@ Reduction (\Rc) & $E_\mathrm{red}+m_\mathrm{expt}\le E_\mathrm{cell}^{\min}$ & l
 \end{tabular*}
 \end{table*}
 
+% carbonate control (frozen)
 % (4) Retrodiction.
 \paragraph*{Retrodiction.}
 The nucleation link is tested against literature cases with measured outcomes; the case selection, the cases, the correctness rule and the pass rule were committed before the run, and the controls and the interface mapping below were added under the third-checkpoint rulings in a further commit, also before the run. % CL-T02
@@ -71,6 +74,7 @@ The retrodiction passes if at least \NumRetroPassCount\ of the \NumRetroUsableCa
 The code that computes a barrier never sees the observed relation, and swapping test and reference must reverse the sign of the difference draw by draw; a permutation null over the case labels is reported as a descriptive control. % CL-T02
 The limits are stated with the rule: several cases share a study or a reference surface, all observed relations run the same way, the source itself already reports the link between input and outcome in \NumRetroLinkReported\ of the \NumRetroUsableCases\ cases, no hydroxyl-terminated case could be built, and only the sign of a within-study difference is tested, not an absolute barrier. % CL-T02
 
+% carbonate control (frozen)
 % (5) Pourbaix and window settings.
 \paragraph*{Pourbaix and window settings.}
 Solid-phase energies were taken from the Materials Project\cite{jain2013commentary} (database version \NumMpDatabaseVersion), retrieved through its interface and used under the Creative Commons Attribution \NumMpLicenceVersion\ International licence (CC~BY~\NumMpLicenceVersion, \url{https://creativecommons.org/licenses/by/4.0/}). % CL-M06
@@ -83,6 +87,7 @@ Because the cell limits combine database solids with a \ce{CO2} and \ce{O2} refe
 The all-experimental route uses tabulated thermochemistry for every reactant and product\cite{rossini1971selected,rossini1981selected}\nacreMissing{reference for the NIST-JANAF tables, whose DOI the bibliography tool could not resolve}, and its margin $m_\mathrm{expt}$ combines the tabulated uncertainties per transferred electron with a bound on the neglected solid entropy of \ce{Ca(ClO4)2} taken from analog salts. % CL-M06
 Where an input of that route is missing, a limit is decided over the computed schemes, a pass under the scheme with the lowest onset and a falsification under every scheme, and is marked as decided by them; a limit whose sink thermochemistry is missing is undetermined and never counts as a pass. % CL-M06
 
+% carbonate control (frozen)
 % (6) The compute anchor protocol.
 \paragraph*{Compute anchor.}
 A single anchor calculation checks the computational pipeline and is not an input of the screen: the free energy of replacing first-shell water of hydrated \ce{Ca^2+} by a carboxylate or catecholate ligand in water. % CL-M07
@@ -96,6 +101,7 @@ The anchor value is compared with the prior of the corresponding input; it never
 Code, inputs, configurations and the number pipeline are archived at \nacreRepoURL\ and \nacreZenodoDOI. % CL-M09
 Every number in the text is a macro generated at build time from a result file, a registered configuration or a record, with its path, key and value logged, and every reference was added by its DOI from the evidence records. % CL-M09
 
+% carbonate control (frozen)
 % (8) Disclosures (lane note N5; cp3 rulings R1, R2 and R6).
 \paragraph*{Disclosures.}
 Three rules were set with some values already in view, and each is therefore not independent of them. % CL-M08

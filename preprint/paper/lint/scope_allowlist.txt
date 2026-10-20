@@ -6,3 +6,11 @@ This paper does not claim any corrosion rate, capacity or device performance.
 This paper does not claim any result from the full first-principles or machine-learned-potential calculations.
 This paper does not claim that any interface, template or film thickness is optimal.
 This paper does not claim experimental validation.
+This paper does not claim that phosphate supply at a pit works or that any film is self-healing; both are design hypotheses.
+This paper does not claim that any film outperforms phosphoric-acid pH control, carbon-coated foil or the baked aluminophosphate baseline.
+This paper does not claim that the nucleation or template half of the chain is validated.
+This paper does not claim priority for any film, route or combination.
+This paper does not claim that any film forms on aluminium foil or that a coacervate wets aluminium; formation and wetting are criteria screened thermodynamically.
+This paper does not claim that a thermodynamic onset is a measured service limit, or that a record in a fluorinated electrolyte supports a pass.
+This paper does not claim any result for a fluorinated electrolyte or any fluoride phase, including as a comparator.
+This paper does not claim the acid-adjusted slurry as a regime of the barrier; it is a comparator to the incumbent.

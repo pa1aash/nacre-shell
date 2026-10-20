@@ -48,7 +48,7 @@ def _prose_lines(path):
             if re.match(r"\\end\{(figure\*?|table\*?|equation)\}", s):
                 skip -= 1
             continue
-        if not s or s.startswith("%") or s.startswith("\\section") or re.fullmatch(r"\\paragraph\*?\{[^}]*\}", s):
+        if not s or s.startswith("%") or s.startswith("\\section") or s.startswith("\\subsection") or re.fullmatch(r"\\paragraph\*?\{[^}]*\}", s):
             continue
         out.append((no, line))
     return out
@@ -71,7 +71,8 @@ def test_every_sentence_line_names_a_ledger_entry_of_its_section(path, section, 
         for cid in re.findall(r"CL-[A-Z]\d{2}", m.group(1)):
             assert cid in ledger, (path.name, no, cid)
             used.add(cid)
-    own = {cid for cid, c in ledger.items() if c["section"] == section}
+    own = {cid for cid, c in ledger.items()
+           if c["section"] == section and c["status"] in ("drafted", "verified")}
     assert own <= used, sorted(own - used)          # every entry of the section is carried by a sentence
     for cid in used:
         assert ledger[cid]["status"] in ("drafted", "verified"), cid

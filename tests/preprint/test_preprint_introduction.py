@@ -58,7 +58,7 @@ def test_markers_and_ledger_agree(claims):
     marked = set(re.findall(r"CL-[A-Z]\d{2}", INTRO.read_text(encoding="utf-8")))
     by_id = {c["id"]: c for c in claims}
     assert marked <= set(by_id), sorted(marked - set(by_id))
-    intro = {c["id"] for c in claims if c["section"] == "introduction"}
+    intro = {c["id"] for c in claims if c["section"] == "introduction" and c["status"] in ("drafted", "verified")}
     assert intro <= marked, sorted(intro - marked)
 
 
@@ -66,7 +66,7 @@ def test_each_cited_doi_of_an_introduction_claim_is_cited_in_the_text(claims):
     key_of = {doi: key for key, doi in bibmod.bib_index(REPO, refs.source(REPO)).items() if doi}
     cited = set(refs.cited(REPO, [INTRO]))
     for c in claims:
-        if c["section"] != "introduction":
+        if c["section"] != "introduction" or c["status"] not in ("drafted", "verified"):
             continue
         for ev in c["evidence"]:
             if ev["kind"] == "doi":

@@ -3,7 +3,8 @@
 % template, rendered into build/rsc_head.tex by `nacre preprint prepare` (run by build.sh).
 % Build with ./build.sh draft or ./build.sh release, from any directory.
 % No number is typed here: numbers are macros from ../generated/numbers.tex, and every claim
-% the text makes has an entry in ../claims.yaml. Section order follows the energetics.
+% the text makes has an entry in ../claims.yaml. Section order: abstract, introduction, design rules (with the templating thermodynamics), methods,
+% results, predictions, discussion and limits, declarations; the SI is si/main_si.tex.
 \input{nacre-preamble}
 \input{../generated/front}
 \input{../generated/authors}
@@ -21,11 +22,10 @@
 \input{layout/panel_letters}
 
 \input{sections/introduction}
-\input{sections/model}
-\input{sections/inputs}
+\input{sections/design}
 \input{sections/methods}
 \input{sections/results}
-\input{sections/outlook}
+\input{sections/predictions}
 \input{sections/discussion}
 \input{sections/declarations}
 

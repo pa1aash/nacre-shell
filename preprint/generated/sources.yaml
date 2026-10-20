@@ -51,6 +51,21 @@ macros:
     reduce: max
     format: 'date:%B %Y'
     claim: CL-V01
+  # --- initial experiment (Predictions; the ruled potential-hold range, a design value, not a result) ---
+  NumHoldLow:
+    source: ops/tracks/redirect_plan.md
+    section: PREDICTIONS
+    pattern: 'hold at ([0-9.]+) to [0-9.]+ V'
+    reduce: first
+    format: .1f
+    claim: CL-Q01
+  NumHoldHigh:
+    source: ops/tracks/redirect_plan.md
+    section: PREDICTIONS
+    pattern: 'hold at [0-9.]+ to ([0-9.]+) V'
+    reduce: first
+    format: .1f
+    claim: CL-Q01
   # --- decision conventions (Methods; theory/thresholds.md through its copy, rule R-thr) ---
   NumPcred:
     source: configs/preprint/thresholds.yaml
