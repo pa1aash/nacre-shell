@@ -102,3 +102,19 @@ def homogeneous_barrier_per_ion(gamma_nl, V_m, nu, a_Ca, a_X, a_Y, nu_Ca, nu_X, 
                          "without supersaturation")
     dmu = BOLTZMANN * positive("T", T) * ln_om / n
     return scalar_or_array(16.0 * np.pi * g ** 3 * vm ** 2 / (3.0 * AVOGADRO ** 2 * dmu ** 2))
+
+
+def coacervate_preference_ideal(T, Gamma_P, K_Pc, c_n, c_l, delta_P):
+    """REJECTED (contract Dgamma_coac_ideal; reported only, never in a verdict): the ideal-dilute isotherm applied with
+    the concentrations of the two coexisting phases, R T [Gamma_P ln((1 + K c_n)/(1 + K c_l)) - delta_P (c_n - c_l)].
+
+    It reads the concentration difference of coexisting phases as an activity difference, which coexistence forbids,
+    and so credits the binding constant with a wetting preference (claims_redirect.md 9c).
+    """
+    from nacre.physics.constants import GAS_CONSTANT
+    t = np.asarray(T, dtype=float)
+    g, k, n, l, d = (np.asarray(v, dtype=float) for v in (Gamma_P, K_Pc, c_n, c_l, delta_P))
+    if np.any(t <= 0) or np.any(g <= 0) or np.any(k <= 0) or np.any(n <= 0) or np.any(l <= 0) or np.any(d <= 0):
+        raise ValueError("coacervate_preference_ideal: every input must be strictly positive")
+    out = GAS_CONSTANT * t * (g * (np.log1p(k * n) - np.log1p(k * l)) - d * (n - l))
+    return out.item() if np.ndim(out) == 0 else out

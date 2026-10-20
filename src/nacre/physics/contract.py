@@ -1,4 +1,4 @@
-"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v5).
+"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v6).
 
 Maps every contract function name to the physics function that implements it and to the
 contract symbol ids of its arguments, in call order. Constants (k_B, N_A, R_gas, F_c, q_e,
@@ -13,13 +13,14 @@ from typing import Callable, Optional
 
 import numpy as np
 
-from nacre.physics import adhesion, conformality, film, nucleation, sequestration, speciation, stability, template
+from nacre.physics import (adhesion, coacervate, conformality, film, gelation, hydrolysis, nucleation, sequestration,
+                           speciation, stability, template)
 from nacre.physics import supersaturation as sat
 from nacre.physics import wetting
 from nacre.physics.devtools import wrong_variants
 
 #: Contract version this registry implements; the contract tests skip a different version.
-CONTRACT_VERSION = 5
+CONTRACT_VERSION = 6
 
 CONSTANT_IDS = {"k_B", "N_A", "R_gas", "F_c", "q_e", "hbar", "m_e", "m_std", "c_std"}
 
@@ -59,6 +60,10 @@ def _supersaturated_mineral(**kw):
     """Validity filter of the mineral barriers: Omega_nu > 1 (the barrier is undefined below it)."""
     with np.errstate(all="ignore"):
         return sat.ln_saturation_ratio_mineral(*[kw[n] for n in MINERAL + ("K_sp",)]) > 0
+
+
+def _li_exchanged(**kw):
+    return kw["Delta_n_Li"] != 0
 
 
 FUNCTIONS = {
@@ -176,6 +181,35 @@ FUNCTIONS = {
     "d_max_ohm": Entry(film.ohmic_thickness_bound, ("R_A_max", "rho_e")),
     "kappa": Entry(film.tunnelling_decay_constant, ("phi_B",)),
     "d_max_tun": Entry(film.tunnelling_thickness_bound, ("j_0", "j_req", "kappa")),
+    # K1 bracket and the framings of the route products (contract v6; cp4 F2, ruling C4)
+    "E_ub": Entry(stability.onset_solid_salt_sink, ("Delta_G_r_ss", "Delta_n_Li"), _li_exchanged),
+    "E_lb": Entry(stability.onset_aqueous_sink, ("Delta_G_r_aq", "Delta_n_Li"), _li_exchanged),
+    "E_solv": Entry(stability.onset_cell_solvent, ("Delta_G_r_aq", "Delta_G_tr_rel", "Delta_n_Li"), _li_exchanged),
+    "Delta_G_tr_rel_born": Entry(stability.relative_transfer_born, ("B_born", "z_M", "r_M", "r_Li")),
+    "E_window_glass": Entry(stability.onset_glass, ("Delta_G_r", "Delta_G_gc", "Delta_n_Li"), _li_exchanged),
+    "E_lb_glass": Entry(stability.onset_aqueous_sink_glass, ("Delta_G_r_aq", "Delta_G_gc", "Delta_n_Li"), _li_exchanged),
+    "E_ub_glass": Entry(stability.onset_solid_salt_sink_glass, ("Delta_G_r_ss", "Delta_G_gc", "Delta_n_Li"),
+                        _li_exchanged),
+    "Omega_glass": Entry(sat.saturation_ratio_glass, MINERAL + ("K_sp", "Delta_G_gc", "T")),
+    # hydrolysis descriptor (contract v6; ruling C1)
+    "k_hyd_eff": Entry(hydrolysis.effective_rate_constant, ("tau_k", "k_hyd")),
+    "t_half_hyd_fn": Entry(hydrolysis.half_life, ("tau_k", "k_hyd")),
+    "f_cond": Entry(hydrolysis.condensed_fraction, ("t_wet", "t_half_hyd")),
+    "t_wet_max": Entry(hydrolysis.wet_time_flip, ("t_half_hyd", "f_min")),
+    # R1 formation criterion (contract v6; ruling C2)
+    "a_Al_oxide_eq": Entry(gelation.aluminium_activity_oxide_equilibrium, ("K_ox_Al", "pH", "a_w")),
+    "a_PP_free": Entry(gelation.free_chain_unit_activity, ("a_PP_tot", "beta_AlPP", "a_Al")),
+    "IAP_AlPP": Entry(gelation.ion_activity_product_alpp, ("a_Al", "a_PP", "nu_Al", "nu_PP")),
+    "Omega_AlPP": Entry(gelation.saturation_ratio_alpp, ("a_Al", "a_PP", "nu_Al", "nu_PP", "K_sp_AlPP")),
+    # liquid wetting of the coacervate (contract v6; ruling C3)
+    "gamma_al_l_ads": Entry(coacervate.substrate_dilute_energy,
+                            ("gamma_al_l0", "T", "Gamma_P", "K_P", "a_P", "delta_P", "Pi_osm")),
+    "gamma_al_n_ads": Entry(coacervate.substrate_dense_energy,
+                            ("gamma_al_n0", "T", "Gamma_P", "K_P", "a_P", "delta_P", "Pi_osm")),
+    "Dgamma_coac": Entry(coacervate.dense_phase_preference, ("gamma_al_l0", "gamma_al_n0")),
+    "S_coac": Entry(coacervate.spreading_coefficient, ("gamma_al_l", "gamma_al_n", "gamma_nl_c")),
+    "cos_theta_coac": Entry(coacervate.contact_angle_cosine, ("gamma_al_l", "gamma_al_n", "gamma_nl_c")),
+    "Dgamma_coac_ideal": Entry(wrong_variants.coacervate_preference_ideal, ("T", "Gamma_P", "K_Pc", "c_n", "c_l", "delta_P")),
 }
 
 
