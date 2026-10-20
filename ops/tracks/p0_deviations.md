@@ -77,3 +77,19 @@ Change: PH-W3.1 (b21dbf0, ops/reports/P0-W3.PH-W3.1.md): machine block `contract
 (the checker requires equality with the contract version). Nothing else in the file changed; no threshold value or registered rule edited.
 Known consequence: configs/preprint/thresholds.yaml (copy of the v4 block) differs until the cp5 freeze regenerates it (decision D45).
 Re-audit: cp5 freeze
+
+## 2026-10-21 theory/thresholds.md
+Change: PH-W3.2a (ops/reports/P0-W3.PH-W3.2a.md): theory/thresholds.md changed after p0-cp3 (block v4->5, contract_version 6, screen_ph added for cp4 F2/F4 and route layer C1-C6; no carbonate link changed). Regenerate configs/preprint/thresholds.yaml at cp5.
+Re-audit: cp5 freeze
+
+## 2026-10-21 theory/contract.yaml
+Change: PH-W3.2a (cp4 fixes 9454a26, route layer 5a6e2cf and 91ce4d5, ops/reports/P0-W3.PH-W3.2a.md): contract v5 -> v6, 22 functions added for the K1 bracket and the route layer (107 functions in total, 85 in v5); check_contract PASS. No existing carbonate function changed. theory/ignorance_priors.md has no diff in this merge.
+Re-audit: cp5 freeze
+
+## 2026-10-21 theory/thresholds.md
+Change: PH-W3.2 (dd41b19, ops/reports/P0-W3.PH-W3.2.md): machine block version 5 -> 6. Added the generated `screen_ph.margins_v6` (numeric K1 margins, cutoff classes, tier-1 crossovers, m_E qualification, ruling-(b) crystal row, R1 input width), derived by theory/tools/gen_margins.py from pinned PH-W5.1 and W1 files. Section 7 (rules). The K1 margin params paths are now thresholds.K1.margin_expt and thresholds.K1.margin_dft. No carbonate link, edge or value changed. Disclosure: derived from PH-W5.1 outputs, which were read.
+Re-audit: cp5 freeze
+
+## 2026-10-21 lit/params.yaml
+Change: PH-W1.3 (preprint/p0-w1 638d92e, params commit 0e3e276, ops/reports/P0-W1.PH-W1.3.md) adds 20 keys (`added_in: P0-W1.PH-W1.3`; 425 keys in total, 4 of them gaps); no existing key changed. Merged from preprint/p0-w1 at the PH-I4e integration. No screen output consulted.
+Re-audit: cp5 freeze
