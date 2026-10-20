@@ -1,7 +1,7 @@
 {
-  "last_session": "P0-W5.4",
-  "status": "DONE-PART1",
-  "day": 3,
+  "last_session": "PH-K1",
+  "status": "DONE",
+  "day": 4,
   "hold": {
     "part": "anchor (Part 2)",
     "status": "HOLD-P",
@@ -75,6 +75,19 @@
       "dryrun_spec": "jobs/preprint/specs/anchor_production_dryrun.yaml",
       "dryrun": "results/preprint/anchor/dispatch/anchor-production-dryrun-2b3a281/",
       "local_smoke": "results/preprint/anchor/driver_smoke/"
+    },
+    "ph_k1": {
+      "report": "ops/reports/PH-K1.md",
+      "ladder": "results/preprint/pourbaix/ph_k1/ph_k1.md",
+      "json": "results/preprint/pourbaix/ph_k1/ph_k1.json",
+      "csv": "results/preprint/pourbaix/ph_k1/ladder.csv",
+      "code": [
+        "src/nacre/pourbaix/ph_k1.py",
+        "src/nacre/pourbaix/ph_k1_run.py",
+        "src/nacre/pourbaix/ph_cache.py"
+      ],
+      "local_only": ".local/w5/cache_ph/ (sha256 in results/preprint/pourbaix/ph_k1/cache/manifest.json)",
+      "mp_db_version": "2026.09.28"
     }
   },
   "notes": [
@@ -83,6 +96,7 @@
     "Al(ClO4)3 dfH -571.1 +- 2.1 kJ/mol (Krivtsov et al. 1973, doi:10.1007/BF00926423): sourced value in the supplement, not yet a W1 params key (key request outstanding).",
     "Al-phase LiClO4 onsets and every reduction limit have no budget key: undetermined (inconclusive, never a pass). Reduction and solvated budgets: gap (W1 post_cp3 not set over a one-hour poll).",
     "Boehmite dehydration to corundum favoured below p(H2O) 2.9e-5 bar (expt; a_w 8.9e-4 liquid-referenced): a threshold, not a verdict; electrolyte water activity is not a sourced key.",
-    "Anchor driver ready: linux-64 lock (xtb 6.6.1 hf49bc11_0, CREST 2.12 h9d67668_0), PySCF 2.14.0 built with -DENABLE_SMD=ON for the CDS term; dry run on the local transport passed (anchor-production-dryrun-2b3a281). Remaining on the pod: install, CDS check, CREST/xtb/DFT on 10 species, the four binding free energies."
+    "Anchor driver ready: linux-64 lock (xtb 6.6.1 hf49bc11_0, CREST 2.12 h9d67668_0), PySCF 2.14.0 built with -DENABLE_SMD=ON for the CDS term; dry run on the local transport passed (anchor-production-dryrun-2b3a281). Remaining on the pod: install, CDS check, CREST/xtb/DFT on 10 species, the four binding free energies.",
+    "PH-K1: tier-1 ladder done. Gate 3.937816 V vs 3.938 V. Ca orthophosphates 3.98-4.07 V (solid-salt upper bound); no pass possible without a solvated sink."
   ]
 }
