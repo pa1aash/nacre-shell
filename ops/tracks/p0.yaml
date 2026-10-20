@@ -367,6 +367,12 @@ days:
     model: Opus
     master_trace: none
     requires: []
+  - id: PH-W2.2b
+    lane: p0-w2
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
   - id: PH-W6.1
     lane: p0-w6
     day: 5
@@ -838,6 +844,10 @@ decisions:
     fails near 4.1 V) plus the gap map, and the abstract says so; the operator is told plainly and decides
     whether to post; the route layer stays as a design hypothesis with its screened thermodynamics.',
   reason: Route ruling evidence consequence 3.}
+- {id: D53, date: '2026-10-20', decision: 'cp4 PASS conditional on fixes F1 to F9 and packet rulings 1 to 11, as
+    filed in ops/tracks/redirect_plan.md (CP4 FIXES) with the owner map there. Nothing starts production until
+    F1 to F5 are applied and the freeze packet goes to the planning chat. PH-W2.2b added (lane w2, Sonnet,
+    day 5, requires []) for F8.', reason: Planning-chat verdict of 2026-10-20 on the cp4 packet.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1133,6 +1143,31 @@ lane_notes:
     margins; vets the bracket; stays after PH-W5.1. (PH-W5.1) Benchmark, Al-O-H passivation window, amorphous
     K1 rows, lower-bound sink bracket when the keys exist, matrix rungs as tier-2 rows. (PH-W8.1, PH-W6.1)
     Sonnet, day 5. Route rulings C1 to C6 in ops/tracks/redirect_plan.md (D49).
+- id: N42
+  date: '2026-10-20'
+  day: 5
+  lanes: [p0-w3]
+  note: '(PH-W3.2a) CP4 fixes F1 (verdict rule 2d), F2 (K1 bracket rule and vetting of the hydration argument, Li-reference and anion term) and the F4 spec (STAGE field, conversion-step rows). D53.'
+- id: N43
+  date: '2026-10-20'
+  day: 5
+  lanes: [p0-w5]
+  note: '(PH-W5.1) CP4 fixes F2 compute (bracket), F3 (Ca(PO3)2 and Al(PO3)3 thermochemistry), F5 comparator row ((LiPO3)n), F7 (carbonate DFT comparator from the 2026.09.28 book, labelled extra), F4 rows. D53.'
+- id: N44
+  date: '2026-10-20'
+  day: 5
+  lanes: [p0-w1]
+  note: '(PH-W1.3) CP4 fixes F2 and F3 data keys per packet decision 10: hydration free energies of Ca2+, Al3+, ClO4-; water-to-carbonate transfer data; Ca(PO3)2 glass DfH, S0 and crystallisation enthalpy; Al(PO3)3 data; polyphosphate hydrolysis rates near pH 7 to 13; conversion temperatures. D53.'
+- id: N45
+  date: '2026-10-20'
+  day: 5
+  lanes: [p0-w8]
+  note: '(PH-W8.1) CP4 fixes F4 table spec, F6 and F8 text (Abstract and Introduction), F9 lint-scope implementation of the SG17W warn pattern. D53.'
+- id: N46
+  date: '2026-10-20'
+  day: 5
+  lanes: [p0-w4]
+  note: '(PH-W4.2a) CP4 fixes F1 proceed rule, F5 panel, STAGE field. D53.'
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
