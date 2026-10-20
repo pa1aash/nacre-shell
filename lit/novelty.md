@@ -455,3 +455,104 @@ Conditions on N1 and N2:
 - **G3 Full text.** Publisher-hosted open copies refused headless clients. Only 5 full texts were reached, and the remaining locators are abstracts or titles. Rows 1 to 5 (the top five) were read from abstracts only. The full text of rows 1, 3 and 5 should be read before cp4, through an authenticated or library route by the operator. *Update 2026-10-17 (P0-W2.2): row 3 was read in full through an open repository copy (see the dated note under Closest prior art); rows 1 and 5 have no open copy and remain outstanding for an operator or library route.*
 - **G4 Depth.** For combinations with more than 25 hits per route, only the top 25 records were screened. The decisive combinations (SOMP and the S-O-M triple, with and without the context block) were screened in full on both boolean routes.
 - **G5 Language.** The query terms are English only.
+
+## Phosphate redirect scan (PH-W2.1, 2026-10-20)
+
+Scope: redirect to calcium-phosphate barriers on Al in fluorine-free cells (`ops/tracks/redirect_plan.md`). Fetched headless on 2026-10-20: Google Patents pages, Crossref, OpenAlex, HAL API, PMC, OSTI, web search. Patents were read as open full-text pages only. Values below are from those pages; "n.r." = not retrieved. Rows from search-result summaries are marked (S). Differences are stated against the target: templated biomimetic Ca-phosphate film + quantitative design rule + fluorine-free + aqueous slurry processing.
+
+### P1. Incumbents
+
+| ID | Identity | Assignee (verification) | Priority | Claim scope | How the target differs |
+|---|---|---|---|---|---|
+| I1 | US 6,485,866 B1 (parent of I2; CA 2,268,355) | Hydro-Québec original; Avestor LP / Bathium Canada listed as current (Google Patents header, verified) | 1999-04-07 | Claims 1, 12, 16: collector coated with a vitreous or partly vitreous binder of an alkaline-metal **phosphate or polyphosphate** plus an electronic-conduction additive; claim 12 is a process from an aqueous dispersion; carbon 2-20 vol % (claim 22) | Claims a glassy Li/K polyphosphate-plus-carbon binder, not a Ca-phosphate nucleated on a template; no design rule; no fluorine-free or Ca claim |
+| I2 | US 6,844,114 B2 | Hydro-Québec original; Avestor / Bathium listed (verified) | 1999-04-07 (filed 2002-09-24) | Claims recite alkaline-metal **borate or polyborate** only; phosphate and (LiPO3)n, made by neutralising (HPO3)n to pH near 7, appear in the description only | Same as I1; borate claims leave phosphate described, not claimed, in this member |
+| I3 | CA 2,268,355 A1 "LiPO3-based collector coating" | Hydro-Québec (original) | 1999-04-07 | Claim 2: coating based on phosphate, polyphosphate, borate or polyborate of an alkali metal; claims 19 and 30 repeat it for process and electrode | As I1 |
+| I4 | US 8,221,915 B2 "High performance lithium or lithium ion cell" | Leyden Energy original; A123 Systems and Leyden ABC LLC listed later (verified) | 2010-11-12 | Al collector with conductive carbon/graphite coating; LiTFSI at 0.1-3 M; additive from LiBOB, LiF, LiFOB, LiPF6 and similar | Carbon coating plus fluorinated imide salt; no phosphate; not fluorine-free |
+| I5 | US 9,263,731 B2 (same title) | Header names no assignee; legal events show Leyden Energy; A123 appears on some pages (unresolved) | 2010-11-12 (filed 2011-10-13) | Porous carbon/graphite-polymer coating leaving Al exposed; imide/methide salt; 0.01-1 M additive forms a film on exposed Al | As I4 |
+| I6 | US 9,350,017 B2 (same title) | Unresolved: one fetch lists A123 Systems as original, the other none; legal events show Leyden | 2010-11-12 (CIP of US 13/273,114) | Claim 1: carbon/graphite coating 0.1-8 um, imide salt (C2F5SO2 or FSO2), additive LiBOB/LiF/LiPF6 and others. Page reports a 60 C hold at 4.2 V: bare Al corrodes at about 60 h, coated none in 1 week; at 3.65 V onset is delayed | As I4; the 60 C hold is a class A anchor for carbon coating |
+| I7 | US 8,252,463 B2 and US 8,821,969 B2 (Modified current collector / method) | Tsinghua University and Hon Hai Precision (verified, both) | 2010-08-27 | Metal plate (example 20 um Al foil) with a protective film Al(x)M(y)PO4 or Al(x)M(y)(PO3)3, M = Cr, Zn, Mg, Zr, Mo, V, Nb or Ta; 10-200 nm; made from H3PO4 + Al(OH)3 + metal oxide (example CrO3) in water or NMP, dip coat, 100-350 C cure | **Closest incumbent: an Al-phosphate / Al-polyphosphate film on Al.** Film is cured aluminophosphate (Cr in the example), not a Ca-phosphate nucleated on a biomimetic template; no oxidation-limit rule; electrolyte salts listed include LiPF6 |
+| I8 | Tolchard, Vullum, Arstad, Wagner, RSC Sustainability 1, 378 (2023), 10.1039/d3su00031a | Academic (SINTEF / NTNU) | 2023 | H3PO4 pH control for aqueous NMC622; needs tight acid stoichiometry and drying (Crossref abstract paraphrase); residual phosphate gave rapid cell death (S: 50-100 cycles) | Phosphate as a slurry additive on the active material, not a film on the foil |
+| I9 | Chen et al., J. Mater. Chem. A 12, 25393 (2024), 10.1039/d4ta03592e | Academic (Uppsala) | 2024 | H3PO4 in water processing of Ni-rich cathodes gives a slightly thinner CEI and lower charge-transfer resistance (Crossref abstract) | As I8 |
+| I10 | Carvalho et al., Polymers 8, 276 (2016), 10.3390/polym8080276 | Academic (Passerini group) | 2016 | LTO slurry pH 11.4 falls to about 6.7 with 1 wt % H3PO4; cavities and Al in cavity (EDX 66-88 at %) absent with acid; 144 vs 124 mAh/g at 5C | pH control for the slurry stage only |
+| I11 | Xu et al., Electrochim. Acta 2022, 10.1016/j.electacta.2022.140970; further LTO/H3PO4 papers (S) | Academic (surfaced as Bresser-group LTO work; authorship n.r.) | 2022 | H3PO4 additive for water-processed LTO; phosphate anion matters beyond buffering; Li3PO4 and a Li1+xTi2(PO4)3 rod phase reported (S) | Phosphate forms on the active material; no barrier on Al designed |
+| I12 | Bichon, Sotta, de Vito, Porcher, Lestriez, J. Power Sources 2021, 10.1016/j.jpowsour.2020.229097 (HAL-CEA, hal-03173352) | Academic / CEA-Liten | 2021 | Water-processed NMC532/graphite; Al corrosion avoided by H3PO4 buffering **or** a carbon-coated collector | Shows both incumbent routes at once |
+| I13 | Long et al., Energy Environ. Sci. 18, 10306 (2025), 10.1039/d5ee06040k | Academic | 2025 | Interfacial strategy confining H+/OH- to suppress Al corrosion in aqueous storage (Crossref); an electrodeposited AlPO4 layer (S, n.r. in abstract) | Aqueous electrolytes, not Li-ion slurry or cell; needs full-text check |
+| I14 | Gao, Ma et al., Mater. Today Energy 7, 18 (2018), 10.1016/j.mtener.2017.12.001 | Academic (Argonne) | 2017 | AlPO4 passivation layer on Al: corrosion peak absent and low leakage in CV and CA (S, via a 2023 review) | Class A anchor; see tier-2 table |
+
+US 6,485,866 phosphate verdict: **yes**, phosphate and polyphosphate are claimed (claims 1, 12, 16), not only described. The continuation US 6,844,114 claims borate only. Search for phosphate conversion coatings on Al: the Tsinghua/Hon Hai films (I7) and AlPO4 on Al foil (I13, I14, Ma 2017) are what was found; no conventional conversion-coating paper for battery foil was found in 2 searches.
+
+### P2. Template precedent
+
+| Ref | What was shown |
+|---|---|
+| Ryu, Ku, Lee, Park, Adv. Funct. Mater. 20, 2132 (2010), 10.1002/adfm.200902347 | Polydopamine coating as a general route to hydroxyapatite crystallisation on ceramics, noble metals, semiconductors and polymers (abstract via search summary; Al and Li-ion cells not covered). Used as an optional qualitative consistency check |
+| Surface-adhesive layer-by-layer PDA-hydroxyapatite on Ti, RSC Adv. 2014, 10.1039/c4ra07907h | Layer-by-layer PDA/HA films on titanium, repeatable, bioactive in cell tests (S) |
+| Xiao et al., Nanosci. Nanotechnol. Lett. 2015, 10.1166/nnl.2015.1965 | PDA layer on Ti implants accelerates hydroxyapatite nucleation and growth (title and search summary) |
+| Tapsir et al., Surf. Coat. Technol. 2016, 10.1016/j.surfcoat.2015.11.024; J. Biomater. Appl. 2017, 10.1177/0885328217744081 | Collagen-hydroxyapatite immobilised on PDA-grafted 316L stainless steel; adhesion and cell tests in the 2017 paper (titles only) |
+| PDA-linked chitosan film on stainless steel, J. Mater. Sci. Mater. Med. 2022 (DOI n.r.) | Chitosan film bonded through PDA and glutaraldehyde, adhesion higher than PDA alone; no calcium phosphate (S) |
+| HA-chitosan on 304 stainless steel by galvanic deposition (conference abstract, S) | HA-chitosan composite coating without external power; no Al, no battery |
+
+No source found for PDA or chitosan templated calcium phosphate on **aluminium** or on a battery collector (3 searches). Absence in this scan does not establish priority.
+
+### P3. Tier-2 hunt (for PH-W1.2 to extract; seed sources excluded)
+
+Class: A hold or LSV on a coated Al collector; B coated cathode particle cycled to a stated cutoff; C bulk LSV. n.r. = not retrieved, to be fetched by W1.2.
+
+| ID | Phase | Class | Electrolyte | Temp | Cutoff / potential | Duration as stated | DOI |
+|---|---|---|---|---|---|---|---|
+| T1 | AlPO4 coating on Al foil | A | 1.2 M LiPF6 EC/EMC 3:7 (fluorinated) | n.r. (not in main text) | Stepped holds; bare Al shows a corrosion window near 3.9 V; the window is absent with AlPO4 and peak parasitic current is about 50 % of uncoated (text states Fig. 4c, up to the 4.5 V step) | Holds up to 20 h | 10.1021/acs.jpclett.6b02933 (Ma et al., 2017; DOI from the SI record) |
+| T2 | AlPO4 passivation layer on Al | A | n.r. | n.r. | CV and CA; corrosion peak disappeared (S) | n.r. | 10.1016/j.mtener.2017.12.001 |
+| T3 | Li-Al-phosphate coating on LiCoO2 | B | n.r. | "room temperature and beyond" (title) | 4.6 V | n.r. | 10.1016/j.ensm.2021.01.031 |
+| T4 | ALD AlPO4 on Li1.2Mn0.54Co0.13Ni0.13O2 | B | n.r. | n.r. | n.r. | n.r. | 10.1016/j.nanoen.2017.02.015 |
+| T5 | ALD FePO4 on LiNi0.5Mn1.5O4 (analogue phase) | B | 1 M LiPF6 EC/DMC 1:1 | CV at room temperature; cycling n.r. | 5.0 V (3.5-5.0 V window) | 100 cycles at 0.5 C: 79.89 % retained bare, 100 % with 40 ALD cycles | 10.1002/advs.201500022 |
+| T6 | Li3PO4 coating on LiNi0.8Co0.15Al0.05O2 for aqueous processing | B | n.r. | n.r. | n.r. | n.r. | 10.1002/cssc.202001907 |
+| T7 | Li3PO4 and in situ LiPO3 (ALD thin film) | C, theoretical window | n.r. | n.r. | 0.69-4.21 V for Li3PO4; up to 5.00 V for LiPO3 (S) | n.r. | n.r. (record at kms.shanghaitech.edu.cn/handle/2MSLDSTB/345791; page unreadable) |
+| T8 | LiPON, about 5 V window (S) | C, indirect | n.r. | n.r. | about 5 V (several records, one calculated) | n.r. | n.r. (Electrochim. Acta 2016 LiPON/B-LAGP record; not extracted) |
+
+Counts: class A 2, B 4, C 2. **No tier-2 row exists for a calcium phosphate** (hydroxyapatite, ACP, OCP, beta-TCP, Ca pyrophosphate, Ca metaphosphate) and no Al(PO3)3 or Al-borate/oxalate row: 1 search for bulk Ca-phosphate LSV returned nothing. All A rows are in LiPF6 (fluorinated) electrolyte, so a fluorine-free reading is not available from them.
+
+### P4. Fluorine-free phosphate-source survey
+
+| ID | Source | What is sourced | Oxidation limit or film |
+|---|---|---|---|
+| S1 | Trimethyl phosphate (TMP) electrolyte on LNMO, Matsumoto et al., J. Power Sources 273 (2015), 10.1016/j.jpowsour.2014.09.018 | TMP-based electrolyte, abstract via search | Oxidation onset about 3.8 V vs Li/Li+, against about 4.6 V for EC:DEC; an oxidative polymer film limits further decomposition. No Al-phosphate film reported |
+| S2 | TMP and TEP at 4.4 and 4.5 V, patent US 11,088,396 "Electrolyte formulations for electrochemical device" (S; assignee n.r.) | Patent text states superior stability at 4.4-4.5 V, to be shown by experiment | Conflicts with S1 (3.8 V onset); treat as unverified |
+| S3 | Tornheim et al., J. Electrochem. Soc. 166 (2019), 10.1149/2.0951902jes (OSTI 1494582) | 1 wt % phosphate and phosphite additives incl. triethyl phosphate in 1.2 M LiPF6 EC/EMC, NMC532/LTO | Holds 4.6 V for 60 h and 4.3 V for 20 h: all phosphates slightly raised CE, none reduced the hold current, i.e. no passivated surface. Electrolyte is fluorinated |
+| S4 | H3PO4 residue in slurries, Tolchard 2023 (I8) | Excess or unreacted orthophosphate remains on drying | Reacts with carbonate electrolyte, rapid failure (S: 50-100 cycles) |
+| S5 | Li3PO4 and Li1+xTi2(PO4)3 from H3PO4 in LTO slurries (I11) | Phosphate forms on the active material in the slurry (S) | Not a source for the foil; a competing phase |
+| S6 | Li3PO4 coating on NCA, Hofmann 2020 (T6) | Coating level trades water protection against electronic conduction | Cutoff n.r. |
+| S7 | Hydro-Québec (LiPO3)n binder (I1, I3) | Phosphate-bearing binder is itself a collector coating; the background says earlier binders react with iron phosphate-type materials | Used at 3.1 V limit in polymer cells (plan); no high-voltage data |
+| S8 | Tsinghua / Hon Hai aluminophosphate (I7) | Phosphate film built from H3PO4 + Al(OH)3 on Al foil | No oxidation limit stated in what was read |
+
+Count: 8 sources. No source was found on a phosphate ester forming an Al phosphate film, or on TEP with Al corrosion (2 searches). **Phosphate supply at a pit from a co-solvent, additive, binder or film reservoir is a hypothesis**: nothing here shows delivery to a pit, in-situ AlPO4 formation in a cell, or the film's oxidation limit in a fluorine-free cell. Film properties can be screened; supply is not screened.
+
+### P5. Novelty wording
+
+Supported by this scan (acknowledge as prior art, or narrow claims):
+
+| # | Wording | Support |
+|---|---|---|
+| NS1 | Phosphate and polyphosphate collector coatings from aqueous dispersion are prior art | I1 claims 1, 12, 16 (1999) |
+| NS2 | Aluminophosphate films on Al collectors are prior art | I7 (2010); T1, T2 |
+| NS3 | Phosphoric-acid pH control of aqueous electrodes is prior art, with residue risk | I8 to I12 |
+| NS4 | Carbon-coated Al collectors are a prior route to the same benefit | I4 to I6, I12; Ma 2017 reports carbon raised parasitic current about 10-fold in LiPF6 |
+| NS5 | Among the open sources scanned, none combines a PDA- or chitosan-templated Ca-phosphate film, a quantitative design rule, fluorine-free cells and aqueous-slurry processing | P1 to P3; narrow, search-limited, patent gap below |
+
+Unsupported (do not write):
+
+| # | Wording | Why |
+|---|---|---|
+| NU1 | "first" anything (first phosphate barrier, first bone-inspired, first templated film on Al) | No priority search possible (SG14) |
+| NU2 | "novel" in any patent sense | Patent gap |
+| NU3 | "no incumbent delivers the benefit" | I7, I8 to I12 deliver slurry-stage protection |
+| NU4 | "outperforms phosphoric acid or carbon-coated collectors" | No comparison exists |
+| NU5 | "a Ca phosphate is more oxidation-stable than carbonate" | No tier-2 row for any Ca phosphate |
+| NU6 | "fluorine-free protection of Al is new" | Not searched as such |
+| NU7 | "phosphate supply at a pit works" or "self-healing" | Hypothesis only |
+| NU8 | "templated Ca phosphate has not been made on Al" | Only 3 searches; no Al/Ca-phosphate hit does not prove absence |
+| NU9 | "the nucleation half is validated" | Retrodiction 7 of 12 |
+| NU10 | Any claim that PDA-HA work on Ti or steel transfers to Al foil in alkaline slurry | Not shown |
+
+Counts: supported 5, unsupported 10.
+
+**Patent-search gap.** No keyword, classification or citation search of patent databases was possible (no Lens token). Only named Google Patents pages (I1 to I7) and incidental hits from web search were read. Not covered: other Hydro-Québec family members, JP/KR/CN filings beyond I7, phosphate conversion-coating patents for foil, claims text of I5 and I6 beyond claim 1.

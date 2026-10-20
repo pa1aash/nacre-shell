@@ -426,3 +426,52 @@ Notes on the assignment:
    - B7 (Hu 2012) and B10 (Yu 2023) are now read in full.
 4. **B13.** The pKa-versus-degree-of-acetylation values of Sorlier et al. (2001, 10.1021/bm015531+, abstract only), and the solvent and pH used by chitosan-binder electrode papers, remain unsourced.
 5. **B14, B15.** No independent source on the OWRK combining rule for highly polar films, and no contact (γ_sn) data at controlled Ca²⁺ activity for the P0 template, were searched for in this session; both are wanted for the Discussion.
+
+## Phosphate redirect entries (PH-W2.1, 2026-10-20)
+
+Five entries for the phosphate redirect (`ops/tracks/redirect_plan.md`), numbered after B15. Sources are the ones logged in `lit/novelty.md`, section "Phosphate redirect scan". "(S)" marks a claim read from a search summary, not the paper. Regime field: whether the plan avoids the argument.
+
+### B16. Li3PO4 and AlPO4 form in the slurry and take the phosphate (K2, K3)
+
+- **Sources.** 10.1016/j.electacta.2022.140970 (Xu 2022, S); 10.3390/polym8080276 (Carvalho 2016, "highly insoluble phosphate compounds" on the active material); 10.1039/d3su00031a (Tolchard 2023, phosphate residues on drying).
+- **Evidence.** H3PO4 in LTO slurries gives Li3PO4 and a Li1+xTi2(PO4)3 phase (S). Residual orthophosphate precipitates on drying and reacts with carbonate electrolyte (S). Phosphate is consumed by Li and Al before any Ca-phosphate nucleates.
+- **Condition.** Phosphate source plus Li-containing active material or Al in aqueous slurry.
+- **Regime.** Partly. The plan lists Li3PO4 and AlPO4 as slurry competing phases and runs K2 on speciation. No sourced Ksp comparison is in this scan.
+- **Placement.** Discussion and Limits.
+- **Severity.** Material.
+
+### B17. Bulk precipitation competes with templated nucleation (K3)
+
+- **Sources.** 10.1039/d3su00031a (bulk orthophosphate precipitates on drying); carbonate analogues B10 and B14 above. No phosphate-specific nucleation-window source was retrieved here.
+- **Evidence.** Where a supersaturated phosphate solution meets a template, precipitates form in bulk and on active material. The retrodiction of the nucleation half scored 7 of 12 (10 required), so no nucleation number is a finding.
+- **Condition.** Any dose at which the homogeneous barrier is also passable; pH 10 to 13 slurry.
+- **Regime.** No. The plan keeps K3 as a gate and reports that bulk precipitation competes; the window may be empty.
+- **Placement.** Limits; Discussion.
+- **Severity.** Material.
+
+### B18. Insulating phosphate films block the collector (K4)
+
+- **Sources.** 10.1021/acs.jpclett.6b02933 (Ma 2017: AlPO4 is an electronic insulator; carbon coating raised static parasitic current about 10-fold); 10.1002/advs.201500022 (Xiao 2015: lower first-cycle capacity with the thickest FePO4 layer, attributed to its conductivity); 10.1002/cssc.202001907 (Hofmann 2020: too much Li3PO4 impairs electronic conduction).
+- **Evidence.** Phosphate layers cost conduction as thickness grows, while carbon raises parasitic current. A barrier has to be thin and continuous at once.
+- **Condition.** Film thickness above the tunnelling or percolation scale; thick coatings in cathode-particle form.
+- **Regime.** Partly. K4 carries the insulating-thickness bound; no thickness limit is sourced in this scan.
+- **Placement.** Limits.
+- **Severity.** Material.
+
+### B19. Structural OH and hydrate water oxidise near the carbonate limit (K1)
+
+- **Sources.** 10.1021/acs.jpclett.6b02933 (Ma 2017: anodic solvent oxidation makes protons at the Al surface, corrosion window near 3.9 V); Li3PO4 window 0.69-4.21 V theoretical, ShanghaiTech record (S, unreadable); 10.1016/j.jpowsour.2014.09.018 (TMP onset about 3.8 V).
+- **Evidence.** No measured oxidation limit exists in this scan for hydroxyapatite, ACP or any hydrate (tier-2 table has no Ca-phosphate row). Computed Li3PO4 sits near 4.2 V, close to carbonate. Hydrate water and OH are plausible proton sources.
+- **Condition.** Charge cutoffs of 4.3 to 4.5 V against Li; hydrated or hydroxylated phases.
+- **Regime.** Partly. K1 uses the two-tier rule with a per-reaction table; "undetermined never passes". A phosphate may fail K1 as carbonate does.
+- **Placement.** Results and Limits.
+- **Severity.** Blocking (bears on the K1 verdict for hydroxyapatite and ACP).
+
+### B20. Incumbents already deliver the benefit by pH control or carbon coating
+
+- **Sources.** 10.1016/j.jpowsour.2020.229097 (Bichon 2021: H3PO4 or carbon-coated collector); 10.3390/polym8080276 (pH 11.4 to 6.7, no cavities, 144 vs 124 mAh/g at 5C); US 9,350,017 (carbon coating: no corrosion in a 1-week 60 C hold at 4.2 V against about 60 h bare); US 8,252,463 (aluminophosphate film on Al); 10.1021/acs.jpclett.6b02933 (AlPO4 on Al removes the 3.9 V window).
+- **Evidence.** Slurry-stage corrosion is solved by acid or carbon; cell-stage protection by carbon or aluminophosphate in fluorinated electrolytes. A Ca-phosphate film must add something these do not.
+- **Condition.** Aqueous slurry (pH control) or carbonate/imide cell (carbon, AlPO4).
+- **Regime.** No. Differentiation rests on the fluorine-free regime, the quantitative design rule and the screen, not on performance. "Outperforms" wording is not supported.
+- **Placement.** Introduction and Discussion.
+- **Severity.** Material.
