@@ -72,3 +72,41 @@ def test_cause_slots_are_filled_from_rows():
     bm._causes(rows)
     assert "-66.5 kJ/mol per water" in rows[0]["cause"]
     assert rows[0]["hydrate_excess_per_water_kJ"] == pytest.approx(-66.5)
+
+
+# ---------------------------------------------------------------- step 2: Al-O-H window
+from nacre.pourbaix import ph_w51_al as al  # noqa: E402
+
+
+def test_speciation_slope_of_al3_is_minus_three_per_ph():
+    s = al.speciation(8.0, [5.0, 6.0], al.log_betas())
+    assert s["Al3+"][1] - s["Al3+"][0] == pytest.approx(-3.0)
+
+
+def test_window_edges_bracket_the_threshold():
+    betas = al.log_betas()
+    wnd = al.window(10.578, betas, 1.0e-4)
+    for ph in (wnd["lower"], wnd["upper"]):
+        assert float(al.speciation(10.578, ph, betas)["total"]) == pytest.approx(-4.0, abs=1e-6)
+    assert wnd["lower"] < wnd["ph_min"] < wnd["upper"]
+
+
+def test_window_is_empty_when_the_minimum_exceeds_the_threshold():
+    assert al.window(10.578, al.log_betas(), 1.0e-6)["passive"] is False
+
+
+def test_committed_window_and_published_statements():
+    d = json.loads((W51 / "al_window.json").read_text(encoding="utf-8"))
+    assert d["primary"]["solid"] == "Al(OH)3 am"
+    assert 4.5 < d["primary"]["lower"] < 5.5 and 8.0 < d["primary"]["upper"] < 8.5
+    assert d["reference"]["solid"] == "boehmite" and d["reference"]["upper_clipped"]
+    assert d["published"]["TR-090"]["lower"] == 4.5 and d["published"]["TR-091"]["lower"] == 4.0
+    alu = d["benchmark"][0]
+    assert abs(alu["diff_kJ"]) < 5.0  # the aluminate DfG agrees with the hydrolysis constant
+
+
+def test_a_al3_csv_covers_ph_5_to_8_5():
+    with open(W51 / "a_al3_oxide.csv", newline="", encoding="utf-8") as fh:
+        rows = list(csv.DictReader(r for r in fh if not r.startswith("#")))
+    assert float(rows[0]["pH"]) == 5.0 and float(rows[-1]["pH"]) == 8.5
+    assert all(float(r["log10_a_Al3_AlOH3_am"]) > float(r["log10_a_Al3_boehmite"]) for r in rows)

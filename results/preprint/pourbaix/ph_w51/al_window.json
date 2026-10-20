@@ -1,0 +1,827 @@
+{
+ "session": "PH-W5.1",
+ "step": "2 Al-O-H passivation window",
+ "generated_utc": "2026-10-20T14:25:02Z",
+ "git_sha": "87345f10da450bcf58598a6d3718d5295ba0483d",
+ "evidence_table_sha256": "442a3ac68477695118b66dc45f81f78946b95fe29239441f97fc1743671eb3ad",
+ "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
+ "question": "Thermodynamic question: over pH 3 to 10 at 298.15 K and I = 0, where does an Al oxide or hydroxide film stay",
+ "solids": {
+  "boehmite": {
+   "log_ks": 7.918697398790942,
+   "u_log": 0.700769681308934,
+   "route": "DfG Al3+ (TI-022) + 2 DfG H2O(l) - DfG boehmite (TI-026)",
+   "sources": [
+    "TI-022",
+    "TI-026",
+    "dfg_h2o_l"
+   ],
+   "grade": "A"
+  },
+  "gibbsite": {
+   "log_ks": 7.738,
+   "u_log": null,
+   "route": "solubility constant (acid form)",
+   "sources": [
+    "TB-028"
+   ],
+   "grade": "C"
+  },
+  "Al(OH)3 am": {
+   "log_ks": 10.578,
+   "u_log": null,
+   "route": "solubility constant (acid form)",
+   "sources": [
+    "TB-027"
+   ],
+   "grade": "C"
+  },
+  "corundum": {
+   "log_ks": 9.1505,
+   "u_log": null,
+   "route": "solubility constant (acid form), per Al (Al2O3 + 6 H+ = 2 Al3+ + 3 H2O)",
+   "sources": [
+    "TB-029"
+   ],
+   "grade": "C"
+  }
+ },
+ "base_kJ": {
+  "dfg_al3_kJ": -489.4,
+  "dfg_h2o_kJ": -237.1,
+  "dfg_boehmite_kJ": -918.4
+ },
+ "log_betas": {
+  "AlOH2+": -4.95,
+  "Al(OH)2+": -10.59,
+  "Al(OH)3(aq)": -16.42,
+  "Al(OH)4-": -22.87
+ },
+ "hydrolysis_sources": {
+  "AlOH2+": "TB-023",
+  "Al(OH)2+": "TB-024",
+  "Al(OH)3(aq)": "TB-025",
+  "Al(OH)4-": "TB-026"
+ },
+ "windows": [
+  {
+   "solid": "boehmite",
+   "c_thr_M": 0.0001,
+   "lower": 3.9882244738874544,
+   "upper": 10.0,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": true,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -8.177375347844269,
+   "lower_range": [
+    3.748242686615347,
+    4.232821107059452
+   ],
+   "upper_range": [
+    10.0,
+    10.0
+   ],
+   "log_ks": 7.918697398790942,
+   "sources": [
+    "TI-022",
+    "TI-026",
+    "dfg_h2o_l"
+   ]
+  },
+  {
+   "solid": "boehmite",
+   "c_thr_M": 1e-05,
+   "lower": 4.33943917292229,
+   "upper": 9.951165644584673,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": false,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -8.177375347844269,
+   "lower_range": [
+    4.091947802775017,
+    4.597202708000349
+   ],
+   "upper_range": [
+    9.249844647008434,
+    10.0
+   ],
+   "log_ks": 7.918697398790942,
+   "sources": [
+    "TI-022",
+    "TI-026",
+    "dfg_h2o_l"
+   ]
+  },
+  {
+   "solid": "boehmite",
+   "c_thr_M": 1e-06,
+   "lower": 4.7122380487972055,
+   "upper": 8.949930148809056,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": false,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -8.177375347844269,
+   "lower_range": [
+    4.447885196872786,
+    5.0013196024363396
+   ],
+   "upper_range": [
+    8.243576244046206,
+    9.651799438833105
+   ],
+   "log_ks": 7.918697398790942,
+   "sources": [
+    "TI-022",
+    "TI-026",
+    "dfg_h2o_l"
+   ]
+  },
+  {
+   "solid": "gibbsite",
+   "c_thr_M": 0.0001,
+   "lower": 3.9259995225554496,
+   "upper": 10.0,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": true,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -8.358072746635212,
+   "log_ks": 7.738,
+   "sources": [
+    "TB-028"
+   ]
+  },
+  {
+   "solid": "gibbsite",
+   "c_thr_M": 1e-05,
+   "lower": 4.274864039157837,
+   "upper": 10.0,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": true,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -8.358072746635212,
+   "log_ks": 7.738,
+   "sources": [
+    "TB-028"
+   ]
+  },
+  {
+   "solid": "gibbsite",
+   "c_thr_M": 1e-06,
+   "lower": 4.642326185943297,
+   "upper": 9.131095406089031,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": false,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -8.358072746635212,
+   "log_ks": 7.738,
+   "sources": [
+    "TB-028"
+   ]
+  },
+  {
+   "solid": "Al(OH)3 am",
+   "c_thr_M": 0.0001,
+   "lower": 4.983157695936951,
+   "upper": 8.285683735807861,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": false,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -5.518072746635212,
+   "log_ks": 10.578,
+   "sources": [
+    "TB-027"
+   ]
+  },
+  {
+   "solid": "Al(OH)3 am",
+   "c_thr_M": 1e-05,
+   "lower": 5.5034824559550355,
+   "upper": 7.221482684017298,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": false,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -5.518072746635212,
+   "log_ks": 10.578,
+   "sources": [
+    "TB-027"
+   ]
+  },
+  {
+   "solid": "Al(OH)3 am",
+   "c_thr_M": 1e-06,
+   "lower": null,
+   "upper": null,
+   "passive": false,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -5.518072746635212,
+   "log_ks": 10.578,
+   "sources": [
+    "TB-027"
+   ]
+  },
+  {
+   "solid": "corundum",
+   "c_thr_M": 0.0001,
+   "lower": 4.423264510266305,
+   "upper": 9.719266408440856,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": false,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -6.945572746635213,
+   "log_ks": 9.1505,
+   "sources": [
+    "TB-029"
+   ]
+  },
+  {
+   "solid": "corundum",
+   "c_thr_M": 1e-05,
+   "lower": 4.804265659673343,
+   "upper": 8.717155667478306,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": false,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -6.945572746635213,
+   "log_ks": 9.1505,
+   "sources": [
+    "TB-029"
+   ]
+  },
+  {
+   "solid": "corundum",
+   "c_thr_M": 1e-06,
+   "lower": 5.25331174662551,
+   "upper": 7.695159276102075,
+   "passive": true,
+   "lower_clipped": false,
+   "upper_clipped": false,
+   "ph_min": 6.234999999999999,
+   "log_total_min": -6.945572746635213,
+   "log_ks": 9.1505,
+   "sources": [
+    "TB-029"
+   ]
+  }
+ ],
+ "primary": {
+  "solid": "Al(OH)3 am",
+  "c_thr_M": 0.0001,
+  "lower": 4.983157695936951,
+  "upper": 8.285683735807861,
+  "passive": true,
+  "lower_clipped": false,
+  "upper_clipped": false,
+  "ph_min": 6.234999999999999,
+  "log_total_min": -5.518072746635212,
+  "log_ks": 10.578,
+  "sources": [
+   "TB-027"
+  ],
+  "why": "the native and in-situ films are amorphous, so the amorphous phase governs (the C4 reading applied to the oxide film; chosen in PH-W5.1, for vetting in PH-W3.2); 0.1 mM is the one Al level a published window states (TR-091)"
+ },
+ "reference": {
+  "solid": "boehmite",
+  "c_thr_M": 0.0001,
+  "lower": 3.9882244738874544,
+  "upper": 10.0,
+  "passive": true,
+  "lower_clipped": false,
+  "upper_clipped": true,
+  "ph_min": 6.234999999999999,
+  "log_total_min": -8.177375347844269,
+  "lower_range": [
+   3.748242686615347,
+   4.232821107059452
+  ],
+  "upper_range": [
+   10.0,
+   10.0
+  ],
+  "log_ks": 7.918697398790942,
+  "sources": [
+   "TI-022",
+   "TI-026",
+   "dfg_h2o_l"
+  ],
+  "why": "crystalline upper reference: the only Al solid with a grade-A DfG (TI-026), the gated Al phase of the R-cell window (params s_boehmite)"
+ },
+ "published": {
+  "TR-090": {
+   "lower": 4.5,
+   "upper": 8.5,
+   "note": "RSC Sustainability 2023 (d3su00031a), grade D, no Al level stated"
+  },
+  "TR-091": {
+   "lower": 4.0,
+   "upper": 8.5,
+   "note": "Chem. Commun. 2016 (c6cc03969c), grade C, 0.1 mM soluble Al3+"
+  }
+ },
+ "benchmark": [
+  {
+   "check": "DfG Al(OH)4-: TB-032 (solubility, grade D) against TI-022 + 4 H2O + TB-026 log K",
+   "a": -1305.42,
+   "b": -1307.2578226770186,
+   "diff_kJ": 1.8378226770184938,
+   "diff_log": -0.3219726029191455,
+   "sources": [
+    "TB-032",
+    "TI-022",
+    "TB-026",
+    "dfg_h2o_l"
+   ]
+  },
+  {
+   "check": "DfG boehmite: TI-026 (grade A) against TB-033 (grade D)",
+   "a": -918.4,
+   "b": -917.82,
+   "diff_kJ": -0.5799999999999272,
+   "diff_log": 0.10161160378978268,
+   "sources": [
+    "TI-026",
+    "TB-033"
+   ]
+  },
+  {
+   "check": "gibbsite solubility minimum: computed (TB-028 + TB-023..026) against the measured minimum for microcrystalline gibbsite (TB-030, TB-031)",
+   "computed_ph_min": 6.234999999999999,
+   "measured_ph_min": 5.9,
+   "computed_log_total_min": -8.358072746635212,
+   "measured_log_total_min": -6.652890694952242,
+   "diff_log": -1.7051820516829705,
+   "note": "the measured phase is microcrystalline gibbsite, more soluble than the crystalline phase of TB-028",
+   "sources": [
+    "TB-028",
+    "TB-030",
+    "TB-031"
+   ]
+  },
+  {
+   "check": "boehmite log K_s (TI-026 route) against gibbsite (TB-028) and Al(OH)3 am (TB-027)",
+   "boehmite": 7.918697398790942,
+   "gibbsite": 7.738,
+   "am": 10.578,
+   "ordering_ok": true,
+   "sources": [
+    "TI-026",
+    "TB-027",
+    "TB-028"
+   ]
+  }
+ ],
+ "a_al3_rows": [
+  {
+   "pH": 5.0,
+   "log10_a_Al3_boehmite": -7.081302601209058,
+   "log10_total_Al_boehmite": -6.697769809659377,
+   "log10_a_Al3_gibbsite": -7.262,
+   "log10_total_Al_gibbsite": -6.878467208450319,
+   "log10_a_Al3_AlOH3_am": -4.422000000000001,
+   "log10_total_Al_AlOH3_am": -4.038467208450319,
+   "log10_a_Al3_corundum": -5.849500000000001,
+   "log10_total_Al_corundum": -5.465967208450321,
+   "fraction_Al3_of_dissolved": 0.4134920923105879
+  },
+  {
+   "pH": 5.1,
+   "log10_a_Al3_boehmite": -7.381302601209057,
+   "log10_total_Al_boehmite": -6.9190298147559375,
+   "log10_a_Al3_gibbsite": -7.5619999999999985,
+   "log10_total_Al_gibbsite": -7.099727213546879,
+   "log10_a_Al3_AlOH3_am": -4.7219999999999995,
+   "log10_total_Al_AlOH3_am": -4.25972721354688,
+   "log10_a_Al3_corundum": -6.1495,
+   "log10_total_Al_corundum": -5.68722721354688,
+   "fraction_Al3_of_dissolved": 0.34492701778413154
+  },
+  {
+   "pH": 5.2,
+   "log10_a_Al3_boehmite": -7.681302601209059,
+   "log10_total_Al_boehmite": -7.126958697409121,
+   "log10_a_Al3_gibbsite": -7.862000000000001,
+   "log10_total_Al_gibbsite": -7.307656096200064,
+   "log10_a_Al3_AlOH3_am": -5.022000000000002,
+   "log10_total_Al_AlOH3_am": -4.467656096200064,
+   "log10_a_Al3_corundum": -6.449500000000002,
+   "log10_total_Al_corundum": -5.895156096200065,
+   "fraction_Al3_of_dissolved": 0.2790333391099855
+  },
+  {
+   "pH": 5.3,
+   "log10_a_Al3_boehmite": -7.981302601209056,
+   "log10_total_Al_boehmite": -7.319926423626134,
+   "log10_a_Al3_gibbsite": -8.161999999999999,
+   "log10_total_Al_gibbsite": -7.500623822417077,
+   "log10_a_Al3_AlOH3_am": -5.321999999999999,
+   "log10_total_Al_AlOH3_am": -4.660623822417077,
+   "log10_a_Al3_corundum": -6.749499999999999,
+   "log10_total_Al_corundum": -6.088123822417078,
+   "fraction_Al3_of_dissolved": 0.2180840091476256
+  },
+  {
+   "pH": 5.4,
+   "log10_a_Al3_boehmite": -8.28130260120906,
+   "log10_total_Al_boehmite": -7.496225172148417,
+   "log10_a_Al3_gibbsite": -8.462000000000003,
+   "log10_total_Al_gibbsite": -7.676922570939361,
+   "log10_a_Al3_AlOH3_am": -5.622000000000003,
+   "log10_total_Al_AlOH3_am": -4.836922570939361,
+   "log10_a_Al3_corundum": -7.049500000000004,
+   "log10_total_Al_corundum": -6.264422570939363,
+   "fraction_Al3_of_dissolved": 0.16402973034418855
+  },
+  {
+   "pH": 5.5,
+   "log10_a_Al3_boehmite": -8.581302601209057,
+   "log10_total_Al_boehmite": -7.654153528152579,
+   "log10_a_Al3_gibbsite": -8.762,
+   "log10_total_Al_gibbsite": -7.834850926943522,
+   "log10_a_Al3_AlOH3_am": -5.922000000000001,
+   "log10_total_Al_AlOH3_am": -4.994850926943522,
+   "log10_a_Al3_corundum": -7.349500000000001,
+   "log10_total_Al_corundum": -6.422350926943524,
+   "fraction_Al3_of_dissolved": 0.11826355423783631
+  },
+  {
+   "pH": 5.6,
+   "log10_a_Al3_boehmite": -8.881302601209054,
+   "log10_total_Al_boehmite": -7.792163802800845,
+   "log10_a_Al3_gibbsite": -9.061999999999998,
+   "log10_total_Al_gibbsite": -7.972861201591789,
+   "log10_a_Al3_AlOH3_am": -6.221999999999998,
+   "log10_total_Al_AlOH3_am": -5.132861201591789,
+   "log10_a_Al3_corundum": -7.649499999999998,
+   "log10_total_Al_corundum": -6.560361201591791,
+   "fraction_Al3_of_dissolved": 0.08144439500894535
+  },
+  {
+   "pH": 5.7,
+   "log10_a_Al3_boehmite": -9.181302601209058,
+   "log10_total_Al_boehmite": -7.909057207203787,
+   "log10_a_Al3_gibbsite": -9.362000000000002,
+   "log10_total_Al_gibbsite": -8.089754605994731,
+   "log10_a_Al3_AlOH3_am": -6.522000000000002,
+   "log10_total_Al_AlOH3_am": -5.24975460599473,
+   "log10_a_Al3_corundum": -7.949500000000002,
+   "log10_total_Al_corundum": -6.677254605994731,
+   "fraction_Al3_of_dissolved": 0.05342623941614606
+  },
+  {
+   "pH": 5.8,
+   "log10_a_Al3_boehmite": -9.481302601209055,
+   "log10_total_Al_boehmite": -8.004177355104531,
+   "log10_a_Al3_gibbsite": -9.661999999999999,
+   "log10_total_Al_gibbsite": -8.184874753895475,
+   "log10_a_Al3_AlOH3_am": -6.821999999999999,
+   "log10_total_Al_AlOH3_am": -5.344874753895476,
+   "log10_a_Al3_corundum": -8.2495,
+   "log10_total_Al_corundum": -6.772374753895476,
+   "fraction_Al3_of_dissolved": 0.033333026984631635
+  },
+  {
+   "pH": 5.9,
+   "log10_a_Al3_boehmite": -9.78130260120906,
+   "log10_total_Al_boehmite": -8.07753388629229,
+   "log10_a_Al3_gibbsite": -9.962000000000003,
+   "log10_total_Al_gibbsite": -8.258231285083234,
+   "log10_a_Al3_AlOH3_am": -7.122000000000003,
+   "log10_total_Al_AlOH3_am": -5.418231285083234,
+   "log10_a_Al3_corundum": -8.549500000000004,
+   "log10_total_Al_corundum": -6.845731285083235,
+   "fraction_Al3_of_dissolved": 0.019780227627781338
+  },
+  {
+   "pH": 6.0,
+   "log10_a_Al3_boehmite": -10.081302601209057,
+   "log10_total_Al_boehmite": -8.129806206193155,
+   "log10_a_Al3_gibbsite": -10.262,
+   "log10_total_Al_gibbsite": -8.310503604984099,
+   "log10_a_Al3_AlOH3_am": -7.422000000000001,
+   "log10_total_Al_AlOH3_am": -5.470503604984099,
+   "log10_a_Al3_corundum": -8.8495,
+   "log10_total_Al_corundum": -6.898003604984099,
+   "fraction_Al3_of_dissolved": 0.011181591061414005
+  },
+  {
+   "pH": 6.1,
+   "log10_a_Al3_boehmite": -10.381302601209054,
+   "log10_total_Al_boehmite": -8.16222764476003,
+   "log10_a_Al3_gibbsite": -10.561999999999998,
+   "log10_total_Al_gibbsite": -8.342925043550974,
+   "log10_a_Al3_AlOH3_am": -7.721999999999998,
+   "log10_total_Al_AlOH3_am": -5.502925043550973,
+   "log10_a_Al3_corundum": -9.149499999999998,
+   "log10_total_Al_corundum": -6.930425043550974,
+   "fraction_Al3_of_dissolved": 0.006038444007017843
+  },
+  {
+   "pH": 6.2,
+   "log10_a_Al3_boehmite": -10.681302601209058,
+   "log10_total_Al_boehmite": -8.176399500336077,
+   "log10_a_Al3_gibbsite": -10.862000000000002,
+   "log10_total_Al_gibbsite": -8.357096899127018,
+   "log10_a_Al3_AlOH3_am": -8.022000000000002,
+   "log10_total_Al_AlOH3_am": -5.51709689912702,
+   "log10_a_Al3_corundum": -9.449500000000002,
+   "log10_total_Al_corundum": -6.944596899127021,
+   "fraction_Al3_of_dissolved": 0.003126776931034385
+  },
+  {
+   "pH": 6.3,
+   "log10_a_Al3_boehmite": -10.981302601209055,
+   "log10_total_Al_boehmite": -8.174100597927463,
+   "log10_a_Al3_gibbsite": -11.161999999999999,
+   "log10_total_Al_gibbsite": -8.354797996718407,
+   "log10_a_Al3_AlOH3_am": -8.322,
+   "log10_total_Al_AlOH3_am": -5.514797996718408,
+   "log10_a_Al3_corundum": -9.7495,
+   "log10_total_Al_corundum": -6.942297996718408,
+   "fraction_Al3_of_dissolved": 0.0015588272772441793
+  },
+  {
+   "pH": 6.4,
+   "log10_a_Al3_boehmite": -11.28130260120906,
+   "log10_total_Al_boehmite": -8.157138830540273,
+   "log10_a_Al3_gibbsite": -11.462000000000003,
+   "log10_total_Al_gibbsite": -8.337836229331216,
+   "log10_a_Al3_AlOH3_am": -8.622000000000003,
+   "log10_total_Al_AlOH3_am": -5.497836229331216,
+   "log10_a_Al3_corundum": -10.049500000000004,
+   "log10_total_Al_corundum": -6.925336229331216,
+   "fraction_Al3_of_dissolved": 0.0007513395135402268
+  },
+  {
+   "pH": 6.5,
+   "log10_a_Al3_boehmite": -11.581302601209057,
+   "log10_total_Al_boehmite": -8.127258764659002,
+   "log10_a_Al3_gibbsite": -11.762,
+   "log10_total_Al_gibbsite": -8.307956163449948,
+   "log10_a_Al3_AlOH3_am": -8.922,
+   "log10_total_Al_AlOH3_am": -5.467956163449946,
+   "log10_a_Al3_corundum": -10.3495,
+   "log10_total_Al_corundum": -6.895456163449947,
+   "fraction_Al3_of_dissolved": 0.000351524956727021
+  },
+  {
+   "pH": 6.6,
+   "log10_a_Al3_boehmite": -11.881302601209054,
+   "log10_total_Al_boehmite": -8.086095523628542,
+   "log10_a_Al3_gibbsite": -12.061999999999998,
+   "log10_total_Al_gibbsite": -8.266792922419487,
+   "log10_a_Al3_AlOH3_am": -9.221999999999998,
+   "log10_total_Al_AlOH3_am": -5.426792922419486,
+   "log10_a_Al3_corundum": -10.649499999999998,
+   "log10_total_Al_corundum": -6.854292922419487,
+   "fraction_Al3_of_dissolved": 0.0001602481123464208
+  },
+  {
+   "pH": 6.7,
+   "log10_a_Al3_boehmite": -12.181302601209058,
+   "log10_total_Al_boehmite": -8.035156894236813,
+   "log10_a_Al3_gibbsite": -12.362000000000002,
+   "log10_total_Al_gibbsite": -8.215854293027755,
+   "log10_a_Al3_AlOH3_am": -9.522000000000002,
+   "log10_total_Al_AlOH3_am": -5.375854293027758,
+   "log10_a_Al3_corundum": -10.949500000000002,
+   "log10_total_Al_corundum": -6.803354293027759,
+   "fraction_Al3_of_dissolved": 7.142566508354705e-05
+  },
+  {
+   "pH": 6.8,
+   "log10_a_Al3_boehmite": -12.481302601209055,
+   "log10_total_Al_boehmite": -7.975818421765831,
+   "log10_a_Al3_gibbsite": -12.661999999999999,
+   "log10_total_Al_gibbsite": -8.156515820556772,
+   "log10_a_Al3_AlOH3_am": -9.822,
+   "log10_total_Al_AlOH3_am": -5.316515820556774,
+   "log10_a_Al3_corundum": -11.2495,
+   "log10_total_Al_corundum": -6.744015820556775,
+   "fraction_Al3_of_dissolved": 3.1225961546405825e-05
+  },
+  {
+   "pH": 6.9,
+   "log10_a_Al3_boehmite": -12.78130260120906,
+   "log10_total_Al_boehmite": -7.909322868564706,
+   "log10_a_Al3_gibbsite": -12.962000000000003,
+   "log10_total_Al_gibbsite": -8.090020267355653,
+   "log10_a_Al3_AlOH3_am": -10.122000000000003,
+   "log10_total_Al_AlOH3_am": -5.25002026735565,
+   "log10_a_Al3_corundum": -11.549500000000004,
+   "log10_total_Al_corundum": -6.677520267355651,
+   "fraction_Al3_of_dissolved": 1.3428276258300708e-05
+  },
+  {
+   "pH": 7.0,
+   "log10_a_Al3_boehmite": -13.081302601209057,
+   "log10_total_Al_boehmite": -7.836780994377816,
+   "log10_a_Al3_gibbsite": -13.262,
+   "log10_total_Al_gibbsite": -8.017478393168762,
+   "log10_a_Al3_AlOH3_am": -10.422,
+   "log10_total_Al_AlOH3_am": -5.17747839316876,
+   "log10_a_Al3_corundum": -11.8495,
+   "log10_total_Al_corundum": -6.604978393168761,
+   "fraction_Al3_of_dissolved": 5.694798909058803e-06
+  },
+  {
+   "pH": 7.1,
+   "log10_a_Al3_boehmite": -13.381302601209054,
+   "log10_total_Al_boehmite": -7.75917361067289,
+   "log10_a_Al3_gibbsite": -13.561999999999998,
+   "log10_total_Al_gibbsite": -7.939871009463836,
+   "log10_a_Al3_AlOH3_am": -10.721999999999998,
+   "log10_total_Al_AlOH3_am": -5.0998710094638335,
+   "log10_a_Al3_corundum": -12.149499999999998,
+   "log10_total_Al_corundum": -6.527371009463835,
+   "fraction_Al3_of_dissolved": 2.387102180369968e-06
+  },
+  {
+   "pH": 7.2,
+   "log10_a_Al3_boehmite": -13.681302601209058,
+   "log10_total_Al_boehmite": -7.677355684747274,
+   "log10_a_Al3_gibbsite": -13.862000000000002,
+   "log10_total_Al_gibbsite": -7.8580530835382145,
+   "log10_a_Al3_AlOH3_am": -11.022000000000002,
+   "log10_total_Al_AlOH3_am": -5.018053083538218,
+   "log10_a_Al3_corundum": -12.449500000000002,
+   "log10_total_Al_corundum": -6.445553083538219,
+   "fraction_Al3_of_dissolved": 9.909530610528294e-07
+  },
+  {
+   "pH": 7.3,
+   "log10_a_Al3_boehmite": -13.981302601209055,
+   "log10_total_Al_boehmite": -7.592062947638596,
+   "log10_a_Al3_gibbsite": -14.161999999999999,
+   "log10_total_Al_gibbsite": -7.772760346429537,
+   "log10_a_Al3_AlOH3_am": -11.322,
+   "log10_total_Al_AlOH3_am": -4.932760346429541,
+   "log10_a_Al3_corundum": -12.7495,
+   "log10_total_Al_corundum": -6.360260346429542,
+   "fraction_Al3_of_dissolved": 4.0809412856750656e-07
+  },
+  {
+   "pH": 7.4,
+   "log10_a_Al3_boehmite": -14.28130260120906,
+   "log10_total_Al_boehmite": -7.503920842723405,
+   "log10_a_Al3_gibbsite": -14.462000000000003,
+   "log10_total_Al_gibbsite": -7.684618241514351,
+   "log10_a_Al3_AlOH3_am": -11.622000000000003,
+   "log10_total_Al_AlOH3_am": -4.844618241514349,
+   "log10_a_Al3_corundum": -13.049500000000004,
+   "log10_total_Al_corundum": -6.27211824151435,
+   "fraction_Al3_of_dissolved": 1.6696223186250535e-07
+  },
+  {
+   "pH": 7.5,
+   "log10_a_Al3_boehmite": -14.581302601209057,
+   "log10_total_Al_boehmite": -7.413455188546734,
+   "log10_a_Al3_gibbsite": -14.762,
+   "log10_total_Al_gibbsite": -7.594152587337681,
+   "log10_a_Al3_AlOH3_am": -11.922,
+   "log10_total_Al_AlOH3_am": -4.7541525873376775,
+   "log10_a_Al3_corundum": -13.3495,
+   "log10_total_Al_corundum": -6.1816525873376795,
+   "fraction_Al3_of_dissolved": 6.794423095675829e-08
+  },
+  {
+   "pH": 7.6,
+   "log10_a_Al3_boehmite": -14.881302601209054,
+   "log10_total_Al_boehmite": -7.3211037423542535,
+   "log10_a_Al3_gibbsite": -15.061999999999998,
+   "log10_total_Al_gibbsite": -7.501801141145201,
+   "log10_a_Al3_AlOH3_am": -12.221999999999998,
+   "log10_total_Al_AlOH3_am": -4.661801141145197,
+   "log10_a_Al3_corundum": -13.649499999999998,
+   "log10_total_Al_corundum": -6.089301141145199,
+   "fraction_Al3_of_dissolved": 2.7529678597997312e-08
+  },
+  {
+   "pH": 7.7,
+   "log10_a_Al3_boehmite": -15.181302601209058,
+   "log10_total_Al_boehmite": -7.227227889690007,
+   "log10_a_Al3_gibbsite": -15.362000000000002,
+   "log10_total_Al_gibbsite": -7.407925288480947,
+   "log10_a_Al3_AlOH3_am": -12.522000000000002,
+   "log10_total_Al_AlOH3_am": -4.567925288480951,
+   "log10_a_Al3_corundum": -13.949500000000002,
+   "log10_total_Al_corundum": -5.995425288480952,
+   "fraction_Al3_of_dissolved": 1.1115404929332998e-08
+  },
+  {
+   "pH": 7.8,
+   "log10_a_Al3_boehmite": -15.481302601209055,
+   "log10_total_Al_boehmite": -7.132123849454207,
+   "log10_a_Al3_gibbsite": -15.661999999999999,
+   "log10_total_Al_gibbsite": -7.312821248245148,
+   "log10_a_Al3_AlOH3_am": -12.822,
+   "log10_total_Al_AlOH3_am": -4.472821248245151,
+   "log10_a_Al3_corundum": -14.2495,
+   "log10_total_Al_corundum": -5.900321248245153,
+   "fraction_Al3_of_dissolved": 4.475290672710825e-09
+  },
+  {
+   "pH": 7.9,
+   "log10_a_Al3_boehmite": -15.78130260120906,
+   "log10_total_Al_boehmite": -7.036032985702577,
+   "log10_a_Al3_gibbsite": -15.962000000000003,
+   "log10_total_Al_gibbsite": -7.216730384493524,
+   "log10_a_Al3_AlOH3_am": -13.122000000000003,
+   "log10_total_Al_AlOH3_am": -4.376730384493521,
+   "log10_a_Al3_corundum": -14.549500000000004,
+   "log10_total_Al_corundum": -5.804230384493523,
+   "fraction_Al3_of_dissolved": 1.7977544998942345e-09
+  },
+  {
+   "pH": 8.0,
+   "log10_a_Al3_boehmite": -16.081302601209057,
+   "log10_total_Al_boehmite": -6.939151003100702,
+   "log10_a_Al3_gibbsite": -16.262,
+   "log10_total_Al_gibbsite": -7.119848401891649,
+   "log10_a_Al3_AlOH3_am": -13.422,
+   "log10_total_Al_AlOH3_am": -4.279848401891646,
+   "log10_a_Al3_corundum": -14.8495,
+   "log10_total_Al_corundum": -5.707348401891648,
+   "fraction_Al3_of_dissolved": 7.208558078935687e-10
+  },
+  {
+   "pH": 8.1,
+   "log10_a_Al3_boehmite": -16.381302601209054,
+   "log10_total_Al_boehmite": -6.841635948229145,
+   "log10_a_Al3_gibbsite": -16.561999999999998,
+   "log10_total_Al_gibbsite": -7.022333347020092,
+   "log10_a_Al3_AlOH3_am": -13.721999999999998,
+   "log10_total_Al_AlOH3_am": -4.182333347020089,
+   "log10_a_Al3_corundum": -15.149499999999998,
+   "log10_total_Al_corundum": -5.609833347020091,
+   "fraction_Al3_of_dissolved": 2.88624601977726e-10
+  },
+  {
+   "pH": 8.2,
+   "log10_a_Al3_boehmite": -16.681302601209055,
+   "log10_total_Al_boehmite": -6.74361503949484,
+   "log10_a_Al3_gibbsite": -16.862,
+   "log10_total_Al_gibbsite": -6.924312438285781,
+   "log10_a_Al3_AlOH3_am": -14.021999999999998,
+   "log10_total_Al_AlOH3_am": -4.084312438285777,
+   "log10_a_Al3_corundum": -15.449499999999999,
+   "log10_total_Al_corundum": -5.511812438285779,
+   "fraction_Al3_of_dissolved": 1.1542833688110068e-10
+  },
+  {
+   "pH": 8.3,
+   "log10_a_Al3_boehmite": -16.98130260120906,
+   "log10_total_Al_boehmite": -6.645190409951583,
+   "log10_a_Al3_gibbsite": -17.162000000000003,
+   "log10_total_Al_gibbsite": -6.8258878087425305,
+   "log10_a_Al3_AlOH3_am": -14.322000000000003,
+   "log10_total_Al_AlOH3_am": -3.985887808742534,
+   "log10_a_Al3_corundum": -15.749500000000003,
+   "log10_total_Al_corundum": -5.413387808742529,
+   "fraction_Al3_of_dissolved": 4.611984178211578e-11
+  },
+  {
+   "pH": 8.4,
+   "log10_a_Al3_boehmite": -17.28130260120906,
+   "log10_total_Al_boehmite": -6.546443879102569,
+   "log10_a_Al3_gibbsite": -17.462000000000003,
+   "log10_total_Al_gibbsite": -6.727141277893517,
+   "log10_a_Al3_AlOH3_am": -14.622000000000003,
+   "log10_total_Al_AlOH3_am": -3.8871412778935133,
+   "log10_a_Al3_corundum": -16.049500000000002,
+   "log10_total_Al_corundum": -5.314641277893508,
+   "fraction_Al3_of_dissolved": 1.8413709100565943e-11
+  },
+  {
+   "pH": 8.5,
+   "log10_a_Al3_boehmite": -17.581302601209057,
+   "log10_total_Al_boehmite": -6.44744088092163,
+   "log10_a_Al3_gibbsite": -17.762,
+   "log10_total_Al_gibbsite": -6.628138279712577,
+   "log10_a_Al3_AlOH3_am": -14.922,
+   "log10_total_Al_AlOH3_am": -3.7881382797125736,
+   "log10_a_Al3_corundum": -16.3495,
+   "log10_total_Al_corundum": -5.215638279712569,
+   "fraction_Al3_of_dissolved": 7.347477752000164e-12
+  }
+ ],
+ "r1_reading": "a(Al3+) at oxide equilibrium falls 1000-fold per pH unit (slope -3); the robust R1 falsifying test uses the most soluble film phase, Al(OH)3 am (the highest a(Al3+)), and boehmite as the stable reference. Polyphosphate complexation leaves a(Al3+) unchanged at fixed solid equilibrium; linear-chain constants are a gap, cyclic ones are single-source.",
+ "conventions": {
+  "T_K": 298.15,
+  "I": 0,
+  "activities": "a = c (I = 0)",
+  "ph_range": [
+   3.0,
+   10.0
+  ],
+  "criterion": "passive where total dissolved Al at equilibrium with the solid <= c_thr"
+ }
+}
