@@ -8,7 +8,7 @@ checkpoint it requires satisfied. Checkpoint cpN is satisfied by tag <track>-cpN
 cp1 is also satisfied by tag g0.
 
 Freeze rule: the ledger's `freeze:` block (tag, paths) names a tag and path globs. Once the tag exists, a
-commit in <tag>..HEAD that touches a frozen path fails the check unless <track>_deviations.md carries a dated
+commit in <tag>..HEAD that modifies, deletes or renames a file existing at the tag under a frozen path fails the check unless <track>_deviations.md carries a dated
 entry that names the changed path and the outputs to re-audit ('Re-audit:' line). No block, no rule.
 """
 import re
@@ -143,9 +143,12 @@ def freeze_problems(root, track):
     tag, paths = rule
     # Commits reachable from HEAD but not from the tag: a branch behind the tag, or one fast-forwarded to it,
     # has none, and a tree diff against the tag would wrongly report the tag's own later changes.
-    names = _util.git(root, "log", "--name-only", "--format=", "-z", "--no-renames", tag + "..HEAD", "--",
-                      *[":(glob)" + g for g in paths])
-    changed = sorted({p for p in names.stdout.split("\0") if p.strip()})
+    # Only a modification, deletion or rename (shown as a deletion of the old path) of a file that exists at
+    # the tag counts; added files never do.
+    names = _util.git(root, "log", "--name-only", "--diff-filter=MD", "--format=", "-z", "--no-renames",
+                      tag + "..HEAD", "--", *[":(glob)" + g for g in paths])
+    changed = sorted({p for p in names.stdout.split("\0") if p.strip()
+                      and _util.git(root, "cat-file", "-e", "%s:%s" % (tag, p)).returncode == 0})
     if not changed:
         return []
     since = _util.git(root, "log", "-1", "--format=%cs", tag).stdout.strip()

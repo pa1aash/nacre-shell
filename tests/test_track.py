@@ -329,6 +329,36 @@ def test_repo_deviations_file_has_header_and_well_formed_entries():
         assert re.search(r"(?m)^Re-audit:\s*\S", body), m.group(0)
 
 
+# --- freeze rule counts only changes to files that exist at the tag ---------------------------
+
+def test_freeze_rule_ignores_a_new_file_under_a_frozen_path(frozen_repo):
+    git(frozen_repo, "tag", "p0-cp3")
+    _write(frozen_repo, {"lit/new_phosphate.csv": "a\n", "theory/new_note.md": "b\n"})
+    commit_all(frozen_repo, "scratch: add files")
+    _write(frozen_repo, {"lit/new_phosphate.csv": "a2\n"})
+    commit_all(frozen_repo, "scratch: edit the added file")
+    assert track.freeze_problems(frozen_repo, "p0") == []
+
+
+def test_freeze_rule_modify_needs_reaudit_but_unlisted_path_passes(frozen_repo):
+    git(frozen_repo, "tag", "p0-cp3")
+    _write(frozen_repo, {"lit/params.yaml": "v2\n", "docs/unlisted.md": "x\n"})
+    commit_all(frozen_repo, "scratch: modify")
+    assert track.freeze_problems(frozen_repo, "p0") == ["lit/params.yaml"]
+    _write(frozen_repo, {"ops/tracks/p0_deviations.md":
+                         "# Deviations\n\n## %s lit/params.yaml\nChange: ksp.\nRe-audit: screen\n" % _today()})
+    commit_all(frozen_repo, "scratch: deviation")
+    assert track.freeze_problems(frozen_repo, "p0") == []
+
+
+def test_freeze_rule_flags_deletion_and_rename_of_a_tag_file(frozen_repo):
+    git(frozen_repo, "tag", "p0-cp3")
+    git(frozen_repo, "rm", "-q", "lit/params.yaml")
+    git(frozen_repo, "mv", "theory/thresholds.md", "theory/thresholds_old.md")
+    commit_all(frozen_repo, "scratch: delete and rename")
+    assert track.freeze_problems(frozen_repo, "p0") == ["lit/params.yaml", "theory/thresholds.md"]
+
+
 # --- freeze rule reads commits since the tag, not the tag's tree -------------------------------
 
 @pytest.fixture
