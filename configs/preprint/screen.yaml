@@ -191,7 +191,7 @@ minerals:
   capoly:
     formula_unit: Ca(PO3)2           # PLACEHOLDER of the condensed-phosphate class: shows that the path runs, registers nothing
     framing: amorphous glass
-    k1_phase: Ca(PO3)2
+    k1_phase: Ca(PO3)2 / Ca-polyphosphate glass
     phase_state: amorphous
     speciation: null                 # no condensed-phosphate speciation in contract v5: the anion activity is an input
     x_symbol: a_PO3
@@ -206,7 +206,7 @@ minerals:
 # so that the evaluators run before the freeze; m_cos and m_S are the zero-margin edges of the same block.
 k_screen:
   provisional: true
-  k1_ladder: results/preprint/pourbaix/ph_w51/ladder_v2.csv   # W5's v2 ladder (framing, stage, E_ub/E_lb): an input path, read and never recomputed
+  k1_ladder: results/preprint/pourbaix/ph_w52/ladder_v3.csv   # W5's v3 ladder (framing, stage, E_ub/E_lb, one verdict column per cutoff class): an input path, read and never recomputed
   p_cred: 0.9                        # provisional (thresholds.decision.credible_level primary)
   p_deg: 0.1                         # provisional, 1 - p_cred
   m_cos: 0.0                         # provisional (thresholds.C3.margin_cos_theta primary)

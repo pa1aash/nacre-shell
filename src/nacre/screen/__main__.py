@@ -49,10 +49,11 @@ def main(argv=None):
     ph.add_argument("--mock", action="store_true", help="allow a parameter table marked mock: true")
     ph.add_argument("--k1-override", action="store_true", help="dry run only: run K3 and K4 although K1 passes no class")
     ph.add_argument("--draws", type=int, default=ph_dry.DEFAULT_DRAWS)
+    ph.add_argument("--ladder", help="K1 ladder (v2 or v3 layout); default the mock ladder")
     rd = sub.add_parser("ph-route-dryrun", help="dry run of the route layer on mock priors (PH-W4.2a; never reported)")
     rd.add_argument("--route", required=True, choices=ph_route_dry.CLASSES)
     rd.add_argument("--params", default=str(ph_route_dry.ROUTE_TABLE))
-    rd.add_argument("--ladder", default=str(ph_route_dry.MOCK_LADDER), help="K1 ladder in the v2 layout")
+    rd.add_argument("--ladder", default=str(ph_route_dry.MOCK_LADDER), help="K1 ladder (v2 or v3 layout)")
     rd.add_argument("--out", help="output summary; default dryrun_ph/route_<class>/summary.json")
     rd.add_argument("--mock", action="store_true", help="allow a parameter table marked mock: true")
     rd.add_argument("--draws", type=int, default=ph_route_dry.DEFAULT_DRAWS)
@@ -107,7 +108,7 @@ def main(argv=None):
         try:
             path, _, stats = ph_dry.run_mineral(root, args.mineral, out, params_path=root / args.params,
                                                 allow_mock=args.mock, k1_override=args.k1_override,
-                                                draws=args.draws)
+                                                draws=args.draws, ladder_path=args.ladder)
         except (MockPriorsRefused, ph_dry.DryRunRefused, run.params_adapter.PriorFileError) as exc:
             print("refused: %s" % exc, file=sys.stderr)
             return 2

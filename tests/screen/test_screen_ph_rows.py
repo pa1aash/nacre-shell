@@ -207,7 +207,7 @@ def test_route_dry_run_refusals(tmp_path, out_dir):
         ph_route_dry.run_route(ROOT, "R4", out_dir / "y" / "s.json", allow_mock=True, draws_n=64)
 
 
-def test_k1_ladder_input_path_is_w5s_v2_file():
+def test_k1_ladder_input_path_is_w5s_v3_file():
     from nacre.screen.run import load_config
     k = kscreen.k_config(load_config(ROOT))
-    assert k["k1_ladder"] == "results/preprint/pourbaix/ph_w51/ladder_v2.csv" == kscreen.LADDER.as_posix()
+    assert k["k1_ladder"] == "results/preprint/pourbaix/ph_w52/ladder_v3.csv" == kscreen.LADDER.as_posix()
