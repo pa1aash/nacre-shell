@@ -171,5 +171,9 @@
       "configs/preprint/thresholds.yaml regenerated from block v4"
     ],
     "screen_output_consulted": "none beyond D27 and the C3 and gap sections of ops/reports/P0-W4.3.md"
+  },
+  "ph_structure": {
+    "status": "ready",
+    "sha": "07e4e2d77e509d1fdf74262b13b883adc1414809"
   }
 }
