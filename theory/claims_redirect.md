@@ -747,3 +747,61 @@ W5 made three choices (`ph_w51.json`, field `staged_products.vitrification`). Ea
    configurational entropy frozen in at the glass transition, which is bounded by the entropy of fusion. If W1 sources it
    (new key `glass_s_fusion_cameta`) and it lies below the upper end, it replaces that end. The full span of the bound moves
    the onset by `margins_v6.m_K1_amorphous.residual_entropy.span_V`, small against the row's margin.
+
+### 10c. The bracket verdict (cp4 F2, after the vetting of Section 2f)
+
+**What would turn "pass inconclusive" into a pass.** By Section 2f, a tier-1 pass needs E_lb >= E_c + m together with
+the transfer premise measured. The premise is Delta_G_tr_rel = DG_tr(M, w->S) - z DG_tr(Li+, w->S) >= 0, holding after
+its uncertainty, for every ionic product of every reaction that is not already above the cutoff. That means Ca2+ (z = 2)
+for the Ca phases, Al3+ (z = 3) for the Al rungs, and H+ for reaction r3, all in the cell solvent class S. Either of two
+data forms is admissible:
+
+- (A) single-ion transfer energies of the product cation and of Li+, into the same solvent and on the same
+  extrathermodynamic scale (the ferrocene or the tetraphenylarsonium tetraphenylborate assumption), each with its
+  uncertainty;
+- (B) the assumption-free salt form: DG_tr(M(ClO4)z, w->S) - z DG_tr(LiClO4, w->S), taken from the solubilities and
+  solid-salt data of both salts in water and in S, or from cell EMFs. Ion pairing in S is then included.
+
+Two further conditions apply. Data in propylene carbonate count for the cell solvent only if PC is registered as the
+proxy of the carbonate class (a planning-chat registration, because a statement for PC is not one for a mixture rich in
+linear carbonates). And E_lb must be computed. It needs only the conventional aqueous formation values (`dfg_ca2_aq`,
+`dfg_al3_aq`, `dfg_li_aq`, already keys): by Section 2f item 3 the anion cancels, so the missing
+`hydration_free_energy_clo4` does not block E_lb. W5's `bracket pending` reason is a convention point, not a missing
+input.
+
+**Sufficient now: no.** At the pinned `lit/params.yaml`, `transfer_free_energy_li_water_pc` is single-source,
+`transfer_free_energy_ca_water_pc` and `transfer_free_energy_al_water_pc` are gaps, and `hydration_free_energy_clo4` is a
+gap. The ClO4- transfer into PC from PH-W1.3 (`transfer_free_energy_clo4_water_pc`, one determination, on the ferrocene
+assumption) is neither sufficient nor needed. In the charge-balanced combination the anion cancels exactly, so its value
+cannot decide the sign of Delta_G_tr_rel. It could serve only to assemble form (B) from single ions, and that still needs
+the cation value that is missing. With Li+ less solvated in PC than in water (its key is positive), the premise asks
+DG_tr(Ca2+) >= 2 DG_tr(Li+) and DG_tr(Al3+) >= 3 DG_tr(Li+): this is the Born ordering, and no fetched value tests it.
+Every tier-1 row therefore stays solid-salt-only (Section 2f, `plausible only`).
+
+**Go/no-go consequence.** With no pass possible, K1 can only falsify or leave a row inconclusive. By tier 1 alone (the
+ladder of PH-W5.1 with the margins of `margins_v6`, before any tier 2 record is applied), the following hold. HAp,
+beta-TCP and alpha-TCP, and ACP on its beta-TCP reference, are falsified at C_mid and C_hi. By I17 they are also
+falsified on the amorphous framing there, so under every nucleus framing. The carbonate control falls with them.
+Brushite is partial at C_hi: falsified only above its crossover inside that class. The silicate comparator Ca2SiO4 is
+falsified at all three classes. Nothing is falsified at C_lo. Open, falsified at no class, are the condensed phases and
+the Al phosphates. Ca2P2O7 (crystalline; its amorphous row undetermined), Ca(PO3)2 glass and crystal, and the Li
+polyphosphate baseline are inconclusive at every class and never pass. AlPO4, Al(PO3)3, the Al-polyphosphate gel and the
+baked aluminophosphate baseline are undetermined (no Al(PO3)3 thermochemistry, no bound on the exchange entropy of the
+Al perchlorate sink). OCP and Li3PO4 are undetermined, as are CaSiO3 and Li2SiO3, whose budgets are incomplete. Under
+rule 2d only Ca2SiO4 stops before K3 and K4. The Ca orthophosphates proceed on C_lo, where they are not falsified. The
+condition of evidence consequence 3 of the route layer is that no condensed phosphate has a lower-bound onset above the
+top of C_mid. On present data that condition holds, because no condensed phase has a supported lower bound at all, and
+the open rows are open only on the upper bound. It changes only if data of form (A) or (B) arrive and the computed E_lb of
+a condensed phase clears the top of C_mid plus its margin. This section reports the condition; the headline is the
+operator's decision.
+
+### 10d. Interpretations
+
+- **I18.** (a) The film solid that governs the window is a fact about the foil surface during t_wet. It is ruled
+  amorphous by the step rule and by nesting, conditional on `al_film_phase_rt_water`. For R1 the amorphous state is the
+  falsification-robust one.
+- **I19.** (b) A composition-matched correction outranks an analogue transfer, and the analogue bound becomes a
+  consistency check. A cross-source pairing that violates metastability is excluded as a pair, never as a datum. The
+  residual-entropy bound is evaluated at its ends.
+- **I20.** Bracket: the anion term is neither needed for E_lb nor able to decide the premise. The pass needs a cation
+  transfer in form (A) or (B) and a registered solvent proxy.
