@@ -735,7 +735,7 @@ W5 made three choices (`ph_w51.json`, field `staged_products.vitrification`). Ea
    `glass_dfh_cameta_crystal` directly. The governing amorphous row does not use the correction, because it is built on
    the glass enthalpy, so it is unchanged.
 2. **The excluded pair TT-044 (with TR-042): accept, with the reason restated.** A glass is metastable with respect to its
-   crystal, so its enthalpy at 298 K lies above the crystal's, and a negative difference is inconsistent. The pair joins
+   crystal, so its enthalpy at room temperature lies above the crystal's, and a negative difference is inconsistent. The pair joins
    two sources whose crystal references differ, so it is the pairing that fails, and TT-044 itself is not shown wrong as a
    glass enthalpy. TT-044 therefore stays in the LiPO3 glass enthalpy of the Li polyphosphate baseline row. There the
    spread of the two glass values enters that row's budget, which widens it and is the conservative direction. After
