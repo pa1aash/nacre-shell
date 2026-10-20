@@ -327,6 +327,12 @@ days:
     day: 4
     model: Sonnet
     master_trace: none
+  - id: PH-W2.2a
+    lane: p0-w2
+    day: 4
+    model: Sonnet
+    master_trace: none
+    requires: []
 - day: 5
   status: pending
   opened_utc: null
@@ -351,6 +357,12 @@ days:
     model: Sonnet
     master_trace: none
     requires: [cp4]
+  - id: PH-W3.2a
+    lane: p0-w3
+    day: 5
+    model: Opus
+    master_trace: none
+    requires: [cp4]
   - id: PH-I5
     lane: p0-int
     day: 5
@@ -366,7 +378,7 @@ days:
   - id: PH-W4.2
     lane: p0-w4
     day: 6
-    model: Opus
+    model: Sonnet
     master_trace: none
     requires: [cp5]
   - id: PH-W4.3
@@ -784,6 +796,10 @@ decisions:
     PH report names; the lanes had to use the P0-WN.PH-WN.1.md form.'}
 - {id: D43, date: '2026-10-20', decision: 'PH-W1.2 and PH-W4.1 no longer require cp4: the data and code sessions proceed on assumed PASS. They touch no verdict rule, threshold, prior or K1 number. Every other session keeps its gating. The cp4 tag p0-cp4 is created after PASS.', reason: 'Data extraction and generalised screen code with dry runs carry no verdict content (plan: lanes proceed on assumed PASS for mechanical work).'}
 - {id: D44, date: '2026-10-20', decision: 'PH-W1.2 and PH-W4.1 move from day 5 to day 4. Day 5 is not opened.', reason: 'D43 ungated them from cp4; they are data and code sessions with no verdict rule (precedent D26, D30).'}
+- {id: D45, date: '2026-10-20', decision: 'W4''s thresholds-copy equality test (test_committed_copy_equals_theory_thresholds) fails until the cp5 freeze: W3 v5 changed contract_version 4 to 5 in theory/thresholds.md and the copy still holds the v4 block. Not marked xfail; W4''s copy is not edited; the cp5 freeze regenerates it.', reason: 'The copy is regenerated once from the frozen block; editing it now would be a second deviation.'}
+- {id: D46, date: '2026-10-20', decision: 'The route layer (R1 to R3, K1 to K4 route forms, Al-salt ladder, baselines, first experiment) is recorded in ops/tracks/redirect_plan.md as a draft pending ruling by the planning chat.', reason: 'No session may treat an unruled layer as binding; the plan file is amended when ruled.'}
+- {id: D47, date: '2026-10-20', decision: 'PH-W1.2 absorbed the route-key work (185 keys); there is no PH-W1.3 route session. PH-W1.3 stays as the day-7 reference audit.', reason: 'The route keys landed in the parameter session; a second session would duplicate it.'}
+- {id: D48, date: '2026-10-20', decision: 'PH-W4.2 and PH-W4.3 run on Sonnet (requires unchanged).', reason: 'Model assignment revised by the integrator brief PH-I4b.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1037,6 +1053,26 @@ lane_notes:
   lanes: [p0-w4]
   note: (W4.3b, D27) Rerun the production screens with the admissibility rule once W3.4b is ready. The
     original runs stay committed as they came.
+- id: N35
+  date: '2026-10-20'
+  day: 4
+  lanes: [p0-w2]
+  note: (PH-W2.2a) Route prior-art scan; added at PH-I4b, no cp gate, no master trace.
+- id: N36
+  date: '2026-10-20'
+  day: 5
+  lanes: [p0-w3]
+  note: (PH-W3.2a) Contract v6 and the route evaluators' derivation; added at PH-I4b, requires cp4.
+- id: N37
+  date: '2026-10-20'
+  day: 5
+  lanes: [p0-w5, p0-w8, p0-w6]
+  note: (PH-W5.1) Include the amorphous K1 framing and the organic-matrix rungs. (PH-W8.1) Include the route section. (PH-W6.1) Include the route schematic. All route content is draft pending ruling (D46).
+- id: N38
+  date: '2026-10-20'
+  day: 7
+  lanes: [p0-w1]
+  note: (PH-W1.3) W1.2 absorbed the route-key work (D47), so no PH-W1.3 route session exists; PH-W1.3 stays as the day-7 reference audit.
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
