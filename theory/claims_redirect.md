@@ -235,6 +235,42 @@ The falsifying side (E_ub < E_c - m_1) does not depend on the premise. Where the
 tier-1 pass is possible and the rule is the solid-salt-only rule of Section 2a for that row; the required transfer
 data are listed as gaps.
 
+### 2g. Stage of a results row and the conversion steps (cp4 F4; spec for W4, W5 and W8)
+
+**STAGE field.** Every results row carries `stage`, one of:
+
+| stage | Phases | Conditions that apply | Conditions not evaluated |
+|---|---|---|---|
+| `slurry` | brushite (precursor), ACP, HAp (and OCP, beta-TCP if kept) | K2, K3, K4 | K1 (printed only as a reference row, labelled `not the cell-stage phase`) |
+| `cell` | Ca2P2O7, Ca(PO3)2, AlPO4, Al(PO3)3 (and the Al-salt ladder rungs) | K1 | K2 to K4 (not evaluated for a phase that is not formed in the slurry) |
+| `conversion` | one row per precursor-to-cell-stage pair | thresholds of the step (below) | none of K1 to K4 |
+
+A slurry-stage phase that is also the cell-stage phase (no conversion step; for example a Ca orthophosphate used as
+formed, the low-cutoff class of cp4 F5) carries both stages in two rows that share a `film_id`, and is the only case in
+which K1 and K2 to K4 appear for one film.
+
+**Conversion-step row** (per pair, for example brushite to monetite, monetite to Ca2P2O7, ACP or HAp to a condensed
+phase, and the Al-salt pairs where a precursor is registered). Fields:
+
+- `precursor`, `product`, `film_id` of each;
+- `a_w_star`: the thermodynamic dehydration or condensation threshold, the water activity at which precursor and product
+  (with the released water) have equal free energy, a_w* = exp(-Delta_rG0 / (n_w R T)) for precursor = product + n_w H2O (the product is favoured for a_w < a_w*)
+  with Delta_rG0 from the same tabulated route as K1 (Section 2a); reported as a threshold (Section 2a, "Dehydration is
+  not an oxidation"), with the temperature at which it is evaluated (`hydration_a_w_star_<pair>`);
+- `T_conv_lit`: conversion temperatures from the literature, with source, heating rate and atmosphere
+  (`hydration_conversion_temperature_<pair>`);
+- `T_cure_baseline`: the cure range of the baked aluminophosphate baseline patent (Tsinghua and Hon Hai family, route
+  layer C5; `matrix_baseline_tsinghua_cure_range`) printed beside, with `T_conv_lit` inside, below or above it;
+- `hydrolysis`: for a step that passes through an aqueous stage, the K2h verdict of Section 9a;
+- `status`: `feasible within the baseline cure range` (T_conv_lit inside or below the range), `requires a higher
+  temperature`, or `undetermined` (no conversion temperature sourced). A status is a statement about the process
+  path, not a verdict on any condition.
+
+**Presentation rule.** A table or figure never presents K1 of a condensed (cell-stage) phase and K2 to K4 of an
+orthophosphate (slurry-stage) phase as one film. A film is reported across stages only as the chain slurry row,
+conversion row, cell row with the same `film_id`, and the chain is only as strong as its weakest member: a chain with an
+`undetermined` or `requires a higher temperature` conversion row is labelled so in its summary line.
+
 ## 3. K2, K3, K4
 
 ### 3a. K2
@@ -358,6 +394,8 @@ hydrated forms, `n_hyd_<P>`). Speciation: `pka1_h3po4`, `pka2_h3po4`, `pka3_h3po
 activity of the electrolyte, `electrolyte_water_content`), tier 2 records as evidence rows with class A, B or C, electrolyte,
 temperature, cutoff and duration. Al-salt ladder: `log10_ksp_el_<F>` (F in alpo4, al_pmeta3, al_borate, al_oxalate,
 al2o3 as hydroxide or oxide form), `sigma_corr_<F>`, `dv_film`, `j_corr_max`, `t_max_corr`, `s_tol`, `rho_film_<F>`.
+Stages and conversion steps (cp4 F4, new): `hydration_a_w_star_<pair>` (computed, W5), `hydration_conversion_temperature_<pair>`,
+`matrix_baseline_tsinghua_cure_range`.
 K1 bracket (cp4 F2, new): `hydration_free_energy_clo4`, `hydration_transfer_ca_water_carbonate`,
 `hydration_transfer_al_water_carbonate`, `hydration_transfer_salt_ca_clo4_2_water_carbonate` (salt form, anion cancels);
 existing keys used: `dfg_ca2_aq`, `dfg_al3_aq`, `dfg_li_aq`, `hydration_free_energy_ca`, `hydration_free_energy_al`,
