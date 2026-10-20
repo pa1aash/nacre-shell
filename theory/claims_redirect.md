@@ -417,3 +417,154 @@ existing keys used: `dfg_ca2_aq`, `dfg_al3_aq`, `dfg_li_aq`, `hydration_free_ene
   barrier (as stated in the brief); a separate bulk prefactor and volume is deferred to PH-W3.2 as a labelled sensitivity.
 - **I7.** Ionic blocking (c) is stated with the ohmic partial-conductivity form and the transference condition;
   a high-field form is a refinement for W3.2 if sigma_corr is only available as a field-dependent law.
+
+## 9. Route layer (contract v6; rulings C1 to C6)
+
+Authority: the ROUTE LAYER of `ops/tracks/redirect_plan.md` (rulings C1 to C6, binding). Routes: R1 interfacial
+gelation of a soluble polyphosphate by Al3+ released at the oxide; R2 a Ca-polyphosphate coacervate that wets the foil
+and dries to a glass; R3 dry-trapped Ca-polyphosphate. Every statement is symbolic; values come from the keys of
+Section 9g. Each table below is a decision table: its rows are exhaustive and evaluated in order.
+
+### 9a. Hydrolysis descriptor (K2 conditional gate, ruling C1)
+
+**Observable.** The condensed fraction at the end of the wet period. Polyphosphate P-O-P bonds hydrolyse toward
+orthophosphate, the low-ceiling phase. Partial hydrolysis to oligophosphates still counts as condensed: only the
+orthophosphate fraction is lost, so f_cond = 1 - x_ortho with x_ortho the fraction of P present as orthophosphate.
+With first-order loss of condensed P at the rate constant k_eff (registered as first order in the condensed fraction;
+the data are reported as rate constants of that form):
+
+    f_cond = 2^(-t_wet / t_half),   t_half = ln 2 / k_eff,   k_eff = tau_k k_hyd        (functions `f_cond`,
+                                                                                          `t_half_hyd_fn`, `k_hyd_eff`)
+
+- **t_wet** (the wet residence time) runs from contact of the polyphosphate with water (mixing) through coating and
+  drying until the water activity falls below the registered a_w,dry (`hydrolysis_a_w_dry`). It is a process input
+  per route and state (`hydrolysis_t_wet_<route>`), never a fitted value.
+- **k_hyd** is the measured rate constant at the nearest covered state; **tau_k** is the registered transfer factor
+  from the data condition to the process state (`hydrolysis_transfer_factor`, a range [tau_lo, tau_hi] with
+  tau_lo <= 1 <= tau_hi unless evidence says otherwise). The data cover gamma-Al2O3 particles at room temperature,
+  pH 6 and pH 8, with and without 1 mM Ca2+ (`hydrolysis_polyp_k_ph6`, `_ph6_ca1mm`, `_ph8`, `_ph8_ca1mm`).
+  They do not cover foil, drying, other pH or other temperatures.
+- **Plausible rates.** k_slow = tau_lo min(k_hyd over the covered rows that bracket the state) and k_fast = tau_hi max(...);
+  with Ca2+ present the Ca rows are used. f_cond is decreasing in k_eff and in t_wet (contract monotonicity), so
+  f_cond(k_slow) is the most favourable and f_cond(k_fast) the least favourable condensed fraction.
+- **f_min** (`hydrolysis_f_min`) is the smallest condensed fraction that keeps the film on the condensed side of the
+  K1 ladder (a registration set with the K1 rows; PH-W3.2 sets the number).
+- **Coverage.** A state is covered when its pH lies within the measured pH set (interpolation between pH 6 and 8
+  only), its temperature equals the data temperature within the registered tolerance, and its Ca2+ level is bracketed
+  by the with- and without-Ca rows. Drying states and the pit are never covered.
+
+| # | Coverage | Condition | K2h verdict | Label |
+|---|---|---|---|---|
+| H1 | outside | any | undetermined, never gating | `hydrolysis: outside data` |
+| H2 | covered | f_cond(k_slow) < f_min | falsified at that state | `hydrolysed even at the slowest plausible rate` |
+| H3 | covered | f_cond(k_fast) >= f_min | not gating | `condensed fraction kept at the fastest plausible rate` |
+| H4 | covered | otherwise | inconclusive | flip value t_wet* = t_half(k) log2(1/f_min) at k_slow and k_fast (`t_wet_max`) |
+
+The evidence grade (`single-source`, `sourced`, `computed`, gap) of every k_hyd used and of tau_k is printed beside
+every H2 to H4 verdict. K2h is a conditional gate: it gates a route's row only through H2; H1, H3 and H4 never end a
+row. It applies to the condensed rows of R1 to R3 and to the conversion-step rows of Section 2g that pass through an
+aqueous stage. The kinetic race of gelation against hydrolysis (R1) stays a labelled hypothesis (C2).
+
+### 9b. Formation criteria (K3 route forms, ruling C2)
+
+**R1, falsifying only.** The gel is an Al polyphosphate with nu_Al Al3+ and nu_PP chain units (PO3-) per formula
+unit. With a_PP the free activity of the chain unit and K_sp,AlPP the solubility product of the gel written for the
+same formula unit (`polyp_log10_ksp_al`, a gap):
+
+    Omega_AlPP = a_Al^nu_Al a_PP^nu_PP / K_sp,AlPP                                         (function `Omega_AlPP`)
+
+| # | Condition | R1 verdict at the state | Label |
+|---|---|---|---|
+| F1r | K_sp,AlPP is a gap | undetermined | flip value K_sp* = IAP_AlPP printed (the K_sp below which the gel is accessible) |
+| F2r | P(Omega_AlPP < 1) >= p_cred | falsified at that state | `gel cannot form (thermodynamic accessibility)` |
+| F3r | P(Omega_AlPP > 1) >= p_cred | not excluded | `not excluded by thermodynamic accessibility` (never a pass) |
+| F4r | otherwise | inconclusive | |
+
+- **Two labelled a(Al3+) states.** *Oxide-equilibrium* (slurry stage): a_Al fixed by the oxide or hydroxide in contact,
+  a_Al = K_ox,Al a_H^3 / a_w^3 (function `a_Al_oxide_eq`; K_ox,Al from our Al-O-H Pourbaix, W5, key `polyp_al_log_k_oxide`). With the oxide present
+  the free Al3+ activity is pinned by this equilibrium whatever the complexation; complexation raises the total
+  dissolved Al, not a_Al. *Pit-state* (cell stage): a_Al from the literature pit solution (`polyp_al_activity_pit`),
+  higher than the oxide-equilibrium value; it is a separate labelled state, never combined with the first.
+- **Polyphosphate complexation of Al3+.** It lowers the free ligand, not the pinned a_Al: a_PP = f_PP,free c_PP/c_std
+  with f_PP,free = 1/(1 + beta_AlPP a_Al) for 1:1 complexes in the ideal limit (function `f_PP_free`;
+  `polyp_al_log_beta1_*` by ring size or chain). Where beta_AlPP is a gap for the registered chain distribution,
+  the free fraction is not set to one silently: the row carries the flag `complexation gap` and is evaluated at
+  f_PP,free = 1 (the upper bound on a_PP, so a falsification there stands and an F3r there is labelled optimistic).
+- **R2 coacervate binodal.** The state is the point (Ca_T, P_T, pH, I) of the slurry. With the binodal map
+  (`coacervate_binodal_map`, with its covered region):
+
+| # | Coverage | Condition | R2 verdict |
+|---|---|---|---|
+| B1 | state outside the covered region | any | undetermined |
+| B2 | covered | state outside the two-phase region with P >= p_cred | falsified at that state (`no liquid precursor`) |
+| B3 | covered | state inside the two-phase region with P >= p_cred | not excluded (a liquid precursor exists; K4 route form next) |
+| B4 | covered | otherwise | inconclusive |
+
+- **R3** has no formation criterion of its own: it is the dried form of the slurry state and is decided by K2h (9a)
+  and the K1 amorphous row (9d). Cut first (one sentence in the paper).
+
+### 9c. Liquid wetting (K4 route form, ruling C3)
+
+Three phases: the substrate s (alumina-covered foil), the dense coacervate n, and the dilute phase l in coexistence
+with it. The spreading coefficient of the coacervate on the substrate under the dilute phase is
+
+    S_coac = gamma_sl - gamma_sn - gamma_nl,     cos theta = (gamma_sl - gamma_sn) / gamma_nl   (functions `S_coac`,
+                                                                                                  `cos_theta_coac`)
+
+with S_coac = gamma_nl (cos theta - 1) on the partial-wetting branch. Write Dgamma = gamma_sl - gamma_sn (the
+substrate's preference for the dense phase over the dilute one).
+
+- **Limit gamma_nl negligible** (gamma_nl << |Dgamma|; ruling C3: coacervate-dilute tensions are orders of magnitude
+  below solid-water energies, W1 to source `coacervate_gamma_nl`). S_coac -> Dgamma, and cos theta -> sign(Dgamma)
+  times infinity: the coacervate wets completely if Dgamma > 0 and is expelled (theta = pi) if Dgamma < 0. The
+  condition reduces to gamma_sn <= gamma_sl. The marginal case Dgamma = 0 is decided by gamma_nl and is reported
+  as inconclusive.
+- **Limit gamma_nl comparable** (gamma_nl of the order of |Dgamma|). Three branches: complete wetting if
+  Dgamma >= gamma_nl (S_coac >= 0); partial wetting with theta < pi/2 if 0 < Dgamma < gamma_nl; non-wetting with
+  theta >= pi/2 if Dgamma <= 0. The K4 route test is S_coac >= m_S; theta < pi/2 alone is reported, not gating.
+- **Sign tests.** S_coac is increasing in gamma_sl and decreasing in gamma_sn and in gamma_nl; at gamma_nl -> 0 the
+  sign of S_coac is the sign of Dgamma (contract limits and monotonicity of `S_coac`).
+
+**Dgamma from polyphosphate adsorption on alumina.** Each interface s|x (x = l, n) carries the registered
+Gibbs-Langmuir machinery (contract v2 to v4): Gamma_P sites per area that bind the polyphosphate chain unit with the
+Langmuir constant K_P, and a layer of thickness delta_P that excludes the solute. Written at the chemical potentials of
+the facing phase (activity a_P of the chain unit and the osmotic pressure Pi_osm of the solution against pure water):
+
+    gamma_sx = gamma_sx^(0) - R T Gamma_P ln(1 + K_P a_P) + delta_P Pi_osm              (function `gamma_sx_ads`)
+
+where gamma_sx^(0) is the energy of the site-free (polyphosphate-free) contact of the substrate with phase x, and the
+last term is the grand-potential cost of excluding the solute from the layer (the ideal-dilute reading
+delta_P R T c is the depletion term of `Delta_gamma_ads`). This is the general form whose ideal-dilute expansion about
+the polyphosphate-free interface is the registered Delta_gamma_ads.
+
+At coexistence the two liquids have equal chemical potentials of every component: equal a_P, equal water activity and
+so equal osmotic pressure. Hence the site term and the exclusion term are the same at both interfaces and cancel:
+
+    Dgamma = gamma_sl - gamma_sn = gamma_sl^(0) - gamma_sn^(0)                         (function `Dgamma_coac`, identity)
+
+**Result.** Specific adsorption of polyphosphate on alumina, however strong, gives no preference for the dense phase
+within this machinery: it lowers both energies equally. The substrate's preference is the difference of the site-free
+contacts, which is a property of the two liquids against the bare oxide (water content, Ca2+ and counter-ion content,
+polymer density) and is a gap (`coacervate_gamma_s0_dilute`, `coacervate_gamma_s0_dense`). The spreading coefficient of
+the coacervate on alumina is therefore a design result in the form S_coac = (gamma_sl^(0) - gamma_sn^(0)) - gamma_nl
+with its flip value Dgamma* = gamma_nl + m_S, and the R2 K4 route form is undetermined until the site-free difference or
+a measured contact angle of the coacervate on alumina under its dilute phase exists (a contact angle and gamma_nl give
+Dgamma = gamma_nl cos theta directly).
+
+- **Rejected form (demonstration `Dgamma_coac_ideal`).** Applying the ideal-dilute isotherm with the concentrations of
+  the two phases, Dgamma = R T [Gamma_P ln((1 + K_c c_n)/(1 + K_c c_l)) - delta_P (c_n - c_l)], attributes the
+  concentration difference of coexisting phases to an activity difference, which coexistence forbids; it would credit
+  the binding constant with a wetting preference. Never used in a verdict.
+- **Admissibility rule (kept).** gamma_sl >= 0 and gamma_sn >= 0 at the regime state; a draw outside is refused and
+  counted, never clipped (D27 form). Because the adsorption terms cancel in Dgamma but not in each energy, admissibility
+  is checked on each of gamma_sl and gamma_sn with its adsorption term, before the difference is formed.
+- **Single-entry rule (kept).** The binding of polyphosphate to alumina (K_P, Gamma_P) enters once, through the site
+  term of `gamma_sx_ads`; gamma_sx^(0) never receives it, and a measured contact energy of the coacervate on alumina is
+  used as gamma_sn at the regime state without a further adsorption correction.
+- **Neutral-solute limitation (stated).** The machinery treats the chain unit with its counter-ions as a neutral solute.
+  The electrostatic double-layer term of a charged oxide does not cancel: the two phases have very different ionic
+  strengths, so their screening lengths differ, and the double-layer contribution to gamma_sx differs between l and n.
+  It is the leading term the cancellation leaves out and is unmodelled; its sign depends on the oxide charge at the
+  regime pH relative to the point of zero charge and is not assumed.
+- **Descriptors.** The self-limiting thickness of the R1 gel and of the dried R2 film is a descriptor. The insulating
+  bound d_max of K4 stays for every route.

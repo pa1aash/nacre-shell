@@ -811,6 +811,7 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `params.pka2_catechol` | pKa2 | literature | C2 analog route, second proton (D27) |
 | `regimes.R-cell.parameters.cutoff_classes` | E_c | design axis (cutoff classes) | screen_ph K1 (redirect) |
 | `thresholds.K1.margin_service` | m_svc | literature (reading uncertainty of a tier-2 record) | screen_ph K1 tier 2 |
+| `params.hydrolysis_f_min` | f_min | registration (set with the K1 rows; PH-W3.2) | screen_ph K2h |
 
 The C2-to-C3 inputs that the thresholds consume through Delta_gamma_ads are the existing priors
 `Gamma_s`, `delta_s`, `c_bulk` and `gamma_sl0`. `gamma_sl0` is new in contract v2 and replaces a
@@ -838,7 +839,7 @@ revised_d27: {session: P0-W3.4b, decision: D27 (2026-10-18), date: 2026-10-19, r
               screen_output_consulted: false, log: theory/cp2_fixes.md (cp3 section, D27 amendment)}
 revised_ph: {session: PH-W3.2a, rule: 'cp4 fixes F2 and F4 and the route layer (rulings C1 to C6), added as screen_ph beside the carbonate links; no carbonate link, edge or value changed',
              authority: theory/claims_redirect.md (Sections 2f, 2g, 9), screen_output_consulted: false}
-contract_version: 5
+contract_version: 6
 decision:
   statistic: band_mass
   credible_level: {symbol: p_cred, params: thresholds.decision.credible_level}
@@ -901,7 +902,7 @@ decision:
     params: {gamma_sl0: params.gamma_sl0_template, Gamma_s: params.gamma_s_site_density, c_bulk: params.c_bulk_slurry}
   omega: Omega_bulk
   forbidden_in_verdicts: [Omega_local_ideal, Delta_mu_local_ideal, DG_het_local_ideal, DG_het_double, E_enr, c_local,
-                          Omega_bulk_hydrated]
+                          Omega_bulk_hydrated, Dgamma_coac_ideal]
   drying_states:
     iap: a_Ca*a_CO3
     bias: the anhydrous IAP overstates Omega by a_w**(-n_hyd) when a_w < 1; drying states are optimistic
@@ -1203,6 +1204,65 @@ screen_ph:
                 params: [params.hydration_transfer_ca_water_carbonate, params.hydration_transfer_al_water_carbonate,
                          params.transfer_free_energy_li_water_pc]}
       class_rule: 'per class: feasible at sup C, falsified at inf C, otherwise partial with crossovers E_lb - m and E_ub + m'
+    K2h:
+      role: conditional gate (ruling C1); gates a route row only through H2
+      regime: R-slurry
+      table: claims_redirect Section 9a, rows H1 to H4
+      tests:
+        - id: K2h_falsify
+          quantity: f_cond
+          comparator: '<'
+          edge: f_min
+          at: slowest plausible rate (tau_lo times the least covered k_hyd) at a covered state
+          params: {f_min: params.hydrolysis_f_min}
+        - id: K2h_not_gating
+          quantity: f_cond
+          comparator: '>='
+          edge: f_min
+          at: fastest plausible rate (tau_hi times the largest covered k_hyd)
+          params: {f_min: params.hydrolysis_f_min}
+      outside_coverage: undetermined, never gating
+      otherwise: inconclusive, with the flip value t_wet_max at both rates
+      evidence_grade: printed beside every verdict
+      condensed: oligophosphates count as condensed; only the orthophosphate fraction is lost
+    K3_R1:
+      role: falsifying only (ruling C2)
+      regime: R-slurry
+      table: claims_redirect Section 9b, rows F1r to F4r
+      tests:
+        - id: K3_R1_falsify
+          quantity: Omega_AlPP
+          comparator: '<'
+          edge: '1'
+          rule: 'P(Omega_AlPP < 1) >= p_cred: falsified at that state'
+          params: {}
+        - id: K3_R1_not_excluded
+          quantity: Omega_AlPP
+          comparator: '>'
+          edge: '1'
+          rule: 'P(Omega_AlPP > 1) >= p_cred: not excluded by thermodynamic accessibility, never a pass'
+          params: {}
+      K_sp_gap: undetermined, flip value K_sp* = IAP_AlPP printed
+      a_Al_states: {oxide_equilibrium: a_Al_oxide_eq, pit: params.polyp_al_activity_pit, combined: never}
+      complexation: {function: a_PP_free, gap: 'beta_AlPP = 0 (upper bound on a_PP), flagged'}
+    K3_R2:
+      role: falsifying where covered (ruling C2)
+      table: claims_redirect Section 9b, rows B1 to B4
+      map: params.coacervate_binodal_map
+      outside_coverage: undetermined
+    K4_R2:
+      role: K4 route form (ruling C3); the closure route of Section 3c is the alternative
+      regime: R-slurry
+      tests:
+        - id: K4_R2_spread
+          quantity: S_coac
+          comparator: '>='
+          edge: m_S
+          params: {m_S: thresholds.C4.margin_S_spread}
+      cancellation: 'Dgamma_coac = gamma_al_l0 - gamma_al_n0 (site and exclusion terms cancel at coexistence)'
+      admissible_draws_only: 'gamma_al_l >= 0 and gamma_al_n >= 0, each with its adsorption term; refused and counted'
+      undetermined_until: site-free contact difference or a measured contact angle with gamma_nl_c
+      falsified: only if the spreading and closure routes both fail on the same draw
   rows:
     stage: [slurry, cell, conversion]
     slurry: {phases: [brushite, ACP, HAp], conditions: [K2, K3, K4]}
