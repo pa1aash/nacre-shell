@@ -664,3 +664,86 @@ Section 2g).
   falsified wherever its crystalline row is falsified, labelled `falsified (bound)`, and stays undetermined everywhere
   else. It can never pass this way. For the nucleus framings (ACP versus apatite) this makes "falsified under every
   framing" decidable from the crystalline row alone, on the falsifying side only.
+
+## 10. PH-W3.2 rulings: W5's post-hoc choices and the bracket verdict
+
+Session PH-W3.2. Inputs: the PH-W5.1 outputs of lane p0-w5 and `lit/params.yaml` of lane p0-w1, at the commits pinned in
+the `margins_v6` entry of the thresholds block (`theory/thresholds.md` Section 7). Numbers are not typed here: each one is
+named by its key, its file, or its field of `margins_v6`.
+
+### 10a. Ruling (a): the film solid that governs the passivation window
+
+**W5's choice.** `al_window.json` (field `primary`) takes amorphous Al(OH)3 as the film solid that sets the window, at the
+Al level of the one published window that states it (TR-091). It shows crystalline boehmite (field `reference`), gibbsite
+and corundum beside it, at three Al levels. The amorphous window is the narrower one. W5 chose this after the windows
+were computed, citing the C4 reading.
+
+**Physics.** C4 is a ruling about route products, so it does not decide by itself which solid sets a(Al3+) at the foil.
+That is a kinetic fact about the surface: the solid in contact with the slurry during the wet residence time t_wet, in
+water, at room temperature. Three points decide the extension:
+
+1. *Which phase is present.* The air-formed film on rolled foil is an amorphous oxide. In room-temperature water it
+   hydrates. The first hydrated solid to form at that temperature is the least ordered one (the step rule that C4 applies
+   to the route products). Crystalline boehmite is the product of hot-water or hydrothermal treatment, and the crystalline
+   trihydroxides form only on ageing. The direction holds without a source, because the amorphous solid is the first
+   precipitate. The identity of the room-temperature film within t_wet is still a fact to fetch: new W1 key
+   `al_film_phase_rt_water` (phase or phases identified on Al in water at room temperature, with time and method). Until
+   it is sourced, the governing row is labelled `film phase: inferred amorphous`.
+2. *Nesting.* At every registered Al level, the amorphous window lies inside the window of each crystalline solid
+   (`al_window.json`, field `windows`), because the amorphous solid is the most soluble registered Al solid. A state inside
+   the amorphous window is therefore inside every registered window. A statement made on the amorphous row holds under
+   every film framing, and the converse does not. So the amorphous row is also the conservative choice for the claim the
+   window supports (the film holds at that state).
+3. *R1 runs the other way.* At oxide equilibrium a(Al3+) is pinned by the film solid, and the amorphous solid gives the
+   highest a(Al3+) (`a_al3_oxide.csv`). For the falsifying-only R1 test the amorphous state is the hardest to falsify, so
+   an R1 falsification there stands under every film framing. A "not excluded" verdict there is optimistic if the film is
+   in fact crystalline.
+
+**Ruling.** The extension of C4 to the oxide film is justified in direction, by points 1 and 2, and conditional on the
+phase identity of point 1. The rows are:
+
+| Use | Governing row | Reference row | Also printed |
+|---|---|---|---|
+| passivation window (comparator state, Section 5) | Al(OH)3 am, at the TR-091 Al level | boehmite (grade A, the gated Al phase of the R-cell window) | gibbsite, corundum; every registered Al level; the published windows TR-090 and TR-091 |
+| R1 oxide-equilibrium a(Al3+) (Section 9b) | Al(OH)3 am | boehmite | none |
+
+Both rows are reported wherever either is used. An R1 "not excluded" (F3r) that holds at the amorphous state and fails
+at the boehmite state is labelled `not excluded only if the film is amorphous`. An R1 falsification (F2r) at the
+amorphous state is reported as robust to the film framing. Corundum is an anhydrous high-temperature phase. It is a
+reference only, never a candidate for the hydrated film.
+
+The amorphous solubility constant is single-source, grade C, and has no printed uncertainty (TB-027). The width of its
+log10 K_s prior is the largest difference of the Al ion-data benchmark (`margins_v6.K3_R1`), not zero. The window stays a
+comparator to the incumbent phosphoric-acid control, never a barrier verdict.
+
+### 10b. Ruling (b): the Ca(PO3)2 glass-to-crystal correction
+
+W5 made three choices (`ph_w51.json`, field `staged_products.vitrification`). Each one is ruled below.
+
+1. **The correction from the LiPO3 and NaPO3 pairs, uncertainty doubled: tighten.** PH-W1.3 supplies the Ca(PO3)2 crystal
+   enthalpy itself (`glass_dfh_cameta_crystal`, a CALPHAD assessment over the three polymorphs). It also supplies the
+   correction against the same glass enthalpy that the amorphous row uses (`glass_crystal_correction_cameta_calphad` =
+   `glass_dfh_cameta_glass` - `glass_dfh_cameta_crystal`). A value matched to the composition outranks an alkali transfer.
+   The transfer assumes a vitrification enthalpy per chain unit that does not depend on the cation, and that is
+   unsupported: the two alkali pairs differ, and Ca2+ crosslinks the chains. The analogue bound [0, n_PO3 h_max] is
+   therefore retired to a consistency check. The direct value per PO3 lies inside it (`margins_v6.m_K1_amorphous.ruling_b.
+   analogue_check`). The assessment prints no uncertainty of its own, and the polymorph envelope alone understates it. The
+   uncertainty is therefore u = f_infl (half polymorph span + tabulated uncertainty of the glass enthalpy), with the
+   inflation factor f_infl of cp4 F3 kept and the label `direct, assessed crystal; inflated`. The band is intersected
+   with the physical domain DeltaH_g->c >= 0. Consequence: only the crystalline reference row moves; its onset and margin
+   are in `ruling_b.crystalline_reference_row`, for W5 to adopt by entering the crystal through
+   `glass_dfh_cameta_crystal` directly. The governing amorphous row does not use the correction, because it is built on
+   the glass enthalpy, so it is unchanged.
+2. **The excluded pair TT-044 (with TR-042): accept, with the reason restated.** A glass is metastable with respect to its
+   crystal, so its enthalpy at 298 K lies above the crystal's, and a negative difference is inconsistent. The pair joins
+   two sources whose crystal references differ, so it is the pairing that fails, and TT-044 itself is not shown wrong as a
+   glass enthalpy. TT-044 therefore stays in the LiPO3 glass enthalpy of the Li polyphosphate baseline row. There the
+   spread of the two glass values enters that row's budget, which widens it and is the conservative direction. After
+   point 1 the exclusion touches no Ca(PO3)2 row.
+3. **The residual entropy bound [0, R ln 2] per PO3: accept, as a labelled assumption with no source.** Two conditions
+   apply. (i) The bound is evaluated at its ends, not as a midpoint: the upper end for E_ub, where the glass is most stable
+   and the onset highest, so a falsification there stands; zero for E_lb. With the linear budget the midpoint plus
+   half-span gives the same numbers, so no published value moves. (ii) The physical ceiling of the residual entropy is the
+   configurational entropy frozen in at the glass transition, which is bounded by the entropy of fusion. If W1 sources it
+   (new key `glass_s_fusion_cameta`) and it lies below the upper end, it replaces that end. The full span of the bound moves
+   the onset by `margins_v6.m_K1_amorphous.residual_entropy.span_V`, small against the row's margin.
