@@ -4,6 +4,7 @@
     python -m nacre.screen dryrun --mock [--params P] [--out O] [--independence]
                                                               dry run, output under results/preprint/screen/dryrun/
     python -m nacre.screen ph-dryrun --mineral M --mock [--k1-override] [--draws N] [--out O]
+    python -m nacre.screen ph-route-dryrun --route R1|R2|R3|baseline --mock [--draws N] [--out O] [--ladder L]
                                                               PH-W4.1 mineral screen on mock priors, under dryrun_ph/
     python -m nacre.screen production --out O [--prior-set S] [--control C ...] [--convention K=V ...]
                                      [--bind SYM=KEY ...] [--independence] [--no-sensitivity]
@@ -16,7 +17,7 @@ import sys
 from pathlib import Path
 
 from nacre._util import repo_root
-from nacre.screen import ph_dry, run, smoke
+from nacre.screen import ph_dry, ph_route_dry, run, smoke
 from nacre.screen import thresholds as thr
 from nacre.screen.priors import MockPriorsRefused
 
@@ -48,6 +49,13 @@ def main(argv=None):
     ph.add_argument("--mock", action="store_true", help="allow a parameter table marked mock: true")
     ph.add_argument("--k1-override", action="store_true", help="dry run only: run K3 and K4 although K1 passes no class")
     ph.add_argument("--draws", type=int, default=ph_dry.DEFAULT_DRAWS)
+    rd = sub.add_parser("ph-route-dryrun", help="dry run of the route layer on mock priors (PH-W4.2a; never reported)")
+    rd.add_argument("--route", required=True, choices=ph_route_dry.CLASSES)
+    rd.add_argument("--params", default=str(ph_route_dry.ROUTE_TABLE))
+    rd.add_argument("--ladder", default=str(ph_route_dry.MOCK_LADDER), help="K1 ladder in the v2 layout")
+    rd.add_argument("--out", help="output summary; default dryrun_ph/route_<class>/summary.json")
+    rd.add_argument("--mock", action="store_true", help="allow a parameter table marked mock: true")
+    rd.add_argument("--draws", type=int, default=ph_route_dry.DEFAULT_DRAWS)
     pr = sub.add_parser("production", help="production screen (P0-W4.3, after cp3)")
     pr.add_argument("--out", default=str(run.SCREEN_DIR / "summary.json"))
     for p in (dr, pr):
@@ -100,6 +108,16 @@ def main(argv=None):
             path, _, stats = ph_dry.run_mineral(root, args.mineral, out, params_path=root / args.params,
                                                 allow_mock=args.mock, k1_override=args.k1_override,
                                                 draws=args.draws)
+        except (MockPriorsRefused, ph_dry.DryRunRefused, run.params_adapter.PriorFileError) as exc:
+            print("refused: %s" % exc, file=sys.stderr)
+            return 2
+        print("wrote %s  (%.1f s, peak %.0f MB)" % (path.relative_to(root), stats["seconds"], stats["peak_mb"]))
+        return 0
+    if args.cmd == "ph-route-dryrun":
+        out = root / (args.out or (run.DRYRUN_PH_DIR / ("route_%s" % args.route) / "summary.json"))
+        try:
+            path, _, stats = ph_route_dry.run_route(root, args.route, out, params_path=root / args.params,
+                                                    ladder_path=args.ladder, allow_mock=args.mock, draws_n=args.draws)
         except (MockPriorsRefused, ph_dry.DryRunRefused, run.params_adapter.PriorFileError) as exc:
             print("refused: %s" % exc, file=sys.stderr)
             return 2

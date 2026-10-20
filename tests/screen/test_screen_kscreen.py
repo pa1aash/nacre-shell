@@ -1,4 +1,5 @@
-"""K1 to K4 for solid-like nuclei, the framing rule, the admissibility restriction and the deletion test (PH-W4.1)."""
+"""K1 to K4 for solid-like nuclei, the framing rule, the admissibility restriction and the deletion test (PH-W4.1);
+the cp4 F1 proceed rule and the v2 ladder layout (PH-W4.2a)."""
 import numpy as np
 import pytest
 
@@ -31,11 +32,41 @@ def _ladder(tmp_path, rows):
 
 
 def test_k1_reader_reads_the_committed_ladder_without_recomputing():
-    t = kscreen.read_k1(ROOT / kscreen.LADDER)
+    t = kscreen.read_k1(ROOT / kscreen.LADDER_V1)
     assert "HAp" in t.phases() and "CaCO3" in t.phases()
     v = t.verdicts("HAp", "crystalline")
     assert v["4.2-4.3 V"] == "falsified" and v["LFP-class"] == "inconclusive"     # upper bound: not a pass
     assert t.passing_classes("HAp", "crystalline") == []
+    br = t.row("HAp", "LFP-class", "crystalline").bracket()                        # v1: the solid-salt onset is E_ub
+    assert br["E_ub"] == pytest.approx(4.0674) and br["E_lb"] is None and br["E_lb_status"] == "pending"
+    assert t.row("HAp", "LFP-class", "crystalline").stage == "cell"
+    assert t.low_cutoff_class("HAp") == "LFP-class"
+
+
+def test_k1_reads_the_v2_layout_framing_stage_and_bracket(tmp_path):
+    head = "phase,class,cutoff_inf_V,framing,stage,E_ub_V,E_lb_V,status,note\n"
+    p = tmp_path / "v2.csv"
+    p.write_text(head + "Ca(PO3)2,C_lo,3.6,amorphous,cell,4.1,3.9,within,x\n"
+                 "Ca(PO3)2,C_lo,3.6,crystalline,cell,4.6,,above,upper bound only\n", encoding="utf-8")
+    t = kscreen.read_k1(p)
+    am = t.row("Ca(PO3)2", "C_lo", "amorphous").bracket()
+    assert (am["E_ub"], am["E_lb"], am["E_lb_status"]) == (4.1, 3.9, "sourced")
+    cr = t.row("Ca(PO3)2", "C_lo", "crystalline").bracket()
+    assert cr["E_lb"] is None and cr["E_lb_status"] == "pending"
+    p.write_text(head + "X,C,1,crystalline,kiln,1,1,above,x\n", encoding="utf-8")
+    with pytest.raises(kscreen.K1Error):
+        kscreen.read_k1(p)
+
+
+def test_k1_reads_a_verdict_column_as_written(tmp_path):
+    p = tmp_path / "v.csv"
+    p.write_text("phase,class,status,note,k1_verdict\nX,C1,above,x,not excluded (class A)\nX,C2,below,x,falsified at E_c\n",
+                 encoding="utf-8")
+    t = kscreen.read_k1(p)
+    assert t.verdicts("X", "crystalline") == {"C1": "not excluded", "C2": "falsified"}
+    p.write_text("phase,class,status,note,k1_verdict\nX,C1,above,x,maybe\n", encoding="utf-8")
+    with pytest.raises(kscreen.K1Error):
+        kscreen.read_k1(p)
 
 
 def test_k1_accepts_two_rows_per_phase_one_per_framing(tmp_path):
@@ -61,17 +92,23 @@ def test_k1_refuses_a_third_row_or_a_duplicate_framing(tmp_path):
 
 @pytest.mark.parametrize("status,note,expected", [("below", "", "falsified"), ("above", "upper bound only", "inconclusive"),
                                                   ("above", "solvated sink", "feasible"), ("within budget", "", "inconclusive"),
-                                                  ("undetermined", "", "inconclusive")])
+                                                  ("undetermined", "", "undetermined")])
 def test_k1_verdict_mapping(status, note, expected):
     assert kscreen.k1_verdict(status, note) == expected
 
 
-def test_gate_closes_without_a_pass_and_a_dry_run_may_override():
-    k1 = {"passes_at": [], "by_class": {}}
-    assert not kscreen.proceeds(k1)["proceeds"]
-    g = kscreen.proceeds(k1, override=True)
-    assert g["proceeds"] and g["overridden"]
-    assert kscreen.proceeds({"passes_at": ["C1"]})["classes"] == ["C1"]
+def test_f1_proceeds_unless_falsified_at_every_class():
+    """cp4 F1 (claims_redirect.md 2d): proceeding is not passing; K1 keeps its verdict."""
+    every = {"by_class": {"C_lo": "falsified", "C_mid": "falsified", "C_hi": "falsified"}}
+    g = kscreen.proceeds(every)
+    assert not g["proceeds"] and g["k1_status"] == every["by_class"]
+    for v in ("inconclusive", "undetermined", "feasible", "not excluded"):
+        g = kscreen.proceeds({"by_class": {"C_lo": v, "C_mid": "falsified", "C_hi": "falsified"}})
+        assert g["proceeds"] and g["classes"] == ["C_lo"] and g["k1_status"]["C_mid"] == "falsified"
+    forced = kscreen.proceeds(every, override=True)
+    assert forced["proceeds"] and forced["overridden"]
+    none = kscreen.proceeds({"by_class": {}})
+    assert none["proceeds"] and "undetermined" in none["note"]
 
 
 # ------------------------------------------------------------------ K2
@@ -196,29 +233,32 @@ def _mineral(**kw):
     return Mineral(**base)
 
 
-def test_evaluate_mineral_does_not_run_k3_k4_when_k1_passes_nowhere():
-    t = kscreen.read_k1(ROOT / kscreen.LADDER)
-    rec = kscreen.evaluate_mineral(_mineral(), t, _doses(), P)
+def test_evaluate_mineral_runs_k3_k4_unless_k1_is_falsified_at_every_class(tmp_path):
+    t = kscreen.read_k1(ROOT / kscreen.LADDER_V1)            # HAp: inconclusive at the LFP class, falsified above
+    rec = kscreen.evaluate_mineral(_mineral(), t, _doses(), P, control_doses=_doses(het=30.0, hom=40.0, b=8.0), d_max=1e-8)
+    assert rec["gate"]["proceeds"] and not rec["gate"]["overridden"] and rec["K3"]["verdict"] == "feasible"
+    assert rec["K1"]["by_class"]["4.2-4.3 V"] == "falsified"                    # proceeding is not passing
+    assert rec["deletion_test"]["holds"] and rec["deletion_test"]["per"]["K3"]["label"] == "template-specific"
+    p = tmp_path / "all.csv"
+    p.write_text("phase,class,status,note\nHAp,C1,below,x\nHAp,C2,below,x\n", encoding="utf-8")
+    rec = kscreen.evaluate_mineral(_mineral(), kscreen.read_k1(p), _doses(), P)
     assert rec["K3"]["verdict"] == "not run" and rec["K4"]["verdict"] == "not run" and rec["provisional"] is True
-    ov = kscreen.evaluate_mineral(_mineral(), t, _doses(), P, control_doses=_doses(het=30.0, hom=40.0, b=8.0), d_max=1e-8,
-                                  k1_override=True)
-    assert ov["gate"]["overridden"] and ov["K3"]["verdict"] == "feasible"
-    assert ov["deletion_test"]["holds"] and ov["deletion_test"]["per"]["K3"]["label"] == "template-specific"
 
 
 def test_liquid_precursor_is_left_to_the_route_evaluator():
-    t = kscreen.read_k1(ROOT / kscreen.LADDER)
+    t = kscreen.read_k1(ROOT / kscreen.LADDER_V1)
     rec = kscreen.evaluate_mineral(_mineral(phase_state="liquid_precursor"), t, _doses(), P)
-    assert rec["K3"]["verdict"] == "inconclusive" and "liquid_precursor_wetting" in rec["route_extension_points_pending"]
+    assert rec["K3"]["verdict"] == "not applicable" and "liquid_precursor_wetting" in rec["route_evaluators"]
 
 
-def test_route_extension_points_raise_not_implemented():
-    m = _mineral()
+def test_route_extension_points_are_implemented():
     assert set(routes.NAMES) == set(routes.ROUTE_EVALUATORS)
     for name, fn in routes.ROUTE_EVALUATORS.items():
         assert fn.__doc__ and len(fn.__doc__) > 80, name
-        with pytest.raises(NotImplementedError):
-            fn(m, {}) if name == "hydrolysis_descriptor" else fn(m, {}, 0.9)
+    r = routes.ROUTE_EVALUATORS["hydrolysis_descriptor"]({"pH": 7.0, "T": 298.0, "pit": True}, [], (1, 1), 1.0, 0.9, 5.0)
+    assert r["row"] == "H1"
+    assert routes.ROUTE_EVALUATORS["formation_accessibility"]("R3", 0.9)["verdict"] == "not applicable"
+    assert routes.ROUTE_EVALUATORS["liquid_precursor_wetting"](0.9, 0.0)["verdict"] == "undetermined"
 
 
 def test_pending_extension_points_follow_the_mineral():
@@ -243,12 +283,17 @@ def test_gap_skeleton_fills_only_registered_treatments():
     assert gaps.check_ph(t) == []
     assert t["status"] == "skeleton" and t["written_before_production_output"] is True
     wait = gaps.awaiting(t)
-    assert wait and all(p.split(".")[0] in {"keys", "speciation", "margins", "ladder", "design_axes", "inputs_with_rule"} for p in wait)
+    assert wait and all(p.split(".")[0] in {"keys", "speciation", "margins", "ladder", "design_axes", "inputs_with_rule",
+                                                     "route_layer"} for p in wait)
     rules = dict(gaps.treatments_ph(t))
     assert rules["inputs_with_rule.gamma_sn0_phosphate"] == "ignorance"
     assert rules["inputs_with_rule.competing_phases"] == "unresolved"
     assert rules["design_axes.p_total_slurry"] == "design_axis"
     assert rules["keys.log10_ksp_hap"] == gaps.PENDING
+    assert rules["route_layer.r1.polyp_log10_ksp_al"] == "unresolved"            # F1r
+    assert rules["route_layer.r2.coacervate_binodal_map"] == "unresolved"        # B1
+    assert rules["route_layer.hydrolysis.hydrolysis_f_min"] == gaps.PENDING     # PH-W3.2 sets the number
+    assert set(t["route_layer"]["evaluators"]) == set(routes.NAMES)
 
 
 def test_gap_skeleton_names_match_claims_redirect_section_7():

@@ -1,0 +1,63 @@
+# MOCK PARAMETER TABLE of the route-layer dry runs (PH-W4.2a), in the layout of lit/params.yaml.
+# Synthetic round numbers chosen only to lie inside each input's physical domain and to exercise every branch of
+# the route evaluators (nacre.screen.routes: K2h, R1, R2, coacervate wetting; nacre.screen.ph_rows: stage rows,
+# baselines). They are not literature values, carry no physical meaning, register no parameter of the redirected
+# screen and never feed a reported result: the adapter refuses this file unless allow_mock / --mock is given, and
+# the dry runs write only under results/preprint/screen/dryrun_ph/ (git-ignored). Symbols are the contract v6 ids
+# (theory/contract.yaml); units are SI. `rows`, `design` and `maps` are mock-only structures of the dry run.
+mock: true
+meta: {session: PH-W4.2a, note: synthetic route-layer dry-run table}
+params:
+  temperature: {symbol: T, transform: none, unit: K, regimes: [R-slurry], status: design-input, prior: {family: fixed, value: 298.15}, sources: []}
+  water_activity: {symbol: a_w, transform: none, unit: "1", regimes: [R-slurry], status: design-input, prior: {family: uniform, low: 0.95, high: 1.0}, sources: []}
+  # R1: Al3+-triggered gelation
+  polyp_al_log_k_oxide: {symbol: K_ox_Al, transform: log10, unit: "1", regimes: [R-slurry], status: computed, prior: {family: uniform, low: 7.0, high: 9.0}, sources: []}
+  polyp_al_activity_pit: {symbol: a_Al, transform: none, unit: "1", regimes: [R-slurry], status: single-source, prior: {family: loguniform, low: 1.0e-6, high: 1.0e-4}, sources: []}
+  polyp_activity_total_mock: {symbol: a_PP_tot, transform: none, unit: "1", regimes: [R-slurry], status: design-input, prior: {family: loguniform, low: 1.0e-3, high: 1.0e-2}, sources: []}
+  polyp_al_log_beta1_linear: {symbol: beta_AlPP, transform: none, unit: "1", regimes: [R-slurry], status: gap, prior: {family: none}, sources: []}
+  polyp_nu_al_mock: {symbol: nu_Al, transform: none, unit: "1", regimes: [R-slurry], status: registered, prior: {family: fixed, value: 1.0}, sources: []}
+  polyp_nu_pp_mock: {symbol: nu_PP, transform: none, unit: "1", regimes: [R-slurry], status: registered, prior: {family: fixed, value: 3.0}, sources: []}
+  polyp_log10_ksp_al: {symbol: K_sp_AlPP, transform: log10, unit: "1", regimes: [R-slurry], status: single-source, prior: {family: uniform, low: -40.0, high: -30.0}, sources: []}
+  # R2 and R3: Ca-polyphosphate (contract v5 mineral with supplied activities)
+  ca_activity_mock: {symbol: a_Ca, transform: none, unit: "1", regimes: [R-slurry], status: design-input, prior: {family: loguniform, low: 1.0e-4, high: 1.0e-2}, sources: []}
+  po3_activity_mock: {symbol: a_X, transform: none, unit: "1", regimes: [R-slurry], status: design-input, prior: {family: loguniform, low: 1.0e-4, high: 1.0e-2}, sources: []}
+  polyp_log10_ksp_cameta: {symbol: K_sp, transform: log10, unit: "1", regimes: [R-slurry], status: single-source, prior: {family: uniform, low: -12.0, high: -8.0}, sources: []}
+  glass_crystal_correction_cameta: {symbol: Delta_G_gc, transform: none, unit: J mol^-1, regimes: [R-slurry], status: computed, prior: {family: uniform, low: 2000.0, high: 8000.0}, sources: []}
+  p_total_mock: {symbol: P_T, transform: none, unit: mol m^-3, regimes: [R-slurry], status: design-input, prior: {family: loguniform, low: 5.0, high: 20.0}, sources: []}
+  ionic_strength_mock: {symbol: I_ionic, transform: none, unit: mol kg^-1, regimes: [R-slurry], status: design-input, prior: {family: uniform, low: 0.05, high: 0.1}, sources: []}
+  # R2 wetting (ruling C3)
+  coacervate_gamma_s0_dilute: {symbol: gamma_al_l0, transform: none, unit: J m^-2, regimes: [R-slurry], status: single-source, prior: {family: uniform, low: 0.06, high: 0.08}, sources: []}
+  coacervate_gamma_s0_dense: {symbol: gamma_al_n0, transform: none, unit: J m^-2, regimes: [R-slurry], status: single-source, prior: {family: uniform, low: 0.04, high: 0.07}, sources: []}
+  coacervate_gamma_nl: {symbol: gamma_nl_c, transform: none, unit: J m^-2, regimes: [R-slurry], status: analog, prior: {family: loguniform, low: 1.0e-6, high: 3.0e-4}, sources: []}
+  polyp_ads_alumina_gamma_max: {symbol: Gamma_P, transform: none, unit: mol m^-2, regimes: [R-slurry], status: single-source, prior: {family: uniform, low: 1.0e-6, high: 3.0e-6}, sources: []}
+  polyp_ads_alumina_k_langmuir: {symbol: K_P, transform: none, unit: "1", regimes: [R-slurry], status: single-source, prior: {family: loguniform, low: 1.0e+2, high: 1.0e+4}, sources: []}
+  polyp_ads_alumina_layer_thickness: {symbol: delta_P, transform: none, unit: m, regimes: [R-slurry], status: single-source, prior: {family: uniform, low: 3.0e-10, high: 1.0e-9}, sources: []}
+  polyp_chain_activity_mock: {symbol: a_P, transform: none, unit: "1", regimes: [R-slurry], status: design-input, prior: {family: loguniform, low: 1.0e-4, high: 1.0e-2}, sources: []}
+  osmotic_pressure_mock: {symbol: Pi_osm, transform: none, unit: J m^-3, regimes: [R-slurry], status: design-input, prior: {family: uniform, low: 1.0e+4, high: 1.0e+5}, sources: []}
+  # insulating bound (K4 descriptor, baseline L5)
+  ra_max_mock: {symbol: R_A_max, transform: none, unit: ohm m^2, regimes: [R-slurry], status: registered, prior: {family: fixed, value: 1.0e-3}, sources: []}
+  rho_e_mock: {symbol: rho_e, transform: none, unit: ohm m, regimes: [R-slurry], status: single-source, prior: {family: fixed, value: 1.0e+6}, sources: []}
+  # read as values or ranges, not sampled (claims_redirect.md 9a: the plausible range of a row is its prior support)
+  hydrolysis_polyp_k_ph6: {symbol: k_hyd, transform: none, unit: s^-1, regimes: [R-slurry], status: single-source, prior: {family: uniform, low: 4.0e-8, high: 6.0e-8}, sources: [], conditions: {pH: 6.0, ca_mM: 0.0}}
+  hydrolysis_polyp_k_ph6_ca1mm: {symbol: k_hyd, transform: none, unit: s^-1, regimes: [R-slurry], status: single-source, prior: {family: uniform, low: 1.5e-7, high: 2.5e-7}, sources: [], conditions: {pH: 6.0, ca_mM: 1.0}}
+  hydrolysis_polyp_k_ph8: {symbol: k_hyd, transform: none, unit: s^-1, regimes: [R-slurry], status: single-source, prior: {family: uniform, low: 4.0e-8, high: 6.0e-8}, sources: [], conditions: {pH: 8.0, ca_mM: 0.0}}
+  hydrolysis_polyp_k_ph8_ca1mm: {symbol: k_hyd, transform: none, unit: s^-1, regimes: [R-slurry], status: single-source, prior: {family: uniform, low: 3.0e-7, high: 5.0e-7}, sources: [], conditions: {pH: 8.0, ca_mM: 1.0}}
+  hydrolysis_data_temperature: {symbol: T, transform: none, unit: K, regimes: [R-slurry], status: single-source, prior: {family: fixed, value: 296.0}, sources: []}
+  hydrolysis_temperature_tolerance: {symbol: dT_tol, transform: none, unit: K, regimes: [R-slurry], status: registered, prior: {family: fixed, value: 5.0}, sources: []}
+  hydrolysis_transfer_factor: {symbol: tau_k, transform: none, unit: "1", regimes: [R-slurry], status: registered, prior: {family: uniform, low: 0.5, high: 3.0}, sources: []}
+  hydrolysis_f_min: {symbol: f_min, transform: none, unit: "1", regimes: [R-slurry], status: registered, prior: {family: fixed, value: 0.9}, sources: []}
+  hydrolysis_t_wet_r1: {symbol: t_wet, transform: none, unit: s, regimes: [R-slurry], status: design-input, prior: {family: fixed, value: 3600.0}, sources: []}
+  hydrolysis_t_wet_r2: {symbol: t_wet, transform: none, unit: s, regimes: [R-slurry], status: design-input, prior: {family: fixed, value: 86400.0}, sources: []}
+  hydrolysis_t_wet_r3: {symbol: t_wet, transform: none, unit: s, regimes: [R-slurry], status: design-input, prior: {family: fixed, value: 600.0}, sources: []}
+  matrix_baseline_tsinghua_film_thickness: {symbol: d_film, transform: none, unit: m, regimes: [R-slurry], status: single-source, prior: {family: fixed, value: 2.0e-8}, sources: []}
+# design states of the dry runs (mock): pH and Ca2+ level of the slurry (ca_mM; also Ca_T of the R2 binodal state,
+# 1 mM = 1 mol m^-3), a drying flag
+design:
+  R1: [{pH: 5.0, ca_mM: 0.0}, {pH: 7.0, ca_mM: 0.0}, {pH: 9.0, ca_mM: 0.0}]
+  R2: [{pH: 7.0, ca_mM: 1.0}, {pH: 7.0, ca_mM: 5.0}]
+  R3: [{pH: 7.0, ca_mM: 1.0}, {pH: 7.0, ca_mM: 1.0, drying: true}]
+# mock coacervate binodal map: the covered region and the two-phase region (units of the state draws)
+maps:
+  coacervate_binodal_map:
+    covered: {Ca_T: [1.0, 50.0], P_T: [1.0, 50.0], I_ionic: [0.01, 0.2]}
+    two_phase: {Ca_T: [4.0, 50.0], P_T: [4.0, 50.0]}
