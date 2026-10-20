@@ -777,6 +777,13 @@ decisions:
 - {id: D40, date: '2026-10-20', decision: 'nacre verify --quick runs every check except the full pytest
     run; lanes use it, integrators use verify --strict.', reason: Lanes run their own tests; one full
     run per integration.}
+- {id: D41, date: '2026-10-20', decision: 'The freeze rule counts only the modification, deletion or renaming
+    of files that exist at the tag; added files never count, so phosphate outputs can be added under the
+    frozen directories.', reason: 'Phosphate work adds files beside the carbonate results without touching
+    them.'}
+- {id: D42, date: '2026-10-20', decision: 'PH report names are carved out for each lane: lane p0-wN may write
+    ops/reports/PH-WN.*.md, and p0-w5 also ops/reports/PH-K1.md.', reason: 'The ownership hook rejected the
+    PH report names; the lanes had to use the P0-WN.PH-WN.1.md form.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
