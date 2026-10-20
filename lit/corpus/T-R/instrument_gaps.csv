@@ -1,0 +1,80 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-20T03:09:21Z,unpaywall,10.6028/nbs.tn.270-4,http_error,HTTP 403 https://doi.org/10.6028/nbs.tn.270-4
+2026-10-20T03:09:30Z,unpaywall,10.6028/nbs.tn.270-5,http_error,HTTP 403 https://doi.org/10.6028/nbs.tn.270-5
+2026-10-20T03:09:39Z,unpaywall,10.6028/nbs.tn.270-7,http_error,HTTP 403 https://doi.org/10.6028/nbs.tn.270-7
+2026-10-20T03:09:48Z,unpaywall,10.6028/nbs.tn.270-1,http_error,HTTP 403 https://doi.org/10.6028/nbs.tn.270-1
+2026-10-20T03:09:57Z,unpaywall,10.6028/nbs.tn.270-2,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:14:38Z,openalex,thermodynamic assessment CaO-P2O5 system tricalcium phosphate calcium pyrophosphate metaphosphate Gibbs energy,not_indexed,no results
+2026-10-20T03:15:00Z,unpaywall,10.1016/j.jct.2006.01.018,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:15:02Z,unpaywall,10.6028/nbs.rpt.10599,http_error,HTTP 403 https://doi.org/10.6028/nbs.rpt.10599
+2026-10-20T03:15:15Z,abstracts,10.1016/j.jct.2006.01.018,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-20T03:15:58Z,unpaywall,10.6028/jres.093.153,http_error,HTTP 403 https://doi.org/10.6028/jres.093.153
+2026-10-20T03:15:59Z,europepmc,10.6028/jres.093.153,http_error,HTTP 403 https://europepmc.org/articles/PMC5178315?pdf=render
+2026-10-20T03:16:08Z,unpaywall,10.6028/jres.072a.052,http_error,HTTP 403 https://doi.org/10.6028/jres.072a.052
+2026-10-20T03:16:09Z,europepmc,10.6028/jres.072a.052,http_error,HTTP 403 https://europepmc.org/articles/PMC6696559?pdf=render
+2026-10-20T03:16:18Z,unpaywall,10.32434/0321-4095-2020-133-6-124-133,http_error,HTTP 403 https://doi.org/10.32434/0321-4095-2020-133-6-124-133
+2026-10-20T03:16:26Z,unpaywall,10.1021/cg801118v,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:16:29Z,unpaywall,10.1007/bf02010752,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:16:31Z,unpaywall,10.1016/0022-0248(90)90079-z,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:16:34Z,unpaywall,10.1016/0003-9969(78)90089-4,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:16:36Z,unpaywall,10.1159/000061650,http_error,HTTP 403 https://karger.com/hrp/article-pdf/70/Suppl. 2/I/2929271/000161650.pdf
+2026-10-20T03:16:39Z,unpaywall+wayback,10.1159/000061650,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://karger.com/hrp/article-pdf/70/Suppl. 2/I/2929271/000161650.pdf
+2026-10-20T03:16:39Z,fulltext,10.1159/000061650,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T03:16:41Z,unpaywall,10.6028/jres.105.030,http_error,HTTP 403 https://doi.org/10.6028/jres.105.030
+2026-10-20T03:16:42Z,europepmc,10.6028/jres.105.030,http_error,HTTP 403 https://europepmc.org/articles/PMC4872681?pdf=render
+2026-10-20T03:18:59Z,unpaywall,10.6028/jres.105.030,http_error,HTTP 403 https://doi.org/10.6028/jres.105.030
+2026-10-20T03:18:59Z,europepmc,10.6028/jres.105.030,http_error,HTTP 403 https://europepmc.org/articles/PMC4872681?pdf=render
+2026-10-20T03:19:20Z,unpaywall,10.1039/d5ra02716k,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2025/ra/d5ra02716k
+2026-10-20T03:19:21Z,europepmc,10.1039/d5ra02716k,http_error,HTTP 403 https://europepmc.org/articles/PMC12210011?pdf=render
+2026-10-20T03:19:28Z,unpaywall,10.3390/molecules31020392,http_error,HTTP 403 https://www.mdpi.com/1420-3049/31/2/392/pdf?version=1769094536
+2026-10-20T03:19:29Z,europepmc,10.3390/molecules31020392,http_error,HTTP 403 https://europepmc.org/articles/PMC12843707?pdf=render
+2026-10-20T03:19:43Z,unpaywall,10.3365/kjmm.2018.56.10.755,not_indexed,HTTP 404 http://kjmm.org/upload/pdf/kjmm-2018-56-10-755.pdf
+2026-10-20T03:19:50Z,europepmc,10.1016/j.actbio.2008.06.010,http_error,HTTP 403 https://europepmc.org/articles/PMC2630969?pdf=render
+2026-10-20T03:21:43Z,unpaywall,10.6028/jres.074a.036,http_error,HTTP 403 https://doi.org/10.6028/jres.074a.036
+2026-10-20T03:21:44Z,europepmc,10.6028/jres.074a.036,http_error,HTTP 403 https://europepmc.org/articles/PMC6696545?pdf=render
+2026-10-20T03:21:56Z,europepmc,10.6028/jres.070a.047,http_error,HTTP 403 https://europepmc.org/articles/PMC6624711?pdf=render
+2026-10-20T03:21:58Z,europepmc+wayback,10.6028/jres.070a.047,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC6624711?pdf=render
+2026-10-20T03:22:29Z,europepmc,PMC6624711,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6624711/fullTextXML)
+2026-10-20T03:22:29Z,fulltext,10.6028/jres.070a.047,not_indexed,"2 candidate location(s), none retrieved"
+2026-10-20T03:22:31Z,unpaywall,10.6028/jres.074a.037,http_error,HTTP 403 https://doi.org/10.6028/jres.074a.037
+2026-10-20T03:22:32Z,europepmc,10.6028/jres.074a.037,http_error,HTTP 403 https://europepmc.org/articles/PMC6696549?pdf=render
+2026-10-20T03:23:34Z,unpaywall,10.2134/jeq1999.00472425002800020018x,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:25:37Z,unpaywall,10.1016/j.actbio.2010.02.017,http_error,"ConnectTimeout: HTTPSConnectionPool(host='oatao.univ-toulouse.fr', port=443): Max retries exceeded with url: /4680/1/Combes_4680.pdf (Caused by ConnectTimeoutError(<HTTPSConnection(host='oatao.univ-toulouse.fr', port=443) at 0x1039ce4b0>, 'Connection to oatao.univ-toulouse.fr timed out. (connect timeout=60.0)')) (https://oatao.univ-toulouse.fr/4680/1/Combes_4680.pdf)"
+2026-10-20T03:25:44Z,unpaywall,10.1039/d1bm01239h,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:25:47Z,unpaywall,10.1180/minmag.2008.072.1.349,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:25:54Z,unpaywall,10.1149/1.1723495,parse_error,not a PDF: https://iopscience.iop.org/article/10.1149/1.1723495/pdf
+2026-10-20T03:25:56Z,unpaywall+wayback,10.1149/1.1723495,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1149/1.1723495/pdf
+2026-10-20T03:25:56Z,fulltext,10.1149/1.1723495,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T03:26:01Z,direct,10.1149/1.1723495,parse_error,not a PDF: https://iopscience.iop.org/article/10.1149/1.1723495/pdf
+2026-10-20T03:26:01Z,unpaywall,10.1016/j.mtla.2021.101107,http_error,HTTP 403 https://www.sciencedirect.com/science/article/pii/S2589152921001101/pdf
+2026-10-20T03:26:02Z,direct+wayback,10.1149/1.1723495,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1149/1.1723495/pdf
+2026-10-20T03:26:03Z,unpaywall+wayback,10.1016/j.mtla.2021.101107,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.sciencedirect.com/science/article/pii/S2589152921001101/pdf
+2026-10-20T03:26:03Z,fulltext,10.1016/j.mtla.2021.101107,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T03:26:05Z,unpaywall,10.1097/00010694-196407000-00003,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:27:54Z,semanticscholar,atomic layer deposition AlPO4 LiNi0.5Mn1.5O4,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-20T03:28:02Z,unpaywall,10.1016/j.nanoen.2017.05.007,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:28:04Z,abstracts,10.1016/j.nanoen.2017.05.007,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-20T03:28:13Z,unpaywall,10.1039/d3nr01251d,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:30:38Z,arxiv,calcium compounds electrochemical stability window first principles oxidation reduction limits,rate_limited,HTTP 429 after 6 attempts (http://export.arxiv.org/api/query)
+2026-10-20T03:30:48Z,fulltext,10.1021/acsami.5b07517,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-20T03:30:48Z,fulltext,10.1021/acs.chemmater.5b04082,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-20T03:30:50Z,unpaywall,10.1021/acsnano.7b02561,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:30:55Z,unpaywall,10.1039/d3su00031a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2023/su/d3su00031a
+2026-10-20T03:31:15Z,unpaywall,10.1039/d4ta03592e,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2024/ta/d4ta03592e
+2026-10-20T03:31:46Z,unpaywall,10.1002/maco.201608843,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:32:41Z,unpaywall,10.1016/j.cej.2019.122959,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:32:45Z,unpaywall,10.1149/1.2039587,parse_error,not a PDF: https://iopscience.iop.org/article/10.1149/1.2039587/pdf
+2026-10-20T03:32:49Z,unpaywall+wayback,10.1149/1.2039587,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1149/1.2039587/pdf
+2026-10-20T03:32:49Z,fulltext,10.1149/1.2039587,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T03:33:00Z,unpaywall,10.1149/1.1426042,parse_error,not a PDF: https://iopscience.iop.org/article/10.1149/1.1426042/pdf
+2026-10-20T03:33:02Z,unpaywall+wayback,10.1149/1.1426042,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://iopscience.iop.org/article/10.1149/1.1426042/pdf
+2026-10-20T03:33:02Z,fulltext,10.1149/1.1426042,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T03:34:52Z,unpaywall,10.5281/zenodo.6413397,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.5281/zenodo.6413397
+2026-10-20T03:34:53Z,fulltext,10.5281/zenodo.6413397,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-20T03:35:06Z,europepmc,aluminum phosphate solubility product AlPO4 variscite log Ksp phosphorus removal,not_indexed,no results
+2026-10-20T03:35:07Z,openalex,aluminium phosphate precipitation pH solubility log Ksp AlPO4 phosphate removal alum,not_indexed,no results
+2026-10-20T03:35:24Z,unpaywall,10.1080/09593332708618735,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:35:27Z,unpaywall,10.2136/sssaj2006.0388,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:35:33Z,unpaywall,10.2136/sssaj1959.03615995002300050017x,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:35:36Z,unpaywall,10.2136/sssaj1955.03615995001900040017x,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T03:35:42Z,unpaywall,10.2136/sssaj1992.03615995005600010009x,paywalled,"no open copy on unpaywall, openalex or europepmc"
