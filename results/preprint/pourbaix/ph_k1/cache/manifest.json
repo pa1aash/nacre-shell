@@ -1,0 +1,154 @@
+{
+ "client_versions": {
+  "emmet-core": "0.87.3",
+  "mp-api": "0.46.5",
+  "mpcontribs-client": null,
+  "pymatgen": "2026.9.24",
+  "requests": "2.34.2"
+ },
+ "files": [
+  {
+   "added_by": "PH-K1",
+   "bytes": 3688581,
+   "file": "mp_entries_ph_Li-Ca-P-O-H.json",
+   "kind": "mp_entries",
+   "licences": [
+    "BY-C"
+   ],
+   "local_only": true,
+   "location": ".local/w5/cache_ph/mp_entries_ph_Li-Ca-P-O-H.json",
+   "n": 298,
+   "n_admitted_by_c": 298,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Ca",
+     "H",
+     "Li",
+     "O",
+     "P"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-20T08:59:10Z",
+   "sha256": "sha256:ab9c9d542aa8710e1c65b62b518c42b6953803ca38bf4c31b0dcc2a217f96d9a"
+  },
+  {
+   "added_by": "PH-K1",
+   "bytes": 5737969,
+   "file": "mp_entries_ph_Li-Al-P-O.json",
+   "kind": "mp_entries",
+   "licences": [
+    "BY-C"
+   ],
+   "local_only": true,
+   "location": ".local/w5/cache_ph/mp_entries_ph_Li-Al-P-O.json",
+   "n": 322,
+   "n_admitted_by_c": 322,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Al",
+     "Li",
+     "O",
+     "P"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-20T08:59:21Z",
+   "sha256": "sha256:7750a5997bd112123994f20f98b8c18c9bae9a0c2ef360b4b75baca0456c6b1f"
+  },
+  {
+   "added_by": "PH-K1",
+   "bytes": 11192428,
+   "file": "mp_entries_ph_Li-Ca-Si-O.json",
+   "kind": "mp_entries",
+   "licences": [
+    "BY-C"
+   ],
+   "local_only": true,
+   "location": ".local/w5/cache_ph/mp_entries_ph_Li-Ca-Si-O.json",
+   "n": 602,
+   "n_admitted_by_c": 602,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Ca",
+     "Li",
+     "O",
+     "Si"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-20T08:59:33Z",
+   "sha256": "sha256:05d0ca4f78130cfe30bd921d0eab9a5d18fb2f168377b1ca3d78413adfe59a00"
+  },
+  {
+   "added_by": "PH-K1",
+   "bytes": 505494,
+   "file": "mp_entries_ph_Li-Cl-O.json",
+   "kind": "mp_entries",
+   "licences": [
+    "BY-C"
+   ],
+   "local_only": true,
+   "location": ".local/w5/cache_ph/mp_entries_ph_Li-Cl-O.json",
+   "n": 74,
+   "n_admitted_by_c": 74,
+   "request": {
+    "additional_criteria": {
+     "thermo_types": [
+      "GGA_GGA+U"
+     ]
+    },
+    "compatible_only": true,
+    "elements": [
+     "Cl",
+     "Li",
+     "O"
+    ],
+    "method": "MPRester.get_entries_in_chemsys",
+    "use_gibbs": null
+   },
+   "retrieved_utc": "2026-10-20T08:59:36Z",
+   "sha256": "sha256:f97610115b8ea7fda2ded0a401f51675cba2c7877ac2deee4b35a4ac5a1e35fe"
+  },
+  {
+   "added_by": "PH-K1",
+   "file": "janaf_SiO2.json",
+   "header": "Silicon Oxide, Quartz (SiO2)\tO2Si1(cr)",
+   "kind": "janaf_table",
+   "request": {
+    "method": "HTTP GET",
+    "url": "https://janaf.nist.gov/tables/O-037.txt"
+   },
+   "retrieved_utc": "2026-10-20T09:01:02Z",
+   "sha256": "sha256:fe15631ccb61c548ca7408702c19b4f4579a4954f9125653ebea8db2cb06f570"
+  }
+ ],
+ "mp_database_version": "2026.09.28",
+ "note": "additive PH-K1 cache from the database version named here, which is newer than the production cache's; the two are never pooled in one energy book",
+ "production_cache_database_version": "2026.04.13",
+ "session": "PH-K1",
+ "thermo_types": [
+  "GGA_GGA+U"
+ ]
+}
