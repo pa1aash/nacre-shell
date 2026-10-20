@@ -1,0 +1,12 @@
+{
+ "kind": "janaf_table",
+ "locator": "NIST-JANAF Thermochemical Tables, table for Ca_alpha (Calcium, Alpha (Ca)\tCa1(cr)), row T=298.15 K and neighbours",
+ "request": {
+  "method": "HTTP GET",
+  "url": "https://janaf.nist.gov/tables/Ca-002.txt"
+ },
+ "retrieved_utc": "2026-10-20T14:19:40Z",
+ "species": "Ca_alpha",
+ "text": "Calcium, Alpha (Ca)\tCa1(cr)\nT(K)\tCp\tS\t-[G-H(Tr)]/T\tH-H(Tr)\tdelta-f H\tdelta-f G\tlog Kf\n0\t0.\t0.\tINFINITE\t-5.736\t0.\t0.\t0.\n100\t19.504\t15.967\t63.525\t-4.756\t0.\t0.\t0.\n200\t24.542\t31.489\t43.924\t-2.487\t0.\t0.\t0.\n250\t25.411\t37.065\t42.012\t-1.237\t0.\t0.\t0.\n298.15\t25.929\t41.588\t41.588\t0.\t0.\t0.\t0.\n300\t25.946\t41.749\t41.589\t0.048\t0.\t0.\t0.\n350\t26.320\t45.774\t41.906\t1.354\t0.\t0.\t0.\n400\t26.868\t49.322\t42.615\t2.683\t0.\t0.\t0.\n450\t27.643\t52.531\t43.541\t4.045\t0.\t0.\t0.\n500\t28.487\t55.487\t44.590\t5.448\t0.\t0.\t0.\n600\t30.382\t60.846\t46.861\t8.391\t0.\t0.\t0.\n700\t32.406\t65.680\t49.210\t11.529\t0.\t0.\t0.\n716.000\t32.737\t66.416\t49.586\t12.051\tALPHA <--> BETA\n800\t34.613\t70.150\t51.551\t14.879\t0.844 0.104  0.007\n900\t36.819\t74.354\t53.853\t18.451\t-0.798\t0.219\t-0.013\n1000\t39.026\t78.348\t56.105\t22.243\t-0.826\t0.333\t-0.017\n1100\t41.232\t82.171\t58.302\t26.256\t-0.936\t0.453\t-0.022\n",
+ "text_sha256": "sha256:4bb1f9cf20427e6e7b7dceaefcb1eee1cd707eb28598a14a965ec3bc823e0529"
+}

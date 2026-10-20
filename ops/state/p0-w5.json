@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-K1",
+  "last_session": "PH-W5.1",
   "status": "DONE",
-  "day": 4,
+  "day": 5,
   "hold": {
     "part": "anchor (Part 2)",
     "status": "HOLD-P",
@@ -88,6 +88,26 @@
       ],
       "local_only": ".local/w5/cache_ph/ (sha256 in results/preprint/pourbaix/ph_k1/cache/manifest.json)",
       "mp_db_version": "2026.09.28"
+    },
+    "ph_w51": {
+      "report": "ops/reports/P0-W5.PH-W5.1.md",
+      "summary": "results/preprint/pourbaix/ph_w51/ph_w51.md",
+      "benchmark": "results/preprint/pourbaix/ph_w51/benchmark_w51.csv",
+      "al_window": "results/preprint/pourbaix/ph_w51/al_window.json",
+      "a_al3_oxide": "results/preprint/pourbaix/ph_w51/a_al3_oxide.csv",
+      "ladder": "results/preprint/pourbaix/ph_w51/ladder_v2.csv",
+      "json": "results/preprint/pourbaix/ph_w51/ph_w51.json",
+      "code": [
+        "src/nacre/pourbaix/ph_w51.py",
+        "src/nacre/pourbaix/ph_w51_bench.py",
+        "src/nacre/pourbaix/ph_w51_al.py",
+        "src/nacre/pourbaix/ph_w51_ladder.py",
+        "src/nacre/pourbaix/ph_w51_run.py",
+        "src/nacre/pourbaix/ph_w51_md.py",
+        "src/nacre/pourbaix/ph_w51_cache.py"
+      ],
+      "local_only": ".local/w5/cache_ph/mp_entries_w51_*.json (sha256 in results/preprint/pourbaix/ph_w51/cache/manifest.json)",
+      "mp_db_version": "2026.09.28"
     }
   },
   "notes": [
@@ -97,6 +117,7 @@
     "Al-phase LiClO4 onsets and every reduction limit have no budget key: undetermined (inconclusive, never a pass). Reduction and solvated budgets: gap (W1 post_cp3 not set over a one-hour poll).",
     "Boehmite dehydration to corundum favoured below p(H2O) 2.9e-5 bar (expt; a_w 8.9e-4 liquid-referenced): a threshold, not a verdict; electrolyte water activity is not a sourced key.",
     "Anchor driver ready: linux-64 lock (xtb 6.6.1 hf49bc11_0, CREST 2.12 h9d67668_0), PySCF 2.14.0 built with -DENABLE_SMD=ON for the CDS term; dry run on the local transport passed (anchor-production-dryrun-2b3a281). Remaining on the pod: install, CDS check, CREST/xtb/DFT on 10 species, the four binding free energies.",
-    "PH-K1: tier-1 ladder done. Gate 3.937816 V vs 3.938 V. Ca orthophosphates 3.98-4.07 V (solid-salt upper bound); no pass possible without a solvated sink."
+    "PH-K1: tier-1 ladder done. Gate 3.937816 V vs 3.938 V. Ca orthophosphates 3.98-4.07 V (solid-salt upper bound); no pass possible without a solvated sink.",
+    "PH-W5.1: phosphate benchmark fails as a set (47-210 kJ/mol; MP2020 oxide correction on every O); Al window pH 5.0-8.3 (am, 0.1 mM); Ca(PO3)2 determined (F3a) 4.97/4.89 V ub; Al(PO3)3 undetermined; bracket pending PH-W1.3 (no ClO4- hydration key)."
   ]
 }
