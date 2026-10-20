@@ -351,3 +351,16 @@ def test_new_track_lane_links_venv_before_provisioning(track_origin, monkeypatch
     monkeypatch.setattr(lane_cmd, "link_venv", lambda target, short, **k: order.append(("link", short)))
     lane_cmd.new_track_lane(track_origin, "p0", "w4", provision_fn=lambda t: order.append(("provision", t.name)))
     assert order == [("link", "w4"), ("provision", "nacre-shell-p-w4")]
+
+
+def test_ph_report_names_are_owned_per_lane(cfg):
+    for n in range(1, 9):
+        lane = "p0-w%d" % n
+        assert ok(cfg, lane, "ops/reports/PH-W%d.1.md" % n)
+        assert not ok(cfg, lane, "ops/reports/PH-W%d.1.md" % (n % 8 + 1))
+    assert ok(cfg, "p0-w1", "ops/reports/P0-W1.PH-W1.1.md")
+
+
+def test_ph_k1_report_is_owned_by_w5_only(hook_repo):
+    assert commit(hook_repo, {"ops/reports/PH-K1.md": "r\n"}, branch="preprint/p0-w5").returncode == 0
+    assert commit(hook_repo, {"ops/reports/PH-K1.md": "r2\n"}, branch="preprint/p0-w1").returncode != 0

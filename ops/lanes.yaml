@@ -159,6 +159,7 @@ tracks:
         branch: preprint/p0-w1
         worktree: "~/Desktop/nacre-shell-p-w1"
         owns:
+          - "ops/reports/PH-W1.*.md"
           - "lit/corpus/**"
           - "lit/evidence_table.csv"
           - "lit/params.yaml"
@@ -170,6 +171,7 @@ tracks:
         branch: preprint/p0-w2
         worktree: "~/Desktop/nacre-shell-p-w2"
         owns:
+          - "ops/reports/PH-W2.*.md"
           - "lit/novelty.md"
           - "lit/contrary.md"
           - "preprint/retrodiction/**"
@@ -180,11 +182,13 @@ tracks:
         branch: preprint/p0-w3
         worktree: "~/Desktop/nacre-shell-p-w3"
         owns:
+          - "ops/reports/PH-W3.*.md"
           - "theory/**"
       p0-w4:
         branch: preprint/p0-w4
         worktree: "~/Desktop/nacre-shell-p-w4"
         owns:
+          - "ops/reports/PH-W4.*.md"
           - "src/nacre/physics/**"
           - "src/nacre/screen/**"
           - "tests/physics/**"
@@ -195,6 +199,8 @@ tracks:
         branch: preprint/p0-w5
         worktree: "~/Desktop/nacre-shell-p-w5"
         owns:
+          - "ops/reports/PH-W5.*.md"
+          - "ops/reports/PH-K1.md"
           - "src/nacre/pourbaix/**"
           - "src/nacre/anchor/**"
           - "tests/pourbaix/**"
@@ -206,6 +212,7 @@ tracks:
         branch: preprint/p0-w6
         worktree: "~/Desktop/nacre-shell-p-w6"
         owns:
+          - "ops/reports/PH-W6.*.md"
           - "figures/style/**"
           - "figures/src/**"
           - "figures/tikz/**"
@@ -217,6 +224,7 @@ tracks:
         branch: preprint/p0-w7
         worktree: "~/Desktop/nacre-shell-p-w7"
         owns:
+          - "ops/reports/PH-W7.*.md"
           - "figures/blender/**"
           - "figures/renders/**"
           - "structures/preprint/**"
@@ -226,6 +234,7 @@ tracks:
         branch: preprint/p0-w8
         worktree: "~/Desktop/nacre-shell-p-w8"
         owns:
+          - "ops/reports/PH-W8.*.md"
           - "preprint/paper/**"
           - "preprint/claims.yaml"
           - "preprint/generated/**"
