@@ -379,6 +379,18 @@ days:
     model: Sonnet
     master_trace: none
     requires: [cp4]
+  - id: PH-W5.2
+    lane: p0-w5
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-W4.2b
+    lane: p0-w4
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
   - id: PH-I5
     lane: p0-int
     day: 5
@@ -848,6 +860,12 @@ decisions:
     filed in ops/tracks/redirect_plan.md (CP4 FIXES) with the owner map there. Nothing starts production until
     F1 to F5 are applied and the freeze packet goes to the planning chat. PH-W2.2b added (lane w2, Sonnet,
     day 5, requires []) for F8.', reason: Planning-chat verdict of 2026-10-20 on the cp4 packet.}
+- {id: D54, date: '2026-10-21', decision: 'PH-W5.2 (lane w5, Sonnet, day 5, requires []: final K1 ladder v3 with
+    registered margins) and PH-W4.2b (lane w4, Sonnet, day 5, requires []: regenerate configs from thresholds
+    block v6, confirm the ladder reader against W5 ladder_v3.csv) added after PH-W3.2 registered the margins
+    (block v6).', reason: Margins registered at W3 block v6.}
+- {id: D55, date: '2026-10-21', decision: 'K1 margins are registered at W3 block v6; the F2 bracket cannot yet give
+    a pass (transfer data gaps).', reason: Result of PH-W3.2 and PH-W3.2a.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
