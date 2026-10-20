@@ -32,6 +32,10 @@ Units: V for E_ub_V, E_lb_V, margin_V; kJ/mol in notes.
 - Per reaction and class: **falsified** if E_ub + m < inf(class); **pass** only if E_lb >= sup(class) + m (impossible while E_lb is
   pending); **undetermined** if the budget is incomplete, the margin is symbolic or the route is missing (a partial margin can neither
   pass nor falsify); otherwise **inconclusive**. A class is falsified at its lower end, so a class straddling E_ub + m is inconclusive.
+- A row whose budget_status is `incomplete` cannot falsify: a class that would read falsified reads undetermined, and the notes say so
+  (PH-W5.2b; reaction and aggregate rows).
+- ACP is the amorphous slurry-stage row, undetermined (no amorphous thermochemistry); the beta-TCP crystalline value is kept as the
+  labelled reference rows `ACP, crystalline` (route and notes say reference).
 - Aggregate class: falsified if any reaction is falsified; otherwise undetermined if any is undetermined; otherwise inconclusive.
 - Amorphous rows: margin from the glass data where block v6 has it (Ca(PO3)2 glass, LiPO3 glass); every other amorphous row has a symbolic
   margin (m_am = m_cr + u/(n_e F), correction a gap) and is undetermined. The block's by-bound readings are in notes only.

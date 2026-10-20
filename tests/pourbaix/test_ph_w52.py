@@ -58,8 +58,6 @@ def test_margins_equal_the_committed_block_copy(rows):
 
 
 def test_falsified_example(rows):
-    r = _row(rows, "Ca2SiO4", "crystalline", "ALL")
-    assert (r["k1_class_lfp"], r["k1_class_42_43"], r["k1_class_44_45"], r["k1_verdict"]) == ("falsified",) * 4
     hap = _row(rows, "HAp", "crystalline", "ALL")
     assert (hap["k1_class_lfp"], hap["k1_class_42_43"], hap["k1_class_44_45"]) == ("inconclusive", "falsified", "falsified")
     assert hap["k1_verdict"] == "inconclusive"
@@ -98,3 +96,23 @@ def test_passivation_window_rows():
     assert am["0.0001"]["ph_lower"] == "4.98" and am["0.0001"]["ph_upper"] == "8.29"
     assert am["1e-06"]["window"] == "none"
     assert any(r["solid"] == "boehmite" and r["role"].startswith("reference") for r in wr)
+
+
+def test_incomplete_budget_row_cannot_falsify(rows):
+    assert w52.gate_incomplete(["falsified", "inconclusive", "falsified"], False) == ["undetermined", "inconclusive", "undetermined"]
+    assert w52.gate_incomplete(["falsified"] * 3, True) == ["falsified"] * 3
+    for r in rows[1]:
+        if r["budget_status"] == "incomplete":
+            for c in ("k1_class_lfp", "k1_class_42_43", "k1_class_44_45", "k1_verdict"):
+                assert r[c] != "falsified", (r["phase"], r["reaction_id"], c)
+    r = _row(rows, "Ca2SiO4", "crystalline", "ALL")
+    assert (r["k1_class_lfp"], r["k1_class_42_43"], r["k1_class_44_45"], r["k1_verdict"]) == ("undetermined",) * 4
+    assert "cannot falsify" in r["notes"]
+
+
+def test_acp_is_amorphous_slurry_undetermined_with_labelled_reference(rows):
+    am = [r for r in rows[1] if r["phase"] == "ACP" and r["framing"] == "amorphous"]
+    assert len(am) == 1 and am[0]["stage"] == "slurry" and am[0]["k1_verdict"] == "undetermined"
+    assert "no amorphous ACP thermochemistry" in am[0]["notes"]
+    ref = [r for r in rows[1] if r["phase"] == "ACP" and r["framing"] == "crystalline"]
+    assert ref and all("reference" in r["route"] and "reference only" in r["notes"] for r in ref)

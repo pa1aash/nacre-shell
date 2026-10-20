@@ -33,6 +33,9 @@ COLUMNS = ["phase", "framing", "stage", "reaction_id", "route", "E_ub_V", "E_lb_
            "benchmark_status", "k1_class_lfp", "k1_class_42_43", "k1_class_44_45", "k1_verdict", "row_ids", "notes"]
 CLASS_COLS = (("k1_class_lfp", "C_lo"), ("k1_class_42_43", "C_mid"), ("k1_class_44_45", "C_hi"))
 PENDING = "pending"
+ACP_REF_ROUTE = "crystalline reference row (beta-TCP value, not ACP)"
+ACP_REF_NOTE = ("reference only: the crystalline beta-TCP value kept beside ACP; ACP itself is the amorphous slurry-stage row, "
+                "undetermined because no amorphous thermochemistry exists")
 
 
 def _git(*args):
@@ -81,6 +84,11 @@ def overall(classes):
     if any(c == "undetermined" for c in classes) and not any(c == "falsified" for c in classes):
         return "undetermined"
     return "inconclusive"
+
+
+def gate_incomplete(classes, complete):
+    """A row whose budget is incomplete cannot falsify: its falsified classes read undetermined."""
+    return classes if complete else ["undetermined" if c == "falsified" else c for c in classes]
 
 
 def aggregate_class(per_reaction):
@@ -184,6 +192,7 @@ def _phase_rows(block, cut, v, reactions):
     if v["dft_mp_V"] or v["dft_janaf_V"]:
         bench += "; comparator only: MP %s V, JANAF %s V" % (v["dft_mp_V"] or "-", v["dft_janaf_V"] or "-")
     out, per = [], []
+    acp_ref = phase == "ACP" and framing == "crystalline"
     glass_rule = framing == "amorphous"
     note_base = v["label"]
     if not reactions:
@@ -196,14 +205,19 @@ def _phase_rows(block, cut, v, reactions):
                 reason += "; block by-bound reading (I17, margin symbolic, not a verdict basis): " + bound
         else:
             reason = "no registered reaction for this phase"
+        if phase == "ACP":
+            reason = "no amorphous ACP thermochemistry exists (single-paper grade-D solubility products only): ACP undetermined; " + reason
         r = _flat(v, "gap", "undetermined", reason + "; " + note_base, "gap")
         r["framing"], r["stage"], r["benchmark_status"] = framing, stage, bench
         return [r]
     for e in reactions:
         complete = e["status"] == "set"
         cls = [class_verdict(e["E_ub"], e["m"], complete, *cut[key]) for _, key in CLASS_COLS]
+        cls = gate_incomplete(cls, complete)
         per.append(cls)
         note = []
+        if acp_ref:
+            note.append(ACP_REF_NOTE)
         if e["adopted"]:
             note.append(e["adopted"])
         if not complete:
@@ -212,6 +226,8 @@ def _phase_rows(block, cut, v, reactions):
                 note.append("partial margin %.4f V (not a verdict basis)" % e["m_partial"])
         note.append(e["text"])
         route = "glass margin rule (own glass data)" if glass_rule else "expt route, m_K1, " + e["sink"]
+        if acp_ref:
+            route = ACP_REF_ROUTE + "; " + route
         out.append({"phase": phase, "framing": framing, "stage": stage, "reaction_id": e["id"], "route": route,
                     "E_ub_V": _fmt(e["E_ub"]), "E_lb_V": PENDING, "margin_V": _fmt(e["m"] if complete else None),
                     "budget_status": "complete" if complete else "incomplete" if e["E_ub"] is not None else "symbolic: " + e["reason"],
@@ -219,12 +235,21 @@ def _phase_rows(block, cut, v, reactions):
                     "k1_verdict": overall(cls), "row_ids": _ids(v), "notes": "; ".join(note)})
     # aggregate row for the phase-framing
     agg = [aggregate_class([p[i] for p in per]) for i in range(3)]
+    gated = gate_incomplete(agg, all(e["status"] == "set" for e in reactions))
+    note_gate = ("budget incomplete: a class that would read falsified reads undetermined (an incomplete budget cannot falsify)"
+                 if gated != agg else None)
+    agg = gated
     done = [e for e in reactions if e["status"] == "set"]
     lim = min(done, key=lambda e: e["E_ub"] + e["m"]) if done else None
     note = [note_base]
+    if acp_ref:
+        note.insert(0, ACP_REF_NOTE)
+    if note_gate:
+        note.insert(0, note_gate)
     if lim:
         note.insert(0, "limiting %s: falsified above %.4f V (E_ub + m)" % (lim["id"], lim["E_ub"] + lim["m"]))
-    out.append({"phase": phase, "framing": framing, "stage": stage, "reaction_id": "ALL", "route": "aggregate over reactions",
+    out.append({"phase": phase, "framing": framing, "stage": stage, "reaction_id": "ALL",
+                "route": ACP_REF_ROUTE + "; aggregate over reactions" if acp_ref else "aggregate over reactions",
                 "E_ub_V": _fmt(lim["E_ub"]) if lim else "", "E_lb_V": PENDING, "margin_V": _fmt(lim["m"]) if lim else "",
                 "budget_status": "complete" if all(e["status"] == "set" for e in reactions) else "incomplete",
                 "benchmark_status": bench, "k1_class_lfp": agg[0], "k1_class_42_43": agg[1], "k1_class_44_45": agg[2],
