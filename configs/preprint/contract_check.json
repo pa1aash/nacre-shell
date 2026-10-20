@@ -1,7 +1,7 @@
 {
-  "checked_utc": "2026-10-20T10:07:54Z",
-  "contract_sha": "b21dbf0ab8660b50961a06a480c0dd505df785b8",
-  "contract_version": 5,
+  "checked_utc": "2026-10-20T20:04:26Z",
+  "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
+  "contract_version": 6,
   "coverage": [],
   "functions": {
     "A_carb_fn": {
@@ -118,6 +118,14 @@
       "points": 256,
       "status": "PASS"
     },
+    "Delta_G_tr_rel_born": {
+      "limit_cases": 2,
+      "max_rel_err": 1.0330116743415864e-15,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "Delta_Phi_r": {
       "limit_cases": 2,
       "max_rel_err": 2.776937321022886e-16,
@@ -163,10 +171,72 @@
       "points": 256,
       "status": "PASS"
     },
+    "Dgamma_coac": {
+      "limit_cases": 0,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Dgamma_coac_ideal": {
+      "limit_cases": 1,
+      "max_rel_err": 5.0654141969160136e-14,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "E_enr": {
       "limit_cases": 3,
       "max_rel_err": 1.6472683547956638e-14,
       "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_lb": {
+      "limit_cases": 0,
+      "max_rel_err": 2.258746321286794e-16,
+      "monotonicity_samples": 0,
+      "notes": [
+        "skipped Delta_G_r_aq (reparametrised statement; proven by the theory checker)"
+      ],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_lb_glass": {
+      "limit_cases": 1,
+      "max_rel_err": 2.3515691845441877e-16,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_solv": {
+      "limit_cases": 1,
+      "max_rel_err": 2.216092860931426e-16,
+      "monotonicity_samples": 0,
+      "notes": [
+        "skipped Delta_G_tr_rel (reparametrised statement; proven by the theory checker)"
+      ],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_ub": {
+      "limit_cases": 0,
+      "max_rel_err": 2.120379348533447e-16,
+      "monotonicity_samples": 0,
+      "notes": [
+        "skipped Delta_G_r_ss (reparametrised statement; proven by the theory checker)"
+      ],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_ub_glass": {
+      "limit_cases": 1,
+      "max_rel_err": 2.493727738494001e-16,
+      "monotonicity_samples": 0,
       "notes": [],
       "points": 256,
       "status": "PASS"
@@ -176,6 +246,16 @@
       "max_rel_err": 2.211691160454984e-16,
       "monotonicity_samples": 0,
       "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_window_glass": {
+      "limit_cases": 1,
+      "max_rel_err": 2.426378350866901e-16,
+      "monotonicity_samples": 0,
+      "notes": [
+        "skipped Delta_G_gc (reparametrised statement; proven by the theory checker)"
+      ],
       "points": 256,
       "status": "PASS"
     },
@@ -191,6 +271,14 @@
       "limit_cases": 3,
       "max_rel_err": 5.0671216119078657e-14,
       "monotonicity_samples": 256,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "IAP_AlPP": {
+      "limit_cases": 1,
+      "max_rel_err": 3.3281576419531986e-14,
+      "monotonicity_samples": 128,
       "notes": [],
       "points": 256,
       "status": "PASS"
@@ -211,6 +299,14 @@
       "points": 256,
       "status": "PASS"
     },
+    "Omega_AlPP": {
+      "limit_cases": 1,
+      "max_rel_err": 3.299307192151528e-14,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "Omega_bulk": {
       "limit_cases": 0,
       "max_rel_err": 2.2076044558663563e-16,
@@ -224,6 +320,16 @@
       "max_rel_err": 4.720664590731383e-15,
       "monotonicity_samples": 64,
       "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "Omega_glass": {
+      "limit_cases": 1,
+      "max_rel_err": 6.791261855590309e-14,
+      "monotonicity_samples": 0,
+      "notes": [
+        "skipped Delta_G_gc (reparametrised statement; proven by the theory checker)"
+      ],
       "points": 256,
       "status": "PASS"
     },
@@ -306,6 +412,14 @@
       "points": 256,
       "status": "PASS"
     },
+    "S_coac": {
+      "limit_cases": 2,
+      "max_rel_err": 2.2706386521041896e-16,
+      "monotonicity_samples": 192,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "S_spread": {
       "limit_cases": 1,
       "max_rel_err": 2.5068157824430174e-15,
@@ -351,6 +465,14 @@
     "W_adh_wet_from_pmf": {
       "limit_cases": 1,
       "max_rel_err": 0.0,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "a_Al_oxide_eq": {
+      "limit_cases": 1,
+      "max_rel_err": 1.5996961809429752e-14,
       "monotonicity_samples": 128,
       "notes": [],
       "points": 256,
@@ -404,6 +526,14 @@
       "points": 256,
       "status": "PASS"
     },
+    "a_PP_free": {
+      "limit_cases": 2,
+      "max_rel_err": 2.2180640193481861e-16,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "c_Ca_free": {
       "limit_cases": 1,
       "max_rel_err": 2.1697863814124356e-16,
@@ -424,6 +554,14 @@
       "limit_cases": 0,
       "max_rel_err": 0.0,
       "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "cos_theta_coac": {
+      "limit_cases": 3,
+      "max_rel_err": 2.1059814404674341e-16,
+      "monotonicity_samples": 128,
       "notes": [],
       "points": 256,
       "status": "PASS"
@@ -516,6 +654,14 @@
       "points": 256,
       "status": "PASS"
     },
+    "f_cond": {
+      "limit_cases": 3,
+      "max_rel_err": 1.0648576335713899e-13,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "f_pairs_phos": {
       "limit_cases": 2,
       "max_rel_err": 2.833846993812033e-16,
@@ -566,6 +712,22 @@
       "points": 196,
       "status": "PASS"
     },
+    "gamma_al_l_ads": {
+      "limit_cases": 1,
+      "max_rel_err": 1.8686913313882644e-15,
+      "monotonicity_samples": 128,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "gamma_al_n_ads": {
+      "limit_cases": 1,
+      "max_rel_err": 2.140411204379832e-13,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "gamma_eff_deck": {
       "limit_cases": 0,
       "max_rel_err": 0.0,
@@ -602,6 +764,14 @@
       "limit_cases": 2,
       "max_rel_err": 3.5461458267444137e-16,
       "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "k_hyd_eff": {
+      "limit_cases": 1,
+      "max_rel_err": 0.0,
+      "monotonicity_samples": 0,
       "notes": [],
       "points": 256,
       "status": "PASS"
@@ -686,6 +856,22 @@
       "points": 256,
       "status": "PASS"
     },
+    "t_half_hyd_fn": {
+      "limit_cases": 0,
+      "max_rel_err": 2.2118565011455949e-16,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "t_wet_max": {
+      "limit_cases": 2,
+      "max_rel_err": 2.856694996920864e-16,
+      "monotonicity_samples": 64,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
     "theta_young": {
       "limit_cases": 3,
       "max_rel_err": 1.8721659038629147e-15,
@@ -711,10 +897,10 @@
       "status": "PASS"
     }
   },
-  "implementation_sha": "60dbe6bbefe86d4b3b983f6c440a2eee7713d1f7",
+  "implementation_sha": "913d8b2357657025b9e11014511171dcdb6aa179",
   "points": 256,
   "ref": "origin/preprint/p0-w3",
-  "ref_sha": "60dbe6bbefe86d4b3b983f6c440a2eee7713d1f7",
+  "ref_sha": "2aa96fbb2b192aab4676b72e1971ff29f59a67c9",
   "reference": "40-digit evaluation of the contract expression; a point beyond rtol passes only where the implementation is at least as accurate as the direct floating-point evaluation of the contract expression (ill-conditioned points, listed in notes)",
   "rtol": 1e-12,
   "seed": 0,

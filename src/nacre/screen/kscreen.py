@@ -1,6 +1,7 @@
 """Evaluators K1 to K4 for solid-like nuclei, as registered in theory/claims_redirect.md (PH-W4.1).
 
-K1 is READ from W5's ladder file (results/preprint/pourbaix/ph_k1/ladder.csv); it is never recomputed here.
+K1 is READ from W5's ladder file (results/preprint/pourbaix/ph_w51/ladder_v2.csv, an input path; the older
+results/preprint/pourbaix/ph_k1/ladder.csv layout is still read); it is never recomputed here.
 K2, K3 and K4 are evaluated on the draws of the screen chain (nacre.screen.chain with a Mineral object):
 
     K2  Omega_bulk >= 1                     worst registered state, shared band-mass rule at p_cred
@@ -19,9 +20,11 @@ Margins and decision constants come from configs/preprint/screen.yaml, block ``k
 PROVISIONAL placeholders (PH-W3.2 sets the numbers; they are frozen at cp5). Nothing here sets a prior, a
 threshold or a verdict rule.
 
-K3 and K4 run only for a phase that passes K1 at some registered cutoff class (claims_redirect.md 2d). The route
-layer (liquid precursor, in-situ formation, hydrolysis) is not evaluated here: its evaluators are the named
-extension points of nacre.screen.routes, which raise NotImplementedError.
+Which phases proceed (cp4 F1, claims_redirect.md 2d): a phase proceeds to K3 and K4 unless its K1 verdict is
+falsified at EVERY registered cutoff class; a phase inconclusive or undetermined at any class proceeds, and its K1
+status is shown in its row. Proceeding is not passing: the K1 column keeps its verdict. The route layer (liquid
+precursor, in-situ formation, hydrolysis) is evaluated by nacre.screen.routes and assembled into stage rows by
+nacre.screen.ph_rows.
 """
 import csv
 from dataclasses import dataclass
@@ -31,10 +34,20 @@ import numpy as np
 
 from nacre.screen import admissibility, decision, routes
 
-LADDER = Path("results") / "preprint" / "pourbaix" / "ph_k1" / "ladder.csv"
+LADDER = Path("results") / "preprint" / "pourbaix" / "ph_w51" / "ladder_v2.csv"
+LADDER_V1 = Path("results") / "preprint" / "pourbaix" / "ph_k1" / "ladder.csv"
+#: Synthetic ladder in the v2 layout for the dry runs (W5's v2 file is not on this lane); never reported.
+MOCK_LADDER = Path("configs") / "preprint" / "mock_k1_ladder_v2.csv"
 FRAMINGS = ("crystalline", "amorphous")
-STATES_OF_K1 = ("feasible", "falsified", "inconclusive")
+STAGES = ("slurry", "cell", "conversion")
+STATES_OF_K1 = ("feasible", "falsified", "inconclusive", "undetermined", "not excluded")
 REQUIRED_COLUMNS = ("phase", "class", "status", "note")
+#: Bracket columns of the v2 ladder (cp4 F2), first match wins. The v1 ladder has the solid-salt onset only
+#: (tier1_onset_V), which is E_ub; E_lb is then 'pending'.
+E_UB_COLUMNS = ("E_ub_V", "e_ub_V", "E_ub", "tier1_onset_V")
+E_LB_COLUMNS = ("E_lb_V", "e_lb_V", "E_lb")
+#: A verdict column written by W5 is read as is (normalised to STATES_OF_K1); otherwise the verdict is read off status.
+VERDICT_COLUMNS = ("k1_verdict", "verdict")
 
 
 class K1Error(ValueError):
@@ -62,20 +75,51 @@ def k_config(cfg):
 
 
 # ------------------------------------------------------------------ K1: read, never recomputed
-def k1_verdict(status, note):
-    """K1 verdict of one ladder row at its cutoff class (claims_redirect.md 2c).
+def k1_verdict(status, note, verdict=None):
+    """K1 verdict of one ladder row at its cutoff class (claims_redirect.md 2c, 2f).
 
-    'below' falsifies at tier 1. 'above' passes only when the row does not say it is an upper bound (the
-    solid-salt sink bounds the onset from above: a falsification stands, a pass is inconclusive). Every other
-    status (within budget, undetermined) is inconclusive: undetermined never passes.
+    A verdict W5 wrote is taken as is (read, not recomputed). Otherwise from status: 'below' falsifies at tier 1;
+    'above' or 'pass' passes only when the row does not say it is an upper bound (the solid-salt sink bounds the
+    onset from above: a falsification stands, a pass is inconclusive); 'undetermined' stays undetermined (never
+    passes); every other status (within the bracket, within budget) is inconclusive.
     """
+    v = (verdict or "").strip().lower()
+    if v:
+        if v.startswith("falsified"):
+            return "falsified"
+        if v.startswith("not excluded"):
+            return "not excluded"
+        for word in ("feasible", "inconclusive", "undetermined"):
+            if v.startswith(word):
+                return word
+        raise K1Error("unknown K1 verdict %r in the ladder" % verdict)
     s = (status or "").strip().lower()
     if s == "below":
         return "falsified"
-    if s == "above":
+    if s in ("above", "pass"):
         n = (note or "").lower()
-        return "inconclusive" if ("upper bound" in n or "not a pass" in n) else "feasible"
+        return "inconclusive" if ("upper bound" in n or "not a pass" in n or "conditional" in n) else "feasible"
+    if s == "undetermined":
+        return "undetermined"
     return "inconclusive"
+
+
+def _float_or_none(text):
+    t = (text or "").strip()
+    if not t:
+        return None
+    try:
+        v = float(t)
+    except ValueError:
+        return None
+    return v if np.isfinite(v) else None
+
+
+def _first(rec, columns):
+    for c in columns:
+        if c in rec and (rec[c] or "").strip():
+            return c, rec[c]
+    return None, None
 
 
 @dataclass(frozen=True)
@@ -88,6 +132,16 @@ class K1Row:
     status: str
     note: str
     verdict: str
+    stage: str = "cell"
+    E_ub: object = None
+    E_lb: object = None
+    E_lb_status: str = "pending"
+    cutoff_inf: object = None
+
+    def bracket(self):
+        """The K1 bracket fields of a results row (schema v5); E_lb is 'pending' while unsourced."""
+        return {"E_ub": self.E_ub, "E_lb": self.E_lb, "E_lb_status": self.E_lb_status,
+                "E_ub_status": "sourced" if self.E_ub is not None else "pending"}
 
 
 class K1Table:
@@ -126,6 +180,17 @@ class K1Table:
     def passing_classes(self, phase, framing):
         return [c for c, v in self.verdicts(phase, framing).items() if v == "feasible"]
 
+    def row(self, phase, cls, framing):
+        return self.rows.get((phase, cls, framing))
+
+    def low_cutoff_class(self, phase=None):
+        """The registered class with the lowest cutoff (cutoff_inf_V); the first listed when the column is absent."""
+        rows = [r for (p, _, _), r in self.rows.items() if phase is None or p == phase]
+        with_c = [r for r in rows if r.cutoff_inf is not None]
+        if with_c:
+            return min(with_c, key=lambda r: r.cutoff_inf).cls
+        return rows[0].cls if rows else None
+
 
 def _counts(rows):
     out = {}
@@ -136,7 +201,9 @@ def _counts(rows):
 
 def read_k1(path):
     """Read W5's ladder. Comment lines start with '#'. A ``framing`` column (crystalline or amorphous) selects
-    the framing of a row and defaults to crystalline; two rows per phase and class are accepted, one per framing."""
+    the framing of a row and defaults to crystalline; two rows per phase and class are accepted, one per framing.
+    A ``stage`` column (cp4 F4) defaults to cell (K1 applies to the cell-stage phase). The bracket ends E_ub and E_lb
+    are read from E_UB_COLUMNS and E_LB_COLUMNS; a missing E_lb is 'pending' (unsourced), never zero."""
     path = Path(path)
     lines = [ln for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip() and not ln.startswith("#")]
     reader = csv.DictReader(lines)
@@ -148,8 +215,17 @@ def read_k1(path):
         framing = (rec.get("framing") or "crystalline").strip() or "crystalline"
         if framing not in FRAMINGS:
             raise K1Error("%s: framing %r of phase %r is not one of %s" % (path, framing, rec["phase"], FRAMINGS))
+        stage = (rec.get("stage") or "cell").strip() or "cell"
+        if stage not in STAGES:
+            raise K1Error("%s: stage %r of phase %r is not one of %s" % (path, stage, rec["phase"], STAGES))
+        _, ub = _first(rec, E_UB_COLUMNS)
+        _, lb = _first(rec, E_LB_COLUMNS)
+        e_ub, e_lb = _float_or_none(ub), _float_or_none(lb)
+        _, vtext = _first(rec, VERDICT_COLUMNS)
         rows.append(K1Row(rec["phase"], rec.get("role", ""), rec["class"], framing, rec.get("tier1_onset_V", ""),
-                          rec["status"], rec["note"], k1_verdict(rec["status"], rec["note"])))
+                          rec["status"], rec["note"], k1_verdict(rec["status"], rec["note"], vtext), stage=stage,
+                          E_ub=e_ub, E_lb=e_lb, E_lb_status="sourced" if e_lb is not None else "pending",
+                          cutoff_inf=_float_or_none(rec.get("cutoff_inf_V"))))
     return K1Table(rows, path)
 
 
@@ -158,29 +234,44 @@ def mineral_framing(mineral):
     return {"crystalline": "crystalline", "amorphous": "amorphous"}.get(mineral.phase_state)
 
 
-def k1_for(table, mineral):
-    """K1 record of a mineral from the ladder: verdicts per cutoff class and the classes it passes at."""
+def k1_for(table, mineral, framing=None):
+    """K1 record of a mineral from the ladder: verdicts per cutoff class, the bracket of each row, the classes it
+    passes at. ``framing`` overrides the mineral's (the route products read both framings)."""
     phase = mineral.k1_phase or mineral.name
-    framing = mineral_framing(mineral)
+    framing = framing or mineral_framing(mineral)
     verdicts = table.verdicts(phase, framing) if framing else {}
     passing = [c for c, v in verdicts.items() if v == "feasible"]
+    brackets = {c: dict(table.row(phase, c, framing).bracket(), stage=table.row(phase, c, framing).stage)
+                for c in verdicts}
     note = None
     if not verdicts:
         note = "no K1 row for phase %r, framing %r: K1 undetermined" % (phase, framing)
-    return {"phase": phase, "framing": framing, "by_class": verdicts, "passes_at": passing,
+    return {"phase": phase, "framing": framing, "by_class": verdicts, "passes_at": passing, "bracket": brackets,
             "source": table.path, "note": note,
             "label": "tier 1 read from the ladder file; not recomputed"}
 
 
 def proceeds(k1, override=False):
-    """Does the phase go on to K3 and K4? Only if K1 passes at any registered class (2d); a dry run may override."""
-    if k1["passes_at"]:
-        return {"proceeds": True, "classes": list(k1["passes_at"]), "overridden": False}
-    if override:
-        return {"proceeds": True, "classes": [], "overridden": True,
-                "note": "K1 gate overridden: dry run only, never reported"}
-    return {"proceeds": False, "classes": [], "overridden": False,
-            "note": "K1 does not pass at any registered cutoff class: K3 and K4 are not run"}
+    """Does the phase go on to K3 and K4? (cp4 F1, claims_redirect.md 2d)
+
+    It proceeds unless its K1 verdict is falsified at EVERY registered cutoff class. Inconclusive, undetermined or
+    no K1 row at all (undetermined) at any class: it proceeds, with the per-class K1 status printed in its row.
+    Proceeding is not passing. ``override`` (dry runs only, recorded) forces a phase falsified at every class through;
+    the rule itself already lets an unresolved phase proceed.
+    """
+    by = k1.get("by_class") or {}
+    status = dict(by)
+    if by and all(v == "falsified" for v in by.values()):
+        if override:
+            return {"proceeds": True, "classes": [], "overridden": True, "k1_status": status,
+                    "note": "K1 gate overridden: dry run only, never reported"}
+        return {"proceeds": False, "classes": [], "overridden": False, "k1_status": status,
+                "note": "K1 falsified at every registered cutoff class: K3 and K4 are not run"}
+    classes = [c for c, v in by.items() if v != "falsified"]
+    note = "K1 not falsified at every class: proceeds (proceeding is not passing; K1 keeps its verdict)"
+    if not by:
+        note = "no K1 row (undetermined): proceeds; K1 shown as undetermined"
+    return {"proceeds": True, "classes": classes, "overridden": False, "k1_status": status, "note": note}
 
 
 # ------------------------------------------------------------------ samples
@@ -517,14 +608,13 @@ def evaluate_mineral(mineral, k1_table, doses, p, controls=None, control_doses=N
     """
     k1 = k1_for(k1_table, mineral)
     gate = proceeds(k1, k1_override)
-    pending = routes.pending_for(mineral)
-    rec = {"mineral": mineral.describe(), "K1": k1, "gate": gate, "route_extension_points_pending": pending,
+    rec = {"mineral": mineral.describe(), "K1": k1, "gate": gate, "route_evaluators": routes.pending_for(mineral),
            "provisional": True}
     rec["K2"] = k2(doses, p["p_cred"], omega_controls)
     if mineral.phase_state == "liquid_precursor":
-        rec["K3"] = rec["K4"] = {"verdict": "inconclusive",
-                                 "gap": "liquid precursor: wetting is evaluated by the route evaluator "
-                                        "routes.liquid_precursor_wetting (not implemented)"}
+        rec["K3"] = rec["K4"] = {"verdict": "not applicable",
+                                 "note": "liquid precursor: K3 and K4 are the route forms of nacre.screen.routes "
+                                         "(formation_accessibility, liquid_precursor_wetting), assembled by ph_rows"}
         rec["deletion_test"] = None
         return rec
     if not gate["proceeds"]:

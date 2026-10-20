@@ -125,3 +125,15 @@ def hydroxide_activity(a_w, pH, pKw):
     ph = real("pH", pH)
     k = real("pKw", pKw)
     return scalar_or_array(w * np.exp(np.log(10.0) * (ph - k)))
+
+
+def saturation_ratio_glass(a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp, Delta_G_gc, T):
+    """Omega_glass = Omega_nu exp(-Delta_G_gc / (R T)): saturation against the glass (contract v6, ruling C4).
+
+    K_sp,glass = K_sp exp(Delta_G_gc / (R T)) for the same formula unit, so the glass is the more soluble form; the
+    governing K2 framing of the route products. Delta_G_gc in J mol^-1 per formula unit, K_sp of the crystal.
+    """
+    gc = non_negative("Delta_G_gc (glass-to-crystal free energy)", Delta_G_gc)
+    t = positive("T (temperature)", T)
+    ln_om = ln_saturation_ratio_mineral(a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp)
+    return scalar_or_array(np.exp(ln_om - gc / (GAS_CONSTANT * t)))

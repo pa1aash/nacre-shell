@@ -6,6 +6,7 @@ design_axis (a registered grid) or unresolved (the test reports a gap and counts
 It is committed before any production output (rule R7), and every production document records the
 commit that last changed it.
 """
+import re
 from pathlib import Path
 
 import yaml
@@ -106,3 +107,26 @@ def check_ph(table):
     """Problems of the phosphate skeleton: a treatment that is neither allowed nor the pending label."""
     return ["%s: treatment %r is not one of %s or %r" % (p, v, TREATMENTS, PENDING)
             for p, v in treatments_ph(table) if v not in TREATMENTS and v != PENDING]
+
+
+def covered_ph(table):
+    """Predicate: is a parameter-table key accounted for by the phosphate skeleton? Every mapping key and listed name
+    of the skeleton counts; a name with a placeholder (``dfg_<species>``, ``v_m_<P>``) matches any non-empty part."""
+    names = set()
+
+    def walk(node):
+        if isinstance(node, dict):
+            for k, v in node.items():
+                names.add(str(k))
+                walk(v)
+        elif isinstance(node, list):
+            for v in node:
+                if isinstance(v, str):
+                    names.add(v)
+                else:
+                    walk(v)
+    walk(table)
+    pats = [re.compile("^" + re.sub(r"<[^>]+>", ".+", re.escape(n).replace(r"\<", "<").replace(r"\>", ">")) + "$")
+            for n in names if "<" in n]
+    exact = {n for n in names if "<" not in n}
+    return lambda key: key in exact or any(p.match(key) for p in pats)

@@ -11,8 +11,8 @@
 #   to register at cp5 freeze   the slot is empty: PH-W1.2 (parameter table) and PH-W3.2 (margins, priors) fill it before the cp5 freeze.
 # Key names are those of theory/claims_redirect.md Section 7; the mineral objects that read them are the `minerals`
 # block of configs/preprint/screen.yaml. No value appears in this file.
-version: 1
-session: PH-W4.1
+version: 2
+session: PH-W4.2a (route keys; version 1 PH-W4.1)
 status: skeleton
 written_before_production_output: true
 pending_label: to register at cp5 freeze
@@ -189,7 +189,88 @@ read_from_w5:                            # K1 is read from results/preprint/pour
   - t_svc_min
   - j_svc
   - tier2_records                        # evidence rows of class A, B or C; none registered means tier 1 only
-route_layer:                             # not evaluated in PH-W4.1: the extension points of nacre.screen.routes
-  - liquid_precursor_wetting
-  - formation_accessibility
-  - hydrolysis_descriptor
+read_from_w5_k1:                         # K1 bracket and the glass framing (cp4 F2, F3; ruling C4): W5 computes, the screen reads
+  - hydration_free_energy_<ion>
+  - hydration_transfer_<ion>_water_carbonate
+  - hydration_transfer_salt_<salt>_water_carbonate
+  - transfer_free_energy_li_water_pc
+  - glass_dfh_<P>_glass
+  - glass_dfh_<P>_crystal
+  - glass_s0_<P>_glass
+  - glass_crystal_correction_lipo3
+  - glass_crystal_correction_napo3
+  - polyp_al_log_k_oxide                 # K_ox,Al of the oxide-equilibrium a(Al3+) (claims_redirect.md 9b), W5 Al-O-H Pourbaix
+  - polyp_al_speciation_ph5_85
+  - density_<P>                          # V_m_fu = M_fu / rho_s (contract v5) with molar_mass_<P>
+  - molar_mass_<P>
+
+# ---------------------------------------------------------------- route layer (PH-W4.2a; contract v6, claims_redirect.md Section 9)
+# Evaluated by nacre.screen.routes (K2h, R1, R2, wetting, framing, matrix, baselines) and nacre.screen.ph_rows (stage rows,
+# conversion rows, the F5 panel). A treatment is filled only where a decision table of Section 9 already says what a
+# missing key does; every other slot reads "to register at cp5 freeze". Names: Section 9g and the lit/params.yaml keys.
+route_layer:
+  evaluators: [hydrolysis_descriptor, formation_accessibility, liquid_precursor_wetting]
+  hydrolysis:                            # K2h, table H1 to H4 (ruling C1)
+    rows_read_as_ranges:                 # sourced rate constants; the plausible range of a row is its prior support (9a)
+      - hydrolysis_polyp_k_ph6
+      - hydrolysis_polyp_k_ph6_ca1mm
+      - hydrolysis_polyp_k_ph8
+      - hydrolysis_polyp_k_ph8_ca1mm
+    derived_not_read: [hydrolysis_polyp_half_life_<state>, hydrolysis_ca_enhancement_ph6, hydrolysis_ca_enhancement_ph8]
+    context_not_a_covered_row: [hydrolysis_pp_half_life_100c_ph10]
+    hydrolysis_row_conditions: {links: [K2h], treatment: to register at cp5 freeze, note: 'pH, Ca2+ level and temperature of each measured row (from each key''s source); a row without them covers no state (H1)'}
+    hydrolysis_transfer_factor: {symbol: tau_k, links: [K2h], treatment: to register at cp5 freeze, effect_if_absent: 'a covered state is undetermined (named gap)'}
+    hydrolysis_f_min: {symbol: f_min, links: [K2h], treatment: to register at cp5 freeze, effect_if_absent: 'a covered state is undetermined (named gap)'}
+    hydrolysis_t_wet_r1: {symbol: t_wet, links: [K2h], treatment: to register at cp5 freeze, effect_if_absent: 'a covered state is undetermined (named gap)'}
+    hydrolysis_t_wet_r2: {symbol: t_wet, links: [K2h], treatment: to register at cp5 freeze, effect_if_absent: 'a covered state is undetermined (named gap)'}
+    hydrolysis_t_wet_r3: {symbol: t_wet, links: [K2h], treatment: to register at cp5 freeze, effect_if_absent: 'a covered state is undetermined (named gap)'}
+    hydrolysis_a_w_dry: {symbol: a_w_dry, links: [K2h], treatment: to register at cp5 freeze}
+    hydrolysis_temperature_tolerance: {links: [K2h], treatment: unresolved, effect: 'no state is covered: H1 undetermined, never gating (claims_redirect.md 9a)'}
+    hydrolysis_polyp_25c_literature_halflife: {symbol: t_half_hyd, links: [K2h], treatment: unresolved, effect: 'context only; not a covered row (9a coverage)'}
+  r1:                                    # K3 route form, table F1r to F4r (ruling C2)
+    polyp_log10_ksp_al: {symbol: K_sp_AlPP, links: [K3, K2], treatment: unresolved, effect: 'F1r: R1 undetermined with the flip value K_sp* = IAP_AlPP printed'}
+    polyp_al_log_beta1_linear: {symbol: beta_AlPP, links: [K3], treatment: unresolved, effect: 'evaluated at beta_AlPP = 0 (upper bound on a_PP), flagged complexation gap: F2r stands, F3r labelled optimistic (9b, I12)'}
+    polyp_al_log_beta1_cyclo: {keys: [polyp_al_log_beta1_cyclo_p3, polyp_al_log_beta1_cyclo_p4, polyp_al_log_beta1_cyclo_p6, polyp_al_log_beta1_cyclo_p8], links: [K3], treatment: to register at cp5 freeze, note: 'whether ring constants apply to the registered chain distribution is not decided'}
+    polyp_chain_distribution: {symbol: n_chain, links: [K3], treatment: to register at cp5 freeze}
+    polyp_al_activity_pit: {symbol: a_Al, links: [K3], treatment: unresolved, effect: 'the pit-state row is undetermined; the oxide-equilibrium row is unaffected (the two are never combined)'}
+    gel_kinetics: {links: [K3], treatment: unresolved, effect: 'gelation against hydrolysis stays a labelled hypothesis (ruling C2)'}
+    descriptors: [polyp_chain_length_material]
+  r2:                                    # K3 route form, table B1 to B4; K4 route form (ruling C3)
+    coacervate_binodal_map: {links: [K3], treatment: unresolved, effect: 'B1: R2 undetermined at every state'}
+    coacervate_pH_window: {symbol: pH, links: [K3], treatment: to register at cp5 freeze}
+    coacervate_gamma_s0_dilute: {symbol: gamma_al_l0, links: [K4], treatment: unresolved, effect: 'with coacervate_gamma_s0_dense: the site-free difference is a gap; K4 route form undetermined unless a contact angle exists (9c, I13)'}
+    coacervate_gamma_s0_dense: {symbol: gamma_al_n0, links: [K4], treatment: unresolved, effect: 'as coacervate_gamma_s0_dilute'}
+    coacervate_contact_angle_alumina: {links: [K4], treatment: unresolved, effect: 'no alternative route to Dgamma = gamma_nl cos(theta)'}
+    coacervate_gamma_nl: {symbol: gamma_nl_c, links: [K4], treatment: unresolved, effect: 'the negligible-gamma_nl limit of ruling C3 is evaluated and labelled; the flip value reads m_S + gamma_nl (gap)'}
+    coacervate_gamma_analog: {symbol: gamma_nl_c, links: [K4], treatment: to register at cp5 freeze, note: 'whether the flagged analog enters the comparable-gamma_nl limit is not decided'}
+    polyp_ads_alumina_gamma_max: {symbol: Gamma_P, links: [K4], treatment: to register at cp5 freeze, note: 'admissibility of gamma_sl and gamma_sn only (the site term cancels in Dgamma)'}
+    polyp_ads_alumina_k_langmuir: {symbol: K_P, links: [K4], treatment: to register at cp5 freeze, note: 'admissibility only'}
+    polyp_ads_alumina_layer_thickness: {symbol: delta_P, links: [K4], treatment: to register at cp5 freeze, note: 'admissibility only'}
+    descriptors: [coacervate_ca_threshold, coacervate_onset_volume, coacervate_ca_to_polyp_ratio, coacervate_viscosity]
+  products:                              # K2 and the amorphous framing of the route products (ruling C4, cp4 F3)
+    polyp_log10_ksp_cameta: {symbol: K_sp, links: [K2], treatment: unresolved, effect: 'K2 of the Ca-polyphosphate glass not evaluable: undetermined'}
+    glass_crystal_correction_<P>: {symbol: Delta_G_gc, links: [K1, K2], treatment: to register at cp5 freeze, note: 'the bounded, labelled correction of cp4 F3 (PH-W3.2 sets the bound); the W1 key carries an enthalpy (H_phase), the contract a free energy'}
+    glass_dfh_alpp_gel: {links: [K1], treatment: to register at cp5 freeze}
+  matrix:                                # table M1 to M4 (ruling C6): the matrix never gates
+    matrix_service_limit_<rung>: {links: [K1], treatment: unresolved, effect: 'M3: matrix-risk flag, no ceiling'}
+    matrix_oxidation_onset_chitosan: {symbol: E_ox, links: [K1], treatment: unresolved, effect: 'M3: matrix-risk flag, no ceiling (no tier 1 for an organic polymer)'}
+    matrix_oxidation_onset_pda: {symbol: E_ox, links: [K1], treatment: unresolved, effect: 'M3: matrix-risk flag; the stated PDA risk is printed'}
+    matrix_thermal_budget: {links: [K1], treatment: unresolved, effect: 'M4 not applied: one variant (with the matrix) reported'}
+    matrix_chitosan_polyp_complex: {links: [K1], treatment: to register at cp5 freeze}
+    descriptors: [matrix_chitosan_pka]
+  baselines:                             # table L1 to L5 (ruling C5): K1, K2, K4 only
+    composition_solubility: {links: [K2], treatment: unresolved, effect: 'L2 undetermined (L3 for the Hydro-Quebec film: inference from chemistry)'}
+    matrix_baseline_tsinghua_film_thickness: {symbol: d_film, links: [K4], treatment: unresolved, effect: 'L5 undetermined'}
+    matrix_baseline_hq_film_thickness: {symbol: d_film, links: [K4], treatment: unresolved, effect: 'L5 undetermined'}
+  conversion:                            # cp4 F4 conversion-step rows (claims_redirect.md 2g)
+    pairs: [brushite-monetite, monetite-capp, acp-condensed, hap-condensed]
+    hydration_a_w_star_<pair>: {links: [conversion], treatment: unresolved, effect: 'a_w* printed as pending'}
+    hydration_conversion_temperature_<pair>: {links: [conversion], treatment: unresolved, effect: 'status undetermined'}
+    matrix_baseline_tsinghua_cure_range: {links: [conversion], treatment: unresolved, effect: 'status undetermined'}
+
+# ---------------------------------------------------------------- post-cp3 parameter keys accounted for by name (PH-W1.2, PH-W1.3)
+post_cp3_accounted:
+  per_phase: [log10_ksp_<P>, v_m_<P>, gamma_nl_<P>, gamma_nv_<P>, n_hyd_<P>]   # the keys block above, per mineral
+  design: [p_total_slurry, cutoff_classes, a_oh_range, a_w_cell]               # design_axes above
+  k1_tier2: [margin_service, t_svc_min, j_svc]                                 # margins and read_from_w5 above
+  ladder_film: [log10_ksp_el_<film>, sigma_corr_<film>, rho_film_<film>, dv_film, j_corr_max, t_max_corr, s_tol]

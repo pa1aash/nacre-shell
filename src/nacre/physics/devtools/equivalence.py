@@ -52,6 +52,10 @@ class Contract:
         self.doc = yaml.safe_load(contract_text)
         sym_doc = yaml.safe_load(symbols_text)
         self.entries = {e["id"]: e for e in sym_doc["symbols"]}
+        # Auxiliary aux_* symbols are positive reparametrisation variables of the checks (contract header); since
+        # contract v6 a limit case may name one in its `at`, so they are sampled like any symbol on (0, oo).
+        for aux in sorted(set(re.findall(r"\baux_[A-Za-z0-9]+\b", contract_text)) - set(self.entries)):
+            self.entries[aux] = {"id": aux, "interval": "(0, oo)"}
         self.syms = {k: sp.Symbol(k, real=True) for k in self.entries}
         self.functions = {f["name"]: f for f in self.doc["functions"]}
 

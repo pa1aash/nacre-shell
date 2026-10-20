@@ -5,8 +5,9 @@
 A dry run shows that the path runs end to end and that its document conforms to the results schema. It
 reads a mock table, propagates the chain with a Mineral object, evaluates K2, K3, K4 and the deletion test
 (nacre.screen.kscreen), reads K1 from W5's ladder file, and writes only under results/preprint/screen/dryrun_ph/.
-It is never reported, tunes nothing and registers nothing. The K1 gate may be overridden for a dry run (the real
-ladder passes no phase yet); the override is written into the record.
+It is never reported, tunes nothing and registers nothing. K1 is read from a ladder in the v2 layout (default: the mock
+ladder kscreen.MOCK_LADDER); since PH-W4.2a the cp4 F1 rule lets an unresolved phase proceed, so no override is
+needed (the flag is kept and recorded). A Ca orthophosphate also gets its stage rows (F5, schema v5).
 """
 import resource
 import time
@@ -17,7 +18,7 @@ import numpy as np
 import yaml
 
 from nacre.physics import film
-from nacre.screen import chain, kscreen, params_adapter, propagate, run, summary
+from nacre.screen import chain, kscreen, params_adapter, ph_rows, propagate, run, summary
 from nacre.screen import mineral as mineral_mod
 
 DRYRUN_PH = run.DRYRUN_PH_DIR
@@ -167,7 +168,7 @@ def run_mineral(root, name, out_path, params_path=None, allow_mock=False, k1_ove
     if "nucleate" in chain.evaluable_links(ctl.joint.symbols, m):
         control_doses = {d: {"slurry": kscreen.samples(o)}
                          for d, o in propagate_doses(ctl, m, ln_doses, draws, seed, chunk).items()}
-    ladder = kscreen.read_k1(root / (ladder_path or k.get("k1_ladder") or kscreen.LADDER))
+    ladder = kscreen.read_k1(root / (ladder_path or kscreen.MOCK_LADDER))
     ref = doses[ln_doses[len(ln_doses) // 2]]
     p = {key: k[key] for key in ("p_cred", "p_deg", "m_cos", "m_S")}
     p["admissible"] = bool(k.get("admissible", True))
@@ -179,8 +180,15 @@ def run_mineral(root, name, out_path, params_path=None, allow_mock=False, k1_ove
                       "note": "path check on mock priors; never reported; tunes nothing"}
     prov = run._provenance(root, cfg, cfg_path, [rp], run.THRESHOLDS, True)
     prov["run_label"] = "ph-dryrun %s" % name
-    prov["session"] = "PH-W4.1"
-    document = summary.build(regimes, prov, mock=True, extensions={"p0-w4": {"ph_screen": rec}})
+    prov["session"] = "PH-W4.2a"
+    rows = None
+    if m.speciation == "phosphate" and m.chain_length_n is None:
+        # F5: a Ca orthophosphate used as formed at the low-cutoff class (slurry row K2 to K4, cell row K1)
+        rows = ph_rows.ortho_low_cutoff_rows("%s_as_formed" % name, m.k1_phase or name, rec, ladder, m)
+        problems = ph_rows.check_presentation(rows)
+        if problems:
+            raise DryRunRefused("presentation rule: %s" % problems)
+    document = summary.build(regimes, prov, mock=True, extensions={"p0-w4": {"ph_screen": rec}}, ph_rows=rows)
     if regimes is None:
         document.pop("regimes", None)
     path = summary.write(document, out_path)

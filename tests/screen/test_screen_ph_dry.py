@@ -1,4 +1,4 @@
-"""Phosphate dry runs and the carbonate regression of the generalised chain (PH-W4.1)."""
+"""Phosphate dry runs and the carbonate regression of the generalised chain (PH-W4.1); stage rows (PH-W4.2a)."""
 import json
 import shutil
 
@@ -25,16 +25,23 @@ def test_dry_run_writes_a_schema_valid_document(name, out_dir):
     summary.validate(json.loads(path.read_text(encoding="utf-8")))
     rec = doc["extensions"]["p0-w4"]["ph_screen"]
     assert doc["mock"] is True and rec["provisional"] is True
-    assert set(rec) >= {"K1", "K2", "K3", "K4", "deletion_test", "gate", "mineral", "route_extension_points_pending"}
-    assert rec["gate"]["overridden"] is True
+    assert set(rec) >= {"K1", "K2", "K3", "K4", "deletion_test", "gate", "mineral", "route_evaluators"}
+    assert doc["schema_version"] == "5"
+    assert rec["gate"]["proceeds"] is True and rec["dry_run"]["k1_gate_overridden"] is True
     assert rec["mineral"]["phase_state"] in ("crystalline", "amorphous")
     assert stats["seconds"] > 0 and stats["peak_mb"] > 0
 
 
-def test_dry_run_without_the_override_stops_at_the_k1_gate(out_dir):
+def test_dry_run_proceeds_under_f1_and_writes_stage_rows(out_dir):
+    """cp4 F1: an unresolved K1 proceeds without an override; F5: HAp used as formed gets a slurry and a cell row."""
     _, doc, _ = ph_dry.run_mineral(ROOT, "hap", out_dir / "gate" / "summary.json", allow_mock=True, draws=SMALL_DRAWS)
     rec = doc["extensions"]["p0-w4"]["ph_screen"]
-    assert rec["K3"]["verdict"] == "not run" and rec["K1"]["passes_at"] == []
+    assert rec["gate"]["proceeds"] and not rec["gate"]["overridden"] and rec["K3"]["verdict"] != "not run"
+    assert rec["K1"]["passes_at"] == []
+    rows = {r["stage"]: r for r in doc["ph_rows"]}
+    assert set(rows) == {"slurry", "cell"} and rows["slurry"]["film_id"] == rows["cell"]["film_id"]
+    assert "K1" not in rows["slurry"] and "K3" not in rows["cell"] and rows["cell"]["scope_class"] == "C_lo"
+    assert rows["slurry"]["retained_mass"]["M_adm"] > 0
 
 
 def test_dry_run_refuses_output_outside_dryrun_ph(tmp_path):

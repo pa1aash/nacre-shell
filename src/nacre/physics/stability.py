@@ -76,3 +76,76 @@ def reaction_limit_potential(Delta_G_r, Delta_n_Li):
     if np.any(dn == 0):
         raise ValueError("Delta_n_Li = 0: a reaction that exchanges no Li sets no potential limit")
     return scalar_or_array(g / (dn * FARADAY))
+
+
+# ------------------------------------------------------------------ K1 bracket (contract v6; cp4 F2)
+def _onset(name, Delta_G, Delta_n_Li):
+    g = real(name, Delta_G)
+    dn = real("Delta_n_Li (Li released)", Delta_n_Li)
+    if np.any(dn == 0):
+        raise ValueError("Delta_n_Li = 0: a reaction that exchanges no Li sets no potential limit")
+    return g / (dn * FARADAY)
+
+
+def onset_solid_salt_sink(Delta_G_r_ss, Delta_n_Li):
+    """E_ub = Delta_G_r_ss / (Delta_n_Li F), V vs Li+/Li: the onset with the solid-salt (LiClO4) sink.
+
+    An upper bound on the thermodynamic onset whatever the solvent: a falsification on it stands, a pass does not.
+    """
+    return scalar_or_array(_onset("Delta_G_r_ss (solid-salt reaction free energy)", Delta_G_r_ss, Delta_n_Li))
+
+
+def onset_aqueous_sink(Delta_G_r_aq, Delta_n_Li):
+    """E_lb = Delta_G_r_aq / (Delta_n_Li F), V vs Li+/Li: every ionic product and the consumed Li+ aqueous.
+
+    A lower bound on the onset in the cell solvent only under the transfer premise (Delta_G_tr_rel >= 0).
+    """
+    return scalar_or_array(_onset("Delta_G_r_aq (aqueous-sink reaction free energy)", Delta_G_r_aq, Delta_n_Li))
+
+
+def onset_cell_solvent(Delta_G_r_aq, Delta_G_tr_rel, Delta_n_Li):
+    """E_solv = (Delta_G_r_aq + Delta_G_tr_rel) / (Delta_n_Li F), V vs Li+/Li in the cell solvent.
+
+    Used in place of E_lb where the transfer premise is violated (Delta_G_tr_rel < 0).
+    """
+    g = real("Delta_G_r_aq (aqueous-sink reaction free energy)", Delta_G_r_aq)
+    tr = real("Delta_G_tr_rel (charge-balanced transfer free energy)", Delta_G_tr_rel)
+    return scalar_or_array(_onset("Delta_G_r_aq + Delta_G_tr_rel", g + tr, Delta_n_Li))
+
+
+def relative_transfer_born(B_born, z_M, r_M, r_Li):
+    """Born-continuum reading of the transfer premise B_born (z_M^2 / r_M - z_M / r_Li), J mol^-1.
+
+    Plausibility only, never decides: with B_born >= 0 (cell solvent less polar than water) the premise holds iff
+    z_M / r_M >= 1 / r_Li.
+    """
+    b = real("B_born (Born prefactor)", B_born)
+    z = positive("z_M (cation charge)", z_M)
+    rm = positive("r_M (cation radius)", r_M)
+    rl = positive("r_Li (Li+ radius)", r_Li)
+    return scalar_or_array(b * (z * z / rm - z / rl))
+
+
+def onset_glass(Delta_G_r, Delta_G_gc, Delta_n_Li):
+    """E_window_glass = (Delta_G_r - Delta_G_gc) / (Delta_n_Li F), V: onset of a reaction that consumes the glass.
+
+    The glass lies Delta_G_gc = G_glass - G_crystal >= 0 above the crystal, so its onset is lower; the governing row
+    of the in-situ routes (ruling C4). Delta_G_gc = 0 gives the crystalline onset.
+    """
+    g = real("Delta_G_r (reaction free energy)", Delta_G_r)
+    gc = non_negative("Delta_G_gc (glass-to-crystal free energy)", Delta_G_gc)
+    return scalar_or_array(_onset("Delta_G_r - Delta_G_gc", g - gc, Delta_n_Li))
+
+
+def onset_aqueous_sink_glass(Delta_G_r_aq, Delta_G_gc, Delta_n_Li):
+    """E_lb_glass = (Delta_G_r_aq - Delta_G_gc) / (Delta_n_Li F), V: lower end of the amorphous K1 bracket."""
+    g = real("Delta_G_r_aq (aqueous-sink reaction free energy)", Delta_G_r_aq)
+    gc = non_negative("Delta_G_gc (glass-to-crystal free energy)", Delta_G_gc)
+    return scalar_or_array(_onset("Delta_G_r_aq - Delta_G_gc", g - gc, Delta_n_Li))
+
+
+def onset_solid_salt_sink_glass(Delta_G_r_ss, Delta_G_gc, Delta_n_Li):
+    """E_ub_glass = (Delta_G_r_ss - Delta_G_gc) / (Delta_n_Li F), V: upper end of the amorphous K1 bracket."""
+    g = real("Delta_G_r_ss (solid-salt reaction free energy)", Delta_G_r_ss)
+    gc = non_negative("Delta_G_gc (glass-to-crystal free energy)", Delta_G_gc)
+    return scalar_or_array(_onset("Delta_G_r_ss - Delta_G_gc", g - gc, Delta_n_Li))

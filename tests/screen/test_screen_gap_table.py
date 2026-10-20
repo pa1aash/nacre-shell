@@ -22,7 +22,10 @@ def params():
 
 
 def test_every_unsourced_key_has_a_treatment(table, params):
-    assert gaps.check(table, params) == []
+    """Keys added to lit/params.yaml after p0-cp3 for the phosphate screen are accounted for by the phosphate
+    skeleton (configs/preprint/gap_resolution_ph.yaml), not by this carbonate table."""
+    ph = gaps.covered_ph(gaps.load_ph(ROOT / gaps.PH_TABLE))
+    assert [p for p in gaps.check(table, params) if not ph(p.split(":")[0])] == []
 
 
 def test_table_is_registered_before_output(table):

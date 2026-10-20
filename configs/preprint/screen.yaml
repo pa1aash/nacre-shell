@@ -206,7 +206,7 @@ minerals:
 # so that the evaluators run before the freeze; m_cos and m_S are the zero-margin edges of the same block.
 k_screen:
   provisional: true
-  k1_ladder: results/preprint/pourbaix/ph_k1/ladder.csv      # W5's file, read and never recomputed
+  k1_ladder: results/preprint/pourbaix/ph_w51/ladder_v2.csv   # W5's v2 ladder (framing, stage, E_ub/E_lb): an input path, read and never recomputed
   p_cred: 0.9                        # provisional (thresholds.decision.credible_level primary)
   p_deg: 0.1                         # provisional, 1 - p_cred
   m_cos: 0.0                         # provisional (thresholds.C3.margin_cos_theta primary)
