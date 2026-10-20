@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W3.2a",
+  "last_session": "PH-W3.2",
   "status": "DONE",
   "day": 5,
   "equation_sheet": {
@@ -217,6 +217,19 @@
   },
   "margins": {
     "status": "ready",
-    "sha": "dd41b1997666ae63634db5dab7543bd761a9e95b"
+    "sha": "c2c7882af0c7913bd17432157a43a3aca953dff4",
+    "first_sha": "dd41b1997666ae63634db5dab7543bd761a9e95b",
+    "thresholds_block_version": 6,
+    "check_contract": "PASS (107 functions; margins re-derived from 5 pinned files)",
+    "rulings": {
+      "a": "governing Al(OH)3 am; reference boehmite; both reported",
+      "b": "correction tighten (direct Ca(PO3)2 value); TT-044 exclusion accept; residual entropy accept (ends)"
+    },
+    "bracket": "pass needs Ca2+/Al3+ transfer (form A or B) and a PC proxy registration; sufficient now: no",
+    "pdfs": {
+      "equation_sheet": "built (5 pages; overfull vbox 307 pt, symbol table overflows)",
+      "derivation": "built (up to date, 21 pages)"
+    },
+    "verify_quick": "not completed: 15 tracked files are dataless (Desktop sync), read times out"
   }
 }
