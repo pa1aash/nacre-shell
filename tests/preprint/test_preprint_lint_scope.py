@@ -69,3 +69,34 @@ def test_claim_statements_are_linted(tmp_path):
 def test_charter_patterns_are_loaded():
     ids = [rid for rid, _ in lint_scope.rules(REPO)]
     assert "SG01" in ids and "SG14" in ids and "PS01" in ids
+
+
+def test_warn_block_is_loaded_from_the_charter():
+    assert [rid for rid, _ in lint_scope.warn_rules(REPO)] == ["SG17W"]
+    assert "SG17W" not in [rid for rid, _ in lint_scope.rules(REPO)]
+
+
+def test_sg17w_fails_a_planted_sentence_without_thermodynamic(tmp_path):
+    f = write(tmp_path / "t.tex", "The film is stable up to 4.5 V in the cell.\n")
+    problems = lint_scope.lint(REPO, [f])
+    assert len(problems) == 1 and "SG17W" in problems[0]
+    c = write(tmp_path / "c.tex", "\\caption{The phase is stable above 4.2 V.}\n")
+    assert any("SG17W" in p for p in lint_scope.lint(REPO, [c]))
+
+
+def test_sg17w_passes_when_the_same_sentence_says_thermodynamic(tmp_path):
+    f = write(tmp_path / "t.tex", "The phase is thermodynamically stable up to 4.5 V against the sink.\n")
+    assert lint_scope.lint(REPO, [f]) == []
+    g = write(tmp_path / "g.tex", "Thermodynamic onset only. The film is stable to 4.5 V.\n")
+    assert len(lint_scope.lint(REPO, [g])) == 1       # another sentence does not count
+
+
+def test_sg17w_applies_to_claim_statements(tmp_path):
+    root = copy_tree(tmp_path)
+    claims = root / "preprint" / "claims.yaml"
+    claims.write_text(claims.read_text(encoding="utf-8") + (
+        "  - id: CL-R98\n    statement: The phase is stable up to 4.5 V.\n"
+        "  - id: CL-R97\n    statement: The phase is thermodynamically stable up to 4.5 V.\n"), encoding="utf-8")
+    problems = lint_scope.lint(root)
+    assert any("CL-R98" in p and "SG17W" in p for p in problems)
+    assert not any("CL-R97" in p for p in problems)

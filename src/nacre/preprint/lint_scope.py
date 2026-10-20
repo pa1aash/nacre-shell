@@ -8,6 +8,9 @@ Scanned: every .tex file under preprint/paper (text, captions and comments; not 
 every .md file under preprint/paper (outline and briefs), and the `statement` and `notes`
 fields of preprint/claims.yaml.
 
+The charter's second block, scope-guard-warn (SG17W..), holds warn patterns: a match is a warning
+that fails only when the same sentence lacks the word "thermodynamic" (see WARN_WORD).
+
 The only exempt sentences are the explicit "does not claim" sentences listed verbatim in
 preprint/paper/lint/scope_allowlist.txt. An allowlist line without "does not claim" is an error.
 """
@@ -21,6 +24,8 @@ from nacre.preprint import paths, texscan
 ALLOWLIST = "scope_allowlist.txt"
 PATTERNS = "scope_patterns.txt"
 _BLOCK = re.compile(r"```scope-guard\n(.*?)```", re.S)
+_WARN_BLOCK = re.compile(r"```scope-guard-warn\n(.*?)```", re.S)
+WARN_WORD = re.compile(r"\bthermodynamic", re.I)
 _MD_START = re.compile(r"^\s*(#+\s|[-*+]\s|\d+[.)]\s|>\s)")
 _SENT = re.compile(r"(?<=[.!?])\s+")
 
@@ -41,6 +46,20 @@ def charter_rules(root):
             rid, rx = s.split(None, 1)
             rules.append((rid, re.compile(rx, re.I)))
     return rules
+
+
+def warn_rules(root):
+    """Patterns of the charter's scope-guard-warn block; none when the charter has no such block."""
+    m = _WARN_BLOCK.search(paths.scope_guard(root).read_text(encoding="utf-8"))
+    if not m:
+        return []
+    out = []
+    for line in m.group(1).splitlines():
+        s = line.strip()
+        if s and not s.startswith("#"):
+            rid, rx = s.split(None, 1)
+            out.append((rid, re.compile(rx, re.I)))
+    return out
 
 
 def rules(root):
@@ -132,10 +151,16 @@ def _line_at(marks, offset):
     return no
 
 
-def check_text_blocks(blocks, label, rs, allowed):
+def check_text_blocks(blocks, label, rs, allowed, warn=()):
     problems = []
     for block in blocks:
         for sentence, start, marks in _sentences(block):
+            if not WARN_WORD.search(sentence):
+                for rid, rx in warn:
+                    m = rx.search(sentence)
+                    if m:
+                        problems.append("%s:%d: %s (warn) %r without 'thermodynamic' in: %s" % (
+                            label, _line_at(marks, start + m.start()), rid, m.group(0), normalise(sentence)[:120]))
             for rid, rx in rs:
                 m = rx.search(sentence)
                 if not m:
@@ -156,20 +181,21 @@ def scanned_files(root):
 
 
 def lint(root, files=None):
-    rs, allowed = rules(root), allowlist(root)
+    rs, allowed, warn = rules(root), allowlist(root), warn_rules(root)
     problems = []
     targets = files if files is not None else scanned_files(root)
     for f in targets:
         lines = Path(f).read_text(encoding="utf-8").splitlines()
         blocks = _blocks_md(lines) if Path(f).suffix == ".md" else _blocks_tex(lines)
-        problems += check_text_blocks(blocks, texscan.rel(root, f), rs, allowed)
+        problems += check_text_blocks(blocks, texscan.rel(root, f), rs, allowed, warn)
     if files is None and paths.claims_yaml(root).is_file():
-        problems += lint_claims(root, rs, allowed)
+        problems += lint_claims(root, rs, allowed, warn=warn)
     return problems
 
 
-def lint_claims(root, rs=None, allowed=None, path=None):
+def lint_claims(root, rs=None, allowed=None, path=None, warn=None):
     rs = rs if rs is not None else rules(root)
+    warn = warn if warn is not None else warn_rules(root)
     allowed = allowed if allowed is not None else allowlist(root)
     path = Path(path) if path else paths.claims_yaml(root)
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
@@ -181,6 +207,6 @@ def lint_claims(root, rs=None, allowed=None, path=None):
                 continue
             block = [(0, line) for line in str(value).splitlines()]
             label = "%s[%s].%s" % (texscan.rel(root, path), c.get("id"), field)
-            for p in check_text_blocks([block], label, rs, allowed):
+            for p in check_text_blocks([block], label, rs, allowed, warn):
                 problems.append(p.replace(":0:", ":", 1))
     return problems

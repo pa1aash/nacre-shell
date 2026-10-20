@@ -1,4 +1,4 @@
-"""Generated title, author block, CRediT statement and declarations."""
+"""Generated title, author block and declarations (no CRediT statement: ChemRxiv does not require one)."""
 import pytest
 import yaml
 
@@ -28,16 +28,15 @@ def test_tbd_and_to_confirm_become_markers(tmp_path):
     assert r"\nacrePending{Cy Byron}" in block
     assert block.count(r"\footnotetext{\textit{$^{a}$~Inst A}}") == 1
     assert r"$^{\ast}$\textit{$^{a}$}" in block
-    assert r"\nacrePlaceholder{CRediT roles TBD}" in declarations.credit_statement(root)
 
 
-def test_credit_roles_come_from_the_taxonomy(tmp_path):
+def test_no_credit_statement_is_generated(tmp_path):
+    assert not hasattr(declarations, "credit_statement")
+    assert "credit.tex" not in declarations.GENERATED
     root = copy_tree(tmp_path)
-    _authors(root, [_a(corresponding=True, credit_roles=["Conceptualization", "Software"])])
-    assert r"\textbf{Ada Byron}: Conceptualization, Software." in declarations.credit_statement(root)
-    _authors(root, [_a(corresponding=True, credit_roles=["Vibes"])])
-    with pytest.raises(declarations.DeclarationsError, match="not in the taxonomy"):
-        declarations.credit_statement(root)
+    assert not (paths.generated(root) / "credit.tex").exists()
+    text = (paths.paper(root) / "sections" / "declarations.tex").read_text(encoding="utf-8")
+    assert "nacreCredit" not in text and "Author contributions" not in text
 
 
 def test_exactly_one_corresponding_author(tmp_path):
@@ -113,11 +112,10 @@ def test_consumed_field_changes_alter_the_output(tmp_path):
     assert {n for n in after if after[n] != before[n]} == {"front.tex"}
     _edit(paths.authors_yaml(root), lambda d: d["authors"][1].update(family_name="Chan"))
     after2 = _generate_all(root)
-    assert after2["authors.tex"] != after["authors.tex"] and after2["credit.tex"] != after["credit.tex"]
+    assert after2["authors.tex"] != after["authors.tex"]
     assert after2["front.tex"] == after["front.tex"]
     _edit(paths.authors_yaml(root), lambda d: d["authors"][1].update(credit_roles=["Conceptualization"]))
-    after3 = _generate_all(root)
-    assert after3["credit.tex"] != after2["credit.tex"] and after3["authors.tex"] == after2["authors.tex"]
+    assert _generate_all(root) == after2             # a CRediT field is not read
 
 
 def test_headers_name_fields_and_carry_no_file_blob(tmp_path):

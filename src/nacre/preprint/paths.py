@@ -56,9 +56,6 @@ def track_yaml(root):
     return Path(root) / "ops" / "tracks" / "p0.yaml"
 
 
-def credit_taxonomy(root):
-    return Path(root) / "charter" / "credit_taxonomy.md"
-
 
 def scope_guard(root):
     return Path(root) / "charter" / "scope_guard.md"

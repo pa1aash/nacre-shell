@@ -1,55 +1,39 @@
-# Brief: Discussion
+# Brief: Discussion and limits
 
 - **File:** `sections/discussion.tex`.
-- **Written:** after checkpoint cp4.
+- **Written:** PH-W8.3 (day 7), after cp5r.
 - **Length target:** 800 to 1000 words, six paragraphs.
 
 ## Purpose
 
-Say plainly what the results license and what they do not. Weigh the contrary evidence. State the limits of the model, the proxy nature of the Pourbaix result and the breadth of the priors.
+Say plainly what the results license and what they do not, weigh the contrary evidence, and state the limits: the validated and unvalidated halves, the open risks, the proxy status of the window, the breadth of the priors.
 
 ## Physical argument, in order
 
-1. **What the results license.**
-   - A statement that the sequence is, or is not, thermodynamically possible under the stated priors.
-   - The ranking of the governing quantities.
-   - The precision targets for first-principles work.
-   - Claims: CL-G01 and CL-P01.
-2. **What they do not license.** The does-not-claim sentences are used verbatim, because they are the only sentences the scope linter exempts. They are about function, rates and cycling, optimality and experiment. Claims: CL-N01, CL-N02, CL-N04 and CL-N05.
-3. **Contrary evidence.**
-   - The literature that cuts against the chain, including Osorio-Celestino and co-workers (2020).
-   - It is weighed link by link: which link it bears on, and whether it moves a prior or a criterion.
-   - Its content is taken from p0-w2's record in `lit/contrary.md`, not from memory. The reference enters through `nacre bib add <doi>` with the DOI recorded there.
-   - Claim: CL-L05.
-4. **Limits of the model.**
-   - Classical nucleation with a spherical-cap nucleus of one registered polymorph; amorphous precursors and non-classical pathways lie outside it (CL-L03).
-   - The insulating-film limitation: film thickness is bounded above by electronic resistance, and that bound is reported only as a limitation (CL-L04, from `charter/scope_guard.md`).
-5. **The Pourbaix proxy.** Phase stability is not kinetics: the Pourbaix result says which phases are stable, not how fast any forms or dissolves. Claim: CL-L01.
-6. **The breadth of the priors.**
-   - Every conclusion is conditional on them, and narrower priors could reorder the ranking.
-   - This is why the required-precision result is the transferable output.
-   - Claim: CL-L02.
+1. **What the results license.** The oxidation ladder per cutoff class, the processing-regime result, the required-precision map, and the headline in the frame that holds. CL-S13, CL-P04.
+2. **What they do not license.** The does-not-claim sentences, verbatim, because they are the only sentences the scope linter exempts: CL-N01, CL-N02, CL-N04, CL-N05, CL-N06 to CL-N13 (function; rates and cycling; optimality; experiment; self-healing and pit supply; outperforming baselines; validation of the nucleation half; priority; formation and wetting on Al; thermodynamic onset as a service limit; fluorinated electrolytes; the acid-adjusted slurry as a regime).
+3. **Validated versus not.** The thermochemistry and window pipeline is benchmarked against tabulated data; the nucleation half failed its pre-registered retrodiction, so template and nucleation results are hypotheses plus the precision map. CL-T03, CL-N08.
+4. **Risks to test, not assume.** Phosphate may fail K1 too; K3 may have no accessible window because bulk precipitation competes; insulating thickness; slurry competing phases; hydrolysis; novelty against incumbents; fluorinated-electrolyte records are context only. CL-L07, CL-L08, CL-L09.
+5. **Contrary evidence.** Carbonate-era contrary records (CL-L05, CL-E01 to CL-E03); polydopamine as a K1 risk (contrary record B4); weighed link by link.
+6. **Limits of the model.** Classical nucleation and the polymorph framing (CL-L03); the insulating film (CL-L04); the Pourbaix result as a thermodynamic proxy (CL-L01); the breadth of the priors (CL-L02).
 
 ## Figures and tables
 
-- Figs 5, 6 and 7 and Table 1 are referred back to; no new figure.
+None new.
 
 ## Macros needed
 
-None new. It reuses Results macros only where a number is essential.
+`NumRetroPassCount`, `NumRetroUsableCases` (registered); the retrodiction outcome count (mock `NumRetroConsistent` until PH-W2 delivers).
 
 ## Claims carried
 
-CL-G01, CL-P01, CL-N01, CL-N02, CL-N04, CL-N05, CL-L05, CL-L03, CL-L04, CL-L01 and CL-L02.
+CL-L07 to CL-L09, CL-N06 to CL-N13; carbonate era: CL-L01 to CL-L05, CL-N01 to CL-N05.
 
 ## Supplying lanes
 
-- p0-w2: `lit/contrary.md` and `lit/novelty.md`.
-- p0-w1: prior breadth (`lit/params.yaml`).
-- p0-w5: Pourbaix.
-- p0-w8: text.
+- p0-w8 writes it; p0-w2 (contrary dossier, novelty gaps).
 
 ## Cautions
 
-- The branch rule applies (`charter/branches.md`): the Discussion must read correctly whether the screen comes out favourable, inconclusive or unfavourable.
-- No softening of a miss in the retrodiction; it is discussed where it bears on a link.
+- Verbatim does-not-claim sentences only; no paraphrase.
+- No "first", "novel"; the patent-search gap is stated, not worked around.

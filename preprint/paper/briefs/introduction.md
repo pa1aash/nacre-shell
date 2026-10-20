@@ -1,65 +1,46 @@
 # Brief: Introduction
 
 - **File:** `sections/introduction.tex`.
-- **Written:** P0-W8.2 (Day 2).
-- **Length target:** 550 to 700 words, six paragraphs, one per step below. P0-W8.2 set the six-step order; the Day 1 brief had four paragraphs.
+- **Written:** PH-W8.2 (day 6). The carbonate-era text is kept for adaptation; paragraphs marked `carbonate control (frozen)` shrink to one paragraph.
+- **Length target:** 600 to 750 words, six paragraphs, one per step below.
 
 ## Purpose
 
-Pose the question physically: is the templated mineralisation sequence thermodynamically possible at the oxide-slurry interface? Then show why a parameter screen with stated precision targets is the right first step.
+Pose the design question: which mineral phases, if any, can serve as a thermodynamically admissible barrier on an aluminium collector in a fluorine-free cell, and how does a screen answer it without promising a pass? Place the paper against its prior art and say what it does not do.
 
 ## Physical argument, in order
 
-1. **The setting.**
-   - Water-processed cathodes with fluorine-free binders.
-   - The alkaline aqueous slurry, and what it does to the native Al2O3/AlOOH on the collector.
-   - Why the slurry stage (R-slurry) matters separately from the cell (R-cell), which is named once as the second set of conditions.
-2. **Biomineralisation as a physical hypothesis.**
-   - Nacre builds a mineral on an organic matrix; amorphous precursors appear at its growth front.
-   - The transplanted chain: adhesion of a catechol-bearing layer to the hydrated oxide in water, Ca2+ binding at the layer, templated nucleation of CaCO3, film stability. Each link is posed as a free-energy question. Fig 1 is cited here.
-   - **Sequestration.** Do not assert that Ca2+ binding raises the local supersaturation. How sequestration enters nucleation is settled by the cp2 derivation (W3 questions Q1 and Q2). The template's role is phrased neutrally, as lowering the nucleation barrier through the interfacial energies and the ion activities at the interface, made precise in the Model.
-   - **Chitosan.** Do not assume chitosan is present as dissolved chains in an alkaline slurry (lane note N4). The Introduction does not name chitosan; polysaccharide templates appear only inside novelty wording N1 ("a catechol or polysaccharide template"), which describes what was searched.
-3. **Why thermodynamics first, and what is unknown.**
-   - A link that is unfavourable for every plausible input ends the sequence whatever the kinetics.
-   - The governing interfacial and binding free energies are weakly constrained by experiment: proxies and single original determinations (`lit/corpus/coverage_notes.yaml`).
-   - A screen that ranks the inputs and states the precision each needs addresses that gap.
-4. **Prior work and the gap.**
-   - Novelty wording N1, then N2, from `lit/novelty.md`, with both qualifiers ("patent literature not searched"; "within the searched literature").
-   - Two departures from the N1 text, recorded in the report of P0-W8.2: the search month is left out (rule R5, no typed numbers), and "sequestration and enrichment" reads "sequestration" (the sequestration caution above).
-   - None of the unsupported wordings U1 to U12.
-5. **Contrary evidence.**
-   - Carbonate scale on aluminium alloys accompanied more corrosion (`lit/contrary.md` B1, Osorio-Celestino and co-workers).
-   - A polydopamine coating reduced CaCO3 deposition (B10).
-   - The distinction between a porous scale and a coherent templated film is central to what follows; it is argued from the nucleation and conformality links, not assumed.
-6. **What the paper does and does not do.**
-   - A thermodynamic screen with literature-bounded inputs; the governing quantities and the accuracy each needs; the section order.
-   - The scope sentences are the does-not-claim entries, verbatim (CL-N01, CL-N02, CL-N03).
+1. **The setting.** Water-processed cathodes with fluorine-free binders; the alkaline slurry and the native oxide (slurry stage); the oxidising cell (cell stage). The two stages are separate sets of conditions. Carried by the carbonate-era claims CL-K01 to CL-K04.
+2. **Incumbents and prior art, stated plainly (F8).**
+   - Aluminophosphate films of the forms Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 on Al foil are claimed prior art, in the two Tsinghua / Hon Hai patents (US 8,252,463; US 8,821,969). The patent numbers enter through `nacre bib add`, never typed. CL-V03.
+   - Phosphate and polyphosphate collector coatings from aqueous dispersion (Hydro-Quebec family) CL-V04; phosphoric-acid pH control CL-V05; carbon-coated foil CL-V06; in-situ polyphosphate films on steel CL-V10.
+   - The electrical data and electrolyte printed in those patents are recorded in the reference table (W2.2b), not summarised as results here.
+   - The wording NS7 appears only with its four qualifiers (in situ; crosslinked and water-insoluble; Al foil; fluorine-free), scan-limited, with the patent-search gap stated beside it (CL-V08). The F8 candidate wording (an oxidation-limit ladder across condensation states) stays unwritten until verified (CL-V09).
+3. **The bone-mineral idea and its plain statement (F6).**
+   - Bone mineral is hydroxyapatite templated on an organic matrix via amorphous and condensed precursors; the transplant to a collector is a hypothesis with four conditions (Fig `fig:pathway` is cited in Design; the hero `fig:hero` here).
+   - State plainly that bone mineral (HAp) and the tricalcium phosphates have a thermodynamic onset near carbonate (tier one, solid-salt sink); numbers by macro from the onset ladder (`NumK1HApLow`, `NumK1HApHigh`, planned). Frame C applies to the calcium orthophosphates only; condensed and aluminium phosphates decide frames A, B or C. CL-S01, CL-D02.
+4. **Why a screen, and what it can report.** A link that is unfavourable for every plausible input ends the chain; inputs are weakly constrained; so the screen reports a verdict per cutoff class, a bracket instead of a point, and undetermined where no source exists. CL-D03, CL-D04.
+5. **The carbonate control.** One paragraph: carbonate runs through the same pipeline as the negative control for the oxidation condition and the positive control for the solubility condition; contrary evidence on carbonate scale and on polydopamine (CL-E01 to CL-E03, carbonate era). CL-S02.
+6. **What the paper does and does not do.** Contribution in one sentence (CL-G03 reworded), the section order, and the scope sentences verbatim: CL-N01, CL-N02, CL-N03, CL-N08, CL-N09.
 
 ## Figures and tables
 
-- Fig 1, the hero: the chain at a glance from oxide to film, with no numbers in the figure. Until p0-w7 delivers the render, the float holds a missing-input marker; the caption says the scene is illustrative and that its charge is balanced with dissolved carbonate ions (ruling D5).
+- `fig:hero`: hero render (phosphate, alone, late). Until delivered the float holds a missing-input marker. Cut order: the hero is cut before the schematic; use `fig:pathway` instead.
+- `tab:candidates` is first cited at step 6 (forward reference).
 
 ## Macros needed
 
-None. The Introduction carries no results and no numbers. A number that becomes essential needs a macro source keyed to `lit/params.yaml`, once p0-w1 has pushed it.
+`NumK1HApLow`, `NumK1HApHigh` (planned, PH-W5.1 onset ladder file); `NumNoveltySearchMonth` (registered).
 
 ## Claims carried
 
-- Background (CL-K01 to CL-K10), traced to evidence rows or DOIs.
-- Hypothesis framing (CL-R06 to CL-R08), forward references to CL-R01 to CL-R05.
-- Novelty (CL-V01, CL-V02) and contrary evidence (CL-E01 to CL-E03).
-- Contribution (CL-G03, CL-P03), forward references to CL-G01 and CL-P01.
-- Scope sentences: CL-N01, CL-N02 and CL-N03.
-- Each sentence that carries a claim ends with a comment naming its id; `tests/preprint/test_preprint_introduction.py` checks the markers against the ledger.
+CL-S01, CL-D02, CL-D03, CL-D04, CL-V03 to CL-V10, CL-S02, CL-N01, CL-N02, CL-N03, CL-N08, CL-N09; carbonate era: CL-K01 to CL-K10, CL-R06 to CL-R08, CL-G03, CL-V01, CL-V02, CL-E01 to CL-E03, CL-P03.
 
 ## Supplying lanes
 
-- p0-w8 writes it.
-- Fig 1 comes from p0-w7 (render) with p0-w6 (style).
-- Background references come from p0-w1's evidence table and p0-w2's novelty and contrary records. Every reference entered through `nacre bib add --bib preprint/paper/refs.bib <doi>`.
+- p0-w8 writes it; p0-w2 supplies the prior-art rows; p0-w5 the onset ladder; p0-w7 the hero (W6 style).
 
 ## Cautions
 
-- No functional promise for the film, and none of the out-of-scope wording that rule R6 lists.
-- No "first report" wording (SG14), and none of U1 to U12.
-- Not the hypothesis wording "engineered out", and no claim that thresholds were set before the calculation (lane note N5). N5's sentence about the earlier calcite estimate belongs to Methods or Discussion.
+- No priority wording (U1 to U12 and NU1 to NU17 of `lit/novelty.md`); no comparison against baselines (CL-N07); self-repair only as a design hypothesis; no fluoride phase, not even as a comparator.
+- NS7 never without its four qualifiers; NS6 is a different wording in `lit/novelty.md` (see CL-V09).
