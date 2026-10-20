@@ -1007,3 +1007,61 @@ matrix_baseline_hq_film_thickness:
   label: film thickness, Hydro-Quebec Li polyphosphate (patent)
 matrix_baseline_tsinghua_film_thickness:
   label: film thickness, Tsinghua aluminophosphate (patent)
+hydration_free_energy_al_marcus:
+  label: hydration free energy of Al3+, Marcus scale (full-text reading)
+  latex: \Delta G_\mathrm{hyd}
+hydration_free_energy_al_tissandier_scale:
+  label: hydration free energy of Al3+, cluster-pair proton scale
+  latex: \Delta G_\mathrm{hyd}
+hydration_free_energy_proton_tissandier:
+  label: hydration free energy of the proton, cluster-pair value
+  latex: \Delta G_\mathrm{hyd}
+hydration_free_energy_li_conventional:
+  label: conventional hydration free energy of Li+ (proton zero)
+  latex: \Delta G_\mathrm{hyd}
+hydration_free_energy_li_tissandier_scale:
+  label: hydration free energy of Li+, cluster-pair proton scale
+  latex: \Delta G_\mathrm{hyd}
+hydration_standard_state_offset:
+  label: offset between the two hydration standard states
+  latex: \Delta G^{*}_\mathrm{hyd} - \Delta G^{\circ}_\mathrm{hyd}
+hydration_free_energy_clo4:
+  label: hydration free energy of ClO4-
+  latex: \Delta G_\mathrm{hyd}
+transfer_free_energy_clo4_water_pc:
+  label: transfer free energy of ClO4-, water to PC
+  latex: \Delta G_\mathrm{tr}
+transfer_free_energy_ca_water_pc:
+  label: transfer free energy of Ca2+, water to PC
+  latex: \Delta G_\mathrm{tr}
+transfer_free_energy_al_water_pc:
+  label: transfer free energy of Al3+, water to PC
+  latex: \Delta G_\mathrm{tr}
+glass_dfh_cameta_crystal:
+  label: enthalpy of formation, Ca(PO3)2 crystal (assessed)
+  latex: \Delta_\mathrm{f}H
+glass_s_cameta_crystal:
+  label: standard entropy, Ca(PO3)2 crystal (assessed)
+  latex: S^\circ
+glass_crystal_correction_cameta_calphad:
+  label: glass-to-crystal correction, Ca(PO3)2 (assessed crystal)
+  latex: \Delta_\mathrm{f}H
+conversion_brushite_monetite_onset:
+  label: brushite to monetite, onset temperature
+  latex: T_\mathrm{conv}
+conversion_brushite_dehydration_range:
+  label: brushite dehydration, temperature range
+  latex: T_\mathrm{conv}
+conversion_monetite_pyrophosphate_onset:
+  label: monetite to pyrophosphate, onset temperature
+  latex: T_\mathrm{conv}
+conversion_pyrophosphate_gamma_beta:
+  label: gamma to beta pyrophosphate, DTA temperature
+  latex: T_\mathrm{conv}
+hydrolysis_polyp_k_ph7_to_13:
+  label: polyphosphate hydrolysis constant, pH 7 to 13
+  latex: k_\mathrm{hyd}
+hydrolysis_tetrameta_ph_min_rate:
+  label: pH of minimum tetrametaphosphate hydrolysis
+coacervate_gamma_analog_complex_pair:
+  label: PAA-qPDMAEMA coacervate-dilute tension (analog)

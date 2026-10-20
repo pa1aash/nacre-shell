@@ -738,3 +738,13 @@ utc,source,query_or_id,failure_kind,detail
 2026-10-20T10:30:00Z,ph-w1.2,10.13036/17533562.59.5.018,paywalled,Na-Ca polyphosphate glass dissolution (Corning 2018); no open copy
 2026-10-20T10:30:00Z,ph-w1.2,"US 12,478,560",not_indexed,"three Google Patents addresses returned HTTP 404 (3 attempts); no DOI for a row"
 2026-10-20T10:30:00Z,ph-w1.2,"US 6,485,866 / 6,844,114 / 8,252,463 / 8,821,969 baselines",no_doi,"solubility, thickness and composition only from the patent texts read by PH-W2.1; no rows, recorded as gap keys"
+2026-10-20T14:30:00Z,ph-w1.3,10.1039/ft9918702995,paywalled,"Marcus 1991 DhydG of 109 ions (ClO4- among them); no open copy; abstract has no numbers (3 attempts: fulltext, abstract, search)"
+2026-10-20T14:30:00Z,ph-w1.3,10.1016/j.molliq.2025.128035,not_indexed,Madrid-2019 perchlorate model; the open location returned HTTP 403 and the archived copy HTTP 404; no hydration energy retrieved
+2026-10-20T14:30:00Z,ph-w1.3,10.1021/jp013242+,paywalled,Tuttle and Warshel cluster-pair single-ion energies; no open copy
+2026-10-20T14:30:00Z,ph-w1.3,"Ca2+ and Al3+ transfer from water into propylene, ethylene or dimethyl carbonate",not_indexed,"searched on openalex, crossref and semanticscholar (rate limited); Marcus 1983 and Gritzner 1988 list neither ion for propylene carbonate"
+2026-10-20T14:30:00Z,ph-w1.3,"Al(PO3)3 DfH, DfG, S; AlPO4 + P2O5 reaction data",not_indexed,"five queries on openalex, crossref, europepmc and semanticscholar returned no thermochemical source; only a paywalled digest of a 1974 phase-diagram paper (10.1002/chin.197452030)"
+2026-10-20T14:30:00Z,ph-w1.3,Ca(PO3)2 glass entropy and crystallisation enthalpy,not_indexed,no calorimetric record found; Ding 2015 (10.3866/pku.whxb201508121) gives assessed crystal values only
+2026-10-20T14:30:00Z,ph-w1.3,10.1139/v54-007; 10.1139/v56-129; 10.1246/bcsj.60.2857; 10.1246/bcsj.55.3766,paywalled,"polyphosphate hydrolysis rates against pH (Crowther and Westman 1954 and 1956; Kura 1987; Watanabe 1982); abstracts only, no rate constants"
+2026-10-20T14:30:00Z,ph-w1.3,10.1021/acs.macromol.9b01491; 10.1021/la300769d; 10.1021/la302729r; 10.1039/b911541b,paywalled,"coacervate interfacial tension (Ali 2019, Priftis 2012, Spruijt 2010); abstracts only"
+2026-10-20T14:30:00Z,ph-w1.3,polyphosphate-containing coacervate interfacial tension,not_indexed,three query formulations on openalex and europepmc returned no measurement
+2026-10-20T14:30:00Z,ph-w1.3,Al3+ polyphosphate or pyrophosphate complexation constants; Ksp of Al polyphosphate,not_indexed,"five query formulations on openalex, crossref and europepmc returned no source"

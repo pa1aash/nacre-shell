@@ -49,3 +49,58 @@ utc,source,query_or_id,failure_kind,detail
 2026-10-20T10:35:03Z,direct+wayback,https://patents.google.com/patent/US12478560,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://patents.google.com/patent/US12478560
 2026-10-20T10:35:04Z,direct,https://patents.google.com/patent/US12478560B1/en,not_indexed,HTTP 404 https://patents.google.com/patent/US12478560B1/en
 2026-10-20T10:35:06Z,direct+wayback,https://patents.google.com/patent/US12478560B1/en,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://patents.google.com/patent/US12478560B1/en
+2026-10-20T14:11:18Z,unpaywall,10.1039/c6ra25804b,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2017/ra/c6ra25804b
+2026-10-20T14:11:18Z,unpaywall,10.1002/cphc.202200516,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/cphc.202200516
+2026-10-20T14:11:18Z,unpaywall,10.1021/jp013242+,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T14:11:18Z,unpaywall,10.1021/acs.jpca.3c05514,rate_limited,HTTP 429 (https://dspace.mit.edu/bitstream/1721.1/153067/1/2023_ionsolv_aq.pdf)
+2026-10-20T14:11:18Z,unpaywall,10.1351/pac198759091093,parse_error,not a PDF: https://www.degruyter.com/document/doi/10.1351/pac198759091093/pdf
+2026-10-20T14:11:21Z,openalex,10.1039/c6ra25804b,parse_error,not a PDF: http://edoc.unibas.ch/55324/3/c6ra25804b.pdf
+2026-10-20T14:12:12Z,openalex,absolute single-ion hydration free energy ion-solvent cluster pair approximation Li+ Ca2+ Al3+ divalent trivalent,not_indexed,no results
+2026-10-20T14:12:22Z,europepmc,10.1021/acs.chemrev.6b00440,http_error,HTTP 403 https://europepmc.org/articles/PMC5312828?pdf=render
+2026-10-20T14:12:22Z,europepmc,10.1021/jp505875v,http_error,HTTP 403 https://europepmc.org/articles/PMC4306492?pdf=render
+2026-10-20T14:12:22Z,europepmc,10.1021/acs.jctc.0c01320,http_error,HTTP 403 https://europepmc.org/articles/PMC8173366?pdf=render
+2026-10-20T14:12:24Z,europepmc+wayback,10.1021/acs.chemrev.6b00440,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC5312828?pdf=render
+2026-10-20T14:12:24Z,europepmc+wayback,10.1021/jp505875v,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC4306492?pdf=render
+2026-10-20T14:12:24Z,europepmc+wayback,10.1021/acs.jctc.0c01320,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC8173366?pdf=render
+2026-10-20T14:12:55Z,europepmc,PMC8173366,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8173366/fullTextXML)
+2026-10-20T14:12:55Z,fulltext,10.1021/acs.jctc.0c01320,not_indexed,"2 candidate location(s), none retrieved"
+2026-10-20T14:14:45Z,unpaywall,10.25911/5d67b788c55de,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.25911/5d67b788c55de
+2026-10-20T14:15:48Z,openalex,10.25911/5d67b788c55de,http_error,"ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) (http://hdl.handle.net/1885/144595)"
+2026-10-20T14:15:58Z,openalex+wayback,10.25911/5d67b788c55de,parse_error,not a PDF: https://web.archive.org/web/2026id_/http://hdl.handle.net/1885/144595
+2026-10-20T14:15:58Z,fulltext,10.25911/5d67b788c55de,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T14:16:39Z,semanticscholar,solvation of Ca2+ and Li+ in propylene carbonate ethylene carbonate Gibbs energy of transfer from water,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-20T14:16:44Z,unpaywall,10.17863/cam.35721,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.17863/cam.35721
+2026-10-20T14:16:52Z,openalex,10.17863/cam.35721,parse_error,not a PDF: https://www.repository.cam.ac.uk/handle/1810/288431
+2026-10-20T14:16:56Z,openalex+wayback,10.17863/cam.35721,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://www.repository.cam.ac.uk/handle/1810/288431
+2026-10-20T14:16:56Z,fulltext,10.17863/cam.35721,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T14:18:55Z,openalex,AlPO4 P2O5 phase equilibria Al(PO3)3 thermodynamic calorimetry,not_indexed,no results
+2026-10-20T14:19:32Z,semanticscholar,calcium polyphosphate glass crystalline Ca(PO3)2 heat of crystallization kJ/mol,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-20T14:19:41Z,unpaywall,10.3390/ma17102221,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC11122804/pdf/materials-17-02221.pdf
+2026-10-20T14:19:41Z,europepmc,10.3390/ma17102221,http_error,HTTP 403 https://europepmc.org/articles/PMC11122804?pdf=render
+2026-10-20T14:19:41Z,unpaywall,10.1351/pac197544020173,parse_error,not a PDF: https://www.degruyter.com/document/doi/10.1351/pac197544020173/pdf
+2026-10-20T14:20:49Z,semanticscholar,Al(PO3)3 aluminum metaphosphate thermodynamic,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-20T14:20:58Z,openalex,aluminum polyphosphate complex stability constant Al3+ tripolyphosphate potentiometric,not_indexed,no results
+2026-10-20T14:21:04Z,unpaywall,10.24355/dbbs.084-201502041020-0,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.24355/dbbs.084-201502041020-0
+2026-10-20T14:21:12Z,openalex,10.24355/dbbs.084-201502041020-0,parse_error,not a PDF: http://www.digibib.tu-bs.de/?docid=00058786
+2026-10-20T14:21:12Z,openalex,10.24355/dbbs.084-201502041020-0,parse_error,not a PDF: https://leopard.tu-braunschweig.de/servlets/MCRFileNodeServlet/dbbs_derivate_00036658/Diss_Zein_Marwan.pdf
+2026-10-20T14:21:24Z,openalex+wayback,10.24355/dbbs.084-201502041020-0,parse_error,not a PDF: https://web.archive.org/web/2026id_/http://www.digibib.tu-bs.de/?docid=00058786
+2026-10-20T14:22:50Z,openalex,interfacial tension polyphosphate coacervate polylysine protamine droplets,not_indexed,no results
+2026-10-20T14:22:50Z,europepmc,interfacial tension of coacervate droplets ATP polylysine polyphosphate liquid-liquid phase separation measurement,not_indexed,no results
+2026-10-20T14:23:04Z,europepmc,10.1021/acs.macromol.9b01491,http_error,HTTP 403 https://europepmc.org/articles/PMC7340275?pdf=render
+2026-10-20T14:23:04Z,unpaywall,10.1021/la302729r,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T14:23:04Z,unpaywall,10.1021/la300769d,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T14:23:06Z,europepmc+wayback,10.1021/acs.macromol.9b01491,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC7340275?pdf=render
+2026-10-20T14:23:35Z,europepmc,PMC7340275,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7340275/fullTextXML)
+2026-10-20T14:23:35Z,fulltext,10.1021/acs.macromol.9b01491,not_indexed,"2 candidate location(s), none retrieved"
+2026-10-20T14:23:53Z,europepmc,aluminium tripolyphosphate complexation speciation potentiometric 27Al NMR,not_indexed,no results
+2026-10-20T14:24:12Z,unpaywall,10.1246/bcsj.60.2857,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T14:24:13Z,unpaywall,10.1246/bcsj.55.3766,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T14:24:13Z,unpaywall,10.1139/v54-007,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T14:24:13Z,unpaywall,10.1139/v56-129,http_error,HTTP 403 https://cdnsciencepub.com/doi/pdf/10.1139/v56-129
+2026-10-20T14:24:16Z,unpaywall+wayback,10.1139/v56-129,http_error,HTTP 403 https://web.archive.org/web/2026id_/https://cdnsciencepub.com/doi/pdf/10.1139/v56-129
+2026-10-20T14:24:16Z,fulltext,10.1139/v56-129,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T14:24:41Z,unpaywall,10.1039/ft9918702995,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T14:24:45Z,unpaywall,10.1016/j.molliq.2025.128035,http_error,HTTP 403 https://iris.uniroma3.it/bitstream/11590/532776/1/JMLGallo2025-2.pdf
+2026-10-20T14:24:47Z,unpaywall+wayback,10.1016/j.molliq.2025.128035,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://iris.uniroma3.it/bitstream/11590/532776/1/JMLGallo2025-2.pdf
+2026-10-20T14:24:47Z,fulltext,10.1016/j.molliq.2025.128035,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T14:26:06Z,unpaywall,10.1002/chin.197452030,paywalled,"no open copy on unpaywall, openalex or europepmc"
