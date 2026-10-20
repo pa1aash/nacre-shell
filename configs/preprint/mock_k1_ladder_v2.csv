@@ -1,24 +1,24 @@
 # MOCK K1 LADDER (PH-W4.2a) in the v2 layout the screen reads (framing, stage, bracket E_ub and E_lb). Synthetic
 # numbers for the route-layer dry runs only; never W5's ladder, never reported. An empty E_lb_V is 'pending'.
 phase,role,class,cutoff_inf_V,cutoff_sup_V,framing,stage,E_ub_V,E_lb_V,status,note
-Al(PO3)3,route,C_lo,3.6,3.7,crystalline,cell,4.9,4.4,above,mock
-Al(PO3)3,route,C_mid,4.2,4.3,crystalline,cell,4.9,4.4,above,mock
-Al(PO3)3,route,C_hi,4.4,4.5,crystalline,cell,4.9,4.4,within,mock
-Al(PO3)3,route,C_lo,3.6,3.7,amorphous,cell,4.7,,above,mock upper bound only (E_lb pending)
-Al(PO3)3,route,C_mid,4.2,4.3,amorphous,cell,4.7,,within,mock
-Al(PO3)3,route,C_hi,4.4,4.5,amorphous,cell,4.7,,within,mock
-Ca(PO3)2,route,C_lo,3.6,3.7,crystalline,cell,4.6,4.2,above,mock
-Ca(PO3)2,route,C_mid,4.2,4.3,crystalline,cell,4.6,4.2,within,mock
-Ca(PO3)2,route,C_hi,4.4,4.5,crystalline,cell,4.6,4.2,within,mock
-Ca(PO3)2,route,C_lo,3.6,3.7,amorphous,cell,4.1,3.9,within,mock
-Ca(PO3)2,route,C_mid,4.2,4.3,amorphous,cell,4.1,3.9,below,mock
-Ca(PO3)2,route,C_hi,4.4,4.5,amorphous,cell,4.1,3.9,below,mock
-AlPO4,baseline,C_lo,3.6,3.7,crystalline,cell,5.0,,above,mock upper bound only
-AlPO4,baseline,C_mid,4.2,4.3,crystalline,cell,5.0,,above,mock upper bound only
-AlPO4,baseline,C_hi,4.4,4.5,crystalline,cell,5.0,,above,mock upper bound only
-AlPO4,baseline,C_lo,3.6,3.7,amorphous,cell,,,undetermined,mock
-AlPO4,baseline,C_mid,4.2,4.3,amorphous,cell,,,undetermined,mock
-AlPO4,baseline,C_hi,4.4,4.5,amorphous,cell,,,undetermined,mock
+Al-polyphosphate (R1 gel),route,C_lo,3.6,3.7,crystalline,cell,4.9,4.4,above,mock
+Al-polyphosphate (R1 gel),route,C_mid,4.2,4.3,crystalline,cell,4.9,4.4,above,mock
+Al-polyphosphate (R1 gel),route,C_hi,4.4,4.5,crystalline,cell,4.9,4.4,within,mock
+Al-polyphosphate (R1 gel),route,C_lo,3.6,3.7,amorphous,cell,4.7,,above,mock upper bound only (E_lb pending)
+Al-polyphosphate (R1 gel),route,C_mid,4.2,4.3,amorphous,cell,4.7,,within,mock
+Al-polyphosphate (R1 gel),route,C_hi,4.4,4.5,amorphous,cell,4.7,,within,mock
+Ca(PO3)2 / Ca-polyphosphate glass,route,C_lo,3.6,3.7,crystalline,cell,4.6,4.2,above,mock
+Ca(PO3)2 / Ca-polyphosphate glass,route,C_mid,4.2,4.3,crystalline,cell,4.6,4.2,within,mock
+Ca(PO3)2 / Ca-polyphosphate glass,route,C_hi,4.4,4.5,crystalline,cell,4.6,4.2,within,mock
+Ca(PO3)2 / Ca-polyphosphate glass,route,C_lo,3.6,3.7,amorphous,cell,4.1,3.9,within,mock
+Ca(PO3)2 / Ca-polyphosphate glass,route,C_mid,4.2,4.3,amorphous,cell,4.1,3.9,below,mock
+Ca(PO3)2 / Ca-polyphosphate glass,route,C_hi,4.4,4.5,amorphous,cell,4.1,3.9,below,mock
+baked aluminophosphate (Tsinghua),baseline,C_lo,3.6,3.7,crystalline,cell,5.0,,above,mock upper bound only
+baked aluminophosphate (Tsinghua),baseline,C_mid,4.2,4.3,crystalline,cell,5.0,,above,mock upper bound only
+baked aluminophosphate (Tsinghua),baseline,C_hi,4.4,4.5,crystalline,cell,5.0,,above,mock upper bound only
+baked aluminophosphate (Tsinghua),baseline,C_lo,3.6,3.7,amorphous,cell,,,undetermined,mock
+baked aluminophosphate (Tsinghua),baseline,C_mid,4.2,4.3,amorphous,cell,,,undetermined,mock
+baked aluminophosphate (Tsinghua),baseline,C_hi,4.4,4.5,amorphous,cell,,,undetermined,mock
 HAp,candidate,C_lo,3.6,3.7,crystalline,cell,4.07,,above,mock upper bound only
 HAp,candidate,C_mid,4.2,4.3,crystalline,cell,4.07,,below,mock
 HAp,candidate,C_hi,4.4,4.5,crystalline,cell,4.07,,below,mock

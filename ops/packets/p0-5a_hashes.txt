@@ -1,0 +1,40 @@
+# Hash manifest of the cp5a freeze packet
+
+Integrated tree preprint/p0 at 5884e1488614083349dfae089aa483f8ac6bb3db (before the packet commit). Dates 2026-10-21.
+
+| file | sha256 | git blob | last commit |
+|---|---|---|---|
+| lit/params.yaml | f56b69150058814641cce33a7066fc27634193c1e35c0e51fc2cacaecd769911 | ac9d7ff5e4da06f63038c61551f75b88ff07c4fb | 0e3e2762805d95836102413555f6598153a6e1dc |
+| theory/thresholds.md | 3d65ef98321f3756cdd0c174dc3adf3f55bf31fa190661edf1cc7f208e2e8e00 | b95f988dfc81763a12da29c278f47c029bebc668 | c2c7882af0c7913bd17432157a43a3aca953dff4 |
+| theory/contract.yaml | 5249c6695b54ec00740bc359155b055a27ee0d3c1be4794b01ce48d98e633d9e | 2e631c03ccf4361801e2115bcb78c943d78bbf9b | 91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1 |
+| configs/preprint/thresholds.yaml | ef87a276ad6908224d893bd7c111e6a9e63fea6a16cc1c0a732dc546bd699d23 | 085813fe6261e931b6233f951a104ab601988552 | 1aff4fe76a6758172da4a8abd6c1e17e7c4b8910 |
+| configs/preprint/contract_check.json | aa994099b554920bc847d6ff3580b5e817e9d99834e8a2c7618f58d64f302438 | fc7c2c39e10e8b541207313f713b7b5a6c983a7d | 02f7fc38b6d6d2780d409f8eb815acf7f2e7ba25 |
+| configs/preprint/gap_resolution_ph.yaml | 0dd15c9229ad5f1d5adc56bf911f993ba06a78b090ea4b15f5ca9de3952bc30a | b3bd151ae7a783d5198ab0aba4c7fd730576a940 | 1aff4fe76a6758172da4a8abd6c1e17e7c4b8910 |
+| configs/preprint/screen.yaml | 261cd2e24ff9e4ede955eacfba67b5ca6f3d7be785329ca73c6932235aa33e8b | 6125490dbafd541ee830b2ea9e7b8cda62c4c86b | 1aff4fe76a6758172da4a8abd6c1e17e7c4b8910 |
+| results/preprint/pourbaix/ph_w52/ladder_v3.csv | 85a373d7a25fa2499d4b526ac3a3724d1b2c24e58a0c78a1d1a0b687c39ca2e2 | 117294500557c37b0c7f896aa5aa5b400731e4de | 7382c589fac0b57842a454804eb526fd18eef601 |
+| results/preprint/pourbaix/ph_w52/ladder_v3_README.md | df900430bf8416b6dc9a3bac73e16801de8414a885d2a9eb87149e21f0ea2a04 | 3c7cc49ec0c97e61102ccac21a7408d4a20de54c | 7382c589fac0b57842a454804eb526fd18eef601 |
+| results/preprint/pourbaix/ph_w52/passivation_window_v3.csv | 5aaf04dafbd21993b577a1a42ed50c18860771c670d489476e9b771e2a43267f | 216fac3435d12d8c1a6b9839d0c6a8c582ae1cfd | 1a1ea5a63990eba08b840e46fc735900d02d12c4 |
+| results/preprint/pourbaix/ph_w52/margins_v6_block.yaml | a3659908a592618f16b0471d6d64ed4885d80a11925fc307e3a1deec7858efdc | fcbcbf4091aa5932894b5a92028737f84c076cf6 | 1a1ea5a63990eba08b840e46fc735900d02d12c4 |
+
+Code (git tree sha at HEAD, last commit touching the path):
+
+| path | tree | last commit |
+|---|---|---|
+| src/nacre/screen | 6e0f538fea5b4a8e65fca57b547f2657e75ecfd9 | 1aff4fe76a6758172da4a8abd6c1e17e7c4b8910 |
+| src/nacre/physics | 1a6cfcaf967877b8e94b7fd7046e6cfa95273669 | 913d8b2357657025b9e11014511171dcdb6aa179 |
+
+MP cache manifests (mp_database_version):
+
+| manifest | version | sha256 | last commit |
+|---|---|---|---|
+| results/preprint/pourbaix/cache/manifest.json | 2026.04.13 | a143176fd20e15dd8c7a2b8381cc0e3a8e71b23a1230ad5179571f174282f7ce | 8e1e2ed80e2354536e7f89765e6e6a89609949e3 |
+| results/preprint/pourbaix/ph_k1/cache/manifest.json | 2026.09.28 | 84a5065d77b8e85a9d8d1f5620134f80a3059176e34d26b31e7b9904ed3f42c9 | 240617afa29aaf9dc581b880dccd0488fb4dab3c |
+| results/preprint/pourbaix/ph_w51/cache/manifest.json | 2026.09.28 | 7afa9f3528cdf5d52b76aaadad96f1fbf30b24a28847fbd0897ff2e5e85201df | 87345f10da450bcf58598a6d3718d5295ba0483d |
+| results/preprint/pourbaix/supplement_d3/cache/manifest.json | 2026.04.13 | 1d00c351f041328ece324f20727c5a21c234a95ebc77f4a91845e3806747d1e2 | 9911ee8f0f38b1127d1a4fb78884fb9003fe26a0 |
+
+Block v6 and contract check:
+
+- generated margins_v6 block text in theory/thresholds.md (lines between BEGIN and END): sha256 of the same extraction as PH-W5.2 (dedented, no trailing newline): 13bdaf545e6b105875829f3aeada38bf7c1df9d41208bbacb5fe9f81cfd2347b
+- block sha256 recorded by PH-W5.2 (ph_w52.json block_sha256): 13bdaf545e6b105875829f3aeada38bf7c1df9d41208bbacb5fe9f81cfd2347b
+- thresholds.md block version 6 (machine block `version: 6`, `contract_version: 6`); W3 last commit of the block: c2c7882af0c7913bd17432157a43a3aca953dff4
+- contract_check.json: status PASS, contract_version 6, contract_sha 91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1, implementation_sha 913d8b2357657025b9e11014511171dcdb6aa179, ref_sha 2aa96fbb2b192aab4676b72e1971ff29f59a67c9, checked 2026-10-20T20:04:26Z, 108 functions

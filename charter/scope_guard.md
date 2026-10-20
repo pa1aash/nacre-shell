@@ -65,9 +65,22 @@ SG14  \b(the )?first (ever )?(report|demonstration|study) of\b
 # P0 verdict language
 SG15  \b(barrier|layer|film|coating|interface) (is|are) (thermodynamically )?(feasible|viable|effective)\b
 SG16  \b(demonstrate|show|establish|prove)s? (the )?feasibility\b
+# redirect additions (ops/tracks/redirect_plan.md), applied at PH-I5
+SG18  \b(phosphate|apatite) (barrier|layer|film|coating) (works|protects|is effective)\b
+# flagged everywhere; the carbonate-control paragraph carries the allow-marker comment <!-- sg:allow nacre --> (W8 adds it when it writes that paragraph)
+SG19  \bnacre-inspired\b
+SG20  \bwe show\b.* (holds|survives) above\b
+SG21  \boutperforms (phosphoric acid|carbon-coated|baked|plain|conventional)\b
+SG22  \b(better than) (baked|plain|conventional) (coating|aluminophosphate)\b
+SG23  \b(insoluble|crosslinked)\b.* film (forms|assembles) (on|at) (aluminium|aluminum|the foil)\b
+SG24  \bcoacervate (wets|forms) on aluminium\b
+SG25  \bpolyphosphate (film|gel|glass) (protects|prevents|is stable)\b
 ```
 
 ```scope-guard-warn
 # flagged unless the word 'thermodynamic' appears in the same sentence; lint-scope implements this in PH-W8.1
 SG17W  \bstable (up to|above|to) [0-9.]+ ?V\b
+# redirect additions: SG26W is flagged unless the sentence rests on the novelty audit; SG27W unless the sentence contains 'hypothesis' or 'criterion' (the exemption words need lint-scope support in W8; lint-scope presently exempts only 'thermodynamic')
+SG26W  \b(novel|first)\b
+SG27W  \bself-heal(s|ing)?\b
 ```

@@ -1,0 +1,13 @@
+solid,role,al_level_M,ph_lower,ph_upper,window,film_phase_label,source
+Al(OH)3 am,governing (ruling a),0.0001,4.98,8.29,pH 4.98 to 8.29,film phase: inferred amorphous (al_film_phase_rt_water unsourced),TB-027
+Al(OH)3 am,governing (ruling a),1e-05,5.50,7.22,pH 5.50 to 7.22,film phase: inferred amorphous (al_film_phase_rt_water unsourced),TB-027
+Al(OH)3 am,governing (ruling a),1e-06,,,none,film phase: inferred amorphous (al_film_phase_rt_water unsourced),TB-027
+boehmite,reference (ruling a),0.0001,3.99,>10,pH 3.99 to >10,,"TI-022,TI-026,dfg_h2o_l"
+boehmite,reference (ruling a),1e-05,4.34,9.95,pH 4.34 to 9.95,,"TI-022,TI-026,dfg_h2o_l"
+boehmite,reference (ruling a),1e-06,4.71,8.95,pH 4.71 to 8.95,,"TI-022,TI-026,dfg_h2o_l"
+gibbsite,printed beside,0.0001,3.93,>10,pH 3.93 to >10,,TB-028
+gibbsite,printed beside,1e-05,4.27,>10,pH 4.27 to >10,,TB-028
+gibbsite,printed beside,1e-06,4.64,9.13,pH 4.64 to 9.13,,TB-028
+corundum,printed beside,0.0001,4.42,9.72,pH 4.42 to 9.72,,TB-029
+corundum,printed beside,1e-05,4.80,8.72,pH 4.80 to 8.72,,TB-029
+corundum,printed beside,1e-06,5.25,7.70,pH 5.25 to 7.70,,TB-029

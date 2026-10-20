@@ -152,7 +152,8 @@ margins:
   m_cos: {params: thresholds.C3.margin_cos_theta, treatment: to register at cp5 freeze, provisional_placeholder: k_screen.m_cos}
   m_S: {params: thresholds.C4.margin_S_spread, treatment: to register at cp5 freeze, provisional_placeholder: k_screen.m_S}
   margin_service: {params: thresholds.K1.margin_service, links: [K1], treatment: to register at cp5 freeze}
-  m_1: {params: 'thresholds.C5.window_margin_expt (m_expt) or thresholds.C5.window_margin (m_E)', links: [K1], treatment: to register at cp5 freeze}
+  margin_expt: {params: thresholds.K1.margin_expt, links: [K1], derived_in: 'block v6, generated entry margins_v6 (no registered treatment slot: the value is derived, not a parameter)'}
+  margin_dft: {params: thresholds.K1.margin_dft, links: [K1], derived_in: 'block v6, generated entry margins_v6 (not set for any phosphate row)'}
 
 # ---------------------------------------------------------------- Al-salt film ladder (claims_redirect.md 4)
 ladder:
@@ -211,6 +212,7 @@ read_from_w5_k1:                         # K1 bracket and the glass framing (cp4
 route_layer:
   evaluators: [hydrolysis_descriptor, formation_accessibility, liquid_precursor_wetting]
   hydrolysis:                            # K2h, table H1 to H4 (ruling C1)
+    hydrolysis_polyp_k_ph7_to_13: {symbol: k_hydrolysis, links: [K2h], treatment: to register at cp5 freeze, note: 'a pH-range rate (7 to 13) under a symbol the contract does not have (k_hyd)'}
     rows_read_as_ranges:                 # sourced rate constants; the plausible range of a row is its prior support (9a)
       - hydrolysis_polyp_k_ph6
       - hydrolysis_polyp_k_ph6_ca1mm
@@ -251,6 +253,9 @@ route_layer:
     polyp_log10_ksp_cameta: {symbol: K_sp, links: [K2], treatment: unresolved, effect: 'K2 of the Ca-polyphosphate glass not evaluable: undetermined'}
     glass_crystal_correction_<P>: {symbol: Delta_G_gc, links: [K1, K2], treatment: to register at cp5 freeze, note: 'the bounded, labelled correction of cp4 F3 (PH-W3.2 sets the bound); the W1 key carries an enthalpy (H_phase), the contract a free energy'}
     glass_dfh_alpp_gel: {links: [K1], treatment: to register at cp5 freeze}
+  k1_bracket:                            # K1 lower bound E_lb (cp4 F2, ruling 10c): the transfer premise needs these keys
+    transfer_free_energy_ca_water_pc: {symbol: Delta_G_tr_rel, links: [K1], treatment: unresolved, effect: 'E_lb pending and no K1 pass possible (the ladder reads E_lb as pending); the verdict is falsified, inconclusive or undetermined only'}
+    transfer_free_energy_al_water_pc: {symbol: Delta_G_tr_rel, links: [K1], treatment: unresolved, effect: 'E_lb pending and no K1 pass possible (the ladder reads E_lb as pending); the verdict is falsified, inconclusive or undetermined only'}
   matrix:                                # table M1 to M4 (ruling C6): the matrix never gates
     matrix_service_limit_<rung>: {links: [K1], treatment: unresolved, effect: 'M3: matrix-risk flag, no ceiling'}
     matrix_oxidation_onset_chitosan: {symbol: E_ox, links: [K1], treatment: unresolved, effect: 'M3: matrix-risk flag, no ceiling (no tier 1 for an organic polymer)'}
