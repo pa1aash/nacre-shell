@@ -72,18 +72,41 @@ $m_{\mathrm{Ca}_\mathrm{T}}$ & total calcium, molal & -- & S\\
 $A_\mathrm{c}$ & carbonate speciation factor & -- & S\\
 $P_\mathrm{c}$ & ion-pair factor & -- & S\\
 $D_\mathrm{c}$ & free-calcium factor & -- & S\\
+$P_\mathrm{T}$ & total dissolved phosphate & $\mathrm{mol}\,\mathrm{m}^{-3}$ & S\\
+$\mathrm{p}K_{1}^{\mathrm{P}}$ & pK1 of phosphoric acid & -- & S\\
+$\mathrm{p}K_{2}^{\mathrm{P}}$ & pK2 of phosphoric acid & -- & S\\
+$\mathrm{p}K_{3}^{\mathrm{P}}$ & pK3 of phosphoric acid & -- & S\\
+$\mathrm{p}K_\mathrm{w}$ & pK of water & -- & S\\
+$K_{\mathrm{CaHPO_4^0}}$ & formation constant of CaHPO4(aq) & -- & S\\
+$K_{\mathrm{CaH_2PO_4^+}}$ & formation constant of CaH2PO4+ & -- & S\\
+$K_{\mathrm{CaPO_4^-}}$ & formation constant of CaPO4- & -- & S\\
+$\gamma_{\pm3}$ & activity coefficient, charge three & -- & S\\
+$m_{P_\mathrm{T}}$ & total phosphate, molal & -- & S\\
+$A_\mathrm{p}$ & phosphate speciation factor & -- & S\\
+$P_\mathrm{p}$ & phosphate ion-pair factor & -- & S\\
 \multicolumn{4}{@{}l}{\textit{Supersaturation}}\\
+$a_{\mathrm{PO}_4^{3-}}$ & free phosphate activity & -- & S\\
+$a_{\mathrm{HPO}_4^{2-}}$ & free hydrogen phosphate activity & -- & S\\
+$a_{\mathrm{OH}^{-}}$ & hydroxide activity & -- & S,C\\
 $a_{\mathrm{Ca}^{2+}}$ & bulk Ca\textsuperscript{2+} activity & -- & S\\
 $a_{\mathrm{CO}_3^{2-}}$ & bulk carbonate activity & -- & S\\
-$K_\mathrm{sp}$ & solubility product of the registered framing & -- & S\\
+$K_\mathrm{sp}$ & solubility product of the registered mineral framing & -- & S\\
 $a_\mathrm{w}$ & water activity of the regime state & -- & S\\
 $n$ & structural water per formula unit (hydrated framing) & -- & S\\
 $\Omega_\mathrm{bulk}$ & bulk saturation ratio IAP/Ksp & -- & S\\
 $\Omega$ & saturation ratio where the nucleus forms & -- & S\\
+$\nu_\mathrm{Ca}$ & Ca ions per formula unit & -- & S\\
+$\nu_\mathrm{X}$ & anions of type X per formula unit & -- & S\\
+$\nu_\mathrm{Y}$ & anions of type Y per formula unit & -- & S\\
+$\nu$ & ions per formula unit & -- & S\\
+$a_\mathrm{X}$ & activity of anion X & -- & S\\
+$a_\mathrm{Y}$ & activity of anion Y & -- & S\\
+$\mathrm{IAP}$ & ion activity product of the formula unit & -- & S\\
+\multicolumn{4}{@{}l}{\textit{Nucleation and Young (C3)}}\\
+$M_\mathrm{fu}$ & molar mass per formula unit & $\mathrm{kg}\,\mathrm{mol}^{-1}$ & S\\
+$\rho_\mathrm{s}$ & density of the mineral framing & $\mathrm{kg}\,\mathrm{m}^{-3}$ & S\\
+\multicolumn{4}{@{}l}{\textit{Supersaturation}}\\
 $\Delta\mu$ & driving force per formula unit & $\mathrm{J}$ & S\\
-\hline\end{tabular}\end{minipage}\hfill
-\begin{minipage}[t]{\dimexpr(\textwidth-2mm)/2\relax}\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}[t]{@{}l p{\dimexpr\linewidth*29/50\relax} l l@{}}\hline
-Symbol & Meaning & SI unit & Reg.\\\hline
 \multicolumn{4}{@{}l}{\textit{Nucleation and Young (C3)}}\\
 $\gamma_\mathrm{nl}$ & nucleus-liquid interfacial free energy & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\gamma_\mathrm{sl}$ & template-liquid energy at the regime activities & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
@@ -97,6 +120,9 @@ $\theta$ & contact angle, measured through the nucleus & $\mathrm{rad}$ & S\\
 $f(\theta)$ & heterogeneous shape factor & -- & S\\
 $V_\mathrm{m}$ & molar volume of the registered framing & $\mathrm{m}^{3}\,\mathrm{mol}^{-1}$ & S\\
 $r^{*}$ & critical radius & $\mathrm{m}$ & S\\
+\hline\end{tabular}\end{minipage}\hfill
+\begin{minipage}[t]{\dimexpr(\textwidth-2mm)/2\relax}\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}[t]{@{}l p{\dimexpr\linewidth*29/50\relax} l l@{}}\hline
+Symbol & Meaning & SI unit & Reg.\\\hline
 $\Delta G^{*}_\mathrm{hom}$ & homogeneous nucleation barrier per nucleus & $\mathrm{J}$ & S\\
 $\Delta G^{*}_\mathrm{het}$ & heterogeneous barrier on the template & $\mathrm{J}$ & S\\
 \multicolumn{4}{@{}l}{\textit{Accessibility of the barrier (C3)}}\\
@@ -135,6 +161,23 @@ $\Delta\Phi$ & grand-potential change of the reaction & $\mathrm{J}\,\mathrm{mol
 $E^{*}$ & potential limit set by one reaction & $\mathrm{V}$ & C\\
 $E_\mathrm{red}$ & lower limit of the stability window & $\mathrm{V}$ & C\\
 $E_\mathrm{ox}$ & upper limit of the stability window & $\mathrm{V}$ & C\\
+$E_\mathrm{c}$ & charge cutoff & $\mathrm{V}$ & C\\
+$\Delta G_\mathrm{r}^\mathrm{ss}$ & reaction free energy, solid-salt sink & $\mathrm{J}\,\mathrm{mol}^{-1}$ & C\\
+$\Delta G_\mathrm{r}^\mathrm{aq}$ & reaction free energy, aqueous sink & $\mathrm{J}\,\mathrm{mol}^{-1}$ & C\\
+$\Delta G_\mathrm{tr}^\mathrm{rel}$ & relative transfer free energy, water to the cell solvent & $\mathrm{J}\,\mathrm{mol}^{-1}$ & C\\
+$E_\mathrm{ub}$ & K1 onset, solid-salt sink (upper end) & $\mathrm{V}$ & C\\
+$E_\mathrm{lb}$ & K1 onset, aqueous sink (lower end) & $\mathrm{V}$ & C\\
+$E_\mathrm{S}$ & K1 onset in the cell solvent & $\mathrm{V}$ & C\\
+$E_\mathrm{lb}^\mathrm{g}$ & K1 lower end, amorphous framing & $\mathrm{V}$ & C\\
+$E_\mathrm{ub}^\mathrm{g}$ & K1 upper end, amorphous framing & $\mathrm{V}$ & C\\
+$B_\mathrm{S}$ & Born transfer constant & $\mathrm{J}\,\mathrm{m}\,\mathrm{mol}^{-1}$ & C\\
+$z_\mathrm{M}$ & charge number of the product cation & -- & C\\
+$r_\mathrm{M}$ & Born radius of the product cation & $\mathrm{m}$ & C\\
+$r_\mathrm{Li}$ & Born radius of Li\textsuperscript{+} & $\mathrm{m}$ & C\\
+$E_\mathrm{svc}$ & measured service limit (tier 2) & $\mathrm{V}$ & C\\
+$\Delta G_\mathrm{hyd}$ & single-ion hydration free energy & $\mathrm{J}\,\mathrm{mol}^{-1}$ & C\\
+\multicolumn{4}{@{}l}{\textit{Registration constants (theory/thresholds.md)}}\\
+$m_\mathrm{svc}$ & K1 tier-2 margin & $\mathrm{V}$ & C\\
 \multicolumn{4}{@{}l}{\textit{Insulating film (C4, R-cell)}}\\
 $d$ & film thickness & $\mathrm{m}$ & C\\
 $\rho_\mathrm{e}$ & film electronic resistivity & $\Omega\,\mathrm{m}$ & C\\
@@ -147,6 +190,41 @@ $j_\mathrm{req}$ & required current density (input) & $\mathrm{A}\,\mathrm{m}^{-
 $d_\mathrm{max}^\mathrm{tun}$ & thickness bound, direct tunnelling & $\mathrm{m}$ & C\\
 $d_\mathrm{max}$ & admissible film thickness & $\mathrm{m}$ & C\\
 $d_\mathrm{max}^\mathrm{ohm}$ & thickness bound, ohmic limit & $\mathrm{m}$ & C\\
+\multicolumn{4}{@{}l}{\textit{Route layer of the redirected screen (K1 to K4, routes R1 to R3)}}\\
+$\Delta G_{\mathrm{g}\to\mathrm{c}}$ & glass-to-crystal free energy & $\mathrm{J}\,\mathrm{mol}^{-1}$ & S,C\\
+$k_\mathrm{hyd}$ & measured hydrolysis rate constant & $\mathrm{s}^{-1}$ & S\\
+$\tau_k$ & transfer factor of the hydrolysis rate & -- & S\\
+$t_{1/2}$ & half-life of the condensed fraction & $\mathrm{s}$ & S\\
+$t_\mathrm{wet}$ & wet residence time & $\mathrm{s}$ & S\\
+$a_\mathrm{w,dry}$ & water activity that ends the wet period & -- & S\\
+$f_\mathrm{cond}$ & condensed fraction at the end of the wet period & -- & S\\
+\multicolumn{4}{@{}l}{\textit{Registration constants (theory/thresholds.md)}}\\
+$f_\mathrm{min}$ & least condensed fraction & -- & S\\
+\multicolumn{4}{@{}l}{\textit{Route layer of the redirected screen (K1 to K4, routes R1 to R3)}}\\
+$f_\mathrm{Ca}$ & Ca\textsuperscript{2+} enhancement of the hydrolysis rate & -- & S\\
+$K_\mathrm{ox}^\mathrm{Al}$ & oxide solubility constant for Al3+ & -- & S\\
+$a_{\mathrm{Al}^{3+}}$ & free Al3+ activity & -- & S,C\\
+$a_\mathrm{PP}^\mathrm{tot}$ & chain-unit activity without complexation & -- & S\\
+$a_\mathrm{PP}$ & free chain-unit activity & -- & S\\
+$\beta_\mathrm{AlPP}$ & Al3+ polyphosphate binding constant & -- & S\\
+$\nu_\mathrm{Al}$ & Al per formula unit of the gel & -- & S\\
+$\nu_\mathrm{PP}$ & chain units per formula unit of the gel & -- & S\\
+$K_\mathrm{sp}^\mathrm{AlPP}$ & solubility product of the Al polyphosphate gel & -- & S\\
+$\Omega_\mathrm{AlPP}$ & saturation ratio of the Al polyphosphate gel & -- & S\\
+$\gamma_\mathrm{sl}^\mathrm{c}$ & oxide - dilute phase energy & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$\gamma_\mathrm{sn}^\mathrm{c}$ & oxide - coacervate energy & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$\gamma_\mathrm{sl}^{\mathrm{c},(0)}$ & site-free oxide - dilute contact & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$\gamma_\mathrm{sn}^{\mathrm{c},(0)}$ & site-free oxide - coacervate contact & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$\gamma_\mathrm{nl}^\mathrm{c}$ & coacervate - dilute tension & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$\Gamma_\mathrm{P}$ & polyphosphate site density on the oxide & $\mathrm{mol}\,\mathrm{m}^{-2}$ & S\\
+$K_\mathrm{P}$ & Langmuir constant, activity form & -- & S\\
+$a_\mathrm{P}$ & chain-unit activity at coexistence & -- & S\\
+$\delta_\mathrm{P}$ & solute-exclusion layer thickness & $\mathrm{m}$ & S\\
+$\Pi_\mathrm{osm}$ & osmotic pressure of the facing phase & $\mathrm{J}\,\mathrm{m}^{-3}$ & S\\
+$S_\mathrm{c}$ & spreading coefficient of the coacervate & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
+$K_\mathrm{P}^{c}$ & Langmuir constant, concentration form & $\mathrm{m}^{3}\,\mathrm{mol}^{-1}$ & S\\
+$c_\mathrm{n}$ & chain-unit concentration, dense phase & $\mathrm{mol}\,\mathrm{m}^{-3}$ & S\\
+$c_\mathrm{l}$ & chain-unit concentration, dilute phase & $\mathrm{mol}\,\mathrm{m}^{-3}$ & S\\
 \multicolumn{4}{@{}l}{\textit{Registration constants (theory/thresholds.md)}}\\
 $p$ & credible level of the decision rule & -- & S,C\\
 $p_\mathrm{deg}$ & least mass shift that counts as degradation & -- & S,C\\

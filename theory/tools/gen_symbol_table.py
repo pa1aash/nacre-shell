@@ -28,6 +28,7 @@ DOMAIN_TITLES = {
     "stability": "Stability (C5)",
     "film": "Insulating film (C4, R-cell)",
     "thresholds": "Registration constants (theory/thresholds.md)",
+    "route": "Route layer of the redirected screen (K1 to K4, routes R1 to R3)",
 }
 REGIME = {"R-slurry": "S", "R-cell": "C", "both": "S,C"}
 
