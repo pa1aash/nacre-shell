@@ -8,8 +8,8 @@ meta:
   spec: lit/corpus/params_spec.yaml
   rule: lit/corpus/params_README.md
   rule_sha256: d9c84962a675d73e82bd843ed949faf8f76bf6a39419cdf3428c04ef5c77d598
-  evidence_table_sha256: 442a3ac68477695118b66dc45f81f78946b95fe29239441f97fc1743671eb3ad
-  generated_utc: '2026-10-20T10:37:19Z'
+  evidence_table_sha256: f081f3e570d7fcf99c0cbd2f3f7157d413523a755a6a0d809477afb135dafda9
+  generated_utc: '2026-10-20T14:33:28Z'
   session: P0-W1.2
   inputs_from:
   - theory/derivation_body.tex section 11
@@ -11215,6 +11215,588 @@ params:
     added_in: P0-W1.PH-W1.2
     role: primary
     flags: []
+  hydration_free_energy_al_marcus:
+    symbol: Delta_G_hyd
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: -4524996.0
+    range:
+      min: -4524996.0
+      max: -4524996.0
+    prior:
+      family: fixed
+      value: -4524996.0
+    rule: P1
+    sources:
+    - TT-054
+    best_grade: C
+    conditions: Al3+ single-ion hydration Gibbs energy, 298 K, Marcus 1991 scale (proton reference -1056 kJ mol^-1),
+      read in the full text of a quoting paper; standard state not printed there
+    correlation_group: null
+    notes: 'Same original determination as hydration_free_energy_al (TK-003, grade D, from -4525 kJ mol^-1); this
+      key carries the full-text reading at grade C. The standard state of the Marcus compilation is not printed
+      in the quoting papers; hydration_standard_state_offset gives the shift between the two conventions. Comparators
+      (not admitted, E2): TK-003.'
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    role: sensitivity
+    of: hydration_free_energy_al
+    added_in: P0-W1.PH-W1.3
+    flags:
+    - single_source
+  hydration_free_energy_al_tissandier_scale:
+    symbol: Delta_G_hyd
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: -4670599.2
+    range:
+      min: -4720807.2
+      max: -4620391.2
+    prior:
+      family: uniform
+      low: -4720807.2
+      high: -4620391.2
+    rule: U1
+    sources:
+    - TT-055
+    best_grade: C
+    conditions: Al3+ hydration Gibbs energy rescaled to the cluster-pair proton scale (-264.0 kcal mol^-1, 1 atm
+      gas to 1 mol/L)
+    correlation_group: null
+    notes: Rescaled Marcus value, not independent of hydration_free_energy_al_marcus (as dg_hyd_ca_tissandier for
+      Ca2+).
+    method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: sensitivity
+    of: hydration_free_energy_al
+    added_in: P0-W1.PH-W1.3
+    flags:
+    - single_source
+  hydration_free_energy_proton_tissandier:
+    symbol: Delta_G_hyd
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: -1112525.6
+    range:
+      min: -1129261.6
+      max: -1095789.6
+    prior:
+      family: uniform
+      low: -1129261.6
+      high: -1095789.6
+    rule: U1
+    sources:
+    - TF-050
+    best_grade: C
+    conditions: proton hydration Gibbs energy of the cluster-pair method, 298 K, 1 mol/L in both phases
+    correlation_group: null
+    notes: 'Input of the Tissandier-scale keys. TD-059 is the abstract-only reading of the same value (E3). The
+      printed uncertainty is read as a standard uncertainty (E4). Comparators (not admitted, E2): TD-059.'
+    method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags:
+    - single_source
+  hydration_free_energy_li_conventional:
+    symbol: Delta_G_hyd
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: sourced
+    value: 575300.0
+    range:
+      min: 575300.0
+      max: 575300.0
+    prior:
+      family: fixed
+      value: 575300.0
+    rule: P1
+    sources:
+    - TT-056
+    - TT-057
+    best_grade: C
+    conditions: Li+ conventional aqueous solvation free energy (proton set to zero), 298 K, 1 mol/L in both phases
+    correlation_group: null
+    notes: Printed without a sign in the conventional scale. Two originals print the same number, tabulated in one
+      paper, so the width is not sourced (P1). Add the proton value (hydration_free_energy_proton_tissandier) for
+      a real-scale value.
+    method: 'P1: 2 independent sources print the same point without uncertainty; the width is not sourced'
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags: []
+  hydration_free_energy_li_tissandier_scale:
+    symbol: Delta_G_hyd
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: computed
+    value: -537225.6
+    range:
+      min: -553961.6
+      max: -520489.6
+    prior:
+      family: none
+    rule: D1
+    sources:
+    - TT-056
+    - TT-057
+    - TF-050
+    best_grade: C
+    method: 'D1: c + p with c = hydration_free_energy_li_conventional, p = hydration_free_energy_proton_tissandier;
+      range is the envelope over the input ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Li+ hydration Gibbs energy on the cluster-pair proton scale (D1): the conventional value plus the proton
+      value. The Marcus-scale key hydration_free_energy_li differs by the proton convention.'
+    derived:
+      expr: c + p
+      inputs:
+        c: hydration_free_energy_li_conventional
+        p: hydration_free_energy_proton_tissandier
+    role: sensitivity
+    of: hydration_free_energy_li
+    added_in: P0-W1.PH-W1.3
+    flags: []
+  hydration_standard_state_offset:
+    symbol: Delta_G_hyd_standard_state_offset
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: definitional
+    value: 7930.0
+    range:
+      min: 7930.0
+      max: 7930.0
+    prior:
+      family: fixed
+      value: 7930.0
+    rule: X3
+    sources:
+    - TT-058
+    best_grade: C
+    conditions: DhydG* (1 mol/L in both phases) minus DhydG0 (ideal gas at 1 atm to 1 mol/L), 298.15 K, per ion
+    correlation_group: null
+    notes: Same for every ion. It is a shift between conventions, not an uncertainty of any hydration value.
+    method: definitional value printed in TT-058 (X3)
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags: []
+  hydration_free_energy_clo4:
+    symbol: Delta_G_hyd
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    value: null
+    range: null
+    range_reason: 'gap (PH-W1.3): no single-ion hydration Gibbs energy of ClO4- in an open source. Marcus 1991 (10.1039/ft9918702995)
+      covers 109 ions and is paywalled, abstract only; the Madrid-2019 perchlorate paper (10.1016/j.molliq.2025.128035)
+      has no retrievable copy; the 2017 volume-based hydration-enthalpy table (10.1039/c6ra25804b) lists enthalpies,
+      not Gibbs energies; the conventional table of Kelly et al. (TT-056) holds the halides and alkali ions only'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: ''
+    method: no admitted row (X1)
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags: []
+  transfer_free_energy_clo4_water_pc:
+    symbol: Delta_G_tr
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: -7700.0
+    range:
+      min: -7700.0
+      max: -7700.0
+    prior:
+      family: fixed
+      value: -7700.0
+    rule: P1
+    sources:
+    - TT-059
+    best_grade: C
+    conditions: ClO4- single-ion Gibbs energy of transfer water to propylene carbonate, 25 C, mol dm^-3 scale (one
+      determination, ferrocene assumption)
+    correlation_group: null
+    notes: 'One determination of twelve in the table, no selected value printed. Li+ has transfer_free_energy_li_water_pc.
+      Not widened: the W1 clause names Ca2+ binding and transfer energies, and this is neither.'
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags:
+    - single_source
+  transfer_free_energy_ca_water_pc:
+    symbol: Delta_G_tr
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    value: null
+    range: null
+    range_reason: 'gap (PH-W1.3): Ca2+ is not listed for propylene carbonate in the IUPAC selections read (Marcus
+      1983 Table 24; Gritzner 1988); searches for Ca2+ transfer into propylene carbonate, ethylene carbonate or
+      dimethyl carbonate in openalex, crossref and semanticscholar returned only solvation-structure simulations'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: ''
+    method: no admitted row (X1)
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags: []
+  transfer_free_energy_al_water_pc:
+    symbol: Delta_G_tr
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    value: null
+    range: null
+    range_reason: 'gap (PH-W1.3): Al3+ is not listed for propylene carbonate in the IUPAC selections read (Marcus
+      1983 Table 24; Gritzner 1988); no other source was found'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: ''
+    method: no admitted row (X1)
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags: []
+  glass_dfh_cameta_crystal:
+    symbol: H_phase
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: -2474880.0
+    range:
+      min: -2476880.0
+      max: -2472880.0
+    prior:
+      family: uniform
+      low: -2476880.0
+      high: -2472880.0
+    rule: U1
+    sources:
+    - TT-060
+    - TT-062
+    - TT-064
+    best_grade: C
+    conditions: Ca(PO3)2 crystal (alpha, beta, gamma), 298 K, from stable elements; CALPHAD assessment
+    correlation_group: null
+    notes: The three polymorph entries of one assessment (Ding et al. 2015, the Ca(PO3)2 values taken from Hudon
+      and Jung), so one source; the 2 kJ mol^-1 steps between polymorphs are a modelling choice. The gap key dfh_cameta
+      (added at PH-W1.2, so not a cp3 gap key and not named by `fills`) is left as it was; this key carries the
+      evidence for it.
+    method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags:
+    - single_source
+  glass_s_cameta_crystal:
+    symbol: S_phase
+    transform: none
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 146.94
+    range:
+      min: 144.36
+      max: 148.55
+    prior:
+      family: uniform
+      low: 144.36
+      high: 148.55
+    rule: U1
+    sources:
+    - TT-061
+    - TT-063
+    - TT-065
+    best_grade: C
+    conditions: Ca(PO3)2 crystal (alpha, beta, gamma), 298 K; CALPHAD assessment
+    correlation_group: null
+    notes: Assessed entropies beside the tabulated value of s_cameta (TR-031); the glass entropy glass_s0_cameta_glass
+      remains a gap.
+    method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    role: sensitivity
+    of: s_cameta
+    added_in: P0-W1.PH-W1.3
+    flags:
+    - single_source
+  glass_crystal_correction_cameta_calphad:
+    symbol: H_phase
+    transform: none
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: computed
+    value: 18872.0
+    range:
+      min: 16872.0
+      max: 20872.0
+    prior:
+      family: none
+    rule: D1
+    sources:
+    - TR-032
+    - TT-060
+    - TT-062
+    - TT-064
+    best_grade: B
+    method: 'D1: g - c with g = glass_dfh_cameta_glass, c = glass_dfh_cameta_crystal; range is the envelope over
+      the input ranges'
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Supplies the correction that the gap key glass_crystal_correction_cameta lacks (that key is left as
+      it was). Glass minus crystal DfH for Ca(PO3)2 (D1): the NBS glass value (TR-032) against the assessed crystal
+      values; positive means the crystal is the more stable. The envelope covers only the polymorph spread; the
+      uncertainty of the assessed crystal enthalpy and of the tabulated glass enthalpy is not printed. Analogs:
+      NaPO3 glass minus crystal (glass_crystal_correction_napo3) and LiPO3 (glass_crystal_correction_lipo3), whose
+      range spans both signs.'
+    derived:
+      expr: g - c
+      inputs:
+        g: glass_dfh_cameta_glass
+        c: glass_dfh_cameta_crystal
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags: []
+  conversion_brushite_monetite_onset:
+    symbol: T_conversion
+    transform: none
+    unit: K
+    regimes:
+    - shared
+    status: single-source
+    value: 433.15
+    range:
+      min: 433.15
+      max: 433.15
+    prior:
+      family: fixed
+      value: 433.15
+    rule: P1
+    sources:
+    - TT-066
+    best_grade: B
+    conditions: brushite heated in air, first detection of monetite by high-temperature XRD, 10 C/min with 30 min
+      holds
+    correlation_group: null
+    notes: 'One source, a preprint. The lower values of older work (135 C in humid air; 105 C and 165 C with an
+      intermediate) are secondary citations, grade D, and are not admitted beside a grade B row (E5). The onset
+      moves with heating rate, hold time and water vapour pressure. Comparators (not admitted, E2): TT-074, TT-076.'
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags:
+    - single_source
+  conversion_brushite_dehydration_range:
+    symbol: T_conversion
+    transform: none
+    unit: K
+    regimes:
+    - shared
+    status: single-source
+    value: 435.65
+    range:
+      min: 383.15
+      max: 488.15
+    prior:
+      family: uniform
+      low: 383.15
+      high: 488.15
+    rule: U1
+    sources:
+    - TT-070
+    best_grade: B
+    conditions: natural brushite, thermogravimetry with evolved-gas MS, 5 C/min in nitrogen, dehydration to CaHPO4
+    correlation_group: null
+    notes: 'A temperature range of the dehydration step, printed as 110 to 215 C; the review value of about 220
+      C (TT-072) cites the same original. Comparators (not admitted, E2): TT-072.'
+    method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags:
+    - single_source
+  conversion_monetite_pyrophosphate_onset:
+    symbol: T_conversion
+    transform: none
+    unit: K
+    regimes:
+    - shared
+    status: sourced
+    value: 673.15
+    range:
+      min: 648.15
+      max: 709.15
+    prior:
+      family: uniform
+      low: 648.15
+      high: 709.15
+    rule: U1
+    sources:
+    - TT-068
+    - TT-071
+    - TT-073
+    best_grade: B
+    conditions: monetite or dehydrated brushite heated to condensation, XRD appearance of crystalline Ca2P2O7 (TT-068),
+      TG step (TT-071), review value (TT-073)
+    correlation_group: null
+    notes: 'Different measurements (first XRD detection at 10 C/min with holds; a TG step at 5 C/min; a review value
+      without stated conditions), so the span is partly a method spread. Grade D values (430 C in humid air, 500
+      C) are secondary citations and are not admitted beside grade B and C rows (E5). Comparators (not admitted,
+      E2): TT-075, TT-077.'
+    method: 'U1: uniform over the sourced span; 3 admitted row(s), 3 independent original(s)'
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags: []
+  conversion_pyrophosphate_gamma_beta:
+    symbol: T_conversion
+    transform: none
+    unit: K
+    regimes:
+    - shared
+    status: single-source
+    value: 808.15
+    range:
+      min: 808.15
+      max: 808.15
+    prior:
+      family: fixed
+      value: 808.15
+    rule: P1
+    sources:
+    - TT-069
+    best_grade: B
+    conditions: gamma to beta Ca2P2O7, DTA exotherm at 10 C/min in air
+    correlation_group: null
+    notes: One source. The same paper's stepwise XRD shows the beta form at 650 C.
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags:
+    - single_source
+  hydrolysis_polyp_k_ph7_to_13:
+    symbol: k_hydrolysis
+    transform: none
+    unit: s^-1
+    regimes:
+    - R-slurry
+    status: gap
+    value: null
+    range: null
+    range_reason: 'gap (PH-W1.3): no numeric hydrolysis rate constant of a linear polyphosphate between pH 7 and
+      13 was retrievable. The classical studies (Crowther and Westman 1954 and 1956, 65.5 C, pH 2 to 13.3; Kura
+      1987 alkaline cyclo-polyphosphates; Watanabe 1982 cation effects) are paywalled, abstract only, and the abstracts
+      hold no rate constants. TT-078 bounds hydrolysis below 10 % in 30 min at pH 7.0 and about 21 C'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Comparators (not admitted, E2): TT-078, TT-079, TT-081, TT-082.'
+    method: no admitted row (X1)
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags: []
+  hydrolysis_tetrameta_ph_min_rate:
+    symbol: pH_min_hydrolysis
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: single-source
+    value: 7.5
+    range:
+      min: 7.5
+      max: 7.5
+    prior:
+      family: fixed
+      value: 7.5
+    rule: P1
+    sources:
+    - TT-080
+    best_grade: D
+    conditions: sodium tetrametaphosphate in water at 65.5 C, pH 2.5 to 13.3; abstract only
+    correlation_group: null
+    notes: Grade D, abstract only. The rate is base catalysed above this pH and acid catalysed below it; a cyclic
+      phosphate, an analog of chain hydrolysis, not of a chain.
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    added_in: P0-W1.PH-W1.3
+    role: primary
+    flags:
+    - single_source
+  coacervate_gamma_analog_complex_pair:
+    symbol: gamma_nl
+    transform: none
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: single-source
+    value: 0.00068
+    range:
+      min: 0.000144
+      max: 0.000994
+    prior:
+      family: uniform
+      low: 0.000144
+      high: 0.000994
+    rule: U1
+    sources:
+    - TT-083
+    - TT-084
+    - TT-085
+    - TT-086
+    best_grade: B
+    conditions: coacervate of poly(acrylic acid) and quaternized poly(dimethylaminoethyl methacrylate) against its
+      dilute phase, pH 6.5, 100 mmol/L NaCl, 25 C, N* 69.5 to 485.6
+    correlation_group: null
+    notes: 'Analog (A1): a synthetic polyelectrolyte pair, not a polyphosphate. Four chain lengths of one paper,
+      so one source, single-source flag. The infinite-chain fit (TT-087, 1000 uN/m) is a fit and not admitted; the
+      abstract-only values (204 uN/m, order 100 uN/m, below 1 mN/m) are grade D and not admitted beside grade B
+      rows (E5). Beside coacervate_gamma_analog (PDADMAC with polyacrylate, 311 uN/m); it never replaces the gap
+      key coacervate_gamma_nl. Comparators (not admitted, E2): TT-087, TT-088, TT-089, TT-090, TT-042.'
+    method: 'not concordant within 2 combined standard uncertainties, so U1; U1: uniform over the sourced span;
+      4 admitted row(s), 4 independent original(s)'
+    role: analog
+    of: coacervate_gamma_nl
+    added_in: P0-W1.PH-W1.3
+    flags:
+    - single_source
+    - analog
 correlation_groups:
   young_energies:
     members:
