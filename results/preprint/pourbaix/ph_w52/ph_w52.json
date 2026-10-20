@@ -1,0 +1,46 @@
+{
+ "session": "PH-W5.2",
+ "generated_utc": "2026-10-20T20:32:55Z",
+ "git_sha": "e6c86f6b3633248b487f78eeef1acdccfa5be35c",
+ "margins_source": {
+  "ref": "origin/preprint/p0-w3",
+  "file": "theory/thresholds.md",
+  "ref_commit": "e6c86f6b3633248b487f78eeef1acdccfa5be35c",
+  "file_commit": "c2c7882af0c7913bd17432157a43a3aca953dff4",
+  "blob_sha": "b95f988dfc81763a12da29c278f47c029bebc668",
+  "block_sha256": "13bdaf545e6b105875829f3aeada38bf7c1df9d41208bbacb5fe9f81cfd2347b"
+ },
+ "n_rows": 81,
+ "columns": [
+  "phase",
+  "framing",
+  "stage",
+  "reaction_id",
+  "route",
+  "E_ub_V",
+  "E_lb_V",
+  "margin_V",
+  "budget_status",
+  "benchmark_status",
+  "k1_class_lfp",
+  "k1_class_42_43",
+  "k1_class_44_45",
+  "k1_verdict",
+  "row_ids",
+  "notes"
+ ],
+ "bracket": {
+  "E_lb": "pending",
+  "status": "bracket pending PH-W1.3 (hydration_free_energy_clo4 absent at p0-w1; Ca2+ and Al3+ transfer free energies to the cell solvent are W1 gaps)"
+ },
+ "ruling_b": {
+  "E_ub_V": 4.9818,
+  "m_V": 0.19,
+  "was": {
+   "E_ub_V": 4.9664,
+   "m_V": 0.2907
+  },
+  "for": "W5 to adopt in the crystalline reference row; the governing amorphous row does not use the correction"
+ },
+ "a_al3_oxide": "unchanged: ruling (a) adopts the PH-W5.1 governing and reference rows; no input moved"
+}
