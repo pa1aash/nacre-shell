@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W5.1",
+  "last_session": "PH-W5.2",
   "status": "DONE",
   "day": 5,
   "hold": {
@@ -119,5 +119,9 @@
     "Anchor driver ready: linux-64 lock (xtb 6.6.1 hf49bc11_0, CREST 2.12 h9d67668_0), PySCF 2.14.0 built with -DENABLE_SMD=ON for the CDS term; dry run on the local transport passed (anchor-production-dryrun-2b3a281). Remaining on the pod: install, CDS check, CREST/xtb/DFT on 10 species, the four binding free energies.",
     "PH-K1: tier-1 ladder done. Gate 3.937816 V vs 3.938 V. Ca orthophosphates 3.98-4.07 V (solid-salt upper bound); no pass possible without a solvated sink.",
     "PH-W5.1: phosphate benchmark fails as a set (47-210 kJ/mol; MP2020 oxide correction on every O); Al window pH 5.0-8.3 (am, 0.1 mM); Ca(PO3)2 determined (F3a) 4.97/4.89 V ub; Al(PO3)3 undetermined; bracket pending PH-W1.3 (no ClO4- hydration key)."
-  ]
+  ],
+  "ladder": {
+    "status": "ready",
+    "sha": "1a1ea5a63990eba08b840e46fc735900d02d12c4"
+  }
 }
