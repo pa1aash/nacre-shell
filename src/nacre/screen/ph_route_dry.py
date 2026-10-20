@@ -5,7 +5,7 @@ evaluators (nacre.screen.routes) and the stage rows (nacre.screen.ph_rows), to t
 
 A dry run shows that the code path runs end to end and that its document validates. It reads the mock route table
 (configs/preprint/mock_params_ph_routes.yaml) and a K1 ladder in the v2 layout (default: the mock ladder
-configs/preprint/mock_k1_ladder_v2.csv; W5's results/preprint/pourbaix/ph_w51/ladder_v2.csv is the production input,
+configs/preprint/mock_k1_ladder_v2.csv; W5's results/preprint/pourbaix/ph_w52/ladder_v3.csv is the production input,
 named in screen.yaml k_screen.k1_ladder), and writes only under results/preprint/screen/dryrun_ph/. It is never
 reported, tunes nothing and registers nothing. The bindings below are those of the mock table; the production
 bindings to lit/params.yaml keys are registered at the cp5 freeze.
@@ -44,8 +44,10 @@ HYDROLYSIS_ROWS = ("hydrolysis_polyp_k_ph6", "hydrolysis_polyp_k_ph6_ca1mm", "hy
 #: Ca(PO3)2 formula unit (contract v5 stoichiometry), the product of R2 and R3.
 CAMETA = {"nu_Ca": 1.0, "nu_X": 2.0, "nu_Y": 0.0, "n_hyd": 0.0}
 #: Film ids and K1 phases of the dry-run rows.
-FILMS = {"R1": ("r1_alpp_gel", "Al(PO3)3"), "R2": ("r2_capoly_glass", "Ca(PO3)2"),
-         "R3": ("r3_capoly_glass", "Ca(PO3)2"), "baseline": ("baseline_tsinghua", "AlPO4")}
+#: (film_id, phase name in W5's ladder_v3.csv); the mock ladder carries the same names
+FILMS = {"R1": ("r1_alpp_gel", "Al-polyphosphate (R1 gel)"), "R2": ("r2_capoly_glass", "Ca(PO3)2 / Ca-polyphosphate glass"),
+         "R3": ("r3_capoly_glass", "Ca(PO3)2 / Ca-polyphosphate glass"),
+         "baseline": ("baseline_tsinghua", "baked aluminophosphate (Tsinghua)")}
 
 
 # ------------------------------------------------------------------ table access

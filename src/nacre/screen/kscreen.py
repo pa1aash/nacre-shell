@@ -1,7 +1,7 @@
 """Evaluators K1 to K4 for solid-like nuclei, as registered in theory/claims_redirect.md (PH-W4.1).
 
-K1 is READ from W5's ladder file (results/preprint/pourbaix/ph_w51/ladder_v2.csv, an input path; the older
-results/preprint/pourbaix/ph_k1/ladder.csv layout is still read); it is never recomputed here.
+K1 is READ from W5's ladder file (results/preprint/pourbaix/ph_w52/ladder_v3.csv, an input path; the v2 layout
+and the older results/preprint/pourbaix/ph_k1/ladder.csv layout are still read); it is never recomputed here.
 K2, K3 and K4 are evaluated on the draws of the screen chain (nacre.screen.chain with a Mineral object):
 
     K2  Omega_bulk >= 1                     worst registered state, shared band-mass rule at p_cred
@@ -34,7 +34,8 @@ import numpy as np
 
 from nacre.screen import admissibility, decision, routes
 
-LADDER = Path("results") / "preprint" / "pourbaix" / "ph_w51" / "ladder_v2.csv"
+LADDER = Path("results") / "preprint" / "pourbaix" / "ph_w52" / "ladder_v3.csv"
+LADDER_V2 = Path("results") / "preprint" / "pourbaix" / "ph_w51" / "ladder_v2.csv"
 LADDER_V1 = Path("results") / "preprint" / "pourbaix" / "ph_k1" / "ladder.csv"
 #: Synthetic ladder in the v2 layout for the dry runs (W5's v2 file is not on this lane); never reported.
 MOCK_LADDER = Path("configs") / "preprint" / "mock_k1_ladder_v2.csv"
@@ -48,6 +49,14 @@ E_UB_COLUMNS = ("E_ub_V", "e_ub_V", "E_ub", "tier1_onset_V")
 E_LB_COLUMNS = ("E_lb_V", "e_lb_V", "E_lb")
 #: A verdict column written by W5 is read as is (normalised to STATES_OF_K1); otherwise the verdict is read off status.
 VERDICT_COLUMNS = ("k1_verdict", "verdict")
+#: The v3 ladder (PH-W5.2) is wide: one row per (phase, framing, stage, reaction_id) with one verdict column per cutoff
+#: class. The column order is the class order (lowest cutoff first); the class names are those of block v6
+#: (regimes.R-cell.parameters.cutoff_classes). No cutoff value is typed here.
+V3_CLASS_COLUMNS = (("k1_class_lfp", "C_lo"), ("k1_class_42_43", "C_mid"), ("k1_class_44_45", "C_hi"))
+V3_MARKER = "k1_class_lfp"
+V3_AGGREGATE = "ALL"
+V3_NO_REACTION = "-"
+V3_STAGES = STAGES + ("comparator", "control")
 
 
 class K1Error(ValueError):
@@ -137,6 +146,11 @@ class K1Row:
     E_lb: object = None
     E_lb_status: str = "pending"
     cutoff_inf: object = None
+    reaction_id: str = ""
+    margin: object = None                    # m_V as written; None where the budget is incomplete or the margin symbolic
+    budget_status: str = ""
+    overall: str = ""                        # the k1_verdict column of a v3 row (read, then checked against the classes)
+    benchmark_status: str = ""
 
     def bracket(self):
         """The K1 bracket fields of a results row (schema v5); E_lb is 'pending' while unsourced."""
@@ -150,6 +164,10 @@ class K1Table:
     def __init__(self, rows, path=""):
         self.rows = {}
         self.path = str(path)
+        self.layout = "v2"
+        self.skipped = []                    # v3 rows that carry no K1 verdict (conversion steps, tier-2-only matrix rows)
+        self.reactions = []                  # v3 per-reaction detail rows (margin None where symbolic or incomplete)
+        self.inconsistencies = []            # v3 rows whose written verdicts disagree with the registered reading rules
         for r in rows:
             key = (r.phase, r.cls, r.framing)
             if key in self.rows:
@@ -207,6 +225,8 @@ def read_k1(path):
     path = Path(path)
     lines = [ln for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip() and not ln.startswith("#")]
     reader = csv.DictReader(lines)
+    if V3_MARKER in (reader.fieldnames or []):
+        return _read_k1_v3(path, reader)
     missing = [c for c in REQUIRED_COLUMNS if c not in (reader.fieldnames or [])]
     if missing:
         raise K1Error("%s: ladder columns missing: %s" % (path, missing))
@@ -227,6 +247,83 @@ def read_k1(path):
                           E_ub=e_ub, E_lb=e_lb, E_lb_status="sourced" if e_lb is not None else "pending",
                           cutoff_inf=_float_or_none(rec.get("cutoff_inf_V"))))
     return K1Table(rows, path)
+
+
+def _v3_class_verdict(text, where):
+    """Verdict of one class cell of a v3 row; 'pass' (the README's word) is the screen's 'feasible'."""
+    v = (text or "").strip().lower()
+    if not v:
+        raise K1Error("%s: empty class verdict" % where)
+    return "feasible" if v == "pass" else k1_verdict("", "", v)
+
+
+def overall_verdict(by_class):
+    """The v3 'k1_verdict' column from the class verdicts (ladder_v3_README): falsified at every class is falsified, any
+    pass is feasible, otherwise undetermined if a class is undetermined and none falsifies, otherwise inconclusive."""
+    v = list(by_class.values())
+    if v and all(x == "falsified" for x in v):
+        return "falsified"
+    if "feasible" in v:
+        return "feasible"
+    if "undetermined" in v and "falsified" not in v:
+        return "undetermined"
+    return "inconclusive"
+
+
+def _read_k1_v3(path, reader):
+    """The v3 ladder (PH-W5.2). Reading rules, all from ladder_v3_README.md:
+    - one K1 record per (phase, framing, stage): the ``ALL`` aggregate row, or the single ``-`` row of a phase with no
+      reaction (a gap); per-reaction rows are detail, kept in ``reactions`` and not used for a verdict;
+    - the three class columns become the classes C_lo, C_mid, C_hi of block v6;
+    - E_lb is 'pending' in every row (read as pending, never zero); an empty margin_V (budget incomplete or symbolic) is
+      margin None with the budget_status kept; E_ub empty is pending;
+    - framing 'both' is read as both framings; a tier-2-only row and a conversion step have no K1 verdict and are listed in
+      ``skipped``;
+    - the written k1_verdict is checked against the class verdicts and the budget; a disagreement is listed in
+      ``inconsistencies`` and the row is read as written."""
+    rows, skipped, bad, reactions = [], [], [], []
+    for n, rec in enumerate(reader, start=2):
+        phase, framing, stage = rec["phase"].strip(), (rec["framing"] or "").strip(), rec["stage"].strip()
+        rid = (rec["reaction_id"] or "").strip()
+        where = "%s line %d (%s)" % (path, n, phase)
+        if stage not in V3_STAGES:
+            raise K1Error("%s: stage %r is not one of %s" % (where, stage, V3_STAGES))
+        cells = [(cls, (rec[col] or "").strip().lower()) for col, cls in V3_CLASS_COLUMNS]
+        if stage == "conversion" or all(v == "n/a" for _, v in cells):
+            skipped.append({"phase": phase, "stage": stage, "reaction_id": rid, "why": "conversion step (no K1 verdict)"})
+            continue
+        if framing.startswith("n/a"):
+            skipped.append({"phase": phase, "stage": stage, "reaction_id": rid, "why": "tier 2 only (no tier-1 K1 row)"})
+            continue
+        if rid not in (V3_AGGREGATE, V3_NO_REACTION):                         # per-reaction detail row
+            reactions.append({"phase": phase, "framing": framing, "stage": stage, "reaction_id": rid,
+                              "E_ub": _float_or_none(rec["E_ub_V"]), "E_lb": _float_or_none(rec["E_lb_V"]),
+                              "margin": _float_or_none(rec["margin_V"]), "budget_status": (rec["budget_status"] or "").strip()})
+            continue
+        framings = FRAMINGS if framing == "both" else (framing,)
+        for f in framings:
+            if f not in FRAMINGS:
+                raise K1Error("%s: framing %r is not one of %s" % (where, f, FRAMINGS))
+        e_ub, e_lb, margin = (_float_or_none(rec[c]) for c in ("E_ub_V", "E_lb_V", "margin_V"))
+        by_class = {cls: _v3_class_verdict(v, where) for cls, v in cells}
+        budget = (rec["budget_status"] or "").strip()
+        overall = (rec["k1_verdict"] or "").strip().lower()
+        if overall != overall_verdict(by_class):
+            bad.append({"phase": phase, "framing": framing, "stage": stage, "problem": "k1_verdict %r but the classes give %r"
+                        % (overall, overall_verdict(by_class))})
+        if budget != "complete" and any(v in ("falsified", "feasible") for v in by_class.values()):
+            bad.append({"phase": phase, "framing": framing, "stage": stage,
+                        "problem": "budget_status %r (a partial margin can neither pass nor falsify) but the class verdicts are %s"
+                        % (budget, by_class)})
+        for f in framings:
+            for cls, verdict in by_class.items():
+                rows.append(K1Row(phase, "", cls, f, rec["E_ub_V"], budget or "", rec["notes"], verdict, stage=stage,
+                                  E_ub=e_ub, E_lb=e_lb, E_lb_status="sourced" if e_lb is not None else "pending",
+                                  reaction_id=rid, margin=margin, budget_status=budget, overall=overall,
+                                  benchmark_status=rec["benchmark_status"]))
+    table = K1Table(rows, path)
+    table.layout, table.skipped, table.inconsistencies, table.reactions = "v3", skipped, bad, reactions
+    return table
 
 
 def mineral_framing(mineral):
