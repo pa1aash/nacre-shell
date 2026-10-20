@@ -41,7 +41,10 @@ What is checked
      is the integral up to its cut, and the admissibility condition has the unit of an energy per
      area.
  13. No literature number in theory/** sources (decimals, exponent notation or integers of
-     three or more digits outside an allowlist).
+     three or more digits outside an allowlist). The generated `margins_v6` entry of the
+     thresholds block is exempt because check 14 re-derives it.
+ 14. Thresholds block version 6 and later: the generated `margins_v6` entry equals a fresh
+     derivation by theory/tools/gen_margins.py from the files it pins by commit and blob.
 
 Exit status 0 when every check passes, 1 otherwise.
 """
@@ -874,6 +877,28 @@ def check_thresholds(ctx, contract, rep):
         rep.add(ok, "thresholds", "sizing rule", "band half-width <= %s, Sobol half-width <= %s, caps: %s; %s" % (
             sz.get("band_mass_half_width_max"), sz.get("sobol_total_order_half_width_max"), sz.get("draw_cap"),
             sz.get("wall_clock_cap")))
+    # PH-W3.2a: the redirected screen (K1 to K4, route forms) lives beside the carbonate links in `screen_ph`;
+    # every test edge is checked like a link edge, and its params keys join the Section 4 table check
+    ph = doc.get("screen_ph") or {}
+    for link, spec in (ph.get("links") or {}).items():
+        for test in spec.get("tests") or []:
+            params = test.get("params") or {}
+            keys.update(v for v in params.values())
+            bad = [k for k in params if k not in ctx.entries]
+            if bad:
+                rep.add(False, "thresholds", "screen_ph %s %s" % (link, test["id"]), "params symbols not registered: %s" % bad)
+            check_edge("screen_ph " + link, test["id"], test["quantity"], test["edge"], params)
+            miss = test.get("where_expt_missing")
+            if isinstance(miss, dict) and "edge" in miss:
+                check_edge("screen_ph " + link, test["id"] + " (no expt route)", test["quantity"], miss["edge"],
+                           dict(params, **(miss.get("params") or {})))
+                keys.update((miss.get("params") or {}).values())
+    if ph:
+        forb = set(dec.get("forbidden_in_verdicts", []))
+        used = {t["quantity"] for s in ph["links"].values() for t in s.get("tests") or []}
+        rep.add(not (used & forb), "thresholds", "screen_ph quantities",
+                "%d tests over %s" % (sum(len(s.get("tests") or []) for s in ph["links"].values()), sorted(used))
+                if not used & forb else "forbidden quantities used: %s" % sorted(used & forb))
     study = doc["study"]
     gating = [k for k, s in doc["links"].items() if s.get("gating", True)]
     descr = [k for k, s in doc["links"].items() if not s.get("gating", True)]
@@ -1005,7 +1030,15 @@ def check_literature_numbers(rep):
     for p in sorted(THEORY.rglob("*")):
         if not p.is_file() or "build" in p.parts or p.suffix not in (".tex", ".yaml", ".md", ".py"):
             continue
+        generated = False
         for no, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
+            # the generated margins entry of the thresholds block carries derived numbers with their pins;
+            # check_margins re-derives it from the pinned files instead
+            if p.name == "thresholds.md" and line.startswith("  # BEGIN generated margins_v6"):
+                generated = True
+            if generated:
+                generated = not line.startswith("  # END generated margins_v6")
+                continue
             text = re.sub(r"P0-W\d+\.\d+|P0-I\d+|\b\d{4}-\d{2}-\d{2}\b", "", line)
             text = re.sub(r"\b(?:Phase|item|items|slide|flag|section)s?\s+[\d, ]+", "", text)
             for kind, rx in LIT_RX:
@@ -1016,13 +1049,39 @@ def check_literature_numbers(rep):
     rep.add(not hits, "no-lit-num", "theory/** sources", "; ".join(hits[:8]) if hits else "no decimal, exponent or 3+ digit literal")
 
 
+def check_margins(rep):
+    """Block version 6: the generated margins entry equals a fresh derivation from its pinned sources (PH-W3.2)."""
+    text = (THEORY / "thresholds.md").read_text(encoding="utf-8")
+    m = re.search(r"```thresholds\n(.*?)```", text, re.S)
+    doc = yaml.safe_load(m.group(1)) if m else {}
+    if (doc.get("version") or 0) < 6:
+        return
+    sys.path.insert(0, str(THEORY / "tools"))
+    import gen_margins
+    ok = isinstance((doc.get("screen_ph") or {}).get("margins_v6"), dict)
+    rep.add(ok, "margins", "screen_ph.margins_v6", "present" if ok else "absent from block version %s" % doc.get("version"))
+    if not ok:
+        return
+    try:
+        fresh = gen_margins.render(gen_margins.derive())
+    except gen_margins.SourceMissing as exc:
+        rep.add(False, "margins", "pinned sources", str(exc))
+        return
+    blk = re.search(re.escape(gen_margins.BEGIN) + r".*?" + re.escape(gen_margins.END), text, re.S)
+    same = bool(blk) and blk.group(0) == fresh
+    rep.add(same, "margins", "re-derivation", "equals a fresh derivation from %d pinned files" % len(gen_margins.PINS)
+            if same else "differs from a fresh derivation (run theory/tools/gen_margins.py)")
+
+
 def main():
     symbols_doc = yaml.safe_load((THEORY / "symbols.yaml").read_text(encoding="utf-8"))
     contract = yaml.safe_load((THEORY / "contract.yaml").read_text(encoding="utf-8"))
     rep = Report()
     check_symbols(symbols_doc, rep)
     ctx = Context(symbols_doc, contract)
-    for f in contract["functions"]:
+    for i, f in enumerate(contract["functions"], 1):
+        # progress on stderr, so a long symbolic run shows it is alive
+        print("function %d/%d %s" % (i, len(contract["functions"]), f.get("name", "?")), file=sys.stderr, flush=True)
         check_function(ctx, f, rep)
     check_constants(ctx, contract, rep)
     check_sign_flips(ctx, contract, rep)
@@ -1031,6 +1090,7 @@ def main():
     check_thresholds(ctx, contract, rep)
     check_ignorance(ctx, rep)
     check_literature_numbers(rep)
+    check_margins(rep)
     print("\n".join(rep.lines))
     print()
     for kind, (p, f) in rep.counts.items():

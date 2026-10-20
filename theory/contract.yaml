@@ -32,9 +32,26 @@
 #   demonstrations      named composites that are wrong on purpose, implemented only to show
 #                       the size of an error (C3 item 13); never used for a verdict
 
-version: 5
-session: PH-W3.1 (redirect D34 to D40)
+version: 6
+session: PH-W3.2a (cp4 F2, route layer C1 to C6)
 changes:
+  - version: 6
+    session: PH-W3.2a (cp4 F2, route layer C1 to C6)
+    reason: >-
+      K1 bracket of cp4 F2 (E_ub with the solid-salt sink, E_lb with every ion aqueous, E_solv in the cell solvent,
+      the relative transfer premise and its Born reading) and the route layer (theory/claims_redirect.md, Section 9):
+      the hydrolysis descriptor f_cond = 2^(-t_wet/t_half) with the transfer factor tau_k (ruling C1); the R1
+      falsifying-only criterion Omega_AlPP with the oxide-pinned a(Al3+) and the complexed free ligand (C2); the
+      coacervate spreading coefficient and the Gibbs-Langmuir energies of the oxide against the coexisting phases,
+      whose site and exclusion terms cancel in the difference (C3), with the ideal-dilute two-concentration form as a
+      rejected, reported-only function; the framings of the route products (ruling C4): the glass lies
+      Delta_G_gc >= 0 above the crystal, so its onset is lower and its saturation ratio smaller (E_window_glass,
+      E_lb_glass, E_ub_glass, Omega_glass). No v5 expression changed.
+    added: [E_ub, E_lb, E_solv, Delta_G_tr_rel_born, k_hyd_eff, t_half_hyd_fn, f_cond, t_wet_max, a_Al_oxide_eq,
+            a_PP_free, IAP_AlPP, Omega_AlPP, gamma_al_l_ads, gamma_al_n_ads, Dgamma_coac, S_coac, cos_theta_coac,
+            Dgamma_coac_ideal, E_window_glass, E_lb_glass, E_ub_glass, Omega_glass]
+    changed: []
+    removed: []
   - version: 5
     session: PH-W3.1 (redirect D34 to D40)
     reason: >-
@@ -1451,6 +1468,323 @@ functions:
         subs: {a_PO4: '@a_PO4_speciation', a_Ca: 'm_CaT/(D_Ca + P_pair_phos*@a_PO4_speciation)'}
         equals: '0'
         numeric: true
+
+  # ------------------------------------------------------------------ K1 bracket (v6; cp4 F2; claims_redirect Section 2f)
+  # E_ub: solid-salt sink (LiClO4 exchange); E_lb: every ion aqueous from one tabulated table; E_solv: the onset in the
+  # cell solvent S, which E_lb bounds from below iff the relative transfer premise Delta_G_tr_rel >= 0 holds.
+  - name: E_ub
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: Delta_G_r_ss/(Delta_n_Li*F_c)
+    note: >-
+      onset with the solid-salt sink (the cation leaves as its solid perchlorate, Li from solid LiClO4); an upper bound
+      on the thermodynamic onset whatever the solvent, because the solid salt is one of the product states the minimum
+      runs over
+    identities:
+      - {note: 'the E_window form with the solid-salt reaction free energy', subs: {Delta_G_r_ss: Delta_G_r}, equals: '@E_window'}
+    monotonicity:
+      - {wrt: Delta_G_r_ss, direction: increasing, subs: {Delta_n_Li: aux_u}}
+
+  - name: E_lb
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: Delta_G_r_aq/(Delta_n_Li*F_c)
+    note: >-
+      onset with the most favourable sink: the ionic products and the consumed Li+ all aqueous at standard state, from
+      one tabulated table of standard formation free energies (the H+ convention cancels because the ionic combination
+      is charge-balanced); a lower bound on the onset in the cell solvent only under the transfer premise
+      (Delta_G_tr_rel >= 0, see E_solv); water solvates, never reacts
+    monotonicity:
+      - {wrt: Delta_G_r_aq, direction: increasing, subs: {Delta_n_Li: aux_u}}
+
+  - name: E_solv
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: (Delta_G_r_aq + Delta_G_tr_rel)/(Delta_n_Li*F_c)
+    note: >-
+      onset vs Li+/Li in the cell solvent S: the aqueous onset shifted by the charge-balanced transfer free energy
+      Delta_G_tr_rel = DG_tr(M, w->S) - z DG_tr(Li+, w->S) (with neutral salts, DG_tr(M(ClO4)z) - z DG_tr(LiClO4): the
+      anion cancels); used in place of E_lb when the premise is violated
+    limits:
+      - {at: {Delta_G_tr_rel: '0'}, expected: '@E_lb', note: 'no relative transfer: the cell solvent behaves as water for this reaction'}
+    inequalities:
+      - {expr: '@E_lb', relation: '<=', rhs: '@E_solv', domains: {Delta_G_tr_rel: '[0, oo)', Delta_n_Li: '(0, oo)'},
+         note: 'the transfer premise makes E_lb a lower bound'}
+    monotonicity:
+      - {wrt: Delta_G_tr_rel, direction: increasing, subs: {Delta_n_Li: aux_u}}
+
+  - name: Delta_G_tr_rel_born
+    claim: K1
+    regime: R-cell
+    unit: J mol^-1
+    expression: B_born*(z_M**2/r_M - z_M/r_Li)
+    note: >-
+      Born-continuum reading of the transfer premise (plausibility only, never decides): DG_tr(i) = z_i^2 B_born / r_i
+      with B_born >= 0 when the permittivity of the cell solvent is below that of water; the premise holds iff
+      z_M / r_M >= 1 / r_Li. Specific donor solvation and ion pairing in the carbonate are outside it.
+    limits:
+      - {at: {z_M: '1', r_M: r_Li}, expected: '0', note: 'Li+ itself: no relative transfer'}
+      - {at: {B_born: '0'}, expected: '0', note: 'equal permittivity'}
+    inequalities:
+      - {expr: '@Delta_G_tr_rel_born', relation: '>=', rhs: '0', subs: {r_M: z_M*r_Li/(1 + aux_u)},
+         domains: {B_born: '[0, oo)'}, note: 'a cation of higher charge density than Li+ (r_M < z_M r_Li) satisfies the premise'}
+
+  # ------------------------------------------------------------------ hydrolysis descriptor (v6; ruling C1)
+  - name: k_hyd_eff
+    claim: K2
+    regime: R-slurry
+    unit: s^-1
+    expression: tau_k*k_hyd
+    note: rate constant at the process state from the measured constant and the registered transfer factor
+    limits:
+      - {at: {tau_k: '1'}, expected: k_hyd, note: 'the data condition itself'}
+
+  - name: t_half_hyd_fn
+    claim: K2
+    regime: R-slurry
+    unit: s
+    expression: log(2)/@k_hyd_eff
+    note: half-life of the condensed fraction (first-order loss of condensed P to orthophosphate)
+    monotonicity:
+      - {wrt: tau_k, direction: decreasing}
+
+  - name: f_cond
+    claim: K2
+    regime: R-slurry
+    unit: '1'
+    expression: 2**(-t_wet/t_half_hyd)
+    note: >-
+      condensed fraction at the end of the wet period (ruling C1): oligophosphates count as condensed, only the
+      orthophosphate fraction is lost; t_wet runs until a_w falls below a_w_dry
+    identities:
+      - {note: 'first-order form', subs: {t_half_hyd: '@t_half_hyd_fn'}, equals: exp(-tau_k*k_hyd*t_wet)}
+      - {note: 'at the flip value t_wet_max the condensed fraction equals f_min', subs: {t_wet: t_half_hyd*log(1/f_min)/log(2)}, equals: f_min}
+    limits:
+      - {at: {t_wet: '0'}, expected: '1'}
+      - {at: {t_wet: t_half_hyd}, expected: 1/2}
+      - {limit: {var: t_wet, to: oo}, expected: '0'}
+    monotonicity:
+      - {wrt: t_wet, direction: decreasing}
+      - {wrt: t_half_hyd, direction: increasing}
+
+  - name: t_wet_max
+    claim: K2
+    regime: R-slurry
+    unit: s
+    expression: t_half_hyd*log(1/f_min)/log(2)
+    note: 'flip value of the wet residence time, f_cond >= f_min iff t_wet <= t_wet_max (reported at k_slow and k_fast)'
+    limits:
+      - {at: {f_min: '1'}, expected: '0'}
+      - {at: {f_min: 1/2}, expected: t_half_hyd}
+    monotonicity:
+      - {wrt: t_half_hyd, direction: nondecreasing, note: 'zero at f_min = 1'}
+
+  # ------------------------------------------------------------------ R1 formation criterion (v6; ruling C2)
+  - name: a_Al_oxide_eq
+    claim: K3
+    regime: R-slurry
+    unit: '1'
+    expression: K_ox_Al*10**(-3*pH)/a_w**3
+    note: >-
+      free Al3+ activity pinned by the oxide or hydroxide in contact (Al(OH)3 + 3 H+ = Al3+ + 3 H2O form, K_ox_Al from
+      our Al-O-H Pourbaix); complexation raises the dissolved total, not this activity. The oxide-equilibrium state;
+      the pit state is a separate labelled input a_Al
+    limits:
+      - {at: {a_w: '1', pH: '0'}, expected: K_ox_Al}
+    monotonicity:
+      - {wrt: pH, direction: nonincreasing}
+      - {wrt: K_ox_Al, direction: nondecreasing}
+
+  - name: a_PP_free
+    claim: K3
+    regime: R-slurry
+    unit: '1'
+    expression: a_PP_tot/(1 + beta_AlPP*a_Al)
+    note: >-
+      free activity of the polyphosphate chain unit after 1:1 complexation by Al3+ (ideal limit); with beta_AlPP a gap
+      the row is evaluated at beta_AlPP = 0 (upper bound on a_PP) and flagged
+    limits:
+      - {at: {beta_AlPP: '0'}, expected: a_PP_tot, note: 'no complexation: the upper bound used under a gap'}
+      - {limit: {var: beta_AlPP, to: oo}, expected: '0'}
+    inequalities:
+      - {expr: '@a_PP_free', relation: '<=', rhs: a_PP_tot}
+    monotonicity:
+      - {wrt: beta_AlPP, direction: decreasing}
+      - {wrt: a_Al, direction: nonincreasing}
+
+  - name: IAP_AlPP
+    claim: K3
+    regime: R-slurry
+    unit: '1'
+    expression: a_Al**nu_Al*a_PP**nu_PP
+    note: ion activity product of the Al polyphosphate gel per formula unit (nu_Al Al3+, nu_PP chain units PO3-)
+    limits:
+      - {at: {nu_Al: '1', nu_PP: '3'}, expected: a_Al*a_PP**3, note: 'Al(PO3)3 stoichiometry'}
+    monotonicity:
+      - {wrt: a_Al, direction: increasing}
+      - {wrt: a_PP, direction: increasing}
+
+  - name: Omega_AlPP
+    claim: K3
+    regime: R-slurry
+    unit: '1'
+    expression: '@IAP_AlPP/K_sp_AlPP'
+    note: >-
+      R1 falsifying-only criterion: Omega_AlPP < 1 robustly means the gel cannot form at that state; Omega_AlPP > 1 means
+      not excluded by thermodynamic accessibility, never a pass; K_sp_AlPP a gap gives undetermined with the flip
+      value K_sp* = IAP_AlPP
+    limits:
+      - {at: {K_sp_AlPP: '@IAP_AlPP'}, expected: '1'}
+    monotonicity:
+      - {wrt: a_Al, direction: increasing}
+      - {wrt: K_sp_AlPP, direction: decreasing}
+
+  # ------------------------------------------------------------------ liquid wetting of the coacervate (v6; ruling C3)
+  # s = alumina-covered foil, n = dense coacervate, l = coexisting dilute phase. Each interface carries the
+  # Gibbs-Langmuir site term and the solute-exclusion term at the chemical potentials of its facing phase; at
+  # coexistence a_P and Pi_osm are common to both, so both terms cancel in the difference.
+  - name: gamma_al_l_ads
+    claim: K4
+    regime: R-slurry
+    unit: J m^-2
+    expression: gamma_al_l0 - R_gas*T*Gamma_P*log(1 + K_P*a_P) + delta_P*Pi_osm
+    note: >-
+      substrate - dilute phase energy: site-free contact gamma_al_l0, the Langmuir site term of polyphosphate on the
+      oxide (the single entry of the binding), and the grand-potential cost delta_P Pi_osm of the solute-exclusion layer;
+      neutral-solute approximation (the double-layer term is a stated limitation); admissible only where >= 0
+    limits:
+      - {at: {a_P: '0', Pi_osm: '0'}, expected: gamma_al_l0, note: 'the polyphosphate-free interface'}
+    identities:
+      - note: 'ideal-dilute expansion: with Pi_osm = R T c and a_P = K-scaled c it is the registered Delta_gamma_ads form'
+        subs: {Pi_osm: R_gas*T*c_bulk, delta_P: delta_s, Gamma_P: Gamma_s, K_P: '@x_bind/a_P', gamma_al_l0: gamma_sl0}
+        equals: '@gamma_sl_insitu'
+    monotonicity:
+      - {wrt: K_P, direction: decreasing}
+      - {wrt: Pi_osm, direction: increasing}
+
+  - name: gamma_al_n_ads
+    claim: K4
+    regime: R-slurry
+    unit: J m^-2
+    expression: gamma_al_n0 - R_gas*T*Gamma_P*log(1 + K_P*a_P) + delta_P*Pi_osm
+    note: >-
+      substrate - coacervate energy, same machinery at the same chemical potentials (coexistence: equal a_P, equal water
+      activity, hence equal Pi_osm); gamma_al_n0 is the site-free contact with the dense phase; admissible only where >= 0
+    limits:
+      - {at: {a_P: '0', Pi_osm: '0'}, expected: gamma_al_n0}
+
+  - name: Dgamma_coac
+    claim: K4
+    regime: R-slurry
+    unit: J m^-2
+    expression: '@gamma_al_l_ads - @gamma_al_n_ads'
+    note: >-
+      substrate preference for the dense phase over the dilute one, gamma_sl - gamma_sn of ruling C3. The site and
+      exclusion terms cancel at coexistence: specific adsorption gives no preference; the preference is the site-free
+      contact difference (a gap until measured)
+    identities:
+      - {note: 'cancellation of the adsorption terms at coexistence', subs: {}, equals: gamma_al_l0 - gamma_al_n0}
+
+  - name: S_coac
+    claim: K4
+    regime: R-slurry
+    unit: J m^-2
+    expression: gamma_al_l - gamma_al_n - gamma_nl_c
+    note: >-
+      spreading coefficient of the coacervate on the oxide under the dilute phase (a design result, reported with its
+      flip value Dgamma* = gamma_nl_c + m_S); K4 route form S_coac >= m_S
+    identities:
+      - {note: 'Young form on the partial-wetting branch', equals: 'gamma_nl_c*(@cos_theta_coac - 1)'}
+    limits:
+      - {at: {gamma_nl_c: '0'}, expected: gamma_al_l - gamma_al_n, note: 'negligible coacervate tension: the condition reduces to gamma_al_n <= gamma_al_l'}
+      - {at: {gamma_al_l: gamma_al_n + gamma_nl_c}, expected: '0', note: 'onset of complete wetting'}
+    monotonicity:
+      - {wrt: gamma_al_l, direction: increasing}
+      - {wrt: gamma_al_n, direction: decreasing}
+      - {wrt: gamma_nl_c, direction: decreasing}
+
+  - name: cos_theta_coac
+    claim: K4
+    regime: R-slurry
+    unit: '1'
+    expression: (gamma_al_l - gamma_al_n)/gamma_nl_c
+    note: >-
+      Young cosine of the coacervate on the oxide; outside [-1, 1] the branch is complete wetting (>= 1) or complete
+      dewetting (<= -1); as gamma_nl_c -> 0 its sign is the sign of gamma_al_l - gamma_al_n
+    limits:
+      - {at: {gamma_al_l: gamma_al_n}, expected: '0', note: 'no preference: theta = pi/2'}
+      - {at: {gamma_al_l: gamma_al_n + aux_u}, limit: {var: gamma_nl_c, to: '0', dir: '+'}, expected: oo, note: 'a substrate that prefers the dense phase: complete wetting as the coacervate tension vanishes'}
+      - {at: {gamma_al_l: gamma_al_n - aux_u}, limit: {var: gamma_nl_c, to: '0', dir: '+'}, expected: -oo, note: 'a substrate that prefers the dilute phase: the coacervate is expelled'}
+    monotonicity:
+      - {wrt: gamma_al_l, direction: increasing}
+      - {wrt: gamma_al_n, direction: decreasing}
+
+  - name: Dgamma_coac_ideal
+    claim: K4
+    regime: R-slurry
+    unit: J m^-2
+    expression: R_gas*T*(Gamma_P*log((1 + K_Pc*c_n)/(1 + K_Pc*c_l)) - delta_P*(c_n - c_l))
+    note: >-
+      REJECTED form, reported only (forbidden in verdicts): the ideal-dilute isotherm applied with the concentrations of
+      the two coexisting phases; it reads their concentration difference as an activity difference, which coexistence
+      forbids, and credits the binding constant with a wetting preference
+    limits:
+      - {at: {c_n: c_l}, expected: '0', note: 'equal concentrations: the only case consistent with the ideal-dilute isotherm at equal activity'}
+
+  # ------------------------------------------------------------------ framings of the route products (v6; ruling C4)
+  - name: E_window_glass
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: (Delta_G_r - Delta_G_gc)/(Delta_n_Li*F_c)
+    note: >-
+      onset of a reaction that consumes the amorphous (glass) form: the glass lies Delta_G_gc = G_glass - G_crystal >= 0
+      above the crystal per formula unit, so its onset is lower; the governing row of the in-situ routes R1 to R3
+    limits:
+      - {at: {Delta_G_gc: '0'}, expected: '@E_window', note: 'no glass-to-crystal free energy: the crystalline onset'}
+    inequalities:
+      - {expr: '@E_window_glass', relation: '<=', rhs: '@E_window', domains: {Delta_G_gc: '[0, oo)', Delta_n_Li: '(0, oo)'},
+         note: 'the crystalline framing is the optimistic upper reference'}
+    monotonicity:
+      - {wrt: Delta_G_gc, direction: decreasing, subs: {Delta_n_Li: aux_u}}
+
+  - name: E_lb_glass
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: (Delta_G_r_aq - Delta_G_gc)/(Delta_n_Li*F_c)
+    note: lower end of the K1 bracket for the amorphous framing (the K1 amorphous row)
+    limits:
+      - {at: {Delta_G_gc: '0'}, expected: '@E_lb'}
+
+  - name: E_ub_glass
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: (Delta_G_r_ss - Delta_G_gc)/(Delta_n_Li*F_c)
+    note: upper end of the K1 bracket for the amorphous framing (the K1 amorphous row)
+    limits:
+      - {at: {Delta_G_gc: '0'}, expected: '@E_ub'}
+
+  - name: Omega_glass
+    claim: K2
+    regime: R-slurry
+    unit: '1'
+    expression: '@Omega_nu*exp(-Delta_G_gc/(R_gas*T))'
+    note: >-
+      saturation ratio against the glass: K_sp,glass = K_sp exp(Delta_G_gc / (R T)) for the same formula unit, so the
+      glass is more soluble; the governing K2 framing of the route products
+    limits:
+      - {at: {Delta_G_gc: '0'}, expected: '@Omega_nu'}
+    inequalities:
+      - {expr: '@Omega_glass', relation: '<=', rhs: '@Omega_nu', domains: {Delta_G_gc: '[0, oo)'},
+         subs: {K_sp: 'a_Ca**nu_Ca*a_X**nu_X*a_Y**nu_Y*a_w**n_hyd/aux_u'},
+         note: 'exact reparametrisation: the activity prefactor IAP/K_sp is one positive symbol'}
+    monotonicity:
+      - {wrt: Delta_G_gc, direction: decreasing, subs: {K_sp: 'a_Ca**nu_Ca*a_X**nu_X*a_Y**nu_Y*a_w**n_hyd/aux_u'}}
 
 constant_relations:
   - {lhs: R_gas, rhs: N_A*k_B}
