@@ -195,5 +195,18 @@
     },
     "F2_vetting": "holds in corrected form, conditionally (relative transfer premise; anion cancels in salt form)",
     "check_contract": "PASS"
+  },
+  "route_contract": {
+    "status": "ready",
+    "sha": "5a6e2cf12a9bbc9fcc85454cf1ec1a90ff6dae60",
+    "version": 6,
+    "functions": 103,
+    "check_contract": "PASS",
+    "items": [
+      "a hydrolysis",
+      "b R1 R2",
+      "c wetting"
+    ],
+    "note": "(d) to (f) follow in the same contract version"
   }
 }
