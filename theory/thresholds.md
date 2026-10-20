@@ -834,7 +834,7 @@ revised_cp3b: {session: P0-W3.4, rule: cp3-mandated registrations for production
 revised_d27: {session: P0-W3.4b, decision: D27 (2026-10-18), date: 2026-10-19, rule: admissibility of the template-liquid energy,
               facts_used: 'D27 only (gamma_sl negative on every draw with the binding analog, median as stated there)',
               screen_output_consulted: false, log: theory/cp2_fixes.md (cp3 section, D27 amendment)}
-contract_version: 4
+contract_version: 5
 decision:
   statistic: band_mass
   credible_level: {symbol: p_cred, params: thresholds.decision.credible_level}
