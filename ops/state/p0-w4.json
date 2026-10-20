@@ -1,9 +1,9 @@
 {
-  "last_session": "PH-W4.1",
+  "last_session": "PH-W4.2a",
   "status": "DONE",
-  "day": 4,
-  "contract_sha": "b21dbf0ab8660b50961a06a480c0dd505df785b8",
-  "contract_checked_ref": "60dbe6b (W3 contract v5)",
+  "day": 5,
+  "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
+  "contract_checked_ref": "2aa96fb (W3 contract v6)",
   "artifacts": {
     "physics_core": "src/nacre/physics/",
     "contract_registry": "src/nacre/physics/contract.py",
@@ -13,7 +13,7 @@
     "mock_priors": "configs/preprint/mock_priors.yaml",
     "mock_summary": "results/preprint/screen/mock/summary.json",
     "screen_scaffold": "src/nacre/screen/",
-    "report": "ops/reports/PH-W4.1.md",
+    "report": "ops/reports/P0-W4.PH-W4.2a.md",
     "screen_config": "configs/preprint/screen.yaml",
     "thresholds_copy": "configs/preprint/thresholds.yaml",
     "precision_method": "configs/preprint/precision_method.md",
@@ -40,7 +40,13 @@
     "carbonate_regression": "src/nacre/screen/ph_regress.py",
     "gap_skeleton_ph": "configs/preprint/gap_resolution_ph.yaml",
     "mock_params_ph": "configs/preprint/mock_params_ph.yaml",
-    "dryrun_ph_dir": "results/preprint/screen/dryrun_ph/"
+    "dryrun_ph_dir": "results/preprint/screen/dryrun_ph/",
+    "route_evaluators": "src/nacre/screen/routes.py",
+    "ph_rows": "src/nacre/screen/ph_rows.py",
+    "route_dry_run": "src/nacre/screen/ph_route_dry.py",
+    "mock_params_ph_routes": "configs/preprint/mock_params_ph_routes.yaml",
+    "mock_k1_ladder_v2": "configs/preprint/mock_k1_ladder_v2.csv",
+    "k1_ladder_input": "results/preprint/pourbaix/ph_w51/ladder_v2.csv"
   },
   "notes": [
     "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
@@ -52,11 +58,12 @@
     "Two-proton log1p precision fix after the runs (7b54cc8): <= 9e-12 J/mol over the screen range; no rerun needed.",
     "Integrator: deviation entries for the thresholds copy (block v4) and W3's theory/thresholds.md after p0-cp3 (D27).",
     ".venv is a symlink to ~/.nacre-venvs/p-w4.",
-    "PH-W4.1: contract v5 implemented (equivalence PASS at rtol 1e-12); chain takes a mineral object; K2 to K4 evaluators with provisional margins; 55 gap-skeleton keys await cp5; dry runs on mock priors only."
+    "PH-W4.1: contract v5 implemented (equivalence PASS at rtol 1e-12); chain takes a mineral object; K2 to K4 evaluators with provisional margins; 55 gap-skeleton keys await cp5; dry runs on mock priors only.",
+    "PH-W4.2a: contract v6 implemented (equivalence PASS vs 2aa96fb, v6 max 2.1e-13); route evaluators H/F/B tables and C3 wetting; F1 proceed rule; stage rows, conversion rows, F5 panel; schema v5; carbonate regression 38/38; 72 gap-skeleton keys await cp5; dry runs on mock priors only."
   ],
   "schema": {
-    "version": "4",
-    "sha": "41a2ada",
+    "version": "5",
+    "sha": "02f7fc3",
     "path": "configs/preprint/results_schema.json"
   },
   "thresholds_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
