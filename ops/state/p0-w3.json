@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-W3.1",
+  "last_session": "PH-W3.2a",
   "status": "DONE",
-  "day": 4,
+  "day": 5,
   "equation_sheet": {
     "status": "ready",
     "sha": "4d03ab0a3db0e866825ebc99684a7bf7203f0f2a",
@@ -44,6 +44,7 @@
     "ops/reports/P0-W3.4.md",
     "ops/reports/P0-W3.4b.md",
     "ops/reports/P0-W3.PH-W3.1.md",
+    "ops/reports/P0-W3.PH-W3.2a.md",
     "theory/blind_rederivation.md",
     "theory/blind_rederivation/checks.py.txt",
     "theory/blind_rederivation/compare.py",
@@ -205,8 +206,13 @@
     "items": [
       "a hydrolysis",
       "b R1 R2",
-      "c wetting"
+      "c wetting",
+      "d framings",
+      "e matrix and baselines",
+      "f thresholds structure"
     ],
-    "note": "(d) to (f) follow in the same contract version"
+    "note": "(d) to (f) at 91ce4d5 in the same contract version; check_contract PASS, 107 functions",
+    "functions_final": 107,
+    "d_to_f_sha": "91ce4d5"
   }
 }
