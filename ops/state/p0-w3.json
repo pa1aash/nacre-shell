@@ -214,5 +214,9 @@
     "note": "(d) to (f) at 91ce4d5 in the same contract version; check_contract PASS, 107 functions",
     "functions_final": 107,
     "d_to_f_sha": "91ce4d5"
+  },
+  "margins": {
+    "status": "ready",
+    "sha": "dd41b1997666ae63634db5dab7543bd761a9e95b"
   }
 }
