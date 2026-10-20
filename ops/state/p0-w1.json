@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W1.1",
+  "last_session": "PH-W1.2",
   "status": "DONE",
   "day": 4,
   "artifacts": [
@@ -51,18 +51,22 @@
     "src/nacre/lit/si_table.py",
     "tests/lit/",
     "lit/corpus/T-R/",
-    "ops/reports/P0-W1.PH-W1.1.md"
+    "ops/reports/P0-W1.PH-W1.1.md",
+    "lit/corpus/T-S/",
+    "lit/corpus/T-T/",
+    "lit/corpus/phosphate_coverage.yaml",
+    "ops/reports/P0-W1.PH-W1.2.md"
   ],
-  "notes": "PH-W1.1: 119 evidence rows in new thread T-R (phosphate K1/K2 inputs, Al passivation window sources, Al-salt ladder, tier-2 seeds); table 1194 rows; gaps in lit/corpus/T-R/gaps.md. P0-W1.4 (day 3 ahead of day 4, D30): 220 params keys (20 new, added_in P0-W1.4; README section 8 rule version 3: post-cp3 additions only, gaps filled through 'fills'); n_req = ln(1/q_0)/A_patch (cp3 R5), the one mandated edit. Found: PVDF surface energy and parts, cathode particle diameter (A_patch upper bound), Ca2+ radius at CN 6 (fills ca_ionic_radius), reduction-limit budgets m_expt 0.022 V (CaCO3) and 0.123 V (corundum), boehmite entropy, Li2CO3/LiAl5O8 Gibbs energies, Al work function. Gaps: asperity contact area, template mass per group, d_max film inputs, primary-drying a_w, solvated-sink and Al-phase oxidation budgets, Al(ClO4)3; no stated correlations. 121 new evidence rows (1075 total). Outlook: phosphate oxidises near 4.2 V (computed), no calcium-salt value. Reference audit: 44 keys, 43 cited, 10 cited without support, 0 unresolved DOIs, no update notices. Deviation entry for lit/params.yaml in ops/reports/P0-W1.4.md. Next: P0-W1.5 (day 5, cp4).",
+  "notes": "PH-W1.2: 76 new evidence rows (T-S 23: tier-2 records, B2131 volumes and weights, pKw; T-T 53: route layer), table 1270; 185 new params keys (added_in P0-W1.PH-W1.2; 405 total; 75 gaps; no existing key changed); lit/corpus/phosphate_coverage.yaml; thread letters extended to T-T. Gaps: Li3PO4 DfG and S, Al(PO3)3 all, Ca(PO3)2 crystal DfH and DfG, OCP DfH and S, ACP water n, all phosphate gamma_nl and gamma_nv, coacervate gamma_nl and binodal, polyP hydrolysis against T, matrix oxidation limits. Next: PH-W3.2a, PH-W5.1.",
   "params": {
     "status": "ready",
-    "sha": "d28ecc9b0ef6629ac0d0eaca5895d18193edab15",
+    "sha": "4ce4f3e032d4ec623eed20c63c32497d84f4117e",
     "post_cp3": true,
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
     "rule": "lit/corpus/params_README.md (rule version 3, section 8)",
-    "keys": 220,
-    "new_keys": 20,
+    "keys": 405,
+    "new_keys": 185,
     "edited_keys": [
       "n_req"
     ],
