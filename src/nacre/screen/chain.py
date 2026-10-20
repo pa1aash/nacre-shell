@@ -61,6 +61,7 @@ from nacre.physics import adhesion, conformality, nucleation, sequestration, spe
 from nacre.physics import supersaturation as sat
 from nacre.physics.constants import AVOGADRO, BOLTZMANN, GAS_CONSTANT, STANDARD_CONCENTRATION
 from nacre.screen.boundary import EMPTY, RefusedMass, clip_cos_theta
+from nacre.screen.mineral import CALCITE
 
 
 @dataclass(frozen=True)
@@ -88,6 +89,9 @@ OUTPUTS = {
         "a_Ca": Output("a_Ca (free Ca2+ activity)", "1", "log10"),
         "a_CO3": Output("a_CO3 (free carbonate activity)", "1", "log10"),
         "c_Ca_free": Output("c_Ca_free (free Ca2+ concentration, c_bulk)", "mol m^-3", "log10"),
+        "a_PO4": Output("a_PO4 (free phosphate activity; phosphate minerals)", "1", "log10"),
+        "a_HPO4": Output("a_HPO4 (free hydrogen phosphate activity; phosphate minerals)", "1", "log10"),
+        "a_OH": Output("a_OH (hydroxide activity; minerals with an OH- ion)", "1", "log10"),
         "Omega_bulk": Output("Omega_bulk from the speciated activities (C5s; no template input)", "1", "log10"),
     },
     "sequester": {
@@ -134,6 +138,12 @@ ANCHOR_INPUTS = ("gamma_ow", "gamma_pw", "gamma_op")
 PMF_INPUTS = ("Delta_F_pmf", "A_c")
 SPECIATION_INPUTS = ("pH", "C_T", "Ca_T", "I_ionic", "rho_water", "pK1_carbonic", "pK2_carbonic", "K_CaCO3_aq",
                      "K_CaHCO3", "K_CaOH", "a_w", "A_DH", "b_D", "I_val")
+#: Phosphate speciation (contract v5): the same closed-solution inputs with the phosphate acid-base and pair constants.
+PHOSPHATE_SPECIATION_INPUTS = ("pH", "P_T", "Ca_T", "I_ionic", "rho_water", "pK1_phosphoric", "pK2_phosphoric",
+                               "pK3_phosphoric", "K_CaHPO4_aq", "K_CaH2PO4", "K_CaPO4", "K_CaOH", "a_w", "A_DH",
+                               "b_D", "I_val")
+#: Symbols the speciation of each kind computes (c_bulk is the free Ca2+ concentration of the C2 relations).
+SPECIATION_OUTPUTS = {"carbonate": ("a_Ca", "a_CO3", "c_bulk"), "phosphate": ("a_Ca", "a_PO4", "a_HPO4", "c_bulk")}
 #: Ignorance priors: target symbol -> (auxiliary uniform, the two energies whose sum bounds it).
 IGNORANCE = {"gamma_sn0": ("u_gamma_sn", ("gamma_p", "gamma_nv")),
              "gamma_ow": ("u_gamma_ow", ("gamma_o", "gamma_w")),
@@ -166,6 +176,39 @@ SEQ_CYCLE_INPUTS = ("Delta_G_site", "pKa", "pH", "T")
 SEQ_CYCLE_2H = "pKa2"
 SEQ_LOCAL_INPUTS = ("T", "c_bulk", "Gamma_s", "delta_s")
 NUC_BASE = ("a_Ca", "a_CO3", "K_sp", "gamma_sn0", "Delta_gamma_w", "gamma_nl", "V_m", "T")
+NUC_TAIL = ("gamma_sn0", "Delta_gamma_w", "gamma_nl", "V_m", "T")
+
+
+def speciation_inputs(mineral=CALCITE):
+    """Inputs of the free-ion speciation that suits the mineral (empty: its activities are supplied)."""
+    return {"carbonate": SPECIATION_INPUTS, "phosphate": PHOSPHATE_SPECIATION_INPUTS}.get(mineral.speciation, ())
+
+
+def nuc_base(mineral=CALCITE):
+    """Inputs of the nucleation link for the mineral (NUC_BASE for calcite in the carbonate form)."""
+    if mineral.is_carbonate_form:
+        return NUC_BASE
+    return mineral.omega_symbols + NUC_TAIL
+
+
+def omega_of(x, n, mineral=CALCITE):
+    """Omega of the mineral per draw (contract v5), NaN where an input is outside its domain.
+
+    Calcite in the carbonate form uses saturation_ratio_bulk, as before; every other mineral takes
+    Omega_nu = IAP/K_sp with the stoichiometric exponents and a_w^n.
+    """
+    if mineral.is_carbonate_form:
+        a_ca, a_co3, ksp = (_arr(x, k, n) for k in ("a_Ca", "a_CO3", "K_sp"))
+        ok = _finite(a_ca, a_co3, ksp) & (a_ca > 0) & (a_co3 > 0) & (ksp > 0)
+        return _apply(sat.saturation_ratio_bulk, ok, n, a_ca, a_co3, ksp)
+    a_ca, a_x, ksp = (_arr(x, k, n) for k in ("a_Ca", mineral.x_symbol, "K_sp"))
+    a_y = _arr(x, mineral.y_symbol, n) if mineral.nu_y > 0 else np.ones(n)
+    a_w = _arr(x, "a_w", n) if mineral.hydrated else np.ones(n)
+    n_hyd = _arr(x, "n_hyd", n) if mineral.n_hyd_key is not None else np.full(n, float(mineral.n_hyd))
+    ok = (_finite(a_ca, a_x, a_y, a_w, n_hyd, ksp) & (a_ca > 0) & (a_x > 0) & (a_y > 0) & (a_w > 0) & (n_hyd >= 0)
+          & (ksp > 0))
+    st = [np.full(n, v) for v in (mineral.nu_ca, mineral.nu_x, mineral.nu_y)]
+    return _apply(sat.saturation_ratio_mineral, ok, n, a_ca, a_x, a_y, *st, a_w, n_hyd, ksp)
 ACCESS_INPUTS = ("J0_het", "t_proc", "N_req")
 NUCLEI_INPUTS = ("J0_het", "t_proc")
 
@@ -210,7 +253,7 @@ def has(x, keys):
     return all(k in x for k in keys)
 
 
-def derived_symbols(symbols):
+def derived_symbols(symbols, mineral=CALCITE):
     """The symbols available after the speciation, ignorance, geometry and analog steps."""
     s = set(symbols)
     for target in ignorance_pairs(s):
@@ -221,14 +264,17 @@ def derived_symbols(symbols):
         s.add("gamma_pw")
     if GEOMETRY[0] in s and s >= set(GEOMETRY[1]):
         s.add("delta_s")
-    if s >= set(SPECIATION_INPUTS):
-        s |= {"a_Ca", "a_CO3", "c_bulk"}
+    spec_in = speciation_inputs(mineral)
+    if spec_in and s >= set(spec_in):
+        s |= set(SPECIATION_OUTPUTS[mineral.speciation])
+        if mineral.speciation == "phosphate" and "pKw" in s:
+            s.add("a_OH")
     if SITE_ANALOG[0] in s and s >= set(SITE_ANALOG[1]):
         s.add("Delta_G_site")
     return s
 
 
-def derive(x):
+def derive(x, mineral=CALCITE):
     """Inputs with the speciation and ignorance steps applied; also the speciation outputs and
     the boundary mass of the activity model (draws refused above I_val)."""
     x = dict(x)
@@ -267,15 +313,26 @@ def derive(x):
         ok = _finite(k, gs, ds, t) & (k > 0) & (gs > 0) & (ds > 0) & (t > 0)
         x["Delta_G_site"] = _apply(sequestration.site_free_energy_from_solution_constant, ok, n, k, gs, ds, t)
     spec, mass = None, None
-    if has(x, SPECIATION_INPUTS) and not ("a_Ca" in x and "a_CO3" in x):
-        v = {k: _arr(x, k, n) for k in SPECIATION_INPUTS}
-        ok = _finite(*v.values()) & (v["I_ionic"] <= v["I_val"]) & (v["C_T"] > 0) & (v["Ca_T"] > 0)
-        out = {k: np.full(n, np.nan) for k in ("a_Ca", "a_CO3", "c_Ca_free")}
+    spec_in = speciation_inputs(mineral)
+    produced = SPECIATION_OUTPUTS.get(mineral.speciation, ())
+    if spec_in and has(x, spec_in) and not all(k in x for k in produced if k != "c_bulk"):
+        v = {k: _arr(x, k, n) for k in spec_in}
+        total = "C_T" if mineral.speciation == "carbonate" else "P_T"
+        ok = _finite(*v.values()) & (v["I_ionic"] <= v["I_val"]) & (v[total] > 0) & (v["Ca_T"] > 0)
+        out = {k: np.full(n, np.nan) for k in produced if k != "c_bulk"}
+        out["c_Ca_free"] = np.full(n, np.nan)
         if np.any(ok):
-            r = speciation.speciate(**{k: a[ok] for k, a in v.items()})
+            fn = speciation.speciate if mineral.speciation == "carbonate" else speciation.speciate_phosphate
+            r = fn(**{k: a[ok] for k, a in v.items()})
             for k in out:
                 out[k][ok] = r[k]
-        x["a_Ca"], x["a_CO3"], x["c_bulk"] = out["a_Ca"], out["a_CO3"], out["c_Ca_free"]
+        for k in produced:
+            x[k] = out["c_Ca_free"] if k == "c_bulk" else out[k]
+        if mineral.speciation == "phosphate" and "pKw" in x and "a_OH" not in x:
+            pkw, a_w = _arr(x, "pKw", n), _arr(x, "a_w", n)
+            ok_h = _finite(v["pH"], pkw, a_w) & (a_w > 0)
+            out["a_OH"] = _apply(sat.hydroxide_activity, ok_h, n, a_w, v["pH"], pkw)
+            x["a_OH"] = out["a_OH"]
         refused = int((_finite(*v.values()) & (v["I_ionic"] > v["I_val"])).sum())
         spec = out
         mass = RefusedMass(int(_finite(*v.values()).sum()), refused, "I_ionic above I_val (Davies validity)")
@@ -283,19 +340,19 @@ def derive(x):
     return x, spec, mass
 
 
-def evaluable_links(symbols):
+def evaluable_links(symbols, mineral=CALCITE):
     """Links whose inputs are all available from the given symbols (after derive)."""
-    s = derived_symbols(symbols)
+    s = derived_symbols(symbols, mineral)
     links = []
     if s >= set(ANCHOR_INPUTS) or s >= set(PMF_INPUTS) or "W_adh_wet" in s:
         links.append("anchor")
-    if s >= set(SPECIATION_INPUTS):
+    if speciation_inputs(mineral) and s >= set(speciation_inputs(mineral)):
         links.append("speciation")
     seq = (s >= set(SEQ_CYCLE_INPUTS) or "Delta_G_seq" in s) and s >= set(SEQ_LOCAL_INPUTS)
     if seq:
         links.append("sequester")
     mode = template_energy_mode(s)
-    if s >= set(NUC_BASE) and (mode == "in_situ" or (mode == "ca_free" and seq)):
+    if s >= set(nuc_base(mineral)) and (mode == "in_situ" or (mode == "ca_free" and seq)):
         links.append("nucleate")
     return links
 
@@ -346,10 +403,13 @@ def sequester(x):
             "Gamma_Ca": excess, "Delta_gamma_ads": d_ads}
 
 
-def nucleate(x, seq=None):
-    """Nucleation link (contract v2); seq is the sequester output when gamma_sl0 is supplied."""
+def nucleate(x, seq=None, mineral=CALCITE):
+    """Nucleation link (contract v2; v5 stoichiometry for a mineral other than calcite).
+
+    seq is the sequester output when gamma_sl0 is supplied.
+    """
     n = _shape(x)
-    a_ca, a_co3, ksp, sn0, dw, nl, vm, t = (_arr(x, k, n) for k in NUC_BASE)
+    sn0, dw, nl, vm, t = (_arr(x, k, n) for k in NUC_TAIL)
     adm = {q: np.full(n, np.nan) for q in ("Pi_ads", "gamma_sl_floor", "r_ads")}
     if template_energy_mode(x) == "ca_free":
         sl0 = _arr(x, "gamma_sl0", n)
@@ -358,8 +418,7 @@ def nucleate(x, seq=None):
                                        _arr(x, "T", n))
     else:
         sl = np.array(_arr(x, "gamma_sl", n), dtype=float)                                  # nothing added
-    ok = _finite(a_ca, a_co3, ksp) & (a_ca > 0) & (a_co3 > 0) & (ksp > 0)
-    om = _apply(sat.saturation_ratio_bulk, ok, n, a_ca, a_co3, ksp)     # uniform chemical potential
+    om = omega_of(x, n, mineral)                                         # uniform chemical potential
     ok_y = _finite(sl, sn0, dw, nl) & (nl > 0)
     ratio = _apply(wetting.contact_angle_cosine_young, ok_y, n, sl, sn0, dw, nl)
     cos_t, mass = clip_cos_theta(ratio)
@@ -429,14 +488,14 @@ def admissible_mask(outputs):
     return np.isfinite(sl) & (sl >= 0)
 
 
-def evaluate(x, links=None):
+def evaluate(x, links=None, mineral=CALCITE):
     """Evaluate the chain on sampled inputs x ({symbol: array}).
 
     Returns (outputs, masses): outputs {link: {quantity: array}} for every evaluable link
     (or the requested subset), masses {link: {quantity: BoundaryMass}}.
     """
-    links = evaluable_links(x) if links is None else list(links)
-    x, spec, spec_mass = derive(x)
+    links = evaluable_links(x, mineral) if links is None else list(links)
+    x, spec, spec_mass = derive(x, mineral)
     geo = x.pop("_geometry_masses", {})
     flags = x.pop("_geometry_flags", {})
     out, masses = {}, {}
@@ -444,9 +503,7 @@ def evaluate(x, links=None):
         spec = dict(spec)
         n = _shape(x)
         if "K_sp" in x:                      # C5s needs only the speciation and K_sp (thresholds C5s)
-            a_ca, a_co3, ksp = spec["a_Ca"], spec["a_CO3"], _arr(x, "K_sp", n)
-            ok = _finite(a_ca, a_co3, ksp) & (a_ca > 0) & (a_co3 > 0) & (ksp > 0)
-            spec["Omega_bulk"] = _apply(sat.saturation_ratio_bulk, ok, n, a_ca, a_co3, ksp)
+            spec["Omega_bulk"] = omega_of(x, n, mineral)
         else:
             spec["Omega_bulk"] = np.full(n, np.nan)
         out["speciation"], masses["speciation"] = spec, {"activity_model": spec_mass}
@@ -462,11 +519,11 @@ def evaluate(x, links=None):
     if geo and ("sequester" in links or "nucleate" in links):
         masses["geometry"] = geo
     if "nucleate" in links:
-        out["nucleate"], masses["nucleate"] = nucleate(x, seq)
+        out["nucleate"], masses["nucleate"] = nucleate(x, seq, mineral)
     return out, masses
 
 
-def sensitivity_model(link, admissible=False):
+def sensitivity_model(link, admissible=False, mineral=CALCITE):
     """The link as a model {symbol: array} -> {quantity: array on its sensitivity scale}.
 
     admissible: on the nucleate link, a draw with gamma_sl_insitu < 0 has no output (NaN), so the
@@ -476,7 +533,7 @@ def sensitivity_model(link, admissible=False):
     scales = {q: o.scale for q, o in OUTPUTS[link].items()}
 
     def model(x):
-        full = evaluate(x, [link])[0]
+        full = evaluate(x, [link], mineral)[0]
         out = full[link]
         if admissible and link == "nucleate":
             keep = admissible_mask(full)
@@ -491,10 +548,10 @@ def sensitivity_model(link, admissible=False):
     return model
 
 
-def flat_model(links=None):
+def flat_model(links=None, mineral=CALCITE):
     """The chain as a model {symbol: array} -> {"link.quantity": array}, for sensitivity analysis."""
     def model(x):
-        out, _ = evaluate(x, links)
+        out, _ = evaluate(x, links, mineral)
         return {"%s.%s" % (link, q): v for link, d in out.items() for q, v in d.items()}
     return model
 
