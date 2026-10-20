@@ -1,0 +1,1509 @@
+meta:
+  session: PH-W1.2
+  generated_utc: '2026-10-20T10:37:22Z'
+  rule: 'two sources: rows of at least two distinct DOIs admitted to the key; one source: rows of one DOI (several determinations
+    of one paper count once); gap: no admitted row. Keys that are computed by the screen, registered at a gate or design inputs
+    carry no evidence status.'
+  inputs:
+  - lit/params.yaml
+  - lit/evidence_table.csv
+  quantities: the K1 and K2 key list of ops/reports/P0-W3.PH-W3.1.md plus the route-layer keys
+K2:
+  solubility product, log10 (K2):
+    hap:
+      key: log10_ksp_hap
+      status: one source
+      row_ids:
+      - TR-055
+      - TR-056
+      independent_dois: 1
+      best_grade: A
+      key_status: sourced
+      note: 'several determinations of one paper or one review: counted as one source'
+    acp:
+      key: log10_ksp_acp
+      status: one source
+      row_ids:
+      - TR-097
+      - TR-098
+      - TR-099
+      - TR-100
+      - TR-101
+      - TR-102
+      independent_dois: 1
+      best_grade: D
+      key_status: single-source
+      note: 'several determinations of one paper or one review: counted as one source'
+    ocp:
+      key: log10_ksp_ocp
+      status: one source
+      row_ids:
+      - TR-046
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    btcp:
+      key: log10_ksp_btcp
+      status: one source
+      row_ids:
+      - TR-069
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    capp:
+      key: log10_ksp_capp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    cameta:
+      key: log10_ksp_cameta
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+  molar volume:
+    hap:
+      key: v_m_hap
+      status: one source
+      row_ids:
+      - TS-021
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    acp:
+      key: v_m_acp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    ocp:
+      key: v_m_ocp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    btcp:
+      key: v_m_btcp
+      status: one source
+      row_ids:
+      - TS-019
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    capp:
+      key: v_m_capp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    cameta:
+      key: v_m_cameta
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+  formula weight:
+    hap:
+      key: molar_mass_hap
+      status: one source
+      row_ids:
+      - TS-022
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    acp:
+      key: molar_mass_acp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    ocp:
+      key: molar_mass_ocp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    btcp:
+      key: molar_mass_btcp
+      status: one source
+      row_ids:
+      - TS-020
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    capp:
+      key: molar_mass_capp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    cameta:
+      key: molar_mass_cameta
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+  crystal density:
+    hap:
+      key: density_hap
+      status: one source
+      row_ids:
+      - TS-022
+      - TS-021
+      independent_dois: 1
+      best_grade: A
+      key_status: computed
+      note: 'several determinations of one paper or one review: counted as one source'
+    acp:
+      key: density_acp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    ocp:
+      key: density_ocp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    btcp:
+      key: density_btcp
+      status: one source
+      row_ids:
+      - TS-020
+      - TS-019
+      independent_dois: 1
+      best_grade: A
+      key_status: computed
+      note: 'several determinations of one paper or one review: counted as one source'
+    capp:
+      key: density_capp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    cameta:
+      key: density_cameta
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+  mineral-water interfacial free energy (K3):
+    hap:
+      key: gamma_nl_hap
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    acp:
+      key: gamma_nl_acp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    ocp:
+      key: gamma_nl_ocp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    btcp:
+      key: gamma_nl_btcp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    capp:
+      key: gamma_nl_capp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    cameta:
+      key: gamma_nl_cameta
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+  mineral-vacuum surface free energy (K3):
+    hap:
+      key: gamma_nv_hap
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    acp:
+      key: gamma_nv_acp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    ocp:
+      key: gamma_nv_ocp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    btcp:
+      key: gamma_nv_btcp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    capp:
+      key: gamma_nv_capp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    cameta:
+      key: gamma_nv_cameta
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+  calcium count nu_ca:
+    hap:
+      key: nu_ca_hap
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    acp:
+      key: nu_ca_acp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    ocp:
+      key: nu_ca_ocp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    btcp:
+      key: nu_ca_btcp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    capp:
+      key: nu_ca_capp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    cameta:
+      key: nu_ca_cameta
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+  anion count nu_x:
+    hap:
+      key: nu_x_hap
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    acp:
+      key: nu_x_acp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    ocp:
+      key: nu_x_ocp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    btcp:
+      key: nu_x_btcp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    capp:
+      key: nu_x_capp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    cameta:
+      key: nu_x_cameta
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+  second ion count nu_y:
+    hap:
+      key: nu_y_hap
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    acp:
+      key: nu_y_acp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    ocp:
+      key: nu_y_ocp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    btcp:
+      key: nu_y_btcp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    capp:
+      key: nu_y_capp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    cameta:
+      key: nu_y_cameta
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+  structural water n_hyd:
+    hap:
+      key: n_hyd_hap
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    acp:
+      key: n_hyd_acp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    ocp:
+      key: n_hyd_ocp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    btcp:
+      key: n_hyd_btcp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    capp:
+      key: n_hyd_capp
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+    cameta:
+      key: n_hyd_cameta
+      status: not an evidence quantity (computed)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: computed
+  speciation and processing:
+    pka1_h3po4:
+      key: pka1_h3po4
+      status: two sources
+      row_ids:
+      - TR-049
+      - TR-063
+      - TR-071
+      independent_dois: 3
+      best_grade: C
+      key_status: sourced
+    pka2_h3po4:
+      key: pka2_h3po4
+      status: two sources
+      row_ids:
+      - TR-050
+      - TR-064
+      - TR-072
+      independent_dois: 3
+      best_grade: C
+      key_status: sourced
+    pka3_h3po4:
+      key: pka3_h3po4
+      status: two sources
+      row_ids:
+      - TR-051
+      - TR-065
+      - TR-073
+      independent_dois: 3
+      best_grade: C
+      key_status: sourced
+    log10_k_cahpo4_aq:
+      key: log10_k_cahpo4_aq
+      status: two sources
+      row_ids:
+      - TR-053
+      - TR-067
+      - TR-074
+      - TR-083
+      independent_dois: 4
+      best_grade: A
+      key_status: sourced
+    log10_k_cah2po4:
+      key: log10_k_cah2po4
+      status: two sources
+      row_ids:
+      - TR-052
+      - TR-066
+      - TR-075
+      - TR-084
+      independent_dois: 4
+      best_grade: A
+      key_status: sourced
+    log10_k_capo4:
+      key: log10_k_capo4
+      status: two sources
+      row_ids:
+      - TR-054
+      - TR-068
+      independent_dois: 2
+      best_grade: C
+      key_status: sourced
+    pkw:
+      key: pkw
+      status: one source
+      row_ids:
+      - TS-023
+      independent_dois: 1
+      best_grade: C
+      key_status: single-source
+    p_total_slurry:
+      key: p_total_slurry
+      status: not an evidence quantity (design-input)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: design-input
+    ph_slurry_acid_adjusted:
+      key: ph_slurry_acid_adjusted
+      status: two sources
+      row_ids:
+      - TA-008
+      - TA-009
+      - TA-014
+      - TJ-088
+      independent_dois: 4
+      best_grade: B
+      key_status: sourced
+    al_passivation_window:
+      key: al_passivation_window
+      status: one source
+      row_ids:
+      - TR-091
+      independent_dois: 1
+      best_grade: C
+      key_status: single-source
+K1:
+  Gibbs energy of formation (tier 1):
+    hap:
+      key: dfg_hap
+      status: one source
+      row_ids:
+      - TR-009
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    btcp:
+      key: dfg_btcp
+      status: two sources
+      row_ids:
+      - TR-006
+      - TR-023
+      independent_dois: 2
+      best_grade: A
+      key_status: sourced
+    ocp:
+      key: dfg_ocp
+      status: one source
+      row_ids:
+      - TR-039
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    capp:
+      key: dfg_capp
+      status: one source
+      row_ids:
+      - TR-029
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    cameta:
+      key: dfg_cameta
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    acp:
+      key: dfg_acp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    alpo4:
+      key: dfg_alpo4
+      status: one source
+      row_ids:
+      - TR-003
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    al_pmeta3:
+      key: dfg_al_pmeta3
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    li3po4:
+      key: dfg_li3po4
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    po4_aq:
+      key: dfg_po4_aq
+      status: one source
+      row_ids:
+      - TR-015
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    hpo4_aq:
+      key: dfg_hpo4_aq
+      status: one source
+      row_ids:
+      - TR-111
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    h2po4_aq:
+      key: dfg_h2po4_aq
+      status: one source
+      row_ids:
+      - TR-114
+      independent_dois: 1
+      best_grade: C
+      key_status: single-source
+    h3po4_aq:
+      key: dfg_h3po4_aq
+      status: one source
+      row_ids:
+      - TR-117
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+  enthalpy of formation (tier 1):
+    hap:
+      key: dfh_hap
+      status: one source
+      row_ids:
+      - TR-008
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    btcp:
+      key: dfh_btcp
+      status: two sources
+      row_ids:
+      - TR-005
+      - TR-022
+      independent_dois: 2
+      best_grade: A
+      key_status: sourced
+    ocp:
+      key: dfh_ocp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    capp:
+      key: dfh_capp
+      status: one source
+      row_ids:
+      - TR-028
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    cameta:
+      key: dfh_cameta
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    acp:
+      key: dfh_acp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    alpo4:
+      key: dfh_alpo4
+      status: one source
+      row_ids:
+      - TR-002
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    al_pmeta3:
+      key: dfh_al_pmeta3
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    li3po4:
+      key: dfh_li3po4
+      status: one source
+      row_ids:
+      - TR-040
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    po4_aq:
+      key: dfh_po4_aq
+      status: one source
+      row_ids:
+      - TR-014
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    hpo4_aq:
+      key: dfh_hpo4_aq
+      status: one source
+      row_ids:
+      - TR-110
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    h2po4_aq:
+      key: dfh_h2po4_aq
+      status: one source
+      row_ids:
+      - TR-113
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    h3po4_aq:
+      key: dfh_h3po4_aq
+      status: one source
+      row_ids:
+      - TR-116
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+  standard entropy (tier 1):
+    hap:
+      key: s_hap
+      status: one source
+      row_ids:
+      - TR-007
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    btcp:
+      key: s_btcp
+      status: two sources
+      row_ids:
+      - TR-004
+      - TR-024
+      independent_dois: 2
+      best_grade: A
+      key_status: sourced
+    ocp:
+      key: s_ocp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    capp:
+      key: s_capp
+      status: one source
+      row_ids:
+      - TR-030
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    cameta:
+      key: s_cameta
+      status: one source
+      row_ids:
+      - TR-031
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    acp:
+      key: s_acp
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    alpo4:
+      key: s_alpo4
+      status: one source
+      row_ids:
+      - TR-001
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    al_pmeta3:
+      key: s_al_pmeta3
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    li3po4:
+      key: s_li3po4
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    po4_aq:
+      key: s_po4_aq
+      status: one source
+      row_ids:
+      - TR-013
+      independent_dois: 1
+      best_grade: A
+      key_status: single-source
+    hpo4_aq:
+      key: s_hpo4_aq
+      status: one source
+      row_ids:
+      - TR-112
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    h2po4_aq:
+      key: s_h2po4_aq
+      status: one source
+      row_ids:
+      - TR-115
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+    h3po4_aq:
+      key: s_h3po4_aq
+      status: one source
+      row_ids:
+      - TR-118
+      independent_dois: 1
+      best_grade: B
+      key_status: single-source
+  criteria and design axes:
+    cutoff_classes:
+      key: cutoff_classes
+      status: not an evidence quantity (registered)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: registered
+    margin_service:
+      key: margin_service
+      status: not an evidence quantity (registered)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: registered
+    t_svc_min:
+      key: t_svc_min
+      status: not an evidence quantity (registered)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: registered
+    j_svc:
+      key: j_svc
+      status: not an evidence quantity (registered)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: registered
+    a_oh_range:
+      key: a_oh_range
+      status: not an evidence quantity (design-input)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: design-input
+    a_w_cell:
+      key: a_w_cell
+      status: not an evidence quantity (design-input)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: design-input
+    solvation_po4_vs_li:
+      key: solvation_po4_vs_li
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    solvation_hpo4_vs_li:
+      key: solvation_hpo4_vs_li
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    solvation_h2po4_vs_li:
+      key: solvation_h2po4_vs_li
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+  Al-salt ladder:
+    log10_ksp_el_alpo4:
+      key: log10_ksp_el_alpo4
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    sigma_corr_alpo4:
+      key: sigma_corr_alpo4
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    rho_film_alpo4:
+      key: rho_film_alpo4
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    log10_ksp_el_al_pmeta3:
+      key: log10_ksp_el_al_pmeta3
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    sigma_corr_al_pmeta3:
+      key: sigma_corr_al_pmeta3
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    rho_film_al_pmeta3:
+      key: rho_film_al_pmeta3
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    log10_ksp_el_al_borate:
+      key: log10_ksp_el_al_borate
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    sigma_corr_al_borate:
+      key: sigma_corr_al_borate
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    rho_film_al_borate:
+      key: rho_film_al_borate
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    log10_ksp_el_al_oxalate:
+      key: log10_ksp_el_al_oxalate
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    sigma_corr_al_oxalate:
+      key: sigma_corr_al_oxalate
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    rho_film_al_oxalate:
+      key: rho_film_al_oxalate
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    log10_ksp_el_al2o3:
+      key: log10_ksp_el_al2o3
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    sigma_corr_al2o3:
+      key: sigma_corr_al2o3
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    rho_film_al2o3:
+      key: rho_film_al2o3
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    dv_film:
+      key: dv_film
+      status: gap
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: gap
+    j_corr_max:
+      key: j_corr_max
+      status: not an evidence quantity (registered)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: registered
+    t_max_corr:
+      key: t_max_corr
+      status: not an evidence quantity (registered)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: registered
+    s_tol:
+      key: s_tol
+      status: not an evidence quantity (registered)
+      row_ids: []
+      independent_dois: 0
+      best_grade: null
+      key_status: registered
+tier2:
+  rows_by_class:
+    A:
+    - TS-001
+    - TS-002
+    - TS-003
+    - TS-004
+    - TS-005
+    - TS-006
+    - TS-007
+    B:
+    - TS-008
+    - TS-009
+    - TS-010
+    - TS-011
+    - TS-012
+    - TS-014
+    - TS-015
+    - TS-016
+    - TR-085 (PH-W1.1, seed, grade D)
+    - TR-086 (PH-W1.1, seed, grade D)
+    - TR-088 (PH-W1.1, seed, grade D)
+    - TR-089 (PH-W1.1, seed, grade D)
+    C:
+    - TS-013
+  phases_with_a_tier2_record:
+    AlPO4 on Al foil: class A (TS-001 to TS-007; fluorinated LiPF6)
+    AlPO4 on NMC622 collector cycled to 4.5 V: class B-type (TS-008)
+    Li-Al-phosphate on LiCoO2 (abstract only): class B, grade D (TS-009, TS-010)
+    FePO4 on LNMO (analogue phase): class B (TS-011 to TS-013)
+    Li3PO4 on NCA: class B (TS-014 to TS-016)
+    AlPO4 on LiCoO2 (abstract only, seed): class B, grade D (TR-085 to TR-088)
+  phases_without_any_tier2_record:
+  - hydroxyapatite
+  - acp
+  - ocp
+  - btcp
+  - capp
+  - cameta
+  - Al(PO3)3
+  - Al borate
+  - Al oxalate
+  fluorine_free_phosphate_record: 'none: every record read is in a LiPF6 carbonate electrolyte (label F_el)'
+route_layer:
+  hydrolysis_polyp_k_ph6:
+    key: hydrolysis_polyp_k_ph6
+    status: one source
+    row_ids:
+    - TT-001
+    - TT-003
+    - TT-005
+    independent_dois: 1
+    best_grade: C
+    key_status: single-source
+    note: 'several determinations of one paper or one review: counted as one source'
+  hydrolysis_polyp_k_ph6_ca1mm:
+    key: hydrolysis_polyp_k_ph6_ca1mm
+    status: one source
+    row_ids:
+    - TT-002
+    - TT-004
+    - TT-006
+    independent_dois: 1
+    best_grade: C
+    key_status: single-source
+    note: 'several determinations of one paper or one review: counted as one source'
+  hydrolysis_polyp_k_ph8:
+    key: hydrolysis_polyp_k_ph8
+    status: one source
+    row_ids:
+    - TT-007
+    - TT-009
+    - TT-011
+    independent_dois: 1
+    best_grade: C
+    key_status: single-source
+    note: 'several determinations of one paper or one review: counted as one source'
+  hydrolysis_polyp_k_ph8_ca1mm:
+    key: hydrolysis_polyp_k_ph8_ca1mm
+    status: one source
+    row_ids:
+    - TT-008
+    - TT-010
+    - TT-012
+    independent_dois: 1
+    best_grade: C
+    key_status: single-source
+    note: 'several determinations of one paper or one review: counted as one source'
+  hydrolysis_polyp_half_life_ph6:
+    key: hydrolysis_polyp_half_life_ph6
+    status: one source
+    row_ids:
+    - TT-001
+    - TT-003
+    - TT-005
+    independent_dois: 1
+    best_grade: C
+    key_status: computed
+    note: 'several determinations of one paper or one review: counted as one source'
+  hydrolysis_polyp_half_life_ph6_ca1mm:
+    key: hydrolysis_polyp_half_life_ph6_ca1mm
+    status: one source
+    row_ids:
+    - TT-002
+    - TT-004
+    - TT-006
+    independent_dois: 1
+    best_grade: C
+    key_status: computed
+    note: 'several determinations of one paper or one review: counted as one source'
+  hydrolysis_polyp_half_life_ph8:
+    key: hydrolysis_polyp_half_life_ph8
+    status: one source
+    row_ids:
+    - TT-007
+    - TT-009
+    - TT-011
+    independent_dois: 1
+    best_grade: C
+    key_status: computed
+    note: 'several determinations of one paper or one review: counted as one source'
+  hydrolysis_polyp_half_life_ph8_ca1mm:
+    key: hydrolysis_polyp_half_life_ph8_ca1mm
+    status: one source
+    row_ids:
+    - TT-008
+    - TT-010
+    - TT-012
+    independent_dois: 1
+    best_grade: C
+    key_status: computed
+    note: 'several determinations of one paper or one review: counted as one source'
+  hydrolysis_ca_enhancement_ph6:
+    key: hydrolysis_ca_enhancement_ph6
+    status: one source
+    row_ids:
+    - TT-013
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  hydrolysis_ca_enhancement_ph8:
+    key: hydrolysis_ca_enhancement_ph8
+    status: one source
+    row_ids:
+    - TT-014
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  hydrolysis_pp_half_life_100c_ph10:
+    key: hydrolysis_pp_half_life_100c_ph10
+    status: one source
+    row_ids:
+    - TT-050
+    independent_dois: 1
+    best_grade: C
+    key_status: single-source
+  hydrolysis_polyp_25c_literature_halflife:
+    key: hydrolysis_polyp_25c_literature_halflife
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  polyp_al_log_beta1_cyclo_p3:
+    key: polyp_al_log_beta1_cyclo_p3
+    status: one source
+    row_ids:
+    - TT-019
+    - TT-023
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+    note: 'several determinations of one paper or one review: counted as one source'
+  polyp_al_log_beta1_cyclo_p4:
+    key: polyp_al_log_beta1_cyclo_p4
+    status: one source
+    row_ids:
+    - TT-020
+    - TT-024
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+    note: 'several determinations of one paper or one review: counted as one source'
+  polyp_al_log_beta1_cyclo_p6:
+    key: polyp_al_log_beta1_cyclo_p6
+    status: one source
+    row_ids:
+    - TT-021
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  polyp_al_log_beta1_cyclo_p8:
+    key: polyp_al_log_beta1_cyclo_p8
+    status: one source
+    row_ids:
+    - TT-022
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  polyp_al_log_beta1_linear:
+    key: polyp_al_log_beta1_linear
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  polyp_chain_length_material:
+    key: polyp_chain_length_material
+    status: one source
+    row_ids:
+    - TT-035
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  polyp_chain_distribution:
+    key: polyp_chain_distribution
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  polyp_log10_ksp_cameta:
+    key: polyp_log10_ksp_cameta
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  polyp_log10_ksp_al:
+    key: polyp_log10_ksp_al
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  polyp_al_speciation_ph5_85:
+    key: polyp_al_speciation_ph5_85
+    status: not an evidence quantity (computed)
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: computed
+  coacervate_ca_threshold:
+    key: coacervate_ca_threshold
+    status: one source
+    row_ids:
+    - TT-025
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  coacervate_pH_window:
+    key: coacervate_pH_window
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  coacervate_onset_volume:
+    key: coacervate_onset_volume
+    status: one source
+    row_ids:
+    - TT-031
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  coacervate_ca_to_polyp_ratio:
+    key: coacervate_ca_to_polyp_ratio
+    status: one source
+    row_ids:
+    - TT-032
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  coacervate_viscosity:
+    key: coacervate_viscosity
+    status: one source
+    row_ids:
+    - TT-033
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  coacervate_gamma_nl:
+    key: coacervate_gamma_nl
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  coacervate_gamma_analog:
+    key: coacervate_gamma_analog
+    status: one source
+    row_ids:
+    - TT-042
+    - TT-043
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+    note: 'several determinations of one paper or one review: counted as one source'
+  matrix_chitosan_pka:
+    key: matrix_chitosan_pka
+    status: one source
+    row_ids:
+    - TT-052
+    independent_dois: 1
+    best_grade: C
+    key_status: single-source
+  matrix_chitosan_polyp_complex:
+    key: matrix_chitosan_polyp_complex
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  matrix_oxidation_onset_chitosan:
+    key: matrix_oxidation_onset_chitosan
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  matrix_oxidation_onset_pda:
+    key: matrix_oxidation_onset_pda
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  glass_dfh_cameta_glass:
+    key: glass_dfh_cameta_glass
+    status: one source
+    row_ids:
+    - TR-032
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  glass_dfh_lipo3_glass:
+    key: glass_dfh_lipo3_glass
+    status: two sources
+    row_ids:
+    - TR-041
+    - TT-044
+    independent_dois: 2
+    best_grade: B
+    key_status: sourced
+  glass_dfh_lipo3_crystal:
+    key: glass_dfh_lipo3_crystal
+    status: one source
+    row_ids:
+    - TR-042
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  glass_crystal_correction_lipo3:
+    key: glass_crystal_correction_lipo3
+    status: two sources
+    row_ids:
+    - TR-041
+    - TT-044
+    - TR-042
+    independent_dois: 2
+    best_grade: B
+    key_status: computed
+  glass_dfh_napo3_glass:
+    key: glass_dfh_napo3_glass
+    status: one source
+    row_ids:
+    - TT-045
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  glass_dfh_napo3_crystal:
+    key: glass_dfh_napo3_crystal
+    status: one source
+    row_ids:
+    - TT-047
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  glass_crystal_correction_napo3:
+    key: glass_crystal_correction_napo3
+    status: one source
+    row_ids:
+    - TT-045
+    - TT-047
+    independent_dois: 1
+    best_grade: B
+    key_status: computed
+    note: 'several determinations of one paper or one review: counted as one source'
+  glass_dfh_kpo3_glass:
+    key: glass_dfh_kpo3_glass
+    status: one source
+    row_ids:
+    - TT-046
+    independent_dois: 1
+    best_grade: B
+    key_status: single-source
+  glass_s0_cameta_glass:
+    key: glass_s0_cameta_glass
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  glass_crystal_correction_cameta:
+    key: glass_crystal_correction_cameta
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  glass_dfh_alpmeta3_glass:
+    key: glass_dfh_alpmeta3_glass
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  glass_s0_alpmeta3_glass:
+    key: glass_s0_alpmeta3_glass
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  glass_crystal_correction_alpmeta3:
+    key: glass_crystal_correction_alpmeta3
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  matrix_baseline_hq_film_thickness:
+    key: matrix_baseline_hq_film_thickness
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap
+  matrix_baseline_tsinghua_film_thickness:
+    key: matrix_baseline_tsinghua_film_thickness
+    status: gap
+    row_ids: []
+    independent_dois: 0
+    best_grade: null
+    key_status: gap

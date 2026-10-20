@@ -1,4 +1,4 @@
-"""Thread-scoped retrieval for the evidence threads (T-A to T-R).
+"""Thread-scoped retrieval for the evidence threads (T-A to T-T).
 
 A thread session wraps nacre.retrieval with paths of its own, so parallel threads never share a
 writable file:

@@ -2250,6 +2250,2029 @@ params:
       Analog (A1): the computed electron tunnelling barrier of a carbonate film (Li2CO3 on Li, PBE gap, which
       underestimates the gap) for the gap phi_b_caco3 (CaCO3 on Al). d_max stays a gap: rho_e, m_eff and j_0 are gaps.
 
+  # ================================================================ PH-W1.2 additions (README section 8): phosphate, K1/K2 and route-layer keys; additive only
+  log10_ksp_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: hydroxyapatite Ca5(PO4)3OH, 298.15 K, ion activity product (Ca2+)^5 (PO4 3-)^3 (OH-), saturated solutions
+      at pH 5 to 7, ion pairs allowed for; per Ca5 formula unit
+    admit:
+    - row: TR-055
+      original: moreno-1968-steam-heated
+    - row: TR-056
+      original: moreno-1968-air-heated
+    comparators:
+    - TR-057
+    - TR-058
+    notes: 'Two preparations of one paper (Moreno et al. 1968) that differ by about 3 log units; the authors take the spread
+      as the experimental uncertainty of HAP Ksp. TR-057 is on a Ca10 basis (twice the value per Ca5) and TR-058 is a correlation
+      argument, not a measurement (E2), so both are comparators. Conflict listed in lit/conflicts.md terms: published phosphate
+      Ksp values are contested.'
+  log10_ksp_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: amorphous calcium phosphate (ACP, amorphous tricalcium phosphate), 293 to 298 K, per Ca3(PO4)2; apparent solubility
+      products of ACPs of different ageing and composition, compiled in a review
+    admit:
+    - row: TR-097
+    - row: TR-098
+    - row: TR-099
+    - row: TR-100
+    - row: TR-101
+    - row: TR-102
+    comparators:
+    - TR-103
+    - TR-105
+    notes: 'All six rows are grade D secondary citations of different originals in one review table (E5 applies: no A to C
+      row exists for ACP). They are apparent solubilities per Ca3(PO4)2 and depend on ageing, Ca/P and carbonate. TR-103 is
+      crystalline alpha-TCP and TR-105 states that several ACP values lie below the crystal, which the authors call erroneous.'
+  log10_ksp_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    conditions: octacalcium phosphate Ca8H2(PO4)6.5H2O dissolving to 8 Ca2+ + 2 H+ + 6 PO4(3-), 23.5 C (nearest to 298 K),
+      pH about 5 to 6
+    admit:
+    - row: TR-046
+    comparators:
+    - TR-047
+    - TR-048
+    notes: 'Single source (Tung 1988, one paper): TR-047 (37 C) and TR-048 (4 C) are the same paper at other temperatures
+      and are comparators. No 25 C entry exists in the paper.'
+  log10_ksp_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    conditions: beta-tricalcium phosphate Ca3(PO4)2, Mg-free, 298.15 K, ion product (Ca2+)^3 (PO4 3-)^2, pH about 5.5, 27
+      months under nitrogen
+    admit:
+    - row: TR-069
+    comparators:
+    - TR-070
+    - TR-104
+    notes: Single source (Li et al. 2008). The same paper gives 29.05 after 3 months under air (TR-070), so the value drifts
+      by about 0.2 to 0.4 log units with equilibration time; this is the experimental spread the single-source flag stands
+      for. TR-104 is a grade D secondary value (E5).
+  log10_ksp_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no solubility product of calcium pyrophosphate beta-Ca2P2O7 in lit/evidence_table.csv (T-R searched openalex
+      and crossref for Ksp of calcium pyrophosphate and metaphosphate: no source). A value computed from the formation Gibbs
+      energy would be a computation of this study, not a sourced input'
+  log10_ksp_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no solubility product of calcium metaphosphate Ca(PO3)2 in lit/evidence_table.csv (T-R searched openalex
+      and crossref for Ksp of calcium pyrophosphate and metaphosphate: no source). A value computed from the formation Gibbs
+      energy would be a computation of this study, not a sourced input'
+  v_m_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: V_m
+    unit: m^3 mol^-1
+    regimes:
+    - R-slurry
+    conditions: hydroxyapatite Ca5(PO4)3OH, 298.15 K, per formula unit as written
+    admit:
+    - row: TS-021
+      uncertainty: pm
+    notes: 'Single source: USGS B2131 table, volume read from the page image; the printed uncertainty is the table''s 2 sigma
+      convention.'
+  v_m_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: V_m
+    unit: m^3 mol^-1
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no molar volume, lattice volume or crystal density of amorphous calcium phosphate Ca3(PO4)2.nH2O (ACP framing)
+      in lit/evidence_table.csv (USGS B2131 prints volumes only for berlinite, whitlockite and hydroxyapatite among the phosphates
+      read)'
+  v_m_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: V_m
+    unit: m^3 mol^-1
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no molar volume, lattice volume or crystal density of octacalcium phosphate Ca8H2(PO4)6.5H2O in lit/evidence_table.csv
+      (USGS B2131 prints volumes only for berlinite, whitlockite and hydroxyapatite among the phosphates read)'
+  v_m_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: V_m
+    unit: m^3 mol^-1
+    regimes:
+    - R-slurry
+    conditions: whitlockite Ca3(PO4)2 (the Ca3(PO4)2 entry of the table, read as the beta-TCP framing), 298.15 K
+    admit:
+    - row: TS-019
+      uncertainty: pm
+    notes: Single source (USGS B2131). The table's mineral is whitlockite, the Mg-bearing mineral; the beta-TCP framing is
+      an identification made here, as for the thermochemistry keys.
+  v_m_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: V_m
+    unit: m^3 mol^-1
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no molar volume, lattice volume or crystal density of calcium pyrophosphate beta-Ca2P2O7 in lit/evidence_table.csv
+      (USGS B2131 prints volumes only for berlinite, whitlockite and hydroxyapatite among the phosphates read)'
+  v_m_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: V_m
+    unit: m^3 mol^-1
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no molar volume, lattice volume or crystal density of calcium metaphosphate Ca(PO3)2 in lit/evidence_table.csv
+      (USGS B2131 prints volumes only for berlinite, whitlockite and hydroxyapatite among the phosphates read)'
+  molar_mass_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: M_fu
+    unit: kg mol^-1
+    regimes:
+    - R-slurry
+    conditions: hydroxyapatite Ca5(PO4)3OH formula weight
+    admit:
+    - row: TS-022
+      uncertainty: none
+    notes: Formula weight printed in the USGS B2131 table (one source).
+  density_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-slurry
+    status: computed
+    derive:
+      expr: M / V
+      inputs:
+        M: molar_mass_hap
+        V: v_m_hap
+      as: none
+    notes: Crystal density as formula weight over molar volume (D1), both from USGS B2131. No density is printed in the table.
+  molar_mass_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: M_fu
+    unit: kg mol^-1
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no printed formula weight of amorphous calcium phosphate Ca3(PO4)2.nH2O (ACP framing) in lit/evidence_table.csv;
+      the weight follows from the formula and standard atomic weights, which are not typed here (README E1)'
+  density_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no density of amorphous calcium phosphate Ca3(PO4)2.nH2O (ACP framing) in lit/evidence_table.csv'
+  molar_mass_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: M_fu
+    unit: kg mol^-1
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no printed formula weight of octacalcium phosphate Ca8H2(PO4)6.5H2O in lit/evidence_table.csv; the weight
+      follows from the formula and standard atomic weights, which are not typed here (README E1)'
+  density_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no density of octacalcium phosphate Ca8H2(PO4)6.5H2O in lit/evidence_table.csv'
+  molar_mass_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: M_fu
+    unit: kg mol^-1
+    regimes:
+    - R-slurry
+    conditions: Ca3(PO4)2 formula weight
+    admit:
+    - row: TS-020
+      uncertainty: none
+    notes: Formula weight printed in the USGS B2131 table (one source).
+  density_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-slurry
+    status: computed
+    derive:
+      expr: M / V
+      inputs:
+        M: molar_mass_btcp
+        V: v_m_btcp
+      as: none
+    notes: Crystal density as formula weight over molar volume (D1), both from USGS B2131. No density is printed in the table.
+  molar_mass_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: M_fu
+    unit: kg mol^-1
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no printed formula weight of calcium pyrophosphate beta-Ca2P2O7 in lit/evidence_table.csv; the weight follows
+      from the formula and standard atomic weights, which are not typed here (README E1)'
+  density_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no density of calcium pyrophosphate beta-Ca2P2O7 in lit/evidence_table.csv'
+  molar_mass_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: M_fu
+    unit: kg mol^-1
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no printed formula weight of calcium metaphosphate Ca(PO3)2 in lit/evidence_table.csv; the weight follows
+      from the formula and standard atomic weights, which are not typed here (README E1)'
+  density_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no density of calcium metaphosphate Ca(PO3)2 in lit/evidence_table.csv'
+  gamma_nl_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nl
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no measured or computed interfacial free energy of hydroxyapatite Ca5(PO4)3OH against aqueous solution in
+      lit/evidence_table.csv (T-C holds calcite and ACC carbonate values only; the Ca-polyphosphate coacervate-water tension,
+      a different liquid-liquid quantity, is in coacervate_gamma_analog)'
+  gamma_nv_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nv
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no surface free energy of hydroxyapatite Ca5(PO4)3OH against vapour in lit/evidence_table.csv'
+  gamma_nl_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nl
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no measured or computed interfacial free energy of amorphous calcium phosphate Ca3(PO4)2.nH2O (ACP framing)
+      against aqueous solution in lit/evidence_table.csv (T-C holds calcite and ACC carbonate values only; the Ca-polyphosphate
+      coacervate-water tension, a different liquid-liquid quantity, is in coacervate_gamma_analog)'
+  gamma_nv_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nv
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no surface free energy of amorphous calcium phosphate Ca3(PO4)2.nH2O (ACP framing) against vapour in lit/evidence_table.csv'
+  gamma_nl_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nl
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no measured or computed interfacial free energy of octacalcium phosphate Ca8H2(PO4)6.5H2O against aqueous
+      solution in lit/evidence_table.csv (T-C holds calcite and ACC carbonate values only; the Ca-polyphosphate coacervate-water
+      tension, a different liquid-liquid quantity, is in coacervate_gamma_analog)'
+  gamma_nv_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nv
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no surface free energy of octacalcium phosphate Ca8H2(PO4)6.5H2O against vapour in lit/evidence_table.csv'
+  gamma_nl_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nl
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no measured or computed interfacial free energy of beta-tricalcium phosphate Ca3(PO4)2 against aqueous solution
+      in lit/evidence_table.csv (T-C holds calcite and ACC carbonate values only; the Ca-polyphosphate coacervate-water tension,
+      a different liquid-liquid quantity, is in coacervate_gamma_analog)'
+  gamma_nv_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nv
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no surface free energy of beta-tricalcium phosphate Ca3(PO4)2 against vapour in lit/evidence_table.csv'
+  gamma_nl_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nl
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no measured or computed interfacial free energy of calcium pyrophosphate beta-Ca2P2O7 against aqueous solution
+      in lit/evidence_table.csv (T-C holds calcite and ACC carbonate values only; the Ca-polyphosphate coacervate-water tension,
+      a different liquid-liquid quantity, is in coacervate_gamma_analog)'
+  gamma_nv_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nv
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no surface free energy of calcium pyrophosphate beta-Ca2P2O7 against vapour in lit/evidence_table.csv'
+  gamma_nl_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nl
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no measured or computed interfacial free energy of calcium metaphosphate Ca(PO3)2 against aqueous solution
+      in lit/evidence_table.csv (T-C holds calcite and ACC carbonate values only; the Ca-polyphosphate coacervate-water tension,
+      a different liquid-liquid quantity, is in coacervate_gamma_analog)'
+  gamma_nv_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nv
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no surface free energy of calcium metaphosphate Ca(PO3)2 against vapour in lit/evidence_table.csv'
+  nu_ca_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Ca
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca5(PO4)3OH (contract v5 nu_ions); a count read from
+      the composition by the screen, so no evidence row is entered
+  nu_x_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_X
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca5(PO4)3OH (contract v5 nu_ions); a count read from
+      the composition by the screen, so no evidence row is entered
+  nu_y_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Y
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca5(PO4)3OH (contract v5 nu_ions); a count read from
+      the composition by the screen, so no evidence row is entered
+  n_hyd_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: n_hyd
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: 'fixed by the registered formula unit Ca5(PO4)3OH (contract v5: structural water of the framing); read from the
+      composition by the screen'
+  nu_ca_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Ca
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca3(PO4)2.nH2O (contract v5 nu_ions); a count read from
+      the composition by the screen, so no evidence row is entered
+  nu_x_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_X
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca3(PO4)2.nH2O (contract v5 nu_ions); a count read from
+      the composition by the screen, so no evidence row is entered
+  nu_y_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Y
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca3(PO4)2.nH2O (contract v5 nu_ions); a count read from
+      the composition by the screen, so no evidence row is entered
+  n_hyd_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: n_hyd
+    unit: '1'
+    regimes:
+    - R-slurry
+    comparators:
+    - TR-106
+    status: gap
+    reason: 'gap: structural water of ACP is not printed as a number per formula unit in any source read (retried in PH-W1.2:
+      Eden 2021, Materialia, no retrievable copy; Meyer and Eanes 1978 and Christoffersen 1990 paywalled). TR-106 gives 10
+      to 20 percent tightly bound water of unstated basis; the conversion to n of about 1.9 to 4.3 needs an assumption of
+      the basis and is not admitted'
+  nu_ca_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Ca
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca8H2(PO4)6.5H2O (contract v5 nu_ions); a count read
+      from the composition by the screen, so no evidence row is entered
+  nu_x_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_X
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca8H2(PO4)6.5H2O (contract v5 nu_ions); a count read
+      from the composition by the screen, so no evidence row is entered
+  nu_y_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Y
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca8H2(PO4)6.5H2O (contract v5 nu_ions); a count read
+      from the composition by the screen, so no evidence row is entered
+  n_hyd_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: n_hyd
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: 'fixed by the registered formula unit Ca8H2(PO4)6.5H2O (contract v5: structural water of the framing); read from
+      the composition by the screen'
+  nu_ca_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Ca
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca3(PO4)2 (contract v5 nu_ions); a count read from the
+      composition by the screen, so no evidence row is entered
+  nu_x_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_X
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca3(PO4)2 (contract v5 nu_ions); a count read from the
+      composition by the screen, so no evidence row is entered
+  nu_y_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Y
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca3(PO4)2 (contract v5 nu_ions); a count read from the
+      composition by the screen, so no evidence row is entered
+  n_hyd_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: n_hyd
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: 'fixed by the registered formula unit Ca3(PO4)2 (contract v5: structural water of the framing); read from the
+      composition by the screen'
+  nu_ca_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Ca
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca2P2O7 (contract v5 nu_ions); a count read from the
+      composition by the screen, so no evidence row is entered
+  nu_x_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_X
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca2P2O7 (contract v5 nu_ions); a count read from the
+      composition by the screen, so no evidence row is entered
+  nu_y_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Y
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca2P2O7 (contract v5 nu_ions); a count read from the
+      composition by the screen, so no evidence row is entered
+  n_hyd_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: n_hyd
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: 'fixed by the registered formula unit Ca2P2O7 (contract v5: structural water of the framing); read from the composition
+      by the screen'
+  nu_ca_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Ca
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca(PO3)2 (contract v5 nu_ions); a count read from the
+      composition by the screen, so no evidence row is entered
+  nu_x_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_X
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca(PO3)2 (contract v5 nu_ions); a count read from the
+      composition by the screen, so no evidence row is entered
+  nu_y_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: nu_Y
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: fixed by the stoichiometry of the registered formula unit Ca(PO3)2 (contract v5 nu_ions); a count read from the
+      composition by the screen, so no evidence row is entered
+  n_hyd_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: n_hyd
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: 'fixed by the registered formula unit Ca(PO3)2 (contract v5: structural water of the framing); read from the composition
+      by the screen'
+  pka1_h3po4:
+    added_in: P0-W1.PH-W1.2
+    symbol: pK1_phosphoric
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: thermodynamic first dissociation constant of H3PO4, 295 to 298 K, I = 0
+    admit:
+    - row: TR-049
+    - row: TR-063
+    - row: TR-071
+    notes: Three compilations or papers (Tung 1988, Carey 2000, Li 2008), all grade C; one value is at 295.15 K.
+  pka2_h3po4:
+    added_in: P0-W1.PH-W1.2
+    symbol: pK2_phosphoric
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: thermodynamic second dissociation constant of H3PO4, 295 to 298 K, I = 0
+    admit:
+    - row: TR-050
+    - row: TR-064
+    - row: TR-072
+    notes: As pka1_h3po4.
+  pka3_h3po4:
+    added_in: P0-W1.PH-W1.2
+    symbol: pK3_phosphoric
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: thermodynamic third dissociation constant of H3PO4, 295 to 298 K, I = 0
+    admit:
+    - row: TR-051
+    - row: TR-065
+    - row: TR-073
+    notes: As pka1_h3po4.
+  log10_k_cahpo4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_CaHPO4_aq
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: formation constant of the CaHPO4(aq) ion pair, 295 to 298 K, I = 0
+    admit:
+    - row: TR-053
+    - row: TR-067
+    - row: TR-074
+    - row: TR-083
+    notes: Four sources; TR-083 is the only grade A row (Gregory 1970). The other three are compilations.
+  log10_k_cah2po4:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_CaH2PO4
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: formation constant of the CaH2PO4+ ion pair, 295 to 298 K, I = 0
+    admit:
+    - row: TR-052
+    - row: TR-066
+    - row: TR-075
+    - row: TR-084
+    notes: Four sources; the values span 0.71 to 0.93 (TR-084 is the grade A row).
+  log10_k_capo4:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_CaPO4
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: formation constant of the CaPO4- ion pair, 295 to 298 K, I = 0
+    admit:
+    - row: TR-054
+    - row: TR-068
+    notes: Two compilations that differ by exactly 1.0 log unit (6.462 and 7.462; one of them may be a transcription difference);
+      both are kept and the prior is the uniform span.
+  pkw:
+    added_in: P0-W1.PH-W1.2
+    symbol: pKw
+    unit: '1'
+    regimes:
+    - R-slurry
+    conditions: ionic product of water at 298.15 K, thermodynamic constant
+    admit:
+    - row: TS-023
+    notes: 'Single source: a constant used in a solubility paper (grade C). The value is not typed from memory.'
+  p_total_slurry:
+    added_in: P0-W1.PH-W1.2
+    symbol: P_T
+    unit: mol m^-3
+    regimes:
+    - R-slurry
+    status: design-input
+    reason: 'design input (the phosphate dose axis P_T): set by the design, not a measured property; the pH-adjustment doses
+      printed for aqueous slurries are comparators (TA-008, TA-009, TA-014)'
+    comparators:
+    - TA-008
+    - TA-009
+    - TA-014
+  ph_slurry_acid_adjusted:
+    added_in: P0-W1.PH-W1.2
+    symbol: pH
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: aqueous cathode or anode slurries whose pH was set with H3PO4; bounds printed as < are taken at the bound
+    admit:
+    - row: TA-008
+    - row: TA-009
+    - row: TA-014
+    - row: TJ-088
+    notes: Four slurries (NMC811 twice, LTO, LFP) lowered with phosphoric acid; the first two are printed as upper bounds
+      only. The key is the phosphoric-acid-specific counterpart of ph_slurry_modified (which also holds PAA, acetic acid and
+      CO2).
+  al_passivation_window:
+    added_in: P0-W1.PH-W1.2
+    symbol: pH
+    unit: '1'
+    regimes:
+    - R-slurry
+    conditions: pH window in which the air-formed oxide on Al holds, 0.1 mM soluble Al3+
+    admit:
+    - row: TR-091
+    comparators:
+    - TR-090
+    - TB-023
+    - TB-024
+    - TB-025
+    - TB-026
+    - TB-027
+    - TB-028
+    - TB-030
+    notes: Bounds of the window as one interval (4 to 8.5). Single source of grade C (TR-091); the 4.5 to 8.5 statement (TR-090)
+      is grade D and is a comparator (E5). The Al3+ hydrolysis constants and Al(OH)3 and gibbsite solubility constants TB-023
+      to TB-030 are the inputs from which the window follows at a stated Al3+; they are comparators here and are read by the
+      Al speciation inside the screen.
+  cutoff_classes:
+    added_in: P0-W1.PH-W1.2
+    symbol: E_cell_max
+    unit: V
+    regimes:
+    - R-cell
+    status: registered
+    reason: 'registered at cp4 (claims register K1): three classes (LFP-class, 4.2 to 4.3 V, 4.4 to 4.5 V) named in ops/tracks/redirect_plan.md.
+      The class values are read from the existing e_cell_max keys by cathode class; this session types none and adds no registration
+      text'
+  margin_service:
+    added_in: P0-W1.PH-W1.2
+    symbol: m_svc
+    unit: V
+    regimes:
+    - R-cell
+    status: registered
+    reason: 'margin: set by PH-W3.2 (this session adds no margins or thresholds); the potential-reading uncertainty of a tier
+      2 record is a registered convention, not a sourced value'
+  t_svc_min:
+    added_in: P0-W1.PH-W1.2
+    symbol: t_svc
+    unit: s
+    regimes:
+    - R-cell
+    status: registered
+    reason: registered by PH-W3.2 (service-time criterion of K1); the hold durations that tier 2 rows record (TS-001 to TS-016)
+      are comparators, not the criterion
+  j_svc:
+    added_in: P0-W1.PH-W1.2
+    symbol: j_svc
+    unit: A m^-2
+    regimes:
+    - R-cell
+    status: registered
+    reason: registered by PH-W3.2 (current-density criterion of K1); none of the tier 2 papers read prints a current density
+      at the stated holds in the text (the values are in figures)
+  dfg_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: hydroxyapatite Ca5(PO4)3OH (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-009
+      uncertainty: pm
+    comparators:
+    - TR-061
+    notes: One source (USGS B2131; 2 sigma table convention). The Ca10 values quoted from Moreno 1968 (TR-061, TR-062; inferred
+      from magnitude) are comparators because the basis is not printed (E2).
+  dfh_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: hydroxyapatite Ca5(PO4)3OH (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-008
+      uncertainty: pm
+    comparators:
+    - TR-061
+    notes: One source (USGS B2131; 2 sigma table convention). The Ca10 values quoted from Moreno 1968 (TR-061, TR-062; inferred
+      from magnitude) are comparators because the basis is not printed (E2).
+  s_hap:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    conditions: hydroxyapatite Ca5(PO4)3OH (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-007
+      uncertainty: pm
+    comparators:
+    - TR-062
+    notes: One source (USGS B2131; 2 sigma table convention). The Ca10 values quoted from Moreno 1968 (TR-061, TR-062; inferred
+      from magnitude) are comparators because the basis is not printed (E2).
+  dfg_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: beta-Ca3(PO4)2 (whitlockite entry of B2131 and the beta-TCP entry of NBS TN 270-6), 298.15 K, 1 bar (standard
+      state)
+    admit:
+    - row: TR-006
+      uncertainty: pm
+    - row: TR-023
+    comparators:
+    - TR-026
+    notes: Two independent tables (USGS B2131 and NBS TN 270-6); alpha-TCP rows are other polymorph comparators. B2131's mineral
+      is whitlockite; the identification with the beta framing is made here.
+  dfh_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: beta-Ca3(PO4)2 (whitlockite entry of B2131 and the beta-TCP entry of NBS TN 270-6), 298.15 K, 1 bar (standard
+      state)
+    admit:
+    - row: TR-005
+      uncertainty: pm
+    - row: TR-022
+    comparators:
+    - TR-025
+    notes: Two independent tables (USGS B2131 and NBS TN 270-6); alpha-TCP rows are other polymorph comparators. B2131's mineral
+      is whitlockite; the identification with the beta framing is made here.
+  s_btcp:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    conditions: beta-Ca3(PO4)2 (whitlockite entry of B2131 and the beta-TCP entry of NBS TN 270-6), 298.15 K, 1 bar (standard
+      state)
+    admit:
+    - row: TR-004
+      uncertainty: pm
+    - row: TR-024
+    comparators:
+    - TR-027
+    notes: Two independent tables (USGS B2131 and NBS TN 270-6); alpha-TCP rows are other polymorph comparators. B2131's mineral
+      is whitlockite; the identification with the beta framing is made here.
+  dfg_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: octacalcium phosphate Ca8H2(PO4)6.5H2O, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-039
+    notes: 'Only DfG is printed (NBS TN 270-6, Table); DfH and S0 are gaps (T-R gaps.md, retried in PH-W1.2: no source).'
+  dfh_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard enthalpy of formation of octacalcium phosphate Ca8H2(PO4)6.5H2O in lit/evidence_table.csv. Only
+      DfG is printed (NBS TN 270-6, Table); DfH and S0 are gaps (T-R gaps.md, retried in PH-W1.2: no source).'
+  s_ocp:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard entropy of octacalcium phosphate Ca8H2(PO4)6.5H2O in lit/evidence_table.csv. Only DfG is printed
+      (NBS TN 270-6, Table); DfH and S0 are gaps (T-R gaps.md, retried in PH-W1.2: no source).'
+  dfg_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: beta-Ca2P2O7 (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-029
+    notes: One source (NBS TN 270-6).
+  dfh_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: beta-Ca2P2O7 (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-028
+    notes: One source (NBS TN 270-6).
+  s_capp:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    conditions: beta-Ca2P2O7 (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-030
+    notes: One source (NBS TN 270-6).
+  dfg_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard Gibbs energy of formation of beta-Ca(PO3)2 (crystalline) in lit/evidence_table.csv. Only S0
+      of the crystal is printed (NBS TN 270-6); crystalline DfH and DfG are blank in the table (retried: Sandstrom 2006, 10.1016/j.jct.2006.01.018,
+      paywalled, no abstract). The glass DfH is a glass_* key.'
+  dfh_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard enthalpy of formation of beta-Ca(PO3)2 (crystalline) in lit/evidence_table.csv. Only S0 of the
+      crystal is printed (NBS TN 270-6); crystalline DfH and DfG are blank in the table (retried: Sandstrom 2006, 10.1016/j.jct.2006.01.018,
+      paywalled, no abstract). The glass DfH is a glass_* key.'
+  s_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    conditions: beta-Ca(PO3)2 (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-031
+    notes: 'Only S0 of the crystal is printed (NBS TN 270-6); crystalline DfH and DfG are blank in the table (retried: Sandstrom
+      2006, 10.1016/j.jct.2006.01.018, paywalled, no abstract). The glass DfH is a glass_* key.'
+  dfg_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard Gibbs energy of formation of amorphous calcium phosphate in lit/evidence_table.csv. No formation
+      data of ACP in the table.'
+  dfh_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard enthalpy of formation of amorphous calcium phosphate in lit/evidence_table.csv. No formation
+      data of ACP in the table.'
+  s_acp:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard entropy of amorphous calcium phosphate in lit/evidence_table.csv. No formation data of ACP in
+      the table.'
+  dfg_alpo4:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: berlinite AlPO4 (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-003
+      uncertainty: pm
+    comparators:
+    - TR-108
+    notes: One source (USGS B2131). The hydrate rows TR-107 and TR-108 are metastable-phase comparators.
+  dfh_alpo4:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: berlinite AlPO4 (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-002
+      uncertainty: pm
+    notes: One source (USGS B2131). The hydrate rows TR-107 and TR-108 are metastable-phase comparators.
+  s_alpo4:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    conditions: berlinite AlPO4 (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-001
+      uncertainty: pm
+    notes: One source (USGS B2131). The hydrate rows TR-107 and TR-108 are metastable-phase comparators.
+  dfg_al_pmeta3:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard Gibbs energy of formation of aluminium metaphosphate Al(PO3)3 in lit/evidence_table.csv. No
+      thermochemistry of Al(PO3)3 in any source read (retried in PH-W1.2: openalex and crossref, no hit); only a reactivity
+      statement (TR-096).'
+  dfh_al_pmeta3:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard enthalpy of formation of aluminium metaphosphate Al(PO3)3 in lit/evidence_table.csv. No thermochemistry
+      of Al(PO3)3 in any source read (retried in PH-W1.2: openalex and crossref, no hit); only a reactivity statement (TR-096).'
+  s_al_pmeta3:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard entropy of aluminium metaphosphate Al(PO3)3 in lit/evidence_table.csv. No thermochemistry of
+      Al(PO3)3 in any source read (retried in PH-W1.2: openalex and crossref, no hit); only a reactivity statement (TR-096).'
+  dfg_li3po4:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard Gibbs energy of formation of Li3PO4 (crystalline) in lit/evidence_table.csv. Only DfH (NBS TN
+      270-8); DfG and S0 are gaps (retried in PH-W1.2: openalex, no source).'
+  dfh_li3po4:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: Li3PO4 (crystalline), 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-040
+    notes: 'Only DfH (NBS TN 270-8); DfG and S0 are gaps (retried in PH-W1.2: openalex, no source).'
+  s_li3po4:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no standard entropy of Li3PO4 (crystalline) in lit/evidence_table.csv. Only DfH (NBS TN 270-8); DfG and
+      S0 are gaps (retried in PH-W1.2: openalex, no source).'
+  dfg_po4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: PO4(3-) aqueous ion, standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-015
+      uncertainty: pm
+    notes: One source (USGS B2131).
+  dfh_po4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: PO4(3-) aqueous ion, standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-014
+      uncertainty: pm
+    notes: One source (USGS B2131).
+  s_po4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    conditions: PO4(3-) aqueous ion, standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-013
+      uncertainty: pm
+    notes: One source (USGS B2131).
+  dfg_hpo4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: HPO4(2-) aqueous ion, standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-111
+    notes: One source (NBS TN 270-3).
+  dfh_hpo4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: HPO4(2-) aqueous ion, standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-110
+    notes: One source (NBS TN 270-3).
+  s_hpo4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    conditions: HPO4(2-) aqueous ion, standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-112
+    notes: One source (NBS TN 270-3).
+  dfg_h2po4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: H2PO4(-) aqueous ion, standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-114
+    notes: One source (NBS TN 270-3). The printed DfG (grade C) contradicts pKa2 with the neighbouring species (TR-114 note).
+  dfh_h2po4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: H2PO4(-) aqueous ion, standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-113
+    notes: One source (NBS TN 270-3). The printed DfG (grade C) contradicts pKa2 with the neighbouring species (TR-114 note).
+  s_h2po4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    conditions: H2PO4(-) aqueous ion, standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-115
+    notes: One source (NBS TN 270-3). The printed DfG (grade C) contradicts pKa2 with the neighbouring species (TR-114 note).
+  dfg_h3po4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: H3PO4(aq), standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-117
+    comparators:
+    - TR-119
+    notes: One source (NBS TN 270-3). TR-119 is the crystal.
+  dfh_h3po4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: H3PO4(aq), standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-116
+    notes: One source (NBS TN 270-3). TR-119 is the crystal.
+  s_h3po4_aq:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    conditions: H3PO4(aq), standard state, 298.15 K, 1 bar (standard state)
+    admit:
+    - row: TR-118
+    notes: One source (NBS TN 270-3). TR-119 is the crystal.
+  solvation_po4_vs_li:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_solv_ion
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no solvation free energy of PO4(3-) in a carbonate solvent (or in any solvent usable as a scheme) in lit/evidence_table.csv;
+      the Ca2+ and Al3+ schemes are the existing solvation_ca_vs_li and solvation_al_vs_li keys'
+  solvation_hpo4_vs_li:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_solv_ion
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no solvation free energy of HPO4(2-) in a carbonate solvent (or in any solvent usable as a scheme) in lit/evidence_table.csv;
+      the Ca2+ and Al3+ schemes are the existing solvation_ca_vs_li and solvation_al_vs_li keys'
+  solvation_h2po4_vs_li:
+    added_in: P0-W1.PH-W1.2
+    symbol: G_solv_ion
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no solvation free energy of H2PO4(-) in a carbonate solvent (or in any solvent usable as a scheme) in lit/evidence_table.csv;
+      the Ca2+ and Al3+ schemes are the existing solvation_ca_vs_li and solvation_al_vs_li keys'
+  a_oh_range:
+    added_in: P0-W1.PH-W1.2
+    symbol: a_OH
+    unit: '1'
+    regimes:
+    - R-cell
+    status: design-input
+    reason: design axis of K1 (a_OH is varied, not measured); no source gives the hydroxide activity of a carbonate electrolyte,
+      so no range is sourced
+  a_w_cell:
+    added_in: P0-W1.PH-W1.2
+    symbol: a_w
+    unit: '1'
+    regimes:
+    - R-cell
+    status: design-input
+    reason: design axis of K1; the water content of a dried carbonate electrolyte is printed in ppm (TI-067, TJ-048, TJ-049)
+      and a mole fraction or activity needs the electrolyte's molar composition and an activity model, which this table does
+      not hold
+    comparators:
+    - TI-067
+    - TJ-048
+    - TJ-049
+  log10_ksp_el_alpo4:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no solubility of AlPO4 in a carbonate electrolyte (T-R searched; the aqueous solubilities TB-023 to TB-030
+      and TR-107 to TR-109 are a different solvent, E2)'
+  sigma_corr_alpo4:
+    added_in: P0-W1.PH-W1.2
+    symbol: sigma_ion
+    unit: S m^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no ionic conductivity of AlPO4 film for Li+ or for Al3+ in lit/evidence_table.csv'
+  rho_film_alpo4:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no film density of AlPO4 in lit/evidence_table.csv (bulk densities follow from molar_mass and v_m only for
+      berlinite and are not film densities)'
+  log10_ksp_el_al_pmeta3:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no solubility of Al(PO3)3 in a carbonate electrolyte (T-R searched; the aqueous solubilities TB-023 to TB-030
+      and TR-107 to TR-109 are a different solvent, E2)'
+  sigma_corr_al_pmeta3:
+    added_in: P0-W1.PH-W1.2
+    symbol: sigma_ion
+    unit: S m^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no ionic conductivity of Al(PO3)3 film for Li+ or for Al3+ in lit/evidence_table.csv'
+  rho_film_al_pmeta3:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no film density of Al(PO3)3 in lit/evidence_table.csv (bulk densities follow from molar_mass and v_m only
+      for berlinite and are not film densities)'
+  log10_ksp_el_al_borate:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no solubility of Al borate in a carbonate electrolyte (T-R searched; the aqueous solubilities TB-023 to
+      TB-030 and TR-107 to TR-109 are a different solvent, E2)'
+  sigma_corr_al_borate:
+    added_in: P0-W1.PH-W1.2
+    symbol: sigma_ion
+    unit: S m^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no ionic conductivity of Al borate film for Li+ or for Al3+ in lit/evidence_table.csv'
+  rho_film_al_borate:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no film density of Al borate in lit/evidence_table.csv (bulk densities follow from molar_mass and v_m only
+      for berlinite and are not film densities)'
+  log10_ksp_el_al_oxalate:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no solubility of Al oxalate in a carbonate electrolyte (T-R searched; the aqueous solubilities TB-023 to
+      TB-030 and TR-107 to TR-109 are a different solvent, E2)'
+  sigma_corr_al_oxalate:
+    added_in: P0-W1.PH-W1.2
+    symbol: sigma_ion
+    unit: S m^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no ionic conductivity of Al oxalate film for Li+ or for Al3+ in lit/evidence_table.csv'
+  rho_film_al_oxalate:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no film density of Al oxalate in lit/evidence_table.csv (bulk densities follow from molar_mass and v_m only
+      for berlinite and are not film densities)'
+  log10_ksp_el_al2o3:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no solubility of Al2O3 or its hydroxide in a carbonate electrolyte (T-R searched; the aqueous solubilities
+      TB-023 to TB-030 and TR-107 to TR-109 are a different solvent, E2)'
+  sigma_corr_al2o3:
+    added_in: P0-W1.PH-W1.2
+    symbol: sigma_ion
+    unit: S m^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no ionic conductivity of Al2O3 or its hydroxide film for Li+ or for Al3+ in lit/evidence_table.csv'
+  rho_film_al2o3:
+    added_in: P0-W1.PH-W1.2
+    symbol: rho_s
+    unit: kg m^-3
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no film density of Al2O3 or its hydroxide in lit/evidence_table.csv (bulk densities follow from molar_mass
+      and v_m only for berlinite and are not film densities)'
+  dv_film:
+    added_in: P0-W1.PH-W1.2
+    symbol: V_film_vol
+    unit: '1'
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'relative volume change of the Al-salt film on forming from Al3+ (Pilling-Bedworth-type ratio): no source read;
+      computed from molar volumes where they are sourced'
+  j_corr_max:
+    added_in: P0-W1.PH-W1.2
+    symbol: j_corr
+    unit: A m^-2
+    regimes:
+    - R-cell
+    status: registered
+    reason: 'maximum tolerable Al-dissolution current density of the barrier: a registered criterion of the ladder (PH-W3.2),
+      not a measured property'
+  t_max_corr:
+    added_in: P0-W1.PH-W1.2
+    symbol: t_corr
+    unit: s
+    regimes:
+    - R-cell
+    status: registered
+    reason: 'service time over which the dissolution current must be tolerated: a registered criterion of the ladder (PH-W3.2)'
+  s_tol:
+    added_in: P0-W1.PH-W1.2
+    symbol: s_tol
+    unit: '1'
+    regimes:
+    - R-cell
+    status: registered
+    reason: 'tolerance of the ladder ranking: a registered criterion of the ladder (PH-W3.2)'
+  hydrolysis_polyp_k_ph6:
+    added_in: P0-W1.PH-W1.2
+    symbol: k_hyd
+    unit: s^-1
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: first-order orthophosphate release from sodium polyphosphate (average chain 10, 2 mM as P) on 0.4 g/L gamma-Al2O3
+      of 5, 35 and 70 nm, pH 6.0, no Ca2+, 0.1 M NaCl, room temperature, 9 days
+    admit:
+    - row: TT-001
+    - row: TT-003
+    - row: TT-005
+    notes: Three alumina sizes of one paper (Wan et al. 2019, grade C fits, no uncertainties); the span is the particle-size
+      effect, not an uncertainty. The fit describes a few percent conversion in 9 days. Alumina here is a nanoparticle gamma-Al2O3,
+      not the air-formed oxide on foil, and the temperature is room temperature, not the film-drying temperature.
+  hydrolysis_polyp_k_ph6_ca1mm:
+    added_in: P0-W1.PH-W1.2
+    symbol: k_hyd
+    unit: s^-1
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: first-order orthophosphate release from sodium polyphosphate (average chain 10, 2 mM as P) on 0.4 g/L gamma-Al2O3
+      of 5, 35 and 70 nm, pH 6.0, 1 mM Ca2+, 0.1 M NaCl, room temperature, 9 days
+    admit:
+    - row: TT-002
+    - row: TT-004
+    - row: TT-006
+    notes: Three alumina sizes of one paper (Wan et al. 2019, grade C fits, no uncertainties); the span is the particle-size
+      effect, not an uncertainty. The fit describes a few percent conversion in 9 days. Alumina here is a nanoparticle gamma-Al2O3,
+      not the air-formed oxide on foil, and the temperature is room temperature, not the film-drying temperature.
+  hydrolysis_polyp_k_ph8:
+    added_in: P0-W1.PH-W1.2
+    symbol: k_hyd
+    unit: s^-1
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: first-order orthophosphate release from sodium polyphosphate (average chain 10, 2 mM as P) on 0.4 g/L gamma-Al2O3
+      of 5, 35 and 70 nm, pH 8.0, no Ca2+, 0.1 M NaCl, room temperature, 9 days
+    admit:
+    - row: TT-007
+    - row: TT-009
+    - row: TT-011
+    notes: Three alumina sizes of one paper (Wan et al. 2019, grade C fits, no uncertainties); the span is the particle-size
+      effect, not an uncertainty. The fit describes a few percent conversion in 9 days. Alumina here is a nanoparticle gamma-Al2O3,
+      not the air-formed oxide on foil, and the temperature is room temperature, not the film-drying temperature.
+  hydrolysis_polyp_k_ph8_ca1mm:
+    added_in: P0-W1.PH-W1.2
+    symbol: k_hyd
+    unit: s^-1
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: first-order orthophosphate release from sodium polyphosphate (average chain 10, 2 mM as P) on 0.4 g/L gamma-Al2O3
+      of 5, 35 and 70 nm, pH 8.0, 1 mM Ca2+, 0.1 M NaCl, room temperature, 9 days
+    admit:
+    - row: TT-008
+    - row: TT-010
+    - row: TT-012
+    notes: Three alumina sizes of one paper (Wan et al. 2019, grade C fits, no uncertainties); the span is the particle-size
+      effect, not an uncertainty. The fit describes a few percent conversion in 9 days. Alumina here is a nanoparticle gamma-Al2O3,
+      not the air-formed oxide on foil, and the temperature is room temperature, not the film-drying temperature.
+  hydrolysis_polyp_half_life_ph6:
+    added_in: P0-W1.PH-W1.2
+    symbol: t_half_hyd
+    unit: s
+    regimes:
+    - R-slurry
+    status: computed
+    derive:
+      expr: log(2) / k
+      inputs:
+        k: hydrolysis_polyp_k_ph6
+      as: none
+    notes: ln 2 over the first-order constant of hydrolysis_polyp_k_ph6 (D1). Extrapolates the 9-day fit by about two orders
+      of magnitude; the range is the envelope over the three alumina sizes.
+  hydrolysis_polyp_half_life_ph6_ca1mm:
+    added_in: P0-W1.PH-W1.2
+    symbol: t_half_hyd
+    unit: s
+    regimes:
+    - R-slurry
+    status: computed
+    derive:
+      expr: log(2) / k
+      inputs:
+        k: hydrolysis_polyp_k_ph6_ca1mm
+      as: none
+    notes: ln 2 over the first-order constant of hydrolysis_polyp_k_ph6_ca1mm (D1). Extrapolates the 9-day fit by about two
+      orders of magnitude; the range is the envelope over the three alumina sizes.
+  hydrolysis_polyp_half_life_ph8:
+    added_in: P0-W1.PH-W1.2
+    symbol: t_half_hyd
+    unit: s
+    regimes:
+    - R-slurry
+    status: computed
+    derive:
+      expr: log(2) / k
+      inputs:
+        k: hydrolysis_polyp_k_ph8
+      as: none
+    notes: ln 2 over the first-order constant of hydrolysis_polyp_k_ph8 (D1). Extrapolates the 9-day fit by about two orders
+      of magnitude; the range is the envelope over the three alumina sizes.
+  hydrolysis_polyp_half_life_ph8_ca1mm:
+    added_in: P0-W1.PH-W1.2
+    symbol: t_half_hyd
+    unit: s
+    regimes:
+    - R-slurry
+    status: computed
+    derive:
+      expr: log(2) / k
+      inputs:
+        k: hydrolysis_polyp_k_ph8_ca1mm
+      as: none
+    notes: ln 2 over the first-order constant of hydrolysis_polyp_k_ph8_ca1mm (D1). Extrapolates the 9-day fit by about two
+      orders of magnitude; the range is the envelope over the three alumina sizes.
+  hydrolysis_ca_enhancement_ph6:
+    added_in: P0-W1.PH-W1.2
+    symbol: f_hyd_ca
+    unit: '1'
+    regimes:
+    - R-slurry
+    conditions: ratio of hydrolysis rates with 1 mM Ca2+ and without, pH 6.0, gamma-Al2O3 5 to 70 nm
+    admit:
+    - row: TT-013
+    notes: One printed range from one paper (grade B).
+  hydrolysis_ca_enhancement_ph8:
+    added_in: P0-W1.PH-W1.2
+    symbol: f_hyd_ca
+    unit: '1'
+    regimes:
+    - R-slurry
+    conditions: ratio of hydrolysis rates with 1 mM Ca2+ and without, pH 8.0, gamma-Al2O3 5 to 70 nm
+    admit:
+    - row: TT-014
+    notes: One printed range from one paper (grade B).
+  hydrolysis_pp_half_life_100c_ph10:
+    added_in: P0-W1.PH-W1.2
+    symbol: t_half_hyd
+    unit: s
+    regimes:
+    - R-slurry
+    role: analog
+    of: hydrolysis_polyp_half_life_ph8
+    conditions: pyrophosphate in water, 100 C, pH 10, extrapolated from literature rates measured at 30 to 120 C
+    admit:
+    - row: TT-050
+    notes: 'Analog (A1): a different chain length, 75 K hotter and without Ca2+ or alumina; it is not a bound for the 25 C
+      route values and is not used as one.'
+  hydrolysis_polyp_25c_literature_halflife:
+    added_in: P0-W1.PH-W1.2
+    symbol: t_half_hyd
+    unit: s
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no half-life or rate of polyphosphate (chain length above 3) hydrolysis against pH, temperature, Ca2+ and
+      Al-oxide other than the Wan 2019 room-temperature series is in the table; Watanabe 1974 and 1975, Smith 1959, Finstein
+      1967 and the Khourchi 2022 soil study are paywalled or not retrievable (PH-W1.2); the temperature dependence of the
+      route (drying at 25 to 100 C) is therefore a gap'
+  polyp_al_log_beta1_cyclo_p3:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_Al_polyP
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: apparent 1:1 stability constant (log beta1) of Al3+ with cyclo-triphosphate, pH 3, 28 C, I 0.3 to 0.5 (ion
+      exchange)
+    admit:
+    - row: TT-019
+    - row: TT-023
+    widen:
+      by: m_seq_method_error
+      scale: log10_constant
+    flags:
+    - single_source
+    notes: One paper (Kura 2007; cation and anion exchange). Cyclic oligomers at pH 3, not linear chains at pH 5 to 8.5; the
+      linear-chain key is a gap. Widened to the method error by W1 because it is a single-source log10 binding constant.
+  polyp_al_log_beta1_cyclo_p4:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_Al_polyP
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: apparent 1:1 stability constant (log beta1) of Al3+ with cyclo-tetraphosphate, pH 3, 28 C, I 0.3 to 0.5 (ion
+      exchange)
+    admit:
+    - row: TT-020
+    - row: TT-024
+    widen:
+      by: m_seq_method_error
+      scale: log10_constant
+    flags:
+    - single_source
+    notes: One paper (Kura 2007; cation and anion exchange). Cyclic oligomers at pH 3, not linear chains at pH 5 to 8.5; the
+      linear-chain key is a gap. Widened to the method error by W1 because it is a single-source log10 binding constant.
+  polyp_al_log_beta1_cyclo_p6:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_Al_polyP
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: apparent 1:1 stability constant (log beta1) of Al3+ with cyclo-hexaphosphate, pH 3, 28 C, I 0.3 to 0.5 (ion
+      exchange)
+    admit:
+    - row: TT-021
+    widen:
+      by: m_seq_method_error
+      scale: log10_constant
+    flags:
+    - single_source
+    notes: One paper (Kura 2007; cation and anion exchange). Cyclic oligomers at pH 3, not linear chains at pH 5 to 8.5; the
+      linear-chain key is a gap. Widened to the method error by W1 because it is a single-source log10 binding constant.
+  polyp_al_log_beta1_cyclo_p8:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_Al_polyP
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: apparent 1:1 stability constant (log beta1) of Al3+ with cyclo-octaphosphate, pH 3, 28 C, I 0.3 to 0.5 (ion
+      exchange)
+    admit:
+    - row: TT-022
+    widen:
+      by: m_seq_method_error
+      scale: log10_constant
+    flags:
+    - single_source
+    notes: One paper (Kura 2007; cation and anion exchange). Cyclic oligomers at pH 3, not linear chains at pH 5 to 8.5; the
+      linear-chain key is a gap. Widened to the method error by W1 because it is a single-source log10 binding constant.
+  polyp_al_log_beta1_linear:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_Al_polyP
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no stability constant of Al3+ with linear polyphosphate chains at pH 5 to 8.5 in lit/evidence_table.csv;
+      Kura 2007 prints cyclic oligomers at pH 3 only (the cyclic rows are keys polyp_al_log_beta1_cyclo_*, proxies not admitted
+      here); Reed 1969 (complexity constants, thesis) has no DOI'
+  polyp_chain_length_material:
+    added_in: P0-W1.PH-W1.2
+    symbol: n_chain
+    unit: '1'
+    regimes:
+    - R-slurry
+    distinct: true
+    conditions: average chain length of the commercial sodium polyphosphate used in the route studies (10, 25 and 40 Pi units)
+    admit:
+    - row: TT-035
+    notes: 'One admitted row (average 25, spread down to 3 Pi); the chain lengths of the other studies are in the conditions
+      of TT-001 (10) and TT-025 and TT-030 (40). Not a speciation: the chain-length distribution against pH, I and Ca2+ is
+      a gap (polyp_chain_distribution).'
+  polyp_chain_distribution:
+    added_in: P0-W1.PH-W1.2
+    symbol: n_chain
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no measured chain-length distribution of polyphosphate against pH, ionic strength or Ca2+ in the table (PH-W1.2:
+      crossref and openalex found analytical methods only)'
+  polyp_log10_ksp_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no solubility product or solubility of Ca polyphosphate (crystalline, glass or coacervate) in the table
+      (PH-W1.2: Omelon thesis has no DOI; Corning 2018 paywalled; Chulalongkorn thesis not extracted)'
+  polyp_log10_ksp_al:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no solubility product or solubility of Al polyphosphate or Al(PO3)3 in water or in a carbonate electrolyte
+      in the table (PH-W1.2: one search, no hit)'
+  polyp_al_speciation_ph5_85:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_hydrolysis
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: computed
+    reason: Al3+ hydrolysis and Al(OH)3 solubility are computed by the screen from the existing hydrolysis constants (TB-023
+      to TB-026, grade C) and amorphous Al(OH)3 and gibbsite solubility (TB-027, TB-028, TB-030); no new row
+    comparators:
+    - TB-023
+    - TB-024
+    - TB-025
+    - TB-026
+    - TB-027
+    - TB-028
+    - TB-030
+  coacervate_ca_threshold:
+    added_in: P0-W1.PH-W1.2
+    symbol: Ca_T
+    unit: mol m^-3
+    regimes:
+    - R-slurry
+    conditions: Ca2+ in the medium at which Na-polyP (chain 40) coacervates, wound exudate, about 150 mg/mL polyP added
+    admit:
+    - row: TT-025
+    notes: An upper bound of the threshold (the concentration present), grade B, one source. Not a Ca:polyP, pH and ionic-strength
+      boundary.
+  coacervate_pH_window:
+    added_in: P0-W1.PH-W1.2
+    symbol: pH
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: the Ca-polyP coacervate window in pH is known only at pH 7 (coacervate) and pH 10 (nanoparticles) (TT-030);
+      no boundary in Ca:polyP, pH and ionic strength is printed in a source read, and the 4 to 9 window of TT-041 is for a
+      protein (analog)'
+  coacervate_onset_volume:
+    added_in: P0-W1.PH-W1.2
+    symbol: V_titr
+    unit: m^3
+    regimes:
+    - R-slurry
+    conditions: 1.2 M CaCl2 added to 100 mL of 0.48 M Na-polyP (Pi basis, chain 40) at pH 7 until the turbidity rises
+    admit:
+    - row: TT-031
+    notes: One titration (grade B). The Ca:Pi mole ratio at the onset is 9.5 mL x 1.2 M / (100 mL x 0.48 M) = 0.2375, arithmetic
+      from the printed amounts.
+  coacervate_ca_to_polyp_ratio:
+    added_in: P0-W1.PH-W1.2
+    symbol: r_CaP
+    unit: '1'
+    regimes:
+    - R-slurry
+    conditions: molar excess of CaCl2 over Na-polyP used to prepare Ca-polyP coacervate (pH 7) and nanoparticles (pH 10)
+    admit:
+    - row: TT-032
+    notes: A preparation ratio, not a boundary.
+  coacervate_viscosity:
+    added_in: P0-W1.PH-W1.2
+    symbol: eta_coac
+    unit: Pa s
+    regimes:
+    - R-slurry
+    conditions: washed Ca-polyP coacervate, pH 7, Brookfield rheometer
+    admit:
+    - row: TT-033
+    notes: 1 cP = 1 mPa s. One source.
+  coacervate_gamma_nl:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nl
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no measured interfacial tension of a Ca-polyphosphate coacervate against water or against an Al oxide in
+      the table (Spruijt 2010, 10.1039/b911541b, no retrievable copy; Vis 2015 and Li 2021 are synthetic polyelectrolyte systems).
+      The analog key coacervate_gamma_analog is not a substitute'
+  coacervate_gamma_analog:
+    added_in: P0-W1.PH-W1.2
+    symbol: gamma_nl
+    unit: J m^-2
+    regimes:
+    - R-slurry
+    role: analog
+    of: coacervate_gamma_nl
+    distinct: true
+    conditions: water/water interfacial tension of PDADMAC/PANa complex coacervate against its dilute phase, pH 10, charge
+      ratio 1; literature range 1 to 100 uN/m for complex coacervates
+    admit:
+    - row: TT-042
+    - row: TT-043
+    notes: 'Analog (A1): synthetic polyelectrolyte coacervates, a liquid-liquid tension of a few tens to hundreds of uN/m,
+      not the free energy of a Ca-polyP liquid against a solid or an electrolyte. Orders of magnitude below the J/m2 scale
+      of the mineral nucleation keys.'
+  matrix_chitosan_pka:
+    added_in: P0-W1.PH-W1.2
+    symbol: pKa
+    unit: '1'
+    regimes:
+    - R-slurry
+    conditions: amino groups of chitosan, water, degree of deacetylation not split
+    admit:
+    - row: TT-052
+    notes: One compilation range (grade C); the charge at pH 5 to 8.5 follows from it by the screen.
+  matrix_chitosan_polyp_complex:
+    added_in: P0-W1.PH-W1.2
+    symbol: K_complex
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: gap
+    reason: 'gap: no binding constant, stoichiometry or pH window of chitosan with polyphosphate or tripolyphosphate in the
+      table; only a nanoparticle size window (TT-053) is printed and it is not a binding constant'
+  matrix_oxidation_onset_chitosan:
+    added_in: P0-W1.PH-W1.2
+    symbol: E_ox
+    unit: V
+    regimes:
+    - R-cell
+    comparators:
+    - TA-048
+    - TA-047
+    status: gap
+    reason: 'gap: no oxidation onset of a chitosan or chitosan-polyphosphate film on Al. TA-048 is a chitosan binder cycled
+      in LNMO half cells to 4.9 V (class B-type, carbonate LiPF6, binder as part of an electrode), which shows service to
+      4.9 V in that cell but is not an onset'
+  matrix_oxidation_onset_pda:
+    added_in: P0-W1.PH-W1.2
+    symbol: E_ox
+    unit: V
+    regimes:
+    - R-cell
+    comparators:
+    - TA-043
+    - TA-044
+    status: gap
+    reason: 'gap: no oxidation onset of polydopamine on Al in carbonate electrolyte: TA-043 and TA-044 show that catechol
+      and polydopamine groups are redox active against Li (quinone), at potentials only in a figure or SI. The route layer
+      therefore has no numeric polydopamine limit'
+  glass_dfh_cameta_glass:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: Ca(PO3)2 glass, 298.15 K
+    admit:
+    - row: TR-032
+    notes: One source (NBS TN 270-6), printed without uncertainty. The crystal DfH is blank in the same table.
+  glass_dfh_lipo3_glass:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    distinct: true
+    conditions: LiPO3 glass, 298.15 K
+    admit:
+    - row: TR-041
+    - row: TT-044
+    notes: 'Two sources that differ by about 23 kJ/mol: NBS TN 270-8 (-296.2 kcal/mol) and Takahashi 1982 (-301.7 kcal/mol,
+      from heats of solution in 3N HNO3). Analog for the Li polyphosphate of route R1 and for the Hydro-Quebec baseline.'
+  glass_dfh_lipo3_crystal:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: LiPO3 crystal, 298.15 K
+    admit:
+    - row: TR-042
+    notes: One source (NBS TN 270-8).
+  glass_crystal_correction_lipo3:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: computed
+    derive:
+      expr: g - c
+      inputs:
+        g: glass_dfh_lipo3_glass
+        c: glass_dfh_lipo3_crystal
+      as: none
+    notes: 'Glass minus crystal DfH for LiPO3 (D1): positive when the crystal is the more stable. The range is the envelope
+      over the two glass determinations.'
+  glass_dfh_napo3_glass:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: NaPO3 glass, 298.15 K
+    admit:
+    - row: TT-045
+    comparators:
+    - TT-049
+    notes: One source (Takahashi 1982). TT-049 is the glass-crystal difference computed from the printed entries, so it is
+      not counted separately.
+  glass_dfh_napo3_crystal:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: NaPO3 crystal, 298.15 K
+    admit:
+    - row: TT-047
+    notes: One source (Takahashi 1982).
+  glass_crystal_correction_napo3:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: computed
+    derive:
+      expr: g - c
+      inputs:
+        g: glass_dfh_napo3_glass
+        c: glass_dfh_napo3_crystal
+      as: none
+    notes: Glass minus crystal DfH for NaPO3 (D1); the only pair printed in one paper, an analog for the Ca and Al cases.
+  glass_dfh_kpo3_glass:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    conditions: KPO3 glass, 298.15 K
+    admit:
+    - row: TT-046
+    notes: One source (Takahashi 1982); context for the alkali series.
+  glass_s0_cameta_glass:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no entropy of Ca(PO3)2 glass in the table (only the crystal S0, key s_cameta)'
+  glass_crystal_correction_cameta:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: the crystalline DfH of Ca(PO3)2 is blank in NBS TN 270-6 and no other source was found (PH-W1.2 retry: Sandstrom
+      2006 paywalled), so the glass-to-crystal correction for Ca polyphosphate is a gap; the Li and Na pairs are analogs'
+  glass_dfh_alpmeta3_glass:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no enthalpy of formation of Al(PO3)3 glass or crystal in any source read (PH-W1.2 retry)'
+  glass_s0_alpmeta3_glass:
+    added_in: P0-W1.PH-W1.2
+    symbol: S_phase
+    unit: J K^-1 mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no entropy of Al(PO3)3 glass or crystal in any source read (PH-W1.2 retry)'
+  glass_crystal_correction_alpmeta3:
+    added_in: P0-W1.PH-W1.2
+    symbol: H_phase
+    unit: J mol^-1
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: no glass or crystal enthalpy of Al(PO3)3 (see glass_dfh_alpmeta3_glass)'
+  matrix_baseline_hq_film_thickness:
+    added_in: P0-W1.PH-W1.2
+    symbol: d_film
+    unit: m
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: thickness, solubility and composition of the Hydro-Quebec Li polyphosphate film are stated only in patent
+      text without a DOI (US 6,485,866 claims a vitreous or partly vitreous alkali phosphate or polyphosphate binder with
+      2 to 20 vol % carbon, lit/novelty.md I1; no solubility and no film thickness was in the text read), so the schema cannot
+      hold a row (T-T gaps.md)'
+  matrix_baseline_tsinghua_film_thickness:
+    added_in: P0-W1.PH-W1.2
+    symbol: d_film
+    unit: m
+    regimes:
+    - R-cell
+    status: gap
+    reason: 'gap: the Tsinghua and Hon Hai aluminophosphate film (US 8,252,463, US 8,821,969) is stated in patent text only:
+      10 to 200 nm, Al(x)M(y)PO4 or Al(x)M(y)(PO3)3 with M = Cr, Zn, Mg, Zr, Mo, V, Nb or Ta, cured at 100 to 350 C (lit/novelty.md
+      I7). No DOI, so no row; no solubility or oxidation limit is stated in the text read'
+
 correlation_groups:
   young_energies:
     kind: assumed independent

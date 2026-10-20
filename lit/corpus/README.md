@@ -58,7 +58,7 @@ location, then Europe PMC full-text XML. Paywalled works without an open copy ar
 | Column | Content and format |
 |---|---|
 | `row_id` | `<thread letter pair>-<three digits>`, unique: `TA-001`, `TB-014`. The prefix matches the thread. |
-| `thread` | `T-A` to `T-R`. |
+| `thread` | `T-A` to `T-T`. |
 | `doi` | Bare DOI, lower case, `10.<registrant>/<suffix>`; no `https://doi.org/` prefix. |
 | `locator` | Where in the work the value is: `p. 155`, `Table 2`, `Fig. 3b`, `Eq. (12)`, `Section 3.2`, `SI Table S4`, `abstract`. Combine as needed (`p. 4, Table 2`). Use the printed page number when the text shows one, else `pdf p. N`. |
 | `quantity` | A lower-case slug. Target quantities use the vocabulary below; other quantities may use any descriptive slug. |

@@ -1,0 +1,51 @@
+utc,source,query_or_id,failure_kind,detail
+2026-10-20T10:08:29Z,direct,https://par.nsf.gov/biblio/10109357,parse_error,not a PDF: https://par.nsf.gov/biblio/10109357
+2026-10-20T10:08:30Z,unpaywall,10.1039/d4tb01080a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2024/tb/d4tb01080a
+2026-10-20T10:08:30Z,direct+wayback,https://par.nsf.gov/biblio/10109357,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://par.nsf.gov/biblio/10109357
+2026-10-20T10:08:30Z,unpaywall,10.1039/c6ra28808a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2017/ra/c6ra28808a
+2026-10-20T10:09:46Z,semanticscholar,polyphosphate hydrolysis kinetics pH temperature calcium catalysis,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-20T10:09:55Z,unpaywall,10.1021/acs.est.9b01876,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T10:09:56Z,unpaywall,10.1016/j.mtbio.2022.100404,http_error,HTTP 403 https://www.sciencedirect.com/science/article/pii/S2590006422002022/pdf
+2026-10-20T10:09:57Z,europepmc,10.1016/j.mtbio.2022.100404,http_error,HTTP 403 https://europepmc.org/articles/PMC9440442?pdf=render
+2026-10-20T10:10:00Z,unpaywall+wayback,10.1016/j.mtbio.2022.100404,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.sciencedirect.com/science/article/pii/S2590006422002022/pdf
+2026-10-20T10:10:02Z,europepmc+wayback,10.1016/j.mtbio.2022.100404,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC9440442?pdf=render
+2026-10-20T10:13:32Z,unpaywall,10.3390/polym17243293,http_error,HTTP 403 https://www.mdpi.com/2073-4360/17/24/3293/pdf?version=1765532397
+2026-10-20T10:13:33Z,europepmc,10.3390/polym17243293,http_error,HTTP 403 https://europepmc.org/articles/PMC12736606?pdf=render
+2026-10-20T10:13:53Z,unpaywall,10.3390/batteries9040199,http_error,HTTP 403 https://www.mdpi.com/2313-0105/9/4/199/pdf?version=1679997135
+2026-10-20T10:13:55Z,unpaywall,10.3390/batteries9040199,http_error,HTTP 403 https://iris.polito.it/bitstream/11583/2977558/2/Tragacanth%2c%20an%20Exudate%20Gum%20as%20Suitable%20Aqueous%20Binder%20for%20High%20Voltage%20Cathode%20Material.pdf
+2026-10-20T10:13:57Z,unpaywall,10.3390/batteries9040199,http_error,HTTP 403 https://iris.unito.it/bitstream/2318/1900112/2/batteries-2260882-supplementary.pdf
+2026-10-20T10:14:07Z,unpaywall,10.1021/acs.macromol.5b01675,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.macromol.5b01675
+2026-10-20T10:14:17Z,unpaywall,10.1016/j.jnoncrysol.2020.120431,http_error,HTTP 403 https://www.sciencedirect.com/science/article/am/pii/S0022309320305433
+2026-10-20T10:14:20Z,unpaywall+wayback,10.1016/j.jnoncrysol.2020.120431,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://www.sciencedirect.com/science/article/am/pii/S0022309320305433
+2026-10-20T10:14:20Z,fulltext,10.1016/j.jnoncrysol.2020.120431,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T10:14:54Z,fulltext,10.1039/b911541b,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-20T10:14:57Z,unpaywall,10.3390/polym13213848,http_error,HTTP 403 https://www.mdpi.com/2073-4360/13/21/3848/pdf?version=1641524283
+2026-10-20T10:14:58Z,europepmc,10.3390/polym13213848,http_error,HTTP 403 https://europepmc.org/articles/PMC8588307?pdf=render
+2026-10-20T10:15:10Z,unpaywall,10.1103/physrevlett.126.237801,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC10168025/pdf/nihms-1873223.pdf
+2026-10-20T10:15:10Z,europepmc,10.1103/physrevlett.126.237801,http_error,HTTP 403 https://europepmc.org/articles/PMC10168025?pdf=render
+2026-10-20T10:15:19Z,unpaywall,10.1039/d5ce00695c,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2025/ce/d5ce00695c
+2026-10-20T10:17:37Z,unpaywall,10.1002/smll.202309528,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/smll.202309528
+2026-10-20T10:17:40Z,unpaywall,10.1002/smll.202309528,parse_error,not a PDF: http://openscience.ub.uni-mainz.de/bitstreams/1030222d-66c4-412e-b472-79ec55c8b6ca/download
+2026-10-20T10:17:41Z,unpaywall+wayback,10.1002/smll.202309528,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/smll.202309528
+2026-10-20T10:17:43Z,unpaywall+wayback,10.1002/smll.202309528,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/http://openscience.ub.uni-mainz.de/bitstreams/1030222d-66c4-412e-b472-79ec55c8b6ca/download
+2026-10-20T10:17:43Z,fulltext,10.1002/smll.202309528,not_indexed,"2 candidate location(s), none retrieved"
+2026-10-20T10:17:58Z,unpaywall,10.1246/bcsj.47.2048,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T10:18:01Z,unpaywall,10.1246/bcsj.48.3593,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T10:18:04Z,unpaywall,10.1139/v59-161,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T10:18:25Z,unpaywall,10.1007/s10973-011-1974-y,http_error,HTTP 503 (https://link.springer.com/content/pdf/10.1007/s10973-011-1974-y.pdf)
+2026-10-20T10:18:31Z,unpaywall,10.13036/17533562.59.5.018,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T10:19:12Z,unpaywall,10.1021/acs.jafc.4c11909,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-20T10:19:16Z,unpaywall,10.1016/j.geoderma.2022.116281,http_error,HTTP 403 https://www.sciencedirect.com/science/article/pii/S0016706122005882/pdf
+2026-10-20T10:19:18Z,unpaywall+wayback,10.1016/j.geoderma.2022.116281,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://www.sciencedirect.com/science/article/pii/S0016706122005882/pdf
+2026-10-20T10:19:18Z,fulltext,10.1016/j.geoderma.2022.116281,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-20T10:19:21Z,unpaywall,10.1021/acs.langmuir.5c02476,http_error,HTTP 403 https://pubs.acs.org/doi/pdf/10.1021/acs.langmuir.5c02476?ref=article_openPDF
+2026-10-20T10:21:03Z,unpaywall,10.1016/j.isci.2024.111088,http_error,HTTP 403 https://pmc.ncbi.nlm.nih.gov/articles/PMC11530844/pdf/main.pdf
+2026-10-20T10:21:04Z,europepmc,10.1016/j.isci.2024.111088,http_error,HTTP 403 https://europepmc.org/articles/PMC11530844?pdf=render
+2026-10-20T10:22:21Z,semanticscholar,polydopamine coated aluminum foil current collector lithium-ion cathode anodic,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-20T10:22:56Z,semanticscholar,polydopamine oxidation potential cyclic voltammetry in carbonate electrolyte 4.5 V binder,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-20T10:34:54Z,direct,https://patents.google.com/patent/US12478560B2/en,parse_error,not a PDF: https://patents.google.com/patent/US12478560B2/en
+2026-10-20T10:34:57Z,direct+wayback,https://patents.google.com/patent/US12478560B2/en,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://patents.google.com/patent/US12478560B2/en
+2026-10-20T10:35:01Z,direct,https://patents.google.com/patent/US12478560,parse_error,not a PDF: https://patents.google.com/patent/US12478560
+2026-10-20T10:35:03Z,direct+wayback,https://patents.google.com/patent/US12478560,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://patents.google.com/patent/US12478560
+2026-10-20T10:35:04Z,direct,https://patents.google.com/patent/US12478560B1/en,not_indexed,HTTP 404 https://patents.google.com/patent/US12478560B1/en
+2026-10-20T10:35:06Z,direct+wayback,https://patents.google.com/patent/US12478560B1/en,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://patents.google.com/patent/US12478560B1/en
