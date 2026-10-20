@@ -101,6 +101,18 @@ CAUSES = {
               "(Cl conserved)",
 }
 
+CAUSE_SHORT = {
+    "P2O5": "covalent P-O only: oxide correction over-corrects", "H3PO4": "DfG only", "HAp": "within error (OH O corrected)",
+    "b-TCP": "within error (ionic Ca-O)", "a-TCP": "within error; alpha/beta order inverted (polymorph)",
+    "OCP": "DfG only (5 lattice waters)", "brushite": "hydrate water given the oxide correction",
+    "monetite": "acid HPO4: over-correction", "Ca2P2O7": "P-O-P bridge: over-correction",
+    "AlPO4": "covalent Al-O/P-O framework: over-correction", "Li3PO4": "within error (polymorph unstated)",
+    "LiPO3": "PO3 chains: over-correction", "LiPO3 glass": "glass vs crystal", "Ca(PO3)2 glass": "glass vs crystal",
+    "CaSiO3": "ionic, near the limit", "Ca2SiO4": "ionic, near the limit", "Li2SiO3": "within error",
+    "boehmite": "DfG only", "gibbsite": "three OH O corrected", "CaCO3": "DfG only",
+    "LiClO4": "Cl-O given the oxide correction (cancels)",
+}
+
 
 def e_form_kj_per_atom():
     """Registered error per atom (upper end of the sourced span), kJ/mol per atom."""
@@ -202,6 +214,7 @@ def _causes(out):
         slots = dict(r, corr_per_O=r["corr_per_O_kJ"] or corr_per_O, raw_per_O=r.get("raw_minus_dfH_per_O_kJ") or 0.0,
                      mid=r["material_id"], sg=r["space_group"], alt_spread=r.get("alt_spread", 0.0), **extra)
         r["cause"] = CAUSES[r["phase"]].format(**slots)
+        r["cause_short"] = CAUSE_SHORT[r["phase"]]
         if r["phase"] == "brushite":
             r["hydrate_excess_per_water_kJ"] = extra["hyd_excess"]
         if r["phase"] == "a-TCP":

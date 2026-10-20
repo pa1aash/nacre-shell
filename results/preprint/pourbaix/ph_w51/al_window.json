@@ -1,8 +1,8 @@
 {
  "session": "PH-W5.1",
  "step": "2 Al-O-H passivation window",
- "generated_utc": "2026-10-20T14:25:02Z",
- "git_sha": "87345f10da450bcf58598a6d3718d5295ba0483d",
+ "generated_utc": "2026-10-20T14:31:50Z",
+ "git_sha": "6c628a020e02621b30ba7f3d2357512e2f9b6da6",
  "evidence_table_sha256": "442a3ac68477695118b66dc45f81f78946b95fe29239441f97fc1743671eb3ad",
  "params_sha": "8bc15c88f5f4a28e64d394186729836bac01cfec",
  "question": "Thermodynamic question: over pH 3 to 10 at 298.15 K and I = 0, where does an Al oxide or hydroxide film stay",

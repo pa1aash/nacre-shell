@@ -110,3 +110,96 @@ def test_a_al3_csv_covers_ph_5_to_8_5():
         rows = list(csv.DictReader(r for r in fh if not r.startswith("#")))
     assert float(rows[0]["pH"]) == 5.0 and float(rows[-1]["pH"]) == 8.5
     assert all(float(r["log10_a_Al3_AlOH3_am"]) > float(r["log10_a_Al3_boehmite"]) for r in rows)
+
+
+# ---------------------------------------------------------------- steps 3 to 7: ladder v2
+from nacre.pourbaix import ph_k1 as k1  # noqa: E402
+from nacre.pourbaix import ph_w51_ladder as lad  # noqa: E402
+
+
+@pytest.fixture(scope="module")
+def doc():
+    return json.loads((W51 / "ph_w51.json").read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="module")
+def ladder():
+    with open(W51 / "ladder_v2.csv", newline="", encoding="utf-8") as fh:
+        return list(csv.DictReader(r for r in fh if not r.startswith("#")))
+
+
+def test_vitrification_bound_excludes_the_unphysical_pair():
+    v = lad.vitrification_bound()
+    assert [x["glass_row"] for x in v["excluded"]] == ["TT-044"]
+    assert v["h_max_kJ_per_PO3"] == pytest.approx((-296.2 + 300.0) * 4.184, abs=0.01)
+
+
+def test_ca_metaphosphate_crystal_lies_below_its_glass(doc):
+    v = doc["staged_products"]["values"]
+    assert v["Ca(PO3)2"]["dfG_kJ"] < v["Ca(PO3)2-glass"]["dfG_kJ"]
+    assert v["Ca(PO3)2"]["u_kJ"] > v["Ca(PO3)2"]["u_vit_kJ"]  # inflated correction is carried in the budget
+
+
+def test_extra_reactions_balance():
+    lad.install()
+    for sid, reactions in lad.EXTRA_REACTIONS.items():
+        for _, _, extra, products in reactions:
+            r = k1.build_reaction(sid, extra, products)
+            assert r[sid] == pytest.approx(-1.0) and r["Li"] > 0
+
+
+def test_every_ladder_row_has_stage_and_framing(ladder):
+    for r in ladder:
+        assert r["row_type"] in ("phase", "baseline", "control", "matrix", "conversion")
+        if r["row_type"] != "conversion":
+            assert r["stage"] and r["framing"]
+
+
+def test_stage_assignment_follows_f4(ladder):
+    stage = {r["phase"]: r["stage"] for r in ladder if r["row_type"] == "phase"}
+    for p in ("brushite", "ACP", "HAp"):
+        assert stage[p] == "slurry"
+    for p in ("Ca2P2O7", "Ca(PO3)2 / Ca-polyphosphate glass", "AlPO4", "Al(PO3)3"):
+        assert stage[p] == "cell"
+
+
+def test_matrix_rungs_never_carry_a_tier1_number(ladder):
+    for r in ladder:
+        if r["row_type"] == "matrix":
+            assert r["E_ub_V"] == "" and r["label"].startswith("gap, matrix-risk flag")
+
+
+def test_al_pmeta3_stays_undetermined_whatever_the_dft_says(ladder):
+    for r in ladder:
+        if r["phase"] in ("Al(PO3)3", "Al-polyphosphate (R1 gel)"):
+            assert r["E_ub_V"] == ""
+            assert r["status_4.2-4.3 V"] == "undetermined"
+
+
+def test_no_upper_bound_is_reported_as_a_pass(ladder):
+    for r in ladder:
+        for c in ("status_LFP-class", "status_4.2-4.3 V", "status_4.4-4.5 V"):
+            assert r.get(c, "") != "pass"
+
+
+def test_bracket_is_pending_without_the_anion_key(doc, ladder):
+    if doc["bracket"]["computed"]:
+        pytest.skip("bracket computed")
+    assert "hydration_free_energy_clo4" in doc["bracket"]["missing"]
+    assert all(r["E_lb_V"] == "pending PH-W1.3" for r in ladder if r["row_type"] in ("phase", "control")
+               and r["E_ub_V"])
+
+
+def test_carbonate_control_stays_frozen_and_f7_comparator_is_labelled(doc):
+    f7 = doc["carbonate_f7"]
+    assert f7["expt_V"] == pytest.approx(k1.FROZEN_INVENTORY_V, abs=1e-3)
+    assert set(f7["dft_2026_09_28_V"]) == {"janaf", "mp"}
+
+
+def test_aw_star_is_one_when_dg_is_zero():
+    star, rng = lad._aw_star(0.0, 1.0, 2)
+    assert star == pytest.approx(1.0) and rng[0] < 1.0 < rng[1]
+
+
+def test_report_respects_the_line_limit():
+    assert len((W51 / "ph_w51.md").read_text(encoding="utf-8").splitlines()) <= 60

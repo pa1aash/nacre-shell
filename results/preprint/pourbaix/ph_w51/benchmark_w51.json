@@ -1,8 +1,8 @@
 {
  "session": "PH-W5.1",
  "step": "1 phosphate benchmark",
- "generated_utc": "2026-10-20T14:22:48Z",
- "git_sha": "35dc3b807acfa7a75cdb82032b3db38750c1ec6d",
+ "generated_utc": "2026-10-20T14:31:18Z",
+ "git_sha": "6c628a020e02621b30ba7f3d2357512e2f9b6da6",
  "inputs": {
   "evidence_table_sha256": "442a3ac68477695118b66dc45f81f78946b95fe29239441f97fc1743671eb3ad",
   "ph_k1_cache_manifest_sha256": "sha256:84a5065d77b8e85a9d8d1f5620134f80a3059176e34d26b31e7b9904ed3f42c9",
@@ -84,7 +84,8 @@
    "raw_minus_dfH_per_O_kJ": 39.23617416329493,
    "dft_minus_dfG_kJ": -278.54624502709544,
    "display": "dft-benchmark-failed (|error| 19.3 > 5.21 kJ/mol per atom)",
-   "cause": "no cation: every O is in covalent P-O (bridging and terminal), where the oxide correction fitted on ionic oxides over-corrects (+39 kJ/mol raw per O against -66 applied); largest per-atom error of the anhydrous set"
+   "cause": "no cation: every O is in covalent P-O (bridging and terminal), where the oxide correction fitted on ionic oxides over-corrects (+39 kJ/mol raw per O against -66 applied); largest per-atom error of the anhydrous set",
+   "cause_short": "covalent P-O only: oxide correction over-corrects"
   },
   {
    "phase": "H3PO4",
@@ -106,7 +107,8 @@
    "expt_u_kJ": 8.368,
    "dft_minus_dfG_kJ": -332.0902087463519,
    "display": "dft-unbenchmarked (DfG only: the 0 K energy has no like-for-like DfH)",
-   "cause": "DfG only (no DfH): a molecular acid crystal; 3 OH oxygens carry the oxide correction; entropy of the free energy not separable"
+   "cause": "DfG only (no DfH): a molecular acid crystal; 3 OH oxygens carry the oxide correction; entropy of the free energy not separable",
+   "cause_short": "DfG only"
   },
   {
    "phase": "HAp",
@@ -134,7 +136,8 @@
    "raw_minus_dfH_per_O_kJ": 58.36989684125491,
    "dft_minus_dfG_kJ": -504.3018422569676,
    "display": "dft-benchmarked (|error| 4.7 <= 5.21 kJ/mol per atom)",
-   "cause": "within the registered error per atom; the one OH oxygen also carries the oxide correction"
+   "cause": "within the registered error per atom; the one OH oxygen also carries the oxide correction",
+   "cause_short": "within error (OH O corrected)"
   },
   {
    "phase": "b-TCP",
@@ -162,7 +165,8 @@
    "raw_minus_dfH_per_O_kJ": 60.42989093995135,
    "dft_minus_dfG_kJ": -284.0442578301013,
    "display": "dft-benchmarked (|error| 3.6 <= 5.21 kJ/mol per atom)",
-   "cause": "within the registered error per atom: the most ionic Ca-O environment, closest to the oxides the correction was fitted on (MP cell R3, 91 sites, an ordered approximant of the partly occupied whitlockite structure)"
+   "cause": "within the registered error per atom: the most ionic Ca-O environment, closest to the oxides the correction was fitted on (MP cell R3, 91 sites, an ordered approximant of the partly occupied whitlockite structure)",
+   "cause_short": "within error (ionic Ca-O)"
   },
   {
    "phase": "a-TCP",
@@ -191,6 +195,7 @@
    "dft_minus_dfG_kJ": -296.182677454593,
    "display": "dft-benchmarked (|error| 4.8 <= 5.21 kJ/mol per atom)",
    "cause": "polymorph mismatch: the table's alpha form is the metastable high-temperature polymorph (DfH +10.9 kJ/mol above beta), MP places its alpha cell -4.2 kJ/mol from its beta cell: the alpha-beta order is inverted",
+   "cause_short": "within error; alpha/beta order inverted (polymorph)",
    "alpha_minus_beta_expt_kJ": 10.856800000000476,
    "alpha_minus_beta_dft_kJ": -4.177619624491854
   },
@@ -214,7 +219,8 @@
    "expt_u_kJ": 8.368,
    "dft_minus_dfG_kJ": -1652.2505608424417,
    "display": "dft-unbenchmarked (DfG only: the 0 K energy has no like-for-like DfH)",
-   "cause": "DfG only (no DfH or S): five lattice waters and two HPO4 OH carry the oxide correction (not separable without DfH)"
+   "cause": "DfG only (no DfH or S): five lattice waters and two HPO4 OH carry the oxide correction (not separable without DfH)",
+   "cause_short": "DfG only (5 lattice waters)"
   },
   {
    "phase": "brushite",
@@ -243,6 +249,7 @@
    "dft_minus_dfG_kJ": -458.82707093910767,
    "display": "dft-benchmark-failed (|error| 16.2 > 5.21 kJ/mol per atom)",
    "cause": "hydrate-water handling: MP2020 applies the oxide correction to the two lattice-water O as to lattice oxide; brushite exceeds monetite by -66.5 kJ/mol per water against -66.3 kJ/mol per O of the correction",
+   "cause_short": "hydrate water given the oxide correction",
    "hydrate_excess_per_water_kJ": -66.45762696541055
   },
   {
@@ -271,7 +278,8 @@
    "raw_minus_dfH_per_O_kJ": 47.0130889166423,
    "dft_minus_dfG_kJ": -210.2242170082866,
    "display": "dft-benchmark-failed (|error| 11.0 > 5.21 kJ/mol per atom)",
-   "cause": "acid phosphate: the HPO4 P-O(H) oxygen is covalent and H-bonded; over-correction (+47 kJ/mol raw per O)"
+   "cause": "acid phosphate: the HPO4 P-O(H) oxygen is covalent and H-bonded; over-correction (+47 kJ/mol raw per O)",
+   "cause_short": "acid HPO4: over-correction"
   },
   {
    "phase": "Ca2P2O7",
@@ -299,7 +307,8 @@
    "raw_minus_dfH_per_O_kJ": 56.547436779062586,
    "dft_minus_dfG_kJ": -274.85550472755995,
    "display": "dft-benchmark-failed (|error| 6.2 > 5.21 kJ/mol per atom)",
-   "cause": "one bridging P-O-P per formula unit: over-correction between the orthophosphates and P2O5"
+   "cause": "one bridging P-O-P per formula unit: over-correction between the orthophosphates and P2O5",
+   "cause_short": "P-O-P bridge: over-correction"
   },
   {
    "phase": "AlPO4",
@@ -327,7 +336,8 @@
    "raw_minus_dfH_per_O_kJ": 49.400504038167696,
    "dft_minus_dfG_kJ": -183.43967652218498,
    "display": "dft-benchmark-failed (|error| 11.3 > 5.21 kJ/mol per atom)",
-   "cause": "berlinite, the tabulated polymorph (no mismatch); Al-O and P-O both covalent in the quartz-like framework: over-correction (+49 kJ/mol raw per O)"
+   "cause": "berlinite, the tabulated polymorph (no mismatch); Al-O and P-O both covalent in the quartz-like framework: over-correction (+49 kJ/mol raw per O)",
+   "cause_short": "covalent Al-O/P-O framework: over-correction"
   },
   {
    "phase": "Li3PO4",
@@ -352,7 +362,8 @@
    "dft_minus_dfH_per_O_kJ": -7.402853114445179,
    "raw_minus_dfH_per_O_kJ": 58.88257005426881,
    "display": "dft-benchmarked (|error| 3.7 <= 5.21 kJ/mol per atom)",
-   "cause": "DfH only; MP lowest Li3PO4 entry (mp-13725, Pmn2_1) against the tabulated crystalline Li3PO4 (polymorph not stated in the table)"
+   "cause": "DfH only; MP lowest Li3PO4 entry (mp-13725, Pmn2_1) against the tabulated crystalline Li3PO4 (polymorph not stated in the table)",
+   "cause_short": "within error (polymorph unstated)"
   },
   {
    "phase": "LiPO3",
@@ -377,7 +388,8 @@
    "dft_minus_dfH_per_O_kJ": -16.292391395116358,
    "raw_minus_dfH_per_O_kJ": 49.993031773597615,
    "display": "dft-benchmark-failed (|error| 9.8 > 5.21 kJ/mol per atom)",
-   "cause": "DfH only; covalent PO3 chains: over-correction as for the condensed phosphates"
+   "cause": "DfH only; covalent PO3 chains: over-correction as for the condensed phosphates",
+   "cause_short": "PO3 chains: over-correction"
   },
   {
    "phase": "LiPO3 glass",
@@ -405,7 +417,8 @@
    "dft_minus_dfH_per_O_kJ": -21.592124728449715,
    "raw_minus_dfH_per_O_kJ": 44.693298440264265,
    "display": "dft-unbenchmarked (the tabulated phase is a glass, MP a crystal)",
-   "cause": "polymorph mismatch: the table's value is the glass, MP has only crystals; the two tabulated glass values differ by 23.0 kJ/mol (TR-041, TT-044)"
+   "cause": "polymorph mismatch: the table's value is the glass, MP has only crystals; the two tabulated glass values differ by 23.0 kJ/mol (TR-041, TT-044)",
+   "cause_short": "glass vs crystal"
   },
   {
    "phase": "Ca(PO3)2 glass",
@@ -430,7 +443,8 @@
    "dft_minus_dfH_per_O_kJ": -20.781524745429653,
    "raw_minus_dfH_per_O_kJ": 45.50389842328432,
    "display": "dft-unbenchmarked (the tabulated phase is a glass, MP a crystal)",
-   "cause": "polymorph mismatch: the table's value is the glass (TR-032), MP mp-5680 is the crystal; the difference contains the vitrification enthalpy"
+   "cause": "polymorph mismatch: the table's value is the glass (TR-032), MP mp-5680 is the crystal; the difference contains the vitrification enthalpy",
+   "cause_short": "glass vs crystal"
   },
   {
    "phase": "CaSiO3",
@@ -458,7 +472,8 @@
    "raw_minus_dfH_per_O_kJ": 56.74545173757991,
    "dft_minus_dfG_kJ": -114.41991429340214,
    "display": "dft-benchmark-failed (|error| 5.7 > 5.21 kJ/mol per atom)",
-   "cause": "silicate comparator: ionic, near the registered error"
+   "cause": "silicate comparator: ionic, near the registered error",
+   "cause_short": "ionic, near the limit"
   },
   {
    "phase": "Ca2SiO4",
@@ -486,7 +501,8 @@
    "raw_minus_dfH_per_O_kJ": 55.933534404879495,
    "dft_minus_dfG_kJ": -156.90755505533798,
    "display": "dft-benchmark-failed (|error| 5.9 > 5.21 kJ/mol per atom)",
-   "cause": "silicate comparator: ionic, near the registered error"
+   "cause": "silicate comparator: ionic, near the registered error",
+   "cause_short": "ionic, near the limit"
   },
   {
    "phase": "Li2SiO3",
@@ -514,7 +530,8 @@
    "raw_minus_dfH_per_O_kJ": 59.33047561031331,
    "dft_minus_dfG_kJ": -111.65764267520217,
    "display": "dft-benchmarked (|error| 3.5 <= 5.21 kJ/mol per atom)",
-   "cause": "silicate comparator: within the registered error"
+   "cause": "silicate comparator: within the registered error",
+   "cause_short": "within error"
   },
   {
    "phase": "boehmite",
@@ -536,7 +553,8 @@
    "expt_u_kJ": 2.2,
    "dft_minus_dfG_kJ": -102.82604785807598,
    "display": "dft-unbenchmarked (DfG only: the 0 K energy has no like-for-like DfH)",
-   "cause": "DfG only (DfH not in the corpus); MP lowest AlO(OH) cell (mp-625054, Cmc2_1), an H-ordered cell"
+   "cause": "DfG only (DfH not in the corpus); MP lowest AlO(OH) cell (mp-625054, Cmc2_1), an H-ordered cell",
+   "cause_short": "DfG only"
   },
   {
    "phase": "gibbsite",
@@ -561,7 +579,8 @@
    "dft_minus_dfH_per_O_kJ": -29.205016291676202,
    "raw_minus_dfH_per_O_kJ": 37.080406877037774,
    "display": "dft-benchmark-failed (|error| 12.5 > 5.21 kJ/mol per atom)",
-   "cause": "Al hydroxide: three OH oxygens carry the oxide correction"
+   "cause": "Al hydroxide: three OH oxygens carry the oxide correction",
+   "cause_short": "three OH O corrected"
   },
   {
    "phase": "CaCO3",
@@ -583,7 +602,8 @@
    "expt_u_kJ": 1.4,
    "dft_minus_dfG_kJ": -168.266669359999,
    "display": "dft-unbenchmarked (DfG only: the 0 K energy has no like-for-like DfH)",
-   "cause": "DfG only; carbonate C-O is covalent (over-correction as for the oxyanions)"
+   "cause": "DfG only; carbonate C-O is covalent (over-correction as for the oxyanions)",
+   "cause_short": "DfG only"
   },
   {
    "phase": "LiClO4",
@@ -611,7 +631,8 @@
    "raw_minus_dfH_per_O_kJ": 15.583304868476844,
    "dft_minus_dfG_kJ": -329.6414732009486,
    "display": "dft-benchmark-failed (|error| 33.8 > 5.21 kJ/mol per atom)",
-   "cause": "perchlorate: the four O bonded to Cl(VII) carry the oxide correction; cancels in every K1 reaction (Cl conserved)"
+   "cause": "perchlorate: the four O bonded to Cl(VII) carry the oxide correction; cancels in every K1 reaction (Cl conserved)",
+   "cause_short": "Cl-O given the oxide correction (cancels)"
   }
  ]
 }
