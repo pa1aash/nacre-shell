@@ -252,7 +252,8 @@ def residual_entropy(win):
 
 def r1_input_width(win):
     b = win["benchmark"]
-    diffs = [abs(x["diff_log"]) for x in b if "diff_log" in x]
+    # ion-data checks only (each compares two DfG values); the gibbsite-minimum check measures crystallinity, not ion data
+    diffs = [abs(x["diff_log"]) for x in b if "diff_log" in x and "diff_kJ" in x]
     solids = win["solids"]
     return {
         "role": "input width, not a margin: the Omega_AlPP edge stays 1 (as K2); the a(Al3+) prior carries the width",

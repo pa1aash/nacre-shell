@@ -1328,7 +1328,7 @@ screen_ph:
     K3_R1:
       role: 'input width, not a margin: the Omega_AlPP edge stays 1 (as K2); the a(Al3+) prior carries the width'
       log10_K_s_width:
-        Al(OH)3 am: {value: 1.705, from: largest |diff_log| of the Al ion-data benchmark (tabulated u not printed)}
+        Al(OH)3 am: {value: 0.322, from: largest |diff_log| of the Al ion-data benchmark (tabulated u not printed)}
         boehmite: {value: 0.701, from: u_log of the boehmite route}
       nu_Al: the width enters log10 a(Al3+) once per Al3+ in the formula unit (slope -3 per pH unchanged)
       active: 'no: K_sp,AlPP is a gap (polyp_log10_ksp_al), so R1 is undetermined (F1r) whatever the width'
