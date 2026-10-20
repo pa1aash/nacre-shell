@@ -159,3 +159,57 @@ prior_sets:
       pKa2: pka2_catechol
   analog:                             # flagged analog priors, run side by side; none registered yet
     bindings: {}
+
+# ---------------------------------------------------------------------------------------------------------------
+# Redirected screen (PH-W4.1, 2026-10-20). Structure only; nothing here is a prior, a threshold or a verdict rule.
+# Mineral objects of the generic screen chain (nacre.screen.mineral). Stoichiometry is the formula unit of
+# contract v5 (theory/contract.yaml, conventions.stoichiometry); every number of a mineral (K_sp, V_m, gamma_nl,
+# gamma_nv, the structural water n) is a parameter-table key, to be registered by W1 (PH-W1.2) and frozen at cp5.
+# Two framings of one candidate phase share k1_phase: the K1 ladder carries one row per framing.
+minerals:
+  hap:
+    formula_unit: Ca5(PO4)3OH
+    framing: apatite
+    k1_phase: HAp                  # the phase name of W5's ladder
+    phase_state: crystalline
+    speciation: phosphate
+    x_symbol: a_PO4
+    y_symbol: a_OH
+    stoichiometry: {nu_ca: 5, nu_x: 3, nu_y: 1, n_hyd: 0}
+    keys: {ksp: log10_ksp_hap, v_m: v_m_hap}
+    gamma_keys: {gamma_nl: gamma_nl_hap, gamma_nv: gamma_nv_hap}
+  acp:
+    formula_unit: Ca3(PO4)2.nH2O
+    framing: ACP
+    k1_phase: HAp                  # ACP and apatite are both registered nucleus framings of the candidate HAp
+    phase_state: amorphous
+    speciation: phosphate
+    x_symbol: a_PO4
+    stoichiometry: {nu_ca: 3, nu_x: 2, nu_y: 0, n_hyd: 0}     # n is read from the table (acp_hydration_n)
+    keys: {ksp: log10_ksp_acp, v_m: v_m_acp, n_hyd: acp_hydration_n}
+    gamma_keys: {gamma_nl: gamma_nl_acp, gamma_nv: gamma_nv_acp}
+  capoly:
+    formula_unit: Ca(PO3)2           # PLACEHOLDER of the condensed-phosphate class: shows that the path runs, registers nothing
+    framing: amorphous glass
+    k1_phase: Ca(PO3)2
+    phase_state: amorphous
+    speciation: null                 # no condensed-phosphate speciation in contract v5: the anion activity is an input
+    x_symbol: a_PO3
+    chain_length_n: 10               # PLACEHOLDER chain length, not a registered value
+    stoichiometry: {nu_ca: 1, nu_x: 2, nu_y: 0, n_hyd: 0}
+    keys: {ksp: log10_ksp_cameta, v_m: v_m_cameta}
+    gamma_keys: {gamma_nl: gamma_nl_cameta, gamma_nv: gamma_nv_cameta}
+    inputs: {a_Ca: a_ca_cameta, a_PO3: po3_activity_cameta, c_bulk: ca_bulk_cameta}   # supplied activities (no speciation)
+
+# K evaluators (nacre.screen.kscreen). Every value is a PLACEHOLDER marked provisional: PH-W3.2 sets the numbers
+# and they are frozen at cp5. p_cred and p_deg repeat the registered conventions of theory/thresholds.md (cp2 ruling)
+# so that the evaluators run before the freeze; m_cos and m_S are the zero-margin edges of the same block.
+k_screen:
+  provisional: true
+  k1_ladder: results/preprint/pourbaix/ph_k1/ladder.csv      # W5's file, read and never recomputed
+  p_cred: 0.9                        # provisional (thresholds.decision.credible_level primary)
+  p_deg: 0.1                         # provisional, 1 - p_cred
+  m_cos: 0.0                         # provisional (thresholds.C3.margin_cos_theta primary)
+  m_S: 0.0                           # provisional (thresholds.C4.margin_S_spread; W1 sets it)
+  admissible: true                   # D27 restriction on K3, K4 and the deletion test; M_adm printed
+  ln_dose_axis: [-2.0, -1.0, 0.0, 1.0, 2.0]    # provisional design grid: ln of the total dose at fixed Ca:P ratio

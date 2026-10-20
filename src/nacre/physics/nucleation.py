@@ -121,3 +121,44 @@ def nucleus_areal_density(J0_het, t_proc, DG_het, temperature):
         raise ValueError("DG_het (heterogeneous barrier) must be finite and non-negative")
     t = positive("temperature", temperature)
     return scalar_or_array(j0 * tp * np.exp(-g / (BOLTZMANN * t)))
+
+
+# ------------------------------------------------------------------ minerals with nu ions per formula unit (contract v5)
+def _omega_nu(a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp):
+    from nacre.physics.supersaturation import ln_saturation_ratio_mineral
+    ln_om = ln_saturation_ratio_mineral(a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp)
+    if np.any(ln_om <= 0.0):
+        raise ValueError("omega (saturation ratio) must exceed 1: the nucleation barrier "
+                         "is undefined without supersaturation")
+    return ln_om
+
+
+def critical_formula_units(gamma_nl, V_m, a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp, temperature):
+    """Formula units in the critical nucleus, 32 pi gamma^3 V_m^2 / (3 N_A^2 (k_B T ln Omega_nu)^3)."""
+    from nacre.physics.constants import AVOGADRO
+    g = positive("gamma (interfacial free energy)", gamma_nl)
+    vm = positive("molar_volume (of the formula unit)", V_m)
+    t = positive("temperature", temperature)
+    dmu = BOLTZMANN * t * _omega_nu(a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp)
+    return scalar_or_array(32.0 * np.pi * g ** 3 * vm ** 2 / (3.0 * AVOGADRO ** 2 * dmu ** 3))
+
+
+def homogeneous_barrier_mineral(gamma_nl, V_m, a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp, temperature):
+    """Homogeneous barrier (J per nucleus) of a mineral with nu ions per formula unit, Omega_nu > 1.
+
+    16 pi gamma^3 V_m^2 / (3 N_A^2 (k_B T ln Omega_nu)^2), V_m the molar volume of the formula unit.
+    """
+    from nacre.physics.constants import AVOGADRO
+    g = positive("gamma (interfacial free energy)", gamma_nl)
+    vm = positive("molar_volume (of the formula unit)", V_m)
+    t = positive("temperature", temperature)
+    dmu = BOLTZMANN * t * _omega_nu(a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp)
+    return scalar_or_array(16.0 * np.pi * g ** 3 * vm ** 2 / (3.0 * AVOGADRO ** 2 * dmu ** 2))
+
+
+def heterogeneous_barrier_mineral(theta, gamma_nl, V_m, a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp,
+                                  temperature):
+    """Heterogeneous barrier f(theta) Delta_G*_hom of a mineral with nu ions per formula unit (J per nucleus)."""
+    hom = homogeneous_barrier_mineral(gamma_nl, V_m, a_Ca, a_X, a_Y, nu_Ca, nu_X, nu_Y, a_w, n_hyd, K_sp,
+                                      temperature)
+    return heterogeneous_barrier(shape_factor(theta), hom)

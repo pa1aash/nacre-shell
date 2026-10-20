@@ -18,6 +18,7 @@ Guards
 import hashlib
 import json
 import subprocess
+from functools import partial
 from pathlib import Path
 
 import numpy as np
@@ -25,12 +26,14 @@ import yaml
 
 from nacre.screen import admissibility, chain, decision, gaps, params_adapter, propagate, shapley, sobol, study, summary
 from nacre.screen import thresholds as thr
+from nacre.screen.mineral import CALCITE
 
 CONFIG = Path("configs") / "preprint" / "screen.yaml"
 THRESHOLDS = Path("configs") / "preprint" / "thresholds.yaml"
 CONTRACT_CHECK = Path("configs") / "preprint" / "contract_check.json"
 SCREEN_DIR = Path("results") / "preprint" / "screen"
 DRYRUN_DIR = SCREEN_DIR / "dryrun"
+DRYRUN_PH_DIR = SCREEN_DIR / "dryrun_ph"            # PH-W4.1: phosphate dry runs, git-ignored, never reported
 LEDGER = Path("jobs") / "ledger" / "p0-w4.jsonl"
 CHECKPOINT_TAG = "p0-cp3"
 #: Session that writes production documents (ledger lines and provenance).
@@ -66,14 +69,21 @@ def _inside(path, directory):
         return False
 
 
-def _sampled(names, s):
+def _hydroxide_input(s, mineral):
+    """pKw, which turns the speciated pH and a_w into a_OH, when the table supplies it for a phosphate mineral."""
+    return ("pKw",) if mineral.speciation == "phosphate" and "pKw" in s else ()
+
+
+def _sampled(names, s, mineral=CALCITE):
     """Replace derived symbols by the sampled inputs they come from (speciation, ignorance)."""
     out = []
+    spec_in = chain.speciation_inputs(mineral)
+    spec_out = chain.SPECIATION_OUTPUTS.get(mineral.speciation, ()) + (("a_OH",) if mineral.speciation == "phosphate" else ())
     for k in names:
         if k in s:
             out.append(k)
-        elif k in ("a_Ca", "a_CO3", "c_bulk") and s >= set(chain.SPECIATION_INPUTS):
-            out.extend(chain.SPECIATION_INPUTS)
+        elif k in spec_out and spec_in and s >= set(spec_in):
+            out.extend(spec_in + _hydroxide_input(s, mineral))
         elif k in chain.ignorance_pairs(s):
             u, pair = chain.ignorance_pairs(s)[k]
             out.extend([u, *pair])
@@ -90,44 +100,46 @@ def _sampled(names, s):
     return list(dict.fromkeys(out))
 
 
-def link_inputs(link, symbols):
+def link_inputs(link, symbols, mineral=CALCITE):
     """Sampled symbols a link reads (nucleate includes the upstream cycle when gamma_sl0 is given)."""
     s = set(symbols)
-    d = chain.derived_symbols(s)
+    d = chain.derived_symbols(s, mineral)
     seq = list(chain.SEQ_CYCLE_INPUTS) if d >= set(chain.SEQ_CYCLE_INPUTS) else ["Delta_G_seq"]
     if chain.SEQ_CYCLE_2H in s and d >= set(chain.SEQ_CYCLE_INPUTS):
         seq.append(chain.SEQ_CYCLE_2H)                      # the two-proton cycle of the analog route (AM3)
     seq = [k for k in dict.fromkeys(seq + list(chain.SEQ_LOCAL_INPUTS))]
     if link == "anchor":
         base = list(chain.PMF_INPUTS) if d >= set(chain.PMF_INPUTS) else list(chain.ANCHOR_INPUTS)
-        return _sampled(base + (["W_adh_wet"] if "W_adh_wet" in s else []), s)
+        return _sampled(base + (["W_adh_wet"] if "W_adh_wet" in s else []), s, mineral)
     if link == "speciation":
-        return list(chain.SPECIATION_INPUTS) + (["K_sp"] if "K_sp" in s else [])
+        extra = [k for k in mineral.omega_symbols[1:] if k in s and k not in chain.speciation_inputs(mineral)]
+        return list(chain.speciation_inputs(mineral)) + list(_hydroxide_input(s, mineral)) + extra
     if link == "sequester":
-        return _sampled(seq, s)
+        return _sampled(seq, s, mineral)
     if link == "nucleate":
         access = [k for k in chain.ACCESS_INPUTS if k in d]
+        base = list(chain.nuc_base(mineral))
         if chain.template_energy_mode(d) == "ca_free":
-            return _sampled(seq + list(chain.NUC_BASE) + ["gamma_sl0"] + access, s)
-        return _sampled(list(chain.NUC_BASE) + ["gamma_sl"] + access, s)
+            return _sampled(seq + base + ["gamma_sl0"] + access, s, mineral)
+        return _sampled(base + ["gamma_sl"] + access, s, mineral)
     raise KeyError(link)
 
 
-def link_joint(joint, link):
+def link_joint(joint, link, mineral=CALCITE):
     """Joint prior of a link's inputs and of every input correlated with one of them."""
     sym = joint.symbols
-    need = {sym.index(s) for s in link_inputs(link, sym) if s in sym}
+    need = {sym.index(s) for s in link_inputs(link, sym, mineral) if s in sym}
     partners = {j for i in need for j in range(joint.k) if joint.spearman[i, j] != 0}
     idx = sorted(need | partners)
     return joint.marginal([joint.names[i] for i in idx])
 
 
-def link_model(link, admissible=False):
+def link_model(link, admissible=False, mineral=CALCITE):
     """Model of one link on the sensitivity scale of each quantity (chain.Output.scale).
 
     admissible: the nucleate link is analysed on the admitted draws (AM3, sensitivity).
     """
-    return chain.sensitivity_model(link, admissible=admissible)
+    return chain.sensitivity_model(link, admissible=admissible, mineral=mineral)
 
 
 def _round_quantiles(levels):
@@ -135,7 +147,7 @@ def _round_quantiles(levels):
 
 
 def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None, independence=False,
-               return_outputs=False, admissible=None):
+               return_outputs=False, admissible=None, mineral=CALCITE):
     """Results entry of one regime (schema $defs/regime). rp: params_adapter.RegimePriors.
 
     With return_outputs the propagated draws ({link: {quantity: array}}) are returned too,
@@ -145,9 +157,10 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
     pc, sc, hc = cfg["propagation"], cfg["sobol"], cfg["shapley"]
     if admissible is None:
         admissible = bool((cfg.get("registrations") or {}).get("admissibility"))
-    links = links or chain.evaluable_links(joint.symbols)
+    links = links or chain.evaluable_links(joint.symbols, mineral)
     mc_seq, sens_seq = np.random.SeedSequence(seed).spawn(2)
-    outputs, masses = propagate.propagate_chain(chain.evaluate, joint, pc["draws_per_regime"],
+    evaluate = chain.evaluate if mineral is CALCITE else partial(chain.evaluate, mineral=mineral)
+    outputs, masses = propagate.propagate_chain(evaluate, joint, pc["draws_per_regime"],
                                                 int(mc_seq.generate_state(1)[0]), pc["chunk"])
     levels = _round_quantiles(pc["quantiles"])
     out_links, convergences, designs = {}, [], []
@@ -165,15 +178,17 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
         meta = chain.OUTPUTS[link]
         quantities = {}
         for q, m in meta.items():
+            if q not in outputs[link]:                       # a quantity of another mineral's speciation
+                continue
             values = outputs[link][q]
             if not np.any(np.isfinite(values)):
                 continue
             quantities[q] = {"symbol": m.symbol, "units": m.units, **propagate.describe(values, levels)}
         names = [q for q in meta if q in quantities and meta[q].scale != "none"]
-        sub = link_joint(joint, link)
+        sub = link_joint(joint, link, mineral)
         s_seq, h_seq, d_seq = link_seq.spawn(3)
         idx, design, conv = sobol.size_and_verify(
-            link_model(link, admissible), sub, names, sc["target_ci_half_width"], int(s_seq.generate_state(1)[0]),
+            link_model(link, admissible, mineral), sub, names, sc["target_ci_half_width"], int(s_seq.generate_state(1)[0]),
             pilot=sc["pilot_base"], n_bootstrap=sc["bootstrap"], confidence=sc["confidence"], key="symbol",
             chunk=pc["chunk"], max_base=sc["max_base"], on_cap="cap", scope=sc.get("target_scope", "all"),
             top_k=int(sc.get("top_k", 3)))
@@ -182,7 +197,7 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
                   n_bootstrap=hc["bootstrap"], confidence=hc["confidence"], chunk=pc["chunk"],
                   design="subsets" if players <= hc["max_players_for_subsets"] else "permutations",
                   n_perm=hc["n_perm"])
-        sh, sh_design = shapley.shapley_effects(link_model(link, admissible), sub, names, rng=np.random.default_rng(h_seq),
+        sh, sh_design = shapley.shapley_effects(link_model(link, admissible, mineral), sub, names, rng=np.random.default_rng(h_seq),
                                                 **kw)
         if admissible and link == "nucleate":
             # AM3: on the admitted draws; the restriction makes the inputs dependent, so the Shapley effects
@@ -193,7 +208,7 @@ def run_regime(rp, cfg, seed, links=None, dependence_check=None, thresholds=None
                  "sensitivity_scale": {q: meta[q].scale for q in names}, "sobol_design": design,
                  "convergence": conv, "shapley_design": sh_design}
         if check and not sub.is_independent:
-            rec, _, _ = shapley.dependence_check(link_model(link, admissible), sub, names, np.random.default_rng(d_seq), **kw)
+            rec, _, _ = shapley.dependence_check(link_model(link, admissible, mineral), sub, names, np.random.default_rng(d_seq), **kw)
             agreement[link] = rec["rank_agreement"]
         out_links[link] = entry
         convergences.append(conv)
@@ -426,7 +441,7 @@ def run(root, out_path, params_path=None, regimes=params_adapter.REGIMES, dry_ru
     if not rp_list:
         raise params_adapter.PriorFileError("no regime has sampled inputs in %s" % params_path)
     if dry_run:
-        if not _inside(out_path, root / DRYRUN_DIR):
+        if not (_inside(out_path, root / DRYRUN_DIR) or _inside(out_path, root / DRYRUN_PH_DIR)):
             raise ProductionRefused("dry-run output belongs under %s" % DRYRUN_DIR)
     else:
         production_guard(root, rp_list, out_path)

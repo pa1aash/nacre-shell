@@ -1,9 +1,9 @@
 {
-  "last_session": "P0-W4.3b",
+  "last_session": "PH-W4.1",
   "status": "DONE",
-  "day": 3,
-  "contract_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
-  "contract_checked_ref": "fd5846f (W3 admissibility, contract v4)",
+  "day": 4,
+  "contract_sha": "b21dbf0ab8660b50961a06a480c0dd505df785b8",
+  "contract_checked_ref": "60dbe6b (W3 contract v5)",
   "artifacts": {
     "physics_core": "src/nacre/physics/",
     "contract_registry": "src/nacre/physics/contract.py",
@@ -13,7 +13,7 @@
     "mock_priors": "configs/preprint/mock_priors.yaml",
     "mock_summary": "results/preprint/screen/mock/summary.json",
     "screen_scaffold": "src/nacre/screen/",
-    "report": "ops/reports/P0-W4.3b.md",
+    "report": "ops/reports/PH-W4.1.md",
     "screen_config": "configs/preprint/screen.yaml",
     "thresholds_copy": "configs/preprint/thresholds.yaml",
     "precision_method": "configs/preprint/precision_method.md",
@@ -32,7 +32,15 @@
     "production_dir": "results/preprint/screen/",
     "ledger": "jobs/ledger/p0-w4.jsonl",
     "admissibility": "src/nacre/screen/admissibility.py",
-    "report_w4_3": "ops/reports/P0-W4.3.md"
+    "report_w4_3": "ops/reports/P0-W4.3.md",
+    "mineral_object": "src/nacre/screen/mineral.py",
+    "k_evaluators": "src/nacre/screen/kscreen.py",
+    "route_extension_points": "src/nacre/screen/routes.py",
+    "ph_dry_run": "src/nacre/screen/ph_dry.py",
+    "carbonate_regression": "src/nacre/screen/ph_regress.py",
+    "gap_skeleton_ph": "configs/preprint/gap_resolution_ph.yaml",
+    "mock_params_ph": "configs/preprint/mock_params_ph.yaml",
+    "dryrun_ph_dir": "results/preprint/screen/dryrun_ph/"
   },
   "notes": [
     "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
@@ -43,7 +51,8 @@
     "sweep_pcred_0.6_adm first attempt failed schema validation before writing (no output); schema fix 41a2ada; rerun under the same name.",
     "Two-proton log1p precision fix after the runs (7b54cc8): <= 9e-12 J/mol over the screen range; no rerun needed.",
     "Integrator: deviation entries for the thresholds copy (block v4) and W3's theory/thresholds.md after p0-cp3 (D27).",
-    ".venv is a symlink to ~/.nacre-venvs/p-w4."
+    ".venv is a symlink to ~/.nacre-venvs/p-w4.",
+    "PH-W4.1: contract v5 implemented (equivalence PASS at rtol 1e-12); chain takes a mineral object; K2 to K4 evaluators with provisional margins; 55 gap-skeleton keys await cp5; dry runs on mock priors only."
   ],
   "schema": {
     "version": "4",
