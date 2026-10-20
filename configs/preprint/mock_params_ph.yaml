@@ -1,0 +1,151 @@
+# MOCK PARAMETER TABLE of the phosphate dry runs (PH-W4.1), in the layout of lit/params.yaml.
+# Synthetic round numbers chosen only to lie inside each input's physical domain and to exercise every path of the
+# mineral chain (phosphate speciation, K2, K3, K4, the deletion test). They are not literature values, carry no
+# physical meaning, register no parameter of the redirected screen and never feed a reported result: the adapter
+# refuses this file unless allow_mock / --mock is given, and the dry runs write only under
+# results/preprint/screen/dryrun_ph/ (git-ignored). Keys named *_hap, *_acp, *_cameta belong to one mineral of
+# configs/preprint/screen.yaml `minerals`; keys named ctl_* belong to the bare-oxide control only.
+mock: true
+meta: {session: PH-W4.1, note: synthetic phosphate dry-run table}
+params:
+  temperature:
+    {symbol: T, transform: none, unit: K, regimes: [shared], status: design-input,
+     prior: {family: uniform, low: 290.0, high: 310.0}, sources: [], correlation_group: null}
+  ph:
+    {symbol: pH, transform: none, unit: "1", regimes: [R-slurry], status: design-input,
+     prior: {family: uniform, low: 10.0, high: 13.0}, sources: [], correlation_group: null}
+  p_total:
+    {symbol: P_T, transform: none, unit: mol m^-3, regimes: [R-slurry], status: design-input,
+     prior: {family: loguniform, low: 0.1, high: 10.0}, sources: [], correlation_group: null}
+  ca_total:
+    {symbol: Ca_T, transform: none, unit: mol m^-3, regimes: [R-slurry], status: design-input,
+     prior: {family: loguniform, low: 1.0, high: 100.0}, sources: [], correlation_group: null}
+  ionic_strength:
+    {symbol: I_ionic, transform: none, unit: mol kg^-1, regimes: [R-slurry], status: design-input,
+     prior: {family: loguniform, low: 0.01, high: 0.1}, sources: [], correlation_group: null}
+  water_density:
+    {symbol: rho_water, transform: none, unit: kg m^-3, regimes: [R-slurry], status: registered,
+     prior: {family: fixed, value: 997.0}, sources: [], correlation_group: null}
+  water_activity:
+    {symbol: a_w, transform: none, unit: "1", regimes: [R-slurry], status: design-input,
+     prior: {family: uniform, low: 0.8, high: 1.0}, sources: [], correlation_group: null}
+  pk1_phosphoric:
+    {symbol: pK1_phosphoric, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 2.15}, sources: [], correlation_group: null}
+  pk2_phosphoric:
+    {symbol: pK2_phosphoric, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 7.2}, sources: [], correlation_group: null}
+  pk3_phosphoric:
+    {symbol: pK3_phosphoric, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 12.35}, sources: [], correlation_group: null}
+  k_cahpo4_aq:
+    {symbol: K_CaHPO4_aq, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 500.0}, sources: [], correlation_group: null}
+  k_cah2po4:
+    {symbol: K_CaH2PO4, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 20.0}, sources: [], correlation_group: null}
+  k_capo4:
+    {symbol: K_CaPO4, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 1000000.0}, sources: [], correlation_group: null}
+  k_caoh:
+    {symbol: K_CaOH, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 2.5e-13}, sources: [], correlation_group: null}
+  pkw:
+    {symbol: pKw, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 14.0}, sources: [], correlation_group: null}
+  debye_huckel_a:
+    {symbol: A_DH, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 0.509}, sources: [], correlation_group: null}
+  davies_b:
+    {symbol: b_D, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 0.3}, sources: [], correlation_group: null}
+  davies_i_val:
+    {symbol: I_val, transform: none, unit: mol kg^-1, regimes: [R-slurry], status: sourced,
+     prior: {family: fixed, value: 0.5}, sources: [], correlation_group: null}
+  site_free_energy:
+    {symbol: Delta_G_site, transform: none, unit: J mol^-1, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: -20000.0, high: -1000.0}, sources: [], correlation_group: null}
+  site_pka:
+    {symbol: pKa, transform: none, unit: "1", regimes: [shared], status: sourced,
+     prior: {family: normal, mean: 10.0, sd: 0.5}, sources: [], correlation_group: null}
+  site_density:
+    {symbol: Gamma_s, transform: none, unit: mol m^-2, regimes: [shared], status: sourced,
+     prior: {family: loguniform, low: 1e-07, high: 1e-05}, sources: [], correlation_group: null}
+  layer_thickness:
+    {symbol: delta_s, transform: none, unit: m, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 1e-09, high: 2e-09}, sources: [], correlation_group: null}
+  gamma_template_liquid:
+    {symbol: gamma_sl0, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 0.0, high: 2.0}, sources: [], correlation_group: young}
+  gamma_template_nucleus:
+    {symbol: gamma_sn0, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 0.0, high: 2.0}, sources: [], correlation_group: young}
+  water_displacement:
+    {symbol: Delta_gamma_w, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 0.0, high: 0.5}, sources: [], correlation_group: young}
+  ctl_gamma_sl_bare_oxide:
+    {symbol: gamma_sl, transform: none, unit: J m^-2, regimes: [shared], status: sourced,
+     prior: {family: uniform, low: 0.5, high: 3.0}, sources: [], correlation_group: null}
+  nucleation_prefactor:
+    {symbol: J0_het, transform: none, unit: m^-2 s^-1, regimes: [R-slurry], status: sourced,
+     prior: {family: loguniform, low: 10000000000.0, high: 1e+20}, sources: [], correlation_group: null}
+  processing_time:
+    {symbol: t_proc, transform: none, unit: s, regimes: [R-slurry], status: design-input,
+     prior: {family: loguniform, low: 10.0, high: 1000.0}, sources: [], correlation_group: null}
+  required_nuclei:
+    {symbol: N_req, transform: none, unit: m^-2, regimes: [R-slurry], status: registered,
+     prior: {family: fixed, value: 100000000000000.0}, sources: [], correlation_group: null}
+  r_a_max:
+    {symbol: R_A_max, transform: none, unit: Ohm m^2, regimes: [R-cell], status: registered,
+     prior: {family: fixed, value: 0.01}, sources: [], correlation_group: null}
+  rho_e_film:
+    {symbol: rho_e, transform: none, unit: Ohm m, regimes: [R-cell], status: sourced,
+     prior: {family: fixed, value: 1000000.0}, sources: [], correlation_group: null}
+  log10_ksp_hap:
+    {symbol: K_sp, transform: log10, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: normal, mean: -35.0, sd: 1.0}, sources: [], correlation_group: null}
+  v_m_hap:
+    {symbol: V_m, transform: none, unit: m^3 mol^-1, regimes: [R-slurry], status: sourced,
+     prior: {family: uniform, low: 8.0e-7, high: 1.2e-6}, sources: [], correlation_group: null}
+  gamma_nl_hap:
+    {symbol: gamma_nl, transform: none, unit: J m^-2, regimes: [R-slurry], status: sourced,
+     prior: {family: uniform, low: 0.6, high: 1.0}, sources: [], correlation_group: null}
+  log10_ksp_acp:
+    {symbol: K_sp, transform: log10, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: normal, mean: -24.0, sd: 1.0}, sources: [], correlation_group: null}
+  v_m_acp:
+    {symbol: V_m, transform: none, unit: m^3 mol^-1, regimes: [R-slurry], status: sourced,
+     prior: {family: uniform, low: 8.0e-7, high: 1.2e-6}, sources: [], correlation_group: null}
+  gamma_nl_acp:
+    {symbol: gamma_nl, transform: none, unit: J m^-2, regimes: [R-slurry], status: sourced,
+     prior: {family: uniform, low: 0.5, high: 0.9}, sources: [], correlation_group: null}
+  log10_ksp_cameta:
+    {symbol: K_sp, transform: log10, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: normal, mean: -9.0, sd: 1.0}, sources: [], correlation_group: null}
+  v_m_cameta:
+    {symbol: V_m, transform: none, unit: m^3 mol^-1, regimes: [R-slurry], status: sourced,
+     prior: {family: uniform, low: 8.0e-7, high: 1.2e-6}, sources: [], correlation_group: null}
+  gamma_nl_cameta:
+    {symbol: gamma_nl, transform: none, unit: J m^-2, regimes: [R-slurry], status: sourced,
+     prior: {family: uniform, low: 0.5, high: 0.9}, sources: [], correlation_group: null}
+  acp_hydration_n:
+    {symbol: n_hyd, transform: none, unit: "1", regimes: [R-slurry], status: sourced,
+     prior: {family: uniform, low: 1.0, high: 3.0}, sources: [], correlation_group: null}
+  a_ca_cameta:
+    {symbol: a_Ca, transform: none, unit: "1", regimes: [R-slurry], status: design-input,
+     prior: {family: loguniform, low: 0.0001, high: 0.01}, sources: [], correlation_group: null}
+  po3_activity_cameta:
+    {symbol: a_PO3, transform: none, unit: "1", regimes: [R-slurry], status: design-input,
+     prior: {family: loguniform, low: 0.0001, high: 0.01}, sources: [], correlation_group: null}
+  ca_bulk_cameta:
+    {symbol: c_bulk, transform: none, unit: mol m^-3, regimes: [R-slurry], status: design-input,
+     prior: {family: loguniform, low: 0.1, high: 10.0}, sources: [], correlation_group: null}
+correlation_groups:
+  young:
+    members: [gamma_template_liquid, gamma_template_nucleus, water_displacement]
+    kind: rank
+    matrix: [[1.0, 0.3, 0.0],
+             [0.3, 1.0, 0.0],
+             [0.0, 0.0, 1.0]]
+    sources: [mock]
+    reason: synthetic correlation exercising the copula

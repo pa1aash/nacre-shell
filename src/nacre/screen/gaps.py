@@ -70,3 +70,39 @@ def analog_keys(table):
     if c1:
         out["W_adh_wet"] = c1["analog"]
     return out
+
+
+# ------------------------------------------------------------------ phosphate skeleton (PH-W4.1)
+PH_TABLE = Path("configs") / "preprint" / "gap_resolution_ph.yaml"
+PENDING = "to register at cp5 freeze"
+
+
+def load_ph(path=PH_TABLE):
+    return load(path)
+
+
+def _walk(node, trail=()):
+    if isinstance(node, dict):
+        if "treatment" in node:
+            yield trail, node["treatment"]
+        for k, v in node.items():
+            yield from _walk(v, trail + (str(k),))
+    elif isinstance(node, list):
+        for i, v in enumerate(node):
+            yield from _walk(v, trail + (str(i),))
+
+
+def treatments_ph(table):
+    """[(path, treatment)] of every entry of the phosphate skeleton that has a treatment slot."""
+    return [(".".join(t), v) for t, v in _walk(table)]
+
+
+def awaiting(table):
+    """Keys of the phosphate skeleton whose treatment is not yet registered (to register at the cp5 freeze)."""
+    return sorted(p for p, v in treatments_ph(table) if v == PENDING)
+
+
+def check_ph(table):
+    """Problems of the phosphate skeleton: a treatment that is neither allowed nor the pending label."""
+    return ["%s: treatment %r is not one of %s or %r" % (p, v, TREATMENTS, PENDING)
+            for p, v in treatments_ph(table) if v not in TREATMENTS and v != PENDING]

@@ -3,6 +3,8 @@
     python -m nacre.screen smoke --mock                       Day 1 smoke path (v1 links)
     python -m nacre.screen dryrun --mock [--params P] [--out O] [--independence]
                                                               dry run, output under results/preprint/screen/dryrun/
+    python -m nacre.screen ph-dryrun --mineral M --mock [--k1-override] [--draws N] [--out O]
+                                                              PH-W4.1 mineral screen on mock priors, under dryrun_ph/
     python -m nacre.screen production --out O [--prior-set S] [--control C ...] [--convention K=V ...]
                                      [--bind SYM=KEY ...] [--independence] [--no-sensitivity]
                                                               P0-W4.3 only: refused before cp3
@@ -14,7 +16,7 @@ import sys
 from pathlib import Path
 
 from nacre._util import repo_root
-from nacre.screen import run, smoke
+from nacre.screen import ph_dry, run, smoke
 from nacre.screen import thresholds as thr
 from nacre.screen.priors import MockPriorsRefused
 
@@ -39,6 +41,13 @@ def main(argv=None):
     dr.add_argument("--mock", action="store_true", help="allow a parameter table marked mock: true")
     dr.add_argument("--independence", action="store_true", help="sample the inputs independently")
     dr.add_argument("--framing", help="framing to bind while the table has none registered (dry runs only)")
+    ph = sub.add_parser("ph-dryrun", help="dry run of the generic mineral screen on mock priors (PH-W4.1; never reported)")
+    ph.add_argument("--mineral", required=True, help="a mineral of screen.yaml `minerals` (hap, acp, capoly)")
+    ph.add_argument("--params", default=str(ph_dry.MOCK_TABLE))
+    ph.add_argument("--out", help="output summary; default dryrun_ph/<mineral>/summary.json")
+    ph.add_argument("--mock", action="store_true", help="allow a parameter table marked mock: true")
+    ph.add_argument("--k1-override", action="store_true", help="dry run only: run K3 and K4 although K1 passes no class")
+    ph.add_argument("--draws", type=int, default=ph_dry.DEFAULT_DRAWS)
     pr = sub.add_parser("production", help="production screen (P0-W4.3, after cp3)")
     pr.add_argument("--out", default=str(run.SCREEN_DIR / "summary.json"))
     for p in (dr, pr):
@@ -84,6 +93,17 @@ def main(argv=None):
             print("MISMATCH against %s@%s: %s" % (thr.THEORY, sha, exc), file=sys.stderr)
             return 1
         print("EQUAL: %s matches %s@%s" % (thr.COPY, thr.THEORY, sha))
+        return 0
+    if args.cmd == "ph-dryrun":
+        out = root / (args.out or (run.DRYRUN_PH_DIR / args.mineral / "summary.json"))
+        try:
+            path, _, stats = ph_dry.run_mineral(root, args.mineral, out, params_path=root / args.params,
+                                                allow_mock=args.mock, k1_override=args.k1_override,
+                                                draws=args.draws)
+        except (MockPriorsRefused, ph_dry.DryRunRefused, run.params_adapter.PriorFileError) as exc:
+            print("refused: %s" % exc, file=sys.stderr)
+            return 2
+        print("wrote %s  (%.1f s, peak %.0f MB)" % (path.relative_to(root), stats["seconds"], stats["peak_mb"]))
         return 0
     if args.cmd in ("dryrun", "production"):
         try:
