@@ -92,7 +92,8 @@ def gate_incomplete(classes, complete):
 
 
 def aggregate_class(per_reaction):
-    """Class verdict of a phase-framing: any falsified reaction falsifies it; an undetermined one blocks the rest."""
+    """Class verdict of a phase-framing (PH-W5.3 X1): falsified iff some reaction is falsified. A reaction whose budget is
+    incomplete is never falsified (gate_incomplete) and never rescues the phase; an undetermined one blocks the rest."""
     if any(v == "falsified" for v in per_reaction):
         return "falsified"
     if any(v == "undetermined" for v in per_reaction):
@@ -235,10 +236,10 @@ def _phase_rows(block, cut, v, reactions):
                     "k1_verdict": overall(cls), "row_ids": _ids(v), "notes": "; ".join(note)})
     # aggregate row for the phase-framing
     agg = [aggregate_class([p[i] for p in per]) for i in range(3)]
-    gated = gate_incomplete(agg, all(e["status"] == "set" for e in reactions))
-    note_gate = ("budget incomplete: a class that would read falsified reads undetermined (an incomplete budget cannot falsify)"
-                 if gated != agg else None)
-    agg = gated
+    complete_all = all(e["status"] == "set" for e in reactions)
+    by_complete = [i for i in range(3) if agg[i] == "falsified"]
+    note_gate = ("budget incomplete in some reactions: falsified by a complete-budget reaction; incomplete rows cannot falsify "
+                 "and never rescue a phase" if by_complete and not complete_all else None)
     done = [e for e in reactions if e["status"] == "set"]
     lim = min(done, key=lambda e: e["E_ub"] + e["m"]) if done else None
     note = [note_base]
@@ -251,7 +252,7 @@ def _phase_rows(block, cut, v, reactions):
     out.append({"phase": phase, "framing": framing, "stage": stage, "reaction_id": "ALL",
                 "route": ACP_REF_ROUTE + "; aggregate over reactions" if acp_ref else "aggregate over reactions",
                 "E_ub_V": _fmt(lim["E_ub"]) if lim else "", "E_lb_V": PENDING, "margin_V": _fmt(lim["m"]) if lim else "",
-                "budget_status": "complete" if all(e["status"] == "set" for e in reactions) else "incomplete",
+                "budget_status": "complete" if complete_all else "incomplete",
                 "benchmark_status": bench, "k1_class_lfp": agg[0], "k1_class_42_43": agg[1], "k1_class_44_45": agg[2],
                 "k1_verdict": overall(agg), "row_ids": _ids(v), "notes": "; ".join(note)})
     return out

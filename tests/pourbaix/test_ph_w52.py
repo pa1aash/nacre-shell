@@ -102,12 +102,30 @@ def test_incomplete_budget_row_cannot_falsify(rows):
     assert w52.gate_incomplete(["falsified", "inconclusive", "falsified"], False) == ["undetermined", "inconclusive", "undetermined"]
     assert w52.gate_incomplete(["falsified"] * 3, True) == ["falsified"] * 3
     for r in rows[1]:
-        if r["budget_status"] == "incomplete":
+        if r["budget_status"] == "incomplete" and r["reaction_id"] != "ALL":
             for c in ("k1_class_lfp", "k1_class_42_43", "k1_class_44_45", "k1_verdict"):
                 assert r[c] != "falsified", (r["phase"], r["reaction_id"], c)
     r = _row(rows, "Ca2SiO4", "crystalline", "ALL")
-    assert (r["k1_class_lfp"], r["k1_class_42_43"], r["k1_class_44_45"], r["k1_verdict"]) == ("undetermined",) * 4
+    assert (r["k1_class_lfp"], r["k1_class_42_43"], r["k1_class_44_45"], r["k1_verdict"]) == ("falsified",) * 4
     assert "cannot falsify" in r["notes"]
+
+
+def test_aggregate_is_falsified_iff_a_complete_budget_reaction_row_is_falsified(rows):
+    groups = {}
+    for r in rows[1]:
+        groups.setdefault((r["phase"], r["framing"], r["stage"]), []).append(r)
+    n_checked = 0
+    for key, grp in groups.items():
+        agg = [r for r in grp if r["reaction_id"] == "ALL"]
+        if not agg:
+            continue
+        assert len(agg) == 1
+        reactions = [r for r in grp if r["reaction_id"] != "ALL"]
+        for c in ("k1_class_lfp", "k1_class_42_43", "k1_class_44_45"):
+            expect = any(r["budget_status"] == "complete" and r[c] == "falsified" for r in reactions)
+            assert (agg[0][c] == "falsified") == expect, (key, c)
+        n_checked += 1
+    assert n_checked >= 20
 
 
 def test_acp_is_amorphous_slurry_undetermined_with_labelled_reference(rows):
