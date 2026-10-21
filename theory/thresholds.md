@@ -820,6 +820,9 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `params.hydrolysis_f_min` | f_min | registration (set with the K1 rows; PH-W3.2) | screen_ph K2h |
 | `params.log10_ksp_aragonite` | K_sp (aragonite) | literature (key created by PH-W1.6) | screen_ph.w36 carbonate K2, label rule |
 | `params.log10_ksp_acc` | K_sp (ACC) | literature | screen_ph.w36 carbonate K2 (reported, not required) |
+| `params.p_c_site_square` | p_c (2D lateral, square) | literature (key created by PH-W1.6) | screen_ph K2h f_min interval, lower end |
+| `params.p_c_site_triangular` | p_c (2D lateral, triangular) | literature (PH-W1.6) | screen_ph K2h f_min, lattice sensitivity |
+| `params.p_c_site_sc` | p_c (3D through-thickness, simple cubic) | literature (PH-W1.6) | screen_ph K2h f_min interval, upper end |
 
 The C2-to-C3 inputs that the thresholds consume through Delta_gamma_ads are the existing priors
 `Gamma_s`, `delta_s`, `c_bulk` and `gamma_sl0`. `gamma_sl0` is new in contract v2 and replaces a
@@ -1498,9 +1501,10 @@ screen_ph:
       condensed: oligophosphates count as condensed; only the orthophosphate fraction is lost
       f_min_criterion: {session: PH-C0 (X4), authority: claims_redirect Section 10f, status: 'proposed; the planning chat rules at cp5a2',
                         form: 'f_min = 1 - p_c, conditional on A1 to A4 (random sites, local failure, harm only through a spanning cluster, one lattice)',
-                        interval: '[1 - p_c(reading L, 2D lateral), 1 - p_c(reading T, 3D through-thickness)]; one site thick -> 1',
+                        interval: '[1 - p_c(2D lateral), 1 - p_c(3D through-thickness)] = [1 - params.p_c_site_square, 1 - params.p_c_site_sc]; triangular (params.p_c_site_triangular) a 2D lattice sensitivity; one site thick -> 1 (PH-W3.6 X4: keys renamed, lateral end fixed to the square lattice)',
+                        reported_as: sensitivity,
                         use: 'K2h_falsify at the lower end, K2h_not_gating at the upper end',
-                        keys: [percolation_site_threshold_square, percolation_site_threshold_triangular, percolation_site_threshold_simple_cubic],
+                        keys: [p_c_site_square, p_c_site_triangular, p_c_site_sc],
                         reporting: 'report-only; f_min a design axis; any K2h statement conditional on f_min'}
     K3_R1:
       role: falsifying only (ruling C2)

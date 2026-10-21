@@ -878,8 +878,8 @@ failure that matters only by lateral propagation. For reading T, a film many sit
 through-thickness path from electrolyte to metal, the threshold is three-dimensional, smaller than the two-dimensional
 ones, so 1 - p_c is larger and the criterion stricter. For a film one site thick, every failed site is a through-path
 and no fraction is tolerated (f_min = 1). The triangular site threshold is exactly 1/2; the others are numerical values
-to be fetched (new W1 keys `percolation_site_threshold_square`, `percolation_site_threshold_triangular`,
-`percolation_site_threshold_simple_cubic`, with DOI and locator). The brief's range (f_min from 1 - p_c,square to 1/2)
+to be fetched (new W1 keys `p_c_site_square`, `p_c_site_triangular`,
+`p_c_site_sc`, with DOI and locator). The brief's range (f_min from 1 - p_c,square to 1/2)
 is therefore the reading-L range only.
 
 **Ruling.** The form f_min = 1 - p_c is accepted as a conditional criterion under A1 to A4; the two-dimensional range
@@ -982,3 +982,19 @@ Every cell is **generated** from the hash-pinned ladder and the production outpu
 file and the production verdict files named in the blocks of `theory/thresholds.md`, through the macro generator. No
 cell is typed, and a cell with no source in those files reads `undetermined`. The term "suitable" appears only inside
 the full label text of Section 11b.
+
+### 11e. X4 as ruled: the f_min interval
+
+f_min is registered as the interval from 1 - p_c(2D lateral) to 1 - p_c(3D through-thickness), reported as a
+sensitivity:
+
+    f_min in [ 1 - p_c_site_square , 1 - p_c_site_sc ]        (keys `p_c_site_square`, `p_c_site_sc`)
+
+The 2D lateral end uses the square lattice, the larger of the two 2D thresholds, so the lowest f_min; the triangular
+site threshold (`p_c_site_triangular`) is a lattice sensitivity inside the 2D range, printed beside it. The 3D
+through-thickness end uses the simple cubic lattice. H2 (falsified) is evaluated at the lower end and H3 (not gating) at
+the upper end, as in Section 10f; a film one site thick has f_min = 1. **K2h is report-only**: no K2h statement gates a
+row or enters the headline, f_min stays a design axis, and every statement is conditional on A1 to A4 of Section 10f.
+Against PH-C0's registration the form and the use are unchanged; the keys are renamed to the W1 names and the lateral
+end is fixed to the square lattice (PH-C0 left the 2D lattice open). The interval is therefore re-registered in block
+version 8; the percolation keys are created by PH-W1.6 and no value appears here.
