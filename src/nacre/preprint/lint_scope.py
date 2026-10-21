@@ -10,7 +10,8 @@ fields of preprint/claims.yaml.
 
 The charter's second block, scope-guard-warn (SG17W..), holds warn patterns: a match is a warning
 that fails only when the same sentence lacks the rule's exemption word (see WARN_EXEMPT): "thermodynamic"
-for SG17W, "audit" for SG26W, "hypothesis" or "criterion" for SG27W.
+for SG17W, "audit" for SG26W, "hypothesis" or "criterion" for SG27W, "aragonite" for SG29W. SG30W has no
+exemption word: its own pattern already matches only when "for", "in" or "under" does not follow within six words.
 
 A line or paragraph carrying the marker `<!-- sg:allow nacre -->` (or `% sg:allow nacre` in .tex) is skipped by the
 patterns that match the word nacre, and by no other pattern.
@@ -33,8 +34,11 @@ WARN_EXEMPT = {
     "SG17W": re.compile(r"\bthermodynamic", re.I),
     "SG26W": re.compile(r"\baudit", re.I),
     "SG27W": re.compile(r"\b(hypothes[ie]s|criteri(on|a))\b", re.I),
+    "SG29W": re.compile(r"\baragonite\b", re.I),
+    "SG30W": re.compile(r"(?!)"),
 }
-WARN_LABEL = {"SG17W": "thermodynamic", "SG26W": "audit", "SG27W": "hypothesis' or 'criterion"}
+WARN_LABEL = {"SG17W": "thermodynamic", "SG26W": "audit", "SG27W": "hypothesis' or 'criterion",
+              "SG29W": "aragonite", "SG30W": "for' / 'in' / 'under' within six words after it"}
 WARN_WORD = WARN_EXEMPT["SG17W"]
 ALLOW_NACRE = re.compile(r"sg:allow nacre", re.I)
 _MD_START = re.compile(r"^\s*(#+\s|[-*+]\s|\d+[.)]\s|>\s)")
