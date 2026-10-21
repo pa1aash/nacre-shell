@@ -98,7 +98,8 @@ def test_every_contract_symbol_with_a_w1_key_has_a_binding_with_a_conversion(tab
         assert s in used, s
     for b in table["bindings"]:
         assert b["conversion"]["name"] in {"log10_to_linear", "identity", "enthalpy_plus_entropy_bound",
-                                           "single_ion_transfer", "hydration_by_scale", "ads_unit", "slot"}
+                                           "single_ion_transfer", "hydration_by_scale", "ads_unit", "slot",
+                                           "aqueous_formation_energy", "carbonate_control_only"}
 
 
 def test_slots_are_not_in_any_contract_formula(table):
@@ -118,7 +119,8 @@ def test_every_unresolved_key_and_every_gap_is_undetermined(table, params):
         value = params.get(k, {}).get("value")
         if rec["status"] == "unresolved":
             r = bd.bind(k, 1.0, table=table, unit="1")
-            assert r.status == bd.UNDETERMINED and r.value is None and r.reason.startswith("unresolved"), k
+            assert r.status == bd.UNDETERMINED and r.value is None, k
+            assert r.reason.startswith(("unresolved", "frozen carbonate")), k
         elif value is None:
             assert bd.bind(k, None, table=table).status == bd.UNDETERMINED, k
 

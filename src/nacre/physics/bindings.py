@@ -1,4 +1,4 @@
-"""W1-key to contract-symbol bindings (cp5a fix X3; PH-W4.2c).
+"""W1-key to contract-symbol bindings (cp5a fix X3; PH-W4.2c, revised PH-W4.2d).
 
 The binding table is configs/preprint/symbol_bindings.yaml. This module holds the conversions and applies the
 table: a key whose binding is unresolved, whose value is a gap, whose scale or form is unnamed or mismatched, or
@@ -11,7 +11,10 @@ Conventions
   Delta_G_gc = H_phase - T S_resid, with the residual entropy of the glass over the crystal, S_resid in
       [0, R ln 2] per PO3 (claims_redirect.md 10b point 3, a labelled assumption with no source).
   Delta_G_tr_rel = DG_tr(M) - z DG_tr(Li+), form A (single ions on one named scale) or form B (the salt form
-      DG_tr(M(ClO4)z) - z DG_tr(LiClO4)); both forms are in J mol^-1 and the solvent must be the same.
+      DG_tr(M(ClO4)z) - z DG_tr(LiClO4)); both forms are in J mol^-1, one solvent, one scale and one source.
+  E_lb uses only the aqueous standard Gibbs energies of formation (keys dfg_*_aq, one scale); E_PC = E_aq +
+      Delta_G_tr_rel/(n F). Hydration free energies are kept for a labelled Born-model comparison, never for E_lb.
+  window_margin* keys belong to the frozen carbonate control and never reach a phosphate row.
 """
 import math
 from dataclasses import dataclass, field, replace
@@ -19,13 +22,15 @@ from pathlib import Path
 
 import yaml
 
-from nacre.physics.constants import GAS_CONSTANT
+from nacre.physics.constants import FARADAY, GAS_CONSTANT
 
 ROOT = Path(__file__).resolve().parents[3]
 BINDINGS_PATH = ROOT / "configs" / "preprint" / "symbol_bindings.yaml"
 
 OK = "ok"
 UNDETERMINED = "undetermined"
+INDICATIVE = "indicative"
+AQ_SCALE = "conventional_aq_standard"
 HYDRATION_SCALES = ("marcus1991", "tissandier", "conventional")
 DEFAULT_T = 298.15
 
@@ -38,6 +43,7 @@ INTERVALS = {
     "k_hyd": (0.0, math.inf, False, False),
     "Delta_G_tr_rel": (-math.inf, math.inf, False, False),
     "Delta_G_hyd": (-math.inf, 0.0, False, False),
+    "G_phase": (-math.inf, math.inf, False, False),
     "Gamma_P": (0.0, math.inf, False, False),
     "K_P": (0.0, math.inf, False, False),
     "delta_P": (0.0, math.inf, False, False),
@@ -190,8 +196,11 @@ def bind(key, value=None, table=None, **inputs):
     b, rec = _find(table, key)
     if b is None:
         return _undetermined("?", "no binding entry for key %r" % key)
-    symbol = b["contract_symbol"]
-    default = b["default"]
+    symbol = rec.get("symbol", b["contract_symbol"]) if b["conversion"]["name"] != "ads_unit" else b["contract_symbol"]
+    if b.get("carbonate_control_only"):
+        return _undetermined(symbol, "frozen carbonate control only; a phosphate margin is the derived m_K1 of block v6", b["contract_unit"])
+    if b.get("proxy_forbidden") and rec.get("status") != "resolved":
+        return _undetermined(symbol, "unresolved: %s (never a proxy for the linear chain-unit constant)" % rec.get("reason", ""), b["contract_unit"])
     if rec.get("status") != "resolved":
         return _undetermined(symbol, "unresolved: %s" % rec.get("reason", b.get("reason", "")), b["contract_unit"])
     if rec.get("role") == "slot":
@@ -218,14 +227,16 @@ def bind(key, value=None, table=None, **inputs):
     if conv == "single_ion_transfer":
         if not rec.get("scale"):
             return _undetermined(symbol, "single-ion scale not named", unit)
-        return Bound(OK, "DG_tr_single_ion", float(value), unit, scale=rec["scale"], form="A",
-                     solvent=rec.get("solvent"), notes={"ion": rec.get("ion")})
-    if conv == "hydration_by_scale":
+        return single_ion_bound(value, rec["scale"], rec.get("solvent"), rec.get("ion"), inputs.get("source"))
+    if conv == "aqueous_formation_energy" and rec.get("role") == "e_lb_input":
+        notes = {"role": rec["role"], "uncertainty": rec.get("uncertainty")}
+        return _checked(symbol, value, unit, scale=rec["scale"], notes=notes)
+    if conv == "hydration_by_scale" or rec.get("role") == "born_comparison_only":
         scale = rec.get("scale")
         if scale not in HYDRATION_SCALES:
             return _undetermined(symbol, "hydration scale not named", unit)
         return _checked(symbol, value, unit, "absolute Delta_G_hyd is negative; a conventional-scale value needs the proton "
-                        "value added on a named real scale", scale=scale)
+                        "value added on a named real scale", scale=scale, notes={"role": "born_comparison_only"})
     if conv == "ads_unit":
         symbol, unit = rec["symbol"], rec["unit"]
         try:
@@ -240,6 +251,16 @@ def bind(key, value=None, table=None, **inputs):
             return _undetermined(symbol, "unit of the adsorption key not established: %s" % e, unit)
         return _checked(symbol, x, unit)
     return _undetermined(symbol, "unknown conversion %r" % conv, unit)
+
+
+def single_ion_bound(value, scale, solvent, ion=None, source=None, unit="J mol^-1"):
+    """A single-ion transfer energy (form A) as a Bound; an unnamed scale or solvent is undetermined."""
+    if not _finite(value):
+        return _undetermined("DG_tr_single_ion", "non-finite value", unit, form="A")
+    if not scale or not solvent:
+        return _undetermined("DG_tr_single_ion", "single-ion scale or solvent not named", unit, form="A")
+    return Bound(OK, "DG_tr_single_ion", float(value), unit, scale=scale, form="A", solvent=solvent,
+                 notes={"ion": ion, "source": source})
 
 
 def delta_g_tr_rel(cation, li, z, form="A", salt=None, li_salt=None):
@@ -264,6 +285,9 @@ def delta_g_tr_rel(cation, li, z, form="A", salt=None, li_salt=None):
             return _undetermined(sym, "scale mismatch: %s versus %s (not converted)" % (a.scale, b.scale), unit, form="A")
         if a.solvent != b.solvent:
             return _undetermined(sym, "solvent mismatch: %s versus %s" % (a.solvent, b.solvent), unit, form="A")
+        sa, sb = a.notes.get("source"), b.notes.get("source")
+        if sa != sb:
+            return _undetermined(sym, "source mismatch: %s versus %s (one method only)" % (sa, sb), unit, form="A")
         return Bound(OK, sym, a.value - z * b.value, unit, scale=a.scale, form="A", solvent=a.solvent)
     if form == "B":
         a, b = salt, li_salt
@@ -273,15 +297,17 @@ def delta_g_tr_rel(cation, li, z, form="A", salt=None, li_salt=None):
             return _undetermined(sym, "form B needs salt values (form B), not single-ion values", unit, form="B")
         if a.solvent != b.solvent:
             return _undetermined(sym, "solvent mismatch: %s versus %s" % (a.solvent, b.solvent), unit, form="B")
+        if a.notes.get("source") != b.notes.get("source"):
+            return _undetermined(sym, "source mismatch: %s versus %s (one method only)" % (a.notes.get("source"), b.notes.get("source")), unit, form="B")
         return Bound(OK, sym, a.value - z * b.value, unit, form="B", solvent=a.solvent)
     return _undetermined(sym, "form must be 'A' (single ion) or 'B' (salt)", unit)
 
 
-def salt_bound(value, solvent, unit="J mol^-1"):
+def salt_bound(value, solvent, unit="J mol^-1", source=None):
     """A salt-form transfer energy (form B) as a Bound, for delta_g_tr_rel(form='B')."""
     if not _finite(value):
         return _undetermined("DG_tr_salt", "non-finite value", unit, form="B", solvent=solvent)
-    return Bound(OK, "DG_tr_salt", float(value), unit, form="B", solvent=solvent)
+    return Bound(OK, "DG_tr_salt", float(value), unit, form="B", solvent=solvent, notes={"source": source})
 
 
 def require_one_hydration_scale(*bounds):
@@ -289,3 +315,55 @@ def require_one_hydration_scale(*bounds):
     if not bounds or not all(b.ok and b.scale in HYDRATION_SCALES for b in bounds):
         return False
     return len({b.scale for b in bounds}) == 1
+
+
+def delta_g_r_aq(terms, table=None):
+    """Delta_G_r_aq (J mol^-1) = sum nu_i G_i over (key, nu, value) terms, nu signed (products positive).
+
+    Only the dfg_*_aq keys of the table (role e_lb_input, one scale) are admitted: any other key, in particular a
+    hydration free energy, a gap, or a second scale, gives "undetermined". The uncertainty is "tabulated" only when
+    every term has one.
+    """
+    sym = "Delta_G_r_aq"
+    unit = "J mol^-1"
+    table = table or load_bindings()
+    total, scales, tabulated = 0.0, set(), True
+    for key, nu, value in terms:
+        r = bind(key, value, table=table)
+        if not (r.ok and r.notes.get("role") == "e_lb_input"):
+            return _undetermined(sym, "%s is not an aqueous formation energy of E_lb (%s)" % (key, r.reason or r.notes.get("role")), unit)
+        scales.add(r.scale)
+        tabulated = tabulated and r.notes.get("uncertainty") == "tabulated"
+        total += nu * r.value
+    if len(scales) != 1:
+        return _undetermined(sym, "terms are not on one scale", unit)
+    return Bound(OK, sym, total, unit, scale=scales.pop(), notes={"uncertainty": "tabulated" if tabulated else "none"})
+
+
+def e_lb(terms, delta_n_li, table=None):
+    """E_lb = Delta_G_r_aq/(Delta_n_Li F) in V, from dfg_*_aq keys only."""
+    g = delta_g_r_aq(terms, table)
+    if not g.ok:
+        return _undetermined("E_lb", g.reason, "V")
+    if not (_finite(delta_n_li) and delta_n_li > 0):
+        return _undetermined("E_lb", "Delta_n_Li must be positive", "V")
+    return Bound(OK, "E_lb", g.value / (delta_n_li * FARADAY), "V", scale=g.scale, notes=g.notes)
+
+
+def e_pc(e_aq, dg_tr_rel, n_li):
+    """E_PC = E_aq + Delta_G_tr_rel/(n F) in V. Notes carry lower_bound: True iff Delta_G_tr_rel >= 0 (E_aq is then a
+    lower bound of E_PC); a negative relative transfer energy violates the premise and E_aq is not a bound."""
+    if not (e_aq.ok and dg_tr_rel.ok and e_aq.symbol == "E_lb" and dg_tr_rel.symbol == "Delta_G_tr_rel"):
+        return _undetermined("E_PC", "E_lb or Delta_G_tr_rel undetermined", "V")
+    if not (_finite(n_li) and n_li > 0):
+        return _undetermined("E_PC", "n must be positive", "V")
+    return Bound(OK, "E_PC", e_aq.value + dg_tr_rel.value / (n_li * FARADAY), "V", scale=e_aq.scale,
+                 solvent=dg_tr_rel.solvent, notes={"lower_bound": dg_tr_rel.value >= 0.0})
+
+
+def indicative_beta(value):
+    """A beta_AlPP computed by the selectivity calculation, as an indicative input: never ok, never gates."""
+    if not (_finite(value) and value >= 0):
+        return _undetermined("beta_AlPP", "non-finite or negative indicative value", "1")
+    return Bound(INDICATIVE, "beta_AlPP", float(value), "1", reason="indicative only; never gates",
+                 notes={"gates": False})

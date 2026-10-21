@@ -1,9 +1,9 @@
-# W1 key to contract v6 symbol bindings (PH-W4.2c, cp5a fix X3). Applied by src/nacre/physics/bindings.py.
-# sha256 of this file with this line removed: 503e27de3c265c032f93599e2053a1bf6437837b203e447a6518103d07f1a138
+# W1 key to contract v6 symbol bindings (PH-W4.2c, cp5a fix X3; revised PH-W4.2d per the cp5a rulings). Applied by src/nacre/physics/bindings.py.
+# sha256 of this file with this line removed: ad70fd7e7977b8dd12233a0e42ef2459f7ce37c38eaa3746530d730e3672377e
 # Status: resolved = unit and kind established from the key record; unresolved = ambiguous, the key yields
 # "undetermined" (default). A gap key (no value) is undetermined at run time whatever its binding status.
 # No prior, threshold, verdict rule or K1 number is set or changed here.
-version: 1
+version: 2
 contract_version: 6
 contract_unit_note: units are SI as in theory/symbols.yaml
 undetermined_default: {status: undetermined, value: null}
@@ -20,9 +20,12 @@ bindings:
       standard_state: molal activity scale, m° = 1 mol kg^-1 (symbols.yaml m_std), dimensionless
     status: unresolved
     reason: the five keys do not establish the contract's quantity (1:1 Al3+ chain-unit complex, activities, pH 5 to 8.5)
+    ruling: 'cp5a: stays unresolved. The cyclic constants at pH 3 are never bound as a proxy for the linear chain-unit constant at pH 5 to 8.5; R1 stays undetermined.'
+    proxy_forbidden: true
+    indicative_input: {allowed: true, gates: false, note: 'a constant computed by the selectivity calculation may be supplied later as an indicative input only; it never gates a verdict and is never an ok binding'}
     default: {status: undetermined, value: null, note: 'the contract rule for a gap (beta_AlPP = 0, flagged) is applied by the contract evaluator, not here'}
     keys:
-      polyp_al_log_beta1_cyclo_p3: &cyclo {status: unresolved, reason: 'cyclic trimetaphosphate at pH 3 (Kura 2007), not a linear chain unit at pH 5 to 8.5; ionic strength and concentration-versus-activity basis not recorded'}
+      polyp_al_log_beta1_cyclo_p3: &cyclo {status: unresolved, reason: 'cyclic trimetaphosphate at pH 3 (Kura 2007), never a proxy for the linear chain-unit constant at pH 5 to 8.5; ionic strength and concentration-versus-activity basis not recorded'}
       polyp_al_log_beta1_cyclo_p4: *cyclo
       polyp_al_log_beta1_cyclo_p6: *cyclo
       polyp_al_log_beta1_cyclo_p8: *cyclo
@@ -93,56 +96,73 @@ bindings:
     w1_unit: J mol^-1
     conversion:
       name: single_ion_transfer
-      formula: 'form A: Delta_G_tr_rel = DG_tr(M) - z DG_tr(Li+); form B: DG_tr(M(ClO4)z) - z DG_tr(LiClO4)'
-      rule: 'form A only when both ions carry the same named single-ion scale and the same solvent; form B takes salt values; a mismatch or an unnamed scale is undetermined, never converted'
+      formula: 'DG_tr_rel = DG_tr(M^z+) - z DG_tr(Li+), computed within ONE method so that the scale cancels (form B: DG_tr(M(ClO4)z) - z DG_tr(LiClO4) from salt values)'
+      rule: 'benchmark values are single-ion values on one stated scale (form A) or salt-form values (form B); one scale and one solvent across keys and sources; a mixed-scale or unnamed-scale input makes the binding unusable (undetermined), never converted'
       solvent: propylene carbonate (proxy of the carbonate class, a planning-chat registration)
-    status: unresolved
-    reason: 'the only Li+ value has no named single-ion scale (IUPAC selected); Ca2+ and Al3+ are gaps; no salt-form (B) key exists'
+      premise: 'DG_tr_rel >= 0 makes E_lb a lower bound (contract E_solv); a negative value is returned as is, and the premise is then violated'
+    status: resolved
+    ruling: 'cp5a: bind the relative quantity DG_tr_rel, not absolute transfer energies'
     default: {status: undetermined, value: null}
     keys:
-      transfer_free_energy_li_water_pc: {status: unresolved, ion: Li+, form: A, solvent: PC, scale: null, reason: 'single-ion scale not named in the key record (IUPAC selected value)'}
+      transfer_free_energy_li_water_pc: {status: unresolved, ion: Li+, form: A, solvent: PC, scale: null, reason: 'single-ion scale not named in the key record (IUPAC selected value); unusable until a scale is stated'}
       transfer_free_energy_ca_water_pc: {status: unresolved, ion: Ca2+, form: A, solvent: PC, scale: null, reason: 'gap; scale not named'}
       transfer_free_energy_al_water_pc: {status: unresolved, ion: Al3+, form: A, solvent: PC, scale: null, reason: 'gap; scale not named'}
       transfer_free_energy_clo4_water_pc: {status: resolved, ion: ClO4-, form: A, solvent: PC, scale: ferrocene, role: anion_cancels, note: 'cancels in the charge-balanced combination; used only to assemble form B from single ions'}
   - id: b07
-    contract_symbol: Delta_G_hyd
+    contract_symbol: G_phase
     contract_unit: J mol^-1
-    w1_symbol: Delta_G_hyd
+    w1_symbol: G_phase
     w1_unit: J mol^-1
     conversion:
-      name: hydration_by_scale
-      formula: 'Delta_G_hyd = x on the named scale; scales are never mixed or converted'
-      scales: [marcus1991, tissandier, conventional]
-      check: 'absolute value in (-oo, 0); a conventional-scale value is positive for Li+ and is undetermined as an absolute Delta_G_hyd until the proton value is added on a named real scale (the key hydration_free_energy_li_tissandier_scale)'
-    status: unresolved
-    reason: 'hydration_free_energy_clo4 names no scale (gap)'
+      name: aqueous_formation_energy
+      formula: 'E_lb = Delta_G_r_aq/(Delta_n_Li F) from the conventional aqueous standard Gibbs energies of formation (keys dfg_*_aq), one scale; E_PC = E_aq + DG_tr_rel/(n F), E_aq a lower bound of E_PC iff DG_tr_rel >= 0'
+      scale: conventional_aq_standard
+      scale_note: 'conventional aqueous standard state, m = 1, 298.15 K, H+ = 0 convention (cancels in a charge-balanced combination); one scale, never mixed or converted'
+      uncertainty: 'per key: tabulated (normal or uniform range in lit/params.yaml) or none (a fixed point value: no width is sourced)'
+      rule: 'E_lb uses only these keys; absolute hydration free energies are never an input of E_lb (the keys dfg_aq_* of the ruling are the W1 keys dfg_*_aq)'
+    status: resolved
+    ruling: 'cp5a: E_lb binds the dfg_*_aq keys; the hydration keys and the Tissandier offset remain for a labelled Born-model comparison only'
     default: {status: undetermined, value: null}
     keys:
-      hydration_free_energy_li: {status: resolved, scale: marcus1991}
-      hydration_free_energy_ca: {status: resolved, scale: marcus1991}
-      hydration_free_energy_al: {status: resolved, scale: marcus1991}
-      hydration_free_energy_al_marcus: {status: resolved, scale: marcus1991, note: 'standard state not printed in the source'}
-      hydration_free_energy_al_tissandier_scale: {status: resolved, scale: tissandier}
-      hydration_free_energy_proton_tissandier: {status: resolved, scale: tissandier}
-      hydration_free_energy_li_conventional: {status: resolved, scale: conventional}
-      hydration_free_energy_li_tissandier_scale: {status: resolved, scale: tissandier}
-      dg_hyd_ca_marcus: {status: resolved, scale: marcus1991}
-      dg_hyd_ca_tissandier: {status: resolved, scale: tissandier}
-      hydration_free_energy_clo4: {status: unresolved, scale: null, reason: 'scale not named; gap'}
+      dfg_ca2_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: tabulated}
+      dfg_co3_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: tabulated}
+      dfg_hco3_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: tabulated}
+      dfg_co2_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: tabulated}
+      dfg_al3_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: tabulated}
+      dfg_al_oh4_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: none}
+      dfg_li_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: none}
+      dfg_liclo4_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: none}
+      dfg_po4_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: tabulated}
+      dfg_hpo4_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: none}
+      dfg_h2po4_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: none}
+      dfg_h3po4_aq: {status: resolved, symbol: G_phase, scale: conventional_aq_standard, role: e_lb_input, uncertainty: none}
+      hydration_free_energy_li: {status: resolved, symbol: Delta_G_hyd, scale: marcus1991, role: born_comparison_only}
+      hydration_free_energy_ca: {status: resolved, symbol: Delta_G_hyd, scale: marcus1991, role: born_comparison_only}
+      hydration_free_energy_al: {status: resolved, symbol: Delta_G_hyd, scale: marcus1991, role: born_comparison_only}
+      hydration_free_energy_al_marcus: {status: resolved, symbol: Delta_G_hyd, scale: marcus1991, role: born_comparison_only, note: 'standard state not printed in the source'}
+      hydration_free_energy_al_tissandier_scale: {status: resolved, symbol: Delta_G_hyd, scale: tissandier, role: born_comparison_only}
+      hydration_free_energy_proton_tissandier: {status: resolved, symbol: Delta_G_hyd, scale: tissandier, role: born_comparison_only}
+      hydration_free_energy_li_conventional: {status: resolved, symbol: Delta_G_hyd, scale: conventional, role: born_comparison_only}
+      hydration_free_energy_li_tissandier_scale: {status: resolved, symbol: Delta_G_hyd, scale: tissandier, role: born_comparison_only}
+      dg_hyd_ca_marcus: {status: resolved, symbol: Delta_G_hyd, scale: marcus1991, role: born_comparison_only}
+      dg_hyd_ca_tissandier: {status: resolved, symbol: Delta_G_hyd, scale: tissandier, role: born_comparison_only}
+      hydration_free_energy_clo4: {status: unresolved, symbol: Delta_G_hyd, role: born_comparison_only, scale: null, reason: 'scale not named; gap'}
   - id: b08
-    contract_symbol: 'thresholds.K1.margin_expt, thresholds.K1.margin_dft (not contract function symbols)'
+    contract_symbol: none
     contract_unit: V
     w1_symbol: m_E, m_expt
     w1_unit: V
-    conversion: {name: identity, formula: 'none applied: the K1 margins are derived in the thresholds block', note: 'the W1 keys are margins of carbonate reactions'}
+    conversion: {name: carbonate_control_only, formula: 'none: unbound from every phosphate row', note: 'the window_margin keys belong to the frozen carbonate control; phosphate K1 margins are the derived m_K1 of block v6 (thresholds.K1.margin_expt, margin_dft)'}
     status: unresolved
-    reason: 'carbonate-case keys (CaCO3, corundum reductions); a phosphate K1 margin is not their value, so any use as margin_expt or margin_dft would be a guess'
+    reason: 'frozen carbonate control only; unbound from every phosphate row'
+    ruling: 'cp5a: unbind from every phosphate row'
+    carbonate_control_only: true
     default: {status: undetermined, value: null}
     keys:
-      window_margin: {status: unresolved, reason: 'carbonate DFT margin; K1 margin_dft is derived in the block'}
-      window_margin_expt: {status: unresolved, reason: 'carbonate expt budget; K1 margin_expt is derived in the block'}
-      window_margin_expt_red_caco3: {status: unresolved, reason: 'carbonate reduction-limit budget'}
-      window_margin_expt_red_corundum: {status: unresolved, reason: 'corundum reduction-limit budget'}
+      window_margin: {status: unresolved, scope: carbonate_control, reason: 'carbonate DFT margin; frozen carbonate control only'}
+      window_margin_expt: {status: unresolved, scope: carbonate_control, reason: 'carbonate expt budget; frozen carbonate control only'}
+      window_margin_expt_red_caco3: {status: unresolved, scope: carbonate_control, reason: 'carbonate reduction-limit budget; frozen carbonate control only'}
+      window_margin_expt_red_corundum: {status: unresolved, scope: carbonate_control, reason: 'corundum reduction-limit budget; frozen carbonate control only'}
   - id: b09
     contract_symbol: 'Gamma_P (mol m^-2), K_P (1), delta_P (m)'
     contract_unit: 'mol m^-2; 1; m'
@@ -153,7 +173,8 @@ bindings:
       formula: 'Gamma_P = x mol m^-2 (mmol, umol, nmol m^-2 scaled; a mass density needs the chain-unit molar mass as an argument); K_P = x, dimensionless activity form only; delta_P = x m (mm, um, nm, angstrom scaled)'
       note: the caller states the unit; a concentration-form K_P or an unknown unit is undetermined
     status: unresolved
-    reason: 'no W1 key in lit/params.yaml at the pin; the unit and kind of the future keys are not recorded'
+    reason: 'no W1 key in lit/params.yaml at the pin; stays unresolved until PH-W1.5 supplies the keys with units, source and pin'
+    ruling: 'cp5a: stays unresolved until the PH-W1.5 keys exist with units, source and pin'
     default: {status: undetermined, value: null}
     keys:
       polyp_ads_alumina_gamma_max: {status: unresolved, symbol: Gamma_P, unit: mol m^-2, reason: 'key absent from lit/params.yaml'}
@@ -182,4 +203,4 @@ bindings:
       matrix_chitosan_polyp_complex: {status: resolved, role: slot}
 not_bound:
   polyp_log10_ksp_cameta: 'Ca polyphosphate solubility product: no contract symbol (K_sp_AlPP only); gap'
-  hydration_standard_state_offset: 'definitional shift between conventions; never applied, because scales are not converted'
+  hydration_standard_state_offset: 'definitional shift between conventions (the Tissandier offset); never applied, because scales are not converted; kept for the labelled Born-model comparison only'
