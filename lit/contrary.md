@@ -515,3 +515,22 @@ Four entries for the draft route layer (`ops/tracks/redirect_plan.md`, "ROUTE LA
 - **Regime.** No. Differentiation rests on the in-situ, matrix-mediated, insoluble character and the quantitative design rule, stated as hypotheses, not on performance. "Outperforms" and "first" wording is not supported (`lit/novelty.md` NU13, NU14).
 - **Placement.** Introduction and Discussion.
 - **Severity.** Material.
+
+### B25. Computed oxidation windows may under-state, and cyclic voltammetry may over-state, real windows (K1; tier-2 discussion)
+
+- **Sources.** 10.1021/jacsau.1c00228 (Schwietert 2021, PMC8479866, Full, introduction); 10.1039/c9ta09401f via arXiv 1901.02251 (Binninger 2020, Full).
+- **Evidence.** Schwietert et al. state that CV "overestimate[s] the actual electrochemical stability window" (small contact area, short time scale) while formation-energy predictions "often underestimate" it (reaction mechanism and barrier not captured). Their LiPON example: decomposition window 0.68-2.64 V, intrinsic window 0.00-4.12 V vs Li/Li+, a cited experiment oxidising LiPON around 4.3 V. Binninger et al. report that window values depend on the method (phase vs stoichiometry stability). Both concern solid electrolytes, not Ca or Al phosphate films in liquid cells.
+- **Condition.** A tier-2 row built from a computed window, or from a bulk LSV or CV, read as a limit for a thin phosphate film at a 4.3 to 4.5 V cutoff.
+- **Regime.** Partly. The two-tier rule already treats tier-2 values as bounded, and "undetermined never passes". Not avoided: neither bound is tight, so a tier-2 number is neither a floor nor a ceiling.
+- **Placement.** Results (K1 tier-2 reading) and Limits.
+- **Severity.** Material.
+
+## Lineage entries (PH-W2.4b, 2026-10-22)
+
+Evidence that narrows the "nacre-inspired" lineage wording of the Introduction (detail in `lit/novelty.md`, section "Lineage support"). Nothing here contradicts the lineage; each entry limits how far a sentence may go.
+
+| # | Entry | Source | Effect on wording |
+|---|---|---|---|
+| B26 | No source read states that chitosan occurs in natural nacre; chitin (beta-chitin) is the matrix polysaccharide, and chitosan appears only as the polymer of nacre-inspired composites | Osuna-Mascaro et al., 10.1371/journal.pone.0122934; Sedira et al., 10.3390/biomimetics11020148 | Write chitin for the matrix and "partly deacetylated chitin" for chitosan; do not say nacre contains chitosan |
+| B27 | Polyphosphate in bone is a hypothesis with co-location data, proposed as a regulator of apatite saturation, not as a mineral precursor; the precursor with direct observation is amorphous calcium phosphate, in zebrafish fin bone | Omelon et al., 10.1371/journal.pone.0005634; Mahamid et al., 10.1073/pnas.0914218107 | The polyphosphate step of the route layer is a design choice, not a biomineral fact; same limit as NU17 |
+| B28 | ACC in nacre rests on a single direct observation in gastropod nacre; the earlier evidence was inferred | DeVol et al., 10.1021/jacs.5b07931 (abstract) | Write "documented", not "established for all nacre" |

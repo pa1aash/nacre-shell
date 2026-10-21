@@ -640,3 +640,118 @@ Counts for this section: supported 2 (NS6, NS7), unsupported 5.
 | Biomineralisation | Abstract level only; no full text read |
 | Chitosan oxidation limit | See `lit/contrary.md` B23; no numeric oxidation potential found in 3 searches |
 | Li polyphosphate solubility | No numeric solubility of (LiPO3)n found in 1 search (PA-level); only the Hydro-Quebec text |
+
+## Oxidation-limit related work and printed patent data (PH-W2.3, 2026-10-22)
+
+Fetched headless on 2026-10-22: Google Patents pages (4), arXiv PDF, PMC page, Crossref. RSC pages returned HTTP 403 on 3 attempts each (article HTML, doi.org resolver, article PDF); RSC full text and SI were not read. "n.r." = not retrieved. "(S)" = Crossref abstract only. Values are as printed; none was recomputed.
+
+### W-1. Related work for the oxidation-limit ladder (X7); to be cited, not claimed against
+
+| ID | Source | Computes or measures | Method | Phases covered | Stability windows stated | Relation to our ladder |
+|---|---|---|---|---|---|---|
+| RW1 | Zhu, He, Mo, RSC J. Mater. Chem. A, 2016, 10.1039/c5ta08574h (SI n.r.; full text 403 x3) | (S) Ab initio electrochemical and chemical stability of solid-electrolyte/electrode interfaces in all-solid-state Li-ion batteries | n.r. (title and abstract only) | n.r.; Li-P-O compounds, LiPON, Li3PO4, Li4P2O7, LiPO3 not confirmed or excluded | n.r. | Ab initio window work on solid electrolytes; cite as method context. Cannot be read as covering or not covering Li-P-O until the full text is retrieved (gap RG1) |
+| RW2 | Binninger, Marcolongo, Mottet, Weber, Laino, RSC J. Mater. Chem. A, 2020, 10.1039/c9ta09401f; read as arXiv 1901.02251v2 (same title and authors) | Compares ways to compute the electrochemical stability window of solid electrolytes; introduces the stoichiometry stability method against the phase stability method | DFT, PBE with SSSP Efficiency pseudopotentials; HSE06 tested on LATP, LLTO, LLZO | LGPS, LiPON (Li2PO2N, cell Li45P24O51N21, vacancy composition Li1.875PO2.125N0.875), LLZO, LLTO, LATP, LISICON, NASICON Na3Zr2Si2PO12. No Li3PO4, Li4P2O7 or LiPO3 (text search: no hit) | Stoichiometry stability vs Li, Table 2: LiPON 0.00 to 4.11 V; LATP 0.66 to 3.13 V; LGPS 1.08 to 2.85 V. Text cites measured LiPON windows 0.0 to about 5.0-5.5 V vs Li and XPS decomposition against Li metal | Computed Li-P-O oxynitride and phosphate-framework windows (LiPON, LATP); all Li-referenced, solid-electrolyte context; no Ca or Al orthophosphate or condensed phosphate, no experimental thermochemistry, no uncertainty budget |
+| RW3 | Schwietert et al., JACS Au 1, 1488 (2021), PMC8479866, 10.1021/jacsau.1c00228 | Electrochemical stability and reaction mechanisms of solid electrolytes; decomposition window (Li grand-potential phase diagram) against intrinsic window (delithiation/lithiation redox) | DFT, PBE, VASP with PAW; 10 000 random Li configurations per composition, 10 lowest relaxed; reference energies from Materials Project | LPS, LPSB, LPSC, LGPS, LBH, LYB, LOC, LiPON (Li2PO2N), LLZO, LLTO, LATP (Li1.5Al0.5Ti1.5(PO4)3), LAGP (Li1.5Al0.5Ge1.5(PO4)3). Mentions metastable P-O phases in the Li2O-P2O5 range as a reason formation energies mislead; no Li3PO4, Li4P2O7 or LiPO3 computed | Decomposition / intrinsic, V vs Li/Li+: LiPON 0.68-2.64 / 0.00-4.12; LATP 2.17-3.86 / 2.74-3.77; LAGP 2.71-3.98 / 2.31-4.30. Text: LiPON oxidised around 4.3 V (cited experiment) | Computed Li-P-O and Al-containing phosphate (LATP, LAGP) windows; the intrinsic-window idea (kinetic route through delithiation) bears on tier-2 reading. Not a Ca or Al phosphate ladder from tabulated thermochemistry |
+
+RW2 and RW3 both state that computed windows depend on the method (RW2: phase vs stoichiometry stability; RW3: decomposition vs intrinsic). RW3 text recorded for the tier-2 discussion (verbatim): "cyclic (CV) experiments overestimate the actual electrochemical stability window, whereas the prediction of the thermodynamic formation energy of the decomposition products often underestimates the actual electrochemical stability window." RW3 gives the reasons as small contact area and short time scale for CV, and unaccounted reaction mechanism and barrier for formation-energy predictions (cited there to its refs 7 to 10).
+
+Related-work read: RW2 and RW3 in full text; RW1 abstract only (RW2 is the RSC version of arXiv 1901.02251, so the four requested items are three distinct papers). SI of RW1 not retrieved. Gap RG1.
+
+### W-2. Candidate wording NS8 (narrowed), tested
+
+> NS8: no scanned source gives a ladder from tabulated experimental thermochemistry, with uncertainty budgets, of Ca and Al phosphate oxidation limits across condensation states.
+
+**Placement: unsupported list (NU18 below), not the supported list.** Reasons:
+
+1. Ab initio window work for Li-P-O compounds exists and is cited: LiPON and LATP/LAGP in RW2 and RW3; computed Li3PO4 and LiPO3 windows in T7 (0.69-4.21 V and up to 5.00 V, record unreadable); LiPON about 5 V in T8. NS8 is at risk from this and must say so; it survives only as a statement that those windows are computed, Li-referenced, and not Ca or Al.
+2. RW1 was not read beyond its abstract; "no scanned source" cannot be asserted while a scanned source is unread.
+3. The wording depends on four qualifiers, each only partly checked: Ca and Al (none of RW2, RW3 covers Ca or Al orthophosphate or condensed phosphates, but LATP/LAGP contain Al), experimental thermochemistry (all read sources are DFT), uncertainty budgets (RW2 and RW3 give none for the windows; RW2 states a larger error margin for one literature value), condensation states (no source read spans ortho, pyro and meta).
+4. The patent literature stays unsearched (gap G1; patent keyword search not possible).
+
+**What would make NS8 supportable:** RW1 full text and SI read with no Ca or Al phosphate ladder in them; a stated scan-limited form ("among the open sources scanned, patent literature not searched"); and the sentence must name the computed Li-P-O windows as prior work in the same sentence or the one before. Status until then: candidate, not usable.
+
+### W-3. F8: Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 films on Al foil are claimed prior art
+
+State plainly in the Introduction: films of Al(x)M(y)PO4 and Al(x)M(y)(PO3)3, M one of Cr, Zn, Mg, Zr, Mo, V, Nb or Ta, on aluminium foil are claimed in US 8,252,463 B2 and US 8,821,969 B2 (Tsinghua University and Hon Hai Precision; priority 2010-08-27). Our film is not claimed to be new as an aluminophosphate or polyphosphate film on Al; any differentiation rests on the stated hypotheses, not on performance.
+
+Printed performance data and conditions (Google Patents full text, read 2026-10-22; facts only):
+
+| Item | US 8,252,463 B2 | US 8,821,969 B2 | US 6,485,866 B1 (contrast) | US 6,844,114 B2 (contrast) |
+|---|---|---|---|---|
+| Test cells | None described for the foil. Examples: 1 modifier, 2 coated Al foil, 3 coated separator; no cell, no cycling, no capacity figure for the foil | Same description | Example 3: cathode of ethylene oxide copolymer (55 vol %) with LiTFSI (O/Li 30), V2O5 (40 vol %), Ketjenblack (5 vol %) on the (LiPO3)n-coated Al; 20 um EO-copolymer/LiTFSI separator; Li metal anode; reversible capacity 5.03 C/cm2. Example 4: KPO3 binder with FePO4 and carbon, same set-up | Same examples as US 6,485,866 |
+| Electrolyte and salt | Listed generically for a cell: LiPF6, LiBF4 or LiBOB in EC, PC, EMC, DEC or DMC; none used in an example | Same | Solid polymer electrolyte, EO copolymer with LiTFSI (O/Li 30); the description also names LiBF4, LiPF6, ClO4- and TFSI salts in the background | Same |
+| Potential or cutoff | None for the foil. Corrosion test is immersion in hydrochloric acid, concentration n.r. in the patent | Same | Recharge upper voltage limit 3.1 V, constant current, charge in 6 h (Example 3); iron phosphate discharge level 3.3 V (Example 4). Background: Al corrosion in TFSI above 4 V can lead to complete disintegration | Same |
+| Temperature | Foil dried 80 C for 0.5 h; heat treated 200 C for 1 h; test temperature n.r. | Same | Cycling at 60 C (Example 3) | Same |
+| Durations | Immersion in HCl 4 h; no bubbles on coated foil | Same | About 30 cycles (A.S.I. about 100 ohm after about 30 cycles); 6 h recharge | Same |
+| Corrosion or capacity statement as printed | Conventional Al foil: "Bubbles are observed ... after a period of time, indicating that the conventional aluminum current collector has been eroding". Coated foil (Example 2): "no bubbles ... for 4 hours"; conductivity "still good"; no number. SEM: many defect holes on bare foil, smooth and dense coated foil. Background: capacity lost on cycling, especially at high temperature | Same text | Coated cell: "good maintenance of the capacity" and A.S.I. about 100 ohm after about 30 cycles; uncoated identical cell: initial capacity loss "about four times higher", high A.S.I. at the start, "confirming the protective role of the coating" | Same text |
+| Film thickness | 10 to 200 nm; 50 to 60 nm preferred; example 52 nm | Same | About 3 um (example), under 10 um | Same |
+| Cure range | Heat treatment 100 to 350 C, preferably 150 to 250 C, 1 to 3 h; example 200 C for 1 h | Same | Dry at 150 C (example 2); (LiPO3)n from (HPO3)n neutralised to pH 4 to 9 | Same |
+| Claims | Film of AlxMyPO4 on metal plate | Method claims | Claims 1, 12, 16: alkali-metal phosphate or polyphosphate vitreous binder | Claims borate or polyborate only; phosphate in the description |
+
+Not printed in any of the four: oxidation limit or window of the film; solubility of the finished film; fluorine-free electrolyte test; test on aluminophosphate in a lithium-ion cell. The two Tsinghua/Hon Hai patents print an acid-immersion bubble observation, not a cell result. The Hydro-Quebec cell result is for polymer electrolyte at 60 C with an upper limit of 3.1 V, below the 4.3 to 4.5 V cutoffs of our ladder. Patent family members and claims beyond these four were not read (gap G1).
+
+### W-4. NS1 to NS5 and NU1 to NU10
+
+Unchanged: the rows at "P5" (NS1 to NS5, NU1 to NU10) were not edited by this session; only new sections were appended (verified by diff).
+
+### W-5. New unsupported-list row
+
+| # | Wording (or any paraphrase) | Why it is not supported |
+|---|---|---|
+| NU18 | NS8 in any form: "no scanned source gives a ladder from tabulated experimental thermochemistry, with uncertainty budgets, of Ca and Al phosphate oxidation limits across condensation states" | RW2, RW3, T7 and T8 give computed Li-P-O windows (LiPON, LATP, LAGP, Li3PO4, LiPO3); RW1 unread beyond its abstract; patents unsearched (G1). Narrow form allowed only after RG1 closes, with the computed work named |
+
+### W-6. Gaps
+
+| ID | Gap |
+|---|---|
+| RG1 | RSC c5ta08574h and c9ta09401f full text and the c5 SI: HTTP 403 on 3 attempts each (article HTML, doi.org, PDF). c9 content read from arXiv 1901.02251; c5 not read beyond Crossref abstract |
+| RG2 | Patent search remains a logged gap: only the four named patents were read; no keyword or classification search, no family or citation check |
+| RG3 | HCl concentration and the date of the corrosion observation are not in the Tsinghua/Hon Hai text |
+
+## Lineage support for "nacre-inspired" (PH-W2.4b, 2026-10-22)
+
+Purpose: ruling C2 defines "nacre-inspired" in the Introduction as the biomineral lineage: an amorphous precursor (amorphous calcium carbonate, ACC) transforming under an organic matrix (chitin, silk-like proteins, polyelectrolytes), with chitin and chitosan as the structural polysaccharide. Each statement below is tested against open sources read on 2026-10-22 (Europe PMC full-text XML or the PMC article page, headless; one attempt each unless noted). "Full" = full text read; "Abs." = abstract only. Quoted text is as printed. No source here is a battery or aluminium source; the table says only what each source says about biominerals.
+
+### L-1. Lineage table
+
+| ID | Statement (Introduction wording to be) | Source (DOI; locator) | Read | What the source supports | Verdict |
+|---|---|---|---|---|---|
+| L1a | (a) Nacre is aragonite platelets within an organic matrix | Sedira et al., Biomimetics 11, 148 (2026), 10.3390/biomimetics11020148; section 1 Introduction ("brick-and-mortar arrangement of aragonite platelets"); section 3.2.1 ("Aragonite crystals ... are nucleated and grown in an organic matrix composed of proteins and chitin") | Full (review) | Nacre is a brick-and-mortar arrangement of aragonite platelets with an organic matrix of proteins and chitin | supported |
+| L1a-2 | (a) same | Osuna-Mascaro et al., PLoS ONE 10, e0122934 (2015), 10.1371/journal.pone.0122934; Introduction, opening paragraph | Full | Mollusc shell is a biocomposite of calcium carbonate (aragonite, calcite or, rarely, vaterite) and a small quantity of organic matrix of proteins, polysaccharides and lipids; the organic fraction varies by microstructure and nacre is among the richer ones | supported (shell level; nacre-specific via L1a) |
+| L1b | (b) ACC is a documented precursor in nacre | DeVol et al., J. Am. Chem. Soc. 137, 13325 (2015), 10.1021/jacs.5b07931; abstract (Europe PMC) | Abs. | Reports ACC precursors observed at the growth front of nacre in gastropod shells (red abalone, synchrotron spectromicroscopy). The abstract states that ACC precursors in nacre had stayed elusive before and that the phases seen are those of calcite precursors in sea urchin spicules, not proto-aragonite | supported (one direct observation, gastropod nacre, abstract level) |
+| L1b-2 | (b) same | Sedira et al. 2026, 10.3390/biomimetics11020148; section 3.2.1 | Full (review) | "Amorphous calcium carbonate (ACC) acts as a precursor in the biomineralisation process, transforming into aragonite"; ACC precursors "observed at the growth front of nacre in gastropod shells" (cites DeVol); proteins and chitin "control the transformation of amorphous calcium carbonate to aragonite" (review statement, cites 183 and 195) | supported (secondary; restates DeVol) |
+| L1b-3 | (b) in other biominerals | Gong et al., Proc. Natl. Acad. Sci. 109 (2012), 10.1073/pnas.1118085109; Introduction | Full (PMC page) | ACC is "an important precursor to geologic and biogenic" CaCO3 minerals; sea urchin spicules form via two ACC precursors, one hydrated and one not; formation proceeds through transient amorphous phases | supported (other biomineral: sea urchin spicule) |
+| L1c | (c) Chitin is a component of the nacre organic matrix | Osuna-Mascaro et al. 2015, 10.1371/journal.pone.0122934; Abstract and Introduction | Full | Interlamellar membranes of bivalve nacre contain a minor chitin component of thin fibres with a protein coat, embedded in a proteinaceous matrix; the Introduction cites earlier work that the intercrystalline matrix of three mollusc classes is silk-fibroin proteins and beta-chitin | supported |
+| L1c-2 | (c) same | Sedira et al. 2026, 10.3390/biomimetics11020148; section 3.2 | Full (review) | "The organic matrix in nacre consists of beta-chitin and silk fibroin-like proteins" | supported (secondary) |
+| L1c-3 | (c) chitosan is the deacetylated derivative of chitin | Younes and Rinaudo, Mar. Drugs 13, 1133 (2015), 10.3390/md13031133; section 1 Introduction and "Chemical structure of chitin and chitosan" | Full | Chitin becomes chitosan "by partial deacetylation under alkaline conditions"; chitosan is a random copolymer of N-acetyl-D-glucosamine and D-glucosamine with a degree of acetylation DA | supported, with "partly deacetylated" as the exact wording |
+| L1c-4 | (c) chitosan as a component of the nacre organic matrix | Sedira et al. 2026; Osuna-Mascaro et al. 2015 | Full | Chitosan appears in Sedira only as the polymer of nacre-inspired composites (chitosan-based and BNNS-chitosan films). Osuna-Mascaro has no mention of chitosan. No source read states chitosan occurs in natural nacre | unsupported (see flags) |
+| L1d | (d) Amorphous calcium phosphate is a precursor in bone | Mahamid et al., Proc. Natl. Acad. Sci. 107, 6316 (2010), 10.1073/pnas.0914218107; abstract and Introduction | Full (PMC page) | In zebrafish fin rays, new mineral is delivered as packages of ACP nanospheres that transform into apatite platelets in the collagen matrix. The Introduction says ACP as precursor in bone had been debated for decades and that earlier studies were "consistent with" it but lacked direct in situ observation | supported for zebrafish fin bone; mammalian bone not covered by this source |
+| L1d-2 | (d) polyphosphate in mineralising tissue | Omelon et al., PLoS ONE 4, e5634 (2009), 10.1371/journal.pone.0005634; Abstract, Introduction | Full | PolyP is located (fluorescent staining) in resorbing bone and calcifying cartilage; amorphous Ca-polyP complexes lower free Ca and phosphate; the authors "hypothesize" polyP formation and degradation as a mechanism controlling apatite saturation, and propose it as a regulator, not as a mineral precursor | partly (co-location and a hypothesis; polyP as precursor is not stated) |
+| L1d-3 | (d) polyP and bone, other | BM2 to BM5 of section R-P2 | Abs. | Co-location, review statements, cell biology; BM5 does not name polyP | partly (abstract level, unchanged from PH-W2.2a) |
+
+### L-2. Verdicts for the four statements
+
+| Statement | Verdict | Basis |
+|---|---|---|
+| (a) Nacre is aragonite platelets within an organic matrix | supported | L1a, L1a-2 |
+| (b) ACC is a documented precursor in nacre and other biominerals | supported (nacre: one direct observation in gastropod nacre, abstract level for DeVol; other biominerals: sea urchin spicule, full text) | L1b, L1b-2, L1b-3 |
+| (c) Chitin is a component of the nacre organic matrix; chitosan is its deacetylated derivative | supported for chitin and for the chemistry ("partly deacetylated"); chitosan in the nacre matrix is unsupported | L1c to L1c-4 |
+| (d) Polyphosphate or amorphous calcium phosphate as a precursor in bone and other biomineralisation | partly: ACP as a precursor is supported in zebrafish fin bone (Mahamid 2010); polyphosphate as a precursor is supported by no source, only as co-located and hypothesised (Omelon 2009, 2014) | L1d, L1d-2, L1d-3 |
+
+### L-3. Flags for the Introduction wording
+
+1. **Chitosan is not shown to be in nacre.** Write that chitin is a component of the nacre matrix and that chitosan is its partly deacetylated derivative, used here as the processable form; do not write that nacre contains chitosan. The phrase "chitin and chitosan as the structural polysaccharide" is supported for chitin only.
+2. **Polyphosphate as a biomineral precursor is unsupported.** What is supported is ACP as a bone precursor (zebrafish fin) and polyP as a co-located, hypothesised regulator. Any sentence that makes polyP a precursor of bone mineral is the NU17 wording and stays unwritten.
+3. **Polyelectrolytes** in the matrix were not tested against a source in this session. Osuna-Mascaro and Sedira name acidic proteins, which are polyelectrolytes, but neither calls the matrix a polyelectrolyte; the word should carry a source or be dropped.
+4. **Scope of the ACC statement.** The nacre observation is one direct observation in gastropod (abalone) nacre; DeVol's abstract says earlier evidence was inferred from other shells. Write "documented" for the lineage, not "universal".
+5. **Zebrafish fin is a bony fish skeleton**; the sentence should say fin bone, not bone in general.
+
+### L-4. Gaps
+
+| ID | Gap |
+|---|---|
+| LG1 | DeVol 2015 is abstract level (Europe PMC); no open full text found in one search. A primary full-text read of the nacre ACC observation is open |
+| LG2 | Gong 2012 and Mahamid 2010 were read from the PMC article pages (author manuscripts); the Europe PMC full-text service returned HTTP 500 for them (1 attempt), so the PMC page was the second route. Mahamid 2008 (PMC2529085) returned a bot check page (1 attempt, recorded, not retried) |
+| LG3 | No source read states chitosan occurs in nacre, and none covers polyelectrolytes as a matrix class (flags 1 and 3) |
+| LG4 | No source read gives polyphosphate as a precursor in bone (flag 2); Omelon 2014 and the R-P2 rows remain abstract level |
+| LG5 | Patent search remains a logged gap (RG2); this section needs no patent source |

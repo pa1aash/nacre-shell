@@ -1,6 +1,6 @@
 {
-  "last_session": "PH-W2.2c",
-  "status": "BLOCKED",
+  "last_session": "PH-W2.4b",
+  "status": "DONE",
   "day": 5,
   "retro_schema": {
     "sha": "4ded6c789c9eb66c385db8d41e51ea15a48a28b9"
@@ -18,7 +18,10 @@
     "ops/reports/P0-W2.4a.md",
     "lit/novelty.md",
     "lit/contrary.md",
-    "ops/reports/PH-W2.2a.md"
+    "ops/reports/PH-W2.2a.md",
+    "preprint/package/experiment_1.md",
+    "preprint/package/braun_note.md",
+    "ops/reports/P0-W2.PH-W2.4b.md"
   ],
   "notes": [
     "ChemRxiv package scaffold: metadata.yaml (schema chemrxiv-package/v1), submission_checklist.md in form order, requirements_recheck.md; every captured requirement marked re-check live (B8).",
@@ -28,6 +31,8 @@
     "Needs from W8: abstract, final title after cp4, release PDF and SI, a generated macro for the Materials Project database version.",
     "P0-W2.3 retrodiction results unchanged (results_sha above).",
     "PH-W2.2a: route-layer prior art (8 rows), NS7 supported only as scan-limited negative, baseline patent facts, contrary B21 to B24; patent keyword search remains a gap.",
-    "PH-W2.2c: SG26W rewording in preprint/package done; verify --quick still fails on SG26W/SG27W hits in preprint/paper/briefs (not lane-owned)."
+    "PH-W2.2c: SG26W rewording in preprint/package done; verify --quick still fails on SG26W/SG27W hits in preprint/paper/briefs (not lane-owned).",
+    "PH-W2.3: related work RW1-RW3 (RW1 abstract only, RSC 403), NS8 unsupported (NU18), F8 patent data W-3, contrary B25; gaps RG1-RG3.",
+    "PH-W2.4b: lineage table (a) supported (b) supported (c) supported for chitin, chitosan in nacre unsupported (d) partly; retitled metadata.yaml; experiment_1.md; braun_note.md. tests/retro 5 fail only on title.working vs ops/tracks/p0.yaml meta.title_working (integrator edit)."
   ]
 }
