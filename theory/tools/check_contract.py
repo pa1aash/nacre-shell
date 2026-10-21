@@ -893,6 +893,33 @@ def check_thresholds(ctx, contract, rep):
                 check_edge("screen_ph " + link, test["id"] + " (no expt route)", test["quantity"], miss["edge"],
                            dict(params, **(miss.get("params") or {})))
                 keys.update((miss.get("params") or {}).values())
+            # PH-C0: a pass under a computed transfer premise clears the edge plus the premise uncertainty
+            comp = test.get("where_premise_computed")
+            if isinstance(comp, dict) and "edge" in comp:
+                check_edge("screen_ph " + link, test["id"] + " (computed premise)", test["quantity"], comp["edge"],
+                           dict(params, **(comp.get("params") or {})))
+                keys.update((comp.get("params") or {}).values())
+                rep.add(comp.get("combine") == "linear sum" and comp.get("label") == "pass (computed premise)",
+                        "thresholds", "screen_ph %s %s computed premise" % (link, test["id"]),
+                        "combine %s, label %s" % (comp.get("combine"), comp.get("label")))
+    comp = (((ph.get("links") or {}).get("K1") or {}).get("premise") or {}).get("computed")
+    if isinstance(comp, dict):
+        # PH-C0 registered conventions of the computed premise, checked like p_cred: a positive RMSE cap,
+        # inflation factors >= 1 that do not fall with charge, a one-sided level above one half, a linear sum
+        t, cv = comp["test"], comp["conventions"]
+        check_edge("screen_ph K1", "premise (computed)", t["quantity"], t["edge"], t.get("params"))
+        q = lambda x: sp.nsimplify(str(x))
+        inf = cv["inflation"]
+        ok = (q(cv["rmse_cap"]["primary"]) > 0 and 1 <= q(inf["Ca2+"]) <= q(inf["Al3+"])
+              and 1 <= q(inf["both_if_hard_multivalent_benchmark"]) <= q(inf["Ca2+"])
+              and 0 < q(cv["level"]["one_sided_percent"]) - 50 < 50 and cv["combine"]["rule"] == "linear sum"
+              and all(1 <= q(n) <= q(cv["n_max"]) for k, n in cv["cluster_n"].items() if k != "same_in_every_solvent"))
+        rep.add(ok, "thresholds", "computed premise conventions",
+                "R_cap %s kJ/mol, f_z %s/%s (%s with a hard multivalent benchmark), level %s %%, n_max %s" % (
+                    cv["rmse_cap"]["primary"], inf["Ca2+"], inf["Al3+"], inf["both_if_hard_multivalent_benchmark"],
+                    cv["level"]["one_sided_percent"], cv["n_max"]))
+        keys.update(cv[k]["params"] for k in ("rmse_cap", "inflation", "level"))
+        keys.update((t.get("params") or {}).values())
     if ph:
         forb = set(dec.get("forbidden_in_verdicts", []))
         used = {t["quantity"] for s in ph["links"].values() for t in s.get("tests") or []}

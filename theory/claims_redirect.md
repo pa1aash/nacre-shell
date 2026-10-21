@@ -228,6 +228,7 @@ as a registered condition, evaluated per row:
 | Premise status | Evidence | Effect on a tier-1 pass (E_lb >= E_c + m_1) |
 |---|---|---|
 | supported | measured transfer or salt-solubility data (water and the cell solvent class) give Delta_G_tr_rel >= 0 for the product ion (`hydration_transfer_ca_water_carbonate`, `hydration_transfer_al_water_carbonate`, with `transfer_free_energy_li_water_pc`) | pass stands, labelled `bracket, premise measured` |
+| supported (computed) | no measured data; computed under `theory/protocol_computational.md` with the benchmark accepted and the credible lower bound Delta_G_tr_rel - k_q u_tr >= 0 for every ionic product (PH-C0, Section 10e) | pass only if E_lb >= E_c + m_1 + u_tr/(Delta_n_Li F), labelled `pass (computed premise)`; without a hard multivalent benchmark at most `indicative` |
 | plausible only | no transfer data for the product ion; Born scaling satisfied | inconclusive, labelled `pass conditional on the transfer premise`; E_lb and E_ub printed |
 | violated | data give Delta_G_tr_rel < 0 | E_lb is replaced by E_solv (the onset in S), and the row is decided with E_solv in place of E_lb |
 
@@ -805,3 +806,53 @@ operator's decision.
   residual-entropy bound is evaluated at its ends.
 - **I20.** Bracket: the anion term is neither needed for E_lb nor able to decide the premise. The pass needs a cation
   transfer in form (A) or (B) and a registered solvent proxy.
+
+### 10e. The computed transfer premise (PH-C0; bracket rule change, verdict-bearing)
+
+Session PH-C0, before any transfer free energy is computed. Authority: the COMPUTATIONAL PACKAGE section of
+`ops/tracks/redirect_plan.md`; the method, the benchmark and the registered conventions are in
+`theory/protocol_computational.md`, and the machine form is `screen_ph.links.K1.premise.computed` of the thresholds
+block (block version 7). Every registered value is proposed; the planning chat rules at cp5a2.
+
+**The rule.** The pass condition of Section 2f, "measured Delta_G_tr_rel >= 0", becomes: the premise is **measured**
+(form A or B of Section 10c), **or computed** under the protocol such that the credible lower bound
+Delta_G_tr_rel_lcb = Delta_G_tr_rel - k_q u_tr is >= 0 at the registered one-sided level q, for every ionic product of
+the row. Here u_tr = f_z R_bench is the benchmark RMSE on the relative quantity times the charge inflation factor of the
+ion. A pass under a computed premise must clear the class edge, the row's margin and the premise uncertainty, combined
+as a linear sum:
+
+    E_lb >= E_c + m_1 + u_tr / (Delta_n_Li F),
+
+and it is labelled `pass (computed premise)` everywhere (ladder, tables, abstract). The physical reason for carrying
+u_tr twice: the lower-bound test establishes the sign at level q, and the edge term keeps the pass true even if the
+premise is wrong by up to one calibrated uncertainty, since E_solv >= E_lb - u_tr/(Delta_n_Li F) whenever
+Delta_G_tr_rel >= -u_tr.
+
+**Conditions.** (i) The benchmark is run first and accepted (R_bench <= R_cap on Na+, K+, Rb+ and Cs+ against Li+ in PC);
+a failed benchmark leaves every row solid-salt-only, with the premise `unresolved (benchmark failed)`. (ii) Cu2+ and Hg2+
+(Jahn-Teller and soft ions) validate the charge dependence only and never stand in for Ca2+ or Al3+ by ion type. (iii)
+Without a hard multivalent measured benchmark, Ca2+ and Al3+ are labelled `extrapolated (ion type)` and reach at most
+`indicative`, never a pass. (iv) An ion whose u_tr is not smaller than its |Delta_G_tr_rel| is `unresolved`. (v) PC is
+the proxy of the cyclic-carbonate class only; ethylene carbonate and the linear carbonates are extrapolations.
+
+**Decision table** (protocol Section 5; D = Delta_G_tr_rel, u = u_tr, E* = E_c + m_1).
+
+| # | Premise | Condition | Tier-1 outcome | Label |
+|---|---|---|---|---|
+| P1 | measured | D minus its stated uncertainty >= 0, E_lb >= E* | pass | `pass (premise measured)` |
+| P2 | computed, hard multivalent benchmark | D - k_q u >= 0, E_lb >= E* + u/(Delta_n_Li F) | pass | `pass (computed premise)` |
+| P3 | as P2 | D - k_q u >= 0, E* <= E_lb < E* + u/(Delta_n_Li F) | inconclusive | `computed premise; edge not cleared` |
+| P4 | computed, no hard multivalent benchmark | as P2 | inconclusive (at most indicative) | `indicative (computed premise, extrapolated (ion type))` |
+| P5 | computed | u < abs(D), D - k_q u < 0 | inconclusive | `computed premise not established` |
+| P6 | computed | D + k_q u < 0 | solid-salt-only; E_solv printed as a comparator | `premise violated (computed)` |
+| P7 | computed | u >= abs(D), charge check failed, or a needed job capped | inconclusive | `unresolved (computed premise)` |
+| P8 | computed | R_bench > R_cap | inconclusive for every row | `unresolved (benchmark failed)` |
+| P9 | none | no data, no accepted computation | inconclusive | `pass conditional on the transfer premise` |
+
+The falsifying side does not depend on the premise. Sequence disclosure: the K1 upper bounds were seen before this rule
+and the protocol were written; both were written and hashed before any transfer value was computed. The scope guard
+allows "thermodynamic viability (computed premise)" for a P2 row and still forbids "works", "protects" and "self-heals"
+outside hypothesis wording.
+
+- **I21.** The computed premise is a weaker kind of evidence than a measurement; it enters only through a credible lower
+  bound and an edge widened by its own uncertainty, and only after a benchmark on the same relative quantity.
