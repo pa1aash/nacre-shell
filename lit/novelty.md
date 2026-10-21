@@ -755,3 +755,86 @@ Purpose: ruling C2 defines "nacre-inspired" in the Introduction as the biominera
 | LG3 | No source read states chitosan occurs in nacre, and none covers polyelectrolytes as a matrix class (flags 1 and 3) |
 | LG4 | No source read gives polyphosphate as a precursor in bone (flag 2); Omelon 2014 and the R-P2 rows remain abstract level |
 | LG5 | Patent search remains a logged gap (RG2); this section needs no patent source |
+
+## Coatings on aluminium and aragonite conditions (PH-W2.5, 2026-10-22)
+
+Scope: decision D69. In-situ aragonite is a literature question and a hypothesis route; no screen change. Retrieval was headless (OpenAlex, Crossref, Europe PMC, publisher pages). "Full" = full text read; "Abs." = abstract only; "Title" = title and metadata only (full text refused, 3 attempts: Crossref, OpenAlex, doi.org HTTP 403). Searches run: OpenAlex free-text and title-and-abstract queries for CaCO3, calcium phosphate and hydroxyapatite on aluminium or its alloys, nacre-like, brick-and-mortar and layer-by-layer coatings on aluminium, and current-collector films (about 35 queries); the Semantic Scholar tool was rate-limited (3 attempts). The patent search stays a logged gap (RG2).
+
+### A-1. Coatings table
+
+| ID | DOI | System | Method | What the source shows (film; protection test; conditions) | What it does NOT show |
+|---|---|---|---|---|---|
+| CA1 | 10.1007/s44371-026-00673-x (Abs.) | CaCO3 scale on Al and Cu buttons, HEDP present | Heated aqueous solution, 100 C, bottom and suspended heating | XRD: scale on Al is calcite only; sludge is calcite plus vaterite; no corrosion test in the abstract | Not a coating made on purpose; no protection test; 100 C; no aragonite on Al |
+| CA2 | 10.1016/j.matdes.2022.111073 (Abs.) | CaCO3 coating on Mg2Zn0.2Ca alloy (Mg, not Al) | Hydrothermal, MgSO4 0 to 20 mM in the bath | Coating with aragonite, vaterite and a calcite middle layer; corrosion resistance rises with MgSO4 up to 20 mM then falls; test not named in the abstract | Not aluminium; hydrothermal, not room temperature; pH not in the abstract |
+| CA3 | 10.3390/jcs5100280 (Abs.) | CaCO3 and Ag particles inside an Al matrix composite | Stir casting; weight loss in neutral and acidic media | Corrosion rate fell with reinforcement content | A bulk composite, not a film on Al; no carbonate formation from solution |
+| CA4 | none found | CaCO3 film on Al or Al alloy from solution, with a matrix, or by electrodeposition | About 12 queries (OpenAlex, 2 failed Semantic Scholar) | No source located for a deliberate CaCO3 film on Al | A negative from this search only; patents unsearched |
+| CP1 | none found | Calcium phosphate or hydroxyapatite on Al or Al alloy | About 8 queries | No source located; hits are on Mg, Ti and steel | Same limit as CA4 |
+| CP2 | 10.1038/s41598-017-16985-z (Abs.) | Electrodeposited hydroxyapatite on Ti64 (not Al) | Electrochemical deposition, electrolyte pH 5 and 6 | Protection efficiency about 89 % (pH 5) and about 93 % (pH 6) from corrosion tests in the abstract | Not Al; acidic bath; test medium not read |
+| NL1 | 10.3389/fchem.2021.810886 (Full) | "Nacre" coating (pearl powder, NaH2PO4, Na2EDTA) on AZ91D Mg alloy | Hydrothermal, 363 K, 6 h, bath pH 5.5, 8.5, 11.5 | Coatings Ca- and P-rich; Ecorr and breakdown potential higher and icorr lower than bare AZ91D in simulated body fluid (polarization, EIS); pH 5.5 bath gave the thickest coating and lowest icorr | Not Al; not layered by design; phase identity not extracted here; not a battery medium |
+| NL2 | 10.1038/s41529-023-00415-9 (Full) | Oriented graphene oxide in waterborne polyurethane, layered like pearl layers; steel (Q235) | Cast coating; EIS and SVET in 3.5 wt% NaCl | Impedance modulus one order of magnitude above the blank coating | Organic-GO lamellae, no mineral; steel, not Al |
+| NL3 | 10.1016/j.porgcoat.2025.109778 (Title) | NH2-BNNS/epoxy lamellar coating, nacre-inspired by title | Not read | Title only | Substrate and test unknown |
+| NL4 | 10.1016/j.electacta.2017.11.046 (Title) | Polymer-clay nanocomposite pretreatment on Al alloy 2024-T3 | Not read | Title shows a layered-silicate polymer coating on an Al alloy; nothing else read | Whether it is brick-and-mortar, and any test, unknown |
+| NL5 | 10.1016/j.porgcoat.2026.110302 (Title) | Nacre-like polyelectrolyte coating for radiative cooling and corrosion | Not read | Title only | Substrate and test unknown |
+| NL6 | none found | Nacre-like or brick-and-mortar mineral-polymer coating on Al, corrosion purpose | About 10 queries | Not located as a mineral-polymer film on Al; NL4 is the closest Al item and was not read | Same limit as CA4 |
+| BC1 | 10.1038/s41529-024-00453-x (Full) | Al current collector, carbonate-ester Li-ion electrolytes | Electrochemical tests of bare Al | Passivation layer re-forms and Al is consumed; breakdown tied to ethylene carbonate adsorption at 4.4 V and 4.8 V | Bare foil only; no CaCO3 or Ca phosphate film |
+| BC2 | none found | CaCO3 or Ca phosphate film on an Al collector | About 6 queries; earlier rows I1, I7 and row 3 (phosphate and polyphosphate on Al) stay the phosphate prior art | No carbonate collector film located | Same limit as CA4 |
+
+Counts: rows 14; carbonate on Al as a deliberate film: none found (CA1 is scale; CA3 is bulk); phosphate on Al: none found in this scan (earlier phosphate rows unchanged); nacre-like on any metal: found (NL1 on Mg with mineral; NL2 on steel, organic); on Al: not read, NL4 title only; battery collector: none found.
+
+### A-2. Polymorph conditions
+
+Room temperature, aqueous. "Fraction" = what the source states. Compatibility with an alkaline electrode slurry (pH 10 to 13, Li+, Mg2+ absent unless added): yes, partly, no.
+
+| ID | DOI | Conditions giving aragonite | Fraction reported | Compatible with a pH 10 to 13 slurry |
+|---|---|---|---|---|
+| PM1 | 10.1002/advs.202203759 (Full) | Mg2+: Ca2+ 10 mM, Mg2+ 50 mM (ratio 5), ammonium carbonate diffusion, pH about 9, glass substrate; mixtures at ratio below 5 | Pure aragonite at Mg:Ca = 5; calcite plus aragonite below that | No: needs Mg2+ at 5 times Ca2+; pH about 9, not 10 to 13 |
+| PM2 | 10.1002/advs.202203759 (Full) | Polyamine (branched PEI) 1e-3 mg/mL, Ca2+ 10 mM, same method, no Mg2+ | Pure aragonite at that dose; calcite plus aragonite at 1e-5; calcite again at 0.1 mg/mL | Partly: no Mg2+ needed; pH about 9; cationic polymer, window is narrow |
+| PM3 | 10.1073/pnas.1423898112 (Abs.) | Calculation: calcite nucleation barrier exceeds aragonite's in solutions with seawater-like Mg:Ca | Not an experiment | No for Mg2+-free; no pH 10 to 13 case |
+| PM4 | 10.1021/acs.cgd.0c00152 (Abs.) | Inorganic seawater-type solutions with Mg2+; aragonite with a disordered core (Na, Mg, sulfate) | Not stated in the abstract | No: Mg2+ required; sulfate not required |
+| PM5 | 10.1007/s44290-025-00291-z (Abs.) | Precipitation vs pH and temperature, below 50 C and at pH 7 to 12.5 | No aragonite at any pH; calcite 98 % at pH 12; vaterite 83 % at pH 8.4; aragonite appears 50 to 85 C, 96 % at 80 C | No: at pH 12 the product is calcite, and aragonite needs elevated temperature |
+| PM6 | 10.1126/science.271.5245.67 (Abs.) | Aragonitic-shell macromolecules pre-adsorbed on beta-chitin and silk fibroin substrate | Aragonite induced; fraction not in the abstract | Not tested at pH 10 to 13; conditions not read |
+| PM7 | 10.1021/acs.cgd.3c00102 (Full) | Mg/Ca 2 to 5 (Mg 20 to 40 mM), ammonium bicarbonate diffusion, aspartic and glutamic acid, chitin | High-Mg calcite and disordered dolomite; no aragonite claim | No: aragonite not the product |
+| PM8 | 10.1002/advs.202203759 (Full), citing refs 48 to 52 | Review lines: additive-free narrow supersaturation window; gel column; nanopores; CO2/NH3 microbubbles at pH 9.7 to 10.5; constant composition at an optimal pH of 11 | Reported as high aragonite fractions; not read at source | Partly: pH 9.7 to 11 reported in two cited studies, not read, no Li+ |
+| PM9 | 10.1021/jacs.5b07931 (Abs.) | ACC precursors at the growth front of gastropod nacre; ACC phases seen resemble those preceding calcite in sea urchin spicules; proto-aragonite found in coral | Direct observation in one gastropod | Not a solution condition |
+| PM10 | 10.1021/acs.cgd.0c00152 (Abs.) | ACC core inside abiotically formed aragonite | Visualised; no fraction | Same as PM4 |
+| PM11 | 10.1016/j.chemgeo.2012.12.014 (Title) | Carbonate accumulation rate, Mg2+, polyaspartic acid, 6 to 40 C | Not read | Not assessable |
+
+Plain statement: the sources read give room-temperature aragonite from solution only with Mg2+ at about 5 times Ca2+ or with a cationic polyamine at low dose, both at pH about 9. The one source that scanned pH (PM5) found calcite at pH 12 and no aragonite at any pH. No source read gives aragonite at pH 10 to 13 with Li+ present and Mg2+ absent. PM8 cites pH 9.7 to 11 results that were not read. Compatibility with an alkaline slurry: **no, with one open lead (PM8, refs 51 and 52, unread)**.
+
+### A-3. In-situ carbonate route (hypothesis route, D69)
+
+**Route R4 (hypothesis, not a result).** The route would need amorphous calcium carbonate to form in the slurry or at the foil under an organic matrix, hold long enough to transform to aragonite on the Al surface, and leave an adherent film. The screen covers K2 (solubility at the processing pH) for aragonite and calcite, and nothing beyond that. The screen cannot say that aragonite forms, that a film forms, that anything resists corrosion, or that a layered structure results. Tests would be the experiment list: XRD or Raman phase fraction of the product from slurry-like solutions (pH 10 to 13, Li+, with and without Mg2+ and matrix); SEM of the foil surface and cross-section; electrochemical measurement of the foil in the slurry medium; and a time series for ACC. No claim is made that any of these succeed.
+
+### A-4. Layering in nacre
+
+Nacre is described as a lamellar composite of aragonite and organic sheets (DeVol et al., 10.1021/jacs.5b07931, abstract, read 2026-10-22). Polyamine-grown aragonite platelets are described as stacks comparable to structures in developing nacre (10.1002/advs.202203759, Full). The layering in nacre comes from organic interlayers between aragonite platelets; the word "thin" and the interlayer thickness are not in the abstracts read (gap LY1). **Statement (no source for it, and none sought):** alternating aragonite and calcite layers is not a nacre-like structure.
+
+### A-5. Novelty effect
+
+| ID | Finding | Effect on existing wording (no existing item edited) |
+|---|---|---|
+| NE1 | CA4, CP1, BC2: no deliberate CaCO3 or Ca phosphate film on Al located | Keeps N1 and NS7 narrow; adds nothing supported beyond "none located in about 35 queries"; a negative from search, not priority |
+| NE2 | NL1: nacre-named Ca-P coating on Mg alloy with measured corrosion resistance | Reinforces U3 and the NU series: no "nacre-inspired protective coating" priority; NS items on nacre-like coatings must name Mg, steel and Al separately |
+| NE3 | NL2, NL3 to NL5: nacre-like or layered coatings for corrosion exist on other metals (steel read; others by title) | Any NS item on layered corrosion coatings must be limited to "aluminium foil in a battery slurry"; NU1 to NU18 stand |
+| NE4 | PM5: no aragonite at any pH including 12, calcite 98 % at pH 12 | NU18 and NS8 are unaffected (phosphate ladder); a new unsupported row is suggested: "aragonite forms in an alkaline slurry" |
+| NE5 | CA1: scale on Al is calcite | "A CaCO3 layer on Al" stays unsupported for aragonite (U9) |
+
+Suggested new unsupported rows (not inserted into the existing list):
+
+| # | Wording | Why |
+|---|---|---|
+| NU19 | "Aragonite forms on Al foil in an alkaline electrode slurry" or "in-situ aragonite is expected at pH 10 to 13" | PM5 shows calcite at pH 12 and no aragonite; PM1 and PM2 are at pH about 9; PM8 leads unread |
+| NU20 | "Alternating aragonite and calcite layers are nacre-like" | A-4: layering in nacre comes from organic interlayers; no source for the alternation |
+
+### A-6. Gaps
+
+| ID | Gap |
+|---|---|
+| CG1 | Full text refused (HTTP 403, 3 attempts each: Crossref, OpenAlex, doi.org): 10.1016/j.porgcoat.2026.110302, 10.1016/j.electacta.2017.11.046, 10.1016/j.porgcoat.2025.109778, 10.1016/j.corsci.2022.110812 (Title or none) |
+| CG2 | 10.1007/s44371-026-00673-x and 10.1007/s44290-025-00291-z: publisher page empty or 403, PDF not served; abstract read via OpenAlex |
+| CG3 | 10.1073/pnas.1423898112 and 10.1073/pnas.1811696115: PNAS 403; abstract only (the second returned no abstract); Mg:Ca threshold value not read |
+| CG4 | Semantic Scholar tool rate-limited on 3 attempts; no citation chaining done |
+| CG5 | Cited studies for aragonite at pH 9.7 to 10.5 and pH 11 (PM8 refs 51, 52) not identified or read |
+| CG6 | Li+ effect on CaCO3 polymorph: one search, no relevant source |
+| LY1 | Thickness and "thin" wording of nacre interlayers: no source read states it |
+| RG2 | Patent search remains a logged gap |
