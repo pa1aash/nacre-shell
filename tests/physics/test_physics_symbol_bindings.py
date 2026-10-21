@@ -61,10 +61,9 @@ def test_every_family_key_has_a_binding_or_a_stated_exclusion(table, params):
     assert missing == []
 
 
-def test_bound_keys_exist_in_params_except_the_absent_adsorption_keys(table, params):
-    absent = {k for k, (b, _r) in _keys(table).items() if k not in params}
-    assert absent == {"polyp_ads_alumina_gamma_max", "polyp_ads_alumina_k_langmuir",
-                      "polyp_ads_alumina_layer_thickness"}
+def test_bound_keys_exist_in_params(table, params):
+    """PH-W1.5 added the three adsorption keys (as gaps); every bound key is now in the parameter table."""
+    assert {k for k, (b, _r) in _keys(table).items() if k not in params} == set()
 
 
 def _contract_symbols():
@@ -280,7 +279,21 @@ def test_k_p_and_delta_p_units():
         bd.delta_p_to_m(1.0, "mol m^-2")
 
 
-def test_adsorption_keys_are_unresolved_until_a_w1_key_exists(table):
+def test_adsorption_keys_are_unresolved_while_they_are_gap_keys(table):
     for k in ("polyp_ads_alumina_gamma_max", "polyp_ads_alumina_k_langmuir", "polyp_ads_alumina_layer_thickness"):
         r = bd.bind(k, 1.0, table=table, unit="1")
-        assert r.status == bd.UNDETERMINED and "absent" in r.reason
+        assert r.status == bd.UNDETERMINED and "gap key" in r.reason
+
+
+# ---- PH-W1.5 keys (PH-W4.2f)
+def test_alkali_transfer_keys_bind_on_the_tatb_scale_but_li_names_no_scale(table):
+    li = bd.bind("transfer_free_energy_li_water_pc", 23800.0, table=table)
+    for k, v in (("na", 14600.0), ("k", 5300.0), ("rb", -1000.0), ("cs", -7000.0)):
+        r = bd.bind("transfer_free_energy_%s_water_pc" % k, v, table=table)
+        assert r.ok and r.scale == "TATB" and r.form == "A" and r.solvent == "PC" and r.value == v
+        assert not bd.delta_g_tr_rel(r, li, 1).ok
+
+
+def test_linear_chain_unit_w15_key_is_a_gap_and_undetermined(table):
+    assert bd.bind("polyp_al_log_beta1_linear_chain_unit_w15", None, table=table).status == bd.UNDETERMINED
+    assert bd.bind("polyp_al_log_beta1_linear_chain_unit_w15", 3.0, table=table).value == pytest.approx(1000.0)

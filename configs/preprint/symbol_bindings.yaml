@@ -1,5 +1,5 @@
 # W1 key to contract v6 symbol bindings (PH-W4.2c, cp5a fix X3; revised PH-W4.2d per the cp5a rulings). Applied by src/nacre/physics/bindings.py.
-# sha256 of this file with this line removed: ad70fd7e7977b8dd12233a0e42ef2459f7ce37c38eaa3746530d730e3672377e
+# sha256 of this file with this line removed: 543ca9db6c8b1567c781e78307d47087ff8e724cac8b4ac52df8a8bcd076a4e9
 # Status: resolved = unit and kind established from the key record; unresolved = ambiguous, the key yields
 # "undetermined" (default). A gap key (no value) is undetermined at run time whatever its binding status.
 # No prior, threshold, verdict rule or K1 number is set or changed here.
@@ -30,6 +30,7 @@ bindings:
       polyp_al_log_beta1_cyclo_p6: *cyclo
       polyp_al_log_beta1_cyclo_p8: *cyclo
       polyp_al_log_beta1_linear: {status: resolved, reason: 'gap in W1; the conversion is defined for when a linear-chain value exists'}
+      polyp_al_log_beta1_linear_chain_unit_w15: {status: resolved, reason: 'gap in W1 (PH-W1.5, no admitted row); same quantity and conversion as polyp_al_log_beta1_linear, undetermined at run time while the value is a gap'}
   - id: b02
     contract_symbol: K_sp_AlPP
     contract_unit: '1'
@@ -107,6 +108,10 @@ bindings:
       transfer_free_energy_li_water_pc: {status: unresolved, ion: Li+, form: A, solvent: PC, scale: null, reason: 'single-ion scale not named in the key record (IUPAC selected value); unusable until a scale is stated'}
       transfer_free_energy_ca_water_pc: {status: unresolved, ion: Ca2+, form: A, solvent: PC, scale: null, reason: 'gap; scale not named'}
       transfer_free_energy_al_water_pc: {status: unresolved, ion: Al3+, form: A, solvent: PC, scale: null, reason: 'gap; scale not named'}
+      transfer_free_energy_na_water_pc: &alk {status: resolved, ion: Na+, form: A, solvent: PC, scale: TATB, role: alkali_single_ion, note: 'PH-W1.5: Marcus 1983 selected value, tetraphenylarsonium tetraphenylborate scale; usable in DG_tr_rel only with a Li+ value on the same named scale and source, and the Li+ key still names no scale'}
+      transfer_free_energy_k_water_pc: {<<: *alk, ion: K+}
+      transfer_free_energy_rb_water_pc: {<<: *alk, ion: Rb+}
+      transfer_free_energy_cs_water_pc: {<<: *alk, ion: Cs+}
       transfer_free_energy_clo4_water_pc: {status: resolved, ion: ClO4-, form: A, solvent: PC, scale: ferrocene, role: anion_cancels, note: 'cancels in the charge-balanced combination; used only to assemble form B from single ions'}
   - id: b07
     contract_symbol: G_phase
@@ -173,13 +178,13 @@ bindings:
       formula: 'Gamma_P = x mol m^-2 (mmol, umol, nmol m^-2 scaled; a mass density needs the chain-unit molar mass as an argument); K_P = x, dimensionless activity form only; delta_P = x m (mm, um, nm, angstrom scaled)'
       note: the caller states the unit; a concentration-form K_P or an unknown unit is undetermined
     status: unresolved
-    reason: 'no W1 key in lit/params.yaml at the pin; stays unresolved until PH-W1.5 supplies the keys with units, source and pin'
+    reason: 'PH-W1.5 added the three keys as gaps (no value, no source); stays unresolved while they are gap keys, and K_P needs an activity-form conversion before it can resolve'
     ruling: 'cp5a: stays unresolved until the PH-W1.5 keys exist with units, source and pin'
     default: {status: undetermined, value: null}
     keys:
-      polyp_ads_alumina_gamma_max: {status: unresolved, symbol: Gamma_P, unit: mol m^-2, reason: 'key absent from lit/params.yaml'}
-      polyp_ads_alumina_k_langmuir: {status: unresolved, symbol: K_P, unit: '1', reason: 'key absent from lit/params.yaml'}
-      polyp_ads_alumina_layer_thickness: {status: unresolved, symbol: delta_P, unit: m, reason: 'key absent from lit/params.yaml'}
+      polyp_ads_alumina_gamma_max: {status: unresolved, symbol: Gamma_P, unit: mol m^-2, reason: 'gap key in lit/params.yaml (PH-W1.5, no isotherm found, no value); stays unresolved while it is a gap'}
+      polyp_ads_alumina_k_langmuir: {status: unresolved, symbol: K_P, unit: '1', reason: 'gap key in lit/params.yaml (PH-W1.5, no value); the W1 unit is m^3 mol^-1, a concentration form that K_P (activity form) does not accept; stays unresolved while it is a gap'}
+      polyp_ads_alumina_layer_thickness: {status: unresolved, symbol: delta_P, unit: m, reason: 'gap key in lit/params.yaml (PH-W1.5, no value); stays unresolved while it is a gap'}
   - id: b10
     contract_symbol: none
     contract_unit: null

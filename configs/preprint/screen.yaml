@@ -59,6 +59,9 @@ bindings:
     by_framing:
       calcite: {gamma_nl: gamma_nl_calcite, V_m: v_m_calcite, K_sp: log10_ksp_calcite}
       ACC: {gamma_nl: gamma_nl_acc, V_m: v_m_acc, K_sp: log10_ksp_acc}
+      # PH-W4.2e: aragonite is a K2 framing only (claims_redirect Section 11a); it has no registered gamma_nl, so no
+      # nucleation link is formed for it. K_sp is the labelled alternative with a width (cp5b decides the older key).
+      aragonite: {V_m: v_m_aragonite, K_sp: log10_ksp_aragonite_25c_i0}
     states:                           # registered R-slurry path (thresholds: worst_state, path_sum)
       slurry:
         T: t_slurry
@@ -72,6 +75,12 @@ bindings:
 # cp3 rulings R6 and R8 (planning chat 2026-10-17), as registrations of the run.
 registrations:
   framings: [calcite, ACC]            # R6: both registered; falsified only under every framing
+  # PH-W4.2e (claims_redirect Section 11a): the K2 framings of carbonate. Not the chain framings above: aragonite has no
+  # nucleation inputs. required: a row is labelled nacre-type only where every required polymorph passes K2.
+  k2_framings:
+    calcite: {required: true}
+    aragonite: {required: true}
+    ACC: {required: false}            # reported beside the two, never required
   pH: {primary: ph_slurry, sensitivity: ph_slurry_modified}
   pKa: {key: pka_catechol, flag: 'stated at the ionic strength of its sources, not at the regime I; reported as a flag'}
   termination_weights: ignorance_mixture   # per-termination verdicts and the simplex, never a point weight

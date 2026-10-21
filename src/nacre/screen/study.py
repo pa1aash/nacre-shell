@@ -599,10 +599,10 @@ def _safe_controls(cfg, resolver):
     return out
 
 
-def _control(params_path, cfg, allow_mock, prior_set, truncation, n, chunk, seed, p, vals, labels):
+def _control(params_path, cfg, allow_mock, prior_set, truncation, n, chunk, seed, p, vals, labels, framing="calcite"):
     design = {k: v for k, v in vals.items() if k in AXIS_UNITS}
     fixed = {k: v for k, v in vals.items() if k not in AXIS_UNITS}
-    states = load_point(params_path, cfg, "calcite", design, allow_mock, prior_set, truncation, fixed_inputs=fixed)
+    states = load_point(params_path, cfg, framing, design, allow_mock, prior_set, truncation, fixed_inputs=fixed)
     outs, _ = propagate_states(states, n, seed, chunk)
     om = omega_point(outs, p)
     if om is None:
