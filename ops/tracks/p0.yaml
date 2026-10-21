@@ -397,6 +397,42 @@ days:
     model: Sonnet
     master_trace: none
     requires: []
+  - id: PH-W1.5
+    lane: p0-w1
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-W4.2d
+    lane: p0-w4
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-W5.3b
+    lane: p0-w5
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-C0
+    lane: p0-w3
+    day: 5
+    model: Opus
+    master_trace: none
+    requires: []
+  - id: PH-W2.3
+    lane: p0-w2
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-I5c
+    lane: p0-int
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
 - day: 6
   status: pending
   opened_utc: null
@@ -434,6 +470,36 @@ days:
     model: Sonnet
     master_trace: none
     requires: []
+  - id: PH-C1
+    lane: p0-w5
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
+  - id: PH-C2
+    lane: p0-w5
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
+  - id: PH-C3
+    lane: p0-w5
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
+  - id: PH-W3.5
+    lane: p0-w3
+    day: 6
+    model: Opus
+    master_trace: none
+    requires: [cp5]
+  - id: PH-W5.4b
+    lane: p0-w5
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
 - day: 7
   status: pending
   opened_utc: null
@@ -874,6 +940,11 @@ decisions:
     the 11 W1-to-contract symbol bindings as its first step, before any output (as PH-W4.3 did with AM1 to AM4),
     using only the registered treatment rules (ignorance prior, flagged analog, design axis, unresolved).',
   reason: 'PH-W4.2b report (72 keys, 11 bindings); decision 6 of the cp5a packet.'}
+- {id: D58, date: '2026-10-21', decision: 'cp5a X-fixes PASS (X1, X2, X3, X5; ladder_v3 ae852aa7, symbol_bindings ca0a3bea).', reason: 'Planning-chat verdict on the cp5a X-fixes.'}
+- {id: D59, date: '2026-10-21', decision: 'cp5 is folded into one combined amendment cp5a2; p0-cp5 is tagged only after its PASS.', reason: 'Single freeze after the computational-package protocol.'}
+- {id: D60, date: '2026-10-21', decision: 'Binding rulings: rows 1 and 9 stay unresolved; row 6 relative form DG_tr_rel; row 7 E_lb from conventional aqueous DfG (hydration keys comparison only); row 8 window_margin unbound from phosphate rows.', reason: 'Planning-chat rulings on the symbol bindings.'}
+- {id: D61, date: '2026-10-21', decision: 'D36 is amended: CPU compute is allowed ONLY for PH-C* sessions under jobs/preprint/**, one rented 64-core node started and stopped by the operator, budget about 15 to 20 node-hours, hard cap USD 150, stop and ask the planning chat at USD 100, every job and its cost logged in jobs/ledger/p0-w5.jsonl, no GPU.', reason: 'Computed bracket premise needs cluster-continuum DFT.'}
+- {id: D62, date: '2026-10-21', decision: 'X4, X7, X8 stay non-gating but are listed in cp5a2.', reason: 'Planning-chat ruling on non-gating fixes.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
