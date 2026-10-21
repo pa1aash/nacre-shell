@@ -216,8 +216,8 @@ claims:
     scope_check: clean
     status: planned
     notes: NS7 stands only with all four qualifiers. Dropping in situ brings in the baked aluminophosphate
-      films; dropping fluorine-free brings in the lithium polyphosphate coating on aluminium. No wording
-      of first or novel accompanies it.
+      films; dropping fluorine-free brings in the lithium polyphosphate coating on aluminium. No priority
+      or novelty wording accompanies it.
   - id: CL-V09
     statement: No scanned source gives an oxidation-limit ladder across phosphate condensation states.
     section: introduction
@@ -463,7 +463,7 @@ claims:
     supplier: p0-w3
     scope_check: clean
     status: planned
-    notes: Route three is the first item of the route-layer cut order (one sentence).
+    notes: Route three is the item cut earliest in the route-layer cut order (one sentence).
   - id: CL-D14
     statement: The hydrolysis descriptor is the condensed fraction at the end of the wet period, which halves
       for each half-life of hydrolysis; the rate carries a registered transfer factor from particle data
@@ -1389,7 +1389,7 @@ claims:
   - id: CL-P01
     origin: carbonate control (frozen)
     statement: >-
-      For each governing quantity the paper states the accuracy a first-principles value must
+      For each governing quantity the paper states the accuracy an ab initio value must
       reach to move the outcome across a decision criterion, derived from the Sobol result and
       the barrier map.
     section: results
@@ -1501,7 +1501,7 @@ claims:
     origin: carbonate control (frozen)
     statement: >-
       Molecular dynamics with a machine-learned potential, fine-tuned on targeted
-      first-principles data, is planned for the hydrated interface, to give the wet work of
+      ab initio data, is planned for the hydrated interface, to give the wet work of
       adhesion and the contact angle at the accuracy the screen requires.
     section: predictions
     type: outlook
@@ -1636,7 +1636,7 @@ claims:
     notes: Also used verbatim as a scope sentence at the end of the Introduction (P0-W8.2).
   - id: CL-N03
     origin: carbonate control (frozen)
-    statement: This paper does not claim any result from the full first-principles or machine-learned-potential calculations.
+    statement: This paper does not claim any result from the full ab initio or machine-learned-potential calculations.
     section: discussion
     type: limitation
     polarity: does-not-claim
@@ -1927,7 +1927,7 @@ claims:
   - id: CL-R08
     origin: carbonate control (frozen)
     statement: >-
-      The question is thermodynamic first, because a link that is unfavourable for every
+      The question is thermodynamic, because a link that is unfavourable for every
       plausible input ends the sequence whatever the kinetics.
     section: introduction
     type: physical relation
@@ -2060,7 +2060,7 @@ claims:
   - id: CL-E03
     origin: carbonate control (frozen)
     statement: >-
-      The first finding concerns a porous scale formed in the bulk and settled on the metal,
+      The initial finding concerns a porous scale formed in the bulk and settled on the metal,
       not a coherent film nucleated on a template; the distinction is central to what follows
       and must be argued from the nucleation and conformality links, not assumed.
     section: introduction
@@ -2080,7 +2080,7 @@ claims:
     origin: carbonate control (frozen)
     statement: >-
       This paper is a thermodynamic screen of the chain with literature-bounded inputs; for
-      each governing quantity it states the accuracy a first-principles value must reach to
+      each governing quantity it states the accuracy an ab initio value must reach to
       move the outcome across a decision criterion.
     section: introduction
     type: required precision

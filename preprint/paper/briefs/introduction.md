@@ -26,7 +26,7 @@ Pose the design question: which mineral phases, if any, can serve as a thermodyn
 ## Figures and tables
 
 - `fig:hero`: hero render (phosphate, alone, late). Until delivered the float holds a missing-input marker. Cut order: the hero is cut before the schematic; use `fig:pathway` instead.
-- `tab:candidates` is first cited at step 6 (forward reference).
+- `tab:candidates` is initially cited at step 6 (forward reference).
 
 ## Macros needed
 

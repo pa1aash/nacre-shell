@@ -3,7 +3,7 @@
 # The same sentences appear in preprint/claims.yaml as the does-not-claim entries.
 This paper does not claim that the barrier works.
 This paper does not claim any corrosion rate, capacity or device performance.
-This paper does not claim any result from the full first-principles or machine-learned-potential calculations.
+This paper does not claim any result from the full ab initio or machine-learned-potential calculations.
 This paper does not claim that any interface, template or film thickness is optimal.
 This paper does not claim experimental validation.
 This paper does not claim that phosphate supply at a pit works or that any film is self-healing; both are design hypotheses.

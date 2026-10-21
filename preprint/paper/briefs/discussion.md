@@ -11,7 +11,7 @@ Say plainly what the results license and what they do not, weigh the contrary ev
 ## Physical argument, in order
 
 1. **What the results license.** The oxidation ladder per cutoff class, the processing-regime result, the required-precision map, and the headline in the frame that holds. CL-S13, CL-P04.
-2. **What they do not license.** The does-not-claim sentences, verbatim, because they are the only sentences the scope linter exempts: CL-N01, CL-N02, CL-N04, CL-N05, CL-N06 to CL-N13 (function; rates and cycling; optimality; experiment; self-healing and pit supply; outperforming baselines; validation of the nucleation half; priority; formation and wetting on Al; thermodynamic onset as a service limit; fluorinated electrolytes; the acid-adjusted slurry as a regime).
+2. **What they do not license.** The does-not-claim sentences, verbatim, because they are the only sentences the scope linter exempts: CL-N01, CL-N02, CL-N04, CL-N05, CL-N06 to CL-N13 (function; rates and cycling; optimality; experiment; the self-repair hypothesis and pit supply; outperforming baselines; validation of the nucleation half; priority; formation and wetting on Al; thermodynamic onset as a service limit; fluorinated electrolytes; the acid-adjusted slurry as a regime).
 3. **Validated versus not.** The thermochemistry and window pipeline is benchmarked against tabulated data; the nucleation half failed its pre-registered retrodiction, so template and nucleation results are hypotheses plus the precision map. CL-T03, CL-N08.
 4. **Risks to test, not assume.** Phosphate may fail K1 too; K3 may have no accessible window because bulk precipitation competes; insulating thickness; slurry competing phases; hydrolysis; novelty against incumbents; fluorinated-electrolyte records are context only. CL-L07, CL-L08, CL-L09.
 5. **Contrary evidence.** Carbonate-era contrary records (CL-L05, CL-E01 to CL-E03); polydopamine as a K1 risk (contrary record B4); weighed link by link.
@@ -36,4 +36,4 @@ CL-L07 to CL-L09, CL-N06 to CL-N13; carbonate era: CL-L01 to CL-L05, CL-N01 to C
 ## Cautions
 
 - Verbatim does-not-claim sentences only; no paraphrase.
-- No "first", "novel"; the patent-search gap is stated, not worked around.
+- No priority or novelty wording; the patent-search gap is stated, not worked around.

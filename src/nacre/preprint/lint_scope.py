@@ -9,7 +9,11 @@ every .md file under preprint/paper (outline and briefs), and the `statement` an
 fields of preprint/claims.yaml.
 
 The charter's second block, scope-guard-warn (SG17W..), holds warn patterns: a match is a warning
-that fails only when the same sentence lacks the word "thermodynamic" (see WARN_WORD).
+that fails only when the same sentence lacks the rule's exemption word (see WARN_EXEMPT): "thermodynamic"
+for SG17W, "audit" for SG26W, "hypothesis" or "criterion" for SG27W.
+
+A line or paragraph carrying the marker `<!-- sg:allow nacre -->` (or `% sg:allow nacre` in .tex) is skipped by the
+patterns that match the word nacre, and by no other pattern.
 
 The only exempt sentences are the explicit "does not claim" sentences listed verbatim in
 preprint/paper/lint/scope_allowlist.txt. An allowlist line without "does not claim" is an error.
@@ -25,7 +29,14 @@ ALLOWLIST = "scope_allowlist.txt"
 PATTERNS = "scope_patterns.txt"
 _BLOCK = re.compile(r"```scope-guard\n(.*?)```", re.S)
 _WARN_BLOCK = re.compile(r"```scope-guard-warn\n(.*?)```", re.S)
-WARN_WORD = re.compile(r"\bthermodynamic", re.I)
+WARN_EXEMPT = {
+    "SG17W": re.compile(r"\bthermodynamic", re.I),
+    "SG26W": re.compile(r"\baudit", re.I),
+    "SG27W": re.compile(r"\b(hypothes[ie]s|criteri(on|a))\b", re.I),
+}
+WARN_LABEL = {"SG17W": "thermodynamic", "SG26W": "audit", "SG27W": "hypothesis' or 'criterion"}
+WARN_WORD = WARN_EXEMPT["SG17W"]
+ALLOW_NACRE = re.compile(r"sg:allow nacre", re.I)
 _MD_START = re.compile(r"^\s*(#+\s|[-*+]\s|\d+[.)]\s|>\s)")
 _SENT = re.compile(r"(?<=[.!?])\s+")
 
@@ -154,16 +165,20 @@ def _line_at(marks, offset):
 def check_text_blocks(blocks, label, rs, allowed, warn=()):
     problems = []
     for block in blocks:
+        marked = any(ALLOW_NACRE.search(line) for _, line in block)
         for sentence, start, marks in _sentences(block):
-            if not WARN_WORD.search(sentence):
-                for rid, rx in warn:
-                    m = rx.search(sentence)
-                    if m:
-                        problems.append("%s:%d: %s (warn) %r without 'thermodynamic' in: %s" % (
-                            label, _line_at(marks, start + m.start()), rid, m.group(0), normalise(sentence)[:120]))
+            for rid, rx in warn:
+                exempt = WARN_EXEMPT.get(rid, WARN_WORD)
+                m = rx.search(sentence)
+                if m and not exempt.search(sentence):
+                    problems.append("%s:%d: %s (warn) %r without %s in: %s" % (
+                        label, _line_at(marks, start + m.start()), rid, m.group(0),
+                        "'%s'" % WARN_LABEL.get(rid, "thermodynamic"), normalise(sentence)[:120]))
             for rid, rx in rs:
                 m = rx.search(sentence)
                 if not m:
+                    continue
+                if marked and "nacre" in rx.pattern:
                     continue
                 if normalise(sentence) in allowed:
                     break

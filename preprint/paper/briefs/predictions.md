@@ -12,7 +12,7 @@ State, conditionally on the cutoff class, what the screen predicts for an experi
 
 1. **The initial experiment.** A film made by route R1 or R2 against four comparators: baked aluminophosphate, hydroxyapatite, bare foil, carbon-coated foil. Two tests: (a) water insolubility and aqueous-slurry immersion; (b) an anodic potential hold from `NumHoldLow` to `NumHoldHigh` V in a fluorine-free electrolyte. The notice to the corresponding author asks whether his laboratory could run it. CL-Q01.
 2. **Conditional predictions.** If the onset ladder holds: hydroxyapatite fails the hold near the carbonate onset (CL-Q02); the condensed phases survive the hold where the orthophosphates do not (CL-Q03); a gelled or coacervate film resists water where lithium polyphosphate dissolves (CL-Q04). Each is stated with the frame (A, B or C) under which it holds.
-3. **What would decide the nucleation condition.** A template-nucleus energy at the precision of the required-precision map; nothing in the paper supplies it. CL-O04. No new first-principles calculation is proposed (decision D36).
+3. **What would decide the nucleation condition.** A template-nucleus energy at the precision of the required-precision map; nothing in the paper supplies it. CL-O04. No new ab initio calculation is proposed (decision D36).
 
 ## Figures and tables
 

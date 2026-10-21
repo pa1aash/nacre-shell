@@ -1,20 +1,24 @@
 {
-  "last_session": "PH-W8.1",
+  "last_session": "PH-W8.1b",
   "status": "DONE",
   "day": 5,
   "artifacts": [
     "ops/reports/P0-W8.3.md",
     "ops/reports/P0-W8.PH-W8.1.md",
+    "ops/reports/P0-W8.PH-W8.1b.md",
     "preprint/claims.yaml",
     "preprint/generated/sources.yaml",
     "preprint/paper/bib/provenance.jsonl",
     "preprint/paper/briefs/design.md",
+    "preprint/paper/briefs/discussion.md",
+    "preprint/paper/briefs/introduction.md",
     "preprint/paper/briefs/methods.md",
     "preprint/paper/briefs/model.md",
     "preprint/paper/briefs/predictions.md",
     "preprint/paper/briefs/results.md",
     "preprint/paper/layout/panel_letters.tex",
     "preprint/paper/lint/numbers_allowlist.txt",
+    "preprint/paper/lint/scope_allowlist.txt",
     "preprint/paper/main.tex",
     "preprint/paper/nacre-preamble.tex",
     "preprint/paper/outline.md",
@@ -33,6 +37,8 @@
     "tests/preprint/preprint_helpers.py",
     "tests/preprint/test_preprint_build.py",
     "tests/preprint/test_preprint_claims.py",
+    "tests/preprint/test_preprint_introduction.py",
+    "tests/preprint/test_preprint_lint_scope.py",
     "tests/preprint/test_preprint_macros.py",
     "tests/preprint/test_preprint_model.py",
     "tests/preprint/test_preprint_refs.py",
@@ -41,6 +47,7 @@
   "notes": [
     "skeleton retargeted: design, predictions added; inputs and outlook removed; carbonate text marked 'carbonate control (frozen)'",
     "ledger: 129 entries (65 redirect, 64 carbonate-era), 22 conditional, 13 does-not-claim; CRediT removed; SG17W lint in lint_scope",
-    "outstanding: NS6 id collision (CL-V09), planned K1 macros, legacy figure and table map"
+    "outstanding: NS6 id collision (CL-V09), planned K1 macros, legacy figure and table map",
+    "PH-W8.1b: lint-scope exemptions SG26W audit, SG27W hypothesis/criterion, SG17W thermodynamic; allow marker implemented; 23 flags cleared; W8.2 adds the marker above the nacre-inspired paragraph"
   ]
 }

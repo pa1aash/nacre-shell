@@ -24,7 +24,7 @@ State the screening rules before any number appears: the four gating conditions,
 
 ### The route layer (`sec:routes`)
 
-7. **Routes R1 to R3** and the race against hydrolysis to orthophosphate (the low-ceiling phase). CL-D13. R3 is one sentence and the first item cut.
+7. **Routes R1 to R3** and the race against hydrolysis to orthophosphate (the low-ceiling phase). CL-D13. R3 is one sentence and the item cut earliest.
 8. **Criteria in route form.** Condensed fraction at the end of the wet period (K2): CL-D14. Formation criteria (K3): R1 falsifying-only, R2 only where the binodal map covers; a(Al3+) in two labelled states (oxide-equilibrium, pit-state). CL-D15. Liquid wetting (K4): gamma_sn <= gamma_sl; spreading coefficient as a design result. CL-D16.
 9. **Framings.** Amorphous governs the in-situ routes, crystalline is an optimistic upper reference; "requires crystallisation" label. CL-D17. Matrix rungs: tier two only, never a gate; polydopamine a stated risk. CL-D18.
 

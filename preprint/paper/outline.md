@@ -15,7 +15,7 @@ The paper is a thermodynamic screen, not a promise of a pass. Carbonate is the c
 7. **Discussion and limits** (`briefs/discussion.md`).
 8. **Declarations** (`briefs/declarations.md`) and **SI** (`briefs/si.md`).
 
-## Figures (labels; numbered by first citation)
+## Figures (labels; numbered by order of citation)
 
 - `fig:hero`: hero render (phosphate, alone, late; cut before the schematic). Introduction.
 - `fig:pathway`: four-panel bone-like pathway schematic. Design rules.
