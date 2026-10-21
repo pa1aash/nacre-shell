@@ -1,5 +1,41 @@
 {
  "figures": {
+  "fig10": {
+   "id": "fig10",
+   "claim": "The DFT formation enthalpies lie inside the registered error band for the ionic orthophosphates and outside it, always on the over-bound side, for the condensed, acid and hydrated phosphates, the aluminium hydroxide and the sink salt, so the phosphate benchmark does not pass as a set.",
+   "caption_key": "One row per phase with a like-for-like formation enthalpy, grouped by family (gaps between groups: phosphates, silicates, Al-O-H phases, the sink salt) and ordered by error within a group. Horizontal axis: DFT minus tabulated formation enthalpy per atom. Grey band: the registered error band. Marker: filled circle, inside the band (benchmarked); open square, outside the band; open diamond, no like-for-like experimental phase (the tabulated phase is a glass). The caption states the uniform oxide correction per oxygen as the explanation of the outside rows.",
+   "mock": false,
+   "width": "single",
+   "size_cm": [
+    8.3,
+    8.5
+   ],
+   "input": "results/preprint/pourbaix/ph_w51/benchmark_w51.csv",
+   "input_sha256": "0bf8a20e34f8681b965eae968493b0f05b126ca9f06cc56ffbae714ce827ed39",
+   "input_source": {
+    "owner": "p0-w5",
+    "path": "results/preprint/pourbaix/ph_w51/benchmark_w51.csv",
+    "commit": "87345f10da450bcf58598a6d3718d5295ba0483d",
+    "sha256": "0bf8a20e34f8681b965eae968493b0f05b126ca9f06cc56ffbae714ce827ed39"
+   },
+   "schema": "figures/src/schemas/benchmark_w51.schema.json",
+   "aux": {
+    "summary": "results/preprint/pourbaix/ph_w51/benchmark_w51.json@c735c78 (p0-w5)"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig10.pdf": "ebfcbe0b241fffdfb6ca3dcb1a6cc20866d3403a5ea7bc450802f4bfc9240fba",
+    "figures/out/fig10.png": "63117260870b662da318f7c6db9d7982ac4f85e6a6e96021f09b17d470e1178d",
+    "figures/out/cvd/fig10_deuteranopia.png": "137903da2ed3128d0bcbe53d69f79f163ccada86ccdad659dd1e7e35a9d1d7d0",
+    "figures/out/cvd/fig10_protanopia.png": "137903da2ed3128d0bcbe53d69f79f163ccada86ccdad659dd1e7e35a9d1d7d0",
+    "figures/out/cvd/fig10_tritanopia.png": "137903da2ed3128d0bcbe53d69f79f163ccada86ccdad659dd1e7e35a9d1d7d0"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
   "fig4": {
    "id": "fig4",
    "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",
