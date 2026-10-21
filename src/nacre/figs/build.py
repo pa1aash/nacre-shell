@@ -87,7 +87,7 @@ def load_input(root, mod, mock):
         if e.get("kind") != "data":
             raise FigureError("%s: %s is not a pinned output document" % (fig["id"], ref))
         path = Path(root) / e["snapshot"]
-        data = json.loads(upstream.snapshot_bytes(key, root))
+        data = upstream.load(key, root)  # JSON, or {"columns", "rows"} for a CSV output
     else:
         path = Path(root) / ref
         data = None
@@ -117,11 +117,13 @@ def load_aux(root, mod, mock):
     """{name: (data, citation)} for FIGURE["aux"], or None when a real aux file is absent."""
     out = {}
     for name, ref in mod.FIGURE.get("aux", {}).items():
-        if isinstance(ref, str) and ref.startswith(schema.UPSTREAM):
+        if isinstance(ref, dict):
+            ref = ref["mock" if mock else "real"]  # a mock run reads the mock file, a real run the real one
+        if ref.startswith(schema.UPSTREAM):
             key = ref[len(schema.UPSTREAM):]
             out[name] = (upstream.load(key, root), upstream.cite(key, root))
             continue
-        path = Path(root) / ref["mock" if mock else "real"]
+        path = Path(root) / ref
         if not path.exists():
             if mock:
                 raise FigureError("%s: mock aux %s missing" % (mod.FIGURE["id"], path))

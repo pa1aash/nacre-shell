@@ -1,0 +1,69 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "benchmark_w51.csv as read by nacre.figs.upstream (lane p0-w5, PH-W5.1)",
+ "type": "object",
+ "required": [
+  "columns",
+  "rows"
+ ],
+ "properties": {
+  "mock": {
+   "type": "boolean"
+  },
+  "columns": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "allOf": [
+    {
+     "contains": {
+      "const": "phase"
+     }
+    },
+    {
+     "contains": {
+      "const": "family"
+     }
+    },
+    {
+     "contains": {
+      "const": "dft_minus_dfH_kJ_per_atom"
+     }
+    },
+    {
+     "contains": {
+      "const": "display"
+     }
+    }
+   ]
+  },
+  "rows": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "object",
+    "required": [
+     "phase",
+     "family",
+     "dft_minus_dfH_kJ_per_atom",
+     "display"
+    ],
+    "properties": {
+     "phase": {
+      "type": "string"
+     },
+     "family": {
+      "type": "string"
+     },
+     "dft_minus_dfH_kJ_per_atom": {
+      "type": "string"
+     },
+     "display": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ }
+}

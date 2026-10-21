@@ -106,6 +106,43 @@
     "figures/out/cvd/fig7_tritanopia.png": "9926119249fe668e0fbd2f2763ed729c0e7150ecb14d9c09fdb7d45088799043"
    },
    "checker": "pass (artists and PDF text)"
+  },
+  "fig9": {
+   "id": "fig9",
+   "claim": "The tier-1 verdict depends on the cutoff class and on the framing: crystalline calcium orthophosphates and the carbonate control are excluded at the two higher classes and not at the lowest, Ca2SiO4 is excluded at all three, and the amorphous framing is undetermined except for two phases.",
+   "caption_key": "One row per phase, grouped top to bottom by regime and role: R-slurry phases, R-cell phases, silicate comparators, the carbonate control (gaps between groups). Three pairs of columns, one pair per registered cutoff class (tick labels, V vs Li+/Li; the lowest class is the nominal value, and the sensitivity with the sourced upper cutoff leaves every verdict unchanged); within a pair, crystalline framing left and amorphous framing right. Fill and hatching: verdict of the tier-1 aggregate at the class (excluded, cross hatching; inconclusive, single hatching; undetermined, plain).",
+   "mock": false,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    9.0
+   ],
+   "input": "figures/src/data/upstream/ladder_v3.csv",
+   "input_sha256": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
+   "input_source": {
+    "owner": "p0-w5",
+    "path": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
+    "commit": "73316df2314b14fb5a16ba6bf15077dfcc658c8c",
+    "sha256": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b"
+   },
+   "schema": "figures/src/schemas/ladder_v3.schema.json",
+   "aux": {
+    "cutoffs": "configs/preprint/thresholds.yaml@1aff4fe (p0-w4)",
+    "sens40": "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv@73316df (p0-w5)"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig9.pdf": "2b9d1464968d504996ad440b8cafbe7aac32324ac765d7923b05c9c8b6b80f30",
+    "figures/out/fig9.png": "918fffcb88bce1e597f526809767bc77786542c828828d220d82ba27f3e2d8a4",
+    "figures/out/cvd/fig9_deuteranopia.png": "66b7a8a81fde22fe70f589ff7f0fbe9dc121b0ee0995d4584bf40e220546c9ac",
+    "figures/out/cvd/fig9_protanopia.png": "488f2e578a126e1a47ede44f3e9b4dbd6ada641e4726abad9cdc8448ae9c2f13",
+    "figures/out/cvd/fig9_tritanopia.png": "c2120a1b06c580b4ba215ebee103f1ff848cacc77215ac0b5ffac6b398f5bc33"
+   },
+   "checker": "pass (artists and PDF text)"
   }
  },
  "mock": false,

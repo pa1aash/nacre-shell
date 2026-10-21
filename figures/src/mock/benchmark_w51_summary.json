@@ -1,0 +1,9 @@
+{
+ "mock": true,
+ "summary": {
+  "e_form": {
+   "max": 5.0
+  },
+  "oxide_correction_kJ_per_O": -60.0
+ }
+}

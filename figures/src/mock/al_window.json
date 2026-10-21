@@ -1,0 +1,19 @@
+{
+ "mock": true,
+ "conventions": {
+  "ph_range": [
+   3.0,
+   10.0
+  ]
+ },
+ "published": {
+  "MOCK-1": {
+   "lower": 4.5,
+   "upper": 8.5
+  },
+  "MOCK-2": {
+   "lower": 4.0,
+   "upper": 8.0
+  }
+ }
+}

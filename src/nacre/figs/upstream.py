@@ -6,7 +6,9 @@ the byte copy in figures/src/schemas/upstream/. Inputs are validated against the
 so a figure always states which version of an owner's contract it was built against. When the
 owner's file is present in this tree and differs from the pin, drift() reports it.
 """
+import csv
 import hashlib
+import io
 import json
 from functools import lru_cache
 from pathlib import Path
@@ -51,11 +53,27 @@ def snapshot_bytes(key, root):
     return data
 
 
+def parse_csv(text):
+    """{"columns": [...], "rows": [{column: text}, ...]} of a CSV output file.
+
+    Lines starting with '#' are comments (the benchmark file opens with one). Every cell stays
+    a string; a template converts the columns it plots and refuses what it cannot read.
+    """
+    lines = [ln for ln in text.splitlines() if not ln.startswith("#")]
+    reader = csv.DictReader(io.StringIO("\n".join(lines)))
+    return {"columns": list(reader.fieldnames), "rows": [dict(r) for r in reader]}
+
+
 def load(key, root):
-    """Parsed pinned contract (JSON or YAML by extension; text for anything else)."""
+    """Parsed pinned file (JSON, YAML or CSV by extension; text for anything else).
+
+    CSV is returned as parse_csv() does.
+    """
     e = entry(key, root)
     data = snapshot_bytes(key, root)
     suffix = Path(e["snapshot"]).suffix
+    if suffix == ".csv":
+        return parse_csv(data.decode("utf-8"))
     if suffix == ".json":
         return json.loads(data)
     if suffix in (".yaml", ".yml"):

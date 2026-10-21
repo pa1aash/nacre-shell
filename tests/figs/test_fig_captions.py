@@ -10,12 +10,12 @@ from figs_helpers import REPO
 from nacre.figs import upstream
 
 CAPTIONS = REPO / "figures/src/captions"
-FIGS = ["fig3", "fig4", "fig5", "fig7"]
+FIGS = ["fig3", "fig4", "fig5", "fig7", "fig9"]
 MAX_WORDS = 80  # "about 70 words" (P0-W6.3), counting the bold figure label
 MACRO_RE = re.compile(r"\\(Num[A-Z][A-Za-z]*)")
 # Digits a caption may carry that are not numbers of the study: the figure label, case and link
 # identifiers (RC04, C3a), and the saturation condition Omega_bulk = 1, which is a definition.
-ALLOWED_DIGITS = [r"\*\*Fig\. [0-9]+\*\*", r"\bRC[0-9]{2}\b", r"\bC[0-9][a-z]?\b", r"Ω_bulk = 1\b"]
+ALLOWED_DIGITS = [r"\*\*Fig\. [0-9]+\*\*", r"\bRC[0-9]{2}\b", r"\bC[0-9][a-z]?\b", r"\bK[0-9]\b", r"Ω_bulk = 1\b"]
 
 
 def _draft(fid):

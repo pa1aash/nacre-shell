@@ -56,6 +56,21 @@ DATA = {
     "screen_ignorance": ("p0-w4", "preprint/p0-w4", "results/preprint/screen/ignorance/summary.json",
                          "screen_ignorance.json",
                          "fig5 input: P0-W4.3 production run ignorance (barrier prefactor; theta prior mass, a property of the prior)"),
+    # PH-W6.1: phosphate screen outputs of lane p0-w5 (CSV and JSON) and the cutoff classes of the merged thresholds.
+    "ladder_v3": ("p0-w5", "preprint/p0-w5", "results/preprint/pourbaix/ph_w52/ladder_v3.csv", "ladder_v3.csv",
+                  "fig9 input: K1 tier-1 ladder v3 (verdict per phase, framing and cutoff class)"),
+    "ladder_v3_sens40": ("p0-w5", "preprint/p0-w5", "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv",
+                         "ladder_v3_sens40.csv", "fig9 check: the ladder with 4.0 V as the lowest class edge"),
+    "benchmark_w51": ("p0-w5", "preprint/p0-w5", "results/preprint/pourbaix/ph_w51/benchmark_w51.csv",
+                      "benchmark_w51.csv", "fig10 input: DFT minus experiment formation enthalpy per phase"),
+    "benchmark_w51_summary": ("p0-w5", "preprint/p0-w5", "results/preprint/pourbaix/ph_w51/benchmark_w51.json",
+                              "benchmark_w51.json", "fig10 registered error band and oxide correction"),
+    "passivation_window_v3": ("p0-w5", "preprint/p0-w5", "results/preprint/pourbaix/ph_w52/passivation_window_v3.csv",
+                              "passivation_window_v3.csv", "fig11 input: Al passivation windows per film solid and Al level"),
+    "al_window": ("p0-w5", "preprint/p0-w5", "results/preprint/pourbaix/ph_w51/al_window.json", "al_window.json",
+                  "fig11 reference bars: the two published pH windows"),
+    "thresholds_screen_ph": ("p0-w4", "preprint/p0", "configs/preprint/thresholds.yaml", "thresholds_screen_ph.yaml",
+                             "fig9 tick labels: the registered cutoff classes (screen_ph.margins_v6.cutoff_classes)"),
 }
 
 

@@ -128,6 +128,40 @@
     "figures/out/mock/cvd/fig7_tritanopia.png": "24e7e2350a76d842ecaca86039a609b31a325974ec9db895eb11af02c99c06e0"
    },
    "checker": "pass (artists and PDF text)"
+  },
+  "fig9": {
+   "id": "fig9",
+   "claim": "The tier-1 verdict depends on the cutoff class and on the framing: crystalline calcium orthophosphates and the carbonate control are excluded at the two higher classes and not at the lowest, Ca2SiO4 is excluded at all three, and the amorphous framing is undetermined except for two phases.",
+   "caption_key": "One row per phase, grouped top to bottom by regime and role: R-slurry phases, R-cell phases, silicate comparators, the carbonate control (gaps between groups). Three pairs of columns, one pair per registered cutoff class (tick labels, V vs Li+/Li; the lowest class is the nominal value, and the sensitivity with the sourced upper cutoff leaves every verdict unchanged); within a pair, crystalline framing left and amorphous framing right. Fill and hatching: verdict of the tier-1 aggregate at the class (excluded, cross hatching; inconclusive, single hatching; undetermined, plain).",
+   "mock": true,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    9.0
+   ],
+   "input": "figures/src/mock/ladder_v3.json",
+   "input_sha256": "c09196c9aabbc16ebcdbee17c7cfc8208c637d8c59041c5ac938a8db5d27ecd2",
+   "input_source": {
+    "path": "figures/src/mock/ladder_v3.json"
+   },
+   "schema": "figures/src/schemas/ladder_v3.schema.json",
+   "aux": {
+    "cutoffs": "figures/src/mock/ladder_cutoffs.yaml sha256:8376f88f1a522a84fef8b93e6536daba241b12527c5a200bb0bbe00d2c355ea3",
+    "sens40": "figures/src/mock/ladder_v3_sens40.json sha256:c09196c9aabbc16ebcdbee17c7cfc8208c637d8c59041c5ac938a8db5d27ecd2"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/mock/fig9.pdf": "95b32cce13a2c5db6efc8918f5247e235ffedd3d6839c4269f20eaac3d1a49cc",
+    "figures/out/mock/fig9.png": "c26b73771750391a163d15a8c88e266d3446f50b191f28cdbf6190684796bec7",
+    "figures/out/mock/cvd/fig9_deuteranopia.png": "73521481e11cf821d4ce9376deea4f4667b4773b0e6b9ba01f15d93922df474c",
+    "figures/out/mock/cvd/fig9_protanopia.png": "c2d49437a1dad689597c94f15d3af75bf1c7d1b3b268a95277e0a395c2c8ba3c",
+    "figures/out/mock/cvd/fig9_tritanopia.png": "7cb32af59dbaf854b3a3350de8d856770821f2fe829c07bbe68855dcb26a0da8"
+   },
+   "checker": "pass (artists and PDF text)"
   }
  },
  "mock": true
