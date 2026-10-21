@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W1.3",
+  "last_session": "PH-W1.5",
   "status": "DONE",
   "day": 5,
   "artifacts": [
@@ -56,18 +56,19 @@
     "lit/corpus/T-T/",
     "lit/corpus/phosphate_coverage.yaml",
     "ops/reports/P0-W1.PH-W1.2.md",
-    "ops/reports/P0-W1.PH-W1.3.md"
+    "ops/reports/P0-W1.PH-W1.3.md",
+    "ops/reports/P0-W1.PH-W1.5.md"
   ],
-  "notes": "PH-W1.3: 38 new evidence rows (T-T, TT-054 to TT-091), table 1308; 20 new params keys (added_in P0-W1.PH-W1.3; 425 total; 4 gap keys; no existing key changed). Found: Al3+ and Li+ hydration with scales and the standard-state shift; ClO4- transfer to propylene carbonate; assessed Ca(PO3)2 crystal DfH and S and the Ca glass-to-crystal correction; conversion temperatures; synthetic complex-coacervate gamma. Gaps: ClO4- hydration; Ca2+ and Al3+ transfer; all Al(PO3)3 and AlPO4 + P2O5 data; Ca(PO3)2 glass S0 and crystallisation enthalpy; numeric polyP hydrolysis at pH 7 to 13; polyphosphate coacervate gamma; Al-polyP complexation and Ksp. Next: PH-W5.1 (resume), PH-W3.2.",
+  "notes": "PH-W1.5: 39 rows (TT-092 to TT-130), 41 keys. Found: PC transfer Na-Cs on the TATB scale, multivalent transfer in MeCN/DMF/DMSO/MeOH (Cu2+, Zn2+, Cd2+, Hg2+, La3+, Ca2+), aqueous DfG and S0 of Li+, Ca2+, Al3+, ClO4-, aqueous Al-Li exchange entropy proxy. Gaps: Ca2+/Mg2+/Zn2+/Ba2+/Al3+ in PC, Al(ClO4)3 solid entropy, Ca(PO3)2 glass S0 and crystallisation, Al(PO3)3, Al-polyP linear constants, alumina isotherm keys. Next: PH-C0.",
   "params": {
     "status": "ready",
-    "sha": "0e3e2762805d95836102413555f6598153a6e1dc",
+    "sha": "d0e93de57e29a05aa13ed1e134539b82983bfe7f",
     "post_cp3": true,
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
     "rule": "lit/corpus/params_README.md (rule version 3, section 8)",
-    "keys": 425,
-    "new_keys": 20,
+    "keys": 466,
+    "new_keys": 41,
     "edited_keys": [],
     "cp3_tag_table": "p0-cp3 (production screens)"
   }
