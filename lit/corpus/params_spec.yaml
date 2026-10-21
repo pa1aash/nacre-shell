@@ -4521,6 +4521,404 @@ params:
       single-source flag. The infinite-chain fit (TT-087, 1000 uN/m) is a fit and not admitted; the abstract-only values
       (204 uN/m, order 100 uN/m, below 1 mN/m) are grade D and not admitted beside grade B rows (E5). Beside
       coacervate_gamma_analog (PDADMAC with polyacrylate, 311 uN/m); it never replaces the gap key coacervate_gamma_nl.
+  # ================================================================ PH-W1.5 additions (rule version 3, section 8)
+  transfer_free_energy_na_water_pc:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Na+ single ion (form A), water to propylene carbonate, 25 C, mol dm^-3 scale, Marcus 1983 selected value on the TATB scale (the scale of transfer_free_energy_li_water_pc, TI-077)
+    admit:
+      - {row: TT-092}
+    notes: >-
+      One stated scale for the five alkali ions: Marcus 1983 selected values, tetraphenylarsonium tetraphenylborate assumption. The determinations of the same table that rest on that assumption are rows TT-096 to TT-105 (refs. 5 and 7) and scatter by up to 4.5 kJ/mol per ion (Na+ 10.9 to 15.1); they are on record, not admitted. No Ca2+ or Al3+ value exists on any scale for PC.
+  transfer_free_energy_k_water_pc:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: K+ single ion (form A), water to propylene carbonate, 25 C, mol dm^-3 scale, Marcus 1983 selected value on the TATB scale (the scale of transfer_free_energy_li_water_pc, TI-077)
+    admit:
+      - {row: TT-093}
+    notes: >-
+      One stated scale for the five alkali ions: Marcus 1983 selected values, tetraphenylarsonium tetraphenylborate assumption. The determinations of the same table that rest on that assumption are rows TT-096 to TT-105 (refs. 5 and 7) and scatter by up to 4.5 kJ/mol per ion (Na+ 10.9 to 15.1); they are on record, not admitted. No Ca2+ or Al3+ value exists on any scale for PC.
+  transfer_free_energy_rb_water_pc:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Rb+ single ion (form A), water to propylene carbonate, 25 C, mol dm^-3 scale, Marcus 1983 selected value on the TATB scale (the scale of transfer_free_energy_li_water_pc, TI-077)
+    admit:
+      - {row: TT-094}
+    notes: >-
+      One stated scale for the five alkali ions: Marcus 1983 selected values, tetraphenylarsonium tetraphenylborate assumption. The determinations of the same table that rest on that assumption are rows TT-096 to TT-105 (refs. 5 and 7) and scatter by up to 4.5 kJ/mol per ion (Na+ 10.9 to 15.1); they are on record, not admitted. No Ca2+ or Al3+ value exists on any scale for PC.
+  transfer_free_energy_cs_water_pc:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Cs+ single ion (form A), water to propylene carbonate, 25 C, mol dm^-3 scale, Marcus 1983 selected value on the TATB scale (the scale of transfer_free_energy_li_water_pc, TI-077)
+    admit:
+      - {row: TT-095}
+    notes: >-
+      One stated scale for the five alkali ions: Marcus 1983 selected values, tetraphenylarsonium tetraphenylborate assumption. The determinations of the same table that rest on that assumption are rows TT-096 to TT-105 (refs. 5 and 7) and scatter by up to 4.5 kJ/mol per ion (Na+ 10.9 to 15.1); they are on record, not admitted. No Ca2+ or Al3+ value exists on any scale for PC.
+  transfer_multi_cu2_water_pc:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Cu2+ single ion, water to propylene carbonate, 25 C, mol dm^-3 scale (negligible liquid junction assumption; one determination, tentative)
+    admit:
+      - {row: TT-106}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_hg2_water_pc:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Hg2+ single ion, water to propylene carbonate, 25 C, mol dm^-3 scale (ferrocene assumption; one determination)
+    admit:
+      - {row: TT-107}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_cu2_water_acetonitrile:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Cu2+ single ion, water to acetonitrile, 25 C, mol dm^-3 scale (negligible liquid junction assumption; one determination, tentative)
+    admit:
+      - {row: TT-108}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_cu2_water_dmf:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Cu2+ single ion, water to N,N'-dimethylformamide, 25 C, mol dm^-3 scale (negligible liquid junction assumption; one determination, tentative)
+    admit:
+      - {row: TT-109}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_cu2_water_dmso:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Cu2+ single ion, water to dimethyl sulfoxide, 25 C, mol dm^-3 scale (negligible liquid junction assumption; one determination, tentative)
+    admit:
+      - {row: TT-110}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_cu2_water_methanol:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Cu2+ single ion, water to methanol, 25 C, mol dm^-3 scale (negligible liquid junction assumption; one determination, tentative)
+    admit:
+      - {row: TT-111}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_zn2_water_dmso:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Zn2+ single ion, water to dimethyl sulfoxide, 25 C, mol dm^-3 scale (bis(biphenyl)chromium assumption; one determination, tentative)
+    admit:
+      - {row: TT-112}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_cd2_water_dmso:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Cd2+ single ion, water to dimethyl sulfoxide, 25 C, mol dm^-3 scale (bis(biphenyl)chromium assumption; one determination, tentative)
+    admit:
+      - {row: TT-113}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_hg2_water_acetonitrile:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Hg2+ single ion, water to acetonitrile, 25 C, mol dm^-3 scale (ferrocene assumption; one determination)
+    admit:
+      - {row: TT-114}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_hg2_water_dmso:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Hg2+ single ion, water to dimethyl sulfoxide, 25 C, mol dm^-3 scale (ferrocene assumption; one determination)
+    admit:
+      - {row: TT-115}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_la3_water_methanol:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: La3+ single ion, water to methanol, 25 C, mol dm^-3 scale (TATB assumption as stated by the compilers with a caveat; one determination)
+    admit:
+      - {row: TT-117}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_ca2_water_acetonitrile_rb_ref:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Ca2+ single ion, water to acetonitrile, 25 C, mol dm^-3 scale (assumption dG(Rb+)=0; weight 0 in the compilation)
+    admit:
+      - {row: TT-118}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_ca2_water_acetonitrile_extrapolation:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Ca2+ single ion, water to acetonitrile, 25 C, mol dm^-3 scale (extrapolation method; weight 0 in the compilation)
+    admit:
+      - {row: TT-119}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_ca2_water_acetonitrile_real_potentials:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    conditions: Ca2+ single ion, water to acetonitrile, 25 C, mol dm^-3 scale ('real' potentials; weight 0 in the compilation)
+    admit:
+      - {row: TT-120}
+    notes: >-
+      Marcus 1983, one determination; the scale is the one named in the row and is not the TATB scale of the alkali keys unless the row says so. For the charge-extrapolation check of the computed transfer method: compare only within one key. Not widened (W1 names Ca2+ binding and transfer energies of the electrolyte solvents; these are other solvents).
+  transfer_multi_la3_water_acetonitrile:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap as a key - the only printed entry is a lower bound (TT-116, >88 kJ/mol, TATB assumption), which is not a point value; the row is kept in the evidence table
+  transfer_multi_mg2_water_pc:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - Mg2+ is not listed for propylene carbonate in Marcus 1983 (Table 24, ion index) and no other source was found; see lit/instrument_gaps.csv (PH-W1.5)
+  transfer_multi_zn2_water_pc:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - Zn2+ is not listed for propylene carbonate in Marcus 1983 (Table 24, ion index) and no other source was found; see lit/instrument_gaps.csv (PH-W1.5)
+  transfer_multi_ba2_water_pc:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_G_tr
+    unit: J mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - Ba2+ is not listed for propylene carbonate in Marcus 1983 (Table 24, ion index) and no other source was found; see lit/instrument_gaps.csv (PH-W1.5)
+  dfg_aq_li:
+    added_in: P0-W1.PH-W1.5
+    symbol: G_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    distinct: true
+    conditions: Li+ aqueous ion, 298.15 K, conventional scale (H+(aq) = 0), standard pressure 0.1 MPa for Wagman and 1 bar for B2131 and TN 270-8
+    admit:
+      - {row: TT-121}
+      - {row: TI-038}
+    notes: >-
+      Wagman 1982 (NIST digitisation) and NBS TN 270-8; TN 270-8 prints no uncertainty, Wagman prints none. One scale: the conventional scale with DfG(H+) = 0 (H+ row of the digitised table prints 0). Input of E_lb = conventional aqueous DfG corrected to PC through DG_tr_rel.
+  dfg_aq_ca2:
+    added_in: P0-W1.PH-W1.5
+    symbol: G_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    distinct: true
+    conditions: Ca2+ aqueous ion, 298.15 K, conventional scale (H+(aq) = 0), standard pressure 0.1 MPa for Wagman and 1 bar for B2131 and TN 270-8
+    admit:
+      - {row: TT-122}
+      - {row: TI-012}
+    notes: >-
+      Wagman 1982 (no uncertainty printed) and USGS B2131 (2 sigma, +-1.0 as assigned in TI-012). One scale: the conventional scale with DfG(H+) = 0 (H+ row of the digitised table prints 0). Input of E_lb = conventional aqueous DfG corrected to PC through DG_tr_rel.
+  dfg_aq_al3:
+    added_in: P0-W1.PH-W1.5
+    symbol: G_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    distinct: true
+    conditions: Al3+ aqueous ion, 298.15 K, conventional scale (H+(aq) = 0), standard pressure 0.1 MPa for Wagman and 1 bar for B2131 and TN 270-8
+    admit:
+      - {row: TT-123}
+      - {row: TI-022}
+    notes: >-
+      Wagman 1982, printed as an integer (-485.), and USGS B2131 (2 sigma, +-1.4); the two differ by 4.4 kJ/mol. One scale: the conventional scale with DfG(H+) = 0 (H+ row of the digitised table prints 0). Input of E_lb = conventional aqueous DfG corrected to PC through DG_tr_rel.
+  dfg_aq_clo4:
+    added_in: P0-W1.PH-W1.5
+    symbol: G_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    distinct: true
+    conditions: ClO4- aqueous ion, 298.15 K, conventional scale (H+(aq) = 0), standard pressure 0.1 MPa for Wagman and 1 bar for B2131 and TN 270-8
+    admit:
+      - {row: TT-124}
+    notes: >-
+      Wagman 1982 only (no uncertainty printed). One scale: the conventional scale with DfG(H+) = 0 (H+ row of the digitised table prints 0). Input of E_lb = conventional aqueous DfG corrected to PC through DG_tr_rel.
+  s_aq_li:
+    added_in: P0-W1.PH-W1.5
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: Li+ aqueous ion, 298.15 K, conventional ionic entropy (S0(H+) = 0)
+    admit:
+      - {row: TT-125}
+    notes: >-
+      Wagman 1982 (NIST digitisation); no uncertainty printed. Input of the aqueous exchange-entropy proxy.
+  s_aq_ca2:
+    added_in: P0-W1.PH-W1.5
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: Ca2+ aqueous ion, 298.15 K, conventional ionic entropy (S0(H+) = 0)
+    admit:
+      - {row: TT-126}
+    notes: >-
+      Wagman 1982 (NIST digitisation); no uncertainty printed. Input of the aqueous exchange-entropy proxy.
+  s_aq_al3:
+    added_in: P0-W1.PH-W1.5
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: Al3+ aqueous ion, 298.15 K, conventional ionic entropy (S0(H+) = 0)
+    admit:
+      - {row: TT-127}
+    notes: >-
+      Wagman 1982 (NIST digitisation); no uncertainty printed. Input of the aqueous exchange-entropy proxy.
+  s_aq_clo4:
+    added_in: P0-W1.PH-W1.5
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    conditions: ClO4- aqueous ion, 298.15 K, conventional ionic entropy (S0(H+) = 0)
+    admit:
+      - {row: TT-128}
+    notes: >-
+      Wagman 1982 (NIST digitisation); no uncertainty printed. Input of the aqueous exchange-entropy proxy.
+  exchange_entropy_al_aq_proxy:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_S_ex
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    status: computed
+    derive:
+      expr: "abs(al - 3 * li)"
+      inputs: {al: s_aq_al3, li: s_aq_li}
+    notes: >-
+      Proxy, not a bound on the solid-state sink. |S0(Al3+, aq) - 3 S0(Li+, aq)| on the conventional ionic entropy
+      scale: the entropy change of exchanging three Li+ for one Al3+ with the perchlorate anions unchanged (the anion
+      terms cancel: Al(ClO4)3 has no entry in the NBS tables, searched by formula). The same arithmetic for Ca2+
+      reproduces the salt-level quantity from the ai rows (TT-126 with TT-125 against TT-128 and the Ca(ClO4)2 and
+      LiClO4 entropies, 310.9 and 195.4: both give 79.9 J/K/mol). A crystalline Al(ClO4)3 versus 3 LiClO4 sink is not
+      the aqueous exchange; the bound on that exchange stays an open input (the Ca analog method of
+      exchange_entropy_bound needs an Al(ClO4)3 or Al-salt entropy that was not found).
+  exchange_entropy_al_crystal_bound:
+    added_in: P0-W1.PH-W1.5
+    symbol: Delta_S_ex
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - no entropy of crystalline Al(ClO4)3 or of its hydrates in the tables read (NBS tables digitisation searched by formula; JANAF/NIST chlorine section lists LiClO4 only)
+  s0_cameta_glass:
+    added_in: P0-W1.PH-W1.5
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - no heat-capacity or entropy measurement of Ca(PO3)2 glass found (three queries on openalex, crossref and europepmc; one OA manuscript requested three times, HTTP 403 or landing page)
+  h_cryst_cameta_glass:
+    added_in: P0-W1.PH-W1.5
+    symbol: H_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - no calorimetric crystallisation enthalpy of Ca(PO3)2 glass found (same searches)
+  dfh_al_pometa3:
+    added_in: P0-W1.PH-W1.5
+    symbol: H_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - Al(PO3)3 (and AlPO4 + P2O5 equilibrium data) not found in the NBS tables digitisation (searched by formula) or in the open literature queried
+  dfg_al_pometa3:
+    added_in: P0-W1.PH-W1.5
+    symbol: G_phase
+    unit: J mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - Al(PO3)3 (and AlPO4 + P2O5 equilibrium data) not found in the NBS tables digitisation (searched by formula) or in the open literature queried
+  s_al_pometa3:
+    added_in: P0-W1.PH-W1.5
+    symbol: S_std
+    unit: J K^-1 mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - Al(PO3)3 (and AlPO4 + P2O5 equilibrium data) not found in the NBS tables digitisation (searched by formula) or in the open literature queried
+  polyp_al_log_beta1_linear_chain_unit_w15:
+    added_in: P0-W1.PH-W1.5
+    symbol: log10_beta
+    unit: 1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - the J. Chem. Eng. Data study of Al3+ with orthophosphate, pyrophosphate, tripolyphosphate and hexametaphosphate (potentiometry, calorimetry, 31P NMR; I = 0.1 to 1 mol/kg) and Bertani et al. Inorg. Chem. 1996 (10.1021/ic960329e) are paywalled with no numbers in the retrieved abstracts; 403 on the repository copy
+  polyp_ads_alumina_gamma_max:
+    added_in: P0-W1.PH-W1.5
+    symbol: Gamma_max
+    unit: mol m^-2
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - no Langmuir or other isotherm of a linear polyphosphate on alumina found with text readable here; Hu-type Environ. Sci. Technol. 2019 (10.1021/acs.est.9b01876, read in full) reports hydrolysis kinetics and 31P NMR speciation, no isotherm; J. Phys. Chem. C 2020 (10.1021/acs.jpcc.0c06127) is paywalled
+  polyp_ads_alumina_k_langmuir:
+    added_in: P0-W1.PH-W1.5
+    symbol: K_L
+    unit: m^3 mol^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - no isotherm found (see polyp_ads_alumina_gamma_max); when one is found the form (activity or concentration) must be stated; unit is that of the concentration form
+  polyp_ads_alumina_layer_thickness:
+    added_in: P0-W1.PH-W1.5
+    symbol: delta_P
+    unit: m
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap - no layer thickness of adsorbed polyphosphate on alumina found
+
 
 correlation_groups:
   young_energies:
