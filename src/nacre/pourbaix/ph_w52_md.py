@@ -56,7 +56,9 @@ sha256 of the extracted margins_v6 block `{meta['block_sha256']}` (copy: margins
 Crystal Ca(PO3)2 reference row only: direct value {rb['correction_kJ']:.2f} +- {rb['u_correction_kJ']:.2f} kJ/mol, E_ub {cr['was']['E_ub_V']:.4f} -> {cr['E_ub_V']:.4f} V,
 m {cr['was']['m_V']:.4f} -> {cr['m_V']:.4f} V. The glass row is unchanged. PH-W5.3 X2: the staged Ca(PO3)2 crystal of the Ca2P2O7
 r1s row takes the same direct value (the analogue-based staged value is replaced); the Ca2P2O7 r1s row and its `ALL` row are recomputed
-(E_ub 4.4651 -> 4.4497 V, m 0.3315 -> 0.2308 V), still inconclusive at every class. The block copy keeps the block's own value.
+(E_ub 4.4651 -> 4.4497 V, m 0.3315 -> 0.2308 V), still inconclusive at every class. PH-W5.3b: the brushite r1s row (0.5 Ca(PO3)2 staged)
+takes the same value scaled by 0.5 (E_ub 4.4230 -> 4.4076 V, m 0.3800 -> 0.2794 V); brushite stays limited by r3 (4.4323 V), no verdict change.
+The block copy keeps the block's own value.
 
 ## F2 bracket status
 E_lb is pending: `hydration_free_energy_clo4` is absent at origin/preprint/p0-w1 and the Ca2+ and Al3+ transfer free energies to the cell

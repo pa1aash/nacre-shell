@@ -42,14 +42,16 @@ The first class (column k1_class_lfp, registered as LFP-class at 3.65 V) is name
 registered 3.65 V are unchanged. Sensitivity (ladder_v3_sens40.csv): the same rows with 4.0 V as the lowest class edge; no verdict changes (carbonate crossover 4.0248 V, lowest phosphate crossover 4.1464 V, a-TCP r1s).
 
 ## Margin source
-`theory/thresholds.md` at `origin/preprint/p0-w3`: blob `b95f988dfc81763a12da29c278f47c029bebc668`, last changed in `c2c7882af0c7913bd17432157a43a3aca953dff4` (ref tip `e6c86f6b3633248b487f78eeef1acdccfa5be35c`);
+`theory/thresholds.md` at `origin/preprint/p0-w3`: blob `b95f988dfc81763a12da29c278f47c029bebc668`, last changed in `c2c7882af0c7913bd17432157a43a3aca953dff4` (ref tip `e8d3a59d2057866561d498db0c982e069c6595c5`);
 sha256 of the extracted margins_v6 block `13bdaf545e6b105875829f3aeada38bf7c1df9d41208bbacb5fe9f81cfd2347b` (copy: margins_v6_block.yaml). Margins are read from the block, not typed.
 
 ## Ruling (b)
 Crystal Ca(PO3)2 reference row only: direct value 18.87 +- 20.74 kJ/mol, E_ub 4.9664 -> 4.9818 V,
 m 0.2907 -> 0.1900 V. The glass row is unchanged. PH-W5.3 X2: the staged Ca(PO3)2 crystal of the Ca2P2O7
 r1s row takes the same direct value (the analogue-based staged value is replaced); the Ca2P2O7 r1s row and its `ALL` row are recomputed
-(E_ub 4.4651 -> 4.4497 V, m 0.3315 -> 0.2308 V), still inconclusive at every class. The block copy keeps the block's own value.
+(E_ub 4.4651 -> 4.4497 V, m 0.3315 -> 0.2308 V), still inconclusive at every class. PH-W5.3b: the brushite r1s row (0.5 Ca(PO3)2 staged)
+takes the same value scaled by 0.5 (E_ub 4.4230 -> 4.4076 V, m 0.3800 -> 0.2794 V); brushite stays limited by r3 (4.4323 V), no verdict change.
+The block copy keeps the block's own value.
 
 ## F2 bracket status
 E_lb is pending: `hydration_free_energy_clo4` is absent at origin/preprint/p0-w1 and the Ca2+ and Al3+ transfer free energies to the cell
