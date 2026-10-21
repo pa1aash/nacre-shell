@@ -231,5 +231,15 @@
       "derivation": "built (up to date, 21 pages)"
     },
     "verify_quick": "not completed: 15 tracked files are dataless (Desktop sync), read times out"
+  },
+  "protocol": {
+    "status": "ready",
+    "sha": "89fc9de83f0371f9ef560aad096ef988b37dd99c",
+    "file": "theory/protocol_computational.md",
+    "sha256_protocol": "57fafbeda8f3535fa4ff654917fb4f93ff9ee0394e3000251348a927c2f1d02e",
+    "sha256_thresholds_block": "5dafce01b9a1d2d6819df6d90cb817cb8cdde4ff7c72f1b6c07dfc795e36f468",
+    "thresholds_block_version": 7,
+    "written_before_any_transfer_value_computed": true,
+    "values": "proposed; the planning chat rules at cp5a2"
   }
 }
