@@ -116,6 +116,26 @@ def _fmt(x):
     return "" if x is None else "%.4f" % x
 
 
+F_KJ_PER_V = 96.485332
+
+
+def staged_ruling_b(block, e, role):
+    """PH-W5.3 X2: the staged Ca(PO3)2 crystal (analogue vitrification enthalpy) is replaced by the ruling-(b) direct
+    glass-to-crystal value, as the block does for the Ca(PO3)2 crystal reference row. role 'reactant' raises E_ub with the more
+    stable crystal, 'product' lowers it. Returns (E_ub, m, text)."""
+    rb = block["m_K1_amorphous"]["ruling_b"]
+    sp = json.loads((W51 / "ph_w51.json").read_text(encoding="utf-8"))["staged_products"]["values"]["Ca(PO3)2"]
+    d_corr = rb["correction_kJ"] - sp["h_vit_kJ"]
+    new_u = sp["u_kJ"] - sp["u_vit_kJ"] + rb["u_correction_kJ"] - rb["u_glass_kJ"]
+    t = e["terms"]
+    n_e = e["n_e"]
+    m = (t["tabulated"] - sp["u_kJ"] + new_u + t["entropy_bound"]) / (n_e * F_KJ_PER_V)
+    e_ub = e["E_ub"] + (d_corr if role == "reactant" else -d_corr) / (n_e * F_KJ_PER_V)
+    return e_ub, m, ("ruling (b) applied to the staged Ca(PO3)2 crystal: direct glass-to-crystal value %.2f +- %.2f kJ/mol replaces the "
+                     "analogue %.2f +- %.2f kJ/mol; E_ub %.4f -> %.4f V, m %.4f -> %.4f V (block v6 value kept in the block copy)"
+                     % (rb["correction_kJ"], rb["u_correction_kJ"], sp["h_vit_kJ"], sp["u_vit_kJ"], e["E_ub"], e_ub, e["m"], m))
+
+
 def _reaction_rows(block):
     """{(phase, framing): [row dicts]} from m_K1.rows, with the ruling-(b) crystal row for Ca(PO3)2."""
     rb = block["m_K1_amorphous"]["ruling_b"]["crystalline_reference_row"]
@@ -123,7 +143,7 @@ def _reaction_rows(block):
     for r in block["m_K1"]["rows"]:
         e = {"id": r["reaction"], "text": r["text"], "sink": r["sink"], "status": r["status"],
              "E_ub": r.get("E_ub_V"), "m": r.get("m_V"), "reason": r.get("reason", ""),
-             "m_partial": r.get("m_V_partial"), "adopted": ""}
+             "m_partial": r.get("m_V_partial"), "adopted": "", "n_e": r.get("n_e"), "terms": r.get("terms_kJ")}
         if r["phase"].startswith("Ca(PO3)2") and r["framing"] == "crystalline" and r["reaction"] == "r1":
             assert abs(e["E_ub"] - rb["was"]["E_ub_V"]) < 5e-4 and abs(e["m"] - rb["was"]["m_V"]) < 5e-4
             e["E_ub"], e["m"] = rb["E_ub_V"], rb["m_V"]
@@ -131,6 +151,8 @@ def _reaction_rows(block):
                             "m %.4f -> %.4f V" % (block["m_K1_amorphous"]["ruling_b"]["correction_kJ"],
                                                   block["m_K1_amorphous"]["ruling_b"]["u_correction_kJ"],
                                                   rb["was"]["E_ub_V"], rb["E_ub_V"], rb["was"]["m_V"], rb["m_V"]))
+        if r["phase"] == "Ca2P2O7" and r["framing"] == "crystalline" and r["reaction"] == "r1s":
+            e["E_ub"], e["m"], e["adopted"] = staged_ruling_b(block, e, "product")
         out.setdefault((r["phase"], r["framing"]), []).append(e)
     return out
 

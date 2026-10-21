@@ -1,7 +1,7 @@
 {
  "session": "PH-W5.2",
- "generated_utc": "2026-10-21T19:15:18Z",
- "git_sha": "62c8cf9fc6d65d6384244c104607ab8f76b7ce00",
+ "generated_utc": "2026-10-21T19:16:16Z",
+ "git_sha": "090259806914703a297687c93a7785d04d4222b9",
  "margins_source": {
   "ref": "origin/preprint/p0-w3",
   "file": "theory/thresholds.md",

@@ -43,8 +43,9 @@ sha256 of the extracted margins_v6 block `13bdaf545e6b105875829f3aeada38bf7c1df9
 
 ## Ruling (b)
 Crystal Ca(PO3)2 reference row only: direct value 18.87 +- 20.74 kJ/mol, E_ub 4.9664 -> 4.9818 V,
-m 0.2907 -> 0.1900 V. The glass row is unchanged. The staged Ca2P2O7 r1s row keeps the block's value (the block moves the
-Ca(PO3)2 crystal reference row only).
+m 0.2907 -> 0.1900 V. The glass row is unchanged. PH-W5.3 X2: the staged Ca(PO3)2 crystal of the Ca2P2O7
+r1s row takes the same direct value (the analogue-based staged value is replaced); the Ca2P2O7 r1s row and its `ALL` row are recomputed
+(E_ub 4.4651 -> 4.4497 V, m 0.3315 -> 0.2308 V), still inconclusive at every class. The block copy keeps the block's own value.
 
 ## F2 bracket status
 E_lb is pending: `hydration_free_energy_clo4` is absent at origin/preprint/p0-w1 and the Ca2+ and Al3+ transfer free energies to the cell
