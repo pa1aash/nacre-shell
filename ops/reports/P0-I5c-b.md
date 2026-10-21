@@ -6,4 +6,5 @@
 - Ledger: day 5 PH-W1.6, PH-W3.6, PH-W2.4b, PH-W6.1, PH-W4.2e, PH-I5d; PH-C1, PH-C2, PH-C3, PH-W3.5, PH-W5.4b moved to deferred_v2; D63 to D68. `nacre track status` runs.
 - Deviation entries: 5 (params x2, thresholds/claims x2, ladder_v3), each Re-audit: cp5b.
 - Provenance repaired by lane W1 (5b955b0, build_params --ledger PH-W1.6, generated_utc only), merged as "params rebuild record". D69 and PH-W2.5 added to the ledger. verify --quick: PASS.
+- Pushed p0 at 4e010df; lanes w1 to w6 and w8 fast-forwarded to 4e010df (7/8, w7 untouched). track check OK for PH-W4.2e (w4) and PH-W2.5 (w2).
 - Outstanding for PH-W8.2: lint-scope needs SG29W exemption word 'aragonite' and SG30W lookahead handling (WARN_EXEMPT/WARN_LABEL in src/nacre/preprint/lint_scope.py); front.tex regeneration. Open: planning-chat confirmation of excluded = falsified (D68).
