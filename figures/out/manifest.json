@@ -36,6 +36,42 @@
    },
    "checker": "pass (artists and PDF text)"
   },
+  "fig11": {
+   "id": "fig11",
+   "claim": "The pH window of an aluminium oxide film narrows as the allowed dissolved aluminium falls: the amorphous hydroxide that governs the film has its window inside the crystalline boehmite window and none at the lowest level.",
+   "caption_key": "Horizontal axis: pH. Top group: the two published statements (grey bars, no stated Al level for the first). Below it one group per dissolved-Al level (tick labels, mM), highest first; within a group the upper bar (black) is amorphous Al(OH)3, the governing film phase, and the lower bar (blue, hatched) is boehmite, the crystalline reference. A bar ends at the computed pH limit; an open circle at the right edge: the window continues beyond the computed pH range; an open square at the left edge: no pH at which the film stays at that level. Computed at 298.15 K with activities equal to concentrations.",
+   "mock": false,
+   "width": "single",
+   "size_cm": [
+    8.3,
+    6.5
+   ],
+   "input": "results/preprint/pourbaix/ph_w52/passivation_window_v3.csv",
+   "input_sha256": "5aaf04dafbd21993b577a1a42ed50c18860771c670d489476e9b771e2a43267f",
+   "input_source": {
+    "owner": "p0-w5",
+    "path": "results/preprint/pourbaix/ph_w52/passivation_window_v3.csv",
+    "commit": "1a1ea5a63990eba08b840e46fc735900d02d12c4",
+    "sha256": "5aaf04dafbd21993b577a1a42ed50c18860771c670d489476e9b771e2a43267f"
+   },
+   "schema": "figures/src/schemas/passivation_window_v3.schema.json",
+   "aux": {
+    "al_window": "results/preprint/pourbaix/ph_w51/al_window.json@c735c78 (p0-w5)"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig11.pdf": "5d99c1b9e549fdc6a4fa204a932d6b4d236522de8841ea3c5f04764f50f4b551",
+    "figures/out/fig11.png": "422303dec91da05c9ea4957ff4b8a8e5cf1489a5f4487ed4120460695e52979c",
+    "figures/out/cvd/fig11_deuteranopia.png": "7de84fdd214dd1fc8bf4de1daee605d36ef4907334e948c377488ee62741faca",
+    "figures/out/cvd/fig11_protanopia.png": "d500ee20fa48ac3a0f674c1eaa2afc11ff40a5fff999b11ae4382ff9cede9910",
+    "figures/out/cvd/fig11_tritanopia.png": "a4c442086833c5e90219e65ed07372ced924da30ba42b66aea4cd16766e51ba3"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
   "fig4": {
    "id": "fig4",
    "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",
