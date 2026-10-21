@@ -221,3 +221,21 @@ Nothing starts production until F1 to F5 are applied and the freeze packet goes 
 9. Add F8; confirm NS1 to NS5 and NU1 to NU10.
 10. Agree. W1 key list adds: hydration free energies of Ca2+, Al3+, ClO4-; water-to-carbonate transfer data if any; Ca(PO3)2 glass DfH, S0 and crystallisation enthalpy; Al(PO3)3 data; polyphosphate hydrolysis rates near pH 7 to 13; conversion temperatures.
 11. Agree plus F9.
+
+## COMPUTATIONAL PACKAGE (pending cp5a2)
+
+**P1. Computed bracket premise.** Cluster-continuum DFT of water-to-propylene-carbonate transfer free energies of Li+, Ca2+ and Al3+, and of DG_tr_rel = DG_tr(M^z+) - z DG_tr(Li+) computed within one method. Free tools only: xtb, PySCF or Psi4; no ORCA.
+**P2. Al3+ selectivity on a tripolyphosphate segment** (Al3+/Ca2+/Li+). Indicative only.
+**P3. Wetting analysis** from polyphosphate-on-alumina adsorption isotherms (Gamma_P, K_P, delta_P; keys from PH-W1.5).
+**P4. Data bounds** (PH-W1.5): measured transfer data, aqueous DfG on one scale, exchange-entropy bound for the Al perchlorate sink, Ca(PO3)2 glass S0 and crystallisation enthalpy, Al(PO3)3 data, Al-polyphosphate stability constants.
+
+**Rules, written and hashed by PH-C0 before any value is computed.**
+- Benchmark first. Acceptance: RMSE at most 15 kJ/mol on the relative quantity.
+- Uncertainty for Ca2+ and Al3+ is the benchmark RMSE times a registered inflation factor. Labels "extrapolated" and "indicative" apply when no multivalent benchmark exists.
+- Bracket rule change: the premise is measured, OR a computed premise whose credible lower bound of DG_tr_rel is >= 0 at the registered level. The latter is labelled "pass (computed premise)" everywhere.
+- PC is the proxy for the cyclic-carbonate class; EC and the linear carbonates are extrapolations.
+- Sequence disclosure: the K1 upper bounds were seen before the protocol was written.
+- The scope guard allows "thermodynamic viability (computed premise)".
+- E_lb = conventional aqueous DfG of Ca2+, Al3+, Li+, ClO4- corrected to PC through DG_tr_rel: E_PC = E_aq + DG_tr_rel/(nF). DG_tr_rel >= 0 makes E_aq a lower bound. A computed-premise pass must clear the class sup plus the registered margin AND the premise uncertainty.
+
+**Headlines, decided only after the results packet.** (A) Condensed Ca and Al phosphates pass at 4.4 to 4.5 V on a computed premise. (B) Premise unresolved: design rule plus gap map. The fallback (B) is stated in the abstract plan now.

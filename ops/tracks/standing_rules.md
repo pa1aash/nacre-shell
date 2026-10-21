@@ -20,3 +20,4 @@ Read with ops/RUNBOOK.md. Decided 2026-10-20 (D34 to D40).
 16. **Do not edit `preprint/paper/**`** except through lane merges.
 17. **END BLOCK.** Every session ends with the END BLOCK format of the RUNBOOK (session, lane, status DONE or BLOCKED, branch sha, tests, verify result, outstanding, next). Stop with BLOCKED plus a diagnosis; do not guess.
 18. **Known failure.** CI Arial tests on Linux are resolved by the W6.3 font fallback.
+19. **Compute exception (D61).** CPU compute is allowed only for PH-C* sessions under jobs/preprint/**: one rented 64-core node started and stopped by the operator, about 15 to 20 node-hours, hard cap USD 150, stop and ask the planning chat at USD 100, every job and cost logged in jobs/ledger/p0-w5.jsonl, no GPU.
