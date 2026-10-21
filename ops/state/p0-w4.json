@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W4.2b",
+  "last_session": "PH-W4.2c",
   "status": "DONE",
   "day": 5,
   "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
@@ -46,7 +46,10 @@
     "route_dry_run": "src/nacre/screen/ph_route_dry.py",
     "mock_params_ph_routes": "configs/preprint/mock_params_ph_routes.yaml",
     "mock_k1_ladder_v2": "configs/preprint/mock_k1_ladder_v2.csv",
-    "k1_ladder_input": "results/preprint/pourbaix/ph_w52/ladder_v3.csv"
+    "k1_ladder_input": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
+    "symbol_bindings": "configs/preprint/symbol_bindings.yaml",
+    "bindings_module": "src/nacre/physics/bindings.py",
+    "report_w4_2c": "ops/reports/P0-W4.PH-W4.2c.md"
   },
   "notes": [
     "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
@@ -60,7 +63,8 @@
     ".venv is a symlink to ~/.nacre-venvs/p-w4.",
     "PH-W4.1: contract v5 implemented (equivalence PASS at rtol 1e-12); chain takes a mineral object; K2 to K4 evaluators with provisional margins; 55 gap-skeleton keys await cp5; dry runs on mock priors only.",
     "PH-W4.2a: contract v6 implemented (equivalence PASS vs 2aa96fb, v6 max 2.1e-13); route evaluators H/F/B tables and C3 wetting; F1 proceed rule; stage rows, conversion rows, F5 panel; schema v5; carbonate regression 38/38; 72 gap-skeleton keys await cp5; dry runs on mock priors only.",
-    "PH-W4.2b: thresholds copy regenerated from block v6 (c2c7882); K1 reader reads W5's ladder_v3.csv (wide layout); dry runs over the real ladder (extracted copy); 72 gap-skeleton keys pending; 11 symbol bindings listed in the report."
+    "PH-W4.2b: thresholds copy regenerated from block v6 (c2c7882); K1 reader reads W5's ladder_v3.csv (wide layout); dry runs over the real ladder (extracted copy); 72 gap-skeleton keys pending; 11 symbol bindings listed in the report.",
+    "PH-W4.2c: symbol-binding table (11 bindings: 6 resolved, 5 unresolved) and conversions; unresolved keys and gaps yield undetermined; 686 tests pass."
   ],
   "schema": {
     "version": "5",

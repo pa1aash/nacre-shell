@@ -1,0 +1,185 @@
+# W1 key to contract v6 symbol bindings (PH-W4.2c, cp5a fix X3). Applied by src/nacre/physics/bindings.py.
+# sha256 of this file with this line removed: 503e27de3c265c032f93599e2053a1bf6437837b203e447a6518103d07f1a138
+# Status: resolved = unit and kind established from the key record; unresolved = ambiguous, the key yields
+# "undetermined" (default). A gap key (no value) is undetermined at run time whatever its binding status.
+# No prior, threshold, verdict rule or K1 number is set or changed here.
+version: 1
+contract_version: 6
+contract_unit_note: units are SI as in theory/symbols.yaml
+undetermined_default: {status: undetermined, value: null}
+bindings:
+  - id: b01
+    contract_symbol: beta_AlPP
+    contract_unit: '1'
+    w1_symbol: K_Al_polyP
+    w1_unit: '1 (transform none in W1; the value is log10 beta1)'
+    conversion:
+      name: log10_to_linear
+      formula: beta_AlPP = 10^x
+      base: 10
+      standard_state: molal activity scale, m° = 1 mol kg^-1 (symbols.yaml m_std), dimensionless
+    status: unresolved
+    reason: the five keys do not establish the contract's quantity (1:1 Al3+ chain-unit complex, activities, pH 5 to 8.5)
+    default: {status: undetermined, value: null, note: 'the contract rule for a gap (beta_AlPP = 0, flagged) is applied by the contract evaluator, not here'}
+    keys:
+      polyp_al_log_beta1_cyclo_p3: &cyclo {status: unresolved, reason: 'cyclic trimetaphosphate at pH 3 (Kura 2007), not a linear chain unit at pH 5 to 8.5; ionic strength and concentration-versus-activity basis not recorded'}
+      polyp_al_log_beta1_cyclo_p4: *cyclo
+      polyp_al_log_beta1_cyclo_p6: *cyclo
+      polyp_al_log_beta1_cyclo_p8: *cyclo
+      polyp_al_log_beta1_linear: {status: resolved, reason: 'gap in W1; the conversion is defined for when a linear-chain value exists'}
+  - id: b02
+    contract_symbol: K_sp_AlPP
+    contract_unit: '1'
+    w1_symbol: K_sp
+    w1_unit: '1, transform log10'
+    conversion:
+      name: log10_to_linear
+      formula: K_sp_AlPP = 10^x per formula unit Al(PO3)3 (nu_Al = 1, nu_PP = 3, as IAP_AlPP)
+      base: 10
+      standard_state: molal activity scale, m° = 1 mol kg^-1
+    status: resolved
+    default: {status: undetermined, value: null}
+    keys:
+      polyp_log10_ksp_al: {status: resolved, reason: 'gap in W1: the Omega_AlPP row is undetermined with its flip (contract)'}
+  - id: b03
+    contract_symbol: gamma_nl_c
+    contract_unit: J m^-2
+    w1_symbol: gamma_nl
+    w1_unit: J m^-2
+    conversion: {name: identity, formula: gamma_nl_c = x, note: 'W1 and the contract are both J m^-2; calcite and other mineral gamma_nl_* keys are a different symbol and are not bound here'}
+    status: resolved
+    default: {status: undetermined, value: null}
+    keys:
+      coacervate_gamma_nl: {status: resolved, role: primary, reason: 'gap in W1'}
+      coacervate_gamma_analog: {status: resolved, role: analog, reason: 'synthetic PDADMAC/PANa coacervate; analog route only, never a substitute for the primary key'}
+      coacervate_gamma_analog_complex_pair: {status: resolved, role: analog, reason: 'synthetic polyelectrolyte pair; analog route only'}
+  - id: b04
+    contract_symbol: Delta_G_gc
+    contract_unit: J mol^-1
+    w1_symbol: H_phase
+    w1_unit: 'J mol^-1 (enthalpy, glass minus crystal, per formula unit)'
+    conversion:
+      name: enthalpy_plus_entropy_bound
+      formula: 'Delta_G_gc = H_phase - T S_resid, S_resid in [0, n_PO3 R ln 2] J K^-1 mol^-1'
+      inputs: [H_phase (the key), S_resid (second named input, required), T (default 298.15 K)]
+      rule: 'registered entropy rule, PO3 residual entropy in [0, R ln 2] per PO3 (claims_redirect.md 10b point 3, labelled assumption, no source); S_resid at the upper end for E_ub, 0 for E_lb; the enthalpy is never read as a free energy'
+      check: 'result must lie in [0, oo); a negative result is undetermined, not clamped'
+    status: resolved
+    default: {status: undetermined, value: null}
+    keys:
+      glass_crystal_correction_lipo3: {status: resolved, n_PO3: 1, formula_unit: LiPO3}
+      glass_crystal_correction_napo3: {status: resolved, n_PO3: 1, formula_unit: NaPO3}
+      glass_crystal_correction_cameta: {status: resolved, n_PO3: 2, formula_unit: Ca(PO3)2, reason: 'gap in W1'}
+      glass_crystal_correction_cameta_calphad: {status: resolved, n_PO3: 2, formula_unit: Ca(PO3)2}
+      glass_crystal_correction_alpmeta3: {status: resolved, n_PO3: 3, formula_unit: Al(PO3)3, reason: 'gap in W1'}
+  - id: b05
+    contract_symbol: k_hyd
+    contract_unit: s^-1
+    w1_symbol: k_hyd (k_hydrolysis for the pH 7 to 13 key)
+    w1_unit: s^-1
+    conversion: {name: identity, formula: k_hyd = x, note: 'the rate constant at the data condition; the transfer to the process state is tau_k in k_hyd_eff, not here'}
+    status: resolved
+    default: {status: undetermined, value: null}
+    keys:
+      hydrolysis_polyp_k_ph6: {status: resolved}
+      hydrolysis_polyp_k_ph6_ca1mm: {status: resolved}
+      hydrolysis_polyp_k_ph8: {status: resolved}
+      hydrolysis_polyp_k_ph8_ca1mm: {status: resolved}
+      hydrolysis_polyp_k_ph7_to_13: {status: resolved, reason: 'gap in W1; the W1 symbol name k_hydrolysis differs from k_hyd, unit s^-1 identical'}
+  - id: b06
+    contract_symbol: Delta_G_tr_rel
+    contract_unit: J mol^-1
+    w1_symbol: Delta_G_tr
+    w1_unit: J mol^-1
+    conversion:
+      name: single_ion_transfer
+      formula: 'form A: Delta_G_tr_rel = DG_tr(M) - z DG_tr(Li+); form B: DG_tr(M(ClO4)z) - z DG_tr(LiClO4)'
+      rule: 'form A only when both ions carry the same named single-ion scale and the same solvent; form B takes salt values; a mismatch or an unnamed scale is undetermined, never converted'
+      solvent: propylene carbonate (proxy of the carbonate class, a planning-chat registration)
+    status: unresolved
+    reason: 'the only Li+ value has no named single-ion scale (IUPAC selected); Ca2+ and Al3+ are gaps; no salt-form (B) key exists'
+    default: {status: undetermined, value: null}
+    keys:
+      transfer_free_energy_li_water_pc: {status: unresolved, ion: Li+, form: A, solvent: PC, scale: null, reason: 'single-ion scale not named in the key record (IUPAC selected value)'}
+      transfer_free_energy_ca_water_pc: {status: unresolved, ion: Ca2+, form: A, solvent: PC, scale: null, reason: 'gap; scale not named'}
+      transfer_free_energy_al_water_pc: {status: unresolved, ion: Al3+, form: A, solvent: PC, scale: null, reason: 'gap; scale not named'}
+      transfer_free_energy_clo4_water_pc: {status: resolved, ion: ClO4-, form: A, solvent: PC, scale: ferrocene, role: anion_cancels, note: 'cancels in the charge-balanced combination; used only to assemble form B from single ions'}
+  - id: b07
+    contract_symbol: Delta_G_hyd
+    contract_unit: J mol^-1
+    w1_symbol: Delta_G_hyd
+    w1_unit: J mol^-1
+    conversion:
+      name: hydration_by_scale
+      formula: 'Delta_G_hyd = x on the named scale; scales are never mixed or converted'
+      scales: [marcus1991, tissandier, conventional]
+      check: 'absolute value in (-oo, 0); a conventional-scale value is positive for Li+ and is undetermined as an absolute Delta_G_hyd until the proton value is added on a named real scale (the key hydration_free_energy_li_tissandier_scale)'
+    status: unresolved
+    reason: 'hydration_free_energy_clo4 names no scale (gap)'
+    default: {status: undetermined, value: null}
+    keys:
+      hydration_free_energy_li: {status: resolved, scale: marcus1991}
+      hydration_free_energy_ca: {status: resolved, scale: marcus1991}
+      hydration_free_energy_al: {status: resolved, scale: marcus1991}
+      hydration_free_energy_al_marcus: {status: resolved, scale: marcus1991, note: 'standard state not printed in the source'}
+      hydration_free_energy_al_tissandier_scale: {status: resolved, scale: tissandier}
+      hydration_free_energy_proton_tissandier: {status: resolved, scale: tissandier}
+      hydration_free_energy_li_conventional: {status: resolved, scale: conventional}
+      hydration_free_energy_li_tissandier_scale: {status: resolved, scale: tissandier}
+      dg_hyd_ca_marcus: {status: resolved, scale: marcus1991}
+      dg_hyd_ca_tissandier: {status: resolved, scale: tissandier}
+      hydration_free_energy_clo4: {status: unresolved, scale: null, reason: 'scale not named; gap'}
+  - id: b08
+    contract_symbol: 'thresholds.K1.margin_expt, thresholds.K1.margin_dft (not contract function symbols)'
+    contract_unit: V
+    w1_symbol: m_E, m_expt
+    w1_unit: V
+    conversion: {name: identity, formula: 'none applied: the K1 margins are derived in the thresholds block', note: 'the W1 keys are margins of carbonate reactions'}
+    status: unresolved
+    reason: 'carbonate-case keys (CaCO3, corundum reductions); a phosphate K1 margin is not their value, so any use as margin_expt or margin_dft would be a guess'
+    default: {status: undetermined, value: null}
+    keys:
+      window_margin: {status: unresolved, reason: 'carbonate DFT margin; K1 margin_dft is derived in the block'}
+      window_margin_expt: {status: unresolved, reason: 'carbonate expt budget; K1 margin_expt is derived in the block'}
+      window_margin_expt_red_caco3: {status: unresolved, reason: 'carbonate reduction-limit budget'}
+      window_margin_expt_red_corundum: {status: unresolved, reason: 'corundum reduction-limit budget'}
+  - id: b09
+    contract_symbol: 'Gamma_P (mol m^-2), K_P (1), delta_P (m)'
+    contract_unit: 'mol m^-2; 1; m'
+    w1_symbol: none
+    w1_unit: absent
+    conversion:
+      name: ads_unit
+      formula: 'Gamma_P = x mol m^-2 (mmol, umol, nmol m^-2 scaled; a mass density needs the chain-unit molar mass as an argument); K_P = x, dimensionless activity form only; delta_P = x m (mm, um, nm, angstrom scaled)'
+      note: the caller states the unit; a concentration-form K_P or an unknown unit is undetermined
+    status: unresolved
+    reason: 'no W1 key in lit/params.yaml at the pin; the unit and kind of the future keys are not recorded'
+    default: {status: undetermined, value: null}
+    keys:
+      polyp_ads_alumina_gamma_max: {status: unresolved, symbol: Gamma_P, unit: mol m^-2, reason: 'key absent from lit/params.yaml'}
+      polyp_ads_alumina_k_langmuir: {status: unresolved, symbol: K_P, unit: '1', reason: 'key absent from lit/params.yaml'}
+      polyp_ads_alumina_layer_thickness: {status: unresolved, symbol: delta_P, unit: m, reason: 'key absent from lit/params.yaml'}
+  - id: b10
+    contract_symbol: none
+    contract_unit: null
+    w1_symbol: n_chain
+    w1_unit: '1'
+    conversion: {name: slot, formula: none, note: 'matrix or route slot only; not used in any barrier or K1 formula'}
+    status: resolved
+    default: {status: undetermined, value: null}
+    keys:
+      polyp_chain_length_material: {status: resolved, role: slot}
+      polyp_chain_distribution: {status: resolved, role: slot}
+  - id: b11
+    contract_symbol: none
+    contract_unit: null
+    w1_symbol: K_complex
+    w1_unit: '1'
+    conversion: {name: slot, formula: none, note: 'matrix slot only; not used in any barrier or K1 formula'}
+    status: resolved
+    default: {status: undetermined, value: null}
+    keys:
+      matrix_chitosan_polyp_complex: {status: resolved, role: slot}
+not_bound:
+  polyp_log10_ksp_cameta: 'Ca polyphosphate solubility product: no contract symbol (K_sp_AlPP only); gap'
+  hydration_standard_state_offset: 'definitional shift between conventions; never applied, because scales are not converted'
