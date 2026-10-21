@@ -9,7 +9,7 @@ Every `[T…]` and `[P…]` source is a Wayback capture from 2025 or 2026, not t
 - [ ] cp5 has passed; C2 requires it [B3]. Not a policy item.
 - [ ] The live policy re-check is done and recorded, using `requirements_recheck.md` [B8].
 - [ ] Every co-author has received the Terms of Submission in writing (email suffices) and has authorised the submission, through the P0-W2.4 co-author pack. Keep the replies [T3-1, T2-1]. **re-check live**
-- [ ] Everyone who meets the ICMJE authorship criteria is listed, and any authorship question is settled among the authors first [T2-1]. **re-check live**
+- [ ] Everyone who meets the ICMJE authorship criteria is listed, and any authorship question is settled among the authors beforehand [T2-1]. **re-check live**
 - [ ] The work is not accepted or published after peer review, and it is not posted on another preprint server [T1-2, T2-1]. **re-check live**
 - [ ] The release files are ready from W8: the manuscript PDF with figures and tables embedded, and the SI (`metadata.yaml` `files`) [T1-1, T1-2]. **re-check live**
 - [ ] The AI-use sentence is present in the PDF's Acknowledgements, built from `.local/p0/ai_ack.tex`, naming the tool and its method of use [T1-2, B4]. **re-check live**
@@ -22,7 +22,7 @@ Every `[T…]` and `[P…]` source is a Wayback capture from 2025 or 2026, not t
 
 ## Step 1: author details
 
-- [ ] Declare co-authorship, then enter every author in the order of `metadata.yaml` `authors`: first name, last name, email (from the local-only list) and institutions [T1-1]. **re-check live**
+- [ ] Declare co-authorship, then enter every author in the order of `metadata.yaml` `authors`: given name, family name, email (from the local-only list) and institutions [T1-1]. **re-check live**
 - [ ] Institutions: one per entry, within the per-author count and name-length limits stated in T1-1 [T1-1]. **re-check live**
 - [ ] Check the fields that ORCID pre-fills for the corresponding author [T1-1]. **re-check live**
 - [ ] Reorder the authors so that the form order matches the PDF byline [T1-1]. **re-check live**
@@ -32,10 +32,10 @@ Every `[T…]` and `[P…]` source is a Wayback capture from 2025 or 2026, not t
 
 - [ ] Title: the final title from W8 (`metadata.yaml` `title.final`), identical to the PDF [T1-1]. **re-check live**
 - [ ] Abstract: pasted from the final PDF, within the word limit stated in T1-1 (`metadata.yaml` `abstract`) [T1-1]. **re-check live**
-- [ ] Categories: main categories and subcategories within the limits stated in T1-1; the first main category is shown on the preprint page. Choose from the live list; the captured list and the lane's proposal are in `metadata.yaml` `categories` [T1-1, P1]. **re-check live**
+- [ ] Categories: main categories and subcategories within the limits stated in T1-1; the top-listed main category is shown on the preprint page. Choose from the live list; the captured list and the lane's proposal are in `metadata.yaml` `categories` [T1-1, P1]. **re-check live**
 - [ ] Keywords from `metadata.yaml` `keywords` [T1-1]. **re-check live**
 - [ ] Content type: Working Paper [T1-1]. **re-check live**
-- [ ] Upload the manuscript PDF and check the first-page thumbnail [T1-1]. **re-check live**
+- [ ] Upload the manuscript PDF and check the cover-page thumbnail [T1-1]. **re-check live**
 - [ ] Funders: "Add Funder" with funder name and grant number, matching the funding statement in the PDF (`metadata.yaml` `funding`) [T1-1, T2-1, T3-1]. **re-check live**
 - [ ] Competing interests for all authors, matching the PDF (`metadata.yaml` `competing_interests`) [T1-1, T2-1, T3-1]. **re-check live**
 - [ ] Ethics approvals: not applicable (`metadata.yaml` `ethics`) [T1-1, T2-1]. **re-check live**

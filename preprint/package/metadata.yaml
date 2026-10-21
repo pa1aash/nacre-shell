@@ -37,7 +37,7 @@ abstract:
   recheck_live: true
 
 # Author order is the register's order (ops/tracks/p0_authors.yaml); the checker enforces the match.
-# The form asks for first and last name, email and institutions for every author [T1-1]; the email
+# The form asks for given name, family name, email and institutions for every author [T1-1]; the email
 # column comes from the local-only contact list.
 authors_source: ops/tracks/p0_authors.yaml
 authors:
@@ -110,10 +110,10 @@ categories:
   - Theoretical and Computational Chemistry
   offered_source: [P1]
   rule: main categories and subcategories are chosen in the form within the limits stated in requirements.md T1;
-    the first main category is the one shown on the preprint page
+    the top-listed main category is the one shown on the preprint page
   rule_source: [T1-1]
   proposed_main: [Theoretical and Computational Chemistry, Physical Chemistry, Materials Science]
-  proposed_note: a proposal from the lane, ordered with the method first; Palaash chooses
+  proposed_note: a proposal from the lane, ordered with the method at the top; Palaash chooses
   chosen_main: TBD (Palaash at C2, from the live list)
   subcategories: TBD (Palaash at C2; no capture lists them, see fetch_index.yaml P2)
   recheck_live: true
@@ -128,7 +128,7 @@ keywords:
   - Pourbaix analysis
   - thermodynamic screening
   - uncertainty propagation
-  - first-principles validation
+  - ab initio validation
   proposed_note: taken from the working title and the model's named methods; checked against the scope guard
   chosen: TBD (Palaash at C2, after the final title)
   source: [T1-1]
