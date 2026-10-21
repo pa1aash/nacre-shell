@@ -1357,6 +1357,14 @@ screen_ph:
       labels: {nacre-type: 'aragonite AND calcite pass K2', otherwise: 'carbonate (calcite)'}
       falsifiability_control: 'the same test flags undersaturation (Omega_bulk < 1) at the low-dose corner of the grid, for each polymorph; otherwise that polymorph is inconclusive in every row'
       authority: claims_redirect Section 11a
+    low_voltage:
+      class: not excluded at the nominal cutoff (regimes.R-cell.parameters.cutoff_classes, C_lo)
+      sensitivity_line: {E_c_V: [4], unit: V, role: sensitivity, not a class}
+      wording: 'low voltage up to about [tier-2 onset]'
+      number_source: 'macro from the hash-pinned ladder (E_svc of the best tier-2 row; the row id by macro too); never typed'
+      no_tier2_row: 'phrase not written; row undetermined (data missing)'
+      carbonate_at_sensitivity_line: 'close to falsification; sentence emitted only if the generated predicate holds (E_x- within m_1 of the line, or tier-2 onset within m_svc of it)'
+      authority: claims_redirect Section 11c
   links:
     K1:
       regime: R-cell

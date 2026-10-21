@@ -943,3 +943,25 @@ or "the slurry". The rules that go with the label, in the same section of the pa
   evaluated by the same test and printed beside the registered region.
 - No sentence of the paper may use "suitable" without the conditions "for [phase] in [region]" within six words. A
   sentence that cannot carry both conditions uses the vocabulary of Section 11d instead.
+
+### 11c. C4: the low-voltage wording
+
+**Class.** The low-voltage class is **not excluded** at the nominal cutoff (the C_lo class of Section 2e,
+`regimes.R-cell.parameters.cutoff_classes`), with a cutoff of 4 V registered as a sensitivity line beside it (a
+registered design cutoff, not a result). Both are read off the K1 verdict table of Section 2c for the carbonate row and
+the phosphate rows, per cutoff, and the word "excluded" is used only in the sense of Section 11d.
+
+**Wording rule.** The paper words the claim as
+
+    low voltage up to about [tier-2 onset]
+
+where [tier-2 onset] is the number E_svc of the tier-2 row of the ladder (the best record, class A or B outranking C,
+Section 2b), emitted by a macro from the hash-pinned ladder file together with the id of that row (macro for the row
+identity, macro for the number). Neither the number nor the row is ever typed. If no tier-2 row exists for the claimed
+phase, the phrase is not written and the row reads `undetermined (data missing)`.
+
+**The 4 V line.** At the 4 V sensitivity line the carbonate row is close to falsification: the tier-1 crossover (E_x-,
+Section 2e) and the tier-2 onset both come from the ladder files by macro, and the paper prints them beside the 4 V
+line. The sentence "close to falsification" is emitted only when the generated predicate holds (E_x- lies within the
+margin m_1 of the 4 V line, or the tier-2 onset lies within m_svc of it); otherwise the plain crossover and onset are
+printed and the sentence is dropped. Proposed; the planning chat rules at cp5b.
