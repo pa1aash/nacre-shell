@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W1.5",
+  "last_session": "PH-W1.6",
   "status": "DONE",
   "day": 5,
   "artifacts": [
@@ -57,18 +57,19 @@
     "lit/corpus/phosphate_coverage.yaml",
     "ops/reports/P0-W1.PH-W1.2.md",
     "ops/reports/P0-W1.PH-W1.3.md",
-    "ops/reports/P0-W1.PH-W1.5.md"
+    "ops/reports/P0-W1.PH-W1.5.md",
+    "ops/reports/P0-W1.PH-W1.6.md"
   ],
-  "notes": "PH-W1.5: 39 rows (TT-092 to TT-130), 41 keys. Found: PC transfer Na-Cs on the TATB scale, multivalent transfer in MeCN/DMF/DMSO/MeOH (Cu2+, Zn2+, Cd2+, Hg2+, La3+, Ca2+), aqueous DfG and S0 of Li+, Ca2+, Al3+, ClO4-, aqueous Al-Li exchange entropy proxy. Gaps: Ca2+/Mg2+/Zn2+/Ba2+/Al3+ in PC, Al(ClO4)3 solid entropy, Ca(PO3)2 glass S0 and crystallisation, Al(PO3)3, Al-polyP linear constants, alumina isotherm keys. Next: PH-C0.",
+  "notes": "PH-W1.6: 6 rows (TT-131 to TT-136), 4 keys (470 total): log10_ksp_aragonite_25c_i0 (-8.336 +- 0.020, grade C, sensitivity of the existing log10_ksp_aragonite), p_c_site_square/triangular/sc. v_m_aragonite already existed. Li+ hydration keys: cause was the (-oo, 0) interval of Delta_G_hyd on a conventional-scale key; per-key spec interval added, rebuild equals the committed table. Deviation text: Re-audit: cp5b. Next: integrator.",
   "params": {
     "status": "ready",
-    "sha": "d0e93de57e29a05aa13ed1e134539b82983bfe7f",
+    "sha": "9792fa070c7677f34dd0ea9b7bf8ade8ec42ae5f",
     "post_cp3": true,
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
     "rule": "lit/corpus/params_README.md (rule version 3, section 8)",
-    "keys": 466,
-    "new_keys": 41,
+    "keys": 470,
+    "new_keys": 4,
     "edited_keys": [],
     "cp3_tag_table": "p0-cp3 (production screens)"
   }
