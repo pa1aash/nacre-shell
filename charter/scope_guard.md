@@ -67,8 +67,9 @@ SG15  \b(barrier|layer|film|coating|interface) (is|are) (thermodynamically )?(fe
 SG16  \b(demonstrate|show|establish|prove)s? (the )?feasibility\b
 # redirect additions (ops/tracks/redirect_plan.md), applied at PH-I5
 SG18  \b(phosphate|apatite) (barrier|layer|film|coating) (works|protects|is effective)\b
-# flagged everywhere; the carbonate-control paragraph carries the allow-marker comment <!-- sg:allow nacre --> (W8 adds it when it writes that paragraph)
-SG19  \bnacre-inspired\b
+# regime frame (PH-I5c-b): "nacre-inspired" is allowed as a lineage word; result wording is forbidden
+SG19  \bnacre-(type|inspired) (barrier|film|coating|layer) (works|protects|is effective|forms)\b
+SG28  \bnacre-like (architecture|layered structure)\b
 SG20  \bwe show\b.* (holds|survives) above\b
 SG21  \boutperforms (phosphoric acid|carbon-coated|baked|plain|conventional)\b
 SG22  \b(better than) (baked|plain|conventional) (coating|aluminophosphate)\b
@@ -83,4 +84,7 @@ SG17W  \bstable (up to|above|to) [0-9.]+ ?V\b
 # redirect additions: SG26W is flagged unless the sentence rests on the novelty audit; SG27W unless the sentence contains 'hypothesis' or 'criterion' (the exemption words need lint-scope support in W8; lint-scope presently exempts only 'thermodynamic')
 SG26W  \b(novel|first)\b
 SG27W  \bself-heal(s|ing)?\b
+# regime frame (PH-I5c-b): SG29W is flagged unless the sentence contains 'aragonite' (the label is only for rows where aragonite AND calcite pass K2); SG30W is flagged when 'thermodynamically suitable' is not followed within six words by 'for', 'in' or 'under' (both need lint-scope support in PH-W8.2)
+SG29W  \bnacre-type\b
+SG30W  \bthermodynamically suitable\b(?!(?:\W+\w+){0,5}?\W+(?:for|in|under)\b)
 ```
