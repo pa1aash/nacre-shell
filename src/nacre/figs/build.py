@@ -31,6 +31,7 @@ from nacre.figs import checker, paths, schema, style, upstream
 
 _FIG_RE = re.compile(r"^fig(\d+)\.py$")
 _REQUIRED = ("id", "claim", "caption_key", "width", "height_cm", "schema", "mock_input", "input")
+_REQUIRED_TEMPLATE = ("id", "claim", "caption_key", "width", "height_cm", "status")
 
 
 class FigureError(Exception):
@@ -58,7 +59,9 @@ def load_template(path):
     fig = getattr(mod, "FIGURE", None)
     if not isinstance(fig, dict) or not callable(getattr(mod, "build", None)):
         raise FigureError("%s: needs FIGURE and build(data, root)" % path.name)
-    missing = [k for k in _REQUIRED if k not in fig]
+    if fig.get("status", "data") not in ("data", "template"):
+        raise FigureError("%s: status must be data or template" % path.name)
+    missing = [k for k in (_REQUIRED_TEMPLATE if fig.get("status") == "template" else _REQUIRED) if k not in fig]
     if missing:
         raise FigureError("%s: FIGURE lacks %s" % (path.name, ", ".join(missing)))
     if fig["id"] != path.stem:
@@ -214,12 +217,86 @@ def render(root, mod, data, input_path, out_dir, tiff=False, cvd=True, aux=None)
     }
 
 
+def is_template(mod):
+    return mod.FIGURE.get("status") == "template"
+
+
+def render_template(root, mod, out_dir, cvd=True):
+    """Draw a template that has no data; every plot area must carry the placeholder.
+
+    Same checker as a data figure. Written to figures/out/templates/ and recorded with
+    status "template" and the release flag "blocked".
+    """
+    from nacre.figs import template
+    root = Path(root)
+    fid = mod.FIGURE["id"]
+    plt, fig = make_figure(root, mod, None)
+    try:
+        expected = style.figsize(mod.FIGURE["width"], mod.FIGURE["height_cm"], root)
+        if any(abs(a - b) > 1e-3 for a, b in zip(expected, tuple(fig.get_size_inches()))):
+            raise FigureError("%s: size differs from FIGURE width/height_cm" % fid)
+        problems = checker.check_rsc(fig, root)
+        bare = [i for i, (_ax, n) in enumerate(template.placeholder_axes(fig)) if n < 2]
+        if bare:
+            problems.append("template axes %s carry no placeholder (a template must look empty)" % bare)
+        if problems:
+            raise checker.FigureCheckError(["%s: %s" % (fid, x) for x in problems])
+        out_dir = Path(out_dir)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        dpi = int(style.applied(root)["raster_dpi"]["value"])
+        pdf, png = out_dir / (fid + ".pdf"), out_dir / (fid + ".png")
+        boxes = checker.allowed_text_boxes(fig)
+        fig.savefig(pdf, format="pdf", metadata={"Creator": None, "Producer": None, "CreationDate": None})
+        fig.savefig(png, format="png", dpi=dpi, metadata={"Software": None})
+        problems = checker.check_pdf_text(pdf, boxes)
+        if problems:
+            raise checker.FigureCheckError(["%s: %s" % (fid, x) for x in problems])
+        outputs = [pdf, png]
+    finally:
+        plt.close(fig)
+    if cvd:
+        from nacre.figs import cvd as cvdmod
+        cdir = out_dir / "cvd"
+        cdir.mkdir(exist_ok=True)
+        outputs += cvdmod.simulate_png(png, cdir, fid, dpi)
+    w, h = expected
+    return {
+        "id": fid,
+        "status": "template",
+        "release": "blocked: placeholder, no data yet",
+        "claim": mod.FIGURE["claim"],
+        "caption_key": mod.FIGURE["caption_key"],
+        "width": mod.FIGURE["width"],
+        "size_cm": [round(w * style.CM_PER_IN, 2), round(h * style.CM_PER_IN, 2)],
+        "waits_for": mod.FIGURE.get("waits_for", ""),
+        "font": style.font_record(root),
+        "outputs": {str(o.resolve().relative_to(root.resolve())): _sha(o) for o in outputs},
+        "checker": "pass (artists and PDF text; placeholder on every plot area)",
+    }
+
+
+def release_problems(root, manifest=None):
+    """What stops a release: a registered template, a layout stub, or a figure built from mock data.
+
+    Reads figures/out/manifest.json (or `manifest`). The release build runs this and refuses to
+    go on while the list is not empty.
+    """
+    path = Path(manifest) if manifest else paths(root)["out"] / "manifest.json"
+    if not path.exists():
+        return ["%s: no manifest" % path]
+    doc = json.loads(path.read_text())
+    out = ["%s: template (%s)" % (k, v.get("release", "placeholder")) for k, v in sorted(doc.get("templates", {}).items())]
+    out += ["%s: layout stub, no drawing yet" % k for k, v in sorted(doc.get("schematics", {}).items()) if v.get("stub")]
+    out += ["%s: built from mock data" % k for k, v in sorted(doc.get("figures", {}).items()) if v.get("mock")]
+    return out
+
+
 def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
     """Build every template (or those in `only`). Returns (records, failures)."""
     root = Path(root)
     p = paths(root)
     out_dir = p["out_mock"] if mock else p["out"]
-    records, failures = [], []
+    records, failures, templates_built = [], [], {}
     for key, msg in upstream.drift(root):
         log("upstream %s: %s" % (key, msg))
     templates = discover(root)
@@ -234,6 +311,13 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
     for path in templates:
         try:
             mod = load_template(path)
+            if is_template(mod):
+                if mock:
+                    continue  # no data, so nothing to build in mock mode
+                trec = render_template(root, mod, p["out"] / "templates", cvd=cvd)
+                templates_built[trec["id"]] = trec
+                log("%s: template -> %s" % (trec["id"], ", ".join(sorted(trec["outputs"]))))
+                continue
             data, input_path = load_input(root, mod, mock)
             aux = load_aux(root, mod, mock) if data is not None else None
             if data is None or aux is None:
@@ -248,6 +332,12 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
         except FigureError as exc:
             failures.append(str(exc))
             log("%s: FAIL %s" % (path.stem, exc))
+    if templates_built:
+        manifest = p["out"] / "manifest.json"
+        doc = json.loads(manifest.read_text()) if manifest.exists() else {}
+        doc.setdefault("templates", {}).update(templates_built)
+        doc["templates"] = dict(sorted(doc["templates"].items()))
+        manifest.write_text(json.dumps(dict(sorted(doc.items())), indent=1) + "\n")
     if records:
         manifest = out_dir / "manifest.json"
         # figures/out/manifest.json also holds the schematics and structures (build_drawings):
@@ -260,7 +350,7 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
         manifest.write_text(json.dumps(dict(sorted(old.items())), indent=1) + "\n")
     n_other, other_failures = build_drawings(root, only=only, cvd=cvd, log=log)
     failures += other_failures
-    return records + [None] * n_other, failures
+    return records + [None] * (n_other + len(templates_built)), failures
 
 
 def build_drawings(root, only=None, cvd=True, log=print):

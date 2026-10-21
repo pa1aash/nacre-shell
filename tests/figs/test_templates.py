@@ -20,7 +20,7 @@ def _mod(fid):
 
 
 def test_discovery_finds_the_templates():
-    assert [p.stem for p in build.discover(REPO)] == TEMPLATES
+    assert [p.stem for p in build.discover(REPO)] == TEMPLATES + ["fig12", "fig13", "fig14", "fig15"]
 
 
 @pytest.mark.parametrize("fid", TEMPLATES)

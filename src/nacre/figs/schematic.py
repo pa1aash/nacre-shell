@@ -167,6 +167,7 @@ def build(root, only=None, cvd=True, log=print):
                 "tex": "figures/tikz/" + entry["tex"], "claim": entry["claim"], "caption": entry["caption"],
                 "text_free": entry["text_free"], "source": entry["source"],
                 "w3_commit": entry.get("w3_commit"),
+                "stub": bool(entry.get("stub", False)),
                 "checker": "pass (PDF: %s, strokes, page width%s)" % (
                     "no text" if entry["text_free"] else "text allowed",
                     "; arrows orthogonal" if entry.get("orthogonal_arrows") else ""),
