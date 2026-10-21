@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W4.2d",
+  "last_session": "PH-W4.2e",
   "status": "DONE",
   "day": 5,
   "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
@@ -50,7 +50,9 @@
     "symbol_bindings": "configs/preprint/symbol_bindings.yaml",
     "bindings_module": "src/nacre/physics/bindings.py",
     "report_w4_2c": "ops/reports/P0-W4.PH-W4.2c.md",
-    "report_w4_2d": "ops/reports/P0-W4.PH-W4.2d.md"
+    "report_w4_2d": "ops/reports/P0-W4.PH-W4.2d.md",
+    "k2_carbonate": "src/nacre/screen/k2_carbonate.py",
+    "report_w4_2e": "ops/reports/P0-W4.PH-W4.2e.md"
   },
   "notes": [
     "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
@@ -65,14 +67,15 @@
     "PH-W4.1: contract v5 implemented (equivalence PASS at rtol 1e-12); chain takes a mineral object; K2 to K4 evaluators with provisional margins; 55 gap-skeleton keys await cp5; dry runs on mock priors only.",
     "PH-W4.2a: contract v6 implemented (equivalence PASS vs 2aa96fb, v6 max 2.1e-13); route evaluators H/F/B tables and C3 wetting; F1 proceed rule; stage rows, conversion rows, F5 panel; schema v5; carbonate regression 38/38; 72 gap-skeleton keys await cp5; dry runs on mock priors only.",
     "PH-W4.2b: thresholds copy regenerated from block v6 (c2c7882); K1 reader reads W5's ladder_v3.csv (wide layout); dry runs over the real ladder (extracted copy); 72 gap-skeleton keys pending; 11 symbol bindings listed in the report.",
-    "PH-W4.2c: symbol-binding table (11 bindings: 6 resolved, 5 unresolved) and conversions; unresolved keys and gaps yield undetermined; 686 tests pass."
+    "PH-W4.2c: symbol-binding table (11 bindings: 6 resolved, 5 unresolved) and conversions; unresolved keys and gaps yield undetermined; 686 tests pass.",
+    "PH-W4.2e: thresholds copy from block v8 (12c1f2d); aragonite K2 framing (log10_ksp_aragonite_25c_i0, v_m_aragonite) with the nacre-type label as an output field; per-polymorph low-dose-corner controls pass; carbonate regression 34/34 and 4/4; 3 tests fail on W1.5 keys without bindings or treatments (not this session's)."
   ],
   "schema": {
     "version": "5",
     "sha": "02f7fc3",
     "path": "configs/preprint/results_schema.json"
   },
-  "thresholds_sha": "c2c7882af0c7913bd17432157a43a3aca953dff4",
+  "thresholds_sha": "12c1f2d886b7fbc05aecc6a3f5a0de0c252c8a52",
   "params_sha": "fbe252b23a5a80e9fff25db72d1d3b85e8454ce8",
   "thresholds_cp3": {
     "source_sha": "74ac69c2586c017e2bc08efecbfbc918b94f48ee",
@@ -150,5 +153,12 @@
     "source_sha": "c2c7882af0c7913bd17432157a43a3aca953dff4",
     "block_version": 6,
     "equality": "EQUAL"
+  },
+  "thresholds_v8": {
+    "source_sha": "12c1f2d886b7fbc05aecc6a3f5a0de0c252c8a52",
+    "block_version": 8,
+    "block_sha256": "d92b42e9106e574fd330635fdc0d54e56d4a1dec4a7f38ece93d8bdfe922b04b",
+    "equality": "EQUAL",
+    "copy_commit": "e85e890"
   }
 }
