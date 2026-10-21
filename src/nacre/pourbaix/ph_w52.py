@@ -92,7 +92,8 @@ def gate_incomplete(classes, complete):
 
 
 def aggregate_class(per_reaction):
-    """Class verdict of a phase-framing: any falsified reaction falsifies it; an undetermined one blocks the rest."""
+    """Class verdict of a phase-framing (PH-W5.3 X1): falsified iff some reaction is falsified. A reaction whose budget is
+    incomplete is never falsified (gate_incomplete) and never rescues the phase; an undetermined one blocks the rest."""
     if any(v == "falsified" for v in per_reaction):
         return "falsified"
     if any(v == "undetermined" for v in per_reaction):
@@ -115,6 +116,26 @@ def _fmt(x):
     return "" if x is None else "%.4f" % x
 
 
+F_KJ_PER_V = 96.485332
+
+
+def staged_ruling_b(block, e, role):
+    """PH-W5.3 X2: the staged Ca(PO3)2 crystal (analogue vitrification enthalpy) is replaced by the ruling-(b) direct
+    glass-to-crystal value, as the block does for the Ca(PO3)2 crystal reference row. role 'reactant' raises E_ub with the more
+    stable crystal, 'product' lowers it. Returns (E_ub, m, text)."""
+    rb = block["m_K1_amorphous"]["ruling_b"]
+    sp = json.loads((W51 / "ph_w51.json").read_text(encoding="utf-8"))["staged_products"]["values"]["Ca(PO3)2"]
+    d_corr = rb["correction_kJ"] - sp["h_vit_kJ"]
+    new_u = sp["u_kJ"] - sp["u_vit_kJ"] + rb["u_correction_kJ"] - rb["u_glass_kJ"]
+    t = e["terms"]
+    n_e = e["n_e"]
+    m = (t["tabulated"] - sp["u_kJ"] + new_u + t["entropy_bound"]) / (n_e * F_KJ_PER_V)
+    e_ub = e["E_ub"] + (d_corr if role == "reactant" else -d_corr) / (n_e * F_KJ_PER_V)
+    return e_ub, m, ("ruling (b) applied to the staged Ca(PO3)2 crystal: direct glass-to-crystal value %.2f +- %.2f kJ/mol replaces the "
+                     "analogue %.2f +- %.2f kJ/mol; E_ub %.4f -> %.4f V, m %.4f -> %.4f V (block v6 value kept in the block copy)"
+                     % (rb["correction_kJ"], rb["u_correction_kJ"], sp["h_vit_kJ"], sp["u_vit_kJ"], e["E_ub"], e_ub, e["m"], m))
+
+
 def _reaction_rows(block):
     """{(phase, framing): [row dicts]} from m_K1.rows, with the ruling-(b) crystal row for Ca(PO3)2."""
     rb = block["m_K1_amorphous"]["ruling_b"]["crystalline_reference_row"]
@@ -122,7 +143,7 @@ def _reaction_rows(block):
     for r in block["m_K1"]["rows"]:
         e = {"id": r["reaction"], "text": r["text"], "sink": r["sink"], "status": r["status"],
              "E_ub": r.get("E_ub_V"), "m": r.get("m_V"), "reason": r.get("reason", ""),
-             "m_partial": r.get("m_V_partial"), "adopted": ""}
+             "m_partial": r.get("m_V_partial"), "adopted": "", "n_e": r.get("n_e"), "terms": r.get("terms_kJ")}
         if r["phase"].startswith("Ca(PO3)2") and r["framing"] == "crystalline" and r["reaction"] == "r1":
             assert abs(e["E_ub"] - rb["was"]["E_ub_V"]) < 5e-4 and abs(e["m"] - rb["was"]["m_V"]) < 5e-4
             e["E_ub"], e["m"] = rb["E_ub_V"], rb["m_V"]
@@ -130,6 +151,8 @@ def _reaction_rows(block):
                             "m %.4f -> %.4f V" % (block["m_K1_amorphous"]["ruling_b"]["correction_kJ"],
                                                   block["m_K1_amorphous"]["ruling_b"]["u_correction_kJ"],
                                                   rb["was"]["E_ub_V"], rb["E_ub_V"], rb["was"]["m_V"], rb["m_V"]))
+        if r["phase"] == "Ca2P2O7" and r["framing"] == "crystalline" and r["reaction"] == "r1s":
+            e["E_ub"], e["m"], e["adopted"] = staged_ruling_b(block, e, "product")
         out.setdefault((r["phase"], r["framing"]), []).append(e)
     return out
 
@@ -142,8 +165,13 @@ def _bound_note(block, phase):
     return None
 
 
-def build(block):
+SENS_EDGE_V = 4.0
+
+
+def build(block, lfp_edge=None):
     cut = cutoffs(block)
+    if lfp_edge is not None:
+        cut["C_lo"] = (lfp_edge, lfp_edge)
     rx = _reaction_rows(block)
     v2 = _read_v2()
     rows = []
@@ -235,10 +263,10 @@ def _phase_rows(block, cut, v, reactions):
                     "k1_verdict": overall(cls), "row_ids": _ids(v), "notes": "; ".join(note)})
     # aggregate row for the phase-framing
     agg = [aggregate_class([p[i] for p in per]) for i in range(3)]
-    gated = gate_incomplete(agg, all(e["status"] == "set" for e in reactions))
-    note_gate = ("budget incomplete: a class that would read falsified reads undetermined (an incomplete budget cannot falsify)"
-                 if gated != agg else None)
-    agg = gated
+    complete_all = all(e["status"] == "set" for e in reactions)
+    by_complete = [i for i in range(3) if agg[i] == "falsified"]
+    note_gate = ("budget incomplete in some reactions: falsified by a complete-budget reaction; incomplete rows cannot falsify "
+                 "and never rescue a phase" if by_complete and not complete_all else None)
     done = [e for e in reactions if e["status"] == "set"]
     lim = min(done, key=lambda e: e["E_ub"] + e["m"]) if done else None
     note = [note_base]
@@ -251,7 +279,7 @@ def _phase_rows(block, cut, v, reactions):
     out.append({"phase": phase, "framing": framing, "stage": stage, "reaction_id": "ALL",
                 "route": ACP_REF_ROUTE + "; aggregate over reactions" if acp_ref else "aggregate over reactions",
                 "E_ub_V": _fmt(lim["E_ub"]) if lim else "", "E_lb_V": PENDING, "margin_V": _fmt(lim["m"]) if lim else "",
-                "budget_status": "complete" if all(e["status"] == "set" for e in reactions) else "incomplete",
+                "budget_status": "complete" if complete_all else "incomplete",
                 "benchmark_status": bench, "k1_class_lfp": agg[0], "k1_class_42_43": agg[1], "k1_class_44_45": agg[2],
                 "k1_verdict": overall(agg), "row_ids": _ids(v), "notes": "; ".join(note)})
     return out
@@ -286,16 +314,37 @@ def _write_csv(path, cols, rows):
         w.writerows(rows)
 
 
+def sensitivity_line(rows, sens, lo):
+    """README sentence on the 4.0 V sensitivity, from the two row lists."""
+    cols = ("k1_class_lfp", "k1_class_42_43", "k1_class_44_45", "k1_verdict")
+    changed = [(r["phase"], r["framing"], r["reaction_id"], [(r[c], q[c]) for c in cols if r[c] != q[c]])
+               for r, q in zip(rows, sens) if any(r[c] != q[c] for c in cols)]
+    cross = [(float(r["E_ub_V"]) + float(r["margin_V"]), r) for r in rows
+             if r["reaction_id"] not in ("ALL", "-") and r["budget_status"] == "complete" and r["margin_V"]]
+    cross = [(x, r) for x, r in cross if x > lo]
+    carb = min(x for x, r in cross if r["phase"] == "CaCO3")
+    phos_x, phos = min(((x, r) for x, r in cross if r["phase"] != "CaCO3"), key=lambda t: t[0])
+    head = ("Sensitivity (ladder_v3_sens40.csv): the same rows with 4.0 V as the lowest class edge; "
+            + ("no verdict changes" if not changed else "verdicts change: " + "; ".join(
+                "%s %s %s %s" % (a, b, c, d) for a, b, c, d in changed)))
+    return head + " (carbonate crossover %.4f V, lowest phosphate crossover %.4f V, %s %s)." % (
+        carb, phos_x, phos["phase"], phos["reaction_id"]), changed
+
+
+
 def run():
     block, body, meta = read_block()
     OUT.mkdir(parents=True, exist_ok=True)
     rows = build(block)
     _write_csv(OUT / "ladder_v3.csv", COLUMNS, rows)
+    sens = build(block, SENS_EDGE_V)
+    _write_csv(OUT / "ladder_v3_sens40.csv", COLUMNS, sens)
+    sens_line, _ = sensitivity_line(rows, sens, cutoffs(block)["C_lo"][0])
     (OUT / "margins_v6_block.yaml").write_text(body + "\n", encoding="utf-8")
     wrows = window_rows()
     _write_csv(OUT / "passivation_window_v3.csv", WINDOW_COLS, wrows)
     from nacre.pourbaix import ph_w52_md
-    (OUT / "ladder_v3_README.md").write_text(ph_w52_md.readme(meta, block), encoding="utf-8")
+    (OUT / "ladder_v3_README.md").write_text(ph_w52_md.readme(meta, block, sens_line), encoding="utf-8")
     doc = {"session": SESSION, "generated_utc": provenance.utc_now(), "git_sha": provenance.git_sha(),
            "margins_source": meta, "n_rows": len(rows), "columns": COLUMNS,
            "bracket": {"E_lb": PENDING, "status": "bracket pending PH-W1.3 (hydration_free_energy_clo4 absent at p0-w1; "
@@ -307,7 +356,7 @@ def run():
     return rows, meta
 
 
-OUTPUTS = ("ladder_v3.csv", "ladder_v3_README.md", "passivation_window_v3.csv", "margins_v6_block.yaml", "ph_w52.json")
+OUTPUTS = ("ladder_v3.csv", "ladder_v3_sens40.csv", "ladder_v3_README.md", "passivation_window_v3.csv", "margins_v6_block.yaml", "ph_w52.json")
 
 
 def ledger():

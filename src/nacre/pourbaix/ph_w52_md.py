@@ -1,7 +1,7 @@
 """PH-W5.2: text of ladder_v3_README.md (one page)."""
 
 
-def readme(meta, block):
+def readme(meta, block, sens_line):
     rb = block["m_K1_amorphous"]["ruling_b"]
     cr = rb["crystalline_reference_row"]
     cc = block["cutoff_classes"]
@@ -21,7 +21,7 @@ row with `reaction_id` = `ALL` aggregates the reactions of one (phase, framing, 
 | margin_V | registered margin m, V; empty where the budget is incomplete or the margin is symbolic |
 | budget_status | `complete`, `incomplete` (a species lacks an uncertainty or bound), `symbolic: <reason>`, `gap`, `not run` |
 | benchmark_status | the PH-W5.1 benchmark label of the phase; any DFT value appears only here, as a comparator with its measured error |
-| k1_class_lfp, k1_class_42_43, k1_class_44_45 | verdict at the classes {cc['C_lo']['name']} ({cc['C_lo']['E_c_V'][0]} V), {cc['C_mid']['name']} ({cc['C_mid']['E_c_V'][0]} to {cc['C_mid']['E_c_V'][1]} V), {cc['C_hi']['name']} ({cc['C_hi']['E_c_V'][0]} to {cc['C_hi']['E_c_V'][1]} V) |
+| k1_class_lfp, k1_class_42_43, k1_class_44_45 | verdict at the classes 3.65 V nominal; 4.0 V sourced upper cutoff ({cc['C_lo']['E_c_V'][0]} V registered), {cc['C_mid']['name']} ({cc['C_mid']['E_c_V'][0]} to {cc['C_mid']['E_c_V'][1]} V), {cc['C_hi']['name']} ({cc['C_hi']['E_c_V'][0]} to {cc['C_hi']['E_c_V'][1]} V) |
 | k1_verdict | overall: falsified at every class = falsified; any pass = pass; otherwise undetermined if a class is undetermined and none falsifies; otherwise inconclusive |
 | row_ids | the ph_w51/ladder_v2.csv row this row refines |
 | notes | limiting reaction and crossover, ruling applied, reasons for undetermined, by-bound readings (not verdict bases) |
@@ -33,13 +33,20 @@ Units: V for E_ub_V, E_lb_V, margin_V; kJ/mol in notes.
   pending); **undetermined** if the budget is incomplete, the margin is symbolic or the route is missing (a partial margin can neither
   pass nor falsify); otherwise **inconclusive**. A class is falsified at its lower end, so a class straddling E_ub + m is inconclusive.
 - A row whose budget_status is `incomplete` cannot falsify: a class that would read falsified reads undetermined, and the notes say so
-  (PH-W5.2b; reaction and aggregate rows).
+  (PH-W5.2b; applies to the reaction rows; the aggregate follows the rule below).
 - ACP is the amorphous slurry-stage row, undetermined (no amorphous thermochemistry); the beta-TCP crystalline value is kept as the
   labelled reference rows `ACP, crystalline` (route and notes say reference).
-- Aggregate class: falsified if any reaction is falsified; otherwise undetermined if any is undetermined; otherwise inconclusive.
+- Aggregate (`ALL`) rule (PH-W5.3 X1): the aggregate of a (phase, framing, stage) is falsified at a class if and only if some
+  complete-budget reaction row of that group is falsified there (E_ub + m < the class edge). Incomplete-budget rows are
+  undetermined on their own and never rescue a phase, so they cannot lift a falsification by a complete row. Where no complete row
+  falsifies, the aggregate is undetermined if any reaction is undetermined, otherwise inconclusive.
 - Amorphous rows: margin from the glass data where block v6 has it (Ca(PO3)2 glass, LiPO3 glass); every other amorphous row has a symbolic
   margin (m_am = m_cr + u/(n_e F), correction a gap) and is undetermined. The block's by-bound readings are in notes only.
 - DFT values never decide a verdict (no phosphate reaction qualifies for m_E).
+
+## Class naming and 4.0 V sensitivity (PH-W5.3 X5)
+The first class (column k1_class_lfp, registered as LFP-class at 3.65 V) is named "3.65 V nominal; 4.0 V sourced upper cutoff"; the column name and the
+registered 3.65 V are unchanged. {sens_line}
 
 ## Margin source
 `{meta['file']}` at `{meta['ref']}`: blob `{meta['blob_sha']}`, last changed in `{meta['file_commit']}` (ref tip `{meta['ref_commit']}`);
@@ -47,8 +54,9 @@ sha256 of the extracted margins_v6 block `{meta['block_sha256']}` (copy: margins
 
 ## Ruling (b)
 Crystal Ca(PO3)2 reference row only: direct value {rb['correction_kJ']:.2f} +- {rb['u_correction_kJ']:.2f} kJ/mol, E_ub {cr['was']['E_ub_V']:.4f} -> {cr['E_ub_V']:.4f} V,
-m {cr['was']['m_V']:.4f} -> {cr['m_V']:.4f} V. The glass row is unchanged. The staged Ca2P2O7 r1s row keeps the block's value (the block moves the
-Ca(PO3)2 crystal reference row only).
+m {cr['was']['m_V']:.4f} -> {cr['m_V']:.4f} V. The glass row is unchanged. PH-W5.3 X2: the staged Ca(PO3)2 crystal of the Ca2P2O7
+r1s row takes the same direct value (the analogue-based staged value is replaced); the Ca2P2O7 r1s row and its `ALL` row are recomputed
+(E_ub 4.4651 -> 4.4497 V, m 0.3315 -> 0.2308 V), still inconclusive at every class. The block copy keeps the block's own value.
 
 ## F2 bracket status
 E_lb is pending: `hydration_free_energy_clo4` is absent at origin/preprint/p0-w1 and the Ca2+ and Al3+ transfer free energies to the cell
