@@ -534,3 +534,34 @@ Evidence that narrows the "nacre-inspired" lineage wording of the Introduction (
 | B26 | No source read states that chitosan occurs in natural nacre; chitin (beta-chitin) is the matrix polysaccharide, and chitosan appears only as the polymer of nacre-inspired composites | Osuna-Mascaro et al., 10.1371/journal.pone.0122934; Sedira et al., 10.3390/biomimetics11020148 | Write chitin for the matrix and "partly deacetylated chitin" for chitosan; do not say nacre contains chitosan |
 | B27 | Polyphosphate in bone is a hypothesis with co-location data, proposed as a regulator of apatite saturation, not as a mineral precursor; the precursor with direct observation is amorphous calcium phosphate, in zebrafish fin bone | Omelon et al., 10.1371/journal.pone.0005634; Mahamid et al., 10.1073/pnas.0914218107 | The polyphosphate step of the route layer is a design choice, not a biomineral fact; same limit as NU17 |
 | B28 | ACC in nacre rests on a single direct observation in gastropod nacre; the earlier evidence was inferred | DeVol et al., 10.1021/jacs.5b07931 (abstract) | Write "documented", not "established for all nacre" |
+
+## Coatings and aragonite entries (PH-W2.5, 2026-10-22)
+
+Evidence that limits what the in-situ carbonate route (hypothesis, D69) and the "nacre-like" wording may say; detail in `lit/novelty.md`, section "Coatings on aluminium and aragonite conditions". Locators as there ("Full", "Abs.", "Title").
+
+### B29. Carbonate or phosphate coatings on aluminium: none located, but related films exist on other metals
+
+- **Sources.** 10.1007/s44371-026-00673-x (Abs.); 10.1016/j.matdes.2022.111073 (Abs.); 10.1038/s41598-017-16985-z (Abs.); 10.3389/fchem.2021.810886 (Full).
+- **Evidence.** About 35 queries located no deliberate CaCO3 or Ca phosphate film on Al or Al alloy. CaCO3 on Al appears as scale (calcite only at 100 C). CaCO3 coatings with measured corrosion resistance exist on Mg alloy, hydroxyapatite on Ti64, and a Ca-P "nacre" coating on AZ91D. Phosphate and polyphosphate films on Al foil remain prior art from the earlier scan (I1, I7).
+- **Condition.** Other metals, hydrothermal or acidic baths, simulated body fluid; none in a battery slurry.
+- **Regime.** Partly. The plan claims no priority and states the negative as scan-limited; what differs, if anything, is the substrate and medium, not the film type. Patents unsearched.
+- **Placement.** Introduction (prior art) and Limits.
+- **Severity.** Material.
+
+### B30. Aragonite formation needs conditions that do not match an alkaline slurry
+
+- **Sources.** 10.1007/s44290-025-00291-z (Abs.); 10.1002/advs.202203759 (Full); 10.1021/acs.cgd.0c00152 (Abs.).
+- **Evidence.** Below 50 C no aragonite at any pH tested, and 98 % calcite at pH 12; aragonite appeared at 50 to 85 C. Aragonite at room temperature was obtained with Mg2+ at Mg:Ca = 5 or with a cationic polyamine, both at pH about 9 by ammonium carbonate diffusion. No source read gives aragonite at pH 10 to 13 with Li+ and without Mg2+.
+- **Condition.** Slurry pH 10 to 13, Li+ present, Mg2+ absent unless added. Two studies cited for aragonite at pH 9.7 to 11 were not read.
+- **Regime.** Partly. The route is a hypothesis and the screen covers K2 only; the plan does not assume aragonite forms. Mg2+ addition and pH adjustment are listed as experiments.
+- **Placement.** Limits and the route-layer paragraph.
+- **Severity.** Material for the carbonate route; none for the screen.
+
+### B31. Nacre-like corrosion coatings already exist on other metals
+
+- **Sources.** 10.3389/fchem.2021.810886 (Full, Mg alloy); 10.1038/s41529-023-00415-9 (Full, steel, organic-GO lamellae); 10.1016/j.porgcoat.2025.109778, 10.1016/j.electacta.2017.11.046 and 10.1016/j.porgcoat.2026.110302 (Title only).
+- **Evidence.** Nacre-named or nacre-structured coatings with measured corrosion resistance (polarization, EIS, SVET) are reported on Mg alloy and steel; an Al-alloy polymer-clay pretreatment exists by title (not read).
+- **Condition.** Chloride or simulated body fluid media, not alkaline battery slurry; Al item unread.
+- **Regime.** Partly. "Nacre-inspired" is a lineage term (C2) and a design rationale, with no priority wording; layering would need organic interlayers, not alternating polymorphs.
+- **Placement.** Introduction and Limits.
+- **Severity.** Material for any "nacre-like coating" novelty wording; minor for the screen.
