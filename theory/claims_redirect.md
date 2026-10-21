@@ -890,3 +890,39 @@ tau_k does for k_eff. A1 is the weakest assumption: hydrolysis starts at the wet
 layered, not random, and a layered vulnerable fraction can fail at any x_ortho. **What the paper may say.** Any K2h
 statement is conditional on f_min ("if a non-percolating orthophosphate fraction is tolerable, then ..."); K2h stays
 report-only, f_min stays a design axis, and no K2h statement gates a row or enters the headline.
+
+## 11. PH-W3.6 registrations (C2 to C6, X4 as ruled)
+
+Session PH-W3.6, lane p0-w3. Everything is symbolic: names of `lit/params.yaml` keys, no literature number. Values and
+verdict text reach the paper only through the generated macros (standing rule 4). Registered in block version 8 of
+`theory/thresholds.md` (`screen_ph.w36`).
+
+### 11a. C2: carbonate K2 framings, and the label "nacre-type"
+
+**K2 framings for carbonate** are calcite, aragonite and ACC (amorphous calcium carbonate, the formation-stage
+precursor). The K2 test for each polymorph pi is the Omega test of Section 3a at every state of the registered grid:
+
+    Omega_bulk(pi) = a_Ca a_CO3 / K_sp(pi) >= 1           pass at the state; Omega_bulk(pi) < 1 means pi dissolves
+
+| Polymorph | K_sp key | Role in the label rule |
+|---|---|---|
+| calcite | `log10_ksp_calcite` | required |
+| aragonite | `log10_ksp_aragonite` | required |
+| ACC | `log10_ksp_acc` (with `acc_hydration_n` for the hydrated product) | reported beside the two; **not required to pass** |
+
+The activities a_Ca and a_CO3 come from the contract speciation at the registered (Ca_T, C_T, pH, I); the framing
+changes only K_sp (one framing per run, Q12). The ACC dose window is reported beside the calcite and aragonite
+windows: ACC is the precursor of the formation stage, not the phase that has to survive in service.
+
+**Label rule.** A row may be labelled `nacre-type` ONLY where aragonite AND calcite both pass K2 (ACC may fail or be
+undetermined and the label stands). Every other carbonate row is labelled `carbonate (calcite)`: a row that fails
+aragonite, a row where aragonite is undetermined (data missing), and every row of a study that has not registered the
+aragonite test. Passing calcite alone never earns `nacre-type`.
+
+**Falsifiability control, per polymorph.** The same test, with the same code path and the same K_sp key, must flag
+undersaturation (Omega_bulk(pi) < 1, dissolution) at the low-dose corner of the registered grid, for each of
+calcite, aragonite and ACC. A polymorph whose control does not flag undersaturation there has an inconclusive K2 in
+every row, whatever its pass pattern, and the rows that depend on it cannot be labelled `nacre-type`. The existing
+supersaturated control of Section 3a is kept beside it.
+
+Which of the two crystalline polymorphs is the more soluble is read from the two keys and printed, never assumed.
