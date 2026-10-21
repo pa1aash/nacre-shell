@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W3.2",
+  "last_session": "PH-C0",
   "status": "DONE",
   "day": 5,
   "equation_sheet": {
@@ -241,5 +241,14 @@
     "thresholds_block_version": 7,
     "written_before_any_transfer_value_computed": true,
     "values": "proposed; the planning chat rules at cp5a2"
+  },
+  "ph_c0": {
+    "report": "ops/reports/P0-W3.PH-C0.md",
+    "protocol_sha": "89fc9de83f0371f9ef560aad096ef988b37dd99c",
+    "x4": "9915772",
+    "x8": "949f351",
+    "check_contract": "PASS (107 functions)",
+    "thresholds_block_version": 7,
+    "sha256_thresholds_block_after_x4": "74ea80dc516d58737870b1ec548abeec7ea5cf65898202271d767ee2ce4e470e"
   }
 }
