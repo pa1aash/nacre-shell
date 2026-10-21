@@ -469,6 +469,12 @@ days:
     model: Sonnet
     master_trace: none
     requires: []
+  - id: PH-W2.5
+    lane: p0-w2
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
 - day: 6
   status: pending
   opened_utc: null
@@ -957,6 +963,7 @@ decisions:
 - {id: D66, date: '2026-10-21', decision: 'Label and polymorph rules (C1 to C5) and the abstract order: (1) regime map and design rule; (2) what the ladder excludes; (3) the narrow suitability statement labelled a necessary condition; (4) the conditional predictions. Aragonite is a K2 framing; nacre-type labels a row only where aragonite AND calcite pass K2; every other carbonate row reads carbonate (calcite).', reason: 'Planning-chat ruling.'}
 - {id: D67, date: '2026-10-21', decision: 'f_min is registered as the interval 1 - p_c(2D square lateral) to 1 - p_c(3D simple cubic through-thickness); triangular is a lattice sensitivity; K2h is report-only (X4 accepted).', reason: 'Planning-chat ruling on X4.'}
 - {id: D68, date: '2026-10-21', decision: 'Vocabulary mapping: the data files say falsified and the regime table says excluded (recorded for confirmation by the planning chat).', reason: 'W6.1 and the regime table share one mapping.'}
+- {id: D69, date: '2026-10-21', decision: 'In-situ aragonite is a literature question and a hypothesis route, not a screen change. Nacre-like layering is not claimed: the layering in nacre comes from organic interlayers, and alternating aragonite and calcite layers is not nacre-like. PH-W2.5 deliverable: literature on (a) calcium carbonate, calcium phosphate and nacre-like or polymer-mineral coatings on aluminium or aluminium foil (film formed, protection measured, conditions); (b) mechanisms that give aragonite instead of calcite at room temperature in a slurry or on a surface (Mg2+, temperature, organic matrix), with sources; (c) the in-situ carbonate route as a stated hypothesis route.', reason: 'Planning-chat ruling after PH-I5c-b.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
