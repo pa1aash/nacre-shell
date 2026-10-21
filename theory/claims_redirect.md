@@ -926,3 +926,20 @@ every row, whatever its pass pattern, and the rows that depend on it cannot be l
 supersaturated control of Section 3a is kept beside it.
 
 Which of the two crystalline polymorphs is the more soluble is read from the two keys and printed, never assumed.
+
+### 11b. C3: the verdict label for a K2 pass
+
+The label of a row that passes K2 is, verbatim:
+
+    thermodynamically suitable against dissolution (a necessary condition) for [phase] in [region]
+
+[phase] is the registered polymorph or framing the test was run for (Section 11a); [region] is the registered
+(Ca_T, C_T, pH, I) grid over which Omega_bulk >= 1 holds at every state, named by its grid id, never "the process"
+or "the slurry". The rules that go with the label, in the same section of the paper:
+
+- It does not address Al's own instability above its passivation window and is not evidence of protection. It is a
+  statement about the mineral against its solution at the registered states, and nothing else.
+- The acid-adjusted pH state (`params.ph_slurry_acid_adjusted`) is shown as the incumbent comparator in the same table,
+  evaluated by the same test and printed beside the registered region.
+- No sentence of the paper may use "suitable" without the conditions "for [phase] in [region]" within six words. A
+  sentence that cannot carry both conditions uses the vocabulary of Section 11d instead.
