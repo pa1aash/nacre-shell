@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W4.2c",
+  "last_session": "PH-W4.2d",
   "status": "DONE",
   "day": 5,
   "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
@@ -49,7 +49,8 @@
     "k1_ladder_input": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
     "symbol_bindings": "configs/preprint/symbol_bindings.yaml",
     "bindings_module": "src/nacre/physics/bindings.py",
-    "report_w4_2c": "ops/reports/P0-W4.PH-W4.2c.md"
+    "report_w4_2c": "ops/reports/P0-W4.PH-W4.2c.md",
+    "report_w4_2d": "ops/reports/P0-W4.PH-W4.2d.md"
   },
   "notes": [
     "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
