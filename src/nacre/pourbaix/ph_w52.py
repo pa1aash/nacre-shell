@@ -119,9 +119,9 @@ def _fmt(x):
 F_KJ_PER_V = 96.485332
 
 
-def staged_ruling_b(block, e, role):
+def staged_ruling_b(block, e, role, coef=1.0):
     """PH-W5.3 X2: the staged Ca(PO3)2 crystal (analogue vitrification enthalpy) is replaced by the ruling-(b) direct
-    glass-to-crystal value, as the block does for the Ca(PO3)2 crystal reference row. role 'reactant' raises E_ub with the more
+    glass-to-crystal value, as the block does for the Ca(PO3)2 crystal reference row. coef is the Ca(PO3)2 stoichiometry of the route. role 'reactant' raises E_ub with the more
     stable crystal, 'product' lowers it. Returns (E_ub, m, text)."""
     rb = block["m_K1_amorphous"]["ruling_b"]
     sp = json.loads((W51 / "ph_w51.json").read_text(encoding="utf-8"))["staged_products"]["values"]["Ca(PO3)2"]
@@ -129,8 +129,8 @@ def staged_ruling_b(block, e, role):
     new_u = sp["u_kJ"] - sp["u_vit_kJ"] + rb["u_correction_kJ"] - rb["u_glass_kJ"]
     t = e["terms"]
     n_e = e["n_e"]
-    m = (t["tabulated"] - sp["u_kJ"] + new_u + t["entropy_bound"]) / (n_e * F_KJ_PER_V)
-    e_ub = e["E_ub"] + (d_corr if role == "reactant" else -d_corr) / (n_e * F_KJ_PER_V)
+    m = (t["tabulated"] - coef * (sp["u_kJ"] - new_u) + t["entropy_bound"]) / (n_e * F_KJ_PER_V)
+    e_ub = e["E_ub"] + coef * (d_corr if role == "reactant" else -d_corr) / (n_e * F_KJ_PER_V)
     return e_ub, m, ("ruling (b) applied to the staged Ca(PO3)2 crystal: direct glass-to-crystal value %.2f +- %.2f kJ/mol replaces the "
                      "analogue %.2f +- %.2f kJ/mol; E_ub %.4f -> %.4f V, m %.4f -> %.4f V (block v6 value kept in the block copy)"
                      % (rb["correction_kJ"], rb["u_correction_kJ"], sp["h_vit_kJ"], sp["u_vit_kJ"], e["E_ub"], e_ub, e["m"], m))
@@ -153,6 +153,8 @@ def _reaction_rows(block):
                                                   rb["was"]["E_ub_V"], rb["E_ub_V"], rb["was"]["m_V"], rb["m_V"]))
         if r["phase"] == "Ca2P2O7" and r["framing"] == "crystalline" and r["reaction"] == "r1s":
             e["E_ub"], e["m"], e["adopted"] = staged_ruling_b(block, e, "product")
+        if r["phase"] == "brushite" and r["framing"] == "crystalline" and r["reaction"] == "r1s":
+            e["E_ub"], e["m"], e["adopted"] = staged_ruling_b(block, e, "product", coef=0.5)
         out.setdefault((r["phase"], r["framing"]), []).append(e)
     return out
 

@@ -52,8 +52,8 @@ def test_margins_equal_the_committed_block_copy(rows):
     for b in block["m_K1"]["rows"]:
         if b["status"] != "set" or b["phase"].startswith("Ca(PO3)2") and b["framing"] == "crystalline":
             continue
-        if (b["phase"], b["framing"], b["reaction"]) == ("Ca2P2O7", "crystalline", "r1s"):
-            continue  # PH-W5.3 X2: staged Ca(PO3)2 crystal moved to ruling (b); see test_ca2p2o7_staged_row_uses_ruling_b
+        if (b["phase"], b["framing"], b["reaction"]) in (("Ca2P2O7", "crystalline", "r1s"), ("brushite", "crystalline", "r1s")):
+            continue  # PH-W5.3 X2 / W5.3b: staged Ca(PO3)2 crystal moved to ruling (b); see the *_staged_row_uses_ruling_b tests
         r = _row(rows, b["phase"], b["framing"], b["reaction"])
         assert float(r["E_ub_V"]) == pytest.approx(b["E_ub_V"], abs=5e-5)
         assert float(r["margin_V"]) == pytest.approx(b["m_V"], abs=5e-5)
@@ -164,3 +164,17 @@ def test_sens40_file_is_the_ladder_with_4_0_v_as_lowest_edge(rows):
         assert [r[c] for c in COLUMNS[10:14]] == [q[c] for c in COLUMNS[10:14]], (r["phase"], r["reaction_id"])
     carb = _row(rows, "CaCO3", "crystalline", "r1")
     assert float(carb["E_ub_V"]) + float(carb["margin_V"]) == pytest.approx(4.0248, abs=5e-5)
+
+
+def test_brushite_staged_row_uses_ruling_b(rows):
+    r1s = _row(rows, "brushite", "crystalline", "r1s")
+    assert float(r1s["E_ub_V"]) == pytest.approx(4.4076, abs=5e-5)
+    assert float(r1s["margin_V"]) == pytest.approx(0.2794, abs=5e-5)
+    assert "ruling (b) applied to the staged Ca(PO3)2 crystal" in r1s["notes"]
+    r3 = _row(rows, "brushite", "crystalline", "r3")
+    assert float(r3["E_ub_V"]) + float(r3["margin_V"]) == pytest.approx(4.4323, abs=1e-4)
+    assert float(r1s["E_ub_V"]) + float(r1s["margin_V"]) > float(r3["E_ub_V"]) + float(r3["margin_V"])
+    allr = _row(rows, "brushite", "crystalline", "ALL")
+    assert (allr["E_ub_V"], allr["margin_V"]) == (r3["E_ub_V"], r3["margin_V"])
+    for r in (r1s, r3, allr):
+        assert (r["k1_class_lfp"], r["k1_class_42_43"], r["k1_class_44_45"], r["k1_verdict"]) == ("inconclusive",) * 4

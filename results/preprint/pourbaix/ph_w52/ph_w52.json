@@ -1,11 +1,11 @@
 {
  "session": "PH-W5.2",
- "generated_utc": "2026-10-21T19:17:11Z",
- "git_sha": "208a1ca392a5d21c1d7ac346631961f4161cd100",
+ "generated_utc": "2026-10-21T20:27:55Z",
+ "git_sha": "2299346436c98593abefff1748af35f1ca12b424",
  "margins_source": {
   "ref": "origin/preprint/p0-w3",
   "file": "theory/thresholds.md",
-  "ref_commit": "e6c86f6b3633248b487f78eeef1acdccfa5be35c",
+  "ref_commit": "e8d3a59d2057866561d498db0c982e069c6595c5",
   "file_commit": "c2c7882af0c7913bd17432157a43a3aca953dff4",
   "blob_sha": "b95f988dfc81763a12da29c278f47c029bebc668",
   "block_sha256": "13bdaf545e6b105875829f3aeada38bf7c1df9d41208bbacb5fe9f81cfd2347b"
