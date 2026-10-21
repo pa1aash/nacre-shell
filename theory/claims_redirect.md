@@ -856,3 +856,37 @@ outside hypothesis wording.
 
 - **I21.** The computed premise is a weaker kind of evidence than a measurement; it enters only through a credible lower
   bound and an edge widened by its own uncertainty, and only after a benchmark on the same relative quantity.
+
+### 10f. The coverage criterion for the hydrolysis descriptor (PH-C0, X4)
+
+**Question.** Section 9a needs f_min, the smallest condensed fraction that keeps the film on the condensed side of the
+K1 ladder. The proposal is that the vulnerable orthophosphate fraction must not percolate: f_min = 1 - p_c, with p_c the
+site-percolation threshold of the lattice assumed for the film.
+
+**Derivation.** Let x_ortho = 1 - f_cond be the fraction of film sites that are orthophosphate. Assume (A1) each site is
+orthophosphate independently with probability x_ortho (no correlation of hydrolysed sites); (A2) an orthophosphate site
+fails at its own, lower K1 onset, and a condensed site does not; (A3) a failed site is harmful only through a connected
+path of failed sites (an isolated failed site is enclosed by condensed sites and its oxidation stays local); (A4) the
+film is a regular lattice of one site type. Under A1 to A4 the film's K1 is that of the condensed phase iff the
+failed sites do not form a spanning cluster, which holds (for a large film) iff x_ortho < p_c. So the criterion is
+f_cond > 1 - p_c, and f_min = 1 - p_c.
+
+**Which p_c.** The proposed values (square and triangular lattices) are two-dimensional thresholds. They describe a
+lateral spanning cluster in the plane of the film. That is the right criterion only for reading L: domains that span
+the film thickness (columnar), isolated through-defects tolerated because they stay local (A3 at the substrate), and
+failure that matters only by lateral propagation. For reading T, a film many sites thick in which failure matters by a
+through-thickness path from electrolyte to metal, the threshold is three-dimensional, smaller than the two-dimensional
+ones, so 1 - p_c is larger and the criterion stricter. For a film one site thick, every failed site is a through-path
+and no fraction is tolerated (f_min = 1). The triangular site threshold is exactly 1/2; the others are numerical values
+to be fetched (new W1 keys `percolation_site_threshold_square`, `percolation_site_threshold_triangular`,
+`percolation_site_threshold_simple_cubic`, with DOI and locator). The brief's range (f_min from 1 - p_c,square to 1/2)
+is therefore the reading-L range only.
+
+**Ruling.** The form f_min = 1 - p_c is accepted as a conditional criterion under A1 to A4; the two-dimensional range
+alone is rejected as the criterion, because the reading is not fixed by data. Registration (proposed; the planning chat
+rules at cp5a2): f_min is an interval [1 - p_c(reading L), 1 - p_c(reading T)]; H2 (falsified) is evaluated at the lower
+end and H3 (not gating) at the upper end, so that neither verdict depends on the unfixed reading, as the transfer range
+tau_k does for k_eff. A1 is the weakest assumption: hydrolysis starts at the wetted face, so the orthophosphate is
+layered, not random, and a layered vulnerable fraction can fail at any x_ortho. **What the paper may say.** Any K2h
+statement is conditional on f_min ("if a non-percolating orthophosphate fraction is tolerable, then ..."); K2h stays
+report-only, f_min stays a design axis, and no K2h statement gates a row or enters the headline.

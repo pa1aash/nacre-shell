@@ -1473,6 +1473,12 @@ screen_ph:
       otherwise: inconclusive, with the flip value t_wet_max at both rates
       evidence_grade: printed beside every verdict
       condensed: oligophosphates count as condensed; only the orthophosphate fraction is lost
+      f_min_criterion: {session: PH-C0 (X4), authority: claims_redirect Section 10f, status: 'proposed; the planning chat rules at cp5a2',
+                        form: 'f_min = 1 - p_c, conditional on A1 to A4 (random sites, local failure, harm only through a spanning cluster, one lattice)',
+                        interval: '[1 - p_c(reading L, 2D lateral), 1 - p_c(reading T, 3D through-thickness)]; one site thick -> 1',
+                        use: 'K2h_falsify at the lower end, K2h_not_gating at the upper end',
+                        keys: [percolation_site_threshold_square, percolation_site_threshold_triangular, percolation_site_threshold_simple_cubic],
+                        reporting: 'report-only; f_min a design axis; any K2h statement conditional on f_min'}
     K3_R1:
       role: falsifying only (ruling C2)
       regime: R-slurry
