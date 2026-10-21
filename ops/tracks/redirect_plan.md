@@ -239,3 +239,37 @@ Nothing starts production until F1 to F5 are applied and the freeze packet goes 
 - E_lb = conventional aqueous DfG of Ca2+, Al3+, Li+, ClO4- corrected to PC through DG_tr_rel: E_PC = E_aq + DG_tr_rel/(nF). DG_tr_rel >= 0 makes E_aq a lower bound. A computed-premise pass must clear the class sup plus the registered margin AND the premise uncertainty.
 
 **Headlines, decided only after the results packet.** (A) Condensed Ca and Al phosphates pass at 4.4 to 4.5 V on a computed premise. (B) Premise unresolved: design rule plus gap map. The fallback (B) is stated in the abstract plan now.
+
+## REGIME FRAME (planning chat, 2026-10-21; supersedes the earlier title and frame)
+
+**Title (working, final wording at cp6).** Thermodynamic screening of nacre- and bone-inspired barriers for aluminium current collectors in fluorine-free lithium-ion cells.
+
+**Frame.** A regime-matched design rule. Two biominerals. Nacre-type carbonate for alkaline processing and low voltage. Condensed and aluminium phosphates, bone-inspired chemistry, as open candidates for high voltage. The carbonate failure above about 4 V is why phosphate is screened.
+
+**Wording policy (v1).**
+- "Thermodynamically suitable against dissolution (a necessary condition) for [phase] in [region]" only for the processing stage, calcite, K2, in the registered (Ca_T, C_T, pH, I) grid where Omega_bulk >= 1, with the falsifiability control flagging Omega < 1 at the low-dose corner. Not earned at K1 in v1.
+- "Not excluded" for inconclusive or undetermined rows. "Excluded" where tier 1 falsifies.
+- Forbidden outside hypothesis wording: works, protects, prevents, self-heals, outperforms.
+- The label does not address Al's own instability above its passivation window and is not evidence of protection. The acid-adjusted pH state is shown as the incumbent comparator.
+
+**Polymorph rule.** Aragonite is a K2 framing. "Nacre-type" labels a row only where aragonite AND calcite pass K2. ACC is the formation-stage precursor: its dose window is reported beside them, not required to pass. Every other carbonate row reads "carbonate (calcite)".
+
+**"Nacre-inspired".** Defined in the Introduction as the biomineral lineage (an amorphous precursor under an organic matrix; chitin; partly deacetylated chitin for chitosan), not a layered-architecture claim. Any statement W2 could not support stays out: chitosan as a component of natural nacre, polyphosphate as a bone-mineral precursor, polyelectrolytes as a matrix class (PH-W2.4b).
+
+**Regime table vocabulary.** Excluded (with a numeric crossover where partial, for example "excluded above 4.43 V" for brushite), not excluded, suitable against dissolution, open (not falsified, no lower bound), undetermined (data missing). Generated from the hash-pinned ladder and production outputs only. The data files say "falsified" and the table says "excluded" (a mapping to be confirmed by the planning chat; D68).
+
+**Low voltage.** C_lo = 3.65 V nominal, 4.0 V as a sensitivity line. The claim is worded "low voltage up to about [tier-2 onset]" (about 3.8 V). The carbonate crossover 4.0248 V and the tier-2 Li2CO3 onset 3.8 to 3.9 V are macros from the ladder files. No K1 pass in v1.
+
+**Percolation.** f_min is registered as the interval 1 - p_c(2D square lateral) to 1 - p_c(3D simple cubic through-thickness), triangular as a lattice sensitivity, K2h report-only (thresholds block v8).
+
+**v1 and v2.** The computed-bracket protocol (PH-C0; hashes informational) and bracket rule v7 are inactive in v1 and move to v2 with R_cap, the t-quantile and cluster sizes. v1 is compute-free (no pods, no spending). v2 adds the computed premise, the labelled "(computed premise)" K1 passes, selectivity and wetting numbers.
+
+**Hero.** Illustrative construction (caption: "illustrative construction; the screen does not test layered architecture or polymorph structure"). Layered carbonate on alumina in water is the first panel; the phosphate and route layer is the second, first to cut.
+
+**Abstract order.** (1) The regime map and design rule. (2) What the ladder excludes. (3) The narrow suitability statement labelled a necessary condition. (4) The conditional predictions. Do not lead with "suitable".
+
+**First experiment.** Foil of bare, carbon-coated, carbonate, calcium phosphate, aluminophosphate or route-layer film. (a) Immersion in a model alkaline slurry. (b) Anodic holds at 3.65 V and at 4.3 to 4.5 V in a fluorine-free electrolyte.
+
+**Conditional predictions.** Carbonate resists the slurry and holds at 3.65 V and fails above about 4 V. Hydroxyapatite fails near 4.1 V. Condensed or aluminium phosphate survives the high-voltage hold.
+
+**cp5 conditions.** PASS, with p0-cp5 created, only when (i) X1 to X8 are applied; (ii) housekeeping is done (thresholds copy from block v8, the two Li+ keys repaired with no value changed, deviations filed, manifest re-hashed); (iii) aragonite is in params.yaml with K_sp, uncertainty and source, registered as a K2 framing, and the K2 falsifiability controls re-pass on it; (iv) the scope-guard changes are committed; (v) the verdict-label text is in claims_redirect.md. Then ONE short note to the planning chat with the new hashes and the aragonite row.
