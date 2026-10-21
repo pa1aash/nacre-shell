@@ -707,3 +707,51 @@ Unchanged: the rows at "P5" (NS1 to NS5, NU1 to NU10) were not edited by this se
 | RG1 | RSC c5ta08574h and c9ta09401f full text and the c5 SI: HTTP 403 on 3 attempts each (article HTML, doi.org, PDF). c9 content read from arXiv 1901.02251; c5 not read beyond Crossref abstract |
 | RG2 | Patent search remains a logged gap: only the four named patents were read; no keyword or classification search, no family or citation check |
 | RG3 | HCl concentration and the date of the corrosion observation are not in the Tsinghua/Hon Hai text |
+
+## Lineage support for "nacre-inspired" (PH-W2.4b, 2026-10-22)
+
+Purpose: ruling C2 defines "nacre-inspired" in the Introduction as the biomineral lineage: an amorphous precursor (amorphous calcium carbonate, ACC) transforming under an organic matrix (chitin, silk-like proteins, polyelectrolytes), with chitin and chitosan as the structural polysaccharide. Each statement below is tested against open sources read on 2026-10-22 (Europe PMC full-text XML or the PMC article page, headless; one attempt each unless noted). "Full" = full text read; "Abs." = abstract only. Quoted text is as printed. No source here is a battery or aluminium source; the table says only what each source says about biominerals.
+
+### L-1. Lineage table
+
+| ID | Statement (Introduction wording to be) | Source (DOI; locator) | Read | What the source supports | Verdict |
+|---|---|---|---|---|---|
+| L1a | (a) Nacre is aragonite platelets within an organic matrix | Sedira et al., Biomimetics 11, 148 (2026), 10.3390/biomimetics11020148; section 1 Introduction ("brick-and-mortar arrangement of aragonite platelets"); section 3.2.1 ("Aragonite crystals ... are nucleated and grown in an organic matrix composed of proteins and chitin") | Full (review) | Nacre is a brick-and-mortar arrangement of aragonite platelets with an organic matrix of proteins and chitin | supported |
+| L1a-2 | (a) same | Osuna-Mascaro et al., PLoS ONE 10, e0122934 (2015), 10.1371/journal.pone.0122934; Introduction, opening paragraph | Full | Mollusc shell is a biocomposite of calcium carbonate (aragonite, calcite or, rarely, vaterite) and a small quantity of organic matrix of proteins, polysaccharides and lipids; the organic fraction varies by microstructure and nacre is among the richer ones | supported (shell level; nacre-specific via L1a) |
+| L1b | (b) ACC is a documented precursor in nacre | DeVol et al., J. Am. Chem. Soc. 137, 13325 (2015), 10.1021/jacs.5b07931; abstract (Europe PMC) | Abs. | Reports ACC precursors observed at the growth front of nacre in gastropod shells (red abalone, synchrotron spectromicroscopy). The abstract states that ACC precursors in nacre had stayed elusive before and that the phases seen are those of calcite precursors in sea urchin spicules, not proto-aragonite | supported (one direct observation, gastropod nacre, abstract level) |
+| L1b-2 | (b) same | Sedira et al. 2026, 10.3390/biomimetics11020148; section 3.2.1 | Full (review) | "Amorphous calcium carbonate (ACC) acts as a precursor in the biomineralisation process, transforming into aragonite"; ACC precursors "observed at the growth front of nacre in gastropod shells" (cites DeVol); proteins and chitin "control the transformation of amorphous calcium carbonate to aragonite" (review statement, cites 183 and 195) | supported (secondary; restates DeVol) |
+| L1b-3 | (b) in other biominerals | Gong et al., Proc. Natl. Acad. Sci. 109 (2012), 10.1073/pnas.1118085109; Introduction | Full (PMC page) | ACC is "an important precursor to geologic and biogenic" CaCO3 minerals; sea urchin spicules form via two ACC precursors, one hydrated and one not; formation proceeds through transient amorphous phases | supported (other biomineral: sea urchin spicule) |
+| L1c | (c) Chitin is a component of the nacre organic matrix | Osuna-Mascaro et al. 2015, 10.1371/journal.pone.0122934; Abstract and Introduction | Full | Interlamellar membranes of bivalve nacre contain a minor chitin component of thin fibres with a protein coat, embedded in a proteinaceous matrix; the Introduction cites earlier work that the intercrystalline matrix of three mollusc classes is silk-fibroin proteins and beta-chitin | supported |
+| L1c-2 | (c) same | Sedira et al. 2026, 10.3390/biomimetics11020148; section 3.2 | Full (review) | "The organic matrix in nacre consists of beta-chitin and silk fibroin-like proteins" | supported (secondary) |
+| L1c-3 | (c) chitosan is the deacetylated derivative of chitin | Younes and Rinaudo, Mar. Drugs 13, 1133 (2015), 10.3390/md13031133; section 1 Introduction and "Chemical structure of chitin and chitosan" | Full | Chitin becomes chitosan "by partial deacetylation under alkaline conditions"; chitosan is a random copolymer of N-acetyl-D-glucosamine and D-glucosamine with a degree of acetylation DA | supported, with "partly deacetylated" as the exact wording |
+| L1c-4 | (c) chitosan as a component of the nacre organic matrix | Sedira et al. 2026; Osuna-Mascaro et al. 2015 | Full | Chitosan appears in Sedira only as the polymer of nacre-inspired composites (chitosan-based and BNNS-chitosan films). Osuna-Mascaro has no mention of chitosan. No source read states chitosan occurs in natural nacre | unsupported (see flags) |
+| L1d | (d) Amorphous calcium phosphate is a precursor in bone | Mahamid et al., Proc. Natl. Acad. Sci. 107, 6316 (2010), 10.1073/pnas.0914218107; abstract and Introduction | Full (PMC page) | In zebrafish fin rays, new mineral is delivered as packages of ACP nanospheres that transform into apatite platelets in the collagen matrix. The Introduction says ACP as precursor in bone had been debated for decades and that earlier studies were "consistent with" it but lacked direct in situ observation | supported for zebrafish fin bone; mammalian bone not covered by this source |
+| L1d-2 | (d) polyphosphate in mineralising tissue | Omelon et al., PLoS ONE 4, e5634 (2009), 10.1371/journal.pone.0005634; Abstract, Introduction | Full | PolyP is located (fluorescent staining) in resorbing bone and calcifying cartilage; amorphous Ca-polyP complexes lower free Ca and phosphate; the authors "hypothesize" polyP formation and degradation as a mechanism controlling apatite saturation, and propose it as a regulator, not as a mineral precursor | partly (co-location and a hypothesis; polyP as precursor is not stated) |
+| L1d-3 | (d) polyP and bone, other | BM2 to BM5 of section R-P2 | Abs. | Co-location, review statements, cell biology; BM5 does not name polyP | partly (abstract level, unchanged from PH-W2.2a) |
+
+### L-2. Verdicts for the four statements
+
+| Statement | Verdict | Basis |
+|---|---|---|
+| (a) Nacre is aragonite platelets within an organic matrix | supported | L1a, L1a-2 |
+| (b) ACC is a documented precursor in nacre and other biominerals | supported (nacre: one direct observation in gastropod nacre, abstract level for DeVol; other biominerals: sea urchin spicule, full text) | L1b, L1b-2, L1b-3 |
+| (c) Chitin is a component of the nacre organic matrix; chitosan is its deacetylated derivative | supported for chitin and for the chemistry ("partly deacetylated"); chitosan in the nacre matrix is unsupported | L1c to L1c-4 |
+| (d) Polyphosphate or amorphous calcium phosphate as a precursor in bone and other biomineralisation | partly: ACP as a precursor is supported in zebrafish fin bone (Mahamid 2010); polyphosphate as a precursor is supported by no source, only as co-located and hypothesised (Omelon 2009, 2014) | L1d, L1d-2, L1d-3 |
+
+### L-3. Flags for the Introduction wording
+
+1. **Chitosan is not shown to be in nacre.** Write that chitin is a component of the nacre matrix and that chitosan is its partly deacetylated derivative, used here as the processable form; do not write that nacre contains chitosan. The phrase "chitin and chitosan as the structural polysaccharide" is supported for chitin only.
+2. **Polyphosphate as a biomineral precursor is unsupported.** What is supported is ACP as a bone precursor (zebrafish fin) and polyP as a co-located, hypothesised regulator. Any sentence that makes polyP a precursor of bone mineral is the NU17 wording and stays unwritten.
+3. **Polyelectrolytes** in the matrix were not tested against a source in this session. Osuna-Mascaro and Sedira name acidic proteins, which are polyelectrolytes, but neither calls the matrix a polyelectrolyte; the word should carry a source or be dropped.
+4. **Scope of the ACC statement.** The nacre observation is one direct observation in gastropod (abalone) nacre; DeVol's abstract says earlier evidence was inferred from other shells. Write "documented" for the lineage, not "universal".
+5. **Zebrafish fin is a bony fish skeleton**; the sentence should say fin bone, not bone in general.
+
+### L-4. Gaps
+
+| ID | Gap |
+|---|---|
+| LG1 | DeVol 2015 is abstract level (Europe PMC); no open full text found in one search. A primary full-text read of the nacre ACC observation is open |
+| LG2 | Gong 2012 and Mahamid 2010 were read from the PMC article pages (author manuscripts); the Europe PMC full-text service returned HTTP 500 for them (1 attempt), so the PMC page was the second route. Mahamid 2008 (PMC2529085) returned a bot check page (1 attempt, recorded, not retried) |
+| LG3 | No source read states chitosan occurs in nacre, and none covers polyelectrolytes as a matrix class (flags 1 and 3) |
+| LG4 | No source read gives polyphosphate as a precursor in bone (flag 2); Omelon 2014 and the R-P2 rows remain abstract level |
+| LG5 | Patent search remains a logged gap (RG2); this section needs no patent source |

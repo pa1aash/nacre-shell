@@ -524,3 +524,13 @@ Four entries for the draft route layer (`ops/tracks/redirect_plan.md`, "ROUTE LA
 - **Regime.** Partly. The two-tier rule already treats tier-2 values as bounded, and "undetermined never passes". Not avoided: neither bound is tight, so a tier-2 number is neither a floor nor a ceiling.
 - **Placement.** Results (K1 tier-2 reading) and Limits.
 - **Severity.** Material.
+
+## Lineage entries (PH-W2.4b, 2026-10-22)
+
+Evidence that narrows the "nacre-inspired" lineage wording of the Introduction (detail in `lit/novelty.md`, section "Lineage support"). Nothing here contradicts the lineage; each entry limits how far a sentence may go.
+
+| # | Entry | Source | Effect on wording |
+|---|---|---|---|
+| B26 | No source read states that chitosan occurs in natural nacre; chitin (beta-chitin) is the matrix polysaccharide, and chitosan appears only as the polymer of nacre-inspired composites | Osuna-Mascaro et al., 10.1371/journal.pone.0122934; Sedira et al., 10.3390/biomimetics11020148 | Write chitin for the matrix and "partly deacetylated chitin" for chitosan; do not say nacre contains chitosan |
+| B27 | Polyphosphate in bone is a hypothesis with co-location data, proposed as a regulator of apatite saturation, not as a mineral precursor; the precursor with direct observation is amorphous calcium phosphate, in zebrafish fin bone | Omelon et al., 10.1371/journal.pone.0005634; Mahamid et al., 10.1073/pnas.0914218107 | The polyphosphate step of the route layer is a design choice, not a biomineral fact; same limit as NU17 |
+| B28 | ACC in nacre rests on a single direct observation in gastropod nacre; the earlier evidence was inferred | DeVol et al., 10.1021/jacs.5b07931 (abstract) | Write "documented", not "established for all nacre" |
