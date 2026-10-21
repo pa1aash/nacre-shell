@@ -1,5 +1,5 @@
 # Note for the planning chat: cp5 closure (PH-I5d), 2026-10-22. STATUS: BLOCKED, p0-cp5 not tagged, nothing pushed.
-Why: `nacre verify --strict` FAIL (6 tests, below); condition (i) not shown (X6 not identifiable in the repository).
+Why: `nacre verify --strict` FAIL (6 tests at the first run; 3 remain after merging w8 c878f70, below). Condition (i) is yes (X6 supplied by the planning chat).
 
 ## Hashes (full table: ops/packets/p0-5a2_hashes.txt, tree 7ebb4b3 + manifest 46f9ce8)
 | file | sha256 (first 16) |
@@ -34,15 +34,15 @@ f_min interval [1 - p_c_square, 1 - p_c_sc] = [0.4073, 0.6884]; triangular gives
 SG19 narrowed; SG28 (nacre-like architecture), SG29W (nacre-type needs aragonite in the sentence), SG30W (thermodynamically suitable needs for/in/under). Charter tests 17 pass.
 
 ## Conditions
-(i) X1-X8 applied: NO. Evidenced: X1, X2, X5 (PH-W5.3), X3 (PH-W4.2c), X4, X8 (PH-C0, PH-W3.6), X7 (PH-W2.3, RW1 full text 403). X6 is not defined anywhere in the tracked files.
+(i) X1-X8 applied: YES. X1, X2, X5 (PH-W5.3), X3 (PH-W4.2c), X4, X8 (PH-C0, PH-W3.6), X7 (PH-W2.3, RW1 full text 403); X6 = acceptance of W3 rulings (a) and (b) (PH-W3.2; ops/reports/P0-W3.PH-W3.2.md, passivation_window_v3.csv), with the paper note that the 4.98 to 8.29 (0.1 mM) and 5.50 to 7.22 (10 uM) pH windows are model windows beside the published 4.5 to 8.5 (grade D).
 (ii) housekeeping: yes (copy test passes; Li+ rebuild test passes; deviations filed; manifest written).
 (iii) aragonite + K2 controls: yes. (iv) scope guard committed: yes. (v) label text in claims_redirect: yes.
 
-## strict verify: FAIL, 6 tests (1984 passed, 1 skipped); the 9 other checks pass or are inactive
-1 test_fig_provenance[thresholds_screen_ph] and 2 test_figs_regime_set ladder labels: figs pin of thresholds.yaml stale (W6 re-pin).
-3 test_lit_si_table: params_table.tex stale (embeds params sha 0ee35c055bac; W8 regen).
-4-5 test_preprint_lint_scope (2): tests expect warn block SG17W/26W/27W; charter now adds SG29W/SG30W (linter support, PH-W8.2).
-6 test_preprint_skeleton title macro: front.tex still has the old working title (PH-W8.2 regen).
+## strict verify: FAIL at the first run, 6 tests (1984 passed, 1 skipped); other checks pass or are inactive
+After merging w8 (c878f70, PH-W8.1c) and re-running only the failing files (tests/figs, preprint, charter, lit si_table): 3 fail, 406 pass.
+1-2 tests/figs test_fig_provenance[thresholds_screen_ph], test_figs_regime_set ladder labels: figures/src/schemas/upstream.yaml pins thresholds.yaml ef87a276...; the v8 file is 48d99f42... (lane W6 re-pin).
+3 test_lit_si_table: committed params_table.tex embeds params sha 2f1fa4f78196; params.yaml is now 0ee35c055bac (generated_utc rebuild) (lane W1 regen).
+Cleared by w8: the two lint_scope tests and the title-macro test.
 
 ## Questions
 1. Confirm log10_ksp_aragonite_25c_i0 as the aragonite K2 input; 11a names the older key.
@@ -51,4 +51,3 @@ SG19 narrowed; SG28 (nacre-like architecture), SG29W (nacre-type needs aragonite
 4. Confirm the mapping excluded = falsified (D68).
 5. PH-W2.5: aragonite at room temperature needs Mg2+ near Mg:Ca 5 or a cationic polyamine near pH 9; calcite 98 % at pH 12, no aragonite at any pH; aragonite only at 50 to 85 C. So "nacre-type" labels dissolution stability only; aragonite formation in an alkaline slurry is unsupported (NU19); alternating aragonite and calcite layers is not nacre-like (NU20). The paper says so plainly.
 6. Left to rule at cp5b: f_min, Al polyphosphate Ksp, A_patch.
-7. What is X6?
