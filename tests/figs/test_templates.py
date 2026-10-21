@@ -6,7 +6,7 @@ from figs_helpers import REPO, check, plt
 
 from nacre.figs import build, paths, schema
 
-TEMPLATES = ["fig4", "fig5", "fig6", "fig7"]
+TEMPLATES = ["fig4", "fig5", "fig6", "fig7", "fig9", "fig10", "fig11"]
 
 
 @pytest.fixture(autouse=True)
@@ -19,8 +19,8 @@ def _mod(fid):
     return build.load_template(paths(REPO)["src"] / (fid + ".py"))
 
 
-def test_discovery_finds_the_four_templates():
-    assert [p.stem for p in build.discover(REPO)] == TEMPLATES
+def test_discovery_finds_the_templates():
+    assert [p.stem for p in build.discover(REPO)] == TEMPLATES + ["fig12", "fig13", "fig14", "fig15"]
 
 
 @pytest.mark.parametrize("fid", TEMPLATES)

@@ -8,6 +8,90 @@
 # merged_tree records whether origin/preprint/p0 held the pinned bytes when pinned. When
 # integration brings an owner's file into this branch, `nacre figs` reports any difference.
 entries:
+  al_window:
+    kind: data
+    owner: p0-w5
+    branch: preprint/p0-w5
+    path: results/preprint/pourbaix/ph_w51/al_window.json
+    commit: c735c78a10f4e26e00041ca28e6e5ab1cd8a3888
+    branch_head: bc9ea5b4a5c0c5bc1d93ee355bf13b30a3db9e18
+    snapshot: results/preprint/pourbaix/ph_w51/al_window.json
+    sha256: 367aec45382e1243e7d2e12dda8295a977064d07108455c9f04bd32759a643d6
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 2299346436c98593abefff1748af35f1ca12b424
+      same_bytes: true
+    used_for: 'fig11 reference bars: the two published pH windows'
+  benchmark_w51:
+    kind: data
+    owner: p0-w5
+    branch: preprint/p0-w5
+    path: results/preprint/pourbaix/ph_w51/benchmark_w51.csv
+    commit: 87345f10da450bcf58598a6d3718d5295ba0483d
+    branch_head: bc9ea5b4a5c0c5bc1d93ee355bf13b30a3db9e18
+    snapshot: results/preprint/pourbaix/ph_w51/benchmark_w51.csv
+    sha256: 0bf8a20e34f8681b965eae968493b0f05b126ca9f06cc56ffbae714ce827ed39
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 2299346436c98593abefff1748af35f1ca12b424
+      same_bytes: true
+    used_for: 'fig10 input: DFT minus experiment formation enthalpy per phase'
+  benchmark_w51_summary:
+    kind: data
+    owner: p0-w5
+    branch: preprint/p0-w5
+    path: results/preprint/pourbaix/ph_w51/benchmark_w51.json
+    commit: c735c78a10f4e26e00041ca28e6e5ab1cd8a3888
+    branch_head: bc9ea5b4a5c0c5bc1d93ee355bf13b30a3db9e18
+    snapshot: results/preprint/pourbaix/ph_w51/benchmark_w51.json
+    sha256: 7bd3a8f0ec272cc7bd9a358234f2f345c42d42738d627d31a4d8e10162a6556a
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 2299346436c98593abefff1748af35f1ca12b424
+      same_bytes: true
+    used_for: fig10 registered error band and oxide correction
+  ladder_v3:
+    kind: data
+    owner: p0-w5
+    branch: preprint/p0-w5
+    path: results/preprint/pourbaix/ph_w52/ladder_v3.csv
+    commit: 73316df2314b14fb5a16ba6bf15077dfcc658c8c
+    branch_head: bc9ea5b4a5c0c5bc1d93ee355bf13b30a3db9e18
+    snapshot: figures/src/data/upstream/ladder_v3.csv
+    sha256: 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 2299346436c98593abefff1748af35f1ca12b424
+      same_bytes: false
+    used_for: 'fig9 input: K1 tier-1 ladder v3 (verdict per phase, framing and cutoff class)'
+  ladder_v3_sens40:
+    kind: data
+    owner: p0-w5
+    branch: preprint/p0-w5
+    path: results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv
+    commit: 73316df2314b14fb5a16ba6bf15077dfcc658c8c
+    branch_head: bc9ea5b4a5c0c5bc1d93ee355bf13b30a3db9e18
+    snapshot: figures/src/data/upstream/ladder_v3_sens40.csv
+    sha256: 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 2299346436c98593abefff1748af35f1ca12b424
+      same_bytes: false
+    used_for: 'fig9 check: the ladder with 4.0 V as the lowest class edge'
+  passivation_window_v3:
+    kind: data
+    owner: p0-w5
+    branch: preprint/p0-w5
+    path: results/preprint/pourbaix/ph_w52/passivation_window_v3.csv
+    commit: 1a1ea5a63990eba08b840e46fc735900d02d12c4
+    branch_head: bc9ea5b4a5c0c5bc1d93ee355bf13b30a3db9e18
+    snapshot: results/preprint/pourbaix/ph_w52/passivation_window_v3.csv
+    sha256: 5aaf04dafbd21993b577a1a42ed50c18860771c670d489476e9b771e2a43267f
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 2299346436c98593abefff1748af35f1ca12b424
+      same_bytes: true
+    used_for: 'fig11 input: Al passivation windows per film solid and Al level'
   results_schema:
     kind: contract
     owner: p0-w4
@@ -121,3 +205,17 @@ entries:
       head: 227d997bb6559cdf09cd892651da558db51e475c
       same_bytes: false
     used_for: fig5 threshold contours (C3a edge, C3b absolute-barrier bound)
+  thresholds_screen_ph:
+    kind: data
+    owner: p0-w4
+    branch: preprint/p0
+    path: configs/preprint/thresholds.yaml
+    commit: 1aff4fe76a6758172da4a8abd6c1e17e7c4b8910
+    branch_head: 2299346436c98593abefff1748af35f1ca12b424
+    snapshot: configs/preprint/thresholds.yaml
+    sha256: ef87a276ad6908224d893bd7c111e6a9e63fea6a16cc1c0a732dc546bd699d23
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 2299346436c98593abefff1748af35f1ca12b424
+      same_bytes: true
+    used_for: 'fig9 tick labels: the registered cutoff classes (screen_ph.margins_v6.cutoff_classes)'

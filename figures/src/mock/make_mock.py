@@ -8,6 +8,8 @@ figure builder writes figures built from it only to figures/out/mock/.
   screen_summary.json  results schema v3, screen regimes (lane p0-w4)            -> fig5, fig6
   screen_c5.json       results schema v3, claim C5 tests (lane p0-w4)            -> fig7
   params.yaml          mock rows in the layout of lit/params.yaml (lane p0-w1)    -> fig5, fig7
+  ladder_v3*.json, ladder_cutoffs.yaml, benchmark_w51*.json, passivation_window_v3.json,
+  al_window.json       CSV outputs as {columns, rows} and their JSON/YAML companions -> fig9, fig10, fig11
 
 Case ids, labels, terminations and observed relations of the retrodiction mock are read from
 the pinned cases.yaml so that the template is exercised on the real case list; the barriers
@@ -296,11 +298,65 @@ def params():
     }
 
 
+# ------------------------------------------------------------------------------ figs 9 to 11
+
+def _table(columns, rows):
+    """A CSV output as nacre.figs.upstream.parse_csv returns it: every cell a string."""
+    return {"mock": True, "note": NOTE, "columns": columns,
+            "rows": [{c: str(r.get(c, "")) for c in columns} for r in rows]}
+
+
+def ladder():
+    cols = ["phase", "framing", "stage", "reaction_id", "k1_class_lfp", "k1_class_42_43", "k1_class_44_45",
+            "k1_verdict"]
+    spec = [("brushite", "slurry", "inconclusive", "falsified", "falsified"),
+            ("HAp", "slurry", "inconclusive", "inconclusive", "falsified"),
+            ("AlPO4", "cell", "undetermined", "undetermined", "undetermined"),
+            ("Ca2P2O7", "cell", "inconclusive", "inconclusive", "inconclusive"),
+            ("CaSiO3", "comparator", "falsified", "falsified", "falsified"),
+            ("CaCO3", "control", "inconclusive", "falsified", "falsified")]
+    rows = []
+    for ph, st, *v in spec:
+        rows.append(dict(zip(cols, [ph, "crystalline", st, "ALL", *v, v[0]])))
+        rows.append(dict(zip(cols, [ph, "amorphous", st, "-", *["undetermined"] * 3, "undetermined"])))
+    return _table(cols, rows)
+
+
+def benchmark():
+    cols = ["phase", "family", "dft_minus_dfH_kJ_per_atom", "display"]
+    spec = [("HAp", "phosphate", -4.1, "dft-benchmarked"), ("brushite", "phosphate", -15.0, "dft-benchmark-failed"),
+            ("LiPO3 glass", "phosphate", -12.0, "dft-unbenchmarked"), ("Li2SiO3", "silicate", -3.0, "dft-benchmarked"),
+            ("CaSiO3", "silicate", -6.5, "dft-benchmark-failed"), ("gibbsite", "Al-O-H", -11.0, "dft-benchmark-failed")]
+    return _table(cols, [dict(zip(cols, r)) for r in spec])
+
+
+def passivation():
+    cols = ["solid", "role", "al_level_M", "ph_lower", "ph_upper", "window"]
+    rows = []
+    for lvl, am, bo in ((1e-4, ("5.0", "8.3"), ("4.0", ">10")), (1e-5, ("5.5", "7.2"), ("4.3", "9.9")),
+                        (1e-6, ("", ""), ("4.7", "9.0"))):
+        rows.append(dict(zip(cols, ["Al(OH)3 am", "governing (ruling a)", lvl, *am, "mock"])))
+        rows.append(dict(zip(cols, ["boehmite", "reference (ruling a)", lvl, *bo, "mock"])))
+    return _table(cols, rows)
+
+
 def main():
     rng = np.random.default_rng(SEED)
     _write_json("retro_results.json", retro_results(rng))
     _write_json("screen_summary.json", screen_summary(rng))
     _write_json("screen_c5.json", screen_c5(rng))
+    _write_json("ladder_v3.json", ladder())
+    _write_json("ladder_v3_sens40.json", ladder())
+    (HERE / "ladder_cutoffs.yaml").write_text(
+        "# MOCK cutoff classes in the layout of thresholds.yaml; synthetic.\nmock: true\n" + yaml.safe_dump(
+            {"screen_ph": {"margins_v6": {"cutoff_classes": {"C_lo": {"E_c_V": [3.0]}, "C_mid": {"E_c_V": [4.0, 4.1]},
+                                                             "C_hi": {"E_c_V": [4.2, 4.3]}}}}}))
+    _write_json("benchmark_w51.json", benchmark())
+    _write_json("benchmark_w51_summary.json", {"mock": True, "summary": {"e_form": {"max": 5.0},
+                                                                         "oxide_correction_kJ_per_O": -60.0}})
+    _write_json("passivation_window_v3.json", passivation())
+    _write_json("al_window.json", {"mock": True, "conventions": {"ph_range": [3.0, 10.0]},
+                                   "published": {"MOCK-1": {"lower": 4.5, "upper": 8.5}, "MOCK-2": {"lower": 4.0, "upper": 8.0}}})
     (HERE / "params.yaml").write_text(
         "# MOCK parameter rows in the layout of lit/params.yaml; synthetic, not literature values.\n"
         + yaml.safe_dump(params(), sort_keys=False))

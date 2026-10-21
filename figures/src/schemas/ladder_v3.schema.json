@@ -1,0 +1,105 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "ladder_v3.csv as read by nacre.figs.upstream (lane p0-w5, PH-W5.3)",
+ "type": "object",
+ "required": [
+  "columns",
+  "rows"
+ ],
+ "properties": {
+  "mock": {
+   "type": "boolean"
+  },
+  "columns": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "allOf": [
+    {
+     "contains": {
+      "const": "phase"
+     }
+    },
+    {
+     "contains": {
+      "const": "framing"
+     }
+    },
+    {
+     "contains": {
+      "const": "stage"
+     }
+    },
+    {
+     "contains": {
+      "const": "reaction_id"
+     }
+    },
+    {
+     "contains": {
+      "const": "k1_class_lfp"
+     }
+    },
+    {
+     "contains": {
+      "const": "k1_class_42_43"
+     }
+    },
+    {
+     "contains": {
+      "const": "k1_class_44_45"
+     }
+    },
+    {
+     "contains": {
+      "const": "k1_verdict"
+     }
+    }
+   ]
+  },
+  "rows": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "object",
+    "required": [
+     "phase",
+     "framing",
+     "stage",
+     "reaction_id",
+     "k1_class_lfp",
+     "k1_class_42_43",
+     "k1_class_44_45",
+     "k1_verdict"
+    ],
+    "properties": {
+     "phase": {
+      "type": "string"
+     },
+     "framing": {
+      "type": "string"
+     },
+     "stage": {
+      "type": "string"
+     },
+     "reaction_id": {
+      "type": "string"
+     },
+     "k1_class_lfp": {
+      "type": "string"
+     },
+     "k1_class_42_43": {
+      "type": "string"
+     },
+     "k1_class_44_45": {
+      "type": "string"
+     },
+     "k1_verdict": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "mock": true,
+ "note": "MOCK: synthetic values to exercise the template; not a result",
+ "columns": [
+  "solid",
+  "role",
+  "al_level_M",
+  "ph_lower",
+  "ph_upper",
+  "window"
+ ],
+ "rows": [
+  {
+   "solid": "Al(OH)3 am",
+   "role": "governing (ruling a)",
+   "al_level_M": "0.0001",
+   "ph_lower": "5.0",
+   "ph_upper": "8.3",
+   "window": "mock"
+  },
+  {
+   "solid": "boehmite",
+   "role": "reference (ruling a)",
+   "al_level_M": "0.0001",
+   "ph_lower": "4.0",
+   "ph_upper": ">10",
+   "window": "mock"
+  },
+  {
+   "solid": "Al(OH)3 am",
+   "role": "governing (ruling a)",
+   "al_level_M": "1e-05",
+   "ph_lower": "5.5",
+   "ph_upper": "7.2",
+   "window": "mock"
+  },
+  {
+   "solid": "boehmite",
+   "role": "reference (ruling a)",
+   "al_level_M": "1e-05",
+   "ph_lower": "4.3",
+   "ph_upper": "9.9",
+   "window": "mock"
+  },
+  {
+   "solid": "Al(OH)3 am",
+   "role": "governing (ruling a)",
+   "al_level_M": "1e-06",
+   "ph_lower": "",
+   "ph_upper": "",
+   "window": "mock"
+  },
+  {
+   "solid": "boehmite",
+   "role": "reference (ruling a)",
+   "al_level_M": "1e-06",
+   "ph_lower": "4.7",
+   "ph_upper": "9.0",
+   "window": "mock"
+  }
+ ]
+}

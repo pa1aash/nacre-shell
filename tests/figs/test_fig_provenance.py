@@ -7,7 +7,7 @@ from figs_helpers import REPO
 
 from nacre.figs import build, paths, schema, upstream
 
-DATA_FIGS = ["fig4", "fig5", "fig7"]  # built from real outputs in P0-W6.3
+DATA_FIGS = ["fig4", "fig5", "fig7", "fig9", "fig10", "fig11"]  # built from real outputs in P0-W6.3
 
 
 def _mod(fid):
@@ -24,7 +24,7 @@ def test_real_input_is_a_pinned_owner_output(fid):
     ref = _mod(fid).FIGURE["input"]
     assert ref.startswith(schema.UPSTREAM), ref
     e = upstream.entry(ref[len(schema.UPSTREAM):], REPO)
-    assert e["kind"] == "data" and e["owner"] in {"p0-w2", "p0-w4"}
+    assert e["kind"] == "data" and e["owner"] in {"p0-w2", "p0-w4", "p0-w5"}
     assert _tracked(e["snapshot"]), e["snapshot"]
     upstream.snapshot_bytes(ref[len(schema.UPSTREAM):], REPO)  # raises on a sha256 mismatch
 
@@ -32,11 +32,12 @@ def test_real_input_is_a_pinned_owner_output(fid):
 @pytest.mark.parametrize("fid", DATA_FIGS)
 def test_real_aux_files_are_committed(fid):
     for name, ref in _mod(fid).FIGURE.get("aux", {}).items():
-        if isinstance(ref, str):
-            assert ref.startswith(schema.UPSTREAM), name
-            assert _tracked(upstream.entry(ref[len(schema.UPSTREAM):], REPO)["snapshot"]), name
+        real = ref["real"] if isinstance(ref, dict) else ref
+        if real.startswith(schema.UPSTREAM):
+            assert _tracked(upstream.entry(real[len(schema.UPSTREAM):], REPO)["snapshot"]), name
         else:
-            assert _tracked(ref["real"]), (name, ref["real"])
+            assert not isinstance(ref, str), name
+            assert _tracked(real), (name, real)
 
 
 @pytest.mark.parametrize("fid", DATA_FIGS)

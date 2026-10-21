@@ -50,3 +50,16 @@ schematics:
     claim: as fig3
     caption: figures/src/captions/fig3.md
     source: as fig3
+  fig16:
+    tex: fig16.tex
+    engine: pdflatex
+    out: stubs/fig16.pdf
+    width: double
+    text_free: true
+    deliverable: false  # PH-W6.1: layout stub with the two panel slots only; built on request (--only fig16)
+    stub: true
+    claim: >-
+      Pathway schematic, two panels: the layered carbonate on alumina in water (a), and the phosphate and route
+      layer (b). Layout stub only; no drawing and no text yet.
+    caption: figures/src/captions/fig16.md
+    source: planning-chat rulings on the pathway schematic (panel slots only; drawings follow)

@@ -51,6 +51,30 @@ requests:
     format: .3f
     unit: '\,\mathrm{V}'
     figure: Fig 7
+  NumCutoffLfpNominal:
+    source: configs/preprint/thresholds.yaml
+    pattern: 'C_lo:\n\s+name: LFP-class\n\s+E_c_V: \[([0-9.]+)\]'
+    format: g
+    unit: '\,\mathrm{V}'
+    figure: Fig 9
+  NumCutoffLfpSens:
+    source: configs/preprint/thresholds.yaml
+    pattern: 'e_cell_max_lfp_V: ([0-9.]+)'
+    format: g
+    unit: '\,\mathrm{V}'
+    figure: Fig 9
+  NumDftErrorBand:
+    source: results/preprint/pourbaix/ph_w51/benchmark_w51.json
+    key: summary/e_form/max
+    format: .2f
+    unit: '\,\mathrm{kJ\,mol^{-1}\,atom^{-1}}'
+    figure: Fig 10
+  NumOxideCorrection:
+    source: results/preprint/pourbaix/ph_w51/benchmark_w51.json
+    key: summary/oxide_correction_kJ_per_O
+    format: .1f
+    unit: '\,\mathrm{kJ\,mol^{-1}\,per\,O}'
+    figure: Fig 10
 # Already defined by W8 (preprint/generated/sources.yaml on preprint/p0-w8, not yet merged into this
 # branch) and used as they are.
 defined_by_w8:

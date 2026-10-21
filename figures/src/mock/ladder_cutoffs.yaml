@@ -1,0 +1,16 @@
+# MOCK cutoff classes in the layout of thresholds.yaml; synthetic.
+mock: true
+screen_ph:
+  margins_v6:
+    cutoff_classes:
+      C_hi:
+        E_c_V:
+        - 4.2
+        - 4.3
+      C_lo:
+        E_c_V:
+        - 3.0
+      C_mid:
+        E_c_V:
+        - 4.0
+        - 4.1

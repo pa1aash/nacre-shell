@@ -1,5 +1,77 @@
 {
  "figures": {
+  "fig10": {
+   "id": "fig10",
+   "claim": "The DFT formation enthalpies lie inside the registered error band for the ionic orthophosphates and outside it, always on the over-bound side, for the condensed, acid and hydrated phosphates, the aluminium hydroxide and the sink salt, so the phosphate benchmark does not pass as a set.",
+   "caption_key": "One row per phase with a like-for-like formation enthalpy, grouped by family (gaps between groups: phosphates, silicates, Al-O-H phases, the sink salt) and ordered by error within a group. Horizontal axis: DFT minus tabulated formation enthalpy per atom. Grey band: the registered error band. Marker: filled circle, inside the band (benchmarked); open square, outside the band; open diamond, no like-for-like experimental phase (the tabulated phase is a glass). The caption states the uniform oxide correction per oxygen as the explanation of the outside rows.",
+   "mock": false,
+   "width": "single",
+   "size_cm": [
+    8.3,
+    8.5
+   ],
+   "input": "results/preprint/pourbaix/ph_w51/benchmark_w51.csv",
+   "input_sha256": "0bf8a20e34f8681b965eae968493b0f05b126ca9f06cc56ffbae714ce827ed39",
+   "input_source": {
+    "owner": "p0-w5",
+    "path": "results/preprint/pourbaix/ph_w51/benchmark_w51.csv",
+    "commit": "87345f10da450bcf58598a6d3718d5295ba0483d",
+    "sha256": "0bf8a20e34f8681b965eae968493b0f05b126ca9f06cc56ffbae714ce827ed39"
+   },
+   "schema": "figures/src/schemas/benchmark_w51.schema.json",
+   "aux": {
+    "summary": "results/preprint/pourbaix/ph_w51/benchmark_w51.json@c735c78 (p0-w5)"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig10.pdf": "ebfcbe0b241fffdfb6ca3dcb1a6cc20866d3403a5ea7bc450802f4bfc9240fba",
+    "figures/out/fig10.png": "63117260870b662da318f7c6db9d7982ac4f85e6a6e96021f09b17d470e1178d",
+    "figures/out/cvd/fig10_deuteranopia.png": "137903da2ed3128d0bcbe53d69f79f163ccada86ccdad659dd1e7e35a9d1d7d0",
+    "figures/out/cvd/fig10_protanopia.png": "137903da2ed3128d0bcbe53d69f79f163ccada86ccdad659dd1e7e35a9d1d7d0",
+    "figures/out/cvd/fig10_tritanopia.png": "137903da2ed3128d0bcbe53d69f79f163ccada86ccdad659dd1e7e35a9d1d7d0"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
+  "fig11": {
+   "id": "fig11",
+   "claim": "The pH window of an aluminium oxide film narrows as the allowed dissolved aluminium falls: the amorphous hydroxide that governs the film has its window inside the crystalline boehmite window and none at the lowest level.",
+   "caption_key": "Horizontal axis: pH. Top group: the two published statements (grey bars, no stated Al level for the first). Below it one group per dissolved-Al level (tick labels, mM), highest first; within a group the upper bar (black) is amorphous Al(OH)3, the governing film phase, and the lower bar (blue, hatched) is boehmite, the crystalline reference. A bar ends at the computed pH limit; an open circle at the right edge: the window continues beyond the computed pH range; an open square at the left edge: no pH at which the film stays at that level. Computed at 298.15 K with activities equal to concentrations.",
+   "mock": false,
+   "width": "single",
+   "size_cm": [
+    8.3,
+    6.5
+   ],
+   "input": "results/preprint/pourbaix/ph_w52/passivation_window_v3.csv",
+   "input_sha256": "5aaf04dafbd21993b577a1a42ed50c18860771c670d489476e9b771e2a43267f",
+   "input_source": {
+    "owner": "p0-w5",
+    "path": "results/preprint/pourbaix/ph_w52/passivation_window_v3.csv",
+    "commit": "1a1ea5a63990eba08b840e46fc735900d02d12c4",
+    "sha256": "5aaf04dafbd21993b577a1a42ed50c18860771c670d489476e9b771e2a43267f"
+   },
+   "schema": "figures/src/schemas/passivation_window_v3.schema.json",
+   "aux": {
+    "al_window": "results/preprint/pourbaix/ph_w51/al_window.json@c735c78 (p0-w5)"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig11.pdf": "5d99c1b9e549fdc6a4fa204a932d6b4d236522de8841ea3c5f04764f50f4b551",
+    "figures/out/fig11.png": "422303dec91da05c9ea4957ff4b8a8e5cf1489a5f4487ed4120460695e52979c",
+    "figures/out/cvd/fig11_deuteranopia.png": "7de84fdd214dd1fc8bf4de1daee605d36ef4907334e948c377488ee62741faca",
+    "figures/out/cvd/fig11_protanopia.png": "d500ee20fa48ac3a0f674c1eaa2afc11ff40a5fff999b11ae4382ff9cede9910",
+    "figures/out/cvd/fig11_tritanopia.png": "a4c442086833c5e90219e65ed07372ced924da30ba42b66aea4cd16766e51ba3"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
   "fig4": {
    "id": "fig4",
    "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",
@@ -54,7 +126,7 @@
    },
    "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
    "aux": {
-    "params": "lit/params.yaml sha256:2b0b5a13757cffc2c0747880320e1e109bf7e781af5f6d0f119b8d4a7360e9c6",
+    "params": "lit/params.yaml sha256:f56b69150058814641cce33a7066fc27634193c1e35c0e51fc2cacaecd769911",
     "thresholds": "configs/preprint/thresholds.yaml@4ed8fcf (p0-w4)"
    },
    "font": {
@@ -91,7 +163,7 @@
    },
    "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
    "aux": {
-    "params": "lit/params.yaml sha256:2b0b5a13757cffc2c0747880320e1e109bf7e781af5f6d0f119b8d4a7360e9c6"
+    "params": "lit/params.yaml sha256:f56b69150058814641cce33a7066fc27634193c1e35c0e51fc2cacaecd769911"
    },
    "font": {
     "family": "Arial",
@@ -104,6 +176,43 @@
     "figures/out/cvd/fig7_deuteranopia.png": "c599b229a3ee462c347dbbdedc694c6353209b2aeba9833fedbeaf32d7a0416c",
     "figures/out/cvd/fig7_protanopia.png": "ddd454666c1a08c7ad4201bb4e4036dd7c13d6299d2fba0a32d4b4e75d59c3b1",
     "figures/out/cvd/fig7_tritanopia.png": "9926119249fe668e0fbd2f2763ed729c0e7150ecb14d9c09fdb7d45088799043"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
+  "fig9": {
+   "id": "fig9",
+   "claim": "The tier-1 verdict depends on the cutoff class and on the framing: crystalline calcium orthophosphates and the carbonate control are excluded at the two higher classes and not at the lowest, Ca2SiO4 is excluded at all three, and the amorphous framing is undetermined except for two phases.",
+   "caption_key": "One row per phase, grouped top to bottom by regime and role: R-slurry phases, R-cell phases, silicate comparators, the carbonate control (gaps between groups). Three pairs of columns, one pair per registered cutoff class (tick labels, V vs Li+/Li; the lowest class is the nominal value, and the sensitivity with the sourced upper cutoff leaves every verdict unchanged); within a pair, crystalline framing left and amorphous framing right. Fill and hatching: verdict of the tier-1 aggregate at the class (excluded, cross hatching; inconclusive, single hatching; undetermined, plain).",
+   "mock": false,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    9.0
+   ],
+   "input": "figures/src/data/upstream/ladder_v3.csv",
+   "input_sha256": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
+   "input_source": {
+    "owner": "p0-w5",
+    "path": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
+    "commit": "73316df2314b14fb5a16ba6bf15077dfcc658c8c",
+    "sha256": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b"
+   },
+   "schema": "figures/src/schemas/ladder_v3.schema.json",
+   "aux": {
+    "cutoffs": "configs/preprint/thresholds.yaml@1aff4fe (p0-w4)",
+    "sens40": "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv@73316df (p0-w5)"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig9.pdf": "2b9d1464968d504996ad440b8cafbe7aac32324ac765d7923b05c9c8b6b80f30",
+    "figures/out/fig9.png": "918fffcb88bce1e597f526809767bc77786542c828828d220d82ba27f3e2d8a4",
+    "figures/out/cvd/fig9_deuteranopia.png": "66b7a8a81fde22fe70f589ff7f0fbe9dc121b0ee0995d4584bf40e220546c9ac",
+    "figures/out/cvd/fig9_protanopia.png": "488f2e578a126e1a47ede44f3e9b4dbd6ada641e4726abad9cdc8448ae9c2f13",
+    "figures/out/cvd/fig9_tritanopia.png": "c2120a1b06c580b4ba215ebee103f1ff848cacc77215ac0b5ffac6b398f5bc33"
    },
    "checker": "pass (artists and PDF text)"
   }
@@ -256,6 +365,24 @@
   }
  },
  "schematics": {
+  "fig16": {
+   "tex": "figures/tikz/fig16.tex",
+   "claim": "Pathway schematic, two panels: the layered carbonate on alumina in water (a), and the phosphate and route layer (b). Layout stub only; no drawing and no text yet.",
+   "caption": "figures/src/captions/fig16.md",
+   "text_free": true,
+   "source": "planning-chat rulings on the pathway schematic (panel slots only; drawings follow)",
+   "w3_commit": null,
+   "stub": true,
+   "checker": "pass (PDF: no text, strokes, page width)",
+   "font": "none (no text)",
+   "outputs": {
+    "figures/out/stubs/fig16.pdf": "c9e19c086545841fc125fbdd4192551aba55affe8fdc1b15c2ad0bb47bacd962",
+    "figures/out/stubs/fig16.png": "6d6bb5847c04899b35452e0db51ad57feb86e92b1f912c8b349d3f3d1570d4d4",
+    "figures/out/stubs/cvd/fig16_deuteranopia.png": "28aae6bb94870bb2ead26524062cf3ddbcb9dfcfb2c72d1f5be26437c11b77fb",
+    "figures/out/stubs/cvd/fig16_protanopia.png": "28aae6bb94870bb2ead26524062cf3ddbcb9dfcfb2c72d1f5be26437c11b77fb",
+    "figures/out/stubs/cvd/fig16_tritanopia.png": "28aae6bb94870bb2ead26524062cf3ddbcb9dfcfb2c72d1f5be26437c11b77fb"
+   }
+  },
   "fig2": {
    "tex": "figures/tikz/fig2.tex",
    "claim": "The coating can only act through a chain of interfacial steps: the catechol-bearing layer must displace interfacial water to adhere, binds a few Ca2+ at its sites without raising the bulk supersaturation, hosts an amorphous CaCO3 nucleus whose contact with the template sets the barrier, and the nuclei must coalesce into a continuous film.",
@@ -263,6 +390,7 @@
    "text_free": true,
    "source": "theory/derivation_body.tex Sections 2 (adhesion in water), 3 and 7 (sequestration, template), 8 (conformality)",
    "w3_commit": null,
+   "stub": false,
    "checker": "pass (PDF: no text, strokes, page width)",
    "font": "none (no text)",
    "outputs": {
@@ -280,6 +408,7 @@
    "text_free": true,
    "source": "theory/derivation_body.tex Section 7 (lane p0-w3); commit in w3_commit",
    "w3_commit": "f23632d91c4a47fab4b7ff6dfa46e2315e6d4ea6",
+   "stub": false,
    "checker": "pass (PDF: no text, strokes, page width; arrows orthogonal)",
    "font": "none (no text)",
    "outputs": {
@@ -289,6 +418,112 @@
     "figures/out/cvd/fig3_protanopia.png": "ef5efc4ec17c8e77d314ce19689b8c5e5f35cba41502116b9e9db8e8bd67c80b",
     "figures/out/cvd/fig3_tritanopia.png": "651d3f1a5140ccf4c5a55c5cb07e0eb73fdfd9a0293e3024416eb8e943da1758"
    }
+  }
+ },
+ "templates": {
+  "fig12": {
+   "id": "fig12",
+   "status": "template",
+   "release": "blocked: placeholder, no data yet",
+   "claim": "Where the slurry dissolves the carbonate over the calcium dose and the dissolved carbonate, and how the acid-adjusted pH state moves that boundary.",
+   "caption_key": "(a) as-prepared slurry; (b) acid-adjusted pH state, the comparator. Same axes as the dose window of Fig. 7a: total calcium dose (horizontal) by total dissolved carbonate (vertical); fill and hatching: verdict at each design point.",
+   "width": "double",
+   "size_cm": [
+    17.1,
+    7.0
+   ],
+   "waits_for": "slurry dissolution outputs for the as-prepared and the acid-adjusted pH states (PH-W4 and PH-W5 follow-ups)",
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/templates/fig12.pdf": "eff7dc630a3cec7dab2fb5a83a0e1bc9410e3d0524f84af5e59c7972b97752ef",
+    "figures/out/templates/fig12.png": "832e60f40954a24e2c87ac56eb0741c726f9e0de1dee87a97d1e2adde0e7f991",
+    "figures/out/templates/cvd/fig12_deuteranopia.png": "efb513191941dd0d2f80609af20b64a16f7d0ddb87da962d922a073b9f6fb1b7",
+    "figures/out/templates/cvd/fig12_protanopia.png": "efb513191941dd0d2f80609af20b64a16f7d0ddb87da962d922a073b9f6fb1b7",
+    "figures/out/templates/cvd/fig12_tritanopia.png": "efb513191941dd0d2f80609af20b64a16f7d0ddb87da962d922a073b9f6fb1b7"
+   },
+   "checker": "pass (artists and PDF text; placeholder on every plot area)"
+  },
+  "fig13": {
+   "id": "fig13",
+   "status": "template",
+   "release": "blocked: placeholder, no data yet",
+   "claim": "The oxidation limit of each phase against each aluminium-salt sink, on the same potential axis as the cell window.",
+   "caption_key": "One row per phase and Al-salt sink (to be named in the caption); horizontal: potential vs Li+/Li; end marks as in Fig. 7b.",
+   "width": "single",
+   "size_cm": [
+    8.3,
+    7.0
+   ],
+   "waits_for": "Al(ClO4)3 thermochemistry and the Al-salt sink budget (dfg_al_clo4_3 is a gap)",
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/templates/fig13.pdf": "c18da2d01e5bbf47b3e77b6efc0547d643e5cf82ca19ef5fb6b93b74498e4428",
+    "figures/out/templates/fig13.png": "f8f228b619e632e928f97ba6b79d0ed04c19f701951f6467637bd457c144c106",
+    "figures/out/templates/cvd/fig13_deuteranopia.png": "120a873161f7ce457d38017624f7ac92bc128669dcf94e3f05761055ff1a0a8e",
+    "figures/out/templates/cvd/fig13_protanopia.png": "120a873161f7ce457d38017624f7ac92bc128669dcf94e3f05761055ff1a0a8e",
+    "figures/out/templates/cvd/fig13_tritanopia.png": "120a873161f7ce457d38017624f7ac92bc128669dcf94e3f05761055ff1a0a8e"
+   },
+   "checker": "pass (artists and PDF text; placeholder on every plot area)"
+  },
+  "fig14": {
+   "id": "fig14",
+   "status": "template",
+   "release": "blocked: placeholder, no data yet",
+   "claim": "The precision each input must reach, relative to its present width, against each decision threshold.",
+   "caption_key": "Rows: inputs, ranked as in Fig. 6; columns: decision thresholds; colour: required width of the input's prior relative to its present width (colour bar).",
+   "width": "double",
+   "size_cm": [
+    17.1,
+    7.0
+   ],
+   "waits_for": "P0-W4.4 Sobol and required-precision output (Fig. 6 inputs)",
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/templates/fig14.pdf": "9651ba1a50ec5b7c9912c89416746aafc008b7b057f5b54b41db97eaf244ae80",
+    "figures/out/templates/fig14.png": "3592970dd969eeea2a19d7004fb667055ce4b4e4b9b50dae2d199d8658268e2c",
+    "figures/out/templates/cvd/fig14_deuteranopia.png": "242b3a4b66fded102046679350b3a9a54fdf7b7535063f65a2adb3dcd776435e",
+    "figures/out/templates/cvd/fig14_protanopia.png": "5ed3eaab62659aa1693fd5cb450df0a9655e0126903e15dbdc3fb11ffabe55b5",
+    "figures/out/templates/cvd/fig14_tritanopia.png": "557ff9ce521a1abb8399a2f9b4e7f15b5da5d512f2eb40b589051cb83b3c9044"
+   },
+   "checker": "pass (artists and PDF text; placeholder on every plot area)"
+  },
+  "fig15": {
+   "id": "fig15",
+   "status": "template",
+   "release": "blocked: placeholder, no data yet",
+   "claim": "The verdict of each candidate coating under each registered condition, so the regime in which each candidate is excluded, inconclusive or undetermined can be read across a row.",
+   "caption_key": "Rows: candidates; columns: conditions (regimes, in the caption); fill and hatching as in Fig. 9: excluded, inconclusive, undetermined.",
+   "width": "double",
+   "size_cm": [
+    17.1,
+    8.0
+   ],
+   "waits_for": "candidate list and regime verdicts from the screen (PH-W4 follow-ups)",
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/templates/fig15.pdf": "18c22ae6bf48aa5750d1926654cb639eeb2a65dc98d3692687ea07d39faed09c",
+    "figures/out/templates/fig15.png": "5020c2194d923780cbbab995be6a35223cee2f3edd67a0e34e766ab78a25d097",
+    "figures/out/templates/cvd/fig15_deuteranopia.png": "14e1d85ee89c94599d7ef0a981d20a86613428f3583d3fc4af69fd455ded9d37",
+    "figures/out/templates/cvd/fig15_protanopia.png": "14e1d85ee89c94599d7ef0a981d20a86613428f3583d3fc4af69fd455ded9d37",
+    "figures/out/templates/cvd/fig15_tritanopia.png": "14e1d85ee89c94599d7ef0a981d20a86613428f3583d3fc4af69fd455ded9d37"
+   },
+   "checker": "pass (artists and PDF text; placeholder on every plot area)"
   }
  }
 }

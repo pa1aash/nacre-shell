@@ -1,0 +1,87 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "passivation_window_v3.csv as read by nacre.figs.upstream (lane p0-w5, PH-W5.3)",
+ "type": "object",
+ "required": [
+  "columns",
+  "rows"
+ ],
+ "properties": {
+  "mock": {
+   "type": "boolean"
+  },
+  "columns": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   },
+   "allOf": [
+    {
+     "contains": {
+      "const": "solid"
+     }
+    },
+    {
+     "contains": {
+      "const": "role"
+     }
+    },
+    {
+     "contains": {
+      "const": "al_level_M"
+     }
+    },
+    {
+     "contains": {
+      "const": "ph_lower"
+     }
+    },
+    {
+     "contains": {
+      "const": "ph_upper"
+     }
+    },
+    {
+     "contains": {
+      "const": "window"
+     }
+    }
+   ]
+  },
+  "rows": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "object",
+    "required": [
+     "solid",
+     "role",
+     "al_level_M",
+     "ph_lower",
+     "ph_upper",
+     "window"
+    ],
+    "properties": {
+     "solid": {
+      "type": "string"
+     },
+     "role": {
+      "type": "string"
+     },
+     "al_level_M": {
+      "type": "string"
+     },
+     "ph_lower": {
+      "type": "string"
+     },
+     "ph_upper": {
+      "type": "string"
+     },
+     "window": {
+      "type": "string"
+     }
+    }
+   }
+  }
+ }
+}
