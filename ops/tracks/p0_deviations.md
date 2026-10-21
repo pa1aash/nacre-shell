@@ -113,3 +113,11 @@ Re-audit: cp5b
 ## 2026-10-21 results/preprint/pourbaix ladder_v3
 Change: PH-W5.3b (ops/reports/P0-W5.PH-W5.3b.md; results commit 73316df). The staged Ca(PO3)2 crystal in the brushite r1s route (0.5 mol per mol brushite) takes the direct ruling-(b) glass-to-crystal value (18.87 +- 20.74 kJ/mol) instead of the analogue-based value, as for the Ca(PO3)2 crystal row and Ca2P2O7 r1s. r1s E_ub 4.4230 to 4.4076 V and m 0.3800 to 0.2794 V. The brushite ALL row is set by r3 (4.4323 V) and does not move. Verdicts: inconclusive at every class before and after; no verdict changes. ladder_v3.csv and ladder_v3_sens40.csv regenerated.
 Re-audit: cp5b
+
+## 2026-10-21 configs/preprint/thresholds.yaml
+Change: PH-W4.2e (e85e890, ops/reports/P0-W4.PH-W4.2e.md). The copy is regenerated from theory/thresholds.md block v8 (source commit 12c1f2d886b7fbc05aecc6a3f5a0de0c252c8a52; block sha256 d92b42e9106e574fd330635fdc0d54e56d4a1dec4a7f38ece93d8bdfe922b04b); equality with the block is checked by test_committed_copy_equals_theory_thresholds, which passes. No config read the f_min interval; no carbonate link, margin or verdict changed. Recorded although the freeze block may not cover the path.
+Re-audit: cp5b
+
+## 2026-10-21 configs/preprint/symbol_bindings.yaml, configs/preprint/gap_resolution_ph.yaml
+Change: PH-W4.2d (7e69504, ops/reports/P0-W4.PH-W4.2d.md) and PH-W4.2f (1eb77f8, ops/reports/P0-W4.PH-W4.2f.md). symbol_bindings.yaml version 2: bindings per the cp5a rulings, rows 1, 6, 7, 8, 9 (8 resolved, 3 unresolved); PH-W4.2f binds 5 further keys (linear-chain Al beta1 key, Na/K/Rb/Cs transfer free energies on the TATB scale) and states reasons for the alumina isotherm keys. gap_resolution_ph.yaml gains treatments for 8 gap keys (transfer_multi_*, exchange_entropy_al_crystal_bound, s0_cameta_glass, h_cryst_cameta_glass), each unresolved or comparison-only, never a pass. No prior, threshold, verdict rule or K1 number changed. Recorded although the freeze block may not cover the paths.
+Re-audit: cp5b
