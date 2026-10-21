@@ -515,3 +515,12 @@ Four entries for the draft route layer (`ops/tracks/redirect_plan.md`, "ROUTE LA
 - **Regime.** No. Differentiation rests on the in-situ, matrix-mediated, insoluble character and the quantitative design rule, stated as hypotheses, not on performance. "Outperforms" and "first" wording is not supported (`lit/novelty.md` NU13, NU14).
 - **Placement.** Introduction and Discussion.
 - **Severity.** Material.
+
+### B25. Computed oxidation windows may under-state, and cyclic voltammetry may over-state, real windows (K1; tier-2 discussion)
+
+- **Sources.** 10.1021/jacsau.1c00228 (Schwietert 2021, PMC8479866, Full, introduction); 10.1039/c9ta09401f via arXiv 1901.02251 (Binninger 2020, Full).
+- **Evidence.** Schwietert et al. state that CV "overestimate[s] the actual electrochemical stability window" (small contact area, short time scale) while formation-energy predictions "often underestimate" it (reaction mechanism and barrier not captured). Their LiPON example: decomposition window 0.68-2.64 V, intrinsic window 0.00-4.12 V vs Li/Li+, a cited experiment oxidising LiPON around 4.3 V. Binninger et al. report that window values depend on the method (phase vs stoichiometry stability). Both concern solid electrolytes, not Ca or Al phosphate films in liquid cells.
+- **Condition.** A tier-2 row built from a computed window, or from a bulk LSV or CV, read as a limit for a thin phosphate film at a 4.3 to 4.5 V cutoff.
+- **Regime.** Partly. The two-tier rule already treats tier-2 values as bounded, and "undetermined never passes". Not avoided: neither bound is tight, so a tier-2 number is neither a floor nor a ceiling.
+- **Placement.** Results (K1 tier-2 reading) and Limits.
+- **Severity.** Material.

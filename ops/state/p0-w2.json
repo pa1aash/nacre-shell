@@ -1,6 +1,6 @@
 {
-  "last_session": "PH-W2.2c",
-  "status": "BLOCKED",
+  "last_session": "PH-W2.3",
+  "status": "DONE",
   "day": 5,
   "retro_schema": {
     "sha": "4ded6c789c9eb66c385db8d41e51ea15a48a28b9"
@@ -28,6 +28,7 @@
     "Needs from W8: abstract, final title after cp4, release PDF and SI, a generated macro for the Materials Project database version.",
     "P0-W2.3 retrodiction results unchanged (results_sha above).",
     "PH-W2.2a: route-layer prior art (8 rows), NS7 supported only as scan-limited negative, baseline patent facts, contrary B21 to B24; patent keyword search remains a gap.",
-    "PH-W2.2c: SG26W rewording in preprint/package done; verify --quick still fails on SG26W/SG27W hits in preprint/paper/briefs (not lane-owned)."
+    "PH-W2.2c: SG26W rewording in preprint/package done; verify --quick still fails on SG26W/SG27W hits in preprint/paper/briefs (not lane-owned).",
+    "PH-W2.3: related work RW1-RW3 (RW1 abstract only, RSC 403), NS8 unsupported (NU18), F8 patent data W-3, contrary B25; gaps RG1-RG3."
   ]
 }
