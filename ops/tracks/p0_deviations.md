@@ -93,3 +93,23 @@ Re-audit: cp5 freeze
 ## 2026-10-21 lit/params.yaml
 Change: PH-W1.3 (preprint/p0-w1 638d92e, params commit 0e3e276, ops/reports/P0-W1.PH-W1.3.md) adds 20 keys (`added_in: P0-W1.PH-W1.3`; 425 keys in total, 4 of them gaps); no existing key changed. Merged from preprint/p0-w1 at the PH-I4e integration. No screen output consulted.
 Re-audit: cp5 freeze
+
+## 2026-10-21 lit/params.yaml
+Change: PH-W1.5 (preprint/p0-w1 8f59a3e and params commit d0e93de, ops/reports/P0-W1.PH-W1.5.md) adds 41 keys (`added_in: P0-W1.PH-W1.5`; 14 gap keys: multivalent PC Ca/Mg/Zn/Ba/Al transfer data, Al(ClO4)3 S, Ca/Al polyphosphate data, alumina isotherm). The existing hydration_free_energy_li_conventional and _tissandier_scale keys were restored to their committed entries after the rebuild moved them. No carbonate result is edited.
+Re-audit: cp5b
+
+## 2026-10-21 lit/params.yaml
+Change: PH-W1.6 (ops/reports/P0-W1.PH-W1.6.md) adds 4 keys (aragonite log10 K_sp and the percolation constants p_c_site_square, p_c_site_triangular, p_c_site_sc) and a per-key interval in lit/params_spec.yaml (src/nacre/lit/build_params.py and params.py). The two Li+ keys are repaired with no value changed (the rebuild reproduces the committed values). Additions under rule 15; no carbonate result is edited.
+Re-audit: cp5b
+
+## 2026-10-21 theory/thresholds.md, theory/claims_redirect.md
+Change: PH-C0 (89fc9de, 9915772; ops/reports/P0-W3.PH-C0.md). Block version 6 to 7: computed transfer premise in screen_ph K1 (premise.computed; where_premise_computed on K1_pass and K1am_pass, edge E_c + m_expt + u_tr/(Delta_n_Li F_c)); Section 6 rule; four Section 4 keys; K2h f_min_criterion (conditional). claims_redirect 2f row, 10e, 10f. Symbols u_tr and Delta_G_tr_rel_lcb. No carbonate link, margin or K1 falsifying edge changed. Disclosure: written before any transfer value was computed; the K1 upper bounds had been seen. Inactive in v1 (D64).
+Re-audit: cp5b
+
+## 2026-10-21 theory/thresholds.md, theory/claims_redirect.md
+Change: PH-W3.6 (ops/reports/P0-W3.PH-W3.6.md). Block version 7 to 8: screen_ph.w36 (carbonate K2 polymorph framings and label rule, low-voltage wording, sensitivity cutoff), f_min_criterion keys and interval; claims_redirect Section 11 and Section 10f key names. symbols.yaml unchanged. No carbonate link, margin, edge or K1 verdict changed. Disclosure: written after the ladder and carbonate K2 outputs existed and were seen. configs/preprint/thresholds.yaml is regenerated from block v8 by PH-W4.2e.
+Re-audit: cp5b
+
+## 2026-10-21 results/preprint/pourbaix ladder_v3
+Change: PH-W5.3b (ops/reports/P0-W5.PH-W5.3b.md; results commit 73316df). The staged Ca(PO3)2 crystal in the brushite r1s route (0.5 mol per mol brushite) takes the direct ruling-(b) glass-to-crystal value (18.87 +- 20.74 kJ/mol) instead of the analogue-based value, as for the Ca(PO3)2 crystal row and Ca2P2O7 r1s. r1s E_ub 4.4230 to 4.4076 V and m 0.3800 to 0.2794 V. The brushite ALL row is set by r3 (4.4323 V) and does not move. Verdicts: inconclusive at every class before and after; no verdict changes. ladder_v3.csv and ladder_v3_sens40.csv regenerated.
+Re-audit: cp5b
