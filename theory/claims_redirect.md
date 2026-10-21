@@ -965,3 +965,20 @@ Section 2e) and the tier-2 onset both come from the ladder files by macro, and t
 line. The sentence "close to falsification" is emitted only when the generated predicate holds (E_x- lies within the
 margin m_1 of the 4 V line, or the tier-2 onset lies within m_svc of it); otherwise the plain crossover and onset are
 printed and the sentence is dropped. Proposed; the planning chat rules at cp5b.
+
+### 11d. C5: the regime-table vocabulary
+
+The regime table of the paper uses exactly these five terms, and no other verdict word:
+
+| Term | Meaning | Source of the entry |
+|---|---|---|
+| excluded | falsified at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed | K1 verdict table, Section 2c |
+| not excluded | not falsified, with a feasible or kinetically stabilised K1 verdict (class A or B named) | K1 verdict table, Section 2c |
+| thermodynamically suitable against dissolution (a necessary condition) for [phase] in [region] | K2 passes at every state of the registered grid, label text of Section 11b | K2 test of Section 11a |
+| open | not falsified, no lower bound: the test is inconclusive on both sides, or the bracket contains the cutoff | verdict row 6 of Section 2c |
+| undetermined | data missing: a gap key, an unbenchmarked number or an unregistered sink (`undetermined (data missing)`) | verdict row 7 of Section 2c |
+
+Every cell is **generated** from the hash-pinned ladder and the production outputs only: the ladder file, the margins
+file and the production verdict files named in the blocks of `theory/thresholds.md`, through the macro generator. No
+cell is typed, and a cell with no source in those files reads `undetermined`. The term "suitable" appears only inside
+the full label text of Section 11b.
