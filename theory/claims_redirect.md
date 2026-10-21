@@ -998,3 +998,12 @@ row or enters the headline, f_min stays a design axis, and every statement is co
 Against PH-C0's registration the form and the use are unchanged; the keys are renamed to the W1 names and the lateral
 end is fixed to the square lattice (PH-C0 left the 2D lattice open). The interval is therefore re-registered in block
 version 8; the percolation keys are created by PH-W1.6 and no value appears here.
+
+### 11f. C6: status lines
+
+- The bracket rule of block version 7 (Section 10e) is **inactive in v1**: E_lb is pending, so no tier-1 pass is possible
+  and every row stays solid-salt-only for the pass edge.
+- The protocol hashes of PH-C0 (`theory/protocol_computational.md` and the earlier thresholds block) are informational;
+  they gate nothing.
+- R_cap, the t-quantile and the cluster sizes defer to v2.
+- The abstract order is not set here; the integrator adds it to the plan text. `ops/tracks/*` is not edited.
