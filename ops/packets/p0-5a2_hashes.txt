@@ -1,0 +1,38 @@
+# Hash manifest of the cp5 freeze (PH-I5d)
+
+Integrated tree preprint/p0 at 7ebb4b3500ff670642332757d714dba4b65711c6 (before the manifest commit). Date 2026-10-22.
+
+| file | sha256 | git blob | last commit |
+|---|---|---|---|
+| lit/params.yaml | 0ee35c055bac4f744083e4e594b74576989ea084dc180fe5c9882dcfa92c811e | cd5689b47d71db69b617ac4dafc8a40b87b663ea | 5b955b06f4c36ab6e660711b1bbe8f67ff338976 |
+| theory/thresholds.md | 57dbc26942a57af5c95c650c1ab07da8ecc0079dd8cc6a58e2d3c616dd65d5d5 | 91d19d01d116c41a6a7fc8a25303bd991981db94 | 12c1f2d886b7fbc05aecc6a3f5a0de0c252c8a52 |
+| theory/contract.yaml | 5249c6695b54ec00740bc359155b055a27ee0d3c1be4794b01ce48d98e633d9e | 2e631c03ccf4361801e2115bcb78c943d78bbf9b | 91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1 |
+| theory/claims_redirect.md | 1e0af21b7d71a59361a10821fab79285d0816e3225d19ef7e30830eee7b7bf09 | 107955153ff9a45646cafe7b498a5789f38d9afa | 5f77ee320c18d05954ee5ab64cfcb4a0d24ecf1f |
+| configs/preprint/thresholds.yaml | 48d99f4292ee162903ec426df1c8cbc8218fc8ad5b5950d0c34f9d04d09280b8 | 60ed8236dba8de8cf6d1f9b715b073f3bd556cd6 | e85e890f9df5d47b751b861ba1254da21c4da166 |
+| configs/preprint/symbol_bindings.yaml | 4d6517f1479661eb5b744bfca45b56b56cbdb78499dca0a9fcabf7a7baeeb418 | fc8ba48b6f4a80619d3d7afc2e2c1ad0d255718e | 1eb77f83235d1aaf656d4684a29570a6e4bf2284 |
+| configs/preprint/gap_resolution_ph.yaml | ac7baeed37deb1b7903d50a3c73e2ae70a5c3592b95a6a8923df272e22f067aa | 1feb4899c7f121eba6f0651ab48efbe741f9bc01 | 1eb77f83235d1aaf656d4684a29570a6e4bf2284 |
+| results/preprint/pourbaix/ph_w52/ladder_v3.csv | 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b | e2f05519c6cdd47ce260df631f851a798f25ad15 | 73316df2314b14fb5a16ba6bf15077dfcc658c8c |
+| results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv | 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b | e2f05519c6cdd47ce260df631f851a798f25ad15 | 73316df2314b14fb5a16ba6bf15077dfcc658c8c |
+| theory/protocol_computational.md | 57fafbeda8f3535fa4ff654917fb4f93ff9ee0394e3000251348a927c2f1d02e | ddcacc57b69815347ffbfebc746ef926aead7e53 | d4555387933b6df639224f678404ebaa2e1d39cf |
+
+symbol_bindings.yaml header hash (file with line 2 removed): 543ca9db6c8b1567c781e78307d47087ff8e724cac8b4ac52df8a8bcd076a4e9 (header records 543ca9db6c8b1567c781e78307d47087ff8e724cac8b4ac52df8a8bcd076a4e9)
+
+Code (git tree sha at HEAD, last commit touching the path):
+
+| path | tree | last commit |
+|---|---|---|
+| src/nacre/screen | 43f05f26a9f3d112cc720a934115d6acb18d17a5 | 3ca476861a285f429c17081ee19d19d8a03cf750 |
+| src/nacre/physics | 86ea27fa6128751d7ee8d0a1ab082456d6cee170 | 7e695042e497a4aad12bbbfeba55e6f125e195d0 |
+
+MP database books (mp_database_version):
+
+| manifest | version | sha256 | last commit |
+|---|---|---|---|
+| results/preprint/pourbaix/cache/manifest.json | 2026.04.13 | a143176fd20e15dd8c7a2b8381cc0e3a8e71b23a1230ad5179571f174282f7ce | 8e1e2ed80e2354536e7f89765e6e6a89609949e3 |
+| results/preprint/pourbaix/ph_k1/cache/manifest.json | 2026.09.28 | 84a5065d77b8e85a9d8d1f5620134f80a3059176e34d26b31e7b9904ed3f42c9 | 240617afa29aaf9dc581b880dccd0488fb4dab3c |
+| results/preprint/pourbaix/ph_w51/cache/manifest.json | 2026.09.28 | 7afa9f3528cdf5d52b76aaadad96f1fbf30b24a28847fbd0897ff2e5e85201df | 87345f10da450bcf58598a6d3718d5295ba0483d |
+| results/preprint/pourbaix/supplement_d3/cache/manifest.json | 2026.04.13 | 1d00c351f041328ece324f20727c5a21c234a95ebc77f4a91845e3806747d1e2 | 9911ee8f0f38b1127d1a4fb78884fb9003fe26a0 |
+
+Block: thresholds.md machine block version 8, sha256 d92b42e9106e574fd330635fdc0d54e56d4a1dec4a7f38ece93d8bdfe922b04b (expected value; verified, equal).
+Ladder_v3.csv expected sha256 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b: see table (compare below).
+Final preprint/p0 sha: recorded in the END BLOCK and the tag p0-cp5 (the commit that adds this file).
