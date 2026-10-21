@@ -104,3 +104,5 @@ utc,source,query_or_id,failure_kind,detail
 2026-10-20T14:24:47Z,unpaywall+wayback,10.1016/j.molliq.2025.128035,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://iris.uniroma3.it/bitstream/11590/532776/1/JMLGallo2025-2.pdf
 2026-10-20T14:24:47Z,fulltext,10.1016/j.molliq.2025.128035,not_indexed,"1 candidate location(s), none retrieved"
 2026-10-20T14:26:06Z,unpaywall,10.1002/chin.197452030,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-21T21:23:24Z,unpaywall,10.1016/0016-7037(82)90056-4,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-21T21:25:50Z,unpaywall,10.1088/0305-4470/31/40/009,parse_error,not a PDF: https://iopscience.iop.org/article/10.1088/0305-4470/31/40/009/pdf

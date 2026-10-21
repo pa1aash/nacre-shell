@@ -130,3 +130,27 @@ def test_missing_row_and_missing_reason_fail(root):
         B.build_entry("k", spec(k={"admit": [{"row": "TC-999"}]})["params"]["k"], {}, {})
     with pytest.raises(B.SpecError):
         B.build_entry("k", spec(k={"status": "gap"})["params"]["k"], {}, {})
+
+
+def test_key_interval_overrides_the_symbol_interval_in_builder_and_loader(root):
+    s = spec(k={"symbol": "K_sp", "unit": "1", "admit": [{"row": "TC-006"}]})
+    path = root / "lit" / "corpus" / "params_spec.yaml"
+    path.write_text(yaml.safe_dump(s))
+    doc = B.build(root, path)
+    (root / "lit" / "params.yaml").write_text(yaml.safe_dump(doc, sort_keys=False))
+    assert P.load_params(root / "lit" / "params.yaml", root, strict=False).errors
+    s["params"]["k"]["interval"] = "(-oo, oo)"
+    path.write_text(yaml.safe_dump(s))
+    doc = B.build(root, path)
+    (root / "lit" / "params.yaml").write_text(yaml.safe_dump(doc, sort_keys=False))
+    assert P.load_params(root / "lit" / "params.yaml", root, strict=False).errors == []
+    assert doc["params"]["k"]["value"] == -8.48
+
+
+def test_rebuild_reproduces_the_committed_table():
+    from nacre import _util
+    root = _util.repo_root()
+    rebuilt = B.build(root, None)
+    committed = yaml.safe_load((root / "lit" / "params.yaml").read_text(encoding="utf-8"))
+    assert rebuilt["params"] == committed["params"]
+    assert rebuilt["correlation_groups"] == committed["correlation_groups"]

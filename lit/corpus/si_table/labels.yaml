@@ -1065,3 +1065,93 @@ hydrolysis_tetrameta_ph_min_rate:
   label: pH of minimum tetrametaphosphate hydrolysis
 coacervate_gamma_analog_complex_pair:
   label: PAA-qPDMAEMA coacervate-dilute tension (analog)
+transfer_free_energy_na_water_pc:
+  label: Na+ Gibbs energy of transfer, water to propylene carbonate (TATB scale)
+transfer_free_energy_k_water_pc:
+  label: K+ Gibbs energy of transfer, water to propylene carbonate (TATB scale)
+transfer_free_energy_rb_water_pc:
+  label: Rb+ Gibbs energy of transfer, water to propylene carbonate (TATB scale)
+transfer_free_energy_cs_water_pc:
+  label: Cs+ Gibbs energy of transfer, water to propylene carbonate (TATB scale)
+transfer_multi_cu2_water_pc:
+  label: Cu2+ Gibbs energy of transfer, water to pc
+transfer_multi_hg2_water_pc:
+  label: Hg2+ Gibbs energy of transfer, water to pc
+transfer_multi_cu2_water_acetonitrile:
+  label: Cu2+ Gibbs energy of transfer, water to acetonitrile
+transfer_multi_cu2_water_dmf:
+  label: Cu2+ Gibbs energy of transfer, water to dmf
+transfer_multi_cu2_water_dmso:
+  label: Cu2+ Gibbs energy of transfer, water to dmso
+transfer_multi_cu2_water_methanol:
+  label: Cu2+ Gibbs energy of transfer, water to methanol
+transfer_multi_zn2_water_dmso:
+  label: Zn2+ Gibbs energy of transfer, water to dmso
+transfer_multi_cd2_water_dmso:
+  label: Cd2+ Gibbs energy of transfer, water to dmso
+transfer_multi_hg2_water_acetonitrile:
+  label: Hg2+ Gibbs energy of transfer, water to acetonitrile
+transfer_multi_hg2_water_dmso:
+  label: Hg2+ Gibbs energy of transfer, water to dmso
+transfer_multi_la3_water_methanol:
+  label: La3+ Gibbs energy of transfer, water to methanol
+transfer_multi_ca2_water_acetonitrile_rb_ref:
+  label: Ca2+ Gibbs energy of transfer, water to acetonitrile rb ref
+transfer_multi_ca2_water_acetonitrile_extrapolation:
+  label: Ca2+ Gibbs energy of transfer, water to acetonitrile extrapolation
+transfer_multi_ca2_water_acetonitrile_real_potentials:
+  label: Ca2+ Gibbs energy of transfer, water to acetonitrile real potentials
+transfer_multi_la3_water_acetonitrile:
+  label: La3+ Gibbs energy of transfer, water to acetonitrile
+transfer_multi_mg2_water_pc:
+  label: Mg2+ Gibbs energy of transfer, water to pc
+transfer_multi_zn2_water_pc:
+  label: Zn2+ Gibbs energy of transfer, water to pc
+transfer_multi_ba2_water_pc:
+  label: Ba2+ Gibbs energy of transfer, water to pc
+dfg_aq_li:
+  label: conventional aqueous Gibbs energy of formation of Li+
+s_aq_li:
+  label: conventional aqueous ionic entropy of Li+
+dfg_aq_ca2:
+  label: conventional aqueous Gibbs energy of formation of Ca2+
+s_aq_ca2:
+  label: conventional aqueous ionic entropy of Ca2+
+dfg_aq_al3:
+  label: conventional aqueous Gibbs energy of formation of Al3+
+s_aq_al3:
+  label: conventional aqueous ionic entropy of Al3+
+dfg_aq_clo4:
+  label: conventional aqueous Gibbs energy of formation of ClO4-
+s_aq_clo4:
+  label: conventional aqueous ionic entropy of ClO4-
+exchange_entropy_al_aq_proxy:
+  label: aqueous exchange entropy proxy, 3 Li+ for Al3+
+exchange_entropy_al_crystal_bound:
+  label: exchange entropy bound, Al(ClO4)3 against 3 LiClO4 (gap)
+s0_cameta_glass:
+  label: Ca(PO3)2 glass standard entropy
+h_cryst_cameta_glass:
+  label: Ca(PO3)2 glass crystallisation enthalpy
+dfh_al_pometa3:
+  label: Al(PO3)3 enthalpy of formation
+dfg_al_pometa3:
+  label: Al(PO3)3 Gibbs energy of formation
+s_al_pometa3:
+  label: Al(PO3)3 standard entropy
+polyp_al_log_beta1_linear_chain_unit_w15:
+  label: log10 stability constant, Al3+ with a linear polyphosphate chain unit (1:1)
+polyp_ads_alumina_gamma_max:
+  label: polyphosphate monolayer capacity on alumina
+polyp_ads_alumina_k_langmuir:
+  label: polyphosphate Langmuir constant on alumina
+polyp_ads_alumina_layer_thickness:
+  label: adsorbed polyphosphate layer thickness on alumina
+log10_ksp_aragonite_25c_i0:
+  label: log10 solubility product of aragonite, 25 C, zero ionic strength
+p_c_site_square:
+  label: site percolation threshold, square lattice
+p_c_site_triangular:
+  label: site percolation threshold, triangular lattice
+p_c_site_sc:
+  label: site percolation threshold, simple cubic lattice
