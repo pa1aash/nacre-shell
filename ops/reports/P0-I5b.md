@@ -1,7 +1,9 @@
 # P0-I5b (integrator, day 5): BLOCKED, not pushed
-1. Merge: preprint/p0-w8 (18721b8) merged --no-ff as f7f466e; only text, linter, tests, report and state files differ; no pyproject change, no lock change.
-2. `uv run nacre verify --strict` (once, ~14 min): FAIL (1 fail, 1 inactive, 8 pass). Failing check: tests. Linters, attribution, identity, signatures, lane ownership, frozen paths, provenance, basenames pass.
-3. Failing tests (full pytest, 5 failed): tests/retro/test_retro_package.py::{test_committed_package_passes_with_placeholders_listed, test_release_mode_fails_on_placeholders, test_copied_package_passes, test_credit_roles_checked_against_taxonomy, test_package_check_command}. Cause: SG26W ("first" without "audit") in preprint/package/submission_checklist.md lines 12, 25, 35, 38 and requirements_recheck.md line 32. W8.1b cleared preprint/paper and claims, not preprint/package.
-4. Second blocker: the pytest process is SIGKILLed (exit 137) in tests/structures/test_structure_builders.py::test_no_clashes_in_committed, also when run alone (memory, 8 GB). The run stops at about 83%, so tests after it never ran and the passed count is unknown (about 1560 passed before the kill).
-5. Not mechanical in integrator paths: preprint/package is lane-owned (W2/W8), and the kill needs a test or memory decision. Nothing was fixed or pushed; no lanes fast-forwarded; PH-W4.2 track check not run; credit.tex gitignore skipped (report text unclear).
-6. Needed: reword or exempt the five package lines (W8 or W2), and rule on the killed test (reduce memory, mark heavy, or run on a larger host); then rerun strict verify.
+1. Merges: w8 (18721b8) already in as f7f466e; w2 (eb73111) merged --no-ff as bd23541; only package text, report and state files differ; no pyproject or lock change.
+2. The w2 merge clears the SG26W hits in preprint/package that failed the earlier strict run (5 retro tests); not re-run as a separate step.
+3. `uv run nacre verify --strict` (one run, killed by hand after about 20 min): the output log stayed empty, the pytest child died by itself at about 10 min and verify then sat idle with no child and no report. No pass or failure list was produced, so strict verify is not a pass.
+4. `uv run pytest -q tests/structures/test_structure_builders.py::test_no_clashes_in_committed` alone: exit 137 (SIGKILL), no output, twice (about 8 min each). It does not pass alone. Memory free was 36-60% at the time.
+5. `uv run nacre verify --quick` on the merged head: PASS (8 pass, 1 inactive), so linters, scope guard, attribution, identity, signatures, ownership, frozen paths, provenance and basenames pass. The remaining blocker is the killed test (inferred, not shown by a strict report).
+6. Not done per the push rule: packet update and zip rebuild, push, lane fast-forwards, track check PH-W4.2.
+7. credit.tex gitignore item dropped: the repository has no such file and CRediT was removed from the guard.
+8. Needs a ruling: run the clash test with more memory headroom or move it to a heavy marker (the test itself was not changed or skipped).
