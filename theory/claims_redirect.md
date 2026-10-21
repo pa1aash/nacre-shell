@@ -228,6 +228,7 @@ as a registered condition, evaluated per row:
 | Premise status | Evidence | Effect on a tier-1 pass (E_lb >= E_c + m_1) |
 |---|---|---|
 | supported | measured transfer or salt-solubility data (water and the cell solvent class) give Delta_G_tr_rel >= 0 for the product ion (`hydration_transfer_ca_water_carbonate`, `hydration_transfer_al_water_carbonate`, with `transfer_free_energy_li_water_pc`) | pass stands, labelled `bracket, premise measured` |
+| supported (computed) | no measured data; computed under `theory/protocol_computational.md` with the benchmark accepted and the credible lower bound Delta_G_tr_rel - k_q u_tr >= 0 for every ionic product (PH-C0, Section 10e) | pass only if E_lb >= E_c + m_1 + u_tr/(Delta_n_Li F), labelled `pass (computed premise)`; without a hard multivalent benchmark at most `indicative` |
 | plausible only | no transfer data for the product ion; Born scaling satisfied | inconclusive, labelled `pass conditional on the transfer premise`; E_lb and E_ub printed |
 | violated | data give Delta_G_tr_rel < 0 | E_lb is replaced by E_solv (the onset in S), and the row is decided with E_solv in place of E_lb |
 
@@ -805,3 +806,204 @@ operator's decision.
   residual-entropy bound is evaluated at its ends.
 - **I20.** Bracket: the anion term is neither needed for E_lb nor able to decide the premise. The pass needs a cation
   transfer in form (A) or (B) and a registered solvent proxy.
+
+### 10e. The computed transfer premise (PH-C0; bracket rule change, verdict-bearing)
+
+Session PH-C0, before any transfer free energy is computed. Authority: the COMPUTATIONAL PACKAGE section of
+`ops/tracks/redirect_plan.md`; the method, the benchmark and the registered conventions are in
+`theory/protocol_computational.md`, and the machine form is `screen_ph.links.K1.premise.computed` of the thresholds
+block (block version 7). Every registered value is proposed; the planning chat rules at cp5a2.
+
+**The rule.** The pass condition of Section 2f, "measured Delta_G_tr_rel >= 0", becomes: the premise is **measured**
+(form A or B of Section 10c), **or computed** under the protocol such that the credible lower bound
+Delta_G_tr_rel_lcb = Delta_G_tr_rel - k_q u_tr is >= 0 at the registered one-sided level q, for every ionic product of
+the row. Here u_tr = f_z R_bench is the benchmark RMSE on the relative quantity times the charge inflation factor of the
+ion. A pass under a computed premise must clear the class edge, the row's margin and the premise uncertainty, combined
+as a linear sum:
+
+    E_lb >= E_c + m_1 + u_tr / (Delta_n_Li F),
+
+and it is labelled `pass (computed premise)` everywhere (ladder, tables, abstract). The physical reason for carrying
+u_tr twice: the lower-bound test establishes the sign at level q, and the edge term keeps the pass true even if the
+premise is wrong by up to one calibrated uncertainty, since E_solv >= E_lb - u_tr/(Delta_n_Li F) whenever
+Delta_G_tr_rel >= -u_tr.
+
+**Conditions.** (i) The benchmark is run first and accepted (R_bench <= R_cap on Na+, K+, Rb+ and Cs+ against Li+ in PC);
+a failed benchmark leaves every row solid-salt-only, with the premise `unresolved (benchmark failed)`. (ii) Cu2+ and Hg2+
+(Jahn-Teller and soft ions) validate the charge dependence only and never stand in for Ca2+ or Al3+ by ion type. (iii)
+Without a hard multivalent measured benchmark, Ca2+ and Al3+ are labelled `extrapolated (ion type)` and reach at most
+`indicative`, never a pass. (iv) An ion whose u_tr is not smaller than its |Delta_G_tr_rel| is `unresolved`. (v) PC is
+the proxy of the cyclic-carbonate class only; ethylene carbonate and the linear carbonates are extrapolations.
+
+**Decision table** (protocol Section 5; D = Delta_G_tr_rel, u = u_tr, E* = E_c + m_1).
+
+| # | Premise | Condition | Tier-1 outcome | Label |
+|---|---|---|---|---|
+| P1 | measured | D minus its stated uncertainty >= 0, E_lb >= E* | pass | `pass (premise measured)` |
+| P2 | computed, hard multivalent benchmark | D - k_q u >= 0, E_lb >= E* + u/(Delta_n_Li F) | pass | `pass (computed premise)` |
+| P3 | as P2 | D - k_q u >= 0, E* <= E_lb < E* + u/(Delta_n_Li F) | inconclusive | `computed premise; edge not cleared` |
+| P4 | computed, no hard multivalent benchmark | as P2 | inconclusive (at most indicative) | `indicative (computed premise, extrapolated (ion type))` |
+| P5 | computed | u < abs(D), D - k_q u < 0 | inconclusive | `computed premise not established` |
+| P6 | computed | D + k_q u < 0 | solid-salt-only; E_solv printed as a comparator | `premise violated (computed)` |
+| P7 | computed | u >= abs(D), charge check failed, or a needed job capped | inconclusive | `unresolved (computed premise)` |
+| P8 | computed | R_bench > R_cap | inconclusive for every row | `unresolved (benchmark failed)` |
+| P9 | none | no data, no accepted computation | inconclusive | `pass conditional on the transfer premise` |
+
+The falsifying side does not depend on the premise. Sequence disclosure: the K1 upper bounds were seen before this rule
+and the protocol were written; both were written and hashed before any transfer value was computed. The scope guard
+allows "thermodynamic viability (computed premise)" for a P2 row and still forbids "works", "protects" and "self-heals"
+outside hypothesis wording.
+
+- **I21.** The computed premise is a weaker kind of evidence than a measurement; it enters only through a credible lower
+  bound and an edge widened by its own uncertainty, and only after a benchmark on the same relative quantity.
+
+### 10f. The coverage criterion for the hydrolysis descriptor (PH-C0, X4)
+
+**Question.** Section 9a needs f_min, the smallest condensed fraction that keeps the film on the condensed side of the
+K1 ladder. The proposal is that the vulnerable orthophosphate fraction must not percolate: f_min = 1 - p_c, with p_c the
+site-percolation threshold of the lattice assumed for the film.
+
+**Derivation.** Let x_ortho = 1 - f_cond be the fraction of film sites that are orthophosphate. Assume (A1) each site is
+orthophosphate independently with probability x_ortho (no correlation of hydrolysed sites); (A2) an orthophosphate site
+fails at its own, lower K1 onset, and a condensed site does not; (A3) a failed site is harmful only through a connected
+path of failed sites (an isolated failed site is enclosed by condensed sites and its oxidation stays local); (A4) the
+film is a regular lattice of one site type. Under A1 to A4 the film's K1 is that of the condensed phase iff the
+failed sites do not form a spanning cluster, which holds (for a large film) iff x_ortho < p_c. So the criterion is
+f_cond > 1 - p_c, and f_min = 1 - p_c.
+
+**Which p_c.** The proposed values (square and triangular lattices) are two-dimensional thresholds. They describe a
+lateral spanning cluster in the plane of the film. That is the right criterion only for reading L: domains that span
+the film thickness (columnar), isolated through-defects tolerated because they stay local (A3 at the substrate), and
+failure that matters only by lateral propagation. For reading T, a film many sites thick in which failure matters by a
+through-thickness path from electrolyte to metal, the threshold is three-dimensional, smaller than the two-dimensional
+ones, so 1 - p_c is larger and the criterion stricter. For a film one site thick, every failed site is a through-path
+and no fraction is tolerated (f_min = 1). The triangular site threshold is exactly 1/2; the others are numerical values
+to be fetched (new W1 keys `p_c_site_square`, `p_c_site_triangular`,
+`p_c_site_sc`, with DOI and locator). The brief's range (f_min from 1 - p_c,square to 1/2)
+is therefore the reading-L range only.
+
+**Ruling.** The form f_min = 1 - p_c is accepted as a conditional criterion under A1 to A4; the two-dimensional range
+alone is rejected as the criterion, because the reading is not fixed by data. Registration (proposed; the planning chat
+rules at cp5a2): f_min is an interval [1 - p_c(reading L), 1 - p_c(reading T)]; H2 (falsified) is evaluated at the lower
+end and H3 (not gating) at the upper end, so that neither verdict depends on the unfixed reading, as the transfer range
+tau_k does for k_eff. A1 is the weakest assumption: hydrolysis starts at the wetted face, so the orthophosphate is
+layered, not random, and a layered vulnerable fraction can fail at any x_ortho. **What the paper may say.** Any K2h
+statement is conditional on f_min ("if a non-percolating orthophosphate fraction is tolerable, then ..."); K2h stays
+report-only, f_min stays a design axis, and no K2h statement gates a row or enters the headline.
+
+## 11. PH-W3.6 registrations (C2 to C6, X4 as ruled)
+
+Session PH-W3.6, lane p0-w3. Everything is symbolic: names of `lit/params.yaml` keys, no literature number. Values and
+verdict text reach the paper only through the generated macros (standing rule 4). Registered in block version 8 of
+`theory/thresholds.md` (`screen_ph.w36`).
+
+### 11a. C2: carbonate K2 framings, and the label "nacre-type"
+
+**K2 framings for carbonate** are calcite, aragonite and ACC (amorphous calcium carbonate, the formation-stage
+precursor). The K2 test for each polymorph pi is the Omega test of Section 3a at every state of the registered grid:
+
+    Omega_bulk(pi) = a_Ca a_CO3 / K_sp(pi) >= 1           pass at the state; Omega_bulk(pi) < 1 means pi dissolves
+
+| Polymorph | K_sp key | Role in the label rule |
+|---|---|---|
+| calcite | `log10_ksp_calcite` | required |
+| aragonite | `log10_ksp_aragonite` | required |
+| ACC | `log10_ksp_acc` (with `acc_hydration_n` for the hydrated product) | reported beside the two; **not required to pass** |
+
+The activities a_Ca and a_CO3 come from the contract speciation at the registered (Ca_T, C_T, pH, I); the framing
+changes only K_sp (one framing per run, Q12). The ACC dose window is reported beside the calcite and aragonite
+windows: ACC is the precursor of the formation stage, not the phase that has to survive in service.
+
+**Label rule.** A row may be labelled `nacre-type` ONLY where aragonite AND calcite both pass K2 (ACC may fail or be
+undetermined and the label stands). Every other carbonate row is labelled `carbonate (calcite)`: a row that fails
+aragonite, a row where aragonite is undetermined (data missing), and every row of a study that has not registered the
+aragonite test. Passing calcite alone never earns `nacre-type`.
+
+**Falsifiability control, per polymorph.** The same test, with the same code path and the same K_sp key, must flag
+undersaturation (Omega_bulk(pi) < 1, dissolution) at the low-dose corner of the registered grid, for each of
+calcite, aragonite and ACC. A polymorph whose control does not flag undersaturation there has an inconclusive K2 in
+every row, whatever its pass pattern, and the rows that depend on it cannot be labelled `nacre-type`. The existing
+supersaturated control of Section 3a is kept beside it.
+
+Which of the two crystalline polymorphs is the more soluble is read from the two keys and printed, never assumed.
+
+### 11b. C3: the verdict label for a K2 pass
+
+The label of a row that passes K2 is, verbatim:
+
+    thermodynamically suitable against dissolution (a necessary condition) for [phase] in [region]
+
+[phase] is the registered polymorph or framing the test was run for (Section 11a); [region] is the registered
+(Ca_T, C_T, pH, I) grid over which Omega_bulk >= 1 holds at every state, named by its grid id, never "the process"
+or "the slurry". The rules that go with the label, in the same section of the paper:
+
+- It does not address Al's own instability above its passivation window and is not evidence of protection. It is a
+  statement about the mineral against its solution at the registered states, and nothing else.
+- The acid-adjusted pH state (`params.ph_slurry_acid_adjusted`) is shown as the incumbent comparator in the same table,
+  evaluated by the same test and printed beside the registered region.
+- No sentence of the paper may use "suitable" without the conditions "for [phase] in [region]" within six words. A
+  sentence that cannot carry both conditions uses the vocabulary of Section 11d instead.
+
+### 11c. C4: the low-voltage wording
+
+**Class.** The low-voltage class is **not excluded** at the nominal cutoff (the C_lo class of Section 2e,
+`regimes.R-cell.parameters.cutoff_classes`), with a cutoff of 4 V registered as a sensitivity line beside it (a
+registered design cutoff, not a result). Both are read off the K1 verdict table of Section 2c for the carbonate row and
+the phosphate rows, per cutoff, and the word "excluded" is used only in the sense of Section 11d.
+
+**Wording rule.** The paper words the claim as
+
+    low voltage up to about [tier-2 onset]
+
+where [tier-2 onset] is the number E_svc of the tier-2 row of the ladder (the best record, class A or B outranking C,
+Section 2b), emitted by a macro from the hash-pinned ladder file together with the id of that row (macro for the row
+identity, macro for the number). Neither the number nor the row is ever typed. If no tier-2 row exists for the claimed
+phase, the phrase is not written and the row reads `undetermined (data missing)`.
+
+**The 4 V line.** At the 4 V sensitivity line the carbonate row is close to falsification: the tier-1 crossover (E_x-,
+Section 2e) and the tier-2 onset both come from the ladder files by macro, and the paper prints them beside the 4 V
+line. The sentence "close to falsification" is emitted only when the generated predicate holds (E_x- lies within the
+margin m_1 of the 4 V line, or the tier-2 onset lies within m_svc of it); otherwise the plain crossover and onset are
+printed and the sentence is dropped. Proposed; the planning chat rules at cp5b.
+
+### 11d. C5: the regime-table vocabulary
+
+The regime table of the paper uses exactly these five terms, and no other verdict word:
+
+| Term | Meaning | Source of the entry |
+|---|---|---|
+| excluded | falsified at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed | K1 verdict table, Section 2c |
+| not excluded | not falsified, with a feasible or kinetically stabilised K1 verdict (class A or B named) | K1 verdict table, Section 2c |
+| thermodynamically suitable against dissolution (a necessary condition) for [phase] in [region] | K2 passes at every state of the registered grid, label text of Section 11b | K2 test of Section 11a |
+| open | not falsified, no lower bound: the test is inconclusive on both sides, or the bracket contains the cutoff | verdict row 6 of Section 2c |
+| undetermined | data missing: a gap key, an unbenchmarked number or an unregistered sink (`undetermined (data missing)`) | verdict row 7 of Section 2c |
+
+Every cell is **generated** from the hash-pinned ladder and the production outputs only: the ladder file, the margins
+file and the production verdict files named in the blocks of `theory/thresholds.md`, through the macro generator. No
+cell is typed, and a cell with no source in those files reads `undetermined`. The term "suitable" appears only inside
+the full label text of Section 11b.
+
+### 11e. X4 as ruled: the f_min interval
+
+f_min is registered as the interval from 1 - p_c(2D lateral) to 1 - p_c(3D through-thickness), reported as a
+sensitivity:
+
+    f_min in [ 1 - p_c_site_square , 1 - p_c_site_sc ]        (keys `p_c_site_square`, `p_c_site_sc`)
+
+The 2D lateral end uses the square lattice, the larger of the two 2D thresholds, so the lowest f_min; the triangular
+site threshold (`p_c_site_triangular`) is a lattice sensitivity inside the 2D range, printed beside it. The 3D
+through-thickness end uses the simple cubic lattice. H2 (falsified) is evaluated at the lower end and H3 (not gating) at
+the upper end, as in Section 10f; a film one site thick has f_min = 1. **K2h is report-only**: no K2h statement gates a
+row or enters the headline, f_min stays a design axis, and every statement is conditional on A1 to A4 of Section 10f.
+Against PH-C0's registration the form and the use are unchanged; the keys are renamed to the W1 names and the lateral
+end is fixed to the square lattice (PH-C0 left the 2D lattice open). The interval is therefore re-registered in block
+version 8; the percolation keys are created by PH-W1.6 and no value appears here.
+
+### 11f. C6: status lines
+
+- The bracket rule of block version 7 (Section 10e) is **inactive in v1**: E_lb is pending, so no tier-1 pass is possible
+  and every row stays solid-salt-only for the pass edge.
+- The protocol hashes of PH-C0 (`theory/protocol_computational.md` and the earlier thresholds block) are informational;
+  they gate nothing.
+- R_cap, the t-quantile and the cluster sizes defer to v2.
+- The abstract order is not set here; the integrator adds it to the plan text. `ops/tracks/*` is not edited.

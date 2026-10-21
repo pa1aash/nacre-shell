@@ -813,7 +813,16 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `thresholds.K1.margin_expt` | m_expt (per phase, framing, reaction, sink) | derived (generated entry margins_v6, PH-W3.2) | screen_ph K1, K1 amorphous |
 | `thresholds.K1.margin_dft` | m_E (per reaction) | derived (margins_v6; not set for any phosphate row) | screen_ph K1 where the expt route is missing |
 | `thresholds.K1.margin_service` | m_svc | literature (reading uncertainty of a tier-2 record) | screen_ph K1 tier 2 |
+| `thresholds.K1.premise_uncertainty` | u_tr | derived (benchmark RMSE times the charge inflation factor; theory/protocol_computational.md Rule 4a) | screen_ph K1 computed premise |
+| `thresholds.K1.premise_rmse_cap` | R_cap | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise (benchmark acceptance) |
+| `thresholds.K1.premise_inflation` | f_z | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise |
+| `thresholds.K1.premise_level` | q | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise |
 | `params.hydrolysis_f_min` | f_min | registration (set with the K1 rows; PH-W3.2) | screen_ph K2h |
+| `params.log10_ksp_aragonite` | K_sp (aragonite) | literature (key created by PH-W1.6) | screen_ph.w36 carbonate K2, label rule |
+| `params.log10_ksp_acc` | K_sp (ACC) | literature | screen_ph.w36 carbonate K2 (reported, not required) |
+| `params.p_c_site_square` | p_c (2D lateral, square) | literature (key created by PH-W1.6) | screen_ph K2h f_min interval, lower end |
+| `params.p_c_site_triangular` | p_c (2D lateral, triangular) | literature (PH-W1.6) | screen_ph K2h f_min, lattice sensitivity |
+| `params.p_c_site_sc` | p_c (3D through-thickness, simple cubic) | literature (PH-W1.6) | screen_ph K2h f_min interval, upper end |
 
 The C2-to-C3 inputs that the thresholds consume through Delta_gamma_ads are the existing priors
 `Gamma_s`, `delta_s`, `c_bulk` and `gamma_sl0`. `gamma_sl0` is new in contract v2 and replaces a
@@ -827,7 +836,7 @@ checks that every expression parses, that only registered ids appear, and that e
 unit of its quantity.
 
 ```thresholds
-version: 6
+version: 8
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
@@ -845,6 +854,12 @@ revised_v6: {session: PH-W3.2, rule: 'numeric margins of screen_ph for the cp5 f
              inputs: 'PH-W5.1 ladder, per-reaction budgets, phosphate benchmark and Al-O-H window (lane p0-w5); lit/params.yaml (lane p0-w1)',
              disclosure: 'the margins are derived from PH-W5.1 outputs, which existed and were read; no edge, comparator or rule of block version 5 changed except the K1 margin params paths',
              log: theory/thresholds.md Section 7}
+revised_c0: {session: PH-C0, rule: 'computed transfer premise (bracket rule change, verdict-bearing): measured, OR computed under theory/protocol_computational.md with the credible lower bound >= 0; registered conventions in screen_ph.links.K1.premise.computed (proposed; the planning chat rules at cp5a2)',
+             authority: theory/protocol_computational.md, theory/claims_redirect.md Section 10e,
+             written_before_any_transfer_value_computed: true, disclosure: 'the K1 upper bounds (PH-W5.1 ladder) were seen before the protocol was written'}
+revised_w36: {session: PH-W3.6, rule: 'carbonate K2 polymorph framings and the label rule, verdict-label text, low-voltage wording, regime vocabulary, f_min interval keys (screen_ph.w36)',
+              authority: theory/claims_redirect.md Section 11, status: 'proposed; the planning chat rules at cp5b', no_value_computed: true,
+              disclosure: 'registered after the K1 ladder outputs and the carbonate K2 results existed and were seen; no carbonate link, edge or margin changed'}
 contract_version: 6
 decision:
   statistic: band_mass
@@ -1335,6 +1350,24 @@ screen_ph:
     K4: {m_S: 'unchanged (thresholds.C4.margin_S_spread, zero: the priors carry the method error)'}
   # END generated margins_v6
   proceed_rule: 'K3 and K4 run unless the K1 verdict is falsified at every registered cutoff class (cp4 F1)'
+  w36:
+    carbonate_k2:
+      framings: [calcite, aragonite, ACC]
+      test: 'Omega_bulk(pi) = a_Ca a_CO3 / K_sp(pi) >= 1 at every state of the registered (Ca_T, C_T, pH, I) grid'
+      keys: {calcite: log10_ksp_calcite, aragonite: log10_ksp_aragonite, ACC: log10_ksp_acc}
+      required_for_nacre_type: [calcite, aragonite]
+      reported_not_required: [ACC]
+      labels: {nacre-type: 'aragonite AND calcite pass K2', otherwise: 'carbonate (calcite)'}
+      falsifiability_control: 'the same test flags undersaturation (Omega_bulk < 1) at the low-dose corner of the grid, for each polymorph; otherwise that polymorph is inconclusive in every row'
+      authority: claims_redirect Section 11a
+    low_voltage:
+      class: not excluded at the nominal cutoff (regimes.R-cell.parameters.cutoff_classes, C_lo)
+      sensitivity_line: {E_c_V: [4], unit: V, role: sensitivity, not a class}
+      wording: 'low voltage up to about [tier-2 onset]'
+      number_source: 'macro from the hash-pinned ladder (E_svc of the best tier-2 row; the row id by macro too); never typed'
+      no_tier2_row: 'phrase not written; row undetermined (data missing)'
+      carbonate_at_sensitivity_line: 'close to falsification; sentence emitted only if the generated predicate holds (E_x- within m_1 of the line, or tier-2 onset within m_svc of it)'
+      authority: claims_redirect Section 11c
   links:
     K1:
       regime: R-cell
@@ -1345,9 +1378,11 @@ screen_ph:
           quantity: E_lb
           comparator: '>='
           edge: E_c + m_expt
-          requires: 'transfer premise Delta_G_tr_rel >= 0 supported by data; plausible only -> inconclusive (pass conditional on the transfer premise); violated -> E_solv replaces E_lb'
+          requires: 'transfer premise Delta_G_tr_rel >= 0 supported: measured (form A or B), or computed (premise.computed, PH-C0); plausible only -> inconclusive (pass conditional on the transfer premise); violated -> E_solv replaces E_lb'
           params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.K1.margin_expt}
           where_expt_missing: {edge: E_c + m_E, label: DFT-decided, params: {m_E: thresholds.K1.margin_dft}}
+          where_premise_computed: {edge: E_c + m_expt + u_tr/(Delta_n_Li*F_c), label: pass (computed premise), combine: linear sum,
+                                   params: {u_tr: thresholds.K1.premise_uncertainty}}
         - id: K1_falsify
           quantity: E_ub
           comparator: '<'
@@ -1371,7 +1406,31 @@ screen_ph:
       anion_consumed: 'a reaction that consumes a solvated anion has no E_lb (solid-salt-only)'
       premise: {quantity: Delta_G_tr_rel, comparator: '>=', edge: '0', status: [supported, plausible_only, violated],
                 params: [params.hydration_transfer_ca_water_carbonate, params.hydration_transfer_al_water_carbonate,
-                         params.transfer_free_energy_li_water_pc]}
+                         params.transfer_free_energy_li_water_pc],
+                computed: {
+                  authority: theory/protocol_computational.md (Rules 1 to 6),
+                  status_note: 'proposed; the planning chat rules at cp5a2',
+                  target: 'Delta_G_tr_rel = DG_tr(M) - z DG_tr(Li+), water to PC, one method (cluster-continuum; xtb, PySCF or Psi4)',
+                  test: {quantity: Delta_G_tr_rel_lcb, comparator: '>=', edge: '0', params: {u_tr: thresholds.K1.premise_uncertainty}},
+                  lower_bound: 'Delta_G_tr_rel - k_q u_tr; k_q = one-sided Student-t quantile at level q with N_bench degrees of freedom',
+                  conventions: {
+                    rmse_cap: {primary: 12, plan_value: 15, unit: kJ/mol, applies_to: 'R_bench over set A (Na+, K+, Rb+, Cs+ against Li+ in PC; TI-077, TT-092 to TT-095)',
+                               conditions: ['not below the data spread on the relative quantity (TT-096 to TT-105)', 'f_2 R_cap/(2 F) <= min m_expt of the Ca rows the premise could decide'],
+                               params: thresholds.K1.premise_rmse_cap},
+                    inflation: {Ca2+: 2, Al3+: 3, both_if_hard_multivalent_benchmark: 2, rule: u_tr = f_z R_bench, params: thresholds.K1.premise_inflation},
+                    level: {one_sided_percent: 95, quantile: Student-t, dof: N_bench, N_bench: 4, params: thresholds.K1.premise_level},
+                    combine: {rule: linear sum, edge: E_c + m_1 + u_tr/(Delta_n_Li F)},
+                    cluster_n: {Li+: 4, Na+: 6, K+: 6, Rb+: 6, Cs+: 6, Ca2+: 6, Al3+: 6, Cu2+: 6, Zn2+: 6, Cd2+: 6, Hg2+: 6, La3+: 8, same_in_every_solvent: true},
+                    n_max: 8,
+                    job_wall_cap: {hours: 4, cores: 16, on_cap: 'capped; dependent results unresolved'}},
+                  resolution: 'resolved iff u_tr < abs(Delta_G_tr_rel); otherwise unresolved',
+                  benchmark_failed: 'R_bench > R_cap: no computed pass anywhere; premise unresolved (benchmark failed)',
+                  charge_check: 'counted multivalent rows (one scale) must satisfy abs(computed - measured) <= f_z R_bench; failure -> that charge unresolved; Cu2+ and Hg2+ validate the charge dependence only',
+                  hard_multivalent: 'absent -> Ca2+ and Al3+ labelled extrapolated (ion type); at most indicative, never pass (computed premise)',
+                  labels: [pass (premise measured), pass (computed premise), 'indicative (computed premise, extrapolated (ion type))', computed premise not established,
+                           premise violated (computed), unresolved (computed premise), unresolved (benchmark failed), pass conditional on the transfer premise],
+                  decision_table: theory/protocol_computational.md Section 5 (rows P1 to P9),
+                  scope: {proxy: 'PC for the cyclic-carbonate class only; EC and linear carbonates are extrapolations', allowed_wording: thermodynamic viability (computed premise)}}}
       class_rule: 'per class: feasible at sup C, falsified at inf C, otherwise partial with crossovers E_lb - m and E_ub + m'
     K1_amorphous:
       role: governing K1 row of the in-situ routes R1 to R3 (ruling C4); the crystalline K1 row is the optimistic upper reference
@@ -1384,6 +1443,8 @@ screen_ph:
           requires: transfer premise supported (as K1_pass)
           params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.K1.margin_expt}
           where_expt_missing: {edge: E_c + m_E, label: DFT-decided, params: {m_E: thresholds.K1.margin_dft}}
+          where_premise_computed: {edge: E_c + m_expt + u_tr/(Delta_n_Li*F_c), label: pass (computed premise), combine: linear sum,
+                                   params: {u_tr: thresholds.K1.premise_uncertainty}}
         - id: K1am_falsify
           quantity: E_ub_glass
           comparator: '<'
@@ -1438,6 +1499,13 @@ screen_ph:
       otherwise: inconclusive, with the flip value t_wet_max at both rates
       evidence_grade: printed beside every verdict
       condensed: oligophosphates count as condensed; only the orthophosphate fraction is lost
+      f_min_criterion: {session: PH-C0 (X4), authority: claims_redirect Section 10f, status: 'proposed; the planning chat rules at cp5a2',
+                        form: 'f_min = 1 - p_c, conditional on A1 to A4 (random sites, local failure, harm only through a spanning cluster, one lattice)',
+                        interval: '[1 - p_c(2D lateral), 1 - p_c(3D through-thickness)] = [1 - params.p_c_site_square, 1 - params.p_c_site_sc]; triangular (params.p_c_site_triangular) a 2D lattice sensitivity; one site thick -> 1 (PH-W3.6 X4: keys renamed, lateral end fixed to the square lattice)',
+                        reported_as: sensitivity,
+                        use: 'K2h_falsify at the lower end, K2h_not_gating at the upper end',
+                        keys: [p_c_site_square, p_c_site_triangular, p_c_site_sc],
+                        reporting: 'report-only; f_min a design axis; any K2h statement conditional on f_min'}
     K3_R1:
       role: falsifying only (ruling C2)
       regime: R-slurry
@@ -1500,6 +1568,17 @@ m (m_expt on the experimental route, m_E where it is missing):
 The vetting of the lower end (thermodynamic cycle, Li-reference consistency, the anion term, and the verdict "holds in
 corrected form, conditionally") is in `claims_redirect.md` Section 2f. Without transfer data for the product ion the
 rule is solid-salt-only for that row: no tier-1 pass is possible there.
+
+**Computed premise (PH-C0, block version 7; verdict-bearing).** The premise is supported if it is measured, OR computed
+under `theory/protocol_computational.md` with the credible lower bound Delta_G_tr_rel - k_q u_tr >= 0 at the registered
+one-sided level q, where u_tr = f_z R_bench is the benchmark RMSE times the charge inflation factor. A pass under a
+computed premise must clear E_c + m + u_tr/(Delta_n_Li F) (linear sum, as for the margins) and is labelled `pass
+(computed premise)` wherever it appears. Without a hard multivalent measured benchmark the Ca2+ and Al3+ results are
+labelled `extrapolated (ion type)` and reach at most `indicative`. A failed benchmark (R_bench > R_cap) leaves every row
+solid-salt-only, with the premise `unresolved (benchmark failed)`. The registered conventions (R_cap, f_z, q, the
+quantile family, the combination, the cluster sizes and the per-job cap) are in `screen_ph.links.K1.premise.computed`,
+all proposed and ruled by the planning chat at cp5a2; the decision table (rows P1 to P9) is in the protocol, Section 5,
+and in `claims_redirect.md` Section 10e.
 
 
 ## 7. Margins of the redirected screen (PH-W3.2, block version 6)

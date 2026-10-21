@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W3.2",
+  "last_session": "PH-W3.6",
   "status": "DONE",
   "day": 5,
   "equation_sheet": {
@@ -231,5 +231,30 @@
       "derivation": "built (up to date, 21 pages)"
     },
     "verify_quick": "not completed: 15 tracked files are dataless (Desktop sync), read times out"
+  },
+  "protocol": {
+    "status": "ready",
+    "sha": "89fc9de83f0371f9ef560aad096ef988b37dd99c",
+    "file": "theory/protocol_computational.md",
+    "sha256_protocol": "57fafbeda8f3535fa4ff654917fb4f93ff9ee0394e3000251348a927c2f1d02e",
+    "sha256_thresholds_block": "5dafce01b9a1d2d6819df6d90cb817cb8cdde4ff7c72f1b6c07dfc795e36f468",
+    "thresholds_block_version": 7,
+    "written_before_any_transfer_value_computed": true,
+    "values": "proposed; the planning chat rules at cp5a2"
+  },
+  "ph_c0": {
+    "report": "ops/reports/P0-W3.PH-C0.md",
+    "protocol_sha": "89fc9de83f0371f9ef560aad096ef988b37dd99c",
+    "x4": "9915772",
+    "x8": "949f351",
+    "check_contract": "PASS (107 functions)",
+    "thresholds_block_version": 7,
+    "sha256_thresholds_block_after_x4": "74ea80dc516d58737870b1ec548abeec7ea5cf65898202271d767ee2ce4e470e"
+  },
+  "ph_w36": {
+    "report": "ops/reports/P0-W3.PH-W3.6.md",
+    "thresholds_block_version": 8,
+    "sha256_thresholds_block": "d92b42e9106e574fd330635fdc0d54e56d4a1dec4a7f38ece93d8bdfe922b04b",
+    "check_contract": "PASS (107 functions)"
   }
 }
