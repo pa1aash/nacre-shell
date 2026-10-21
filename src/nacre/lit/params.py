@@ -162,6 +162,16 @@ def load_symbols(root):
     return {s["id"]: s for s in (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("symbols", [])}
 
 
+def load_interval_overrides(root):
+    """Per-key admissible intervals of the specification (`interval`), for a key whose scale is not the one
+    its symbol's interval assumes (for example a conventional-scale hydration energy, proton set to zero)."""
+    path = Path(root) / "lit" / "corpus" / "params_spec.yaml"
+    if not path.exists():
+        return {}
+    spec = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("params") or {}
+    return {k: v["interval"] for k, v in spec.items() if isinstance(v, dict) and v.get("interval")}
+
+
 def load_grades(root):
     path = Path(root) / TABLE
     if not path.exists():
@@ -171,7 +181,7 @@ def load_grades(root):
 
 
 # ---- validation ------------------------------------------------------------------------------
-def _check_prior(key, e, grades, symbols, bad):
+def _check_prior(key, e, grades, symbols, bad, overrides=None):
     pr = e.get("prior")
     if not isinstance(pr, dict) or pr.get("family") not in FAMILIES:
         bad("prior.family must be one of %s" % sorted(FAMILIES))
@@ -187,7 +197,8 @@ def _check_prior(key, e, grades, symbols, bad):
     src_grades = [grades.get(s) for s in srcs]
     value, rng, transform = e.get("value"), e.get("range"), e.get("transform")
     sym = symbols.get(e.get("symbol"))
-    iv = _interval(sym.get("interval")) if sym and transform == "none" else None
+    text = (overrides or {}).get(key) or (sym.get("interval") if sym else None)
+    iv = _interval(text) if (sym or text) and transform == "none" else None
     if fam in ("normal", "uniform", "loguniform"):
         if not all(_num(pr[k]) for k in FAMILIES[fam]):
             bad("%s prior parameters must be finite numbers" % fam)
@@ -264,6 +275,7 @@ def validate(params, root=None):
     root = Path(root) if root else _util.repo_root()
     doc, errs = params.doc, []
     grades, symbols = load_grades(root), load_symbols(root)
+    overrides = load_interval_overrides(root)
     if doc.get("mock") is not False:
         errs.append("top level: 'mock' must be false")
     entries = doc.get("params")
@@ -316,7 +328,7 @@ def validate(params, root=None):
         known = sorted(grades[s] for s in srcs if s in grades)
         if (known[0] if known else None) != e["best_grade"]:
             bad("best_grade %r is not the best grade of the sources (%r)" % (e["best_grade"], known[0] if known else None))
-        _check_prior(key, e, grades, symbols, bad)
+        _check_prior(key, e, grades, symbols, bad, overrides)
         role = e.get("role", "primary")
         if role not in ROLES:
             bad("role %r not in %s" % (role, ROLES))

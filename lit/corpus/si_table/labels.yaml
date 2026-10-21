@@ -1147,3 +1147,11 @@ polyp_ads_alumina_k_langmuir:
   label: polyphosphate Langmuir constant on alumina
 polyp_ads_alumina_layer_thickness:
   label: adsorbed polyphosphate layer thickness on alumina
+log10_ksp_aragonite_25c_i0:
+  label: log10 solubility product of aragonite, 25 C, zero ionic strength
+p_c_site_square:
+  label: site percolation threshold, square lattice
+p_c_site_triangular:
+  label: site percolation threshold, triangular lattice
+p_c_site_sc:
+  label: site percolation threshold, simple cubic lattice

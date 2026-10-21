@@ -8,8 +8,8 @@ meta:
   spec: lit/corpus/params_spec.yaml
   rule: lit/corpus/params_README.md
   rule_sha256: d9c84962a675d73e82bd843ed949faf8f76bf6a39419cdf3428c04ef5c77d598
-  evidence_table_sha256: 83a91293901bfb3c4112ecf4a03a2cee49e0e7da0b7420e255e924c1426efcef
-  generated_utc: '2026-10-21T20:34:27Z'
+  evidence_table_sha256: 41962fe8d194e2d2645b111dca3521909296614f20b3c33b2115bbaa90efe798
+  generated_utc: '2026-10-21T21:30:00Z'
   session: P0-W1.2
   inputs_from:
   - theory/derivation_body.tex section 11
@@ -11365,6 +11365,124 @@ params:
     role: sensitivity
     of: hydration_free_energy_li
     added_in: P0-W1.PH-W1.3
+    flags: []
+  log10_ksp_aragonite_25c_i0:
+    symbol: K_sp
+    transform: log10
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: single-source
+    value: -8.336
+    range:
+      min: -8.376
+      max: -8.296
+    prior:
+      family: uniform
+      low: -8.376
+      high: -8.296
+    rule: U1
+    sources:
+    - TT-131
+    best_grade: C
+    conditions: aragonite, 298.15 K, I -> 0 (activity basis), CaCO3 = Ca2+ + CO3 2-
+    correlation_group: null
+    notes: 'Labelled alternative to log10_ksp_aragonite (a rounded -8.34 read from tertiary compilations, 20 to
+      25 C, no uncertainty). The row prints -8.336 +- 0.020 (1 sigma) at 25 C and zero ionic strength, from Plummer
+      and Busenberg 1982 (paywalled, not read) through the WATEQ4F table. TC-045 and TC-046 round the same original.
+      Check against evaluated formation energies (not admitted, a different quantity): DfG aragonite -1127.4 (TI-004),
+      Ca2+ -553.6 (TI-012), CO3 2- -527.0 (TI-014) kJ/mol give DrG 46.8 kJ/mol, log10 Ksp -8.20 +- 0.32, which agrees
+      with the printed value within one standard uncertainty. Whether a consumer reads this key in place of the
+      primary is decided at cp5b. Comparators (not admitted, E2): TC-045, TC-046.'
+    method: 'U1: uniform over the sourced span; 1 admitted row(s), 1 independent original(s)'
+    role: sensitivity
+    of: log10_ksp_aragonite
+    added_in: P0-W1.PH-W1.6
+    flags:
+    - single_source
+  p_c_site_square:
+    symbol: p_c_site_square
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 0.59274605809
+    range:
+      min: 0.59274595
+      max: 0.59274647
+    prior:
+      family: normal
+      mean: 0.59274605809
+      sd: 1.13137085009e-07
+    rule: N1
+    sources:
+    - TT-132
+    - TT-133
+    best_grade: B
+    conditions: site percolation threshold of the infinite square lattice
+    correlation_group: null
+    notes: Coverage criterion f_min = 1 - p_c of the hydrolysis film. A mathematical constant of the lattice, so
+      the conditions of the table do not apply. The wider Monte Carlo entries of the Feng table (same paper) are
+      not counted again.
+    method: 'N1: 2 concordant independent grade A/B values; inverse-variance mean, sd = max(u_w, s_x); 2 admitted
+      row(s), 2 independent original(s)'
+    added_in: P0-W1.PH-W1.6
+    role: primary
+    flags: []
+  p_c_site_triangular:
+    symbol: p_c_site_triangular
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: single-source
+    value: 0.5
+    range:
+      min: 0.5
+      max: 0.5
+    prior:
+      family: fixed
+      value: 0.5
+    rule: P1
+    sources:
+    - TT-134
+    best_grade: C
+    conditions: site percolation threshold of the infinite triangular lattice
+    correlation_group: null
+    notes: Printed as an exact value in the table of the paper. A point without an uncertainty (P1).
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    added_in: P0-W1.PH-W1.6
+    role: primary
+    flags:
+    - single_source
+  p_c_site_sc:
+    symbol: p_c_site_sc
+    transform: none
+    unit: '1'
+    regimes:
+    - R-slurry
+    status: sourced
+    value: 0.31160805
+    range:
+      min: 0.3116055
+      max: 0.3116107
+    prior:
+      family: uniform
+      low: 0.3116055
+      high: 0.3116107
+    rule: U1
+    sources:
+    - TT-135
+    - TT-136
+    best_grade: B
+    conditions: site percolation threshold of the infinite simple cubic lattice
+    correlation_group: null
+    notes: Lorenz and Ziff 1998 (abstract) and the entry of Ballesteros et al. in their Table I; a grade C row is
+      admitted, so the prior is uniform over the sourced span.
+    method: 'U1: uniform over the sourced span; 2 admitted row(s), 2 independent original(s)'
+    added_in: P0-W1.PH-W1.6
+    role: primary
     flags: []
   hydration_standard_state_offset:
     symbol: Delta_G_hyd_standard_state_offset

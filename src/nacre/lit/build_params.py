@@ -277,7 +277,7 @@ def _build_entry_core(key, spec, rows, symbols):
     unit = str(spec["unit"])
     transform = spec.get("transform", "none")
     sym = symbols.get(spec["symbol"]) if transform == "none" else None
-    iv = _interval(sym)
+    iv = P._interval(spec["interval"]) if spec.get("interval") else _interval(sym)
     adm_specs = spec.get("admit") or []
     vals = []
     for adm in adm_specs:

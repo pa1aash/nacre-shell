@@ -4318,6 +4318,10 @@ params:
     unit: J mol^-1
     regimes: [R-cell]
     conditions: Li+ conventional aqueous solvation free energy (proton set to zero), 298 K, 1 mol/L in both phases
+    interval: "(-oo, oo)"
+    interval_reason: >-
+      Conventional scale (proton set to zero): Li+ is positive here (+575.3 kJ/mol), while the symbol Delta_G_hyd
+      (interval (-oo, 0)) is the absolute scale. The key's own admissible interval replaces the symbol's.
     admit:
       - {row: TT-056, original: tissandier-1998}
       - {row: TT-057, original: fawcett-1999}
@@ -4335,6 +4339,59 @@ params:
     notes: >-
       Li+ hydration Gibbs energy on the cluster-pair proton scale (D1): the conventional value plus the proton value. The
       Marcus-scale key hydration_free_energy_li differs by the proton convention.
+  log10_ksp_aragonite_25c_i0:
+    added_in: P0-W1.PH-W1.6
+    symbol: K_sp
+    transform: log10
+    unit: "1"
+    regimes: [R-slurry]
+    role: sensitivity
+    of: log10_ksp_aragonite
+    conditions: aragonite, 298.15 K, I -> 0 (activity basis), CaCO3 = Ca2+ + CO3 2-
+    admit:
+      - {row: TT-131}
+    comparators: [TC-045, TC-046]
+    notes: >-
+      Labelled alternative to log10_ksp_aragonite (a rounded -8.34 read from tertiary compilations, 20 to 25 C, no
+      uncertainty). The row prints -8.336 +- 0.020 (1 sigma) at 25 C and zero ionic strength, from Plummer and
+      Busenberg 1982 (paywalled, not read) through the WATEQ4F table. TC-045 and TC-046 round the same original. Check
+      against evaluated formation energies (not admitted, a different quantity): DfG aragonite -1127.4 (TI-004),
+      Ca2+ -553.6 (TI-012), CO3 2- -527.0 (TI-014) kJ/mol give DrG 46.8 kJ/mol, log10 Ksp -8.20 +- 0.32, which agrees
+      with the printed value within one standard uncertainty. Whether a consumer reads this key in place of the
+      primary is decided at cp5b.
+  p_c_site_square:
+    added_in: P0-W1.PH-W1.6
+    symbol: p_c_site_square
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: site percolation threshold of the infinite square lattice
+    admit:
+      - {row: TT-132, original: feng-deng-blote-2008}
+      - {row: TT-133, original: newman-ziff-2001}
+    notes: >-
+      Coverage criterion f_min = 1 - p_c of the hydrolysis film. A mathematical constant of the lattice, so the
+      conditions of the table do not apply. The wider Monte Carlo entries of the Feng table (same paper) are not counted again.
+  p_c_site_triangular:
+    added_in: P0-W1.PH-W1.6
+    symbol: p_c_site_triangular
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: site percolation threshold of the infinite triangular lattice
+    admit:
+      - {row: TT-134}
+    notes: Printed as an exact value in the table of the paper. A point without an uncertainty (P1).
+  p_c_site_sc:
+    added_in: P0-W1.PH-W1.6
+    symbol: p_c_site_sc
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: site percolation threshold of the infinite simple cubic lattice
+    admit:
+      - {row: TT-135}
+      - {row: TT-136, original: ballesteros-1997}
+    notes: >-
+      Lorenz and Ziff 1998 (abstract) and the entry of Ballesteros et al. in their Table I; a grade C row is admitted,
+      so the prior is uniform over the sourced span.
   hydration_standard_state_offset:
     added_in: P0-W1.PH-W1.3
     symbol: Delta_G_hyd_standard_state_offset
