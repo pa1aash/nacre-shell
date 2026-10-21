@@ -433,6 +433,42 @@ days:
     model: Sonnet
     master_trace: none
     requires: []
+  - id: PH-W1.6
+    lane: p0-w1
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-W3.6
+    lane: p0-w3
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-W2.4b
+    lane: p0-w2
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-W6.1
+    lane: p0-w6
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-W4.2e
+    lane: p0-w4
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
+  - id: PH-I5d
+    lane: p0-int
+    day: 5
+    model: Sonnet
+    master_trace: none
+    requires: []
 - day: 6
   status: pending
   opened_utc: null
@@ -470,36 +506,6 @@ days:
     model: Sonnet
     master_trace: none
     requires: []
-  - id: PH-C1
-    lane: p0-w5
-    day: 6
-    model: Sonnet
-    master_trace: none
-    requires: [cp5]
-  - id: PH-C2
-    lane: p0-w5
-    day: 6
-    model: Sonnet
-    master_trace: none
-    requires: [cp5]
-  - id: PH-C3
-    lane: p0-w5
-    day: 6
-    model: Sonnet
-    master_trace: none
-    requires: [cp5]
-  - id: PH-W3.5
-    lane: p0-w3
-    day: 6
-    model: Opus
-    master_trace: none
-    requires: [cp5]
-  - id: PH-W5.4b
-    lane: p0-w5
-    day: 6
-    model: Sonnet
-    master_trace: none
-    requires: [cp5]
 - day: 7
   status: pending
   opened_utc: null
@@ -945,6 +951,12 @@ decisions:
 - {id: D60, date: '2026-10-21', decision: 'Binding rulings: rows 1 and 9 stay unresolved; row 6 relative form DG_tr_rel; row 7 E_lb from conventional aqueous DfG (hydration keys comparison only); row 8 window_margin unbound from phosphate rows.', reason: 'Planning-chat rulings on the symbol bindings.'}
 - {id: D61, date: '2026-10-21', decision: 'D36 is amended: CPU compute is allowed ONLY for PH-C* sessions under jobs/preprint/**, one rented 64-core node started and stopped by the operator, budget about 15 to 20 node-hours, hard cap USD 150, stop and ask the planning chat at USD 100, every job and its cost logged in jobs/ledger/p0-w5.jsonl, no GPU.', reason: 'Computed bracket premise needs cluster-continuum DFT.'}
 - {id: D62, date: '2026-10-21', decision: 'X4, X7, X8 stay non-gating but are listed in cp5a2.', reason: 'Planning-chat ruling on non-gating fixes.'}
+- {id: D63, date: '2026-10-21', decision: 'Regime-matched repositioning. Working title: Thermodynamic screening of nacre- and bone-inspired barriers for aluminium current collectors in fluorine-free lithium-ion cells (final wording at cp6).', reason: 'Planning-chat ruling; see the REGIME FRAME section of ops/tracks/redirect_plan.md.'}
+- {id: D64, date: '2026-10-21', decision: 'v1 is compute-free. The D61 compute exception is suspended; the PH-C0 protocol and bracket rule v7 are kept as v2 artifacts.', reason: 'The computed premise moves to v2; no pods and no spending in v1.'}
+- {id: D65, date: '2026-10-21', decision: 'cp5 PASS conditions: (i) X1 to X8 applied; (ii) housekeeping done (thresholds copy from block v8, the two Li+ keys repaired with no value changed, deviations filed, manifest re-hashed); (iii) aragonite in params.yaml with K_sp, uncertainty and source, registered as a K2 framing, and the K2 falsifiability controls re-pass on it; (iv) the scope-guard changes committed; (v) the verdict-label text in claims_redirect.md. p0-cp5 is created only then, followed by one short note to the planning chat with the new hashes and the aragonite row.', reason: 'Planning-chat ruling on the cp5a2 packet.'}
+- {id: D66, date: '2026-10-21', decision: 'Label and polymorph rules (C1 to C5) and the abstract order: (1) regime map and design rule; (2) what the ladder excludes; (3) the narrow suitability statement labelled a necessary condition; (4) the conditional predictions. Aragonite is a K2 framing; nacre-type labels a row only where aragonite AND calcite pass K2; every other carbonate row reads carbonate (calcite).', reason: 'Planning-chat ruling.'}
+- {id: D67, date: '2026-10-21', decision: 'f_min is registered as the interval 1 - p_c(2D square lateral) to 1 - p_c(3D simple cubic through-thickness); triangular is a lattice sensitivity; K2h is report-only (X4 accepted).', reason: 'Planning-chat ruling on X4.'}
+- {id: D68, date: '2026-10-21', decision: 'Vocabulary mapping: the data files say falsified and the regime table says excluded (recorded for confirmation by the planning chat).', reason: 'W6.1 and the regime table share one mapping.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1265,6 +1277,38 @@ lane_notes:
   day: 5
   lanes: [p0-w4]
   note: '(PH-W4.2a) CP4 fixes F1 proceed rule, F5 panel, STAGE field. D53.'
+deferred_v2:
+# D64: v1 is compute-free; these sessions depend on the computed premise and move to v2.
+  - id: PH-C1
+    lane: p0-w5
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
+  - id: PH-C2
+    lane: p0-w5
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
+  - id: PH-C3
+    lane: p0-w5
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
+  - id: PH-W3.5
+    lane: p0-w3
+    day: 6
+    model: Opus
+    master_trace: none
+    requires: [cp5]
+  - id: PH-W5.4b
+    lane: p0-w5
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
