@@ -1,11 +1,12 @@
 {
-  "last_session": "PH-W8.1b",
+  "last_session": "PH-W8.1c",
   "status": "DONE",
   "day": 5,
   "artifacts": [
     "ops/reports/P0-W8.3.md",
     "ops/reports/P0-W8.PH-W8.1.md",
     "ops/reports/P0-W8.PH-W8.1b.md",
+    "ops/reports/P0-W8.PH-W8.1c.md",
     "preprint/claims.yaml",
     "preprint/generated/sources.yaml",
     "preprint/paper/bib/provenance.jsonl",
@@ -48,6 +49,7 @@
     "skeleton retargeted: design, predictions added; inputs and outlook removed; carbonate text marked 'carbonate control (frozen)'",
     "ledger: 129 entries (65 redirect, 64 carbonate-era), 22 conditional, 13 does-not-claim; CRediT removed; SG17W lint in lint_scope",
     "outstanding: NS6 id collision (CL-V09), planned K1 macros, legacy figure and table map",
-    "PH-W8.1b: lint-scope exemptions SG26W audit, SG27W hypothesis/criterion, SG17W thermodynamic; allow marker implemented; 23 flags cleared; W8.2 adds the marker above the nacre-inspired paragraph"
+    "PH-W8.1b: lint-scope exemptions SG26W audit, SG27W hypothesis/criterion, SG17W thermodynamic; allow marker implemented; 23 flags cleared; W8.2 adds the marker above the nacre-inspired paragraph",
+    "PH-W8.1c: lint-scope SG29W (aragonite exemption) and SG30W (pattern lookahead); title test updated; front.tex regenerated; 183 passed"
   ]
 }

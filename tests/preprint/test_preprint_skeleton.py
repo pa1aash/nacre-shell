@@ -147,7 +147,7 @@ def test_registered_macros_named_in_briefs_exist():
 
 def test_title_macro_is_the_working_title():
     track = yaml.safe_load(paths.track_yaml(REPO).read_text(encoding="utf-8"))["meta"]["title_working"]
-    assert " ".join(track.split()) == ("Thermodynamic screening of bone-inspired calcium phosphate barriers for "
+    assert " ".join(track.split()) == ("Thermodynamic screening of nacre- and bone-inspired barriers for "
                                        "aluminium current collectors in fluorine-free lithium-ion cells")
     from nacre.preprint import declarations
     assert " ".join(track.split()) in declarations.front_matter(REPO)

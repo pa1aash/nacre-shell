@@ -72,8 +72,10 @@ def test_charter_patterns_are_loaded():
 
 
 def test_warn_block_is_loaded_from_the_charter():
-    assert [rid for rid, _ in lint_scope.warn_rules(REPO)] == ["SG17W", "SG26W", "SG27W"]
-    assert "SG17W" not in [rid for rid, _ in lint_scope.rules(REPO)]
+    assert [rid for rid, _ in lint_scope.warn_rules(REPO)] == ["SG17W", "SG26W", "SG27W", "SG29W", "SG30W"]
+    rule_ids = [rid for rid, _ in lint_scope.rules(REPO)]
+    assert "SG28" in rule_ids and "SG19" in rule_ids
+    assert not {"SG17W", "SG26W", "SG27W", "SG29W", "SG30W"} & set(rule_ids)
 
 
 def test_sg17w_fails_a_planted_sentence_without_thermodynamic(tmp_path):
@@ -128,13 +130,43 @@ def test_sg27w_passes_with_hypothesis_or_criterion(tmp_path):
     assert lint_scope.lint(REPO, [g]) == []
 
 
+def test_sg29w_fails_nacre_type_without_aragonite(tmp_path):
+    f = write(tmp_path / "t.tex", "The nacre-type phases pass the screen.\n")
+    problems = lint_scope.lint(REPO, [f])
+    assert len(problems) == 1 and "SG29W" in problems[0]
+
+
+def test_sg29w_passes_when_the_sentence_names_aragonite(tmp_path):
+    f = write(tmp_path / "t.tex", "Aragonite and calcite both pass, so the row is nacre-type.\n")
+    assert lint_scope.lint(REPO, [f]) == []
+    g = write(tmp_path / "g.tex", "Aragonite is tested. The row is nacre-type.\n")
+    assert len(lint_scope.lint(REPO, [g])) == 1       # another sentence does not count
+
+
+def test_sg30w_fails_thermodynamically_suitable_without_a_scope_word(tmp_path):
+    f = write(tmp_path / "t.tex", "The phase is thermodynamically suitable.\n")
+    problems = lint_scope.lint(REPO, [f])
+    assert len(problems) == 1 and "SG30W" in problems[0]
+    g = write(tmp_path / "g.tex", "The phase is thermodynamically suitable against dissolution, a necessary "
+                                  "condition that holds here for calcite.\n")
+    assert any("SG30W" in p for p in lint_scope.lint(REPO, [g]))       # the scope word is past six words
+
+
+def test_sg30w_passes_with_for_in_or_under_within_six_words(tmp_path):
+    f = write(tmp_path / "t.tex", "The phase is thermodynamically suitable against dissolution (a necessary "
+                                  "condition) for calcite in the window.\n")
+    assert lint_scope.lint(REPO, [f]) == []
+    g = write(tmp_path / "g.tex", "The phase is thermodynamically suitable under these conditions.\n")
+    assert lint_scope.lint(REPO, [g]) == []
+
+
 def test_allow_marker_skips_only_the_nacre_pattern(tmp_path):
-    bare = write(tmp_path / "a.tex", "The start is nacre-inspired.\n")
-    assert any("SG19" in p for p in lint_scope.lint(REPO, [bare]))
-    marked = write(tmp_path / "b.tex", "<!-- sg:allow nacre -->\nThe start is nacre-inspired.\n")
+    bare = write(tmp_path / "a.tex", "The nacre-like architecture is shown.\n")
+    assert any("SG28" in p for p in lint_scope.lint(REPO, [bare]))
+    marked = write(tmp_path / "b.tex", "<!-- sg:allow nacre -->\nThe nacre-like architecture is shown.\n")
     assert lint_scope.lint(REPO, [marked]) == []
     other = write(tmp_path / "c.tex", "<!-- sg:allow nacre -->\nThe nacre-inspired film protects the foil.\n")
     problems = lint_scope.lint(REPO, [other])
     assert problems and not any("SG19" in p for p in problems)
-    unmarked_next = write(tmp_path / "d.tex", "<!-- sg:allow nacre -->\nA.\n\nThe start is nacre-inspired.\n")
-    assert any("SG19" in p for p in lint_scope.lint(REPO, [unmarked_next]))
+    unmarked_next = write(tmp_path / "d.tex", "<!-- sg:allow nacre -->\nA.\n\nThe nacre-like architecture is shown.\n")
+    assert any("SG28" in p for p in lint_scope.lint(REPO, [unmarked_next]))
