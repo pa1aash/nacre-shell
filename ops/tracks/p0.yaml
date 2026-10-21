@@ -19,7 +19,7 @@
 #
 # Exactly one day is open. `nacre track open-day <n>` (integrator, on preprint/p0) closes day n-1 and
 # opens day n with the commit "ops(p0): open day <n>".
-meta: {title_working: Thermodynamic screening of bone-inspired calcium phosphate barriers for aluminium
+meta: {title_working: Thermodynamic screening of nacre- and bone-inspired barriers for aluminium
     current collectors in fluorine-free lithium-ion cells, venue: ChemRxiv, base: preprint/p0}
 lanes:
 - {id: p0-w1, branch: preprint/p0-w1, worktree: ~/Desktop/nacre-shell-p-w1, model: Opus}
