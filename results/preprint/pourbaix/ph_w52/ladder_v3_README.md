@@ -14,7 +14,7 @@ row with `reaction_id` = `ALL` aggregates the reactions of one (phase, framing, 
 | margin_V | registered margin m, V; empty where the budget is incomplete or the margin is symbolic |
 | budget_status | `complete`, `incomplete` (a species lacks an uncertainty or bound), `symbolic: <reason>`, `gap`, `not run` |
 | benchmark_status | the PH-W5.1 benchmark label of the phase; any DFT value appears only here, as a comparator with its measured error |
-| k1_class_lfp, k1_class_42_43, k1_class_44_45 | verdict at the classes LFP-class (3.65 V), 4.2-4.3 V (4.2 to 4.3 V), 4.4-4.5 V (4.4 to 4.5 V) |
+| k1_class_lfp, k1_class_42_43, k1_class_44_45 | verdict at the classes 3.65 V nominal; 4.0 V sourced upper cutoff (3.65 V registered), 4.2-4.3 V (4.2 to 4.3 V), 4.4-4.5 V (4.4 to 4.5 V) |
 | k1_verdict | overall: falsified at every class = falsified; any pass = pass; otherwise undetermined if a class is undetermined and none falsifies; otherwise inconclusive |
 | row_ids | the ph_w51/ladder_v2.csv row this row refines |
 | notes | limiting reaction and crossover, ruling applied, reasons for undetermined, by-bound readings (not verdict bases) |
@@ -36,6 +36,10 @@ Units: V for E_ub_V, E_lb_V, margin_V; kJ/mol in notes.
 - Amorphous rows: margin from the glass data where block v6 has it (Ca(PO3)2 glass, LiPO3 glass); every other amorphous row has a symbolic
   margin (m_am = m_cr + u/(n_e F), correction a gap) and is undetermined. The block's by-bound readings are in notes only.
 - DFT values never decide a verdict (no phosphate reaction qualifies for m_E).
+
+## Class naming and 4.0 V sensitivity (PH-W5.3 X5)
+The first class (column k1_class_lfp, registered as LFP-class at 3.65 V) is named "3.65 V nominal; 4.0 V sourced upper cutoff"; the column name and the
+registered 3.65 V are unchanged. Sensitivity (ladder_v3_sens40.csv): the same rows with 4.0 V as the lowest class edge; no verdict changes (carbonate crossover 4.0248 V, lowest phosphate crossover 4.1464 V, a-TCP r1s).
 
 ## Margin source
 `theory/thresholds.md` at `origin/preprint/p0-w3`: blob `b95f988dfc81763a12da29c278f47c029bebc668`, last changed in `c2c7882af0c7913bd17432157a43a3aca953dff4` (ref tip `e6c86f6b3633248b487f78eeef1acdccfa5be35c`);

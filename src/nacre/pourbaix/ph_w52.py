@@ -165,8 +165,13 @@ def _bound_note(block, phase):
     return None
 
 
-def build(block):
+SENS_EDGE_V = 4.0
+
+
+def build(block, lfp_edge=None):
     cut = cutoffs(block)
+    if lfp_edge is not None:
+        cut["C_lo"] = (lfp_edge, lfp_edge)
     rx = _reaction_rows(block)
     v2 = _read_v2()
     rows = []
@@ -309,16 +314,37 @@ def _write_csv(path, cols, rows):
         w.writerows(rows)
 
 
+def sensitivity_line(rows, sens, lo):
+    """README sentence on the 4.0 V sensitivity, from the two row lists."""
+    cols = ("k1_class_lfp", "k1_class_42_43", "k1_class_44_45", "k1_verdict")
+    changed = [(r["phase"], r["framing"], r["reaction_id"], [(r[c], q[c]) for c in cols if r[c] != q[c]])
+               for r, q in zip(rows, sens) if any(r[c] != q[c] for c in cols)]
+    cross = [(float(r["E_ub_V"]) + float(r["margin_V"]), r) for r in rows
+             if r["reaction_id"] not in ("ALL", "-") and r["budget_status"] == "complete" and r["margin_V"]]
+    cross = [(x, r) for x, r in cross if x > lo]
+    carb = min(x for x, r in cross if r["phase"] == "CaCO3")
+    phos_x, phos = min(((x, r) for x, r in cross if r["phase"] != "CaCO3"), key=lambda t: t[0])
+    head = ("Sensitivity (ladder_v3_sens40.csv): the same rows with 4.0 V as the lowest class edge; "
+            + ("no verdict changes" if not changed else "verdicts change: " + "; ".join(
+                "%s %s %s %s" % (a, b, c, d) for a, b, c, d in changed)))
+    return head + " (carbonate crossover %.4f V, lowest phosphate crossover %.4f V, %s %s)." % (
+        carb, phos_x, phos["phase"], phos["reaction_id"]), changed
+
+
+
 def run():
     block, body, meta = read_block()
     OUT.mkdir(parents=True, exist_ok=True)
     rows = build(block)
     _write_csv(OUT / "ladder_v3.csv", COLUMNS, rows)
+    sens = build(block, SENS_EDGE_V)
+    _write_csv(OUT / "ladder_v3_sens40.csv", COLUMNS, sens)
+    sens_line, _ = sensitivity_line(rows, sens, cutoffs(block)["C_lo"][0])
     (OUT / "margins_v6_block.yaml").write_text(body + "\n", encoding="utf-8")
     wrows = window_rows()
     _write_csv(OUT / "passivation_window_v3.csv", WINDOW_COLS, wrows)
     from nacre.pourbaix import ph_w52_md
-    (OUT / "ladder_v3_README.md").write_text(ph_w52_md.readme(meta, block), encoding="utf-8")
+    (OUT / "ladder_v3_README.md").write_text(ph_w52_md.readme(meta, block, sens_line), encoding="utf-8")
     doc = {"session": SESSION, "generated_utc": provenance.utc_now(), "git_sha": provenance.git_sha(),
            "margins_source": meta, "n_rows": len(rows), "columns": COLUMNS,
            "bracket": {"E_lb": PENDING, "status": "bracket pending PH-W1.3 (hydration_free_energy_clo4 absent at p0-w1; "
@@ -330,7 +356,7 @@ def run():
     return rows, meta
 
 
-OUTPUTS = ("ladder_v3.csv", "ladder_v3_README.md", "passivation_window_v3.csv", "margins_v6_block.yaml", "ph_w52.json")
+OUTPUTS = ("ladder_v3.csv", "ladder_v3_sens40.csv", "ladder_v3_README.md", "passivation_window_v3.csv", "margins_v6_block.yaml", "ph_w52.json")
 
 
 def ledger():

@@ -1,7 +1,7 @@
 """PH-W5.2: text of ladder_v3_README.md (one page)."""
 
 
-def readme(meta, block):
+def readme(meta, block, sens_line):
     rb = block["m_K1_amorphous"]["ruling_b"]
     cr = rb["crystalline_reference_row"]
     cc = block["cutoff_classes"]
@@ -21,7 +21,7 @@ row with `reaction_id` = `ALL` aggregates the reactions of one (phase, framing, 
 | margin_V | registered margin m, V; empty where the budget is incomplete or the margin is symbolic |
 | budget_status | `complete`, `incomplete` (a species lacks an uncertainty or bound), `symbolic: <reason>`, `gap`, `not run` |
 | benchmark_status | the PH-W5.1 benchmark label of the phase; any DFT value appears only here, as a comparator with its measured error |
-| k1_class_lfp, k1_class_42_43, k1_class_44_45 | verdict at the classes {cc['C_lo']['name']} ({cc['C_lo']['E_c_V'][0]} V), {cc['C_mid']['name']} ({cc['C_mid']['E_c_V'][0]} to {cc['C_mid']['E_c_V'][1]} V), {cc['C_hi']['name']} ({cc['C_hi']['E_c_V'][0]} to {cc['C_hi']['E_c_V'][1]} V) |
+| k1_class_lfp, k1_class_42_43, k1_class_44_45 | verdict at the classes 3.65 V nominal; 4.0 V sourced upper cutoff ({cc['C_lo']['E_c_V'][0]} V registered), {cc['C_mid']['name']} ({cc['C_mid']['E_c_V'][0]} to {cc['C_mid']['E_c_V'][1]} V), {cc['C_hi']['name']} ({cc['C_hi']['E_c_V'][0]} to {cc['C_hi']['E_c_V'][1]} V) |
 | k1_verdict | overall: falsified at every class = falsified; any pass = pass; otherwise undetermined if a class is undetermined and none falsifies; otherwise inconclusive |
 | row_ids | the ph_w51/ladder_v2.csv row this row refines |
 | notes | limiting reaction and crossover, ruling applied, reasons for undetermined, by-bound readings (not verdict bases) |
@@ -43,6 +43,10 @@ Units: V for E_ub_V, E_lb_V, margin_V; kJ/mol in notes.
 - Amorphous rows: margin from the glass data where block v6 has it (Ca(PO3)2 glass, LiPO3 glass); every other amorphous row has a symbolic
   margin (m_am = m_cr + u/(n_e F), correction a gap) and is undetermined. The block's by-bound readings are in notes only.
 - DFT values never decide a verdict (no phosphate reaction qualifies for m_E).
+
+## Class naming and 4.0 V sensitivity (PH-W5.3 X5)
+The first class (column k1_class_lfp, registered as LFP-class at 3.65 V) is named "3.65 V nominal; 4.0 V sourced upper cutoff"; the column name and the
+registered 3.65 V are unchanged. {sens_line}
 
 ## Margin source
 `{meta['file']}` at `{meta['ref']}`: blob `{meta['blob_sha']}`, last changed in `{meta['file_commit']}` (ref tip `{meta['ref_commit']}`);

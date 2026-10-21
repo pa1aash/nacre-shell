@@ -147,3 +147,20 @@ def test_ca2p2o7_staged_row_uses_ruling_b(rows):
     assert (allr["E_ub_V"], allr["margin_V"]) == (r1s["E_ub_V"], r1s["margin_V"])
     for r in (r1s, allr):
         assert (r["k1_class_lfp"], r["k1_class_42_43"], r["k1_class_44_45"], r["k1_verdict"]) == ("inconclusive",) * 4
+
+
+def test_sens40_file_is_the_ladder_with_4_0_v_as_lowest_edge(rows):
+    with (W52 / "ladder_v3_sens40.csv").open(encoding="utf-8", newline="") as fh:
+        reader = csv.DictReader(fh)
+        assert reader.fieldnames == COLUMNS
+        sens = list(reader)
+    assert len(sens) == len(rows[1])
+    for r in sens:
+        if r["reaction_id"] in ("ALL", "-") or r["budget_status"] != "complete":
+            continue
+        expect = w52.class_verdict(float(r["E_ub_V"]), float(r["margin_V"]), True, 4.0, 4.0)
+        assert r["k1_class_lfp"] == expect, (r["phase"], r["reaction_id"])
+    for r, q in zip(rows[1], sens):  # no verdict changes (crossovers 4.0248 V carbonate, 4.1464 V lowest phosphate)
+        assert [r[c] for c in COLUMNS[10:14]] == [q[c] for c in COLUMNS[10:14]], (r["phase"], r["reaction_id"])
+    carb = _row(rows, "CaCO3", "crystalline", "r1")
+    assert float(carb["E_ub_V"]) + float(carb["margin_V"]) == pytest.approx(4.0248, abs=5e-5)
