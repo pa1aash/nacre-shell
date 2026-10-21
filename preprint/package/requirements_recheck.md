@@ -29,7 +29,7 @@ ChemRxiv appears to have moved to a new hosting platform during 2026 (`ops/polic
 | Main file | T1-1, T1-2 | same | Is the main file still one PDF with figures embedded? Is there still no copyediting? Has the recommended figure resolution changed? |
 | File size limit | T1-1 | same | None was stated in the capture. Look for one on the live form or help pages. |
 | Abstract limit | T1-1 | same | Has the abstract word limit changed? |
-| Categories and subcategories | T1-1, P1 | same; `…/engage/chemrxiv/browse-dashboard` | Compare the live main-category list with `metadata.yaml` `categories.offered`. Check the category limits and the "first main category is displayed" rule. The subcategory list was never captured, so read it live. |
+| Categories and subcategories | T1-1, P1 | same; `…/engage/chemrxiv/browse-dashboard` | Compare the live main-category list with `metadata.yaml` `categories.offered`. Check the category limits and the rule that the top-listed main category is displayed. The subcategory list was never captured, so read it live. |
 | Keywords | T1-1 | same | Is there a limit on the number of keywords, or a controlled vocabulary? |
 | Supporting information | T1-1, T1-2 | same | Is SI still uploaded beside the main PDF in any format, with supplementary weblinks? |
 | Licences | T1-1, T1-2 | same | Is CC BY 4.0 still offered? Is copyright still retained by the authors? |

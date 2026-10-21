@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-W2.2a",
-  "status": "DONE",
-  "day": 4,
+  "last_session": "PH-W2.2c",
+  "status": "BLOCKED",
+  "day": 5,
   "retro_schema": {
     "sha": "4ded6c789c9eb66c385db8d41e51ea15a48a28b9"
   },
@@ -27,6 +27,7 @@
     "Needs from Palaash: CRediT roles (all six authors), Braun department and ORCID, funding, competing interests, compute, AI-use wording (.local/p0/ai_ack.tex), category and keyword choice at C2, live policy re-check.",
     "Needs from W8: abstract, final title after cp4, release PDF and SI, a generated macro for the Materials Project database version.",
     "P0-W2.3 retrodiction results unchanged (results_sha above).",
-    "PH-W2.2a: route-layer prior art (8 rows), NS7 supported only as scan-limited negative, baseline patent facts, contrary B21 to B24; patent keyword search remains a gap."
+    "PH-W2.2a: route-layer prior art (8 rows), NS7 supported only as scan-limited negative, baseline patent facts, contrary B21 to B24; patent keyword search remains a gap.",
+    "PH-W2.2c: SG26W rewording in preprint/package done; verify --quick still fails on SG26W/SG27W hits in preprint/paper/briefs (not lane-owned)."
   ]
 }
