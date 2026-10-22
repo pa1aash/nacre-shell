@@ -18,7 +18,8 @@ FIGURE = {
         "offset slightly. Marker area: fraction of cells that pass. Filled circle: the lowest passing dose is "
         "below 0.01 mol/dm^3; open circle: at or above it. Cross: thermodynamically excluded at that pH; plus: "
         "open; dot: undetermined. (b) Candidates without a pH-dependent K2 map: bar from the upper bound "
-        "downward with no lower end, the lower bound being pending. Grey line and bands: the registered "
+        "downward with no lower end, the lower bound being pending; dashed where the uncertainty budget of the bound is "
+        "incomplete. Grey line and bands: the registered "
         "cutoff classes, lowest to highest."),
     "width": "double",
     "height_cm": 12.0,
@@ -52,7 +53,8 @@ LABELS = {
 
 
 def upper_bounds(ladder):
-    """{ladder phase: E_ub in V}: the lowest computed upper bound over the reactions of the crystalline framing.
+    """{ladder phase: (E_ub in V, budget complete)}: the lowest computed upper bound over the reactions of the
+    crystalline framing, and whether the uncertainty budget of that reaction is complete.
 
     Where the aggregate row carries a bound it is that minimum; where the aggregate is blank because the
     budget is incomplete (AlPO4 r4, the silicates), the bound of the reactions that were computed stands.
@@ -64,10 +66,12 @@ def upper_bounds(ladder):
             continue
         if r["E_ub_V"] in ("", None):
             continue
-        out[r["phase"]] = min(out.get(r["phase"], np.inf), float(r["E_ub_V"]))
+        cur = out.get(r["phase"], (np.inf, False))
+        if float(r["E_ub_V"]) < cur[0]:
+            out[r["phase"]] = (float(r["E_ub_V"]), r["budget_status"] == "complete")
     for r in ladder["rows"]:
         if r["framing"] == FRAMING and r["reaction_id"] == "ALL" and r["E_ub_V"] not in ("", None):
-            if abs(float(r["E_ub_V"]) - out.get(r["phase"], np.inf)) > 5e-5:
+            if abs(float(r["E_ub_V"]) - out.get(r["phase"], (np.inf,))[0]) > 5e-5:
                 raise ValueError("fig17: aggregate bound of %s differs from the lowest reaction bound" % r["phase"])
     return out
 
@@ -85,7 +89,9 @@ def map_rows(ladder, states):
         if k2 in states:
             by_ph = dict(states[k2]["acid"])
             by_ph.update(states[k2]["alkaline"])
-            rows.append((k2, ub[lad], by_ph))
+            if not ub[lad][1]:
+                raise ValueError("fig17: %s has an incomplete K1 budget but is drawn in panel a" % lad)
+            rows.append((k2, ub[lad][0], by_ph))
     rows.sort(key=lambda r: (r[1], MAP_ORDER.index(r[0])))
     return rows
 
@@ -106,7 +112,7 @@ def offsets(rows):
 
 def bar_rows(ladder, mapped):
     ub = upper_bounds(ladder)
-    rows = sorted(((p, v) for p, v in ub.items() if p in NO_K2_MAP and K1_ON.get(p, p) not in mapped),
+    rows = sorted(((p, v[0], v[1]) for p, v in ub.items() if p in NO_K2_MAP and K1_ON.get(p, p) not in mapped),
                   key=lambda r: r[1])
     missing = [p for p in ub if p not in NO_K2_MAP and K1_ON.get(p, p) not in mapped]
     if missing:
@@ -149,11 +155,12 @@ def build(data, root, aux):
                 ax_a.plot([ph], [y], marker=mk, markersize=3.6 if mk != "." else 5.0, markeredgewidth=data_lw,
                           markeredgecolor="black", markerfacecolor="black", linestyle="none", zorder=3)
     phs = sorted({p for _n, _e, by in rows for p in by})
-    lows = [e for _p, e in bars] + [e for _n, e, _b in rows] + [classes["C_lo"][0]]
+    lows = [e for _p, e, _c in bars] + [e for _n, e, _b in rows] + [classes["C_lo"][0]]
     ax_a.set_ylim(min(e for _n, e, _b in rows) - 0.1, max(classes["C_hi"]) + 0.1)
     ax_b.set_ylim(min(lows) - 0.15, max(lows + classes["C_hi"]) + 0.1)
-    for k, (_phase, e_ub) in enumerate(bars):
-        ax_b.plot([k, k], [e_ub, ax_b.get_ylim()[0]], color="black", linewidth=data_lw, zorder=3)
+    for k, (_phase, e_ub, complete) in enumerate(bars):
+        ax_b.plot([k, k], [e_ub, ax_b.get_ylim()[0]], color="black", linewidth=data_lw, zorder=3,
+                  linestyle="-" if complete else (0, (2, 2)))
         ax_b.plot([k], [e_ub], marker="_", markersize=5.0, markeredgewidth=data_lw, markeredgecolor="black",
                   linestyle="none", zorder=3)
     ax_a.set_xticks(phs, ["%g" % p for p in phs])
@@ -162,7 +169,7 @@ def build(data, root, aux):
     ax_a.set_ylabel(axis_title("E_ub", root, unit="V vs Li$^{+}$/Li"))
     ax_b.set_ylabel(axis_title("E_ub", root, unit="V vs Li$^{+}$/Li"))
     ax_b.set_xlim(-0.6, len(bars) - 0.4)
-    ax_b.set_xticks(range(len(bars)), [LABELS[p] for p, _e in bars], rotation=90)
+    ax_b.set_xticks(range(len(bars)), [LABELS[p] for p, _e, _c in bars], rotation=90)
     for ax in (ax_a, ax_b):
         ax.spines[["top", "right"]].set_visible(False)
     panel_letters([ax_a, ax_b])

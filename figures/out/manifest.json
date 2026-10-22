@@ -183,7 +183,7 @@
   "fig17": {
    "id": "fig17",
    "claim": "Dissolution stability and oxidative stability are separate tests: the candidates that pass K2 over the widest pH range sit at K1 upper bounds below the two higher cutoff classes, and the condensed and aluminium phosphates, which have no pH-dependent K2 map, have an upper bound but no lower one.",
-   "caption_key": "(a) One row of markers per candidate that has both a K2 map and a K1 upper bound, at its tier-1 upper bound on the oxidation limit (vertical, V vs Li+/Li); horizontal: slurry pH of the K2 cell sets (acid-adjusted state, then the as-prepared slurry); rows ordered by upper bound, rows with equal bounds offset slightly. Marker area: fraction of cells that pass. Filled circle: the lowest passing dose is below 0.01 mol/dm^3; open circle: at or above it. Cross: thermodynamically excluded at that pH; plus: open; dot: undetermined. (b) Candidates without a pH-dependent K2 map: bar from the upper bound downward with no lower end, the lower bound being pending. Grey line and bands: the registered cutoff classes, lowest to highest.",
+   "caption_key": "(a) One row of markers per candidate that has both a K2 map and a K1 upper bound, at its tier-1 upper bound on the oxidation limit (vertical, V vs Li+/Li); horizontal: slurry pH of the K2 cell sets (acid-adjusted state, then the as-prepared slurry); rows ordered by upper bound, rows with equal bounds offset slightly. Marker area: fraction of cells that pass. Filled circle: the lowest passing dose is below 0.01 mol/dm^3; open circle: at or above it. Cross: thermodynamically excluded at that pH; plus: open; dot: undetermined. (b) Candidates without a pH-dependent K2 map: bar from the upper bound downward with no lower end, the lower bound being pending; dashed where the uncertainty budget of the bound is incomplete. Grey line and bands: the registered cutoff classes, lowest to highest.",
    "mock": false,
    "width": "double",
    "size_cm": [
@@ -212,11 +212,11 @@
     "release": true
    },
    "outputs": {
-    "figures/out/fig17.pdf": "3086fee0755b02fe3346b92184aae715ae78fbda56c02108a9ed6fce51d5daa5",
-    "figures/out/fig17.png": "9984d7ce3e16b60926c75c4b45a3171f5bb6eb40b650a9ba1345f5f8ff523e45",
-    "figures/out/cvd/fig17_deuteranopia.png": "2d7e8d3838798870210aeedba7887ced9172e11e89d147825e5f4efe4732c665",
-    "figures/out/cvd/fig17_protanopia.png": "ec2761961089e3b159a5a29329720d6aab0b7c3683e6c4422e0a742425c2db52",
-    "figures/out/cvd/fig17_tritanopia.png": "7c0c38908241b1709e3ba51c8ff8369adafd5bc7c43f5200de4bd89daf4a27e4"
+    "figures/out/fig17.pdf": "bd33efa422fa1f1717d76d0f097e8de32cfd630fe9ec3025c07d3995b54f4663",
+    "figures/out/fig17.png": "4c77bf1f3edd8631c3e24fc28d23698cd864ecdd0763823e5470aeb7f49fa3df",
+    "figures/out/cvd/fig17_deuteranopia.png": "c4e283e69103080271c293a008c334b01c86c6713fb524d9648bf4d1b6e74d75",
+    "figures/out/cvd/fig17_protanopia.png": "87fe5eb136aa90e78e52d5500c54ef8fc824d42a412b6628e3bd70edf630f1f0",
+    "figures/out/cvd/fig17_tritanopia.png": "13f4d48c21cbbef8cb7de6405024874fa549a19ebbdd8e84893d2c327443384f"
    },
    "checker": "pass (artists and PDF text)"
   },

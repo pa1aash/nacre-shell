@@ -62,10 +62,10 @@ def test_stability_map_rows_and_bars():
     f17 = _mod("fig17")
     ladder, st = upstream.load("ladder_v3", REPO), _real_states()
     ub = f17.upper_bounds(ladder)
-    assert ub["HAp"] == 4.0674 and ub["AlPO4"] == 5.2105 and "OCP" not in ub and "Li3PO4" not in ub
+    assert ub["HAp"] == (4.0674, True) and ub["AlPO4"] == (5.2105, False) and "OCP" not in ub and "Li3PO4" not in ub
     rows = f17.map_rows(ladder, st)
     assert [r[0] for r in rows] == ["calcite", "a-TCP", "ACP", "b-TCP", "HAp", "brushite"]
     off = f17.offsets(rows)
     assert off["ACP"] < off["b-TCP"] and off["HAp"] == 0.0
-    bars = [p for p, _e in f17.bar_rows(ladder, {r[0] for r in rows})]
+    bars = [p for p, _e, _c in f17.bar_rows(ladder, {r[0] for r in rows})]
     assert "AlPO4" in bars and "Ca2P2O7" in bars and len(bars) == 8

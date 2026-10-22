@@ -4,4 +4,4 @@ Source: `perph.csv` (K2 per-pH table, lane p0-w4, PH-W4.5) with the cell verdict
 
 ## Draft
 
-**Fig. 17** Stability map. (a) One row per candidate, at its K1 upper bound, from the bottom: calcite, $\alpha$-TCP, ACP, $\beta$-TCP, HAp, brushite. Circle area: passing fraction; filled: lowest passing dose below \NumDoseHigh, open: at or above. Cross: thermodynamically excluded; plus: open; dot: undetermined. (b) No pH-dependent K2 map: bars from the bound, lower end pending. Grey: cutoff classes.
+**Fig. 17** Stability map. (a) One row per candidate, at its K1 upper bound, from the bottom: calcite, $\alpha$-TCP, ACP, $\beta$-TCP, HAp, brushite. Circle area: passing fraction; filled: lowest passing dose below \NumDoseHigh, open: at or above. Cross: thermodynamically excluded; plus: open; dot: undetermined. (b) No pH-dependent K2 map: bars from the bound, lower end pending; dashed: budget incomplete. Grey: cutoff classes.
