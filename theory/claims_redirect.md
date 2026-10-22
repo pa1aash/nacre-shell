@@ -907,8 +907,12 @@ precursor). The K2 test for each polymorph pi is the Omega test of Section 3a at
 | Polymorph | K_sp key | Role in the label rule |
 |---|---|---|
 | calcite | `log10_ksp_calcite` | required |
-| aragonite | `log10_ksp_aragonite` | required |
+| aragonite | `log10_ksp_aragonite_25c_i0` | required |
 | ACC | `log10_ksp_acc` (with `acc_hydration_n` for the hydrated product) | reported beside the two; **not required to pass** |
+
+The older key `log10_ksp_aragonite` is superseded and not read by any K2 run; `log10_ksp_aragonite_25c_i0` is the only
+aragonite K_sp input (cp5 closure ruling Q1). Its grade is upgraded only if the primary source is reached; otherwise the
+SI says so.
 
 The activities a_Ca and a_CO3 come from the contract speciation at the registered (Ca_T, C_T, pH, I); the framing
 changes only K_sp (one framing per run, Q12). The ACC dose window is reported beside the calcite and aragonite

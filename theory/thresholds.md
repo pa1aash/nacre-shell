@@ -818,7 +818,7 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `thresholds.K1.premise_inflation` | f_z | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise |
 | `thresholds.K1.premise_level` | q | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise |
 | `params.hydrolysis_f_min` | f_min | registration (set with the K1 rows; PH-W3.2) | screen_ph K2h |
-| `params.log10_ksp_aragonite` | K_sp (aragonite) | literature (key created by PH-W1.6) | screen_ph.w36 carbonate K2, label rule |
+| `params.log10_ksp_aragonite_25c_i0` | K_sp (aragonite; the older `log10_ksp_aragonite` is superseded, not read) | literature (W1) | screen_ph.w36 carbonate K2, label rule |
 | `params.log10_ksp_acc` | K_sp (ACC) | literature | screen_ph.w36 carbonate K2 (reported, not required) |
 | `params.p_c_site_square` | p_c (2D lateral, square) | literature (key created by PH-W1.6) | screen_ph K2h f_min interval, lower end |
 | `params.p_c_site_triangular` | p_c (2D lateral, triangular) | literature (PH-W1.6) | screen_ph K2h f_min, lattice sensitivity |
@@ -836,7 +836,7 @@ checks that every expression parses, that only registered ids appear, and that e
 unit of its quantity.
 
 ```thresholds
-version: 8
+version: 9
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
@@ -860,6 +860,8 @@ revised_c0: {session: PH-C0, rule: 'computed transfer premise (bracket rule chan
 revised_w36: {session: PH-W3.6, rule: 'carbonate K2 polymorph framings and the label rule, verdict-label text, low-voltage wording, regime vocabulary, f_min interval keys (screen_ph.w36)',
               authority: theory/claims_redirect.md Section 11, status: 'proposed; the planning chat rules at cp5b', no_value_computed: true,
               disclosure: 'registered after the K1 ladder outputs and the carbonate K2 results existed and were seen; no carbonate link, edge or margin changed'}
+revised_w37: {session: PH-W3.7, rule: 'cp5 closure rulings Q1 and Q5: aragonite K2 input key log10_ksp_aragonite_25c_i0; label rule without a nacre-type label (screen_ph.w36.carbonate_k2)',
+              authority: theory/claims_redirect.md Sections 11a and 11g, no_value_computed: true, screen_output_consulted: false}
 contract_version: 6
 decision:
   statistic: band_mass
@@ -1354,7 +1356,7 @@ screen_ph:
     carbonate_k2:
       framings: [calcite, aragonite, ACC]
       test: 'Omega_bulk(pi) = a_Ca a_CO3 / K_sp(pi) >= 1 at every state of the registered (Ca_T, C_T, pH, I) grid'
-      keys: {calcite: log10_ksp_calcite, aragonite: log10_ksp_aragonite, ACC: log10_ksp_acc}
+      keys: {calcite: log10_ksp_calcite, aragonite: log10_ksp_aragonite_25c_i0, ACC: log10_ksp_acc}
       required_for_nacre_type: [calcite, aragonite]
       reported_not_required: [ACC]
       labels: {nacre-type: 'aragonite AND calcite pass K2', otherwise: 'carbonate (calcite)'}
