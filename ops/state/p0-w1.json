@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W1.7",
+  "last_session": "PH-W1.8",
   "status": "DONE",
   "day": 6,
   "artifacts": [
@@ -59,18 +59,19 @@
     "ops/reports/P0-W1.PH-W1.3.md",
     "ops/reports/P0-W1.PH-W1.5.md",
     "ops/reports/P0-W1.PH-W1.6.md",
-    "ops/reports/P0-W1.PH-W1.7.md"
+    "ops/reports/P0-W1.PH-W1.7.md",
+    "ops/reports/P0-W1.PH-W1.8.md"
   ],
-  "notes": "PH-W1.7: aragonite primary gap (grade C stays); +2 rows (TR-120, TR-121), +4 keys (474): brushite, alpha-TCP (D), Li3PO4, OCP Ca4H basis; README section 9 conversion rules. Deviation text: Re-audit: cp5b.",
+  "notes": "PH-W1.8: H3PO4 pH-controller dose rows TR-122..TR-138, TR-140 and 4 dose keys; p_total_slurry_h3po4_window gap (liquid density missing); Al(ClO4)3 S/DfG gap. Deviation text: Re-audit: cp6.",
   "params": {
     "status": "ready",
-    "sha": "f1a8061e62752e4d873ed70b1a556b3d7f6e102f",
+    "sha": "3620586694941e71f39c1c22d5fc51c49b2b3aa3",
     "post_cp3": true,
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
     "rule": "lit/corpus/params_README.md (rule version 3, section 8)",
-    "keys": 474,
-    "new_keys": 4,
+    "keys": 479,
+    "new_keys": 5,
     "edited_keys": [],
     "cp3_tag_table": "p0-cp3 (production screens)"
   }

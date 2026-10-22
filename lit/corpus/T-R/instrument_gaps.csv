@@ -79,3 +79,30 @@ utc,source,query_or_id,failure_kind,detail
 2026-10-20T03:35:36Z,unpaywall,10.2136/sssaj1955.03615995001900040017x,paywalled,"no open copy on unpaywall, openalex or europepmc"
 2026-10-20T03:35:42Z,unpaywall,10.2136/sssaj1992.03615995005600010009x,paywalled,"no open copy on unpaywall, openalex or europepmc"
 2026-10-22T09:58:48Z,unpaywall,10.3390/cryst15121045,http_error,HTTP 403 https://www.mdpi.com/2073-4352/15/12/1045/pdf?version=1765204321
+2026-10-22T19:13:39Z,unpaywall,10.1039/d3su00031a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2023/su/d3su00031a
+2026-10-22T19:15:02Z,unpaywall+wayback,10.1039/d3su00031a,http_error,HTTP 503 (https://web.archive.org/web/2026id_/https://pubs.rsc.org/en/content/articlepdf/2023/su/d3su00031a)
+2026-10-22T19:15:02Z,fulltext,10.1039/d3su00031a,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-22T19:15:02Z,unpaywall,10.1039/d4ta03592e,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2024/ta/d4ta03592e
+2026-10-22T19:16:31Z,unpaywall+wayback,10.1039/d4ta03592e,http_error,HTTP 503 (https://web.archive.org/web/2026id_/https://pubs.rsc.org/en/content/articlepdf/2024/ta/d4ta03592e)
+2026-10-22T19:16:31Z,fulltext,10.1039/d4ta03592e,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-22T19:16:52Z,direct,10.1039/d3su00031a,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2023/su/d3su00031a
+2026-10-22T19:20:16Z,unpaywall,10.1016/j.electacta.2022.140970,http_error,"ConnectTimeout: HTTPSConnectionPool(host='publikationen.bibliothek.kit.edu', port=443): Max retries exceeded with url: /1000150391/152857094 (Caused by ConnectTimeoutError(<HTTPSConnection(host='publikationen.bibliothek.kit.edu', port=443) at 0x10b62a7b0>, 'Connection to publikationen.bibliothek.kit.edu timed out. (connect timeout=60.0)')) (https://publikationen.bibliothek.kit.edu/1000150391/152857094)"
+2026-10-22T19:20:25Z,unpaywall,10.1021/acsami.9b00999,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-22T19:20:26Z,unpaywall,10.3390/polym8080276,http_error,HTTP 403 https://www.mdpi.com/2073-4360/8/8/276/pdf?version=1470134470
+2026-10-22T19:20:27Z,europepmc,10.3390/polym8080276,http_error,HTTP 403 https://europepmc.org/articles/PMC6431947?pdf=render
+2026-10-22T19:20:35Z,unpaywall,10.1016/j.electacta.2021.138203,rate_limited,HTTP 429 (https://www.osti.gov/servlets/purl/1777736)
+2026-10-22T19:21:05Z,unpaywall+wayback,10.1016/j.electacta.2021.138203,http_error,HTTP 503 (https://web.archive.org/web/2026id_/https://www.osti.gov/servlets/purl/1777736)
+2026-10-22T19:21:05Z,fulltext,10.1016/j.electacta.2021.138203,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-22T19:21:06Z,unpaywall,10.1002/celc.202500327,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/celc.202500327
+2026-10-22T19:21:08Z,unpaywall+wayback,10.1002/celc.202500327,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/celc.202500327
+2026-10-22T19:21:08Z,fulltext,10.1002/celc.202500327,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-22T19:21:33Z,direct,10.1016/j.electacta.2021.138203,rate_limited,HTTP 429 (https://www.osti.gov/servlets/purl/1777736)
+2026-10-22T19:22:04Z,direct+wayback,10.1016/j.electacta.2021.138203,http_error,HTTP 503 (https://web.archive.org/web/2026id_/https://www.osti.gov/servlets/purl/1777736)
+2026-10-22T19:22:12Z,direct,10.1002/celc.202500327,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/celc.202500327
+2026-10-22T19:22:14Z,direct+wayback,10.1002/celc.202500327,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/celc.202500327
+2026-10-22T19:22:45Z,direct,10.1002/celc.202500327,parse_error,not a PDF: http://hdl.handle.net/2078.1/309436
+2026-10-22T19:22:51Z,direct+wayback,10.1002/celc.202500327,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/http://hdl.handle.net/2078.1/309436
+2026-10-22T19:22:54Z,openalex,Bichon Lestriez aqueous processing NMC532 phosphoric acid HAL,not_indexed,no results
+2026-10-22T19:23:20Z,unpaywall,10.1002/cssc.201600353,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-22T19:23:21Z,fulltext,10.1016/j.jpowsour.2020.229097,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-22T19:25:59Z,unpaywall,10.1088/0026-1394/38/4/3,paywalled,"no open copy on unpaywall, openalex or europepmc"

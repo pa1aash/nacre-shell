@@ -4425,6 +4425,74 @@ params:
       IP(OCP) expression, which the existing key's conditions do not follow (they name the Ca8 dissolution). The
       existing key is not edited. Conversion to the Ca8H2(PO4)6 basis: log10 K(Ca8) = 2 log10 K(Ca4H), documented
       in lit/corpus/params_README.md section 9. Not independent of log10_ksp_ocp.
+  ph_additive_h3po4_dose_wt_active:
+    added_in: P0-W1.PH-W1.8
+    symbol: w_h3po4_active
+    unit: "1"
+    regimes: [R-slurry]
+    distinct: true
+    conditions: >-
+      H3PO4 added as a slurry pH controller in aqueous electrode processing, as a mass fraction of the active material
+      (NMC622, LTO); printed in wt%, the acid concentration is not stated (Tolchard, Carvalho) or is a 33% aqueous
+      solution (Xu); solids loading or water volume not printed
+    admit:
+      - {row: TR-122}
+      - {row: TR-123}
+      - {row: TR-124}
+    notes: >-
+      Doses tested: 0.5 and 1 wt% (NMC622, Tolchard 2023), 0.67 to 2.68 wt% (LTO, Xu 2022, Bresser group), 1 wt% (LTO,
+      Carvalho 2016). Resulting pH: LTO 6.7 at 1 wt% (TA-014) against 11.4 without acid (TA-013); LTO after 2 h milling
+      10.8, 10.4, 9.6, 9.1 at 0.67, 1.34, 2.01, 2.68 wt% (TR-132..TR-135), initial pH below 6 to below 5 (TR-136..TR-138).
+      No pH printed for Tolchard 2023. The dose in mol per kg active is the mol-basis key below.
+  ph_additive_h3po4_dose_wt_total_solids:
+    added_in: P0-W1.PH-W1.8
+    symbol: w_h3po4_solids
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: >-
+      H3PO4 (purity 99.99%) as a mass fraction of the total electrode material (NMC811, carbon black, Na-CMC), aqueous
+      slurry, 0.5 wt%; pH and solids loading not printed
+    admit:
+      - {row: TR-125}
+    comparators: [TR-126]
+    notes: >-
+      Single source (Chen 2024). Kukay 2020 (TR-126, 0.5 to 1.5 wt%, solids loading 55%) prints no basis for its
+      percentage and is not admitted (E2).
+  ph_additive_h3po4_dose_mol_per_kg_active:
+    added_in: P0-W1.PH-W1.8
+    symbol: n_h3po4_per_active
+    unit: mol kg^-1
+    regimes: [R-slurry]
+    conditions: >-
+      H3PO4 amount per mass of NMC811, aqueous and water-isopropanol 80:20 slurries, 92:5:3 NMC811:Super C45:binder,
+      solid content 50% (45% for Na alginate), acid concentration not stated, pH below 9.0
+    admit:
+      - {row: TR-127}
+    notes: >-
+      Single source (TA-008 paper). The mass of 1 M solution of the other mol-type dose (TR-128) cannot be converted
+      because the density of the solution is not printed.
+  ph_additive_h3po4_solution_mass_per_g_active:
+    added_in: P0-W1.PH-W1.8
+    symbol: m_h3po4_soln_per_active
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: >-
+      mass of 1 mol dm^-3 H3PO4 solution per mass of NMC811 (g/g), solid content 60%, pH below 8.6
+    admit:
+      - {row: TR-128}
+    notes: >-
+      Single source. Not a mol dose until the density of the 1 M solution is known; kept as printed.
+  p_total_slurry_h3po4_window:
+    added_in: P0-W1.PH-W1.8
+    symbol: P_T_h3po4_window
+    unit: mol m^-3
+    regimes: [R-slurry]
+    status: gap
+    reason: >-
+      gap: the solids loading is printed for three H3PO4-dosed slurries (50% and 60% in the TA-008 and TA-009 papers,
+      55% in Kukay 2020) but none prints the liquid volume or a liquid density, and the density of water-isopropanol
+      80:20 or of 1 M H3PO4 was not found in an open source (PH-W1.8, details in lit/corpus/T-R/gaps.md), so the dose per
+      dm^3 (1 mol dm^-3 = 1000 mol m^-3, the loader's SI unit) is not derived; the dose is held per mass of active material in the keys ph_additive_h3po4_dose_*
   p_c_site_square:
     added_in: P0-W1.PH-W1.6
     symbol: p_c_site_square

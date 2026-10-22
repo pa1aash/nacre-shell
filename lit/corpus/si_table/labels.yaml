@@ -1163,3 +1163,13 @@ p_c_site_triangular:
   label: site percolation threshold, triangular lattice
 p_c_site_sc:
   label: site percolation threshold, simple cubic lattice
+ph_additive_h3po4_dose_wt_active:
+  label: H3PO4 dose as pH controller, mass fraction of active material
+ph_additive_h3po4_dose_wt_total_solids:
+  label: H3PO4 dose as pH controller, mass fraction of total electrode material
+ph_additive_h3po4_dose_mol_per_kg_active:
+  label: H3PO4 dose as pH controller, amount per mass of NMC811
+ph_additive_h3po4_solution_mass_per_g_active:
+  label: mass of 1 M H3PO4 solution per mass of NMC811
+p_total_slurry_h3po4_window:
+  label: total phosphate in the slurry liquid, H3PO4-dosed window
