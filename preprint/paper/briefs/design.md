@@ -41,7 +41,7 @@ None for results. Symbols from `theory/macros.tex`; chemical formulae through `\
 
 ## Claims carried
 
-CL-D03 to CL-D18; carbonate era: CL-R01 to CL-R05, CL-R09 to CL-R13, CL-L06.
+CL-D03 to CL-D18, CL-D20; carbonate era: CL-R01 to CL-R03, CL-R05, CL-R09 to CL-R12, CL-L06 (CL-R04 withdrawn at PH-W8.2, replaced by the conditions; CL-R13 moved to the Introduction).
 
 ## Supplying lanes
 

@@ -1,14 +1,98 @@
 % Design rules. Brief: briefs/design.md. Claims carried: the entries of ../claims.yaml with section
 % design (the four conditions and the route layer) and section model (templating thermodynamics,
-% input below). Prose: PH-W8.2. Structure only at PH-W8.1; no number and no result is stated here.
+% input below). Prose: PH-W8.2, written to theory/claims_redirect.md Sections 2, 3, 9 and 11 (contract v6,
+% thresholds block v9). One sentence per line; each ends with a comment naming its ledger id. Each
+% condition is argued physically before it is stated. No number and no result is stated here.
 \section{Design rules}\label{sec:design}
 
 \subsection{The four conditions}\label{sec:conditions}
-\nacrePlaceholder{four conditions prose, the two-tier onset rule, stage and proceed rules}
 
-% Templating thermodynamics: the carbonate-era Physical model, mineral-neutral, kept for adaptation.
-% carbonate control (frozen): the stability step inside is carbonate-specific.
+% (1) What a mineral barrier has to do, and the four conditions that follow.
+A mineral film is of use on the collector only if it forms where it is needed, is continuous, outlasts the water it forms in and then holds at the cathode potential. % CL-D04, CL-D05, CL-D06, CL-D07
+Each requirement is a free-energy test that a phase can fail whatever the kinetics, so each becomes a necessary condition (Fig.~\ref{fig:conditions}): % CL-D04, CL-D05, CL-D06, CL-D07
+$K_1$, the oxidation onset of the phase lies above the charge cutoff; $K_2$, the phase does not dissolve at the slurry states; $K_3$, a dose window exists in which the phase nucleates on the template but not in the bulk; and $K_4$, the film is continuous while thin enough to conduct. % CL-D04, CL-D05, CL-D06, CL-D07
+Adhesion of the template to the oxide and \ce{Ca^2+} binding at the template are descriptors reported beside the conditions, not gates, and a pass of $K_3$ or $K_4$ must degrade when the template is replaced by the bare oxide or by poly(vinylidene fluoride), or it is labelled generic. % CL-D03
+
+\begin{figure}[t]
+  \centering
+  \nacreMissing{four-conditions diagram, pending}
+  \caption{The four conditions and the stage at which each applies: the oxidation condition at the cell stage; the dissolution, nucleation-window and thin-film conditions at the slurry stage; and the conversion step that joins a slurry-stage precursor to its cell-stage product.}
+  \label{fig:conditions}
+\end{figure}
+
+% (2) K1: the oxidation onset as a bracket, with two tiers, per cutoff class.
+At the cutoff the cell holds the collector at a fixed lithium chemical potential, and a film oxidises once releasing its cation and oxygen, with the electrons going to plate lithium, lowers the free energy. % CL-D08
+The onset is $E=\Delta G_\mathrm{r}/(\Delta n_\mathrm{Li}\Fc)$, and it depends on where the released cation goes. % CL-D08
+Pairing it with the salt anion as a solid salt is one state the product can reach, so that onset $E_\mathrm{ub}$ is an upper bound, and a phase with $E_\mathrm{ub}<E_\mathrm{c}-m_1$ is falsified at the cutoff $E_\mathrm{c}$ whatever the true sink. % CL-D08
+Every ion hydrated at its standard state gives a lower bound $E_\mathrm{lb}$ only if the product cation loses at least as much solvation per unit charge as \ce{Li+} on passing from water to the cell solvent, so a pass needs $E_\mathrm{lb}\ge E_\mathrm{c}+m_1$ with that premise measured, and a cutoff inside the bracket is inconclusive. % CL-D08
+These bounds are tier one; tier two is a measured service limit $E_\mathrm{svc}$ from a potential hold on coated foil, a coated cathode particle cycled to a stated cutoff or voltammetry of the bulk phase, in that order of weight. % CL-D09
+A phase is falsified at a cutoff only where tier one and the available tier two both fall below it, a hold or particle record above the cutoff makes a tier-one fall read not excluded and kinetically stabilised, and a record in a fluorinated electrolyte, where aluminium fluoride forms on the foil, can counter-indicate but never support. % CL-D09
+A condition with a missing input is undetermined and never passes. % CL-D09
+Because a pass at one cutoff is a pass at every lower one, verdicts are given per cutoff class, never as one verdict, and a class reads feasible, falsified or partial with its crossover; a falsified phase is reported as thermodynamically excluded\nacreExcludedMark. % CL-D04
+
+% (3) K2: the processing-stage dissolution criterion and the label it earns.
+A film formed in the slurry dissolves wherever the slurry is undersaturated with respect to it, and the measure is the supersaturation that also drives its nucleation, % CL-D05
+\begin{equation}\label{eq:stability}
+\Delta G_\mathrm{diss}=-\Rg T\ln\Omb,\qquad \Omb=\frac{\prod_i a_i^{\nu_i}\,a_\mathrm{w}^{n}}{\Ksp}\ge1
+\end{equation}
+per formula unit, with the free-ion activities of the speciation at the slurry state and the measured solubility product of the phase. % CL-D05
+The test runs at every state of a grid of total calcium, total phosphate or carbonate, pH and ionic strength: a pass needs every state, a failure at one state stands, and a test that does not report dissolution at an undersaturated control state is inconclusive. % CL-D05
+A pass earns one label, thermodynamically suitable against dissolution (a necessary condition) for that phase in that grid, and no more. % CL-D20
+The label does not address the instability of aluminium itself outside its passivation window and is not evidence of protection; the acid-adjusted slurry of the incumbent route is evaluated in the same way beside the grid, as a comparator and not as a regime of the barrier. % CL-D20
+
+% (4) K3: an accessible nucleation window along the dose axis.
+A film nucleates on the template only if the template lowers the barrier enough for nuclei to appear in the time available before the bulk solution precipitates the mineral itself. % CL-D06
+Along the dose axis the homogeneous barrier falls as $(\ln\Omb)^{-2}$ and the templated one is the fraction $f(\theta)$ of it, so a window opens between the dose at which the templated barrier meets the criterion of Eq.~\eqref{eq:access} and the dose at which the homogeneous barrier meets it too (Section~\ref{sec:model}). % CL-D06
+The window is empty unless $f<1$, is bounded below by $\Omb\ge1$, and is reported with the saturation of every competing phase, which can close it from above. % CL-D06
+
+% (5) K4: a thin continuous film.
+A film blocks only where it is continuous, yet it must stay thin enough to pass the electrons of the electrode. % CL-D07
+It can be continuous because the mineral spreads over the template, $\Ssp$ of Eq.~\eqref{eq:spread} above its margin, or because islands nucleate densely enough to meet below the insulating thickness; $K_4$ is not excluded if either holds and is falsified only when both fail on the same draws. % CL-D07
+
+% (6) The stage rule and the proceed rule.
+The phase that forms in the slurry is in general not the phase that faces the cell, so the conditions apply at different stages. % CL-D11
+Slurry-stage phases (brushite, amorphous calcium phosphate, hydroxyapatite) are tested on $K_2$ to $K_4$, cell-stage phases (calcium pyrophosphate and metaphosphate, the aluminium phosphates) on $K_1$, and a conversion step joins a precursor to its cell-stage product through the water activity at which it dehydrates or condenses, the literature conversion temperature and the cure range of the baked aluminophosphate. % CL-D11
+$K_1$ of a condensed phase and $K_2$ to $K_4$ of an orthophosphate are never presented as one film: a film is reported across stages only as the chain of its slurry, conversion and cell rows, and the chain is as strong as its weakest member. % CL-D11
+A phase proceeds to $K_3$ and $K_4$ unless $K_1$ falsifies it at every cutoff class, and proceeding is not passing: an inconclusive or undetermined $K_1$ stays in its row. % CL-D10
+
+% (7) A barrier that is not itself stable.
+A barrier need not be thermodynamically stable at the cutoff if its corrosion product is insoluble and oxidation-stable: aluminium fluoride plays that part in fluorinated electrolytes, and the fluorine-free analogue would be an aluminium phosphate or borate film. % CL-D12
+The screen tests the properties of such a film, its oxidation onset, its insolubility in the electrolyte and its blocking of the corrosion ions, while the supply of phosphate to a pit is a hypothesis outside the screen. % CL-D12
+
+% Templating thermodynamics: the carbonate-era Physical model, made mineral-neutral at PH-W8.2.
+% carbonate control (frozen): the artwork of its two figures shows a calcium carbonate nucleus.
 \input{sections/model}
 
 \subsection{The route layer}\label{sec:routes}
-\nacrePlaceholder{route layer prose, the hydrolysis race, formation and wetting criteria, framings}
+
+% (1) Why routes: a condensed phosphate does not survive water as such; the race against hydrolysis.
+The cell-stage candidates are condensed phosphates, and a condensed phosphate cannot simply be precipitated from the slurry: in water its P--O--P bonds hydrolyse towards orthophosphate, the phase with the lower oxidation onset. % CL-D13
+Three in-situ routes try to outrun that hydrolysis: gelation of a soluble polyphosphate at the oxide by the aluminium ions released there; a calcium polyphosphate coacervate, a dense liquid phase that separates from solution\cite{wang2024liquidliquid}, which wets the foil and dries to a glass; and calcium polyphosphate trapped by fast drying, which has no formation criterion of its own and is decided by hydrolysis and the amorphous onset alone. % CL-D13
+The routes enter the screen as thermodynamic criteria; whether gelation or drying outruns hydrolysis is kinetics, and the race stays a labelled hypothesis. % CL-D13, CL-D15
+
+\begin{figure}[t]
+  \centering
+  \nacreMissing{bone-like pathway schematic, pending}
+  \caption{Illustrative construction of the bone-like pathway the route layer screens: a soluble or liquid phosphate precursor at the hydrated oxide of the collector, its gel or coacervate, the dried amorphous film, and the condensed film that faces the cell. Each step is a screened criterion, not a statement that the step occurs.}
+  \label{fig:pathway}
+\end{figure}
+
+% (2) The hydrolysis constraint.
+Hydrolysis removes condensed phosphorus at a rate proportional to what is left, so the condensed fraction at the end of the wet period is $f_\mathrm{cond}=\exp(-k_\mathrm{eff}t_\mathrm{wet})$ and halves with every half-life of hydrolysis (Fig.~\ref{fig:pathway}). % CL-D14
+Here $t_\mathrm{wet}$ runs from mixing to the end of drying, and $k_\mathrm{eff}$ is the rate constant measured on alumina particles at room temperature\cite{wan2019polyphosphate} times a transfer factor to the process state, bracketed from both sides. % CL-D14
+The smallest tolerable condensed fraction is a percolation bound for the orthophosphate that hydrolysis leaves, so the descriptor is reported beside each route and never gates a row; states outside the measured pH and temperature are undetermined. % CL-D14
+
+% (3) Formation criteria in route form.
+Thermodynamics can only rule gelation out: an aluminium polyphosphate whose supersaturation is below unity cannot form at that state, while one above unity is not excluded, which is never a pass. % CL-D15
+With the oxide film present the free \ce{Al^3+} activity is pinned by the oxide itself, because complexation by polyphosphate lowers the free ligand and not the free cation; at the cell stage it is the activity in a corrosion pit, a separate state never combined with the slurry-stage one. % CL-D15
+The coacervate route can be ruled out only where a measured phase map of the coacervate covers the slurry state, and is undetermined elsewhere. % CL-D15
+
+% (4) The liquid-precursor wetting condition.
+A liquid precursor covers the foil if the oxide prefers the dense coacervate to the dilute liquid it coexists with by more than the tension between the two liquids. % CL-D16
+With the spreading coefficient written for that pair, $S_\mathrm{coac}=\gsl-\gsn-\gnl$, where s is the oxide, n the coacervate and l the dilute liquid, the tension $\gnl$ between coexisting liquids is far below a solid--water energy, and in the limit of negligible $\gnl$ the condition reduces to $\gsn\le\gsl$. % CL-D16
+Adsorption of polyphosphate on alumina lowers both energies equally, because the coexisting liquids have equal chemical potentials of every component, so it gives the oxide no preference; the preference is the difference of the polyphosphate-free contacts, which is unmeasured, and the spreading coefficient on alumina is a design result with its flip value, while the self-limiting thickness of the film is a descriptor. % CL-D16
+
+% (5) Framings and the organic matrix.
+The in-situ products are amorphous, a gel or a glass, and a glass lies above its crystal in free energy, so it oxidises earlier and dissolves more. % CL-D17
+The amorphous framing therefore governs these routes and the crystalline one is an optimistic upper reference, and a phase that passes only as a crystal is labelled as requiring crystallisation. % CL-D17
+An organic matrix such as chitosan or polydopamine has no meaningful thermodynamic onset here, so only a measured service limit enters, as a ceiling printed beside the mineral; the matrix never gates a row on its own, and polydopamine carries a stated oxidation risk. % CL-D18
