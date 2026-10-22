@@ -199,7 +199,7 @@
    },
    "schema": "figures/src/schemas/ladder_v3.schema.json",
    "aux": {
-    "cutoffs": "configs/preprint/thresholds.yaml@1aff4fe (p0-w4)",
+    "cutoffs": "configs/preprint/thresholds.yaml@e85e890 (p0-w4)",
     "sens40": "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv@73316df (p0-w5)"
    },
    "font": {
