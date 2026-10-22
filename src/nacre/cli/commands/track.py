@@ -99,7 +99,13 @@ def read_state(root, lane_id):
 
 
 def session_status(data, session, state):
-    """The status a session has reached given its lane state, or None if not reached."""
+    """The status a session has reached given its lane state, or None if not reached.
+
+    A session listed in the ledger's top-level `done:` list is DONE whatever the lane state says: the integrator
+    records a session there when its lane state moved past it to a session the ledger does not list.
+    """
+    if session["id"] in (data.get("done") or []):
+        return "DONE"
     order = [s["id"] for s in sessions(data) if s["lane"] == session["lane"]]
     last = (state or {}).get("last_session")
     if last not in order:

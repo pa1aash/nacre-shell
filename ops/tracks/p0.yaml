@@ -487,31 +487,56 @@ days:
     model: Sonnet
     master_trace: none
     requires: [cp5]
-    note: 'First step (D57): commit the gap-table treatments for the 72 pending keys and the 11 symbol bindings before any output.'
+    note: 'Production screens on the MacBook, no pods, no spending: slurry-stage K2 to K4 for carbonate (calcite, aragonite, ACC) and phosphate phases, K1 read from ladder_v3, framings, baselines, the F1 proceed rule, deletion test, sensitivity sweeps. First step (D57): commit the gap-table treatments for the 72 pending keys and the 11 symbol bindings before any output.'
   - id: PH-W4.3
     lane: p0-w4
     day: 6
     model: Sonnet
     master_trace: none
     requires: [cp5]
+    note: 'Required-precision map and flip values. Runs after PH-W4.2.'
+  - id: PH-W6.2
+    lane: p0-w6
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
+    note: 'Real-data figures from the production outputs. Runs after PH-W4.2. Moved from day 7.'
   - id: PH-W8.2
     lane: p0-w8
     day: 6
     model: Opus
     master_trace: none
-    requires: [cp4]
+    requires: []
+    note: 'Introduction, Design rules and Methods in the regime frame.'
+  - id: PH-W8.2b
+    lane: p0-w8
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: [cp5]
+    note: 'Regime-table generator. Runs after PH-W4.2.'
   - id: PH-W2.2
     lane: p0-w2
     day: 6
     model: Sonnet
     master_trace: none
-    requires: [cp4]
+    requires: []
+    note: 'ChemRxiv package finalised.'
+  - id: PH-W6.3b
+    lane: p0-w6
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: []
+    note: 'Completion of the two-panel hero and schematic stub. Cut candidate.'
   - id: PH-I6
     lane: p0-int
     day: 6
     model: Sonnet
     master_trace: none
     requires: []
+    note: 'Results packet cp5b. Runs after PH-W4.2 and PH-W4.3.'
 - day: 7
   status: pending
   opened_utc: null
@@ -522,12 +547,6 @@ days:
     lane: p0-w8
     day: 7
     model: Opus
-    master_trace: none
-    requires: [cp5r]
-  - id: PH-W6.2
-    lane: p0-w6
-    day: 7
-    model: Sonnet
     master_trace: none
     requires: [cp5r]
   - id: PH-W7.1
@@ -964,6 +983,7 @@ decisions:
 - {id: D67, date: '2026-10-21', decision: 'f_min is registered as the interval 1 - p_c(2D square lateral) to 1 - p_c(3D simple cubic through-thickness); triangular is a lattice sensitivity; K2h is report-only (X4 accepted).', reason: 'Planning-chat ruling on X4.'}
 - {id: D68, date: '2026-10-21', decision: 'Vocabulary mapping: the data files say falsified and the regime table says excluded (recorded for confirmation by the planning chat).', reason: 'W6.1 and the regime table share one mapping.'}
 - {id: D69, date: '2026-10-21', decision: 'In-situ aragonite is a literature question and a hypothesis route, not a screen change. Nacre-like layering is not claimed: the layering in nacre comes from organic interlayers, and alternating aragonite and calcite layers is not nacre-like. PH-W2.5 deliverable: literature on (a) calcium carbonate, calcium phosphate and nacre-like or polymer-mineral coatings on aluminium or aluminium foil (film formed, protection measured, conditions); (b) mechanisms that give aragonite instead of calcite at room temperature in a slurry or on a surface (Mg2+, temperature, organic matrix), with sources; (c) the in-situ carbonate route as a stated hypothesis route.', reason: 'Planning-chat ruling after PH-I5c-b.'}
+- {id: D70, date: '2026-10-21', decision: 'The ten day-5 sessions PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1 (listed twice), PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6 and PH-W4.2e ran with the track check skipped (freeze fixes and fixes to earlier output) and are recorded done from their reports, in the ledger done list. cp5 closed at p0-cp5 (1682411).', reason: 'Lane states moved past them to sessions the ledger does not list, so the day-close check read them as not run.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1316,6 +1336,17 @@ deferred_v2:
     model: Sonnet
     master_trace: none
     requires: [cp5]
+# D70: recorded done from their reports; lane states moved past them to unlisted sessions (read by `nacre track`).
+done:
+- PH-W8.1
+- PH-W1.3
+- PH-W4.2a
+- PH-W6.1
+- PH-W4.2b
+- PH-W1.5
+- PH-W4.2d
+- PH-W1.6
+- PH-W4.2e
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]

@@ -222,6 +222,25 @@ def test_later_session_implies_earlier_done(repo):
     assert track.session_status(data, s, {"last_session": None, "status": "READY"}) is None
 
 
+def test_done_list_marks_a_session_done_when_the_lane_state_cannot(repo):
+    data = ledger()
+    s = track.find_session(data, "P0-W1.1")
+    state = {"last_session": "P0-W1.1c", "status": "DONE"}
+    assert track.session_status(data, s, state) is None
+    data["done"] = ["P0-W1.1"]
+    assert track.session_status(data, s, state) == "DONE"
+    assert track.session_status(data, track.find_session(data, "P0-W1.2"), state) is None
+
+
+def test_open_day_accepts_a_session_in_the_done_list(repo):
+    open_day1(repo)
+    data = track.load_track(repo, "p0")
+    data["done"] = ["P0-I0", "P0-W1.1", "P0-W2.1", "P0-I1"]
+    track.save_track(repo, "p0", data)
+    commit_all(repo)
+    assert track.open_next_day(repo, "p0", 2)["day"] == 2
+
+
 # --- status ---------------------------------------------------------------------
 
 def test_status_lines(repo):
