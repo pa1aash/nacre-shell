@@ -27,3 +27,10 @@
 \newcommand{\nacreText}[1]{#1}
 \newcommand{\nacreMockText}[2]{\ifnacrerelease\errmessage{NACRE release guard: mock macro #1 used}\fi
   \textcolor{magenta}{#2\textsuperscript{\textsf{mock}}}}
+% Cross-document references between the article and the ESI, which share no aux file: the label is
+% kept in the source for checks, and the section name is printed.
+\newcommand{\nacreSIref}[2]{ESI, \emph{#2}}
+\newcommand{\nacreMainref}[2]{main text, \emph{#2}}
+% Regime vocabulary: every "thermodynamically excluded" carries the footnote labelled fn:excluded
+% (set where the Introduction uses it); later uses repeat its mark.
+\newcommand{\nacreExcludedMark}{\textsuperscript{\ref{fn:excluded}}}

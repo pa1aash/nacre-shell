@@ -34,7 +34,7 @@ Pose the design question: which mineral phases, if any, can serve as a thermodyn
 
 ## Claims carried
 
-CL-S01, CL-D02, CL-D03, CL-D04, CL-V03 to CL-V10, CL-S02, CL-N01, CL-N02, CL-N03, CL-N08, CL-N09; carbonate era: CL-K01 to CL-K10, CL-R06 to CL-R08, CL-G03, CL-V01, CL-V02, CL-E01 to CL-E03, CL-P03.
+CL-S01, CL-D02, CL-D04, CL-D19, CL-V03 to CL-V10 (CL-V07 to CL-V09 not written), CL-K12 to CL-K15, CL-L10, CL-S02, CL-N01, CL-N02, CL-N03, CL-N08, CL-N09; carbonate era: CL-K01 to CL-K04, CL-K06, CL-R08, CL-R13, CL-E01, CL-E02, CL-P03 (reworded). Withdrawn at PH-W8.2: CL-K05, CL-K07 to CL-K10, CL-R06, CL-R07, CL-G03, CL-V01, CL-V02, CL-E03. CL-D03 moved to Design.
 
 ## Supplying lanes
 
