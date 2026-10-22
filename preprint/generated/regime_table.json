@@ -1,0 +1,79 @@
+{
+ "generator": "nacre preprint regime-table",
+ "inputs": {
+  "configs/preprint/thresholds.yaml": "37c17b673ccef4b8526b41acefbccb6e31dbb1f247848c6667355c606686cb61",
+  "lit/params.yaml": "ecc27194534a60d5f6db906ca40e58aa4fe65ac72c31f326b80e468ac33c32c9",
+  "results/preprint/pourbaix/ph_w52/ladder_v3.csv": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
+  "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
+  "results/preprint/screen/k2_grid_ph/summary.json": "9df2b4b54159d074ff94ca46ea2959a1c5fcd82102de821d0779820d9a2b1fc8",
+  "results/preprint/screen/phosphate_films_ph/summary.json": "9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800"
+ },
+ "numbers": {
+  "acid": {
+   "acc": {
+    "first_pass_ph": 8.5
+   },
+   "acp": {
+    "first_pass_ph": 5.5
+   },
+   "aragonite": {
+    "first_pass_ph": 6.5
+   },
+   "btcp": {
+    "first_pass_ph": 4.5
+   },
+   "calcite": {
+    "first_pass_ph": 6.5
+   },
+   "hap": {
+    "first_pass_ph": 4.5
+   },
+   "ph_high": 8.5,
+   "ph_low": 4.5
+  },
+  "crossover": {
+   "brushite": {
+    "C_hi": 4.4323
+   }
+  },
+  "grid_id": "g1",
+  "k2": {
+   "acc": {
+    "dose_hi": 0.1,
+    "dose_lo": 0.01,
+    "n_cells": 324,
+    "n_pass": 88
+   },
+   "acp": {
+    "n_cells": 648,
+    "n_pass": 57
+   },
+   "aragonite": {
+    "dose_hi": 0.1,
+    "dose_lo": 0.0001,
+    "n_cells": 324,
+    "n_pass": 216
+   },
+   "btcp": {
+    "n_cells": 648,
+    "n_pass": 300
+   },
+   "calcite": {
+    "dose_hi": 0.1,
+    "dose_lo": 1e-05,
+    "n_cells": 324,
+    "n_pass": 218
+   },
+   "hap": {
+    "n_cells": 648,
+    "n_pass": 415
+   }
+  }
+ },
+ "production_manifest": {
+  "ladder_hash": "sha256:595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
+  "params_hash": "sha256:0ee35c055bac4f744083e4e594b74576989ea084dc180fe5c9882dcfa92c811e",
+  "thresholds_hash": "sha256:48d99f4292ee162903ec426df1c8cbc8218fc8ad5b5950d0c34f9d04d09280b8"
+ },
+ "schema": 1
+}
