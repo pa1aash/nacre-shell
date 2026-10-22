@@ -1022,6 +1022,11 @@ Against PH-C0's registration the form and the use are unchanged; the keys are re
 end is fixed to the square lattice (PH-C0 left the 2D lattice open). The interval is therefore re-registered in block
 version 8; the percolation keys are created by PH-W1.6 and no value appears here.
 
+**Deferred to cp5b (cp5 closure ruling Q6).** The f_min interval stays a recorded sensitivity and does not gate: its
+two ends come from `p_c_site_square` and `p_c_site_sc`, and the triangular lattice value (`p_c_site_triangular`) is
+the sensitivity inside the 2D range. The numbers are read from the keys by macro; none is typed in this file. The
+interval, the Al polyphosphate K_sp and A_patch are all decided at cp5b.
+
 ### 11f. C6: status lines
 
 - The bracket rule of block version 7 (Section 10e) is **inactive in v1**: E_lb is pending, so no tier-1 pass is possible
@@ -1030,3 +1035,17 @@ version 8; the percolation keys are created by PH-W1.6 and no value appears here
   they gate nothing.
 - R_cap, the t-quantile and the cluster sizes defer to v2.
 - The abstract order is not set here; the integrator adds it to the plan text. `ops/tracks/*` is not edited.
+
+### 11g. Definitions (cp5 closure ruling Q3)
+
+**K_P.** K_P = K * c0 with c0 = 1 mol dm^-3 (molar), so K_P is dimensionless and activity-based: K is the
+thermodynamic constant written on activities, and K_P is its value on the molar standard state. The molal conversion
+is stated: a constant given on the molal scale is converted to the molar scale with the solvent density, c = m * rho_solvent
+(dilute limit), and the conversion is applied in code, never by hand. A literature K in molal or per-litre form is
+converted by this rule, never copied. K_P is bound in `symbol_bindings` with a unit test (W4).
+
+**TATB scale.** The Li+ PC key and every benchmark ion are declared on the TATB scale. A source on another scale is
+converted by a documented rule or excluded; the declared scale is printed beside each such key.
+
+**Ca(PO3)2 glass-to-crystal bound.** The bound registered in Section 10b stays as registered (ruling (b)). The sign
+bound DG_g-to-c >= 0 is kept for falsification (I17). It is not tightened without new calorimetry.
