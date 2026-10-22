@@ -1,6 +1,6 @@
 {
   "last_session": "PH-W4.2",
-  "status": "RUNNING",
+  "status": "DONE",
   "day": 6,
   "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
   "contract_checked_ref": "2aa96fb (W3 contract v6)",
@@ -70,7 +70,8 @@
     "PH-W4.2b: thresholds copy regenerated from block v6 (c2c7882); K1 reader reads W5's ladder_v3.csv (wide layout); dry runs over the real ladder (extracted copy); 72 gap-skeleton keys pending; 11 symbol bindings listed in the report.",
     "PH-W4.2c: symbol-binding table (11 bindings: 6 resolved, 5 unresolved) and conversions; unresolved keys and gaps yield undetermined; 686 tests pass.",
     "PH-W4.2e: thresholds copy from block v8 (12c1f2d); aragonite K2 framing (log10_ksp_aragonite_25c_i0, v_m_aragonite) with the nacre-type label as an output field; per-polymorph low-dose-corner controls pass; carbonate regression 34/34 and 4/4; 3 tests fail on W1.5 keys without bindings or treatments (not this session's).",
-    "PH-W4.2f: bindings and gap-table treatments for the W1.5 keys (5 bound, 3 b09 reworded, 8 treated unresolved); 729 tests pass; items for cp5b listed in the report."
+    "PH-W4.2f: bindings and gap-table treatments for the W1.5 keys (5 bound, 3 b09 reworded, 8 treated unresolved); 729 tests pass; items for cp5b listed in the report.",
+    "PH-W4.2: pre-run commit 8073c8e (K_P scale, TATB declarations, labels, second K2 control, acid-adjusted K2); 13 production runs (k2_grid_ph, phosphate_films_ph, 11 chain reruns equal to their P0-W4.3b digests); 1 capped (nucleate Sobol of ignorance_ph at 2^17 base rows); K3 and K4 of the phosphate framings undetermined (gamma_nl, gamma_nv gaps); report ops/reports/P0-W4.PH-W4.2.md."
   ],
   "schema": {
     "version": "5",
@@ -134,7 +135,125 @@
     "sens_gamma_sl0_untruncated": "results/preprint/screen/sens_gamma_sl0_untruncated/summary.json",
     "sens_gamma_sl0_untruncated_r2": "results/preprint/screen/sens_gamma_sl0_untruncated_r2/summary.json"
   },
-  "runs": [],
+  "runs": [
+    {
+      "run": "k2_grid_ph",
+      "path": "results/preprint/screen/k2_grid_ph/summary.json",
+      "commit": "8612b89",
+      "draws": "2^14 per cell (5562 cells)",
+      "capped": false,
+      "seconds": 69.1,
+      "peak_mb": 180
+    },
+    {
+      "run": "phosphate_films_ph",
+      "path": "results/preprint/screen/phosphate_films_ph/summary.json",
+      "commit": "4401915",
+      "draws": "2^14 per cell (4536 cells)",
+      "capped": false,
+      "seconds": 64.1,
+      "peak_mb": 178
+    },
+    {
+      "run": "table_ph",
+      "path": "results/preprint/screen/table_ph/summary.json",
+      "commit": "3512cba",
+      "draws": "16384 per state",
+      "capped": false,
+      "seconds": 9.1,
+      "peak_mb": 402
+    },
+    {
+      "run": "ignorance_ph",
+      "path": "results/preprint/screen/ignorance_ph/summary.json",
+      "commit": "9c7c1a9",
+      "draws": "16384 per state",
+      "capped": true,
+      "seconds": 493.4,
+      "peak_mb": 1417
+    },
+    {
+      "run": "sweep_pcred_0.6_ph",
+      "path": "results/preprint/screen/sweep_pcred_0.6_ph/summary.json",
+      "commit": "cd17326",
+      "draws": "16384 per state",
+      "capped": false,
+      "seconds": 17.2,
+      "peak_mb": 265
+    },
+    {
+      "run": "sweep_pcred_0.99_ph",
+      "path": "results/preprint/screen/sweep_pcred_0.99_ph/summary.json",
+      "commit": "1e31699",
+      "draws": "16384 per state",
+      "capped": false,
+      "seconds": 16.1,
+      "peak_mb": 265
+    },
+    {
+      "run": "sweep_mcos_0.1_ph",
+      "path": "results/preprint/screen/sweep_mcos_0.1_ph/summary.json",
+      "commit": "2254372",
+      "draws": "16384 per state",
+      "capped": false,
+      "seconds": 15.8,
+      "peak_mb": 260
+    },
+    {
+      "run": "sweep_mcos_0.2_ph",
+      "path": "results/preprint/screen/sweep_mcos_0.2_ph/summary.json",
+      "commit": "55974a4",
+      "draws": "16384 per state",
+      "capped": false,
+      "seconds": 15.9,
+      "peak_mb": 265
+    },
+    {
+      "run": "sweep_untruncated_ph",
+      "path": "results/preprint/screen/sweep_untruncated_ph/summary.json",
+      "commit": "55a3281",
+      "draws": "16384 per state",
+      "capped": false,
+      "seconds": 16.5,
+      "peak_mb": 265
+    },
+    {
+      "run": "sweep_independent_ph",
+      "path": "results/preprint/screen/sweep_independent_ph/summary.json",
+      "commit": "f579e73",
+      "draws": "16384 per state",
+      "capped": false,
+      "seconds": 16.3,
+      "peak_mb": 257
+    },
+    {
+      "run": "sens_acc_omega_ph",
+      "path": "results/preprint/screen/sens_acc_omega_ph/summary.json",
+      "commit": "b887472",
+      "draws": "16384 per state",
+      "capped": false,
+      "seconds": 16.5,
+      "peak_mb": 264
+    },
+    {
+      "run": "sens_gamma_sl0_untruncated_ph",
+      "path": "results/preprint/screen/sens_gamma_sl0_untruncated_ph/summary.json",
+      "commit": "9b7f24e",
+      "draws": "16384 per state",
+      "capped": false,
+      "seconds": 15.2,
+      "peak_mb": 258
+    },
+    {
+      "run": "sens_gamma_sl0_untruncated_r2_ph",
+      "path": "results/preprint/screen/sens_gamma_sl0_untruncated_r2_ph/summary.json",
+      "commit": "ebfba6f",
+      "draws": "16384 per state",
+      "capped": false,
+      "seconds": 16.2,
+      "peak_mb": 254
+    }
+  ],
   "thresholds_v6": {
     "source_sha": "c2c7882af0c7913bd17432157a43a3aca953dff4",
     "block_version": 6,
