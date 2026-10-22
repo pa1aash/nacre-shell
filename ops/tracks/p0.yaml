@@ -1101,6 +1101,8 @@ decisions:
     pH) is deferred to the planning chat at cp5b. The patent references (US 8,252,463; US 8,821,969;
     US 6,485,866; US 6,844,114) stay as missing-input markers until a fetched-metadata route exists.',
   reason: Integrator record at PH-I6c.}
+- {id: D75, date: '2026-10-21', decision: 'The results packet cp5b is built; the strict verify runs at cp6.',
+  reason: Integrator record at PH-I6.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1457,7 +1459,7 @@ deferred_v2:
   model: Sonnet
   master_trace: none
   requires: [cp5]
-done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2, PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b]
+done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2, PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b, PH-W8.2b, PH-W6.2c, PH-W6.2d, PH-W8.2d]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
