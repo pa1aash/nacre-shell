@@ -142,6 +142,44 @@
    },
    "checker": "pass (artists and PDF text)"
   },
+  "fig15": {
+   "id": "fig15",
+   "claim": "The phosphates that pass K2 in the as-prepared slurry (HAp, ACP, beta-TCP) and the carbonate are thermodynamically excluded at the two higher cutoff classes and open at the lowest, while every amorphous framing and the aluminium phosphates are undetermined: passing dissolution stability does not settle the cell regime.",
+   "caption_key": "One row per phase or baseline, grouped top to bottom: R-slurry phases, R-cell phases, silicate comparators, the carbonate polymorphs (gaps between groups). Columns: K2 in the as-prepared (processing) slurry; K2 in the acid-adjusted slurry state (suitable where any grid cell passes); then one pair of columns per registered K1 cutoff class (tick labels, V vs Li+/Li; the lowest is the nominal class), crystalline framing left and amorphous right. Fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); no fill: not tested in that column. K1 of the carbonate is drawn on the calcite row.",
+   "mock": false,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    10.0
+   ],
+   "input": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
+   "input_sha256": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
+   "input_source": {
+    "owner": "p0-w5",
+    "path": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
+    "commit": "73316df2314b14fb5a16ba6bf15077dfcc658c8c",
+    "sha256": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b"
+   },
+   "schema": "figures/src/schemas/ladder_v3.schema.json",
+   "aux": {
+    "cutoffs": "configs/preprint/thresholds.yaml@e85e890 (p0-w4)",
+    "films": "results/preprint/screen/phosphate_films_ph/summary.json@4401915 (p0-w4)",
+    "k2": "results/preprint/screen/k2_grid_ph/summary.json@8612b89 (p0-w4)"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig15.pdf": "cc381a027285d3757cd898ba7ccf0a37458639b848ed18a1e4e58b56dd36a5f6",
+    "figures/out/fig15.png": "b006a7709bcc24072048c0ebd7923b4464a66bd3ed3bc0f7df38d2be59755142",
+    "figures/out/cvd/fig15_deuteranopia.png": "120f0f88c53c9cf0d43ca7d3ceb37779d9adfa0c4a5b5f7ee8e6f1bb9a195179",
+    "figures/out/cvd/fig15_protanopia.png": "03df4d580c840c2b7eb11dd7f748f781794be80d0c013a8dda33545c055c4f61",
+    "figures/out/cvd/fig15_tritanopia.png": "ff07bbe2dece89ead624f13973df0b6256b882ad4702ea4902d1acc96a2627bc"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
   "fig4": {
    "id": "fig4",
    "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",
@@ -540,32 +578,6 @@
     "figures/out/templates/cvd/fig13_deuteranopia.png": "120a873161f7ce457d38017624f7ac92bc128669dcf94e3f05761055ff1a0a8e",
     "figures/out/templates/cvd/fig13_protanopia.png": "120a873161f7ce457d38017624f7ac92bc128669dcf94e3f05761055ff1a0a8e",
     "figures/out/templates/cvd/fig13_tritanopia.png": "120a873161f7ce457d38017624f7ac92bc128669dcf94e3f05761055ff1a0a8e"
-   },
-   "checker": "pass (artists and PDF text; placeholder on every plot area)"
-  },
-  "fig15": {
-   "id": "fig15",
-   "status": "template",
-   "release": "blocked: placeholder, no data yet",
-   "claim": "The verdict of each candidate coating under each registered condition, so the regime in which each candidate is excluded, inconclusive or undetermined can be read across a row.",
-   "caption_key": "Rows: candidates; columns: conditions (regimes, in the caption); fill and hatching as in Fig. 9: excluded, inconclusive, undetermined.",
-   "width": "double",
-   "size_cm": [
-    17.1,
-    8.0
-   ],
-   "waits_for": "candidate list and regime verdicts from the screen (PH-W4 follow-ups)",
-   "font": {
-    "family": "Arial",
-    "file": "Arial.ttf",
-    "release": true
-   },
-   "outputs": {
-    "figures/out/templates/fig15.pdf": "18c22ae6bf48aa5750d1926654cb639eeb2a65dc98d3692687ea07d39faed09c",
-    "figures/out/templates/fig15.png": "5020c2194d923780cbbab995be6a35223cee2f3edd67a0e34e766ab78a25d097",
-    "figures/out/templates/cvd/fig15_deuteranopia.png": "14e1d85ee89c94599d7ef0a981d20a86613428f3583d3fc4af69fd455ded9d37",
-    "figures/out/templates/cvd/fig15_protanopia.png": "14e1d85ee89c94599d7ef0a981d20a86613428f3583d3fc4af69fd455ded9d37",
-    "figures/out/templates/cvd/fig15_tritanopia.png": "14e1d85ee89c94599d7ef0a981d20a86613428f3583d3fc4af69fd455ded9d37"
    },
    "checker": "pass (artists and PDF text; placeholder on every plot area)"
   }

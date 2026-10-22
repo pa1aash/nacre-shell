@@ -130,6 +130,41 @@
    },
    "checker": "pass (artists and PDF text)"
   },
+  "fig15": {
+   "id": "fig15",
+   "claim": "Each candidate is thermodynamically excluded, open or undetermined at the registered cutoff classes and passes dissolution stability in the processing state only for some phases: no phase is suitable against dissolution in both slurry states and not excluded at the high cutoff classes.",
+   "caption_key": "One row per phase or baseline, grouped top to bottom: R-slurry phases, R-cell phases, silicate comparators, the carbonate polymorphs (gaps between groups). Columns: K2 in the as-prepared (processing) slurry; K2 in the acid-adjusted slurry state (suitable where any grid cell passes); then one pair of columns per registered K1 cutoff class (tick labels, V vs Li+/Li; the lowest is the nominal class), crystalline framing left and amorphous right. Fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); no fill: not tested in that column. K1 of the carbonate is drawn on the calcite row.",
+   "mock": true,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    10.0
+   ],
+   "input": "figures/src/mock/ladder_v3.json",
+   "input_sha256": "c09196c9aabbc16ebcdbee17c7cfc8208c637d8c59041c5ac938a8db5d27ecd2",
+   "input_source": {
+    "path": "figures/src/mock/ladder_v3.json"
+   },
+   "schema": "figures/src/schemas/ladder_v3.schema.json",
+   "aux": {
+    "cutoffs": "figures/src/mock/ladder_cutoffs.yaml sha256:8376f88f1a522a84fef8b93e6536daba241b12527c5a200bb0bbe00d2c355ea3",
+    "films": "figures/src/mock/phosphate_films.json sha256:54c8511ec2b708642938391bc023529a5cb371df897e783f19c53fa742846001",
+    "k2": "figures/src/mock/k2_grid.json sha256:7cb6ce8c64cb8475dbf223cf2e5e32dc5cc2c41629d2b8b76a43eb3ae4d65692"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/mock/fig15.pdf": "885db78c0294cf92ef060f671773420960e1a3d57e8a6fbb78812e9692048ce2",
+    "figures/out/mock/fig15.png": "238860d0af7606a4bb9a46476e63b68534a056d98a60c422ebc75e4d447da504",
+    "figures/out/mock/cvd/fig15_deuteranopia.png": "956018d81ccddf063c542ac3f7367faa6ab5289234affca951c4410286fbc158",
+    "figures/out/mock/cvd/fig15_protanopia.png": "69777c2a710f3e14002ef17d58391a27f79f2a243cf9a8525da885471405309c",
+    "figures/out/mock/cvd/fig15_tritanopia.png": "e7a8a863671202d3e2140fc2afe7cf2e2fdd996444170d00bf28bc260557dc30"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
   "fig4": {
    "id": "fig4",
    "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",
