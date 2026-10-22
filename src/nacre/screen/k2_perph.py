@@ -180,7 +180,7 @@ def main(root):
     (out / "perph.json").write_text(json.dumps(doc, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     (out / "perph.md").write_text(markdown(doc), encoding="utf-8")
     with (out / "perph.csv").open("w", newline="", encoding="utf-8") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["grid", "source", "phase", "pH", "n_cells", "n_passing", "passing_fraction", "min_passing_Ca_T_mol_dm3",
                     "min_passing_P_T_mol_dm3", "CaP_min", "CaP_max"])
         for grid, srcs in doc["tables"].items():
