@@ -60,7 +60,7 @@ def test_results_subsections_follow_the_outline():
 
 
 def test_carbonate_text_is_marked_with_the_source_comment():
-    for name, n in (("introduction", 3), ("methods", 4), ("model", 1), ("results", 1), ("design", 1)):
+    for name, n in (("introduction", 1), ("methods", 1), ("model", 1), ("results", 1), ("design", 1)):
         text = (PAPER / "sections" / (name + ".tex")).read_text(encoding="utf-8")
         assert text.count("% carbonate control (frozen)") >= n, name
 

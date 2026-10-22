@@ -32,7 +32,7 @@ Registered: `NumPcred`, `NumPcredSweepLow`, `NumPcredSweepHigh`, `NumMcos`, `Num
 
 ## Claims carried
 
-CL-M10 to CL-M16; carbonate era: CL-M01 to CL-M09, CL-P02, CL-T02, CL-B01 to CL-B03.
+CL-M10 to CL-M17, CL-T03; carbonate era: CL-M01 to CL-M09, CL-P02, CL-T02 (CL-M05, CL-M07 and CL-T02 carried in the SI section si:methods since PH-W8.2), CL-B01 to CL-B03 (still planned).
 
 ## Supplying lanes
 
