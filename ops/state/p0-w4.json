@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-W4.2f",
-  "status": "DONE",
-  "day": 5,
+  "last_session": "PH-W4.2",
+  "status": "RUNNING",
+  "day": 6,
   "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
   "contract_checked_ref": "2aa96fb (W3 contract v6)",
   "artifacts": {
@@ -134,23 +134,7 @@
     "sens_gamma_sl0_untruncated": "results/preprint/screen/sens_gamma_sl0_untruncated/summary.json",
     "sens_gamma_sl0_untruncated_r2": "results/preprint/screen/sens_gamma_sl0_untruncated_r2/summary.json"
   },
-  "runs": {
-    "diag_analog_binding_adm": "results/preprint/screen/diag_analog_binding_adm/summary.json",
-    "diag_sourced_only_adm": "results/preprint/screen/diag_sourced_only_adm/summary.json",
-    "ignorance_adm": "results/preprint/screen/ignorance_adm/summary.json",
-    "sens_acc_omega_adm": "results/preprint/screen/sens_acc_omega_adm/summary.json",
-    "sens_gamma_sl0_untruncated_adm": "results/preprint/screen/sens_gamma_sl0_untruncated_adm/summary.json",
-    "sens_gamma_sl0_untruncated_r2_adm": "results/preprint/screen/sens_gamma_sl0_untruncated_r2_adm/summary.json",
-    "sens_ph_modified_adm": "results/preprint/screen/sens_ph_modified_adm/summary.json",
-    "sens_rca_analog_adm": "results/preprint/screen/sens_rca_analog_adm/summary.json",
-    "sweep_independent_adm": "results/preprint/screen/sweep_independent_adm/summary.json",
-    "sweep_mcos_0.1_adm": "results/preprint/screen/sweep_mcos_0.1_adm/summary.json",
-    "sweep_mcos_0.2_adm": "results/preprint/screen/sweep_mcos_0.2_adm/summary.json",
-    "sweep_pcred_0.6_adm": "results/preprint/screen/sweep_pcred_0.6_adm/summary.json",
-    "sweep_pcred_0.99_adm": "results/preprint/screen/sweep_pcred_0.99_adm/summary.json",
-    "sweep_untruncated_adm": "results/preprint/screen/sweep_untruncated_adm/summary.json",
-    "table_adm": "results/preprint/screen/table_adm/summary.json"
-  },
+  "runs": [],
   "thresholds_v6": {
     "source_sha": "c2c7882af0c7913bd17432157a43a3aca953dff4",
     "block_version": 6,
@@ -162,5 +146,6 @@
     "block_sha256": "d92b42e9106e574fd330635fdc0d54e56d4a1dec4a7f38ece93d8bdfe922b04b",
     "equality": "EQUAL",
     "copy_commit": "e85e890"
-  }
+  },
+  "pre_run_sha": "8073c8ed020c810dabd44f13f655718a1d9e8610"
 }
