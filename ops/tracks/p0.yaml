@@ -19,8 +19,8 @@
 #
 # Exactly one day is open. `nacre track open-day <n>` (integrator, on preprint/p0) closes day n-1 and
 # opens day n with the commit "ops(p0): open day <n>".
-meta: {title_working: Thermodynamic screening of nacre- and bone-inspired barriers for aluminium
-    current collectors in fluorine-free lithium-ion cells, venue: ChemRxiv, base: preprint/p0}
+meta: {title_working: Thermodynamic screening of nacre- and bone-inspired barriers for aluminium current
+    collectors in fluorine-free lithium-ion cells, venue: ChemRxiv, base: preprint/p0}
 lanes:
 - {id: p0-w1, branch: preprint/p0-w1, worktree: ~/Desktop/nacre-shell-p-w1, model: Opus}
 - {id: p0-w2, branch: preprint/p0-w2, worktree: ~/Desktop/nacre-shell-p-w2, model: Opus; Sonnet from P0-W2.4}
@@ -326,9 +326,9 @@ days:
     master_trace: none
     requires: []
 - day: 5
-  status: open
+  status: closed
   opened_utc: '2026-10-20T13:02:26Z'
-  closed_utc: null
+  closed_utc: '2026-10-22T08:42:21Z'
   carried: [P0-W7.4, PH-I4]
   sessions:
   - id: PH-W5.1
@@ -476,10 +476,10 @@ days:
     master_trace: none
     requires: []
 - day: 6
-  status: pending
-  opened_utc: null
+  status: open
+  opened_utc: '2026-10-22T08:42:21Z'
   closed_utc: null
-  carried: []
+  carried: [P0-W7.4]
   sessions:
   - id: PH-W4.2
     lane: p0-w4
@@ -487,56 +487,59 @@ days:
     model: Sonnet
     master_trace: none
     requires: [cp5]
-    note: 'Production screens on the MacBook, no pods, no spending: slurry-stage K2 to K4 for carbonate (calcite, aragonite, ACC) and phosphate phases, K1 read from ladder_v3, framings, baselines, the F1 proceed rule, deletion test, sensitivity sweeps. First step (D57): commit the gap-table treatments for the 72 pending keys and the 11 symbol bindings before any output.'
+    note: 'Production screens on the MacBook, no pods, no spending: slurry-stage K2 to K4 for carbonate
+      (calcite, aragonite, ACC) and phosphate phases, K1 read from ladder_v3, framings, baselines, the
+      F1 proceed rule, deletion test, sensitivity sweeps. First step (D57): commit the gap-table treatments
+      for the 72 pending keys and the 11 symbol bindings before any output.'
   - id: PH-W4.3
     lane: p0-w4
     day: 6
     model: Sonnet
     master_trace: none
     requires: [cp5]
-    note: 'Required-precision map and flip values. Runs after PH-W4.2.'
+    note: Required-precision map and flip values. Runs after PH-W4.2.
   - id: PH-W6.2
     lane: p0-w6
     day: 6
     model: Sonnet
     master_trace: none
     requires: [cp5]
-    note: 'Real-data figures from the production outputs. Runs after PH-W4.2. Moved from day 7.'
+    note: Real-data figures from the production outputs. Runs after PH-W4.2. Moved from day 7.
   - id: PH-W8.2
     lane: p0-w8
     day: 6
     model: Opus
     master_trace: none
     requires: []
-    note: 'Introduction, Design rules and Methods in the regime frame.'
+    note: Introduction, Design rules and Methods in the regime frame.
   - id: PH-W8.2b
     lane: p0-w8
     day: 6
     model: Sonnet
     master_trace: none
     requires: [cp5]
-    note: 'Regime-table generator. Runs after PH-W4.2.'
+    note: Regime-table generator. Runs after PH-W4.2.
   - id: PH-W2.2
     lane: p0-w2
     day: 6
     model: Sonnet
     master_trace: none
     requires: []
-    note: 'ChemRxiv package finalised.'
+    note: ChemRxiv package finalised.
   - id: PH-W6.3b
     lane: p0-w6
     day: 6
     model: Sonnet
     master_trace: none
     requires: []
-    note: 'Completion of the two-panel hero and schematic stub. Cut candidate.'
+    note: Completion of the two-panel hero and schematic stub. Cut candidate.
   - id: PH-I6
     lane: p0-int
     day: 6
     model: Sonnet
     master_trace: none
     requires: []
-    note: 'Results packet cp5b. Runs after PH-W4.2 and PH-W4.3.'
+    note: Results packet cp5b. Runs after PH-W4.2 and PH-W4.3.
 - day: 7
   status: pending
   opened_utc: null
@@ -954,36 +957,75 @@ decisions:
     fails near 4.1 V) plus the gap map, and the abstract says so; the operator is told plainly and decides
     whether to post; the route layer stays as a design hypothesis with its screened thermodynamics.',
   reason: Route ruling evidence consequence 3.}
-- {id: D53, date: '2026-10-20', decision: 'cp4 PASS conditional on fixes F1 to F9 and packet rulings 1 to 11, as
-    filed in ops/tracks/redirect_plan.md (CP4 FIXES) with the owner map there. Nothing starts production until
-    F1 to F5 are applied and the freeze packet goes to the planning chat. PH-W2.2b added (lane w2, Sonnet,
-    day 5, requires []) for F8.', reason: Planning-chat verdict of 2026-10-20 on the cp4 packet.}
-- {id: D54, date: '2026-10-21', decision: 'PH-W5.2 (lane w5, Sonnet, day 5, requires []: final K1 ladder v3 with
-    registered margins) and PH-W4.2b (lane w4, Sonnet, day 5, requires []: regenerate configs from thresholds
-    block v6, confirm the ladder reader against W5 ladder_v3.csv) added after PH-W3.2 registered the margins
-    (block v6).', reason: Margins registered at W3 block v6.}
-- {id: D55, date: '2026-10-21', decision: 'K1 margins are registered at W3 block v6; the F2 bracket cannot yet give
-    a pass (transfer data gaps).', reason: Result of PH-W3.2 and PH-W3.2a.}
+- {id: D53, date: '2026-10-20', decision: 'cp4 PASS conditional on fixes F1 to F9 and packet rulings 1
+    to 11, as filed in ops/tracks/redirect_plan.md (CP4 FIXES) with the owner map there. Nothing starts
+    production until F1 to F5 are applied and the freeze packet goes to the planning chat. PH-W2.2b added
+    (lane w2, Sonnet, day 5, requires []) for F8.', reason: Planning-chat verdict of 2026-10-20 on the
+    cp4 packet.}
+- {id: D54, date: '2026-10-21', decision: 'PH-W5.2 (lane w5, Sonnet, day 5, requires []: final K1 ladder
+    v3 with registered margins) and PH-W4.2b (lane w4, Sonnet, day 5, requires []: regenerate configs
+    from thresholds block v6, confirm the ladder reader against W5 ladder_v3.csv) added after PH-W3.2
+    registered the margins (block v6).', reason: Margins registered at W3 block v6.}
+- {id: D55, date: '2026-10-21', decision: K1 margins are registered at W3 block v6; the F2 bracket cannot
+    yet give a pass (transfer data gaps)., reason: Result of PH-W3.2 and PH-W3.2a.}
 - {id: D56, date: '2026-10-21', decision: 'The cp5a freeze packet is built (ops/packets/p0-5a.md, bundle
-    .local/packets/p0-5a.zip). Tag p0-cp5 is created only after the planning chat replies PASS; nothing starts
-    production before it.', reason: Freeze audit before the production screen.}
-- {id: D57, date: '2026-10-21', decision: 'PH-W4.2 commits the gap-table treatments for the 72 pending keys and
-    the 11 W1-to-contract symbol bindings as its first step, before any output (as PH-W4.3 did with AM1 to AM4),
-    using only the registered treatment rules (ignorance prior, flagged analog, design axis, unresolved).',
-  reason: 'PH-W4.2b report (72 keys, 11 bindings); decision 6 of the cp5a packet.'}
-- {id: D58, date: '2026-10-21', decision: 'cp5a X-fixes PASS (X1, X2, X3, X5; ladder_v3 ae852aa7, symbol_bindings ca0a3bea).', reason: 'Planning-chat verdict on the cp5a X-fixes.'}
-- {id: D59, date: '2026-10-21', decision: 'cp5 is folded into one combined amendment cp5a2; p0-cp5 is tagged only after its PASS.', reason: 'Single freeze after the computational-package protocol.'}
-- {id: D60, date: '2026-10-21', decision: 'Binding rulings: rows 1 and 9 stay unresolved; row 6 relative form DG_tr_rel; row 7 E_lb from conventional aqueous DfG (hydration keys comparison only); row 8 window_margin unbound from phosphate rows.', reason: 'Planning-chat rulings on the symbol bindings.'}
-- {id: D61, date: '2026-10-21', decision: 'D36 is amended: CPU compute is allowed ONLY for PH-C* sessions under jobs/preprint/**, one rented 64-core node started and stopped by the operator, budget about 15 to 20 node-hours, hard cap USD 150, stop and ask the planning chat at USD 100, every job and its cost logged in jobs/ledger/p0-w5.jsonl, no GPU.', reason: 'Computed bracket premise needs cluster-continuum DFT.'}
-- {id: D62, date: '2026-10-21', decision: 'X4, X7, X8 stay non-gating but are listed in cp5a2.', reason: 'Planning-chat ruling on non-gating fixes.'}
-- {id: D63, date: '2026-10-21', decision: 'Regime-matched repositioning. Working title: Thermodynamic screening of nacre- and bone-inspired barriers for aluminium current collectors in fluorine-free lithium-ion cells (final wording at cp6).', reason: 'Planning-chat ruling; see the REGIME FRAME section of ops/tracks/redirect_plan.md.'}
-- {id: D64, date: '2026-10-21', decision: 'v1 is compute-free. The D61 compute exception is suspended; the PH-C0 protocol and bracket rule v7 are kept as v2 artifacts.', reason: 'The computed premise moves to v2; no pods and no spending in v1.'}
-- {id: D65, date: '2026-10-21', decision: 'cp5 PASS conditions: (i) X1 to X8 applied; (ii) housekeeping done (thresholds copy from block v8, the two Li+ keys repaired with no value changed, deviations filed, manifest re-hashed); (iii) aragonite in params.yaml with K_sp, uncertainty and source, registered as a K2 framing, and the K2 falsifiability controls re-pass on it; (iv) the scope-guard changes committed; (v) the verdict-label text in claims_redirect.md. p0-cp5 is created only then, followed by one short note to the planning chat with the new hashes and the aragonite row.', reason: 'Planning-chat ruling on the cp5a2 packet.'}
-- {id: D66, date: '2026-10-21', decision: 'Label and polymorph rules (C1 to C5) and the abstract order: (1) regime map and design rule; (2) what the ladder excludes; (3) the narrow suitability statement labelled a necessary condition; (4) the conditional predictions. Aragonite is a K2 framing; nacre-type labels a row only where aragonite AND calcite pass K2; every other carbonate row reads carbonate (calcite).', reason: 'Planning-chat ruling.'}
-- {id: D67, date: '2026-10-21', decision: 'f_min is registered as the interval 1 - p_c(2D square lateral) to 1 - p_c(3D simple cubic through-thickness); triangular is a lattice sensitivity; K2h is report-only (X4 accepted).', reason: 'Planning-chat ruling on X4.'}
-- {id: D68, date: '2026-10-21', decision: 'Vocabulary mapping: the data files say falsified and the regime table says excluded (recorded for confirmation by the planning chat).', reason: 'W6.1 and the regime table share one mapping.'}
-- {id: D69, date: '2026-10-21', decision: 'In-situ aragonite is a literature question and a hypothesis route, not a screen change. Nacre-like layering is not claimed: the layering in nacre comes from organic interlayers, and alternating aragonite and calcite layers is not nacre-like. PH-W2.5 deliverable: literature on (a) calcium carbonate, calcium phosphate and nacre-like or polymer-mineral coatings on aluminium or aluminium foil (film formed, protection measured, conditions); (b) mechanisms that give aragonite instead of calcite at room temperature in a slurry or on a surface (Mg2+, temperature, organic matrix), with sources; (c) the in-situ carbonate route as a stated hypothesis route.', reason: 'Planning-chat ruling after PH-I5c-b.'}
-- {id: D70, date: '2026-10-21', decision: 'The ten day-5 sessions PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1 (listed twice), PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6 and PH-W4.2e ran with the track check skipped (freeze fixes and fixes to earlier output) and are recorded done from their reports, in the ledger done list. cp5 closed at p0-cp5 (1682411).', reason: 'Lane states moved past them to sessions the ledger does not list, so the day-close check read them as not run.'}
+    .local/packets/p0-5a.zip). Tag p0-cp5 is created only after the planning chat replies PASS; nothing
+    starts production before it.', reason: Freeze audit before the production screen.}
+- {id: D57, date: '2026-10-21', decision: 'PH-W4.2 commits the gap-table treatments for the 72 pending
+    keys and the 11 W1-to-contract symbol bindings as its first step, before any output (as PH-W4.3 did
+    with AM1 to AM4), using only the registered treatment rules (ignorance prior, flagged analog, design
+    axis, unresolved).', reason: 'PH-W4.2b report (72 keys, 11 bindings); decision 6 of the cp5a packet.'}
+- {id: D58, date: '2026-10-21', decision: 'cp5a X-fixes PASS (X1, X2, X3, X5; ladder_v3 ae852aa7, symbol_bindings
+    ca0a3bea).', reason: Planning-chat verdict on the cp5a X-fixes.}
+- {id: D59, date: '2026-10-21', decision: cp5 is folded into one combined amendment cp5a2; p0-cp5 is tagged
+    only after its PASS., reason: Single freeze after the computational-package protocol.}
+- {id: D60, date: '2026-10-21', decision: 'Binding rulings: rows 1 and 9 stay unresolved; row 6 relative
+    form DG_tr_rel; row 7 E_lb from conventional aqueous DfG (hydration keys comparison only); row 8 window_margin
+    unbound from phosphate rows.', reason: Planning-chat rulings on the symbol bindings.}
+- {id: D61, date: '2026-10-21', decision: 'D36 is amended: CPU compute is allowed ONLY for PH-C* sessions
+    under jobs/preprint/**, one rented 64-core node started and stopped by the operator, budget about
+    15 to 20 node-hours, hard cap USD 150, stop and ask the planning chat at USD 100, every job and its
+    cost logged in jobs/ledger/p0-w5.jsonl, no GPU.', reason: Computed bracket premise needs cluster-continuum
+    DFT.}
+- {id: D62, date: '2026-10-21', decision: 'X4, X7, X8 stay non-gating but are listed in cp5a2.', reason: Planning-chat
+    ruling on non-gating fixes.}
+- {id: D63, date: '2026-10-21', decision: 'Regime-matched repositioning. Working title: Thermodynamic
+    screening of nacre- and bone-inspired barriers for aluminium current collectors in fluorine-free lithium-ion
+    cells (final wording at cp6).', reason: Planning-chat ruling; see the REGIME FRAME section of ops/tracks/redirect_plan.md.}
+- {id: D64, date: '2026-10-21', decision: v1 is compute-free. The D61 compute exception is suspended;
+    the PH-C0 protocol and bracket rule v7 are kept as v2 artifacts., reason: The computed premise moves
+    to v2; no pods and no spending in v1.}
+- {id: D65, date: '2026-10-21', decision: 'cp5 PASS conditions: (i) X1 to X8 applied; (ii) housekeeping
+    done (thresholds copy from block v8, the two Li+ keys repaired with no value changed, deviations filed,
+    manifest re-hashed); (iii) aragonite in params.yaml with K_sp, uncertainty and source, registered
+    as a K2 framing, and the K2 falsifiability controls re-pass on it; (iv) the scope-guard changes committed;
+    (v) the verdict-label text in claims_redirect.md. p0-cp5 is created only then, followed by one short
+    note to the planning chat with the new hashes and the aragonite row.', reason: Planning-chat ruling
+    on the cp5a2 packet.}
+- {id: D66, date: '2026-10-21', decision: 'Label and polymorph rules (C1 to C5) and the abstract order:
+    (1) regime map and design rule; (2) what the ladder excludes; (3) the narrow suitability statement
+    labelled a necessary condition; (4) the conditional predictions. Aragonite is a K2 framing; nacre-type
+    labels a row only where aragonite AND calcite pass K2; every other carbonate row reads carbonate (calcite).',
+  reason: Planning-chat ruling.}
+- {id: D67, date: '2026-10-21', decision: f_min is registered as the interval 1 - p_c(2D square lateral)
+    to 1 - p_c(3D simple cubic through-thickness); triangular is a lattice sensitivity; K2h is report-only
+    (X4 accepted)., reason: Planning-chat ruling on X4.}
+- {id: D68, date: '2026-10-21', decision: 'Vocabulary mapping: the data files say falsified and the regime
+    table says excluded (recorded for confirmation by the planning chat).', reason: W6.1 and the regime
+    table share one mapping.}
+- {id: D69, date: '2026-10-21', decision: 'In-situ aragonite is a literature question and a hypothesis
+    route, not a screen change. Nacre-like layering is not claimed: the layering in nacre comes from organic
+    interlayers, and alternating aragonite and calcite layers is not nacre-like. PH-W2.5 deliverable:
+    literature on (a) calcium carbonate, calcium phosphate and nacre-like or polymer-mineral coatings
+    on aluminium or aluminium foil (film formed, protection measured, conditions); (b) mechanisms that
+    give aragonite instead of calcite at room temperature in a slurry or on a surface (Mg2+, temperature,
+    organic matrix), with sources; (c) the in-situ carbonate route as a stated hypothesis route.', reason: Planning-chat
+    ruling after PH-I5c-b.}
+- {id: D70, date: '2026-10-21', decision: 'The ten day-5 sessions PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1
+    (listed twice), PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6 and PH-W4.2e ran with the track check skipped
+    (freeze fixes and fixes to earlier output) and are recorded done from their reports, in the ledger
+    done list. cp5 closed at p0-cp5 (1682411).', reason: 'Lane states moved past them to sessions the
+    ledger does not list, so the day-close check read them as not run.'}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1283,70 +1325,64 @@ lane_notes:
   date: '2026-10-20'
   day: 5
   lanes: [p0-w3]
-  note: '(PH-W3.2a) CP4 fixes F1 (verdict rule 2d), F2 (K1 bracket rule and vetting of the hydration argument, Li-reference and anion term) and the F4 spec (STAGE field, conversion-step rows). D53.'
+  note: (PH-W3.2a) CP4 fixes F1 (verdict rule 2d), F2 (K1 bracket rule and vetting of the hydration argument,
+    Li-reference and anion term) and the F4 spec (STAGE field, conversion-step rows). D53.
 - id: N43
   date: '2026-10-20'
   day: 5
   lanes: [p0-w5]
-  note: '(PH-W5.1) CP4 fixes F2 compute (bracket), F3 (Ca(PO3)2 and Al(PO3)3 thermochemistry), F5 comparator row ((LiPO3)n), F7 (carbonate DFT comparator from the 2026.09.28 book, labelled extra), F4 rows. D53.'
+  note: (PH-W5.1) CP4 fixes F2 compute (bracket), F3 (Ca(PO3)2 and Al(PO3)3 thermochemistry), F5 comparator
+    row ((LiPO3)n), F7 (carbonate DFT comparator from the 2026.09.28 book, labelled extra), F4 rows. D53.
 - id: N44
   date: '2026-10-20'
   day: 5
   lanes: [p0-w1]
-  note: '(PH-W1.3) CP4 fixes F2 and F3 data keys per packet decision 10: hydration free energies of Ca2+, Al3+, ClO4-; water-to-carbonate transfer data; Ca(PO3)2 glass DfH, S0 and crystallisation enthalpy; Al(PO3)3 data; polyphosphate hydrolysis rates near pH 7 to 13; conversion temperatures. D53.'
+  note: '(PH-W1.3) CP4 fixes F2 and F3 data keys per packet decision 10: hydration free energies of Ca2+,
+    Al3+, ClO4-; water-to-carbonate transfer data; Ca(PO3)2 glass DfH, S0 and crystallisation enthalpy;
+    Al(PO3)3 data; polyphosphate hydrolysis rates near pH 7 to 13; conversion temperatures. D53.'
 - id: N45
   date: '2026-10-20'
   day: 5
   lanes: [p0-w8]
-  note: '(PH-W8.1) CP4 fixes F4 table spec, F6 and F8 text (Abstract and Introduction), F9 lint-scope implementation of the SG17W warn pattern. D53.'
+  note: (PH-W8.1) CP4 fixes F4 table spec, F6 and F8 text (Abstract and Introduction), F9 lint-scope implementation
+    of the SG17W warn pattern. D53.
 - id: N46
   date: '2026-10-20'
   day: 5
   lanes: [p0-w4]
-  note: '(PH-W4.2a) CP4 fixes F1 proceed rule, F5 panel, STAGE field. D53.'
+  note: (PH-W4.2a) CP4 fixes F1 proceed rule, F5 panel, STAGE field. D53.
 deferred_v2:
-# D64: v1 is compute-free; these sessions depend on the computed premise and move to v2.
-  - id: PH-C1
-    lane: p0-w5
-    day: 6
-    model: Sonnet
-    master_trace: none
-    requires: [cp5]
-  - id: PH-C2
-    lane: p0-w5
-    day: 6
-    model: Sonnet
-    master_trace: none
-    requires: [cp5]
-  - id: PH-C3
-    lane: p0-w5
-    day: 6
-    model: Sonnet
-    master_trace: none
-    requires: [cp5]
-  - id: PH-W3.5
-    lane: p0-w3
-    day: 6
-    model: Opus
-    master_trace: none
-    requires: [cp5]
-  - id: PH-W5.4b
-    lane: p0-w5
-    day: 6
-    model: Sonnet
-    master_trace: none
-    requires: [cp5]
-# D70: recorded done from their reports; lane states moved past them to unlisted sessions (read by `nacre track`).
-done:
-- PH-W8.1
-- PH-W1.3
-- PH-W4.2a
-- PH-W6.1
-- PH-W4.2b
-- PH-W1.5
-- PH-W4.2d
-- PH-W1.6
-- PH-W4.2e
+- id: PH-C1
+  lane: p0-w5
+  day: 6
+  model: Sonnet
+  master_trace: none
+  requires: [cp5]
+- id: PH-C2
+  lane: p0-w5
+  day: 6
+  model: Sonnet
+  master_trace: none
+  requires: [cp5]
+- id: PH-C3
+  lane: p0-w5
+  day: 6
+  model: Sonnet
+  master_trace: none
+  requires: [cp5]
+- id: PH-W3.5
+  lane: p0-w3
+  day: 6
+  model: Opus
+  master_trace: none
+  requires: [cp5]
+- id: PH-W5.4b
+  lane: p0-w5
+  day: 6
+  model: Sonnet
+  master_trace: none
+  requires: [cp5]
+done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
