@@ -16,6 +16,15 @@ Every `[T…]` and `[P…]` source is a Wayback capture from 2025 or 2026, not t
 - [ ] The contact details for every co-author are at hand from the local-only list `.local/p0/authors_contact.yaml` [T1-1]. **re-check live**
 - [ ] No size limit was found in the captures. Check the live page for one and compare it with the PDF and SI [T1-1]. **re-check live**
 
+## Final structure of the release
+
+- [ ] Main PDF: the release build of `preprint/paper/main.tex`, figures and tables embedded (`metadata.yaml` `files.manuscript_pdf`) [T1-1, T1-2]. **re-check live**
+- [ ] SI PDF: the release build of `preprint/paper/si/main_si.tex`, uploaded as supporting material (`files.supplementary`) [T1-1, T1-2]. **re-check live**
+- [ ] Data and code links: repository (`\nacreRepoURL`), Zenodo data and code record (`\nacreZenodoDOI`) and SI record (`\nacreSIDOI`). The Zenodo DOI is filled at release (C3); until then the Data and code availability section keeps the token and the release build stops on it [T1-1, T2-1]. **re-check live**
+- [ ] Materials Project attribution: the text in `metadata.yaml` `data_and_code_availability.materials_project.statement_draft`, taken from W5's `results/preprint/pourbaix/cache/attribution_for_paper.md`, with the database version filled from the generated macro; every item under `must_survive_editing` is still in the PDF [T1-2]. **re-check live**
+- [ ] The co-author pack replies are in hand for all six authors (`coauthor_pack.md`), including the department and ORCID of Prof. Braun and every author's CRediT roles [T3-1, T2-1]. **re-check live**
+- [ ] `uv run nacre retro package-check --release` passes (no TBD left except the C3 items, which are filled at C3) [B3, B8].
+
 ## Log in
 
 - [ ] Log in with the corresponding author's ORCID iD (`metadata.yaml` author Gang) and select "Submit Content" [T1-1, T2-1]. **re-check live**
