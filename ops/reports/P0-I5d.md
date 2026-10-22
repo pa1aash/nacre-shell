@@ -7,5 +7,5 @@ Status DONE. Tag p0-cp5 (signed) on 1682411; preprint/p0 pushed at 1682411.
 - Hang rule: strict verify prints its table only at the end; empty log for the first 10 minutes while pytest CPU advanced; not stopped (first run).
 - Manifest ops/packets/p0-5a2_hashes.txt re-hashed; no earlier hash changed, two rows added (params_table.tex, figures upstream.yaml). Note ops/packets/p0-5a2_note.md (49 lines).
 - `verify --quick` PASS. Lanes w1 to w6 and w8 fast-forwarded to 1682411 (7/8; w7 skipped by instruction).
-- Day 6: see the final line of this report.
-- Disk free after uv cache clean: recorded below.
+- Day 6: NOT open. `nacre track open-day 6` (also with --carry P0-W7.4) refuses: day 5 is not complete in the track ledger; ten sessions show "not run" (PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1 twice, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e) although their lane reports exist. Carrying them would break the rule to carry only DONE items; planning chat or the track ledger needs to mark them. State stays day 5.
+- Disk free after uv cache clean: 12Gi used, 20Gi free of 228Gi (df -h /). Keep-awake stopped.
