@@ -17,7 +17,7 @@ LADDER = Path("results") / "preprint" / "pourbaix" / "ph_w52" / "ladder_v3.csv"
 LADDER_SHA256 = "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b"
 BINDINGS = Path("configs") / "preprint" / "symbol_bindings.yaml"
 GAP_TABLES = (Path("configs") / "preprint" / "gap_resolution.yaml", Path("configs") / "preprint" / "gap_resolution_ph.yaml")
-THRESHOLDS_BLOCK_VERSION = 8
+THRESHOLDS_BLOCK_VERSION = 9
 HEADER_PREFIX = "# sha256 of this file with this line removed: "
 LEDGER = Path("jobs") / "ledger" / "p0-w4.jsonl"
 

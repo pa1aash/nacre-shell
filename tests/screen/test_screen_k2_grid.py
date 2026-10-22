@@ -142,8 +142,8 @@ def test_provenance_fields_and_frozen_hashes():
     assert ph_prov.check_frozen(ROOT)
     ex = ph_prov.extra(ROOT)
     assert ex["ladder_hash"] == "sha256:" + ph_prov.LADDER_SHA256
-    assert ex["thresholds_block_version"] == 8
-    assert ex["thresholds_block_sha256"] == "sha256:d92b42e9106e574fd330635fdc0d54e56d4a1dec4a7f38ece93d8bdfe922b04b"
+    assert ex["thresholds_block_version"] == 9
+    assert ex["thresholds_block_sha256"] == "sha256:45135dd172dcb0a11caef2750b5074d2485a75bad1b6c03f61c623b3c319d3e4"
     assert ex["checkpoint_tag"] == "p0-cp5" and len(ex["checkpoint_tag_commit"]) == 40
     assert ex["symbol_bindings_hash"] == "sha256:" + hashlib.sha256((ROOT / ph_prov.BINDINGS).read_bytes()).hexdigest()
     assert set(ex["gap_table_hashes"]) == {p.as_posix() for p in ph_prov.GAP_TABLES}
