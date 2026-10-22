@@ -490,7 +490,9 @@ days:
     note: 'Production screens on the MacBook, no pods, no spending: slurry-stage K2 to K4 for carbonate
       (calcite, aragonite, ACC) and phosphate phases, K1 read from ladder_v3, framings, baselines, the
       F1 proceed rule, deletion test, sensitivity sweeps. First step (D57): commit the gap-table treatments
-      for the 72 pending keys and the 11 symbol bindings before any output.'
+      for the 72 pending keys and the 11 symbol bindings before any output. Per D71 the first step, committed before any output, also covers (a) the K_P
+      binding with unit test and the TATB declaration, (b) the labels of Q5, (c) the second control of
+      Q2, (d) K2 tests in the acid-adjusted state; then production.'
   - id: PH-W4.3
     lane: p0-w4
     day: 6
@@ -533,6 +535,25 @@ days:
     master_trace: none
     requires: []
     note: Completion of the two-panel hero and schematic stub. Cut candidate.
+  - id: PH-W3.7
+    lane: p0-w3
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: []
+    note: 'Update theory/claims_redirect.md per D71 and D72: section 11a names log10_ksp_aragonite_25c_i0
+      and marks the older key superseded, not read; the label rule and the two row labels of Q5; the
+      regime-table footnote and the kinetic-stabilisation sentence of Q4; the acid-adjusted row; K_P and
+      the TATB declaration as definitions; f_min recorded as deferred; check_contract passes.'
+  - id: PH-W1.7
+    lane: p0-w1
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: []
+    note: 'Non-gating. Try to reach Plummer and Busenberg 1982 or another primary source for the aragonite
+      Ksp and upgrade the grade if read, otherwise record the gap. Document the conversion rule for any
+      non-TATB transfer source and the molal-to-molar conversion for any K.'
   - id: PH-I6
     lane: p0-int
     day: 6
@@ -1026,6 +1047,15 @@ decisions:
     (freeze fixes and fixes to earlier output) and are recorded done from their reports, in the ledger
     done list. cp5 closed at p0-cp5 (1682411).', reason: 'Lane states moved past them to sessions the
     ledger does not list, so the day-close check read them as not run.'}
+- {id: D71, date: '2026-10-21', decision: 'cp5 closure PASS. Rulings Q1 to Q6 recorded in the CP5 CLOSURE
+    RULINGS section of redirect_plan.md: aragonite key log10_ksp_aragonite_25c_i0 (older key superseded,
+    not read); second low-dose control in the unmodified alkaline slurry; TATB for Li+ and benchmark
+    ions, Ca(PO3)2 bound kept, K_P = K * c0; excluded = falsified with the tier-1 footnote; label rule;
+    f_min, Al polyphosphate K_sp and A_patch deferred to cp5b.', reason: Planning-chat ruling at cp5
+    closure.}
+- {id: D72, date: '2026-10-21', decision: 'Label rule change (changes C2): nacre-type requires aragonite
+    passing K2 and its formation supported under the registered processing conditions. NU19 says it is
+    not, so the regime table has no nacre-type row.', reason: Planning-chat ruling at cp5 closure (Q5).}
 lane_notes:
 - id: N1
   date: '2026-10-16'
