@@ -147,5 +147,22 @@
     "equality": "EQUAL",
     "copy_commit": "e85e890"
   },
-  "pre_run_sha": "8073c8ed020c810dabd44f13f655718a1d9e8610"
+  "pre_run_sha": "8073c8ed020c810dabd44f13f655718a1d9e8610",
+  "runs_w4_3b": {
+    "diag_analog_binding_adm": "results/preprint/screen/diag_analog_binding_adm/summary.json",
+    "diag_sourced_only_adm": "results/preprint/screen/diag_sourced_only_adm/summary.json",
+    "ignorance_adm": "results/preprint/screen/ignorance_adm/summary.json",
+    "sens_acc_omega_adm": "results/preprint/screen/sens_acc_omega_adm/summary.json",
+    "sens_gamma_sl0_untruncated_adm": "results/preprint/screen/sens_gamma_sl0_untruncated_adm/summary.json",
+    "sens_gamma_sl0_untruncated_r2_adm": "results/preprint/screen/sens_gamma_sl0_untruncated_r2_adm/summary.json",
+    "sens_ph_modified_adm": "results/preprint/screen/sens_ph_modified_adm/summary.json",
+    "sens_rca_analog_adm": "results/preprint/screen/sens_rca_analog_adm/summary.json",
+    "sweep_independent_adm": "results/preprint/screen/sweep_independent_adm/summary.json",
+    "sweep_mcos_0.1_adm": "results/preprint/screen/sweep_mcos_0.1_adm/summary.json",
+    "sweep_mcos_0.2_adm": "results/preprint/screen/sweep_mcos_0.2_adm/summary.json",
+    "sweep_pcred_0.6_adm": "results/preprint/screen/sweep_pcred_0.6_adm/summary.json",
+    "sweep_pcred_0.99_adm": "results/preprint/screen/sweep_pcred_0.99_adm/summary.json",
+    "sweep_untruncated_adm": "results/preprint/screen/sweep_untruncated_adm/summary.json",
+    "table_adm": "results/preprint/screen/table_adm/summary.json"
+  }
 }
