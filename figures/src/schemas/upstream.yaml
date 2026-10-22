@@ -50,33 +50,48 @@ entries:
       head: 2299346436c98593abefff1748af35f1ca12b424
       same_bytes: true
     used_for: fig10 registered error band and oxide correction
+  k2_grid_ph:
+    kind: data
+    owner: p0-w4
+    branch: preprint/p0
+    path: results/preprint/screen/k2_grid_ph/summary.json
+    commit: 8612b89295d1b3c316b8ed3aa526c55a7f59f04c
+    branch_head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+    snapshot: results/preprint/screen/k2_grid_ph/summary.json
+    sha256: 9df2b4b54159d074ff94ca46ea2959a1c5fcd82102de821d0779820d9a2b1fc8
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+      same_bytes: true
+    used_for: 'fig12 input: K2 verdict over the registered Ca_T by C_T grid per polymorph, and the acid-adjusted
+      comparator'
   ladder_v3:
     kind: data
     owner: p0-w5
-    branch: preprint/p0-w5
+    branch: preprint/p0
     path: results/preprint/pourbaix/ph_w52/ladder_v3.csv
     commit: 73316df2314b14fb5a16ba6bf15077dfcc658c8c
-    branch_head: bc9ea5b4a5c0c5bc1d93ee355bf13b30a3db9e18
-    snapshot: figures/src/data/upstream/ladder_v3.csv
+    branch_head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+    snapshot: results/preprint/pourbaix/ph_w52/ladder_v3.csv
     sha256: 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b
     merged_tree:
       ref: origin/preprint/p0
-      head: 2299346436c98593abefff1748af35f1ca12b424
-      same_bytes: false
+      head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+      same_bytes: true
     used_for: 'fig9 input: K1 tier-1 ladder v3 (verdict per phase, framing and cutoff class)'
   ladder_v3_sens40:
     kind: data
     owner: p0-w5
-    branch: preprint/p0-w5
+    branch: preprint/p0
     path: results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv
     commit: 73316df2314b14fb5a16ba6bf15077dfcc658c8c
-    branch_head: bc9ea5b4a5c0c5bc1d93ee355bf13b30a3db9e18
-    snapshot: figures/src/data/upstream/ladder_v3_sens40.csv
+    branch_head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+    snapshot: results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv
     sha256: 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b
     merged_tree:
       ref: origin/preprint/p0
-      head: 2299346436c98593abefff1748af35f1ca12b424
-      same_bytes: false
+      head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+      same_bytes: true
     used_for: 'fig9 check: the ladder with 4.0 V as the lowest class edge'
   passivation_window_v3:
     kind: data
@@ -92,6 +107,34 @@ entries:
       head: 2299346436c98593abefff1748af35f1ca12b424
       same_bytes: true
     used_for: 'fig11 input: Al passivation windows per film solid and Al level'
+  phosphate_films_ph:
+    kind: data
+    owner: p0-w4
+    branch: preprint/p0
+    path: results/preprint/screen/phosphate_films_ph/summary.json
+    commit: 4401915ac5a6f19289a60c47faef450ba70ac62b
+    branch_head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+    snapshot: results/preprint/screen/phosphate_films_ph/summary.json
+    sha256: 9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+      same_bytes: true
+    used_for: 'fig15 processing column: K2 regime of each phosphate and comparator film'
+  precision_map_ph:
+    kind: data
+    owner: p0-w4
+    branch: preprint/p0
+    path: results/preprint/screen/precision_ph/precision_map.json
+    commit: 9842d9497db4401bb07e2dd3692f79b131d25131
+    branch_head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+    snapshot: results/preprint/screen/precision_ph/precision_map.json
+    sha256: be5dcb073c204fd63de01631b1713c2878391d3d0b8d3785849f5385a54f20df
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+      same_bytes: true
+    used_for: 'fig14 input: prior range, flip value and required precision per quantity'
   results_schema:
     kind: contract
     owner: p0-w4
@@ -208,14 +251,14 @@ entries:
   thresholds_screen_ph:
     kind: data
     owner: p0-w4
-    branch: preprint/p0
+    branch: preprint/p0-w4
     path: configs/preprint/thresholds.yaml
-    commit: e85e890f9df5d47b751b861ba1254da21c4da166
-    branch_head: 6a9f193e8be45c700e9476005b243c453293edc7
+    commit: 2345f00813d127e02496c3fd474d09f3b374427c
+    branch_head: 2345f00813d127e02496c3fd474d09f3b374427c
     snapshot: configs/preprint/thresholds.yaml
-    sha256: 48d99f4292ee162903ec426df1c8cbc8218fc8ad5b5950d0c34f9d04d09280b8
+    sha256: 37c17b673ccef4b8526b41acefbccb6e31dbb1f247848c6667355c606686cb61
     merged_tree:
       ref: origin/preprint/p0
-      head: 6a9f193e8be45c700e9476005b243c453293edc7
-      same_bytes: true
+      head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
+      same_bytes: false
     used_for: 'fig9 tick labels: the registered cutoff classes (screen_ph.margins_v6.cutoff_classes)'

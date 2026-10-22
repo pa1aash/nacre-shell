@@ -7,7 +7,7 @@ from figs_helpers import REPO
 
 from nacre.figs import build, paths, schema, upstream
 
-DATA_FIGS = ["fig4", "fig5", "fig7", "fig9", "fig10", "fig11"]  # built from real outputs in P0-W6.3
+DATA_FIGS = ["fig4", "fig5", "fig7", "fig9", "fig10", "fig11", "fig12", "fig14", "fig15"]  # real outputs: P0-W6.3, PH-W6.2
 
 
 def _mod(fid):

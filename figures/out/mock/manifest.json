@@ -66,6 +66,105 @@
    },
    "checker": "pass (artists and PDF text)"
   },
+  "fig12": {
+   "id": "fig12",
+   "claim": "In the registered alkaline slurry every polymorph passes K2 over part of the dose window and the Omega_bulk = 1 line runs through it; in the acid-adjusted state the carbonates are thermodynamically excluded at the low pH values and pass only near the top of the registered range, and the calcium phosphates differ among themselves.",
+   "caption_key": "(a to c) K2 verdict of calcite, aragonite and ACC over the registered total calcium dose (horizontal, log scale) and total dissolved carbonate (vertical) at the registered slurry pH value, ionic strength value and the wet-film water activity; fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); line: Omega_bulk = 1 at the median activities. (d) Comparator: the acid-adjusted slurry state at each of its registered pH values; one row per carbonate and Ca-phosphate phase; a cell takes the regime of its grid cells (suitable where any cell passes, otherwise open where any is inconclusive, otherwise excluded); K2 only, no K3 or K4 verdict is drawn from this state.",
+   "mock": true,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    11.0
+   ],
+   "input": "figures/src/mock/k2_grid.json",
+   "input_sha256": "7cb6ce8c64cb8475dbf223cf2e5e32dc5cc2c41629d2b8b76a43eb3ae4d65692",
+   "input_source": {
+    "path": "figures/src/mock/k2_grid.json"
+   },
+   "schema": "figures/src/schemas/k2_grid.schema.json",
+   "aux": {
+    "params": "figures/src/mock/params.yaml sha256:ba922768ea5c4180044c4bd91632465a8a77c56b45cef25f2ac25f9e551002b7"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/mock/fig12.pdf": "d5d5744624839a8f75f19d66c86e2aaedeefefd71f697fb078dd8db84e608d86",
+    "figures/out/mock/fig12.png": "ac55208de9b9057041cdd26dc76686cbe9ca72897ae6949cb322c9300e0ba9ed",
+    "figures/out/mock/cvd/fig12_deuteranopia.png": "04d5e15ce65c3f2a648c2b6962f26e1d70841d3c86b029a3902d85ad7d29f822",
+    "figures/out/mock/cvd/fig12_protanopia.png": "6d65f107fa6d22e18f810154b8df01bb0e19302a8adfef38ba0b623321caa954",
+    "figures/out/mock/cvd/fig12_tritanopia.png": "754b6ab4b536bdc7db03647378c582374c4e77fbc817a3a99598f6968cfa75df"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
+  "fig14": {
+   "id": "fig14",
+   "claim": "Few quantities can settle a verdict by measurement alone: most flip values lie outside the present prior range or need a width well below it, and the rows without a registered prior have no required precision at all.",
+   "caption_key": "One row per quantity, grouped by the verdict link it settles (gaps between groups). (a) The prior range of the quantity, scaled to width one (grey band; log scale for a log-uniform prior), and the flip value with its 5 to 95 percent range where the output gives one. (b) The required width of the measurement as a fraction of the present prior width (bar from zero). (c) Rows with no numerical required width: left, no flip in the physical range or closed by definition; middle, unreachable at the prior; right, gap or not computable. Marker: evidence grade of the present input (circle A, square B, triangle C, inverted triangle D, diamond ignorance prior, cross no grade); open marker and dashed band: gap row, no registered prior.",
+   "mock": true,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    13.0
+   ],
+   "input": "figures/src/mock/precision_map.json",
+   "input_sha256": "b0a6b548c58095bd2790cad09b10e385bcd7dd1e70fa2063db1039dccda9c96d",
+   "input_source": {
+    "path": "figures/src/mock/precision_map.json"
+   },
+   "schema": "figures/src/schemas/precision_map.schema.json",
+   "aux": {},
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/mock/fig14.pdf": "a8ba33291c6a87a0e67fceb24f46abbe281e18bbeb03707eba3b69a9b83ac8c5",
+    "figures/out/mock/fig14.png": "03b37c0b80b6c78a836e3fafd9c46e674e3d711323754d081ceda3543c18d9d7",
+    "figures/out/mock/cvd/fig14_deuteranopia.png": "7e121951959203e4d449821f3c5c7441e8770c3dbd0ed011765ba250f5803099",
+    "figures/out/mock/cvd/fig14_protanopia.png": "7e121951959203e4d449821f3c5c7441e8770c3dbd0ed011765ba250f5803099",
+    "figures/out/mock/cvd/fig14_tritanopia.png": "7e121951959203e4d449821f3c5c7441e8770c3dbd0ed011765ba250f5803099"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
+  "fig15": {
+   "id": "fig15",
+   "claim": "Each candidate is thermodynamically excluded, open or undetermined at the registered cutoff classes and passes dissolution stability in the processing state only for some phases: no phase is suitable against dissolution in both slurry states and not excluded at the high cutoff classes.",
+   "caption_key": "One row per phase or baseline, grouped top to bottom: R-slurry phases, R-cell phases, silicate comparators, the carbonate polymorphs (gaps between groups). Columns: K2 in the as-prepared (processing) slurry; K2 in the acid-adjusted slurry state (suitable where any grid cell passes); then one pair of columns per registered K1 cutoff class (tick labels, V vs Li+/Li; the lowest is the nominal class), crystalline framing left and amorphous right. Fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); no fill: not tested in that column. K1 of the carbonate is drawn on the calcite row.",
+   "mock": true,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    10.0
+   ],
+   "input": "figures/src/mock/ladder_v3.json",
+   "input_sha256": "c09196c9aabbc16ebcdbee17c7cfc8208c637d8c59041c5ac938a8db5d27ecd2",
+   "input_source": {
+    "path": "figures/src/mock/ladder_v3.json"
+   },
+   "schema": "figures/src/schemas/ladder_v3.schema.json",
+   "aux": {
+    "cutoffs": "figures/src/mock/ladder_cutoffs.yaml sha256:8376f88f1a522a84fef8b93e6536daba241b12527c5a200bb0bbe00d2c355ea3",
+    "films": "figures/src/mock/phosphate_films.json sha256:54c8511ec2b708642938391bc023529a5cb371df897e783f19c53fa742846001",
+    "k2": "figures/src/mock/k2_grid.json sha256:7cb6ce8c64cb8475dbf223cf2e5e32dc5cc2c41629d2b8b76a43eb3ae4d65692"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/mock/fig15.pdf": "885db78c0294cf92ef060f671773420960e1a3d57e8a6fbb78812e9692048ce2",
+    "figures/out/mock/fig15.png": "238860d0af7606a4bb9a46476e63b68534a056d98a60c422ebc75e4d447da504",
+    "figures/out/mock/cvd/fig15_deuteranopia.png": "956018d81ccddf063c542ac3f7367faa6ab5289234affca951c4410286fbc158",
+    "figures/out/mock/cvd/fig15_protanopia.png": "69777c2a710f3e14002ef17d58391a27f79f2a243cf9a8525da885471405309c",
+    "figures/out/mock/cvd/fig15_tritanopia.png": "e7a8a863671202d3e2140fc2afe7cf2e2fdd996444170d00bf28bc260557dc30"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
   "fig4": {
    "id": "fig4",
    "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",

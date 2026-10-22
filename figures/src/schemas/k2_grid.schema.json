@@ -1,0 +1,184 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "k2_grid_ph/summary.json (lane p0-w4, PH-W4.2) as read by fig12 and fig15",
+ "type": "object",
+ "required": [
+  "extensions",
+  "ph_rows"
+ ],
+ "properties": {
+  "mock": {
+   "type": "boolean"
+  },
+  "extensions": {
+   "type": "object",
+   "required": [
+    "p0-w4"
+   ],
+   "properties": {
+    "p0-w4": {
+     "type": "object",
+     "required": [
+      "k2_grid"
+     ],
+     "properties": {
+      "k2_grid": {
+       "type": "object",
+       "required": [
+        "carbonate",
+        "acid_adjusted"
+       ],
+       "properties": {
+        "carbonate": {
+         "type": "object",
+         "required": [
+          "polymorphs"
+         ],
+         "properties": {
+          "polymorphs": {
+           "type": "object",
+           "minProperties": 1,
+           "additionalProperties": {
+            "type": "object",
+            "required": [
+             "cells",
+             "ksp_key"
+            ],
+            "properties": {
+             "cells": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+               "type": "object",
+               "required": [
+                "axes",
+                "verdict"
+               ],
+               "properties": {
+                "axes": {
+                 "type": "object"
+                },
+                "verdict": {
+                 "enum": [
+                  "feasible",
+                  "falsified",
+                  "inconclusive",
+                  "undetermined"
+                 ]
+                }
+               }
+              }
+             },
+             "ksp_key": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         }
+        },
+        "acid_adjusted": {
+         "type": "object",
+         "required": [
+          "carbonate",
+          "phosphate"
+         ],
+         "properties": {
+          "carbonate": {
+           "type": "object",
+           "additionalProperties": {
+            "type": "object",
+            "required": [
+             "cells"
+            ],
+            "properties": {
+             "cells": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+               "type": "object",
+               "required": [
+                "axes",
+                "verdict"
+               ],
+               "properties": {
+                "axes": {
+                 "type": "object"
+                },
+                "verdict": {
+                 "enum": [
+                  "feasible",
+                  "falsified",
+                  "inconclusive",
+                  "undetermined"
+                 ]
+                }
+               }
+              }
+             }
+            }
+           }
+          },
+          "phosphate": {
+           "type": "object",
+           "additionalProperties": {
+            "type": "object",
+            "required": [
+             "cells"
+            ],
+            "properties": {
+             "cells": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+               "type": "object",
+               "required": [
+                "axes",
+                "verdict"
+               ],
+               "properties": {
+                "axes": {
+                 "type": "object"
+                },
+                "verdict": {
+                 "enum": [
+                  "feasible",
+                  "falsified",
+                  "inconclusive",
+                  "undetermined"
+                 ]
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "ph_rows": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "row_id",
+     "K2"
+    ],
+    "properties": {
+     "row_id": {
+      "type": "string"
+     },
+     "K2": {
+      "type": "object"
+     }
+    }
+   }
+  }
+ }
+}

@@ -9,7 +9,7 @@ from figs_helpers import REPO
 from nacre.figs import build, colours, paths, style, upstream
 
 LADDER_SHA = "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b"
-TEMPLATE_IDS = ["fig12", "fig13", "fig14", "fig15"]
+TEMPLATE_IDS = ["fig13"]  # fig12, fig14 and fig15 became data figures in PH-W6.2
 
 
 def _mod(fid):
@@ -74,7 +74,7 @@ def test_passivation_windows_read_the_governing_and_reference_rows():
     assert w[1e-4]["governing"][0] > w[1e-4]["reference"][0]  # inside the crystalline window
 
 
-@pytest.mark.parametrize("fid", ["fig9", "fig10", "fig11"])
+@pytest.mark.parametrize("fid", ["fig9", "fig10", "fig11", "fig12", "fig14", "fig15"])
 def test_new_captions_stay_within_seventy_words_and_avoid_banned_words(fid):
     text = (REPO / "figures/src/captions" / (fid + ".md")).read_text()
     draft = re.search(r"^## Draft\n(.*?)(?=^## |\Z)", text, re.S | re.M).group(1).strip()
@@ -104,7 +104,7 @@ def test_release_check_passes_on_a_clean_manifest(tmp_path):
 
 
 def test_template_without_placeholder_is_refused(tmp_path):
-    mod = _mod("fig12")
+    mod = _mod("fig13")
     real = mod.build
 
     def bare(data, root, aux):

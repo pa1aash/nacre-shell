@@ -1,0 +1,168 @@
+{
+ "mock": true,
+ "note": "MOCK: synthetic values to exercise the template; not a result",
+ "session": "MOCK",
+ "rows": [
+  {
+   "id": "gamma_sn",
+   "link": "C3a / K3a",
+   "kind": "closed",
+   "quantity": "gamma_sn",
+   "evidence_grade": "ignorance prior (mock)",
+   "prior": {
+    "central95_J_m2": [
+     0.02,
+     0.8
+    ],
+    "gap": false
+   },
+   "flip": {
+    "q05_q50_q95": [
+     0.0002,
+     0.0012,
+     0.0029
+    ]
+   },
+   "required_precision": {
+    "status": "already_clears",
+    "width_ratio": 1.0
+   }
+  },
+  {
+   "id": "gamma_nv",
+   "link": "K3a / K4",
+   "kind": "closed",
+   "quantity": "gamma_nv",
+   "evidence_grade": "gap (mock)",
+   "prior": {
+    "gap": true
+   },
+   "flip": {
+    "note": "mock"
+   },
+   "required_precision": {
+    "status": "no_flip"
+   }
+  },
+  {
+   "id": "c1_analog_w_adh_wet",
+   "link": "C1",
+   "kind": "mc",
+   "quantity": "c1_analog_w_adh_wet",
+   "evidence_grade": "B",
+   "prior": {
+    "family": "loguniform",
+    "gap": false,
+    "low_high_J_m2": [
+     0.0001,
+     0.015
+    ]
+   },
+   "flip": {
+    "value": 0.0038
+   },
+   "required_precision": {
+    "status": "ok",
+    "width_ratio": 0.56
+   }
+  },
+  {
+   "id": "c1_dupre_gamma_ow",
+   "link": "C1",
+   "kind": "mc",
+   "quantity": "c1_dupre_gamma_ow",
+   "evidence_grade": "ignorance prior (mock)",
+   "prior": {
+    "family": "ignorance",
+    "gap": false,
+    "low_high_J_m2": [
+     0.0,
+     0.12
+    ]
+   },
+   "flip": {
+    "flip_q05_q50_q95": [
+     0.007,
+     0.05,
+     0.095
+    ]
+   },
+   "required_precision": {
+    "status": "unreachable",
+    "width_ratio": null
+   }
+  },
+  {
+   "id": "k2_ksp_hap",
+   "link": "K2",
+   "kind": "mc",
+   "quantity": "k2_ksp_hap",
+   "evidence_grade": "A",
+   "prior": {
+    "evidence_grade": "A",
+    "gap": false,
+    "low": -57.5,
+    "high": -54.5
+   },
+   "flip": null,
+   "required_precision": null,
+   "summary": {
+    "median_width_ratio": 0.79,
+    "unreachable": 3,
+    "ok": 3
+   }
+  },
+  {
+   "id": "k2_ksp_btcp",
+   "link": "K2",
+   "kind": "mc",
+   "quantity": "k2_ksp_btcp",
+   "evidence_grade": "A",
+   "prior": {
+    "evidence_grade": "A",
+    "gap": false,
+    "low": -28.9,
+    "high": -28.8
+   },
+   "flip": null,
+   "required_precision": null,
+   "summary": {
+    "median_width_ratio": null,
+    "unreachable": 6,
+    "ok": 0
+   }
+  },
+  {
+   "id": "k2_ksp_brushite",
+   "link": "K2",
+   "kind": "gap",
+   "quantity": "k2_ksp_brushite",
+   "evidence_grade": "D",
+   "prior": {
+    "gap": true
+   },
+   "flip": {
+    "note": "mock"
+   },
+   "required_precision": {
+    "status": "gap"
+   }
+  },
+  {
+   "id": "binodal_map",
+   "link": "route layer",
+   "kind": "gap",
+   "quantity": "binodal_map",
+   "evidence_grade": "gap",
+   "prior": {
+    "gap": true
+   },
+   "flip": {
+    "quantity": null
+   },
+   "required_precision": {
+    "status": "not_computable"
+   }
+  }
+ ]
+}

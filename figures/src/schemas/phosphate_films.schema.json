@@ -1,0 +1,38 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "phosphate_films_ph/summary.json (lane p0-w4, PH-W4.2) as read by fig15",
+ "type": "object",
+ "required": [
+  "ph_rows"
+ ],
+ "properties": {
+  "mock": {
+   "type": "boolean"
+  },
+  "ph_rows": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "row_id",
+     "phase",
+     "stage"
+    ],
+    "properties": {
+     "row_id": {
+      "type": "string"
+     },
+     "phase": {
+      "type": "string"
+     },
+     "stage": {
+      "type": "string"
+     },
+     "K2": {
+      "type": "object"
+     }
+    }
+   }
+  }
+ }
+}

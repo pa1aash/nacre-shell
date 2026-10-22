@@ -75,6 +75,21 @@ requests:
     format: .1f
     unit: '\,\mathrm{kJ\,mol^{-1}\,per\,O}'
     figure: Fig 10
+  NumSlurryPh:
+    source: lit/params.yaml
+    pattern: '^  ph_slurry:\n(?:    .*\n)*?    value: ([0-9.]+)'
+    format: g
+    figure: Fig 12
+  NumAcidPhLow:
+    source: configs/preprint/screen.yaml
+    pattern: 'pH_acid_adjusted: \{values: \[([0-9.]+),'
+    format: g
+    figure: Fig 12
+  NumAcidPhHigh:
+    source: configs/preprint/screen.yaml
+    pattern: 'pH_acid_adjusted: \{values: \[[0-9., ]*, ([0-9.]+)\]'
+    format: g
+    figure: Fig 12
 # Already defined by W8 (preprint/generated/sources.yaml on preprint/p0-w8, not yet merged into this
 # branch) and used as they are.
 defined_by_w8:
