@@ -273,3 +273,26 @@ Nothing starts production until F1 to F5 are applied and the freeze packet goes 
 **Conditional predictions.** Carbonate resists the slurry and holds at 3.65 V and fails above about 4 V. Hydroxyapatite fails near 4.1 V. Condensed or aluminium phosphate survives the high-voltage hold.
 
 **cp5 conditions.** PASS, with p0-cp5 created, only when (i) X1 to X8 are applied; (ii) housekeeping is done (thresholds copy from block v8, the two Li+ keys repaired with no value changed, deviations filed, manifest re-hashed); (iii) aragonite is in params.yaml with K_sp, uncertainty and source, registered as a K2 framing, and the K2 falsifiability controls re-pass on it; (iv) the scope-guard changes are committed; (v) the verdict-label text is in claims_redirect.md. Then ONE short note to the planning chat with the new hashes and the aragonite row.
+
+## CP5 CLOSURE RULINGS (planning chat, 2026-10-21)
+
+**Q1 Aragonite input.** `log10_ksp_aragonite_25c_i0` = -8.336, uniform [-8.376, -8.296], grade C (USGS OFR 91-183, from Plummer and Busenberg 1982). `claims_redirect` 11a names this key. The older `log10_ksp_aragonite` (-8.34, fixed, TC-045) is "superseded, not read". Upgrade the grade only if W1 reaches the primary source; otherwise say so in the SI.
+
+**Q2 Low-dose corner.** Carbonate Omega scales with Ca_T x C_T x alpha2(pH), so the minimum is at low Ca_T, low C_T and the LOWEST pH. Add a second labelled control: the same low-dose corner in the UNMODIFIED alkaline slurry (pH 10 to 13).
+
+**Q3 Scales and definitions.**
+- Li+ scale: TATB for the Li+ PC key and every benchmark ion. Any other-scale source is converted by a documented rule or excluded.
+- Ca(PO3)2 glass-to-crystal bound: keep ruling (b), 18.87 +/- 20.74 kJ/mol, band [0, 39.6]. Keep the sign bound DG_g-to-c >= 0 for falsification (I17). Do not tighten without new calorimetry.
+- K_P = K * c0 with c0 = 1 mol dm^-3 (molar, dimensionless), activity-based. The molal conversion is stated. K_P is bound in symbol_bindings with a unit test. A literature K in molal or per-litre form is converted, never copied.
+
+**Q4 Vocabulary.** "excluded" = "falsified" (D68), with the regime-table footnote "excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)". Kinetic stabilisation is not ruled out for phosphates (tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones). Never write "fails at high voltage" without "thermodynamically".
+
+**Q5 Label rule (changes C2).** "nacre-type" requires aragonite passing K2 AND its formation supported under the registered processing conditions. NU19 says it is not, so the regime table carries NO "nacre-type" row. Rows read:
+- "calcite (suitable against dissolution, a necessary condition, in [region])"
+- "aragonite (dissolution stability only; formation unsupported at slurry pH and room temperature)"
+
+"Nacre-inspired" stays in the title and Introduction strictly as the biomineral lineage (amorphous precursor under an organic matrix, chitin and chitosan). The screen does not test layered architecture or polymorph structure. Alternating aragonite and calcite layers are not nacre-like (NU20). The title wording is rechecked at cp6.
+
+**Q6 Deferred to cp5b.** f_min (interval [0.4073, 0.6884], triangular 0.5 as sensitivity), Al polyphosphate K_sp, A_patch.
+
+**Regime table addition.** The acid-adjusted slurry state (the incumbent phosphoric-acid pH control, pH 4.5 to 8.5): calcite is undersaturated there, so carbonate reads "excluded against dissolution" while the Ca-phosphate phases are tested on K2 in the same state. Generated from the K2 outputs. If the Ca phosphates do not pass there, say so.
