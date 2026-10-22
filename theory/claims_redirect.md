@@ -897,7 +897,7 @@ Session PH-W3.6, lane p0-w3. Everything is symbolic: names of `lit/params.yaml` 
 verdict text reach the paper only through the generated macros (standing rule 4). Registered in block version 8 of
 `theory/thresholds.md` (`screen_ph.w36`).
 
-### 11a. C2: carbonate K2 framings, and the label "nacre-type"
+### 11a. C2: carbonate K2 framings and the label rule (replaced at cp5 closure, Q5)
 
 **K2 framings for carbonate** are calcite, aragonite and ACC (amorphous calcium carbonate, the formation-stage
 precursor). The K2 test for each polymorph pi is the Omega test of Section 3a at every state of the registered grid:
@@ -906,8 +906,8 @@ precursor). The K2 test for each polymorph pi is the Omega test of Section 3a at
 
 | Polymorph | K_sp key | Role in the label rule |
 |---|---|---|
-| calcite | `log10_ksp_calcite` | required |
-| aragonite | `log10_ksp_aragonite_25c_i0` | required |
+| calcite | `log10_ksp_calcite` | row reported |
+| aragonite | `log10_ksp_aragonite_25c_i0` | row reported |
 | ACC | `log10_ksp_acc` (with `acc_hydration_n` for the hydrated product) | reported beside the two; **not required to pass** |
 
 The older key `log10_ksp_aragonite` is superseded and not read by any K2 run; `log10_ksp_aragonite_25c_i0` is the only
@@ -918,15 +918,25 @@ The activities a_Ca and a_CO3 come from the contract speciation at the registere
 changes only K_sp (one framing per run, Q12). The ACC dose window is reported beside the calcite and aragonite
 windows: ACC is the precursor of the formation stage, not the phase that has to survive in service.
 
-**Label rule.** A row may be labelled `nacre-type` ONLY where aragonite AND calcite both pass K2 (ACC may fail or be
-undetermined and the label stands). Every other carbonate row is labelled `carbonate (calcite)`: a row that fails
-aragonite, a row where aragonite is undetermined (data missing), and every row of a study that has not registered the
-aragonite test. Passing calcite alone never earns `nacre-type`.
+**Label rule (cp5 closure ruling Q5; replaces the C2 label rule).** There is NO `nacre-type` label. A label of that
+kind would need aragonite to pass K2 AND its formation to be supported under the registered processing conditions, and
+the formation evidence (NU19) says it is not supported at slurry pH and room temperature. The regime table rows read,
+verbatim:
+
+    calcite (suitable against dissolution, a necessary condition, in [region])
+    aragonite (dissolution stability only; formation unsupported at slurry pH and room temperature)
+
+[region] is the registered grid of Section 11b, named by its grid id. ACC is reported beside the two rows and is not
+required. Each row stands on its own K2 result; no row is promoted or demoted by the other, and an undetermined K2 reads
+`undetermined (data missing)`. The screen tests dissolution stability only: it does not test layered architecture or
+polymorph structure, and alternating aragonite and calcite layers are not nacre-like (NU20). "Nacre-inspired" in the
+title and the Introduction names the biomineral lineage only (an amorphous precursor under an organic matrix, chitin
+and chitosan); the title wording is rechecked at cp6.
 
 **Falsifiability control, per polymorph.** The same test, with the same code path and the same K_sp key, must flag
 undersaturation (Omega_bulk(pi) < 1, dissolution) at the low-dose corner of the registered grid, for each of
 calcite, aragonite and ACC. A polymorph whose control does not flag undersaturation there has an inconclusive K2 in
-every row, whatever its pass pattern, and the rows that depend on it cannot be labelled `nacre-type`. The existing
+every row, whatever its pass pattern, and the rows that depend on it read `undetermined`. The existing
 supersaturated control of Section 3a is kept beside it.
 
 Which of the two crystalline polymorphs is the more soluble is read from the two keys and printed, never assumed.

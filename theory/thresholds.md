@@ -1357,9 +1357,13 @@ screen_ph:
       framings: [calcite, aragonite, ACC]
       test: 'Omega_bulk(pi) = a_Ca a_CO3 / K_sp(pi) >= 1 at every state of the registered (Ca_T, C_T, pH, I) grid'
       keys: {calcite: log10_ksp_calcite, aragonite: log10_ksp_aragonite_25c_i0, ACC: log10_ksp_acc}
-      required_for_nacre_type: [calcite, aragonite]
+      required_for_label: none (no nacre-type label; each row stands on its own K2 result)
       reported_not_required: [ACC]
-      labels: {nacre-type: 'aragonite AND calcite pass K2', otherwise: 'carbonate (calcite)'}
+      labels:
+        calcite: 'calcite (suitable against dissolution, a necessary condition, in [region])'
+        aragonite: 'aragonite (dissolution stability only; formation unsupported at slurry pH and room temperature)'
+        ACC: reported beside the two rows, not required
+      not_tested: 'layered architecture and polymorph structure; alternating aragonite and calcite layers are not nacre-like'
       falsifiability_control: 'the same test flags undersaturation (Omega_bulk < 1) at the low-dose corner of the grid, for each polymorph; otherwise that polymorph is inconclusive in every row'
       authority: claims_redirect Section 11a
     low_voltage:
