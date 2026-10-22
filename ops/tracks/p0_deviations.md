@@ -145,3 +145,19 @@ Re-audit: cp5b
 ## 2026-10-21 figures/src/schemas/upstream.yaml
 Change: PH-W6.2b re-pins thresholds_screen_ph to the thresholds copy of block v9 (sha256 37c17b67...cb61, PH-W4.2g commit 2345f00). Pins only; merged_tree.same_bytes is recomputed against origin/preprint/p0 after the push.
 Re-audit: cp5b
+
+## 2026-10-22 lit/params.yaml
+Change: PH-W1.8 (ops/reports/P0-W1.PH-W1.8.md) adds 18 evidence rows and 5 keys (ph_additive_h3po4_dose_wt_active, ph_additive_h3po4_dose_wt_total_solids, ph_additive_h3po4_mol_per_kg_active, ph_additive_h3po4_solution_mass_per_g_active, p_total_slurry_h3po4_window). None of the existing keys changed (the diff has additions and the meta hashes only). p_total_slurry_h3po4_window (mol m^-3) is a gap: solids loading is printed in the sources, liquid volume and liquid density are not, so no value is registered.
+Re-audit: cp6
+
+## 2026-10-22 results/preprint/screen/*_ph2/, results/preprint/screen/k2_perph_ph2/
+Change: PH-W4.5 (ops/reports/P0-W4.PH-W4.5.md; pre-run commit d32da3d) adds new directories k2_alkaline_ph2, k2_acid_ph2, k2_perph_ph2 and f3_ph2 under results/preprint/screen/. Additive: the frozen runs are untouched and no existing result file is edited. The rerun with the post-freeze K_sp keys changed brushite from undetermined to feasible and added an OCP row on the Ca4H basis; no frozen verdict changed.
+Re-audit: cp6
+
+## 2026-10-22 configs/preprint/symbol_bindings.yaml
+Change: hash record only, no edit in this merge. The PH-W4.2f report records the file as committed with sha256 4d6517f1; the file at 1eb77f8 (PH-W4.2f) hashes to 4d6517f1, and the file at the production pre-run commit 8073c8e and the current file hash to 416c954b. The file changed legitimately in PH-W4.2d (7e69504, a33aa9c0) and PH-W4.2f (1eb77f8); the report hash is the 1eb77f8 state, and the change to 416c954b entered with the pre-run commit 8073c8e.
+Re-audit: cp6
+
+## 2026-10-22 src/nacre/screen/k2_grid.py, configs/preprint/screen_ph2.yaml
+Change: PH-W4.5 adds the supersaturated control rule: per phase, the grid cell of maximum median Omega in the wet slurry state must report feasible (0 of 648 and 0 of 540 cells change for HAp, ACP, b-TCP, OCP original key). The earlier move of the control from pH 12 to pH 7.65 came from a dry run (output seen before the choice); this is disclosed. screen.yaml is unedited.
+Re-audit: cp6
