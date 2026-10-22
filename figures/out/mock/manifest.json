@@ -165,6 +165,43 @@
    },
    "checker": "pass (artists and PDF text)"
   },
+  "fig17": {
+   "id": "fig17",
+   "claim": "Dissolution stability and oxidative stability are separate tests: the candidates that pass K2 over the widest pH range sit at K1 upper bounds below the two higher cutoff classes, and the condensed and aluminium phosphates, which have no pH-dependent K2 map, have an upper bound but no lower one.",
+   "caption_key": "(a) One row of markers per candidate that has both a K2 map and a K1 upper bound, at its tier-1 upper bound on the oxidation limit (vertical, V vs Li+/Li); horizontal: slurry pH of the K2 cell sets (acid-adjusted state, then the as-prepared slurry); rows ordered by upper bound, rows with equal bounds offset slightly. Marker area: fraction of cells that pass. Filled circle: the lowest passing dose is below 0.01 mol/dm^3; open circle: at or above it. Cross: thermodynamically excluded at that pH; plus: open; dot: undetermined. (b) Candidates without a pH-dependent K2 map: bar from the upper bound downward with no lower end, the lower bound being pending. Grey line and bands: the registered cutoff classes, lowest to highest.",
+   "mock": true,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    11.0
+   ],
+   "input": "figures/src/mock/perph_ph2.json",
+   "input_sha256": "62831b6f4b193b3b3702197e750e8e814094f8fe03e7849b02d28c84b1788bfa",
+   "input_source": {
+    "path": "figures/src/mock/perph_ph2.json"
+   },
+   "schema": "figures/src/schemas/perph_ph2.schema.json",
+   "aux": {
+    "acid": "figures/src/mock/k2_acid_ph2.json sha256:b7ebe0e32283d32d2b2cdb766100e8bdab1f4f88d42b31a4660a939f65f6c332",
+    "alkaline": "figures/src/mock/k2_alkaline_ph2.json sha256:f8efe8bf9c7445fbd022084395f433cf2ae8ac316a4f4dab88f90b65ff333b74",
+    "cutoffs": "figures/src/mock/ladder_cutoffs.yaml sha256:8376f88f1a522a84fef8b93e6536daba241b12527c5a200bb0bbe00d2c355ea3",
+    "k2": "figures/src/mock/k2_grid.json sha256:3bb893e837e804330e27ea81c00c7c0ec594687757bb88a64090e16d511a0745",
+    "ladder": "figures/src/mock/ladder_eub.json sha256:11627a35052b770fa9ed8f67067f7733e85162720ad3fe2ed2a33f13fa3457b9"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/mock/fig17.pdf": "4c8178ea65025ca643b87eb377f7718c2a613c634208e179373374ae9eb9005a",
+    "figures/out/mock/fig17.png": "ef68d76055f8e969f35317e4fabaf03bc35a71af29df03eeda054c8367090d14",
+    "figures/out/mock/cvd/fig17_deuteranopia.png": "ac64d6c329895bcdbbe169542d8e88b152209dac94d2c84b7ee326543dea4025",
+    "figures/out/mock/cvd/fig17_protanopia.png": "16743f6048fede9a1495f3e048fc133c393145ca902fd5fbaa8d5aaf8c8961c2",
+    "figures/out/mock/cvd/fig17_tritanopia.png": "5c929b69bb8f2e66fc1a8a5ada477040c696965f1bd2a90d03f6b0b1432f05b6"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
   "fig4": {
    "id": "fig4",
    "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",

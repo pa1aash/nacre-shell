@@ -85,6 +85,12 @@ requests:
     pattern: 'pH_acid_adjusted: \{values: \[[0-9., ]*, ([0-9.]+)\]'
     format: g
     figure: Fig 12
+  NumDoseHigh:
+    source: src/nacre/figs/k2ph.py
+    pattern: '^DOSE_HIGH = ([0-9.]+)'
+    format: g
+    unit: '\,\mathrm{mol\,dm^{-3}}'
+    figure: Fig 15 and Fig 17
 # Already defined by W8 (preprint/generated/sources.yaml on preprint/p0-w8, not yet merged into this
 # branch) and used as they are.
 defined_by_w8:

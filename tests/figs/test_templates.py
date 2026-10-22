@@ -6,7 +6,7 @@ from figs_helpers import REPO, check, plt
 
 from nacre.figs import build, paths, schema
 
-TEMPLATES = ["fig4", "fig5", "fig6", "fig7", "fig9", "fig10", "fig11", "fig12", "fig14", "fig15"]
+TEMPLATES = ["fig4", "fig5", "fig6", "fig7", "fig9", "fig10", "fig11", "fig12", "fig14", "fig15", "fig17"]
 
 
 @pytest.fixture(autouse=True)

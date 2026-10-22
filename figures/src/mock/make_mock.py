@@ -10,6 +10,9 @@ figure builder writes figures built from it only to figures/out/mock/.
   params.yaml          mock rows in the layout of lit/params.yaml (lane p0-w1)    -> fig5, fig7
   ladder_v3*.json, ladder_cutoffs.yaml, benchmark_w51*.json, passivation_window_v3.json,
   al_window.json       CSV outputs as {columns, rows} and their JSON/YAML companions -> fig9, fig10, fig11
+  k2_acid_ph2.json, k2_alkaline_ph2.json, perph_ph2.json, ladder_eub.json, regime_table.json
+                       the PH-W4.5 phosphate runs, their per-pH table, a ladder with upper bounds and the
+                       regime table rows                                                -> fig15, fig17
 
 Case ids, labels, terminations and observed relations of the retrodiction mock are read from
 the pinned cases.yaml so that the template is exercised on the real case list; the barriers
@@ -391,8 +394,8 @@ def _k2_cells(phases_axes, passing):
 
 
 def k2_grid():
-    ph_axes = [{"Ca_T": ca, "C_T": ct, "pH": "pH@value", "I": "I@value", "a_w": aw}
-               for ca, ct in MOCK_AXES for aw in ("wet_film", "dry_room_min")]
+    ph_axes = [{"Ca_T": ca, "C_T": ct, "pH": ph, "I": "I@value", "a_w": aw}
+               for ca, ct in MOCK_AXES for aw in ("wet_film", "dry_room_min") for ph in ("pH@min", "pH@value", "pH@max")]
     acid_axes = [{"Ca_T": ca, "C_T": ct, "pH": "%s 1" % ph, "I": "I@value"} for ca, ct in MOCK_AXES for ph in (4.5, 5.5, 6.5, 7.5, 8.5)]
     p_axes = [{"Ca_T": ca, "P_T": "0.001 mol dm^-3", "pH": "%s 1" % ph, "I": "I@value"}
               for ca, _ct in MOCK_AXES[::3] for ph in (4.5, 5.5, 6.5, 7.5, 8.5)]
@@ -437,6 +440,122 @@ def phosphate_films():
     return {"mock": True, "note": NOTE, "ph_rows": rows}
 
 
+# ------------------------------------------------------------------------------ figs 15 and 17
+
+MOCK_PH_ACID = (4.5, 5.5, 6.5, 7.5, 8.5)
+MOCK_PH_ALKALINE = (10.0, 12.0, 13.0)
+MOCK_DOSES = (1e-4, 1e-3, 1e-2, 1e-1)
+MOCK_RUNS = {"hap": "HAp", "acp": "ACP", "btcp": "b-TCP", "ocp_ca4h": "OCP", "brushite": "brushite",
+             "atcp": "a-TCP", "li3po4": "Li3PO4"}
+
+
+def _dose_text(x):
+    return "%g mol dm^-3" % x
+
+
+def _phosphate_cells(name, pairs):
+    """Synthetic cells of a phosphate run over (Ca_T, P_T, pH token) with a verdict pattern per phase."""
+    cells = {}
+    for i, (ca, p, tok, k) in enumerate(pairs):
+        if name in ("atcp", "li3po4"):
+            v = "undetermined"
+        elif name == "brushite":
+            v = "feasible" if (ca, p) == (1e-1, 1e-1) and k == 0 else "falsified"
+        else:
+            lvl = {"hap": 0, "btcp": 1, "ocp_ca4h": 2, "acp": 3}[name]
+            score = k + 1 + np.log10(ca / 1e-4) + np.log10(p / 1e-4) / 2 - lvl
+            v = "feasible" if score >= 3 else ("inconclusive" if score >= 2 else "falsified")
+        axes = {"Ca_T": _dose_text(ca), "P_T": _dose_text(p), "pH": tok, "I": "I@value"}
+        cells["; ".join("%s=%s" % kv for kv in axes.items())] = {"axes": axes, "verdict": v, "state": "slurry"}
+    return cells
+
+
+def k2_ph2(state):
+    """A phosphate K2 run in the shape of k2_acid_ph2 / k2_alkaline_ph2 (PH-W4.5)."""
+    toks = ["%s 1" % p for p in MOCK_PH_ACID] if state == "acid" else ["pH@min", "pH@value", "pH@max"]
+    pairs = [(ca, p, tok, k) for ca in MOCK_DOSES for p in MOCK_DOSES for k, tok in enumerate(toks)]
+    phases = {key: {"ladder_phase": lp, "controls_pass": True, "cells": _phosphate_cells(key, pairs)}
+              for key, lp in MOCK_RUNS.items()}
+    return {"mock": True, "note": NOTE, "extensions": {"p0-w4": {"k2_ph2": {"states": {state: {"phases": phases}}}}}}
+
+
+def _dose_cell(text):
+    return float(text.split()[0])
+
+
+def perph_table(grid, acid, alkaline):
+    """The per-pH table of the mock runs, derived from their cells in the layout of perph.csv."""
+    cols = ["grid", "source", "phase", "pH", "n_cells", "n_passing", "passing_fraction", "min_passing_Ca_T_mol_dm3",
+            "min_passing_P_T_mol_dm3", "CaP_min", "CaP_max"]
+    rows = []
+
+    def add(gridname, source, phase, cells, ph_of):
+        per = {}
+        for c in cells.values():
+            per.setdefault(ph_of(c["axes"]["pH"]), []).append(c)
+        for ph, cs in sorted(per.items()):
+            ok = [c for c in cs if c["verdict"] == "feasible"]
+            ca = min((_dose_cell(c["axes"]["Ca_T"]) for c in ok), default=None)
+            pt = min((_dose_cell(c["axes"]["P_T"]) for c in ok if "P_T" in c["axes"]), default=None)
+            rows.append({"grid": gridname, "source": source, "phase": phase, "pH": ph, "n_cells": len(cs),
+                         "n_passing": len(ok), "passing_fraction": "%.6f" % (len(ok) / len(cs)),
+                         "min_passing_Ca_T_mol_dm3": "" if ca is None else repr(ca),
+                         "min_passing_P_T_mol_dm3": "" if pt is None else repr(pt)})
+
+    k2 = grid["extensions"]["p0-w4"]["k2_grid"]
+    alk = dict(zip(("pH@min", "pH@value", "pH@max"), MOCK_PH_ALKALINE))
+    for name in ("calcite", "aragonite", "ACC"):
+        add("alkaline", "frozen", name, k2["carbonate"]["polymorphs"][name]["cells"], lambda t: alk[t])
+        add("acid", "frozen", name, k2["acid_adjusted"]["carbonate"][name]["cells"], lambda t: float(t.split()[0]))
+    for doc, gridname, conv in ((alkaline, "alkaline", lambda t: alk[t]), (acid, "acid", lambda t: float(t.split()[0]))):
+        st = "alkaline" if gridname == "alkaline" else "acid"
+        for key, lp in MOCK_RUNS.items():
+            name = "OCP (Ca4H key)" if lp == "OCP" else lp
+            add(gridname, "rerun", name, doc["extensions"]["p0-w4"]["k2_ph2"]["states"][st]["phases"][key]["cells"], conv)
+    return rows, cols
+
+
+def k2_perph(grid, acid, alkaline):
+    rows, cols = perph_table(grid, acid, alkaline)
+    return _table(cols, rows)
+
+
+def ladder_eub():
+    """Mock ladder rows with upper bounds, for the stability map (reaction rows and the aggregate)."""
+    cols = ["phase", "framing", "stage", "reaction_id", "E_ub_V", "E_lb_V", "budget_status", "k1_class_lfp",
+            "k1_class_42_43", "k1_class_44_45", "k1_verdict"]
+    spec = [("brushite", "slurry", 4.3, "inconclusive"), ("HAp", "slurry", 4.1, "inconclusive"),
+            ("ACP", "slurry", 4.05, "inconclusive"), ("AlPO4", "cell", 5.2, "undetermined"),
+            ("Ca2P2O7", "cell", 4.5, "inconclusive"), ("CaSiO3", "comparator", 3.7, "undetermined"),
+            ("CaCO3", "control", 3.95, "inconclusive")]
+    rows = []
+    for ph, st, e, v in spec:
+        rows.append(dict(zip(cols, [ph, "crystalline", st, "r1", e + 0.2, "pending", "complete", v, v, v, v])))
+        rows.append(dict(zip(cols, [ph, "crystalline", st, "r1s", e, "pending", "complete", v, v, v, v])))
+        rows.append(dict(zip(cols, [ph, "crystalline", st, "ALL", "" if ph in ("AlPO4", "CaSiO3") else e, "pending",
+                                    "incomplete" if ph in ("AlPO4", "CaSiO3") else "complete", v, v, v, v])))
+        rows.append(dict(zip(cols, [ph, "amorphous", st, "-", "", "pending", "gap", *["undetermined"] * 4])))
+    return _table(cols, rows)
+
+
+def regime_table(acid):
+    """A few acid rows of the regime table in its CSV layout, with the first-pass pH of the mock run."""
+    cols = ["row_id", "group", "stage_tag", "column", "text", "words", "numbers"]
+    rows = []
+    for rid, lp in (("hap", "HAp"), ("acp", "ACP"), ("atcp", "a-TCP"), ("brushite", "brushite")):
+        key = [k for k, v in MOCK_RUNS.items() if v == lp][0]
+        cells = acid["extensions"]["p0-w4"]["k2_ph2"]["states"]["acid"]["phases"][key]["cells"]
+        passing = sorted(float(c["axes"]["pH"].split()[0]) for c in cells.values() if c["verdict"] == "feasible")
+        if passing:
+            rows.append({"row_id": rid, "group": "slurry", "stage_tag": "slurry", "column": "acid",
+                         "text": "suitable against dissolution from pH %g" % passing[0], "words": "suitable against dissolution",
+                         "numbers": "NumRegAcidFirst%s=%g" % (rid.capitalize(), passing[0])})
+        else:
+            rows.append({"row_id": rid, "group": "slurry", "stage_tag": "slurry", "column": "acid",
+                         "text": "undetermined (data missing)", "words": "undetermined", "numbers": ""})
+    return _table(cols, rows)
+
+
 def main():
     rng = np.random.default_rng(SEED)
     _write_json("retro_results.json", retro_results(rng))
@@ -453,7 +572,13 @@ def main():
                                                                          "oxide_correction_kJ_per_O": -60.0}})
     _write_json("passivation_window_v3.json", passivation())
     _write_json("precision_map.json", precision_map())
-    _write_json("k2_grid.json", k2_grid())
+    grid, acid, alk = k2_grid(), k2_ph2("acid"), k2_ph2("alkaline")
+    _write_json("k2_grid.json", grid)
+    _write_json("k2_acid_ph2.json", acid)
+    _write_json("k2_alkaline_ph2.json", alk)
+    _write_json("perph_ph2.json", k2_perph(grid, acid, alk))
+    _write_json("ladder_eub.json", ladder_eub())
+    _write_json("regime_table.json", regime_table(acid))
     _write_json("phosphate_films.json", phosphate_films())
     _write_json("al_window.json", {"mock": True, "conventions": {"ph_range": [3.0, 10.0]},
                                    "published": {"MOCK-1": {"lower": 4.5, "upper": 8.5}, "MOCK-2": {"lower": 4.0, "upper": 8.0}}})

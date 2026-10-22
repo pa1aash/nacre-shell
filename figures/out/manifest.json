@@ -180,6 +180,46 @@
    },
    "checker": "pass (artists and PDF text)"
   },
+  "fig17": {
+   "id": "fig17",
+   "claim": "Dissolution stability and oxidative stability are separate tests: the candidates that pass K2 over the widest pH range sit at K1 upper bounds below the two higher cutoff classes, and the condensed and aluminium phosphates, which have no pH-dependent K2 map, have an upper bound but no lower one.",
+   "caption_key": "(a) One row of markers per candidate that has both a K2 map and a K1 upper bound, at its tier-1 upper bound on the oxidation limit (vertical, V vs Li+/Li); horizontal: slurry pH of the K2 cell sets (acid-adjusted state, then the as-prepared slurry); rows ordered by upper bound, rows with equal bounds offset slightly. Marker area: fraction of cells that pass. Filled circle: the lowest passing dose is below 0.01 mol/dm^3; open circle: at or above it. Cross: thermodynamically excluded at that pH; plus: open; dot: undetermined. (b) Candidates without a pH-dependent K2 map: bar from the upper bound downward with no lower end, the lower bound being pending. Grey line and bands: the registered cutoff classes, lowest to highest.",
+   "mock": false,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    12.0
+   ],
+   "input": "results/preprint/screen/k2_perph_ph2/perph.csv",
+   "input_sha256": "a41716b2ca1afb730f6bbcd4b9244903542bb85e906502c099e06a4d821f6b32",
+   "input_source": {
+    "owner": "p0-w4",
+    "path": "results/preprint/screen/k2_perph_ph2/perph.csv",
+    "commit": "5a1af818104f376bd62bfdab58e747bc2c0772f2",
+    "sha256": "a41716b2ca1afb730f6bbcd4b9244903542bb85e906502c099e06a4d821f6b32"
+   },
+   "schema": "figures/src/schemas/perph_ph2.schema.json",
+   "aux": {
+    "acid": "results/preprint/screen/k2_acid_ph2/summary.json@f648d3a (p0-w4)",
+    "alkaline": "results/preprint/screen/k2_alkaline_ph2/summary.json@30f194d (p0-w4)",
+    "cutoffs": "configs/preprint/thresholds.yaml@2345f00 (p0-w4)",
+    "k2": "results/preprint/screen/k2_grid_ph/summary.json@8612b89 (p0-w4)",
+    "ladder": "results/preprint/pourbaix/ph_w52/ladder_v3.csv@73316df (p0-w5)"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig17.pdf": "3086fee0755b02fe3346b92184aae715ae78fbda56c02108a9ed6fce51d5daa5",
+    "figures/out/fig17.png": "9984d7ce3e16b60926c75c4b45a3171f5bb6eb40b650a9ba1345f5f8ff523e45",
+    "figures/out/cvd/fig17_deuteranopia.png": "2d7e8d3838798870210aeedba7887ced9172e11e89d147825e5f4efe4732c665",
+    "figures/out/cvd/fig17_protanopia.png": "ec2761961089e3b159a5a29329720d6aab0b7c3683e6c4422e0a742425c2db52",
+    "figures/out/cvd/fig17_tritanopia.png": "7c0c38908241b1709e3ba51c8ff8369adafd5bc7c43f5200de4bd89daf4a27e4"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
   "fig4": {
    "id": "fig4",
    "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",

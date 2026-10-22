@@ -50,6 +50,34 @@ entries:
       head: 2299346436c98593abefff1748af35f1ca12b424
       same_bytes: true
     used_for: fig10 registered error band and oxide correction
+  k2_acid_ph2:
+    kind: data
+    owner: p0-w4
+    branch: preprint/p0
+    path: results/preprint/screen/k2_acid_ph2/summary.json
+    commit: f648d3ac510aaa40f1825a10149a1f3fec75c448
+    branch_head: 9544eef9309a7383da8a2f1053715d96efadc84e
+    snapshot: results/preprint/screen/k2_acid_ph2/summary.json
+    sha256: e8f6858496922a5212179fe381870c1af6a9d00f4b108118e2bcc0b6861402e7
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 9544eef9309a7383da8a2f1053715d96efadc84e
+      same_bytes: true
+    used_for: 'fig15 and fig17: cell verdicts of the phosphates in the acid-adjusted state (post-freeze keys)'
+  k2_alkaline_ph2:
+    kind: data
+    owner: p0-w4
+    branch: preprint/p0
+    path: results/preprint/screen/k2_alkaline_ph2/summary.json
+    commit: 30f194d08fa5e8e87a81735b5a90e943654cf76c
+    branch_head: 9544eef9309a7383da8a2f1053715d96efadc84e
+    snapshot: results/preprint/screen/k2_alkaline_ph2/summary.json
+    sha256: d2fd4601f90dcb88d0a123da184332a9a61b8a7f8eb3a813eb4d0edf0cb22740
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 9544eef9309a7383da8a2f1053715d96efadc84e
+      same_bytes: true
+    used_for: 'fig15 and fig17: cell verdicts of the phosphates in the as-prepared slurry'
   k2_grid_ph:
     kind: data
     owner: p0-w4
@@ -65,6 +93,20 @@ entries:
       same_bytes: true
     used_for: 'fig12 input: K2 verdict over the registered Ca_T by C_T grid per polymorph, and the acid-adjusted
       comparator'
+  k2_perph_ph2:
+    kind: data
+    owner: p0-w4
+    branch: preprint/p0
+    path: results/preprint/screen/k2_perph_ph2/perph.csv
+    commit: 5a1af818104f376bd62bfdab58e747bc2c0772f2
+    branch_head: 9544eef9309a7383da8a2f1053715d96efadc84e
+    snapshot: results/preprint/screen/k2_perph_ph2/perph.csv
+    sha256: a41716b2ca1afb730f6bbcd4b9244903542bb85e906502c099e06a4d821f6b32
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 9544eef9309a7383da8a2f1053715d96efadc84e
+      same_bytes: true
+    used_for: 'fig15 and fig17 input: passing cells and minimum passing doses per phase and pH'
   ladder_v3:
     kind: data
     owner: p0-w5
@@ -135,6 +177,20 @@ entries:
       head: 231f46c5b2d8e7ae2722b14a8cf1471ed8fde258
       same_bytes: true
     used_for: 'fig14 input: prior range, flip value and required precision per quantity'
+  regime_table:
+    kind: data
+    owner: p0-w8
+    branch: preprint/p0
+    path: preprint/generated/regime_table.csv
+    commit: dbce2e6c71cf798d6a695b9c3e3bc262a150f5d2
+    branch_head: 9544eef9309a7383da8a2f1053715d96efadc84e
+    snapshot: preprint/generated/regime_table.csv
+    sha256: 1675897c363ea7ed670186d0925cc362a8023481e53d62ba547fad86942fb44c
+    merged_tree:
+      ref: origin/preprint/p0
+      head: 9544eef9309a7383da8a2f1053715d96efadc84e
+      same_bytes: true
+    used_for: 'fig15 cross-check: the first-pass pH of the acid-adjusted column of the regime table'
   results_schema:
     kind: contract
     owner: p0-w4
@@ -223,16 +279,16 @@ entries:
   symbols:
     kind: contract
     owner: p0-w3
-    branch: preprint/p0-w3
+    branch: preprint/p0
     path: theory/symbols.yaml
-    commit: 4c0a3b0c0c920355a0a4155892041370620c4408
-    branch_head: 4f4c4078522103a5331588d8612c8c9e8cf5a02e
-    snapshot: figures/src/schemas/upstream/symbols.yaml
-    sha256: 48c4f01fba8930e76b765a5f8b97ee400cd49ba00a77efe32cc3dfba03f10d6e
+    commit: 89fc9de83f0371f9ef560aad096ef988b37dd99c
+    branch_head: 9544eef9309a7383da8a2f1053715d96efadc84e
+    snapshot: theory/symbols.yaml
+    sha256: 201acda3b6be2fe82bb409c6fb87620157833505de83372d3929416e0d169d01
     merged_tree:
       ref: origin/preprint/p0
-      head: 227d997bb6559cdf09cd892651da558db51e475c
-      same_bytes: false
+      head: 9544eef9309a7383da8a2f1053715d96efadc84e
+      same_bytes: true
     used_for: axis titles and parameter labels (theory symbol ids)
   thresholds:
     kind: contract
