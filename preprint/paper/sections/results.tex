@@ -10,10 +10,12 @@
 Dissolution ($K_2$) is read at the processing stage (grid \NumRegGridId) and in the acid-adjusted comparator state, oxidation ($K_1$) per cutoff class.
 Entries use the registered vocabulary and carry their stage.}\label{tab:regime}
 \input{../generated/regime_table}
+\nacreRegimeTable
 \end{table*}
 
 \subsection{Carbonate control}\label{sec:res-carbonate}
 % carbonate control (frozen): one paragraph, one table row, one figure panel.
+The nucleation link of the carbonate chain is falsified within the registered model at \NumNucLinkFalsified\ of \NumNucLinkDesigns\ design points; the other \NumNucLinkInconclusive\ are inconclusive. % CL-T03
 \nacrePlaceholder{carbonate control results prose}
 
 \subsection{Phosphate phases, including hydroxide and water}\label{sec:res-phosphate}
@@ -26,6 +28,10 @@ Entries use the registered vocabulary and carry their stage.}\label{tab:regime}
 \nacrePlaceholder{processing regime results prose}
 
 \subsection{Required precision for the template--nucleus energy}\label{sec:res-precision}
+For a solid phosphate nucleus on a hydrophilic template, a contact angle below 90 degrees requires $\gsn$ below $\gsl$, which lies between \NumNucGslQFive\ and \NumNucGslQNinetyFive\ (median \NumNucGslMedian; admitted draws span \NumNucGslMin\ to \NumNucGslMax). % CL-T03
+The registered ignorance prior puts \NumNucMassSourced\ of its mass there under the sourced calcite $\gamma_\mathrm{nv}$, and at most \NumNucMassDesignMax\ over the design points with enough admitted draws, whatever $\gamma_\mathrm{nv}$ (its support widens with $\gamma_\mathrm{nv}$). % CL-T03
+A measured or computed $\gsn$ to within about \NumNucDecideWithin\ would decide it. % CL-P01
+The nucleation half of the model failed its retrodiction (\NumRetroCorrect\ of \NumRetroUsableCases\ against \NumRetroPassCount), so this is a model statement, not evidence that templated nucleation is impossible. % CL-T03
 \nacrePlaceholder{required precision results prose}
 
 \subsection{Candidate ranking with baselines}\label{sec:res-ranking}

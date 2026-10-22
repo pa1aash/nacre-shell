@@ -2,39 +2,82 @@
  "generator": "nacre preprint regime-table",
  "inputs": {
   "configs/preprint/thresholds.yaml": "37c17b673ccef4b8526b41acefbccb6e31dbb1f247848c6667355c606686cb61",
-  "lit/params.yaml": "ecc27194534a60d5f6db906ca40e58aa4fe65ac72c31f326b80e468ac33c32c9",
+  "lit/corpus/gaps.md": "0cb805078660f89922c93029dc83da9c84fdfd3b297c6c41aea35b0ea7311e0f",
+  "lit/params.yaml": "f7c109d848ae1cb014a549954e2b9ccc92b248c390535dcd8a5adb0ec63e3666",
   "results/preprint/pourbaix/ph_w52/ladder_v3.csv": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
   "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
+  "results/preprint/pourbaix/ph_w52/passivation_window_v3.csv": "5aaf04dafbd21993b577a1a42ed50c18860771c670d489476e9b771e2a43267f",
+  "results/preprint/screen/f3_ph2/f3_numbers.json": "01c27b815d9db8b8b1b9cdb9417456fb6b6f4fced638f8e9b16c3b0cc7578927",
   "results/preprint/screen/k2_grid_ph/summary.json": "9df2b4b54159d074ff94ca46ea2959a1c5fcd82102de821d0779820d9a2b1fc8",
+  "results/preprint/screen/k2_perph_ph2/perph.csv": "a41716b2ca1afb730f6bbcd4b9244903542bb85e906502c099e06a4d821f6b32",
+  "results/preprint/screen/k2_perph_ph2/perph.json": "d2de4e735c2f152f17d48e4582666933aa9b25ed2a218a640611a18c89bdb558",
   "results/preprint/screen/phosphate_films_ph/summary.json": "9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800"
  },
  "numbers": {
   "acid": {
    "acc": {
-    "first_pass_ph": 8.5
+    "first_pass_ph": 8.5,
+    "min_ca": 0.1,
+    "n_cells": 270,
+    "n_pass": 5
    },
    "acp": {
-    "first_pass_ph": 5.5
+    "first_pass_ph": 5.5,
+    "min_ca": 0.1,
+    "min_p": 0.1,
+    "n_cells": 540,
+    "n_pass": 49
    },
    "aragonite": {
-    "first_pass_ph": 6.5
+    "first_pass_ph": 6.5,
+    "min_ca": 0.01,
+    "n_cells": 270,
+    "n_pass": 64
    },
    "btcp": {
-    "first_pass_ph": 4.5
+    "first_pass_ph": 4.5,
+    "min_ca": 0.1,
+    "min_p": 0.1,
+    "n_cells": 540,
+    "n_pass": 145
    },
    "calcite": {
-    "first_pass_ph": 6.5
+    "first_pass_ph": 6.5,
+    "min_ca": 0.01,
+    "n_cells": 270,
+    "n_pass": 68
    },
    "hap": {
-    "first_pass_ph": 4.5
+    "first_pass_ph": 4.5,
+    "min_ca": 0.1,
+    "min_p": 0.01,
+    "n_cells": 540,
+    "n_pass": 193
    },
+   "model_hi": 8.29,
+   "model_lo": 4.98,
    "ph_high": 8.5,
-   "ph_low": 4.5
+   "ph_low": 4.5,
+   "sourced_hi": 9.0,
+   "sourced_lo": 6.3
+  },
+  "control": {
+   "cells_moved": 0,
+   "ph_from": 12.0,
+   "ph_to": 7.65
   },
   "crossover": {
    "brushite": {
     "C_hi": 4.4323
    }
+  },
+  "dose": {
+   "high_statements": 21,
+   "high_threshold": 0.01,
+   "mmol_per_g": 0.16,
+   "mol_per_kg_liquid": 0.147,
+   "wt_hi": 2.68,
+   "wt_lo": 0.5
   },
   "grid_id": "g1",
   "k2": {
@@ -68,6 +111,450 @@
     "n_cells": 648,
     "n_pass": 415
    }
+  },
+  "nucleation": {
+   "c3_designs": 36,
+   "c3_falsified": 24,
+   "c3_inconclusive": 12,
+   "decide_within": 1.2193036152489043,
+   "gsl_max": 3.357952638668788,
+   "gsl_min": 0.001064094014150186,
+   "gsl_q05": 0.18402041448318218,
+   "gsl_q50": 1.2193036152489043,
+   "gsl_q95": 2.877082604096524,
+   "mass_design_max_pct": 3.376170768895666,
+   "mass_sourced_pct": 0.28776978417266186
+  },
+  "perph": {
+   "acc": {
+    "4.5": {
+     "n_pass": 0
+    },
+    "5.5": {
+     "n_pass": 0
+    },
+    "6.5": {
+     "n_pass": 0
+    },
+    "7.5": {
+     "n_pass": 0
+    },
+    "8.5": {
+     "fraction": 0.092593,
+     "min_ca": 0.1,
+     "n_pass": 5
+    },
+    "n_cells": 54
+   },
+   "acp": {
+    "4.5": {
+     "n_pass": 0
+    },
+    "5.5": {
+     "fraction": 0.018519,
+     "min_ca": 0.1,
+     "min_p": 0.1,
+     "n_pass": 2,
+     "ratio_hi": 1.0,
+     "ratio_lo": 1.0
+    },
+    "6.5": {
+     "fraction": 0.083333,
+     "min_ca": 0.01,
+     "min_p": 0.01,
+     "n_pass": 9,
+     "ratio_hi": 10.0,
+     "ratio_lo": 0.09999999999999999
+    },
+    "7.5": {
+     "fraction": 0.157407,
+     "min_ca": 0.01,
+     "min_p": 0.001,
+     "n_pass": 17,
+     "ratio_hi": 100.0,
+     "ratio_lo": 0.09999999999999999
+    },
+    "8.5": {
+     "fraction": 0.194444,
+     "min_ca": 0.01,
+     "min_p": 0.0001,
+     "n_pass": 21,
+     "ratio_hi": 1000.0,
+     "ratio_lo": 0.09999999999999999
+    },
+    "n_cells": 108
+   },
+   "aragonite": {
+    "4.5": {
+     "n_pass": 0
+    },
+    "5.5": {
+     "n_pass": 0
+    },
+    "6.5": {
+     "fraction": 0.203704,
+     "min_ca": 0.01,
+     "n_pass": 11
+    },
+    "7.5": {
+     "fraction": 0.407407,
+     "min_ca": 0.001,
+     "n_pass": 22
+    },
+    "8.5": {
+     "fraction": 0.574074,
+     "min_ca": 0.0001,
+     "n_pass": 31
+    },
+    "n_cells": 54
+   },
+   "brushite": {
+    "4.5": {
+     "fraction": 0.083333,
+     "min_ca": 0.01,
+     "min_p": 0.01,
+     "n_pass": 9,
+     "ratio_hi": 10.0,
+     "ratio_lo": 0.09999999999999999
+    },
+    "5.5": {
+     "fraction": 0.166667,
+     "min_ca": 0.001,
+     "min_p": 0.001,
+     "n_pass": 18,
+     "ratio_hi": 100.0,
+     "ratio_lo": 0.01
+    },
+    "6.5": {
+     "fraction": 0.203704,
+     "min_ca": 0.001,
+     "min_p": 0.001,
+     "n_pass": 22,
+     "ratio_hi": 100.0,
+     "ratio_lo": 0.01
+    },
+    "7.5": {
+     "fraction": 0.222222,
+     "min_ca": 0.001,
+     "min_p": 0.001,
+     "n_pass": 24,
+     "ratio_hi": 100.0,
+     "ratio_lo": 0.01
+    },
+    "8.5": {
+     "fraction": 0.111111,
+     "min_ca": 0.01,
+     "min_p": 0.01,
+     "n_pass": 12,
+     "ratio_hi": 10.0,
+     "ratio_lo": 0.09999999999999999
+    },
+    "n_cells": 108
+   },
+   "btcp": {
+    "4.5": {
+     "fraction": 0.027778,
+     "min_ca": 0.1,
+     "min_p": 0.1,
+     "n_pass": 3,
+     "ratio_hi": 1.0,
+     "ratio_lo": 1.0
+    },
+    "5.5": {
+     "fraction": 0.12963,
+     "min_ca": 0.01,
+     "min_p": 0.001,
+     "n_pass": 14,
+     "ratio_hi": 100.0,
+     "ratio_lo": 0.09999999999999999
+    },
+    "6.5": {
+     "fraction": 0.287037,
+     "min_ca": 0.001,
+     "min_p": 1e-05,
+     "n_pass": 31,
+     "ratio_hi": 10000.0,
+     "ratio_lo": 0.01
+    },
+    "7.5": {
+     "fraction": 0.425926,
+     "min_ca": 0.0001,
+     "min_p": 1e-06,
+     "n_pass": 46,
+     "ratio_hi": 100000.00000000001,
+     "ratio_lo": 0.001
+    },
+    "8.5": {
+     "fraction": 0.472222,
+     "min_ca": 0.0001,
+     "min_p": 1e-06,
+     "n_pass": 51,
+     "ratio_hi": 100000.00000000001,
+     "ratio_lo": 0.01
+    },
+    "n_cells": 108
+   },
+   "calcite": {
+    "4.5": {
+     "n_pass": 0
+    },
+    "5.5": {
+     "n_pass": 0
+    },
+    "6.5": {
+     "fraction": 0.240741,
+     "min_ca": 0.01,
+     "n_pass": 13
+    },
+    "7.5": {
+     "fraction": 0.425926,
+     "min_ca": 0.001,
+     "n_pass": 23
+    },
+    "8.5": {
+     "fraction": 0.592593,
+     "min_ca": 0.0001,
+     "n_pass": 32
+    },
+    "n_cells": 54
+   },
+   "hap": {
+    "4.5": {
+     "fraction": 0.046296,
+     "min_ca": 0.1,
+     "min_p": 0.01,
+     "n_pass": 5,
+     "ratio_hi": 10.0,
+     "ratio_lo": 1.0
+    },
+    "5.5": {
+     "fraction": 0.166667,
+     "min_ca": 0.01,
+     "min_p": 0.0001,
+     "n_pass": 18,
+     "ratio_hi": 1000.0,
+     "ratio_lo": 0.09999999999999999
+    },
+    "6.5": {
+     "fraction": 0.388889,
+     "min_ca": 0.0001,
+     "min_p": 1e-06,
+     "n_pass": 42,
+     "ratio_hi": 100000.00000000001,
+     "ratio_lo": 0.001
+    },
+    "7.5": {
+     "fraction": 0.546296,
+     "min_ca": 0.0001,
+     "min_p": 1e-06,
+     "n_pass": 59,
+     "ratio_hi": 100000.00000000001,
+     "ratio_lo": 0.001
+    },
+    "8.5": {
+     "fraction": 0.638889,
+     "min_ca": 1e-05,
+     "min_p": 1e-06,
+     "n_pass": 69,
+     "ratio_hi": 100000.00000000001,
+     "ratio_lo": 0.001
+    },
+    "n_cells": 108
+   },
+   "ocp": {
+    "4.5": {
+     "fraction": 0.046296,
+     "min_ca": 0.1,
+     "min_p": 0.01,
+     "n_pass": 5,
+     "ratio_hi": 10.0,
+     "ratio_lo": 1.0
+    },
+    "5.5": {
+     "fraction": 0.138889,
+     "min_ca": 0.01,
+     "min_p": 0.001,
+     "n_pass": 15,
+     "ratio_hi": 100.0,
+     "ratio_lo": 0.09999999999999999
+    },
+    "6.5": {
+     "fraction": 0.259259,
+     "min_ca": 0.001,
+     "min_p": 0.0001,
+     "n_pass": 28,
+     "ratio_hi": 1000.0,
+     "ratio_lo": 0.01
+    },
+    "7.5": {
+     "fraction": 0.37963,
+     "min_ca": 0.0001,
+     "min_p": 1e-05,
+     "n_pass": 41,
+     "ratio_hi": 10000.0,
+     "ratio_lo": 0.001
+    },
+    "8.5": {
+     "fraction": 0.388889,
+     "min_ca": 0.0001,
+     "min_p": 1e-05,
+     "n_pass": 42,
+     "ratio_hi": 10000.0,
+     "ratio_lo": 0.01
+    },
+    "n_cells": 108
+   },
+   "ph": {
+    "4.5": 4.5,
+    "5.5": 5.5,
+    "6.5": 6.5,
+    "7.5": 7.5,
+    "8.5": 8.5
+   }
+  },
+  "ratio": {
+   "hap": 1.6666666666666667,
+   "hap_hi": 100000.00000000001,
+   "hap_lo": 0.001,
+   "tcp": 1.5
+  },
+  "rerun": {
+   "ACC": {
+    "acid": {
+     "frozen": 5
+    },
+    "alkaline": {
+     "frozen": 88
+    }
+   },
+   "acp": {
+    "acid": {
+     "cells": 540,
+     "frozen": 49,
+     "rerun": 49
+    },
+    "alkaline": {
+     "cells": 648,
+     "frozen": 57,
+     "rerun": 57
+    }
+   },
+   "aragonite": {
+    "acid": {
+     "frozen": 64
+    },
+    "alkaline": {
+     "frozen": 216
+    }
+   },
+   "atcp": {
+    "acid": {
+     "cells": 540,
+     "frozen": 0,
+     "rerun": 0
+    },
+    "alkaline": {
+     "cells": 648,
+     "frozen": 0,
+     "rerun": 0
+    }
+   },
+   "brushite": {
+    "acid": {
+     "cells": 540,
+     "frozen": 0,
+     "rerun": 85
+    },
+    "alkaline": {
+     "cells": 648,
+     "frozen": 0,
+     "rerun": 3
+    }
+   },
+   "btcp": {
+    "acid": {
+     "cells": 540,
+     "frozen": 145,
+     "rerun": 145
+    },
+    "alkaline": {
+     "cells": 648,
+     "frozen": 300,
+     "rerun": 300
+    }
+   },
+   "calcite": {
+    "acid": {
+     "frozen": 68
+    },
+    "alkaline": {
+     "frozen": 218
+    }
+   },
+   "hap": {
+    "acid": {
+     "cells": 540,
+     "frozen": 193,
+     "rerun": 193
+    },
+    "alkaline": {
+     "cells": 648,
+     "frozen": 415,
+     "rerun": 415
+    }
+   },
+   "li3po4": {
+    "acid": {
+     "cells": 540,
+     "frozen": 0,
+     "rerun": 0
+    },
+    "alkaline": {
+     "cells": 648,
+     "frozen": 0,
+     "rerun": 0
+    }
+   },
+   "ocp": {
+    "acid": {
+     "cells": 540,
+     "frozen": 0,
+     "rerun": 0
+    },
+    "alkaline": {
+     "cells": 648,
+     "frozen": 0,
+     "rerun": 0
+    }
+   },
+   "ocp_ca4h": {
+    "acid": {
+     "cells": 540,
+     "rerun": 131
+    },
+    "alkaline": {
+     "cells": 648,
+     "rerun": 74
+    }
+   }
+  },
+  "slurry": {
+   "ph_high": 13.0,
+   "ph_low": 10.0
+  },
+  "sobol": {
+   "base": "2**17",
+   "half_width": 0.09769737069065093,
+   "target": 0.02
+  },
+  "window": {
+   "ca_hi": 0.1,
+   "ca_lo": 1e-06,
+   "n_ca": 6,
+   "n_p": 6,
+   "n_pairs": 36,
+   "p_hi": 0.1,
+   "p_lo": 1e-06
   }
  },
  "production_manifest": {

@@ -25,6 +25,8 @@ NA11  \\ln\s*\(\s*1\s*/\s*q_\{?0\}?|(?<![0-9.])1\s*-\s*p_
 NA12  \\ln\s*\(\s*1\s*\+\s*x\s*\)
 # the half angle and the right angle of the spherical cap, theta/2 and pi/2
 NA13  \\theta\s*/\s*2|\\pi\s*/\s*2
+# the right angle of the hemisphere, written as a contact angle (theta below 90 degrees is the wetting side)
+NA14  \b90\s+degrees\b
 # chemical formulae and ion charges written with mhchem
 NA01  \\ce\{(?:[^{}]|\{[^{}]*\})*\}
 # ion-charge superscripts in math, e.g. Ca^{2+}, CO_3^{2-}, OH^-
