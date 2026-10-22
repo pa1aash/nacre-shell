@@ -1366,6 +1366,12 @@ screen_ph:
       not_tested: 'layered architecture and polymorph structure; alternating aragonite and calcite layers are not nacre-like'
       falsifiability_control: 'the same test flags undersaturation (Omega_bulk < 1) at the low-dose corner of the grid, for each polymorph; otherwise that polymorph is inconclusive in every row'
       authority: claims_redirect Section 11a
+    regime_table:
+      vocabulary: [excluded, not excluded, suitable against dissolution, open, undetermined]
+      excluded_footnote: 'excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)'
+      kinetic_note: 'kinetic stabilisation is not ruled out for phosphates (tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones); never "fails at high voltage" without "thermodynamically"'
+      acid_adjusted_row: {state: params.ph_slurry_acid_adjusted (range from the key), carbonate: 'excluded against dissolution where calcite is undersaturated', ca_phosphates: 'tested on K2 in the same state; failures stated in the cell', source: generated from K2 outputs}
+      authority: claims_redirect Section 11d
     low_voltage:
       class: not excluded at the nominal cutoff (regimes.R-cell.parameters.cutoff_classes, C_lo)
       sensitivity_line: {E_c_V: [4], unit: V, role: sensitivity, not a class}

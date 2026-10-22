@@ -982,20 +982,29 @@ printed and the sentence is dropped. Proposed; the planning chat rules at cp5b.
 
 ### 11d. C5: the regime-table vocabulary
 
-The regime table of the paper uses exactly these five terms, and no other verdict word:
+The regime table of the paper uses exactly these terms, and no other verdict word (cp5 closure ruling Q4):
 
 | Term | Meaning | Source of the entry |
 |---|---|---|
-| excluded | falsified at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed | K1 verdict table, Section 2c |
+| excluded | falsified (D68) at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed. Footnote, verbatim: "excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)" | K1 verdict table, Section 2c |
 | not excluded | not falsified, with a feasible or kinetically stabilised K1 verdict (class A or B named) | K1 verdict table, Section 2c |
-| thermodynamically suitable against dissolution (a necessary condition) for [phase] in [region] | K2 passes at every state of the registered grid, label text of Section 11b | K2 test of Section 11a |
+| suitable against dissolution | K2 passes at every state of the registered grid; always inside the row text of Section 11a ("a necessary condition, in [region]"), the full label of Section 11b | K2 test of Section 11a |
 | open | not falsified, no lower bound: the test is inconclusive on both sides, or the bracket contains the cutoff | verdict row 6 of Section 2c |
 | undetermined | data missing: a gap key, an unbenchmarked number or an unregistered sink (`undetermined (data missing)`) | verdict row 7 of Section 2c |
 
+**Kinetic stabilisation.** "excluded" is a thermodynamic statement. Kinetic stabilisation is not ruled out for
+phosphates: tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones. A sentence of the paper never
+says "fails at high voltage" without the word "thermodynamically" in the same sentence.
+
+**Acid-adjusted slurry state row.** The table carries a row for the acid-adjusted slurry state (the incumbent
+phosphoric-acid pH control, `params.ph_slurry_acid_adjusted`, whose range is registered there and printed by macro). Where calcite is undersaturated there, the
+carbonate cell reads "excluded against dissolution". The Ca-phosphate phases are tested on K2 in the same state with the
+same code path, and their cells are the K2 outputs of that state. If a Ca phosphate does not pass there, the table
+says so in that cell; no cell is softened. The cells are generated from the K2 outputs.
+
 Every cell is **generated** from the hash-pinned ladder and the production outputs only: the ladder file, the margins
 file and the production verdict files named in the blocks of `theory/thresholds.md`, through the macro generator. No
-cell is typed, and a cell with no source in those files reads `undetermined`. The term "suitable" appears only inside
-the full label text of Section 11b.
+cell is typed, and a cell with no source in those files reads `undetermined`.
 
 ### 11e. X4 as ruled: the f_min interval
 
