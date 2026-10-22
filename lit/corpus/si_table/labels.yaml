@@ -1149,6 +1149,14 @@ polyp_ads_alumina_layer_thickness:
   label: adsorbed polyphosphate layer thickness on alumina
 log10_ksp_aragonite_25c_i0:
   label: log10 solubility product of aragonite, 25 C, zero ionic strength
+log10_ksp_brushite:
+  label: solubility product, brushite
+log10_ksp_atcp:
+  label: solubility product, alpha-TCP
+log10_ksp_li3po4:
+  label: solubility product, Li3PO4 (concentration basis)
+log10_ksp_ocp_ca4h_basis:
+  label: solubility product, OCP per Ca4H(PO4)3
 p_c_site_square:
   label: site percolation threshold, square lattice
 p_c_site_triangular:

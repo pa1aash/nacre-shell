@@ -4359,6 +4359,72 @@ params:
       Ca2+ -553.6 (TI-012), CO3 2- -527.0 (TI-014) kJ/mol give DrG 46.8 kJ/mol, log10 Ksp -8.20 +- 0.32, which agrees
       with the printed value within one standard uncertainty. Whether a consumer reads this key in place of the
       primary is decided at cp5b.
+  log10_ksp_brushite:
+    added_in: P0-W1.PH-W1.7
+    symbol: K_sp
+    transform: log10
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: >-
+      brushite CaHPO4.2H2O = Ca2+ + HPO4 2- + 2 H2O, 298.15 K, activity product (Ca2+)(HPO4 2-) per CaHPO4.2H2O formula
+      unit, Debye-Hueckel activity coefficients at the low ionic strength of the ternary Ca(OH)2-H3PO4-H2O system,
+      saturated solutions at pH 3.5 to 7
+    admit:
+      - {row: TR-081}
+    notes: >-
+      Single source (Gregory et al. 1970); the paper prints Ks = 2.561e-7 +- 0.048e-7 at 25 C (2.534e-7 with Davies),
+      log10 and the width derived in the row. Solubility passes through a maximum near 25 C. Formula-unit basis: one
+      Ca per unit, so no factor between formula units. Brushite is a precursor phase and a competing phase.
+  log10_ksp_atcp:
+    added_in: P0-W1.PH-W1.7
+    symbol: K_sp
+    transform: log10
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: >-
+      alpha-tricalcium phosphate Ca3(PO4)2, per Ca3(PO4)2 formula unit (ion product (Ca2+)^3 (PO4 3-)^2), temperature and
+      ionic-strength basis not stated by the review
+    admit:
+      - {row: TR-103}
+    notes: >-
+      Grade D only (review table, secondary citation of Fowler and Kuroda; the primary was not reached, so no grade A to
+      C row exists and E5 admits the D row). The width is not sourced (P1); a normal prior is excluded by rule. Same
+      basis as log10_ksp_btcp (per Ca3(PO4)2), so the two are comparable.
+  log10_ksp_li3po4:
+    added_in: P0-W1.PH-W1.7
+    symbol: K_sp
+    transform: log10
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: >-
+      Li3PO4 = 3 Li+ + PO4 3-, per Li3PO4 formula unit, concentration product (c_Li+/c0)^3 (c_PO4/c0) with c0 = 1 M,
+      no activity coefficients and no phosphate protonation, conductivity of a saturated suspension in distilled
+      water (ionic strength about 0.016 mol/L), room temperature not stated
+    admit:
+      - {row: TR-121}
+    comparators: [TR-078, TR-079, TR-076]
+    notes: >-
+      Single source (Michael thesis, 2022): (1.3 +- 0.2)e-9 on a concentration basis. The widely quoted 2.37e-11
+      (TR-078, TR-079, one original not checked, grade D, convention not given) is lower by about 1.7 log units and
+      is not admitted (E5). The solubility row TR-076 gives a concentration product of order 5e-10 by the same ideal
+      formula. A consumer comparing with an activity product at other ionic strength has to convert; the key is not
+      an activity-basis constant.
+  log10_ksp_ocp_ca4h_basis:
+    added_in: P0-W1.PH-W1.7
+    symbol: K_sp
+    transform: log10
+    unit: "1"
+    regimes: [R-slurry]
+    conditions: >-
+      octacalcium phosphate, 296.65 K (23.5 C), ion activity product (Ca2+)^4 (H+) (PO4 3-)^3, that is per half of the
+      printed formula unit Ca8H2(PO4)6.5H2O (a Ca4H(PO4)3.2.5H2O unit), pH about 5 to 6, extended Debye-Hueckel
+    admit:
+      - {row: TR-120}
+    notes: >-
+      Same determination and value as log10_ksp_ocp (Tung et al. 1988), with the basis stated by the paper's own
+      IP(OCP) expression, which the existing key's conditions do not follow (they name the Ca8 dissolution). The
+      existing key is not edited. Conversion to the Ca8H2(PO4)6 basis: log10 K(Ca8) = 2 log10 K(Ca4H), documented
+      in lit/corpus/params_README.md section 9. Not independent of log10_ksp_ocp.
   p_c_site_square:
     added_in: P0-W1.PH-W1.6
     symbol: p_c_site_square
