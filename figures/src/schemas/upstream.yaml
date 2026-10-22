@@ -210,12 +210,12 @@ entries:
     owner: p0-w4
     branch: preprint/p0
     path: configs/preprint/thresholds.yaml
-    commit: 1aff4fe76a6758172da4a8abd6c1e17e7c4b8910
-    branch_head: 2299346436c98593abefff1748af35f1ca12b424
+    commit: e85e890f9df5d47b751b861ba1254da21c4da166
+    branch_head: 6a9f193e8be45c700e9476005b243c453293edc7
     snapshot: configs/preprint/thresholds.yaml
-    sha256: ef87a276ad6908224d893bd7c111e6a9e63fea6a16cc1c0a732dc546bd699d23
+    sha256: 48d99f4292ee162903ec426df1c8cbc8218fc8ad5b5950d0c34f9d04d09280b8
     merged_tree:
       ref: origin/preprint/p0
-      head: 2299346436c98593abefff1748af35f1ca12b424
+      head: 6a9f193e8be45c700e9476005b243c453293edc7
       same_bytes: true
     used_for: 'fig9 tick labels: the registered cutoff classes (screen_ph.margins_v6.cutoff_classes)'
