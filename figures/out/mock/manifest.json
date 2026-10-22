@@ -132,8 +132,8 @@
   },
   "fig15": {
    "id": "fig15",
-   "claim": "Each candidate is thermodynamically excluded, open or undetermined at the registered cutoff classes and passes dissolution stability in the processing state only for some phases: no phase is suitable against dissolution in both slurry states and not excluded at the high cutoff classes.",
-   "caption_key": "One row per phase or baseline, grouped top to bottom: R-slurry phases, R-cell phases, silicate comparators, the carbonate polymorphs (gaps between groups). Columns: K2 in the as-prepared (processing) slurry; K2 in the acid-adjusted slurry state (suitable where any grid cell passes); then one pair of columns per registered K1 cutoff class (tick labels, V vs Li+/Li; the lowest is the nominal class), crystalline framing left and amorphous right. Fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); no fill: not tested in that column. K1 of the carbonate is drawn on the calcite row.",
+   "claim": "The phosphates that pass K2 in the as-prepared slurry (HAp, ACP, beta-TCP) and the carbonate are thermodynamically excluded at the two higher cutoff classes and open at the lowest, while most amorphous framings and the aluminium phosphates are open or undetermined: passing dissolution stability does not settle the cell regime, and it needs a high dose at the lowest acid-adjusted pH.",
+   "caption_key": "One row per phase or baseline, grouped top to bottom: R-slurry phases, R-cell phases, silicate comparators, the carbonate polymorphs (gaps between groups). Columns: K2 in the as-prepared (processing) slurry, then K2 in the acid-adjusted slurry state split by pH (tick labels, pH of the slurry); then one pair of columns per registered K1 cutoff class (tick labels, V vs Li+/Li; the lowest is the nominal class), crystalline framing left and amorphous right. Fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); a suitable K2 cell whose minimum passing dose is at or above the high-dose value carries vertical lines as well; no fill: not tested in that column. K1 of the carbonate is drawn on the calcite row.",
    "mock": true,
    "width": "double",
    "size_cm": [
@@ -147,9 +147,12 @@
    },
    "schema": "figures/src/schemas/ladder_v3.schema.json",
    "aux": {
+    "acid": "figures/src/mock/k2_acid_ph2.json sha256:b7ebe0e32283d32d2b2cdb766100e8bdab1f4f88d42b31a4660a939f65f6c332",
+    "alkaline": "figures/src/mock/k2_alkaline_ph2.json sha256:f8efe8bf9c7445fbd022084395f433cf2ae8ac316a4f4dab88f90b65ff333b74",
     "cutoffs": "figures/src/mock/ladder_cutoffs.yaml sha256:8376f88f1a522a84fef8b93e6536daba241b12527c5a200bb0bbe00d2c355ea3",
-    "films": "figures/src/mock/phosphate_films.json sha256:54c8511ec2b708642938391bc023529a5cb371df897e783f19c53fa742846001",
-    "k2": "figures/src/mock/k2_grid.json sha256:7cb6ce8c64cb8475dbf223cf2e5e32dc5cc2c41629d2b8b76a43eb3ae4d65692"
+    "k2": "figures/src/mock/k2_grid.json sha256:3bb893e837e804330e27ea81c00c7c0ec594687757bb88a64090e16d511a0745",
+    "perph": "figures/src/mock/perph_ph2.json sha256:62831b6f4b193b3b3702197e750e8e814094f8fe03e7849b02d28c84b1788bfa",
+    "regime_table": "figures/src/mock/regime_table.json sha256:96b7320ae33753025782fe8c49f069bb5e1ad090434d6fdef2042a52098d49f7"
    },
    "font": {
     "family": "Arial",
@@ -157,11 +160,11 @@
     "release": true
    },
    "outputs": {
-    "figures/out/mock/fig15.pdf": "885db78c0294cf92ef060f671773420960e1a3d57e8a6fbb78812e9692048ce2",
-    "figures/out/mock/fig15.png": "238860d0af7606a4bb9a46476e63b68534a056d98a60c422ebc75e4d447da504",
-    "figures/out/mock/cvd/fig15_deuteranopia.png": "956018d81ccddf063c542ac3f7367faa6ab5289234affca951c4410286fbc158",
-    "figures/out/mock/cvd/fig15_protanopia.png": "69777c2a710f3e14002ef17d58391a27f79f2a243cf9a8525da885471405309c",
-    "figures/out/mock/cvd/fig15_tritanopia.png": "e7a8a863671202d3e2140fc2afe7cf2e2fdd996444170d00bf28bc260557dc30"
+    "figures/out/mock/fig15.pdf": "96304e7a90004cdcbdd7fe22c9b81d20b52c502a00b24fddb5fdbf531799bd3c",
+    "figures/out/mock/fig15.png": "5d6ae18004784b7164f7be8238764329a648e13f7c27ad4454897c2962f1025b",
+    "figures/out/mock/cvd/fig15_deuteranopia.png": "787512bb0109fe9380265133be67f05f35bf45bce35818ad7aad62ec7e9f81f7",
+    "figures/out/mock/cvd/fig15_protanopia.png": "1204c7532a4e58ca2463cbc2bc5f7cdf1cba291b091da54eab890d420b10a1b2",
+    "figures/out/mock/cvd/fig15_tritanopia.png": "e3d20dd8ea86645fe8b44d80a6f4d981a7f5bfd99f2865388d2518ea307331d5"
    },
    "checker": "pass (artists and PDF text)"
   },

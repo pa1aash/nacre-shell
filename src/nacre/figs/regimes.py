@@ -20,7 +20,18 @@ REGISTERED = tuple(FROM_VERDICT.values())
 HUE = {"excluded": "vermillion", "open": "yellow", "undetermined": "blue",
        "suitable against dissolution": "skyblue"}
 HATCH = {"excluded": "xxxx", "open": "////", "undetermined": None, "suitable against dissolution": ".."}
+HIGH_DOSE_HATCH = "||"  # added to the hatching of a suitable cell whose minimum passing dose is high
 ORDER = ("suitable against dissolution", "undetermined", "open", "excluded")  # drawing and key order
+
+
+def hatch(word, high_dose=False):
+    """The hatching of a registered word; a suitable cell at a high minimum dose adds vertical lines."""
+    h = HATCH[word]
+    if high_dose:
+        if word != "suitable against dissolution":
+            raise ValueError("regimes: only a suitable cell has a minimum passing dose")
+        return h + HIGH_DOSE_HATCH
+    return h
 
 
 def word(verdict):

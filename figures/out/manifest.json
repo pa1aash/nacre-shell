@@ -132,8 +132,8 @@
   },
   "fig15": {
    "id": "fig15",
-   "claim": "The phosphates that pass K2 in the as-prepared slurry (HAp, ACP, beta-TCP) and the carbonate are thermodynamically excluded at the two higher cutoff classes and open at the lowest, while most amorphous framings and the aluminium phosphates are open or undetermined: passing dissolution stability does not settle the cell regime.",
-   "caption_key": "One row per phase or baseline, grouped top to bottom: R-slurry phases, R-cell phases, silicate comparators, the carbonate polymorphs (gaps between groups). Columns: K2 in the as-prepared (processing) slurry; K2 in the acid-adjusted slurry state (suitable where any grid cell passes); then one pair of columns per registered K1 cutoff class (tick labels, V vs Li+/Li; the lowest is the nominal class), crystalline framing left and amorphous right. Fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); no fill: not tested in that column. K1 of the carbonate is drawn on the calcite row.",
+   "claim": "The phosphates that pass K2 in the as-prepared slurry (HAp, ACP, beta-TCP) and the carbonate are thermodynamically excluded at the two higher cutoff classes and open at the lowest, while most amorphous framings and the aluminium phosphates are open or undetermined: passing dissolution stability does not settle the cell regime, and it needs a high dose at the lowest acid-adjusted pH.",
+   "caption_key": "One row per phase or baseline, grouped top to bottom: R-slurry phases, R-cell phases, silicate comparators, the carbonate polymorphs (gaps between groups). Columns: K2 in the as-prepared (processing) slurry, then K2 in the acid-adjusted slurry state split by pH (tick labels, pH of the slurry); then one pair of columns per registered K1 cutoff class (tick labels, V vs Li+/Li; the lowest is the nominal class), crystalline framing left and amorphous right. Fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); a suitable K2 cell whose minimum passing dose is at or above the high-dose value carries vertical lines as well; no fill: not tested in that column. K1 of the carbonate is drawn on the calcite row.",
    "mock": false,
    "width": "double",
    "size_cm": [
@@ -150,9 +150,12 @@
    },
    "schema": "figures/src/schemas/ladder_v3.schema.json",
    "aux": {
+    "acid": "results/preprint/screen/k2_acid_ph2/summary.json@f648d3a (p0-w4)",
+    "alkaline": "results/preprint/screen/k2_alkaline_ph2/summary.json@30f194d (p0-w4)",
     "cutoffs": "configs/preprint/thresholds.yaml@2345f00 (p0-w4)",
-    "films": "results/preprint/screen/phosphate_films_ph/summary.json@4401915 (p0-w4)",
-    "k2": "results/preprint/screen/k2_grid_ph/summary.json@8612b89 (p0-w4)"
+    "k2": "results/preprint/screen/k2_grid_ph/summary.json@8612b89 (p0-w4)",
+    "perph": "results/preprint/screen/k2_perph_ph2/perph.csv@5a1af81 (p0-w4)",
+    "regime_table": "preprint/generated/regime_table.csv@dbce2e6 (p0-w8)"
    },
    "font": {
     "family": "Arial",
@@ -160,8 +163,11 @@
     "release": true
    },
    "outputs": {
-    "figures/out/fig15.pdf": "cc381a027285d3757cd898ba7ccf0a37458639b848ed18a1e4e58b56dd36a5f6",
-    "figures/out/fig15.png": "b006a7709bcc24072048c0ebd7923b4464a66bd3ed3bc0f7df38d2be59755142"
+    "figures/out/fig15.pdf": "e501345792edfe891d9abe208c3c77858e4101bae68b687612822c5ece895ecb",
+    "figures/out/fig15.png": "6b551636489a768dd383ee04f5c81c9682e274bca35432e78546e660faaa1353",
+    "figures/out/cvd/fig15_deuteranopia.png": "49a1bde12d33e4f1f2c01174ade36a1dce26bcc4a14c70428a35ed56961d334f",
+    "figures/out/cvd/fig15_protanopia.png": "6eaa6174dc73d94ebefff6934c3bc1de752b92eb9436fcaec32f59a02fb6687e",
+    "figures/out/cvd/fig15_tritanopia.png": "fafd7907c279486a919f3ea5096be6b29b46bb0bd19cb01d381397119f7a1726"
    },
    "checker": "pass (artists and PDF text)"
   },

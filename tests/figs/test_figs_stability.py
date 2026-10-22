@@ -69,3 +69,35 @@ def test_stability_map_rows_and_bars():
     assert off["ACP"] < off["b-TCP"] and off["HAp"] == 0.0
     bars = [p for p, _e, _c in f17.bar_rows(ladder, {r[0] for r in rows})]
     assert "AlPO4" in bars and "Ca2P2O7" in bars and len(bars) == 8
+
+
+def test_fig15_agrees_with_the_regime_table_except_the_stale_rows():
+    f15 = _mod("fig15")
+    st = _real_states()
+    table = upstream.load("regime_table", REPO)
+    assert sorted(f15.check_regime_table(table, st)) == ["acc", "acp", "aragonite", "atcp", "btcp", "calcite", "hap", "li_ortho"]
+    # the exemption is needed: the table predates PH-W4.5 for exactly these two rows
+    for rid, phase in (("brushite", "brushite"), ("ocp", "OCP")):
+        row = next(r for r in table["rows"] if r["row_id"] == rid and r["column"] == "acid")
+        assert "NumRegAcidFirst" not in row["numbers"] and f15.first_pass(st[phase]["acid"]) == 4.5
+
+
+def test_fig15_refuses_a_disagreeing_table_row():
+    f15 = _mod("fig15")
+    table = upstream.load("regime_table", REPO)
+    bad = {"columns": table["columns"], "rows": [dict(r) for r in table["rows"]]}
+    for r in bad["rows"]:
+        if r["row_id"] == "hap" and r["column"] == "acid":
+            r["numbers"] = "NumRegAcidFirstHap=5.5"
+    with pytest.raises(ValueError, match="first pass pH"):
+        f15.check_regime_table(bad, _real_states())
+
+
+def test_high_dose_hatch_only_on_suitable_cells():
+    from nacre.figs import regimes
+    assert regimes.hatch("suitable against dissolution", True) == ".." + regimes.HIGH_DOSE_HATCH
+    assert regimes.hatch("suitable against dissolution") == ".."
+    with pytest.raises(ValueError):
+        regimes.hatch("open", True)
+    st = _real_states()
+    assert st["HAp"]["acid"][4.5].high and not st["HAp"]["acid"][6.5].high
