@@ -140,8 +140,8 @@ def phosphate_bindings(cfg, spec, sampled_ph=False):
     return b
 
 
-def phosphate_omega(rp, spec, n, seed, chunk, a_w, mineral):
-    """Omega draws of a phosphate phase from the speciated activities (ln IAP summed over the ions, minus ln K_sp)."""
+def phosphate_omega_evaluate(spec, a_w, mineral):
+    """x ({symbol: array}) -> (outputs, masses) of the phosphate Omega of one phase at the water activity a_w."""
     def evaluate(x):
         xd, sp, mass = chain.derive(dict(x), mineral)
         m = _shape(xd)
@@ -169,7 +169,12 @@ def phosphate_omega(rp, spec, n, seed, chunk, a_w, mineral):
         return ({"speciation": {"Omega_bulk": om, "a_Ca": np.asarray(xd["a_Ca"], dtype=float),
                                 "a_CO3": np.asarray(xd.get("a_PO4", xd["a_Ca"]), dtype=float)}},
                 {"speciation": {}})
-    o, _ = propagate.propagate_chain(evaluate, rp.joint, n, seed, chunk)
+    return evaluate
+
+
+def phosphate_omega(rp, spec, n, seed, chunk, a_w, mineral):
+    """Omega draws of a phosphate phase from the speciated activities (ln IAP summed over the ions, minus ln K_sp)."""
+    o, _ = propagate.propagate_chain(phosphate_omega_evaluate(spec, a_w, mineral), rp.joint, n, seed, chunk)
     return o
 
 

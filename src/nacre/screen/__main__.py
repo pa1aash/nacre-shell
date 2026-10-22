@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 from nacre._util import repo_root
-from nacre.screen import k2_grid, ph_dry, ph_prod, ph_route_dry, ph_prov, run, smoke
+from nacre.screen import k2_grid, ph_dry, ph_precision, ph_prod, ph_route_dry, ph_prov, run, smoke
 from nacre.screen import thresholds as thr
 from nacre.screen.priors import MockPriorsRefused
 
@@ -95,6 +95,9 @@ def main(argv=None):
     pp.add_argument("--dry", action="store_true")
     pp.add_argument("--stride", type=int, default=1)
     pp.add_argument("--label")
+    pm = sub.add_parser("ph-precision", help="required-precision map and flip values (PH-W4.3)")
+    pm.add_argument("--out", required=True)
+    pm.add_argument("--dry", action="store_true")
     th = sub.add_parser("thresholds", help="copy or check configs/preprint/thresholds.yaml")
     th.add_argument("action", choices=("copy", "check"))
     th.add_argument("--ref", default="origin/preprint/p0-w3", help="git ref holding theory/thresholds.md")
@@ -129,6 +132,15 @@ def main(argv=None):
             return 2
         print("wrote %s  (%.1f s, peak %.0f MB, %d cells, %d capped)" % (path.relative_to(root), stats["seconds"], stats["peak_mb"],
                                                                          stats["cells"], stats["capped_cells"]))
+        return 0
+    if args.cmd == "ph-precision":
+        try:
+            path, doc = ph_precision.run_map(root, root / args.out if not Path(args.out).is_absolute() else args.out, args.dry,
+                                             log=lambda m: print(" ", m, flush=True))
+        except (run.ProductionRefused, ph_prov.Frozen, run.params_adapter.PriorFileError) as exc:
+            print("refused: %s" % exc, file=sys.stderr)
+            return 2
+        print("wrote %s (%d rows)" % (path, len(doc["rows"])))
         return 0
     if args.cmd == "ph-production":
         try:
