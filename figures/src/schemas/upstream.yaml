@@ -182,13 +182,13 @@ entries:
     owner: p0-w8
     branch: preprint/p0
     path: preprint/generated/regime_table.csv
-    commit: dbce2e6c71cf798d6a695b9c3e3bc262a150f5d2
-    branch_head: 9544eef9309a7383da8a2f1053715d96efadc84e
+    commit: 09e65764f3edde54960763c8be0891558b391dde
+    branch_head: 693a59020f5544a96f8904a27c04522a9725dc11
     snapshot: preprint/generated/regime_table.csv
-    sha256: 1675897c363ea7ed670186d0925cc362a8023481e53d62ba547fad86942fb44c
+    sha256: b5dd4c6b99b66a21182cf1b74b59fce8a2e575e2565d6782e2b3c49fe72b2a98
     merged_tree:
-      ref: origin/preprint/p0
-      head: 9544eef9309a7383da8a2f1053715d96efadc84e
+      ref: preprint/p0-w6
+      head: 693a59020f5544a96f8904a27c04522a9725dc11
       same_bytes: true
     used_for: 'fig15 cross-check: the first-pass pH of the acid-adjusted column of the regime table'
   results_schema:
@@ -310,11 +310,11 @@ entries:
     branch: preprint/p0
     path: configs/preprint/thresholds.yaml
     commit: 2345f00813d127e02496c3fd474d09f3b374427c
-    branch_head: 65abfb6bc3256c5b8ad35092bf3c8188929a4841
+    branch_head: 693a59020f5544a96f8904a27c04522a9725dc11
     snapshot: configs/preprint/thresholds.yaml
     sha256: 37c17b673ccef4b8526b41acefbccb6e31dbb1f247848c6667355c606686cb61
     merged_tree:
-      ref: origin/preprint/p0
-      head: 65abfb6bc3256c5b8ad35092bf3c8188929a4841
+      ref: preprint/p0-w6
+      head: 693a59020f5544a96f8904a27c04522a9725dc11
       same_bytes: true
     used_for: 'fig9 tick labels: the registered cutoff classes (screen_ph.margins_v6.cutoff_classes)'

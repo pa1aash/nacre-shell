@@ -167,7 +167,7 @@
     "cutoffs": "configs/preprint/thresholds.yaml@2345f00 (p0-w4)",
     "k2": "results/preprint/screen/k2_grid_ph/summary.json@8612b89 (p0-w4)",
     "perph": "results/preprint/screen/k2_perph_ph2/perph.csv@5a1af81 (p0-w4)",
-    "regime_table": "preprint/generated/regime_table.csv@dbce2e6 (p0-w8)"
+    "regime_table": "preprint/generated/regime_table.csv@09e6576 (p0-w8)"
    },
    "font": {
     "family": "Arial",
