@@ -86,6 +86,30 @@ def _cites(args):
     return _report("cites", problems)
 
 
+def _regime_table(args):
+    from nacre.preprint import regime_table
+    root = _util.repo_root()
+    try:
+        if args.check:
+            stale = regime_table.check(root)
+            for f in stale:
+                print("regime-table: STALE %s" % f.relative_to(root).as_posix())
+            print("regime-table: %s" % ("STALE (run `nacre preprint regime-table`)" if stale else "up to date"))
+            return 1 if stale else 0
+        written = regime_table.write(root)
+    except (regime_table.RegimeTableError, macros_error()) as exc:
+        print("regime-table: FAIL\n" + str(exc))
+        return 1
+    for f in written:
+        print("wrote " + f.relative_to(root).as_posix())
+    return 0
+
+
+def macros_error():
+    from nacre.preprint import macros
+    return macros.MacroError
+
+
 def _guard(args):
     from nacre.preprint import build
     return _report("release guard", build.guard(_util.repo_root()))
@@ -111,5 +135,8 @@ def register(subparsers):
     q.set_defaults(func=_prepare)
     q = sub.add_parser("cites", help="every \\cite key resolves in preprint/paper/refs.bib")
     q.set_defaults(func=_cites)
+    q = sub.add_parser("regime-table", help="write the regime table, its CSV and its macro block from the committed results")
+    q.add_argument("--check", action="store_true", help="only report whether the committed outputs are byte-identical to a fresh run")
+    q.set_defaults(func=_regime_table)
     q = sub.add_parser("guard", help="run the release guard only")
     q.set_defaults(func=_guard)

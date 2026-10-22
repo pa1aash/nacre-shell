@@ -5,6 +5,8 @@
 % Release-mode stops: a placeholder, a pending author-register field, a missing optional
 % input or a mock number stops a release build where it is used. In draft mode each renders
 % with a visible marker instead.
+% Rules of the generated tables (booktabs); \RequirePackage is allowed before \documentclass.
+\RequirePackage{booktabs}
 \newif\ifnacrerelease
 \nacrereleasefalse
 \InputIfFileExists{build/mode.tex}{}{}
