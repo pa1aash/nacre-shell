@@ -2,8 +2,8 @@
 # Copied verbatim; the authority is theory/thresholds.md (rule R-thr). Do not edit:
 # after tag p0-cp3 a change goes through a dated entry in ops/tracks/p0_deviations.md.
 # source: theory/thresholds.md
-# source-sha: 12c1f2d886b7fbc05aecc6a3f5a0de0c252c8a52
-version: 8
+# source-sha: 05589fb638b577b14af9600589c2198bae867415
+version: 9
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
@@ -27,6 +27,8 @@ revised_c0: {session: PH-C0, rule: 'computed transfer premise (bracket rule chan
 revised_w36: {session: PH-W3.6, rule: 'carbonate K2 polymorph framings and the label rule, verdict-label text, low-voltage wording, regime vocabulary, f_min interval keys (screen_ph.w36)',
               authority: theory/claims_redirect.md Section 11, status: 'proposed; the planning chat rules at cp5b', no_value_computed: true,
               disclosure: 'registered after the K1 ladder outputs and the carbonate K2 results existed and were seen; no carbonate link, edge or margin changed'}
+revised_w37: {session: PH-W3.7, rule: 'cp5 closure rulings Q1 and Q5: aragonite K2 input key log10_ksp_aragonite_25c_i0; label rule without a nacre-type label (screen_ph.w36.carbonate_k2)',
+              authority: theory/claims_redirect.md Sections 11a and 11g, no_value_computed: true, screen_output_consulted: false}
 contract_version: 6
 decision:
   statistic: band_mass
@@ -521,12 +523,22 @@ screen_ph:
     carbonate_k2:
       framings: [calcite, aragonite, ACC]
       test: 'Omega_bulk(pi) = a_Ca a_CO3 / K_sp(pi) >= 1 at every state of the registered (Ca_T, C_T, pH, I) grid'
-      keys: {calcite: log10_ksp_calcite, aragonite: log10_ksp_aragonite, ACC: log10_ksp_acc}
-      required_for_nacre_type: [calcite, aragonite]
+      keys: {calcite: log10_ksp_calcite, aragonite: log10_ksp_aragonite_25c_i0, ACC: log10_ksp_acc}
+      required_for_label: none (no nacre-type label; each row stands on its own K2 result)
       reported_not_required: [ACC]
-      labels: {nacre-type: 'aragonite AND calcite pass K2', otherwise: 'carbonate (calcite)'}
+      labels:
+        calcite: 'calcite (suitable against dissolution, a necessary condition, in [region])'
+        aragonite: 'aragonite (dissolution stability only; formation unsupported at slurry pH and room temperature)'
+        ACC: reported beside the two rows, not required
+      not_tested: 'layered architecture and polymorph structure; alternating aragonite and calcite layers are not nacre-like'
       falsifiability_control: 'the same test flags undersaturation (Omega_bulk < 1) at the low-dose corner of the grid, for each polymorph; otherwise that polymorph is inconclusive in every row'
       authority: claims_redirect Section 11a
+    regime_table:
+      vocabulary: [excluded, not excluded, suitable against dissolution, open, undetermined]
+      excluded_footnote: 'excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)'
+      kinetic_note: 'kinetic stabilisation is not ruled out for phosphates (tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones); never "fails at high voltage" without "thermodynamically"'
+      acid_adjusted_row: {state: params.ph_slurry_acid_adjusted (range from the key), carbonate: 'excluded against dissolution where calcite is undersaturated', ca_phosphates: 'tested on K2 in the same state; failures stated in the cell', source: generated from K2 outputs}
+      authority: claims_redirect Section 11d
     low_voltage:
       class: not excluded at the nominal cutoff (regimes.R-cell.parameters.cutoff_classes, C_lo)
       sensitivity_line: {E_c_V: [4], unit: V, role: sensitivity, not a class}
