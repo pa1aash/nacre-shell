@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W4.3",
+  "last_session": "PH-W4.2g",
   "status": "DONE",
   "day": 6,
   "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
@@ -54,7 +54,8 @@
     "k2_carbonate": "src/nacre/screen/k2_carbonate.py",
     "report_w4_2e": "ops/reports/P0-W4.PH-W4.2e.md",
     "report_w4_2f": "ops/reports/P0-W4.PH-W4.2f.md",
-    "precision_map": "results/preprint/screen/precision_ph/precision_map.json"
+    "precision_map": "results/preprint/screen/precision_ph/precision_map.json",
+    "report_w4_2g": "ops/reports/P0-W4.PH-W4.2g.md"
   },
   "notes": [
     "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
@@ -72,14 +73,15 @@
     "PH-W4.2c: symbol-binding table (11 bindings: 6 resolved, 5 unresolved) and conversions; unresolved keys and gaps yield undetermined; 686 tests pass.",
     "PH-W4.2e: thresholds copy from block v8 (12c1f2d); aragonite K2 framing (log10_ksp_aragonite_25c_i0, v_m_aragonite) with the nacre-type label as an output field; per-polymorph low-dose-corner controls pass; carbonate regression 34/34 and 4/4; 3 tests fail on W1.5 keys without bindings or treatments (not this session's).",
     "PH-W4.2f: bindings and gap-table treatments for the W1.5 keys (5 bound, 3 b09 reworded, 8 treated unresolved); 729 tests pass; items for cp5b listed in the report.",
-    "PH-W4.2: pre-run commit 8073c8e (K_P scale, TATB declarations, labels, second K2 control, acid-adjusted K2); 13 production runs (k2_grid_ph, phosphate_films_ph, 11 chain reruns equal to their P0-W4.3b digests); 1 capped (nucleate Sobol of ignorance_ph at 2^17 base rows); K3 and K4 of the phosphate framings undetermined (gamma_nl, gamma_nv gaps); report ops/reports/P0-W4.PH-W4.2.md."
+    "PH-W4.2: pre-run commit 8073c8e (K_P scale, TATB declarations, labels, second K2 control, acid-adjusted K2); 13 production runs (k2_grid_ph, phosphate_films_ph, 11 chain reruns equal to their P0-W4.3b digests); 1 capped (nucleate Sobol of ignorance_ph at 2^17 base rows); K3 and K4 of the phosphate framings undetermined (gamma_nl, gamma_nv gaps); report ops/reports/P0-W4.PH-W4.2.md.",
+    "PH-W4.2g: thresholds copy from block v9 (05589fb); text-only diff; version pins 8 to 9 in two tests and ph_prov.THRESHOLDS_BLOCK_VERSION; 766 tests pass in tests/physics tests/screen. W6 must re-pin configs/preprint/thresholds.yaml."
   ],
   "schema": {
     "version": "5",
     "sha": "02f7fc3",
     "path": "configs/preprint/results_schema.json"
   },
-  "thresholds_sha": "12c1f2d886b7fbc05aecc6a3f5a0de0c252c8a52",
+  "thresholds_sha": "05589fb638b577b14af9600589c2198bae867415",
   "params_sha": "fbe252b23a5a80e9fff25db72d1d3b85e8454ce8",
   "thresholds_cp3": {
     "source_sha": "74ac69c2586c017e2bc08efecbfbc918b94f48ee",
@@ -284,5 +286,12 @@
     "sweep_pcred_0.99_adm": "results/preprint/screen/sweep_pcred_0.99_adm/summary.json",
     "sweep_untruncated_adm": "results/preprint/screen/sweep_untruncated_adm/summary.json",
     "table_adm": "results/preprint/screen/table_adm/summary.json"
+  },
+  "thresholds_v9": {
+    "source_sha": "05589fb638b577b14af9600589c2198bae867415",
+    "block_version": 9,
+    "block_sha256": "45135dd172dcb0a11caef2750b5074d2485a75bad1b6c03f61c623b3c319d3e4",
+    "copy_sha256": "37c17b673ccef4b8526b41acefbccb6e31dbb1f247848c6667355c606686cb61",
+    "equality": "EQUAL"
   }
 }
