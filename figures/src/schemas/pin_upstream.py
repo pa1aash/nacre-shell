@@ -42,7 +42,7 @@ SOURCES = {
                      "fig4 input (retro-results/v1, SCHEMA.md section 5)"),
     "retro_cases": ("p0-w2", "preprint/p0-w2", "preprint/retrodiction/cases.yaml", "retrodiction_cases.yaml",
                     "fig4 case labels and observed relations"),
-    "symbols": ("p0-w3", "preprint/p0-w3", "theory/symbols.yaml", "symbols.yaml",
+    "symbols": ("p0-w3", "preprint/p0", "theory/symbols.yaml", "symbols.yaml",
                 "axis titles and parameter labels (theory symbol ids)"),
 }
 
@@ -78,6 +78,15 @@ DATA = {
                          "precision_map_ph.json", "fig14 input: prior range, flip value and required precision per quantity"),
     "phosphate_films_ph": ("p0-w4", "preprint/p0", "results/preprint/screen/phosphate_films_ph/summary.json",
                            "phosphate_films_ph.json", "fig15 processing column: K2 regime of each phosphate and comparator film"),
+    # PH-W6.3: per-pH K2 tables and the post-freeze reruns (PH-W4.5), and the generated regime table.
+    "k2_perph_ph2": ("p0-w4", "preprint/p0", "results/preprint/screen/k2_perph_ph2/perph.csv", "k2_perph_ph2.csv",
+                     "fig15 and fig17 input: passing cells and minimum passing doses per phase and pH"),
+    "k2_acid_ph2": ("p0-w4", "preprint/p0", "results/preprint/screen/k2_acid_ph2/summary.json", "k2_acid_ph2.json",
+                    "fig15 and fig17: cell verdicts of the phosphates in the acid-adjusted state (post-freeze keys)"),
+    "k2_alkaline_ph2": ("p0-w4", "preprint/p0", "results/preprint/screen/k2_alkaline_ph2/summary.json",
+                        "k2_alkaline_ph2.json", "fig15 and fig17: cell verdicts of the phosphates in the as-prepared slurry"),
+    "regime_table": ("p0-w8", "preprint/p0", "preprint/generated/regime_table.csv", "regime_table.csv",
+                     "fig15 cross-check: the first-pass pH of the acid-adjusted column of the regime table"),
 }
 
 

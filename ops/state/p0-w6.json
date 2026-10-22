@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W6.2b",
+  "last_session": "PH-W6.3",
   "status": "DONE",
   "day": 6,
   "palette_sha": "9307edcac3e6a014920e02ed8e8a855c4d56660e",
@@ -57,6 +57,7 @@
     "Fig 7 from W4.3 table_r2 C5 (on W5.3 documents): dose window + R-cell scheme windows; 4.025 V bound",
     "W8 must add the 9 macros in figures/src/captions/macro_requests.yaml",
     "Re-pin after integration (pin_upstream.py drops copies that match the tree)",
-    "Fig 6 waits for P0-W4.4; Fig 8 for the pod"
+    "Fig 6 waits for P0-W4.4; Fig 8 for the pod",
+    "PH-W6.3: fig17 stability map, fig15 per pH with high-dose hatch, fig13 dropped (Al-salt table CSV, W8 table request), PH-W6.2 row count corrected to 32"
   ]
 }

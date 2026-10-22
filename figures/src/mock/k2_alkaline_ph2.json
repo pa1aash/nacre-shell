@@ -1,0 +1,3418 @@
+{
+ "mock": true,
+ "note": "MOCK: synthetic values to exercise the template; not a result",
+ "extensions": {
+  "p0-w4": {
+   "k2_ph2": {
+    "states": {
+     "alkaline": {
+      "phases": {
+       "hap": {
+        "ladder_phase": "HAp",
+        "controls_pass": true,
+        "cells": {
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         }
+        }
+       },
+       "acp": {
+        "ladder_phase": "ACP",
+        "controls_pass": true,
+        "cells": {
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         }
+        }
+       },
+       "btcp": {
+        "ladder_phase": "b-TCP",
+        "controls_pass": true,
+        "cells": {
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         }
+        }
+       },
+       "ocp_ca4h": {
+        "ladder_phase": "OCP",
+        "controls_pass": true,
+        "cells": {
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "inconclusive",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         }
+        }
+       },
+       "brushite": {
+        "ladder_phase": "brushite",
+        "controls_pass": true,
+        "cells": {
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "feasible",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "falsified",
+          "state": "slurry"
+         }
+        }
+       },
+       "atcp": {
+        "ladder_phase": "a-TCP",
+        "controls_pass": true,
+        "cells": {
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         }
+        }
+       },
+       "li3po4": {
+        "ladder_phase": "Li3PO4",
+        "controls_pass": true,
+        "cells": {
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.0001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.001 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.01 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.01 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.0001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.001 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.01 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@min",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@value",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         },
+         "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@max; I=I@value": {
+          "axes": {
+           "Ca_T": "0.1 mol dm^-3",
+           "P_T": "0.1 mol dm^-3",
+           "pH": "pH@max",
+           "I": "I@value"
+          },
+          "verdict": "undetermined",
+          "state": "slurry"
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

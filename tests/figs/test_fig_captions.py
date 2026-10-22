@@ -78,6 +78,8 @@ def _resolve(spec):
     by_path = {e["path"]: k for k, e in upstream.registry(REPO).items()}
     if "pattern" in spec:
         text = (REPO / spec["source"]).read_text()
+        if spec.get("reduce") == "count":
+            return len(re.findall(spec["pattern"], text, re.M))
         return re.search(spec["pattern"], text, re.M).group(1)
     doc = json.loads(upstream.snapshot_bytes(by_path[spec["source"]], REPO))
     for part in spec["key"].split("/"):

@@ -304,7 +304,7 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
         wanted = set(only)
         templates = [t for t in templates if t.stem in wanted]
         from nacre.figs import schematic
-        others = set(schematic.table(root)) | {"rdkit"}
+        others = set(schematic.table(root)) | {"rdkit", "al_salt"}
         missing = wanted - {t.stem for t in templates} - others
         for m in sorted(missing):
             failures.append("%s: no template figures/src/%s.py, schematic or structure set" % (m, m))
@@ -332,12 +332,23 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
         except FigureError as exc:
             failures.append(str(exc))
             log("%s: FAIL %s" % (path.stem, exc))
-    if templates_built:
-        manifest = p["out"] / "manifest.json"
+    manifest = p["out"] / "manifest.json"
+    if templates_built or (not mock and not only and manifest.exists()):
         doc = json.loads(manifest.read_text()) if manifest.exists() else {}
+        if not mock and not only:
+            doc.pop("templates", None)  # a full build records exactly the templates that exist
         doc.setdefault("templates", {}).update(templates_built)
-        doc["templates"] = dict(sorted(doc["templates"].items()))
+        if not doc["templates"]:
+            del doc["templates"]
+        else:
+            doc["templates"] = dict(sorted(doc["templates"].items()))
         manifest.write_text(json.dumps(dict(sorted(doc.items())), indent=1) + "\n")
+    if not mock and (not only or "al_salt" in only):
+        from nacre.figs import alsalt
+        doc = json.loads(manifest.read_text()) if manifest.exists() else {}
+        doc.setdefault("tables", {})["al_salt_ladder"] = alsalt.build(root)
+        manifest.write_text(json.dumps(dict(sorted(doc.items())), indent=1) + "\n")
+        log("al_salt_ladder: table -> %s" % doc["tables"]["al_salt_ladder"]["path"])
     if records:
         manifest = out_dir / "manifest.json"
         # figures/out/manifest.json also holds the schematics and structures (build_drawings):
