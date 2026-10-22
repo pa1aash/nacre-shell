@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W8.2",
+  "last_session": "PH-W8.2c",
   "status": "DONE",
   "day": 6,
   "artifacts": [
@@ -45,7 +45,8 @@
     "tests/preprint/test_preprint_macros.py",
     "tests/preprint/test_preprint_model.py",
     "tests/preprint/test_preprint_refs.py",
-    "tests/preprint/test_preprint_skeleton.py"
+    "tests/preprint/test_preprint_skeleton.py",
+    "ops/reports/P0-W8.PH-W8.2c.md"
   ],
   "notes": [
     "skeleton retargeted: design, predictions added; inputs and outlook removed; carbonate text marked 'carbonate control (frozen)'",
@@ -53,6 +54,7 @@
     "outstanding: NS6 id collision (CL-V09), planned K1 macros, legacy figure and table map",
     "PH-W8.1b: lint-scope exemptions SG26W audit, SG27W hypothesis/criterion, SG17W thermodynamic; allow marker implemented; 23 flags cleared; W8.2 adds the marker above the nacre-inspired paragraph",
     "PH-W8.1c: lint-scope SG29W (aragonite exemption) and SG30W (pattern lookahead); title test updated; front.tex regenerated; 183 passed",
-    "PH-W8.2: Introduction (742 words), Design rules and Methods written in the regime frame; 19 macros, 14 references; ledger 138 (75 drafted); carbonate Methods detail moved to SI si:methods; patents uncited (no DOI); release guard still refuses (27)"
+    "PH-W8.2: Introduction (742 words), Design rules and Methods written in the regime frame; 19 macros, 14 references; ledger 138 (75 drafted); carbonate Methods detail moved to SI si:methods; patents uncited (no DOI); release guard still refuses (27)",
+    "PH-W8.2c: PH-W2.6 corrections (chitosan, patents, pH control); 6 patent macros; design+templating 2469 words, methods 823; si:templating added; SI wording pass; briefs renamed to NumOnsetBone*; patent references pending (bib tool is DOI-only)"
   ]
 }
