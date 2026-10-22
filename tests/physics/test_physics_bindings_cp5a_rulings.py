@@ -80,9 +80,9 @@ def test_row6_salt_forms_and_mixing_forms():
     assert not bd.delta_g_tr_rel(None, None, 3, form="B", salt=_ion(1.0), li_salt=bd.salt_bound(1.0, "PC")).ok
 
 
-def test_row6_binding_row_resolved_but_key_inputs_still_unusable(table):
+def test_row6_binding_row_resolved_li_on_tatb_and_gap_keys_unusable(table):
     assert _row(table, "b06")["status"] == "resolved"
-    assert not bd.bind("transfer_free_energy_li_water_pc", 23800.0, table=table).ok
+    assert bd.bind("transfer_free_energy_li_water_pc", 23800.0, table=table).scale == "TATB"
     assert not bd.bind("transfer_free_energy_ca_water_pc", None, table=table).ok
 
 

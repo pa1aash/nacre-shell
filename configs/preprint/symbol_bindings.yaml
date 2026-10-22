@@ -1,9 +1,9 @@
-# W1 key to contract v6 symbol bindings (PH-W4.2c, cp5a fix X3; revised PH-W4.2d per the cp5a rulings). Applied by src/nacre/physics/bindings.py.
-# sha256 of this file with this line removed: 543ca9db6c8b1567c781e78307d47087ff8e724cac8b4ac52df8a8bcd076a4e9
+# W1 key to contract v6 symbol bindings (PH-W4.2c, cp5a fix X3; revised PH-W4.2d per the cp5a rulings; PH-W4.2f; PH-W4.2 pre-run: K_P scale, TATB declarations). Applied by src/nacre/physics/bindings.py.
+# sha256 of this file with this line removed: 78efeb1971a5c633b066fb244c9270e9e014db183c47c8a310807423a09c0ee1
 # Status: resolved = unit and kind established from the key record; unresolved = ambiguous, the key yields
 # "undetermined" (default). A gap key (no value) is undetermined at run time whatever its binding status.
 # No prior, threshold, verdict rule or K1 number is set or changed here.
-version: 2
+version: 3
 contract_version: 6
 contract_unit_note: units are SI as in theory/symbols.yaml
 undetermined_default: {status: undetermined, value: null}
@@ -105,14 +105,14 @@ bindings:
     ruling: 'cp5a: bind the relative quantity DG_tr_rel, not absolute transfer energies'
     default: {status: undetermined, value: null}
     keys:
-      transfer_free_energy_li_water_pc: {status: unresolved, ion: Li+, form: A, solvent: PC, scale: null, reason: 'single-ion scale not named in the key record (IUPAC selected value); unusable until a scale is stated'}
-      transfer_free_energy_ca_water_pc: {status: unresolved, ion: Ca2+, form: A, solvent: PC, scale: null, reason: 'gap; scale not named'}
-      transfer_free_energy_al_water_pc: {status: unresolved, ion: Al3+, form: A, solvent: PC, scale: null, reason: 'gap; scale not named'}
-      transfer_free_energy_na_water_pc: &alk {status: resolved, ion: Na+, form: A, solvent: PC, scale: TATB, role: alkali_single_ion, note: 'PH-W1.5: Marcus 1983 selected value, tetraphenylarsonium tetraphenylborate scale; usable in DG_tr_rel only with a Li+ value on the same named scale and source, and the Li+ key still names no scale'}
+      transfer_free_energy_li_water_pc: {status: resolved, ion: Li+, form: A, solvent: PC, scale: TATB, source: marcus1983_pac55_977, role: reference_ion, note: 'declared on the TATB scale (PH-W4.2 pre-run): the evidence row TI-077 is the IUPAC selected value of Marcus 1983, a tetraphenylarsonium tetraphenylborate-type assumption, mol dm^-3 scale; the same compilation and scale as the alkali keys below'}
+      transfer_free_energy_ca_water_pc: {status: resolved, ion: Ca2+, form: A, solvent: PC, scale: TATB, source: marcus1983_pac55_977, role: target_ion, note: 'gap in W1 (no value on any scale); the scale a value must carry to enter DG_tr_rel is TATB, undetermined at run time while it is a gap'}
+      transfer_free_energy_al_water_pc: {status: resolved, ion: Al3+, form: A, solvent: PC, scale: TATB, source: marcus1983_pac55_977, role: target_ion, note: 'gap in W1 (no value on any scale); the scale a value must carry to enter DG_tr_rel is TATB, undetermined at run time while it is a gap'}
+      transfer_free_energy_na_water_pc: &alk {status: resolved, ion: Na+, form: A, solvent: PC, scale: TATB, source: marcus1983_pac55_977, role: alkali_single_ion, note: 'PH-W1.5: Marcus 1983 selected value, tetraphenylarsonium tetraphenylborate scale; DG_tr_rel = DG_tr(M+) - DG_tr(Li+) on the same scale, solvent and source'}
       transfer_free_energy_k_water_pc: {<<: *alk, ion: K+}
       transfer_free_energy_rb_water_pc: {<<: *alk, ion: Rb+}
       transfer_free_energy_cs_water_pc: {<<: *alk, ion: Cs+}
-      transfer_free_energy_clo4_water_pc: {status: resolved, ion: ClO4-, form: A, solvent: PC, scale: ferrocene, role: anion_cancels, note: 'cancels in the charge-balanced combination; used only to assemble form B from single ions'}
+      transfer_free_energy_clo4_water_pc: {status: resolved, ion: ClO4-, form: A, solvent: PC, scale: ferrocene, source: marcus1983_pac55_977, role: anion_cancels, note: 'other scale (ferrocene, anions adjusted by -10.0 kJ mol^-1 in the source): converted by no rule, so it is never combined with a TATB cation in form A (a scale mismatch is undetermined); it cancels only in a salt-form (form B) assembly with the same anion on both sides'}
   - id: b07
     contract_symbol: G_phase
     contract_unit: J mol^-1
@@ -175,15 +175,16 @@ bindings:
     w1_unit: absent
     conversion:
       name: ads_unit
-      formula: 'Gamma_P = x mol m^-2 (mmol, umol, nmol m^-2 scaled; a mass density needs the chain-unit molar mass as an argument); K_P = x, dimensionless activity form only; delta_P = x m (mm, um, nm, angstrom scaled)'
-      note: the caller states the unit; a concentration-form K_P or an unknown unit is undetermined
+      formula: 'Gamma_P = x mol m^-2 (mmol, umol, nmol m^-2 scaled; a mass density needs the chain-unit molar mass as an argument); K_P = K c0 with c0 = 1 mol dm^-3 (molar, dimensionless), activity-based; delta_P = x m (mm, um, nm, angstrom scaled)'
+      k_p_rule: 'K per litre (dm^3 mol^-1, L mol^-1, M^-1, m^3 mol^-1 x 1000, cm^3 mol^-1 x 0.001): K_P = K[dm^3 mol^-1] c0. K molal (kg mol^-1, or dimensionless on m° = 1 mol kg^-1): K_P = K c0 / rho_w, rho_w in kg dm^-3 (c = rho_w m, dilute aqueous solution), the water density supplied by the caller. A concentration quotient (basis other than activity), an unlabelled dimensionless K and an unknown unit are undetermined, never copied'
+      note: the caller states the unit; an unknown unit is undetermined
     status: unresolved
-    reason: 'PH-W1.5 added the three keys as gaps (no value, no source); stays unresolved while they are gap keys, and K_P needs an activity-form conversion before it can resolve'
+    reason: 'PH-W1.5 added the three keys as gaps (no value, no source); Gamma_P and delta_P stay unresolved while they are gap keys; the K_P conversion is stated (K c0, c0 = 1 mol dm^-3) and the key resolves, undetermined at run time while it is a gap'
     ruling: 'cp5a: stays unresolved until the PH-W1.5 keys exist with units, source and pin'
     default: {status: undetermined, value: null}
     keys:
       polyp_ads_alumina_gamma_max: {status: unresolved, symbol: Gamma_P, unit: mol m^-2, reason: 'gap key in lit/params.yaml (PH-W1.5, no isotherm found, no value); stays unresolved while it is a gap'}
-      polyp_ads_alumina_k_langmuir: {status: unresolved, symbol: K_P, unit: '1', reason: 'gap key in lit/params.yaml (PH-W1.5, no value); the W1 unit is m^3 mol^-1, a concentration form that K_P (activity form) does not accept; stays unresolved while it is a gap'}
+      polyp_ads_alumina_k_langmuir: {status: resolved, symbol: K_P, unit: 'm^3 mol^-1', reason: 'gap key in lit/params.yaml (PH-W1.5, no isotherm, no value): undetermined at run time; the W1 unit m^3 mol^-1 is converted by K_P = 1000 K c0 (activity basis required), never copied'}
       polyp_ads_alumina_layer_thickness: {status: unresolved, symbol: delta_P, unit: m, reason: 'gap key in lit/params.yaml (PH-W1.5, no value); stays unresolved while it is a gap'}
   - id: b10
     contract_symbol: none
@@ -209,3 +210,21 @@ bindings:
 not_bound:
   polyp_log10_ksp_cameta: 'Ca polyphosphate solubility product: no contract symbol (K_sp_AlPP only); gap'
   hydration_standard_state_offset: 'definitional shift between conventions (the Tissandier offset); never applied, because scales are not converted; kept for the labelled Born-model comparison only'
+  transfer_multi_cu2_water_pc: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_hg2_water_pc: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_cu2_water_acetonitrile: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_cu2_water_dmf: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_cu2_water_dmso: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_cu2_water_methanol: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_zn2_water_dmso: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_cd2_water_dmso: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_hg2_water_acetonitrile: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_hg2_water_dmso: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_la3_water_methanol: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_ca2_water_acetonitrile_rb_ref: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_ca2_water_acetonitrile_extrapolation: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_ca2_water_acetonitrile_real_potentials: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_la3_water_acetonitrile: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_mg2_water_pc: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_zn2_water_pc: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'
+  transfer_multi_ba2_water_pc: 'excluded (PH-W4.2 pre-run): not a benchmark ion of DG_tr_rel; the scale is the one named in its row, not TATB, and no conversion rule between single-ion scales is registered, so it never enters a DG_tr_rel (comparison only)'

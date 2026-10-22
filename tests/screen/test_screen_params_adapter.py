@@ -214,3 +214,16 @@ def test_states_share_their_draws_except_the_state_specific_inputs(tmp_path):
     assert np.array_equal(o1["l"]["g"], o2["l"]["g"])                       # common random numbers
     u1, u2 = (o1["l"]["T"] - 280.0) / 20.0, (o2["l"]["T"] - 330.0) / 20.0
     assert abs(np.corrcoef(u1, u2)[0, 1]) < 0.05                            # state-specific inputs independent
+
+
+def test_cached_c_loader_parses_the_production_table_exactly_as_the_pure_python_loader():
+    """read_table shares one parse per file (libyaml loader): the data equal the pure-Python SafeLoader's parse."""
+    import yaml
+    from nacre._util import repo_root
+    path = repo_root() / pa.PRODUCTION_PARAMS
+    raw = path.read_bytes()
+    doc, sha = pa.read_table(path, False)
+    assert doc == yaml.safe_load(raw)
+    assert pa.read_table(path, False)[0] is doc                 # the second read is the cached parse
+    import hashlib
+    assert sha == "sha256:" + hashlib.sha256(raw).hexdigest()

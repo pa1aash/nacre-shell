@@ -111,11 +111,28 @@ def _in_regime(entry, regime):
     return regime in regimes or "shared" in regimes
 
 
+#: Parsed tables by (path, mtime, size): a screen run reads the 13 000-line table once per design point and state, and the
+#: pure-Python YAML parse costs seconds. The parsed document is shared and is never modified by a caller.
+_TABLE_CACHE = {}
+_SAFE_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)      # libyaml parser, same resolver and constructor as SafeLoader
+
+
+def _parse_table(path):
+    st = path.stat()
+    key = (str(path.resolve()), st.st_mtime_ns, st.st_size)
+    hit = _TABLE_CACHE.get(key)
+    if hit is None:
+        raw = path.read_bytes()
+        hit = (yaml.load(raw, Loader=_SAFE_LOADER) or {}, "sha256:" + hashlib.sha256(raw).hexdigest())
+        _TABLE_CACHE.clear()
+        _TABLE_CACHE[key] = hit
+    return hit
+
+
 def read_table(path, allow_mock=False):
     """Parse the parameter table; returns (doc, sha256). Refuses a mock table without the flag."""
     path = Path(path)
-    raw = path.read_bytes()
-    doc = yaml.safe_load(raw) or {}
+    doc, sha = _parse_table(path)
     if not isinstance(doc, dict):
         raise PriorFileError("%s: top level must be a mapping" % path)
     mock = doc.get("mock")
@@ -126,7 +143,7 @@ def read_table(path, allow_mock=False):
                                 "it, and never for production results" % path)
     if not isinstance(doc.get("params"), dict) or not doc["params"]:
         raise PriorFileError("%s: 'params' must be a non-empty mapping" % path)
-    return doc, "sha256:" + hashlib.sha256(raw).hexdigest()
+    return doc, sha
 
 
 #: Contract symbols that the parameter table records under an older symbol (a name binding, no value):

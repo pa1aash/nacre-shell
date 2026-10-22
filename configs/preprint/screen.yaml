@@ -75,8 +75,10 @@ bindings:
 # cp3 rulings R6 and R8 (planning chat 2026-10-17), as registrations of the run.
 registrations:
   framings: [calcite, ACC]            # R6: both registered; falsified only under every framing
+  # PH-W4.2: keys that no run reads. A test asserts that none of them is read.
+  superseded_keys: {log10_ksp_aragonite: 'superseded, not read (replaced by log10_ksp_aragonite_25c_i0, which carries a width)'}
   # PH-W4.2e (claims_redirect Section 11a): the K2 framings of carbonate. Not the chain framings above: aragonite has no
-  # nucleation inputs. required: a row is labelled nacre-type only where every required polymorph passes K2.
+  # nucleation inputs. required: false for ACC, reported beside calcite and aragonite with its dose window, never required to pass.
   k2_framings:
     calcite: {required: true}
     aragonite: {required: true}
@@ -114,6 +116,17 @@ design_axes:
                at: [min, value, max], keyed_to: 'cathode class (W1 rule G1)'}
   R_A_max: {params: r_a_max, at: [value]}     # cp3 R7(2): design axis; registration pending
   j_req: {params: j_req, at: [value]}         # cp3 R7(2): design axis; registration pending
+  # PH-W4.2 (K2 grid of nacre.screen.k2_grid). pH and I are grid axes of the K2 maps: the minimum, central and maximum of their
+  # table keys; the other chain inputs stay sampled. Design registrations, not literature values.
+  pH: {params: ph_slurry, at: [min, value, max], unit: '1', source: 'ph_slurry range 10 to 13 (unmodified alkaline slurry)'}
+  I_ionic: {params: ionic_strength_slurry, at: [min, value, max], unit: 'mol kg^-1', source: 'ionic_strength_slurry range'}
+  # the acid-adjusted comparator state: the incumbent phosphoric-acid pH control, pH 4.5 to 8.5 in unit steps (session PH-W4.2); the
+  # sourced key ph_slurry_acid_adjusted (6.3 to 9.0, four slurries) is printed beside it, never substituted
+  pH_acid_adjusted: {values: [4.5, 5.5, 6.5, 7.5, 8.5], unit: '1', source: 'PH-W4.2 prompt: pH 4.5 to 8.5; key ph_slurry_acid_adjusted spans 6.3 to 9.0'}
+  # the phosphate dose axis P_T: p_total_slurry is a design input with no admitted row (X1); the decade grid of Ca_T is used, a
+  # design registration of this session and flagged for cp5b
+  P_T: {unit: mol dm^-3, values: [1.0e-6, 1.0e-5, 1.0e-4, 1.0e-3, 1.0e-2, 1.0e-1],
+        source: 'no sourced P_T: decade grid equal to the Ca_T grid, a design registration (PH-W4.2); flagged for cp5b'}
 
 # Sizing rule (theory/thresholds.md, cp2; gap_resolution.yaml sizing): the decision layer starts at
 # 2^14 draws per state and doubles until every band-mass half-width is at most 0.01, capped at the
@@ -149,6 +162,40 @@ omega_control:
       pH: {value: 12.0}
       C_T: {params: dic_slurry, at: value}
       Ca_T: {value: 1.0e-1, unit: mol dm^-3}
+
+# PH-W4.2: the second falsifiability corner. The same low-dose corner (Ca_T and C_T minima of omega_control.undersaturated) in the
+# UNMODIFIED alkaline slurry, scanned over the pH range of ph_slurry (10 to 13) in steps; it shows where undersaturation sets in
+# and is reported beside the gating controls, never gating.
+omega_control_unmodified:
+  pH: {params: ph_slurry, step: 0.25}
+  Ca_T: {value: 1.0e-6, unit: mol dm^-3}
+  C_T: {params: dic_slurry, at: min}
+
+# Phosphate K2 (PH-W4.2): the slurry-stage phases of W5's ladder. nu: exponents of the ion activity product of the formula unit
+# of the K_sp key (activities a_Ca, a_PO4, a_HPO4, a_OH of the registered phosphate speciation; a_H = 10^-pH); n_hyd: structural
+# water (a_w^n; the term is zero at a_w = 1). ksp: null = no K_sp key in lit/params.yaml, the row is undetermined.
+k2_phases:
+  hap:  {ladder: HAp,  formula: Ca5(PO4)3OH, ksp: log10_ksp_hap, nu: {a_Ca: 5, a_PO4: 3, a_OH: 1}, n_hyd: 0}
+  acp:  {ladder: ACP,  formula: 'Ca3(PO4)2.nH2O', ksp: log10_ksp_acp, nu: {a_Ca: 3, a_PO4: 2}, n_hyd_key: n_hyd_acp}
+  ocp:  {ladder: OCP,  formula: 'Ca8H2(PO4)6.5H2O', ksp: log10_ksp_ocp, nu: {a_Ca: 8, a_PO4: 6, a_H: 2}, n_hyd: 5}
+  btcp: {ladder: b-TCP, formula: Ca3(PO4)2, ksp: log10_ksp_btcp, nu: {a_Ca: 3, a_PO4: 2}, n_hyd: 0}
+  brushite: {ladder: brushite, formula: 'CaHPO4.2H2O', ksp: null, nu: {}, note: 'no brushite K_sp key in lit/params.yaml'}
+  atcp: {ladder: a-TCP, formula: alpha-Ca3(PO4)2, ksp: null, nu: {}, note: 'no alpha-TCP K_sp key in lit/params.yaml'}
+  li3po4: {ladder: Li3PO4, formula: Li3PO4, ksp: null, nu: {}, note: 'no Li3PO4 K_sp key in lit/params.yaml (a competing phase of K3, not a Ca phosphate)'}
+# Falsifiability controls of the phosphate K2: the low-dose corner (Ca_T and P_T minima, lowest pH of ph_slurry_modified) must
+# report dissolution, the supersaturated state stability.
+k2_controls_phosphate:
+  undersaturated:
+    Ca_T: {value: 1.0e-6, unit: mol dm^-3}
+    P_T: {value: 1.0e-6, unit: mol dm^-3}
+    pH: {params: ph_slurry_modified, at: min}
+  # the supersaturated state sits at the central pH of ph_slurry_acid_adjusted: octacalcium phosphate (an acid phase) is not
+  # supersaturated at pH 12 even at 0.1 mol dm^-3, so a pH 12 state would not be a supersaturated control for it (a pre-run
+  # correction after a dry run, disclosed in the PH-W4.2 report; the dry-run output is not reported)
+  supersaturated:
+    Ca_T: {value: 1.0e-1, unit: mol dm^-3}
+    P_T: {value: 1.0e-1, unit: mol dm^-3}
+    pH: {params: ph_slurry_acid_adjusted, at: value}
 
 # Prior sets, selectable per run (--prior-set) and labelled in every output (cp3 R8, gap policy).
 prior_sets:
