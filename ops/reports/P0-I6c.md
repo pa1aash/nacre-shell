@@ -7,3 +7,4 @@
 - pytest (seven directories): 1449 passed, 1 failed, 1 skipped. Failure: tests/figs/test_fig_captions.py::test_requests_do_not_duplicate_defined_macros. NumRetroCorrect is requested in figures/src/captions/macro_requests.yaml (w6) and now also defined in preprint/generated/sources.yaml (w8, same source, key, format).
 - Fix (delete the request, 438 figs and preprint tests pass with it) was refused by the lane-ownership hook: figures/src/captions is outside p0-int. Reverted; hook not bypassed. The fix belongs to a w6 session.
 - verify --quick: PASS. Not pushed; lanes not fast-forwarded; track checks not run.
+- w6 lane branch fast-forwarded to 6fab325 (pushed alone, no preprint/p0 push, no tag) so a w6 session can fix the duplicate NumRetroCorrect request on the merged tree.
