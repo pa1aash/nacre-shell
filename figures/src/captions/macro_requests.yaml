@@ -4,11 +4,6 @@
 # figures/src/schemas/upstream.yaml. Percent macros: the formatter must escape the % sign (or use
 # unit '\%' with a scaled value); W8 chooses.
 requests:
-  NumRetroCorrect:
-    source: preprint/retrodiction/results/results.json
-    key: summary/correct
-    format: d
-    figure: Fig 4
   NumRetroNullMedian:
     source: preprint/retrodiction/results/results.json
     key: summary/permutation_null/within_study/median
