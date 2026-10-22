@@ -51,3 +51,24 @@ def test_brushite_and_ocp_cells_evaluate(ctx):
         assert rec["ksp_key"] == ph[name]["ksp"]
         assert all("omega_median_by_state" in c for c in rec["cells"].values())
         assert rec["controls"]["supersaturated_control_cell"]["control_cell"] in rec["cells"]
+
+
+def test_per_ph_tables_reproduce_the_frozen_pass_counts():
+    from nacre.screen import k2_perph as pe
+    doc = pe.build(ROOT)
+    h = doc["headline"]
+    assert (h["alkaline"]["calcite"]["frozen_passing"], h["alkaline"]["hap"]["frozen_passing"]) == (218, 415)
+    assert (h["acid"]["calcite"]["frozen_passing"], h["acid"]["btcp"]["frozen_passing"]) == (68, 145)
+    for grid in h:
+        for key in ("hap", "acp", "btcp", "ocp"):
+            assert h[grid][key]["cells_changed"] == 0          # same keys: only the control rule differs, no cell moves
+    assert doc["tables"]["acid"]["rerun"]["brushite"]["ksp_key"] == "log10_ksp_brushite"
+
+
+def test_f3_numbers_reproduce_the_stored_band_mass():
+    import json
+    d = json.loads((ROOT / "results/preprint/screen/f3_ph2/f3_numbers.json").read_text())
+    f = d["mass_gamma_sn_le_gamma_sl"]
+    assert f["sourced_calcite_gamma_nv"] == pytest.approx(f["stored_C3a_P_good"], abs=1e-12)
+    assert d["c3_link_by_design_point"]["counts"] == {"falsified": 24, "inconclusive": 12}
+    assert d["sobol_nucleate"]["log2_base"] == 17 and d["sobol_nucleate"]["capped"]
