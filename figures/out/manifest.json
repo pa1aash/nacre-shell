@@ -144,7 +144,7 @@
   },
   "fig15": {
    "id": "fig15",
-   "claim": "The phosphates that pass K2 in the as-prepared slurry (HAp, ACP, beta-TCP) and the carbonate are thermodynamically excluded at the two higher cutoff classes and open at the lowest, while every amorphous framing and the aluminium phosphates are undetermined: passing dissolution stability does not settle the cell regime.",
+   "claim": "The phosphates that pass K2 in the as-prepared slurry (HAp, ACP, beta-TCP) and the carbonate are thermodynamically excluded at the two higher cutoff classes and open at the lowest, while most amorphous framings and the aluminium phosphates are open or undetermined: passing dissolution stability does not settle the cell regime.",
    "caption_key": "One row per phase or baseline, grouped top to bottom: R-slurry phases, R-cell phases, silicate comparators, the carbonate polymorphs (gaps between groups). Columns: K2 in the as-prepared (processing) slurry; K2 in the acid-adjusted slurry state (suitable where any grid cell passes); then one pair of columns per registered K1 cutoff class (tick labels, V vs Li+/Li; the lowest is the nominal class), crystalline framing left and amorphous right. Fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); no fill: not tested in that column. K1 of the carbonate is drawn on the calcite row.",
    "mock": false,
    "width": "double",
@@ -234,7 +234,7 @@
    },
    "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
    "aux": {
-    "params": "lit/params.yaml sha256:f56b69150058814641cce33a7066fc27634193c1e35c0e51fc2cacaecd769911",
+    "params": "lit/params.yaml sha256:ecc27194534a60d5f6db906ca40e58aa4fe65ac72c31f326b80e468ac33c32c9",
     "thresholds": "configs/preprint/thresholds.yaml@4ed8fcf (p0-w4)"
    },
    "font": {
@@ -271,7 +271,7 @@
    },
    "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
    "aux": {
-    "params": "lit/params.yaml sha256:f56b69150058814641cce33a7066fc27634193c1e35c0e51fc2cacaecd769911"
+    "params": "lit/params.yaml sha256:ecc27194534a60d5f6db906ca40e58aa4fe65ac72c31f326b80e468ac33c32c9"
    },
    "font": {
     "family": "Arial",
@@ -297,7 +297,7 @@
     17.1,
     9.0
    ],
-   "input": "figures/src/data/upstream/ladder_v3.csv",
+   "input": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
    "input_sha256": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
    "input_source": {
     "owner": "p0-w5",
