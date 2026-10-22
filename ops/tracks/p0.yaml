@@ -554,6 +554,23 @@ days:
     note: 'Non-gating. Try to reach Plummer and Busenberg 1982 or another primary source for the aragonite
       Ksp and upgrade the grade if read, otherwise record the gap. Document the conversion rule for any
       non-TATB transfer source and the molal-to-molar conversion for any K.'
+  - id: PH-W4.2g
+    lane: p0-w4
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: []
+    note: Regenerate configs/preprint/thresholds.yaml from thresholds block v9 and make the copy-equality
+      test pass.
+  - id: PH-W4.5
+    lane: p0-w4
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: []
+    note: 'Pending. BLOCKED until the planning chat''s cp5b ruling (D73). Rerun only the rows whose K_sp
+      keys arrived after the freeze (brushite, Li3PO4, OCP on the Ca4H basis; alpha-TCP is grade D) as
+      new runs, reported side by side with the frozen production.'
   - id: PH-I6
     lane: p0-int
     day: 6
@@ -1056,6 +1073,9 @@ decisions:
 - {id: D72, date: '2026-10-21', decision: 'Label rule change (changes C2): nacre-type requires aragonite
     passing K2 and its formation supported under the registered processing conditions. NU19 says it is
     not, so the regime table has no nacre-type row.', reason: Planning-chat ruling at cp5 closure (Q5).}
+- {id: D73, date: '2026-10-21', decision: 'Production (PH-W4.2, pre-run sha 8073c8e, 13 runs) and PH-W4.3
+    are complete; the post-freeze keys of PH-W1.7 are not used by them; the rerun (PH-W4.5) requires a
+    ruling at cp5b.', reason: Integrator record at PH-I6b.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
