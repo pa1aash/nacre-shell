@@ -1,0 +1,572 @@
+{
+ "M_adm": 0.12725830078125,
+ "c3_link_by_design_point": {
+  "counts": {
+   "falsified": 24,
+   "inconclusive": 12
+  },
+  "n": 36
+ },
+ "gamma_nv_prior_J_m2": {
+  "max": 0.8598216463981212,
+  "min": 0.4283044559512967,
+  "q05": 0.45000327422010267,
+  "q50": 0.6476744650236171,
+  "q95": 0.8405515825447355
+ },
+ "gamma_p_J_m2": {
+  "max": 0.061294309681175385,
+  "min": 0.043344383325064045,
+  "q05": 0.04434597257266724,
+  "q50": 0.05245855251803292,
+  "q95": 0.06044005129418533
+ },
+ "gamma_sl_J_m2": {
+  "admitted_draws": {
+   "max": 0.003357952638668788,
+   "min": 1.064094014150186e-06,
+   "q05": 0.0001840204144831822,
+   "q50": 0.0012193036152489043,
+   "q95": 0.002877082604096524
+  },
+  "all_finite_draws": {
+   "max": 0.003357952638668788,
+   "min": -0.16758734041697976,
+   "q05": -0.08749506246775696,
+   "q50": -0.013238632482974709,
+   "q95": 0.001639431620560527
+  }
+ },
+ "gamma_sn_J_m2_prior_with_sourced_calcite_gamma_nv": {
+  "admitted_draws": {
+   "max": 0.8967481961364936,
+   "min": 0.0002886585525057344,
+   "q05": 0.034956523526734395,
+   "q50": 0.3349849096074761,
+   "q95": 0.7260756986696194
+  }
+ },
+ "mass_gamma_sn_le_gamma_sl": {
+  "by_design_point": [
+   {
+    "M_adm": 0.84466552734375,
+    "design_point": "Ca_T=1e-06 mol dm^-3; C_T=dic_slurry@min; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0001655074258353223,
+     0.001622213006458976,
+     0.0031581421789873203
+    ],
+    "mass_at_gamma_nv_0": 0.03128838788929836,
+    "mass_sourced_gamma_nv": 0.0024568249150950213,
+    "n_admitted": 13839
+   },
+   {
+    "M_adm": 0.84063720703125,
+    "design_point": "Ca_T=1e-06 mol dm^-3; C_T=dic_slurry@min; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00018016437187635465,
+     0.0016540982579352132,
+     0.003172135805464708
+    ],
+    "mass_at_gamma_nv_0": 0.03376170768895666,
+    "mass_sourced_gamma_nv": 0.0017425397516880855,
+    "n_admitted": 13773
+   },
+   {
+    "M_adm": 0.86175537109375,
+    "design_point": "Ca_T=1e-06 mol dm^-3; C_T=dic_slurry@value; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00017746710465581619,
+     0.0016569614629939149,
+     0.0031756301322496943
+    ],
+    "mass_at_gamma_nv_0": 0.03187194560521284,
+    "mass_sourced_gamma_nv": 0.002337276011048941,
+    "n_admitted": 14119
+   },
+   {
+    "M_adm": 0.8587646484375,
+    "design_point": "Ca_T=1e-06 mol dm^-3; C_T=dic_slurry@value; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00017563470104720114,
+     0.0016378942106394887,
+     0.0031767826652978823
+    ],
+    "mass_at_gamma_nv_0": 0.03148542999289268,
+    "mass_sourced_gamma_nv": 0.0019189765458422175,
+    "n_admitted": 14070
+   },
+   {
+    "M_adm": 0.87030029296875,
+    "design_point": "Ca_T=1e-06 mol dm^-3; C_T=dic_slurry@max; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00017208636693070992,
+     0.0016431665273202937,
+     0.0031927777742482614
+    ],
+    "mass_at_gamma_nv_0": 0.03043691703485518,
+    "mass_sourced_gamma_nv": 0.002805245809664072,
+    "n_admitted": 14259
+   },
+   {
+    "M_adm": 0.870849609375,
+    "design_point": "Ca_T=1e-06 mol dm^-3; C_T=dic_slurry@max; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0001624122684872499,
+     0.001657365350297724,
+     0.003182767227659544
+    ],
+    "mass_at_gamma_nv_0": 0.032310064479955145,
+    "mass_sourced_gamma_nv": 0.002382954864031399,
+    "n_admitted": 14268
+   },
+   {
+    "M_adm": 0.6549072265625,
+    "design_point": "Ca_T=1e-05 mol dm^-3; C_T=dic_slurry@min; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00018563668211217746,
+     0.0015324259484622452,
+     0.003082400014560909
+    ],
+    "mass_at_gamma_nv_0": 0.03038210624417521,
+    "mass_sourced_gamma_nv": 0.0020503261882572226,
+    "n_admitted": 10730
+   },
+   {
+    "M_adm": 0.6475830078125,
+    "design_point": "Ca_T=1e-05 mol dm^-3; C_T=dic_slurry@min; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0001876265811934749,
+     0.0015322139326006457,
+     0.0030804220591790147
+    ],
+    "mass_at_gamma_nv_0": 0.03129123468426013,
+    "mass_sourced_gamma_nv": 0.0016965127238454288,
+    "n_admitted": 10610
+   },
+   {
+    "M_adm": 0.71893310546875,
+    "design_point": "Ca_T=1e-05 mol dm^-3; C_T=dic_slurry@value; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00017748322382217356,
+     0.0015590946515547574,
+     0.003115868122187469
+    ],
+    "mass_at_gamma_nv_0": 0.03073265981832074,
+    "mass_sourced_gamma_nv": 0.0028015960607861447,
+    "n_admitted": 11779
+   },
+   {
+    "M_adm": 0.71002197265625,
+    "design_point": "Ca_T=1e-05 mol dm^-3; C_T=dic_slurry@value; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00018296127972652936,
+     0.0015319708539663396,
+     0.003111920107963266
+    ],
+    "mass_at_gamma_nv_0": 0.0306885584114158,
+    "mass_sourced_gamma_nv": 0.0021490587122840197,
+    "n_admitted": 11633
+   },
+   {
+    "M_adm": 0.74517822265625,
+    "design_point": "Ca_T=1e-05 mol dm^-3; C_T=dic_slurry@max; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00017223835098625968,
+     0.0015704792273173315,
+     0.003124369945994635
+    ],
+    "mass_at_gamma_nv_0": 0.033336063559669095,
+    "mass_sourced_gamma_nv": 0.0027848308624784995,
+    "n_admitted": 12209
+   },
+   {
+    "M_adm": 0.73992919921875,
+    "design_point": "Ca_T=1e-05 mol dm^-3; C_T=dic_slurry@max; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00017921811477305248,
+     0.0015818642063090624,
+     0.003122227528872498
+    ],
+    "mass_at_gamma_nv_0": 0.030438010393466965,
+    "mass_sourced_gamma_nv": 0.002722098490472655,
+    "n_admitted": 12123
+   },
+   {
+    "M_adm": 0.36737060546875,
+    "design_point": "Ca_T=0.0001 mol dm^-3; C_T=dic_slurry@min; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00016053929792657936,
+     0.001365442744916216,
+     0.0029866330820509913
+    ],
+    "mass_at_gamma_nv_0": 0.026084067120784184,
+    "mass_sourced_gamma_nv": 0.0014952649941850807,
+    "n_admitted": 6019
+   },
+   {
+    "M_adm": 0.365478515625,
+    "design_point": "Ca_T=0.0001 mol dm^-3; C_T=dic_slurry@min; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00019309351239527446,
+     0.001386870610649295,
+     0.0029876589056534193
+    ],
+    "mass_at_gamma_nv_0": 0.028056112224448898,
+    "mass_sourced_gamma_nv": 0.0035070140280561123,
+    "n_admitted": 5988
+   },
+   {
+    "M_adm": 0.4423828125,
+    "design_point": "Ca_T=0.0001 mol dm^-3; C_T=dic_slurry@value; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00016934374723561022,
+     0.0014024664658908001,
+     0.0030014109706073765
+    ],
+    "mass_at_gamma_nv_0": 0.02911147902869757,
+    "mass_sourced_gamma_nv": 0.0019315673289183224,
+    "n_admitted": 7248
+   },
+   {
+    "M_adm": 0.43597412109375,
+    "design_point": "Ca_T=0.0001 mol dm^-3; C_T=dic_slurry@value; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0001754571818818354,
+     0.001412593245570167,
+     0.003032176577750181
+    ],
+    "mass_at_gamma_nv_0": 0.027019459610807785,
+    "mass_sourced_gamma_nv": 0.001119977600447991,
+    "n_admitted": 7143
+   },
+   {
+    "M_adm": 0.4835205078125,
+    "design_point": "Ca_T=0.0001 mol dm^-3; C_T=dic_slurry@max; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00017185053822686374,
+     0.0014261774636284662,
+     0.002996612019247825
+    ],
+    "mass_at_gamma_nv_0": 0.02612976521080535,
+    "mass_sourced_gamma_nv": 0.0026508457460237313,
+    "n_admitted": 7922
+   },
+   {
+    "M_adm": 0.4844970703125,
+    "design_point": "Ca_T=0.0001 mol dm^-3; C_T=dic_slurry@max; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00018873080911836843,
+     0.001459947686343107,
+     0.0030351846329433785
+    ],
+    "mass_at_gamma_nv_0": 0.02758881330309902,
+    "mass_sourced_gamma_nv": 0.00163769211388259,
+    "n_admitted": 7938
+   },
+   {
+    "M_adm": 0.12725830078125,
+    "design_point": "Ca_T=0.001 mol dm^-3; C_T=dic_slurry@min; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0001840204144831822,
+     0.0012193036152489043,
+     0.002877082604096524
+    ],
+    "mass_at_gamma_nv_0": 0.02302158273381295,
+    "mass_sourced_gamma_nv": 0.0028776978417266188,
+    "n_admitted": 2085
+   },
+   {
+    "M_adm": 0.12469482421875,
+    "design_point": "Ca_T=0.001 mol dm^-3; C_T=dic_slurry@min; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0001971141822765293,
+     0.001217237798253911,
+     0.002868176598364836
+    ],
+    "mass_at_gamma_nv_0": 0.02936857562408223,
+    "mass_sourced_gamma_nv": 0.0019579050416054823,
+    "n_admitted": 2043
+   },
+   {
+    "M_adm": 0.17144775390625,
+    "design_point": "Ca_T=0.001 mol dm^-3; C_T=dic_slurry@value; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00016896151835000013,
+     0.00128707915502663,
+     0.0028603376662533625
+    ],
+    "mass_at_gamma_nv_0": 0.026699893200427198,
+    "mass_sourced_gamma_nv": 0.002491990032039872,
+    "n_admitted": 2809
+   },
+   {
+    "M_adm": 0.1746826171875,
+    "design_point": "Ca_T=0.001 mol dm^-3; C_T=dic_slurry@value; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00017333328742512967,
+     0.0012856121090533972,
+     0.0028671300742890015
+    ],
+    "mass_at_gamma_nv_0": 0.02480782669461915,
+    "mass_sourced_gamma_nv": 0.0010482180293501049,
+    "n_admitted": 2862
+   },
+   {
+    "M_adm": 0.2135009765625,
+    "design_point": "Ca_T=0.001 mol dm^-3; C_T=dic_slurry@max; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0001813679094510575,
+     0.0013388525440326741,
+     0.0029054266128082087
+    ],
+    "mass_at_gamma_nv_0": 0.026014865637507146,
+    "mass_sourced_gamma_nv": 0.002858776443682104,
+    "n_admitted": 3498
+   },
+   {
+    "M_adm": 0.21002197265625,
+    "design_point": "Ca_T=0.001 mol dm^-3; C_T=dic_slurry@max; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00019520291136691787,
+     0.001359949740814276,
+     0.0028862353619943516
+    ],
+    "mass_at_gamma_nv_0": 0.028189479802383028,
+    "mass_sourced_gamma_nv": 0.002034292356873002,
+    "n_admitted": 3441
+   },
+   {
+    "M_adm": 0.023193359375,
+    "design_point": "Ca_T=0.01 mol dm^-3; C_T=dic_slurry@min; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00019275509683014811,
+     0.0011195405280518026,
+     0.0026397922896813216
+    ],
+    "mass_at_gamma_nv_0": 0.02368421052631579,
+    "mass_sourced_gamma_nv": 0.002631578947368421,
+    "n_admitted": 380
+   },
+   {
+    "M_adm": 0.02276611328125,
+    "design_point": "Ca_T=0.01 mol dm^-3; C_T=dic_slurry@min; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.000205517146934455,
+     0.0011925585653615946,
+     0.002580780819602005
+    ],
+    "mass_at_gamma_nv_0": 0.029490616621983913,
+    "mass_sourced_gamma_nv": 0.005361930294906166,
+    "n_admitted": 373
+   },
+   {
+    "M_adm": 0.03375244140625,
+    "design_point": "Ca_T=0.01 mol dm^-3; C_T=dic_slurry@value; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00017033155713680438,
+     0.0011140138953167145,
+     0.0025432217807565428
+    ],
+    "mass_at_gamma_nv_0": 0.02531645569620253,
+    "mass_sourced_gamma_nv": 0.003616636528028933,
+    "n_admitted": 553
+   },
+   {
+    "M_adm": 0.03497314453125,
+    "design_point": "Ca_T=0.01 mol dm^-3; C_T=dic_slurry@value; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00016319459858412473,
+     0.0011772384680649138,
+     0.0026248701256090246
+    ],
+    "mass_at_gamma_nv_0": 0.017452006980802792,
+    "mass_sourced_gamma_nv": 0.0,
+    "n_admitted": 573
+   },
+   {
+    "M_adm": 0.04461669921875,
+    "design_point": "Ca_T=0.01 mol dm^-3; C_T=dic_slurry@max; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00018821846397866604,
+     0.0012391275170046917,
+     0.002741056368464684
+    ],
+    "mass_at_gamma_nv_0": 0.028727770177838577,
+    "mass_sourced_gamma_nv": 0.0027359781121751026,
+    "n_admitted": 731
+   },
+   {
+    "M_adm": 0.043701171875,
+    "design_point": "Ca_T=0.01 mol dm^-3; C_T=dic_slurry@max; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0001668967285843521,
+     0.001179345483812952,
+     0.002640949421283162
+    ],
+    "mass_at_gamma_nv_0": 0.019553072625698324,
+    "mass_sourced_gamma_nv": 0.0013966480446927375,
+    "n_admitted": 716
+   },
+   {
+    "M_adm": 0.00225830078125,
+    "design_point": "Ca_T=0.1 mol dm^-3; C_T=dic_slurry@min; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0003813588433382153,
+     0.0015080427125610243,
+     0.003553388668471459
+    ],
+    "mass_at_gamma_nv_0": 0.05405405405405406,
+    "mass_sourced_gamma_nv": 0.02702702702702703,
+    "n_admitted": 37
+   },
+   {
+    "M_adm": 0.0029296875,
+    "design_point": "Ca_T=0.1 mol dm^-3; C_T=dic_slurry@min; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00021346605403863047,
+     0.0015009233377665087,
+     0.004735241031220031
+    ],
+    "mass_at_gamma_nv_0": 0.041666666666666664,
+    "mass_sourced_gamma_nv": 0.0,
+    "n_admitted": 48
+   },
+   {
+    "M_adm": 0.00238037109375,
+    "design_point": "Ca_T=0.1 mol dm^-3; C_T=dic_slurry@value; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0002990440239338026,
+     0.0013477658569052932,
+     0.00628753336398614
+    ],
+    "mass_at_gamma_nv_0": 0.0,
+    "mass_sourced_gamma_nv": 0.0,
+    "n_admitted": 39
+   },
+   {
+    "M_adm": 0.00341796875,
+    "design_point": "Ca_T=0.1 mol dm^-3; C_T=dic_slurry@value; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.0001914613966284435,
+     0.0010870567960466872,
+     0.003645964176095244
+    ],
+    "mass_at_gamma_nv_0": 0.03571428571428571,
+    "mass_sourced_gamma_nv": 0.017857142857142856,
+    "n_admitted": 56
+   },
+   {
+    "M_adm": 0.002685546875,
+    "design_point": "Ca_T=0.1 mol dm^-3; C_T=dic_slurry@max; a_w=wet_film",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00011153869819339419,
+     0.001291753007856283,
+     0.003150683735469858
+    ],
+    "mass_at_gamma_nv_0": 0.022727272727272728,
+    "mass_sourced_gamma_nv": 0.0,
+    "n_admitted": 44
+   },
+   {
+    "M_adm": 0.00244140625,
+    "design_point": "Ca_T=0.1 mol dm^-3; C_T=dic_slurry@max; a_w=dry_room_min",
+    "gamma_sl_q05_q50_q95_J_m2": [
+     0.00021713909228189557,
+     0.0013010194014576408,
+     0.005099112931086047
+    ],
+    "mass_at_gamma_nv_0": 0.025,
+    "mass_sourced_gamma_nv": 0.0,
+    "n_admitted": 40
+   }
+  ],
+  "fixed_gamma_nv": {
+   "0": {
+    "gamma_nv_J_m2": 0.0,
+    "gamma_sn_support_upper_J_m2_q50": 0.05245855251803292,
+    "mass_gamma_sn_le_gamma_sl": 0.02302158273381295
+   },
+   "0.001": {
+    "gamma_nv_J_m2": 0.001,
+    "gamma_sn_support_upper_J_m2_q50": 0.05345855251803292,
+    "mass_gamma_sn_le_gamma_sl": 0.02302158273381295
+   },
+   "0.0025": {
+    "gamma_nv_J_m2": 0.0025,
+    "gamma_sn_support_upper_J_m2_q50": 0.05495855251803292,
+    "mass_gamma_sn_le_gamma_sl": 0.022062350119904078
+   },
+   "0.005": {
+    "gamma_nv_J_m2": 0.005,
+    "gamma_sn_support_upper_J_m2_q50": 0.05745855251803292,
+    "mass_gamma_sn_le_gamma_sl": 0.021103117505995205
+   },
+   "0.01": {
+    "gamma_nv_J_m2": 0.01,
+    "gamma_sn_support_upper_J_m2_q50": 0.06245855251803292,
+    "mass_gamma_sn_le_gamma_sl": 0.02014388489208633
+   },
+   "0.025": {
+    "gamma_nv_J_m2": 0.025,
+    "gamma_sn_support_upper_J_m2_q50": 0.07745855251803292,
+    "mass_gamma_sn_le_gamma_sl": 0.017266187050359712
+   },
+   "0.05": {
+    "gamma_nv_J_m2": 0.05,
+    "gamma_sn_support_upper_J_m2_q50": 0.10245855251803293,
+    "mass_gamma_sn_le_gamma_sl": 0.014388489208633094
+   },
+   "0.1": {
+    "gamma_nv_J_m2": 0.1,
+    "gamma_sn_support_upper_J_m2_q50": 0.15245855251803292,
+    "mass_gamma_sn_le_gamma_sl": 0.010071942446043165
+   },
+   "0.25": {
+    "gamma_nv_J_m2": 0.25,
+    "gamma_sn_support_upper_J_m2_q50": 0.30245855251803294,
+    "mass_gamma_sn_le_gamma_sl": 0.00671462829736211
+   },
+   "0.5": {
+    "gamma_nv_J_m2": 0.5,
+    "gamma_sn_support_upper_J_m2_q50": 0.5524585525180329,
+    "mass_gamma_sn_le_gamma_sl": 0.003357314148681055
+   },
+   "1": {
+    "gamma_nv_J_m2": 1.0,
+    "gamma_sn_support_upper_J_m2_q50": 1.052458552518033,
+    "mass_gamma_sn_le_gamma_sl": 0.002398081534772182
+   },
+   "1.84": {
+    "gamma_nv_J_m2": 1.84,
+    "gamma_sn_support_upper_J_m2_q50": 1.892458552518033,
+    "mass_gamma_sn_le_gamma_sl": 0.0014388489208633094
+   }
+  },
+  "max_over_design_points_gamma_nv_0": 0.05405405405405406,
+  "max_over_design_points_gamma_nv_0_with_M_adm_at_least_0.02": 0.03376170768895666,
+  "max_over_design_points_sourced": 0.02702702702702703,
+  "max_over_grid": 0.02302158273381295,
+  "sourced_calcite_gamma_nv": 0.0028776978417266188,
+  "stored_C3a_P_good": 0.0028776978417266188
+ },
+ "n_admitted_finite": 2085,
+ "n_draws": 16384,
+ "point": "Ca_T=0.001 mol dm^-3; C_T=dic_slurry@min; a_w=wet_film",
+ "reproduction_check": {
+  "M_adm_reproduced": 0.12725830078125,
+  "P_good_C3a_reproduced": 0.0028776978417266188,
+  "P_good_C3a_stored": 0.0028776978417266188,
+  "design_point": "Ca_T=0.001 mol dm^-3; C_T=dic_slurry@min; a_w=wet_film",
+  "equal": true
+ },
+ "session": "PH-W4.5",
+ "sobol_nucleate": {
+  "base_samples": 131072,
+  "capped": true,
+  "evaluations": 3407872,
+  "log2_base": 17,
+  "max_total_order_ci_half_width": 0.09769737069065093,
+  "target": 0.02
+ }
+}

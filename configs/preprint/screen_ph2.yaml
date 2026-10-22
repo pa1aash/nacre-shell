@@ -1,0 +1,29 @@
+# PH-W4.5 (post-freeze rerun of the phosphate K2). Additions beside configs/preprint/screen.yaml, which is not edited. The K_sp keys
+# are named here and read from lit/params.yaml by name; no value is typed. Verdict rules, priors and thresholds are those of the
+# frozen run.
+session: PH-W4.5
+frozen_runs: [k2_grid_ph, phosphate_films_ph]
+frozen_tag: p0-cp5
+suffix: _ph2
+# order of the rows of a rerun document; a name not in screen.yaml k2_phases is defined below
+phase_order: [hap, acp, btcp, ocp, ocp_ca4h, brushite, li3po4, atcp]
+k2_phases_ph2:
+  # OCP on the basis of the key's own ion activity product (Tung et al. 1988): per Ca4H(PO4)3.2.5H2O, half the Ca8 unit of the
+  # original key log10_ksp_ocp; shown beside it, both stay in the rows
+  ocp_ca4h: {ladder: OCP, formula: 'Ca4H(PO4)3.2.5H2O (Ca4H basis)', ksp: log10_ksp_ocp_ca4h_basis,
+             nu: {a_Ca: 4, a_PO4: 3, a_H: 1}, n_hyd: 2.5}
+  brushite: {ladder: brushite, formula: 'CaHPO4.2H2O', ksp: log10_ksp_brushite, nu: {a_Ca: 1, a_HPO4: 1}, n_hyd: 2}
+  # Li3PO4: the key is a concentration product (c_Li+)^3 (c_PO4) at c0 = 1 M with no activity coefficients; the chain has no Li+
+  # concentration input and no free-phosphate concentration, and no key gives a Li+ dose, so the row stays undetermined
+  li3po4: {ladder: Li3PO4, formula: Li3PO4, ksp: null, ksp_key_registered: log10_ksp_li3po4, nu: {},
+           note: 'key log10_ksp_li3po4 is a concentration product (c_Li)^3 (c_PO4), c0 = 1 M, no activity coefficients; the chain has no Li+ concentration or free-phosphate concentration, no key gives a Li+ dose: undetermined (gap, not a guess)'}
+  # alpha-TCP: the key is grade D (point value without uncertainty); it stays undetermined by the cp5b ruling
+  atcp: {ladder: a-TCP, formula: alpha-Ca3(PO4)2, ksp: null, ksp_key_registered: log10_ksp_atcp, nu: {},
+         note: 'key log10_ksp_atcp is grade D (a point value without uncertainty): undetermined by the cp5b ruling'}
+# The supersaturated control by a rule (cp5b F4), the same for every phase and state: the cell of the grid of that state with the
+# maximum median Omega of that phase in the wet slurry state; the phase must report stability (feasible) there. The low-dose corner
+# (undersaturated control) is that of screen.yaml k2_controls_phosphate. The earlier configured state (pH 12 in W4.2 dry run, then
+# the central pH of ph_slurry_acid_adjusted) is run and printed beside it, not gating.
+supersaturated_control:
+  rule: grid cell of maximum median Omega (wet slurry state) of the phase, per grid state
+  state: slurry
