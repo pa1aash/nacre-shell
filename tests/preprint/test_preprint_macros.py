@@ -19,7 +19,12 @@ def _tree(tmp_path, spec, doc):
 def test_generated_files_are_git_ignored_not_tracked():
     tracked = subprocess.run(["git", "-C", str(REPO), "ls-files", "preprint/generated"],
                              capture_output=True, text=True, check=True).stdout.split()
-    assert not [f for f in tracked if f.endswith(".tex")]
+    # allow-list: regime_table.tex is generated from committed inputs, needed for a clean build, and verified by --check
+    allowed = {"preprint/generated/regime_table.tex"}
+    assert not [f for f in tracked if f.endswith(".tex") and f not in allowed]
+    check = subprocess.run(["uv", "run", "nacre", "preprint", "regime-table", "--check"],
+                           cwd=str(REPO), capture_output=True, text=True)
+    assert check.returncode == 0, check.stdout + check.stderr
     assert "preprint/generated/sources.yaml" in tracked
     for name in ("numbers", "front", "authors", "declarations"):
         p = subprocess.run(["git", "-C", str(REPO), "check-ignore", "-q", "preprint/generated/%s.tex" % name])
