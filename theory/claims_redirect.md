@@ -897,7 +897,7 @@ Session PH-W3.6, lane p0-w3. Everything is symbolic: names of `lit/params.yaml` 
 verdict text reach the paper only through the generated macros (standing rule 4). Registered in block version 8 of
 `theory/thresholds.md` (`screen_ph.w36`).
 
-### 11a. C2: carbonate K2 framings, and the label "nacre-type"
+### 11a. C2: carbonate K2 framings and the label rule (replaced at cp5 closure, Q5)
 
 **K2 framings for carbonate** are calcite, aragonite and ACC (amorphous calcium carbonate, the formation-stage
 precursor). The K2 test for each polymorph pi is the Omega test of Section 3a at every state of the registered grid:
@@ -906,23 +906,37 @@ precursor). The K2 test for each polymorph pi is the Omega test of Section 3a at
 
 | Polymorph | K_sp key | Role in the label rule |
 |---|---|---|
-| calcite | `log10_ksp_calcite` | required |
-| aragonite | `log10_ksp_aragonite` | required |
+| calcite | `log10_ksp_calcite` | row reported |
+| aragonite | `log10_ksp_aragonite_25c_i0` | row reported |
 | ACC | `log10_ksp_acc` (with `acc_hydration_n` for the hydrated product) | reported beside the two; **not required to pass** |
+
+The older key `log10_ksp_aragonite` is superseded and not read by any K2 run; `log10_ksp_aragonite_25c_i0` is the only
+aragonite K_sp input (cp5 closure ruling Q1). Its grade is upgraded only if the primary source is reached; otherwise the
+SI says so.
 
 The activities a_Ca and a_CO3 come from the contract speciation at the registered (Ca_T, C_T, pH, I); the framing
 changes only K_sp (one framing per run, Q12). The ACC dose window is reported beside the calcite and aragonite
 windows: ACC is the precursor of the formation stage, not the phase that has to survive in service.
 
-**Label rule.** A row may be labelled `nacre-type` ONLY where aragonite AND calcite both pass K2 (ACC may fail or be
-undetermined and the label stands). Every other carbonate row is labelled `carbonate (calcite)`: a row that fails
-aragonite, a row where aragonite is undetermined (data missing), and every row of a study that has not registered the
-aragonite test. Passing calcite alone never earns `nacre-type`.
+**Label rule (cp5 closure ruling Q5; replaces the C2 label rule).** There is NO `nacre-type` label. A label of that
+kind would need aragonite to pass K2 AND its formation to be supported under the registered processing conditions, and
+the formation evidence (NU19) says it is not supported at slurry pH and room temperature. The regime table rows read,
+verbatim:
+
+    calcite (suitable against dissolution, a necessary condition, in [region])
+    aragonite (dissolution stability only; formation unsupported at slurry pH and room temperature)
+
+[region] is the registered grid of Section 11b, named by its grid id. ACC is reported beside the two rows and is not
+required. Each row stands on its own K2 result; no row is promoted or demoted by the other, and an undetermined K2 reads
+`undetermined (data missing)`. The screen tests dissolution stability only: it does not test layered architecture or
+polymorph structure, and alternating aragonite and calcite layers are not nacre-like (NU20). "Nacre-inspired" in the
+title and the Introduction names the biomineral lineage only (an amorphous precursor under an organic matrix, chitin
+and chitosan); the title wording is rechecked at cp6.
 
 **Falsifiability control, per polymorph.** The same test, with the same code path and the same K_sp key, must flag
 undersaturation (Omega_bulk(pi) < 1, dissolution) at the low-dose corner of the registered grid, for each of
 calcite, aragonite and ACC. A polymorph whose control does not flag undersaturation there has an inconclusive K2 in
-every row, whatever its pass pattern, and the rows that depend on it cannot be labelled `nacre-type`. The existing
+every row, whatever its pass pattern, and the rows that depend on it read `undetermined`. The existing
 supersaturated control of Section 3a is kept beside it.
 
 Which of the two crystalline polymorphs is the more soluble is read from the two keys and printed, never assumed.
@@ -968,20 +982,29 @@ printed and the sentence is dropped. Proposed; the planning chat rules at cp5b.
 
 ### 11d. C5: the regime-table vocabulary
 
-The regime table of the paper uses exactly these five terms, and no other verdict word:
+The regime table of the paper uses exactly these terms, and no other verdict word (cp5 closure ruling Q4):
 
 | Term | Meaning | Source of the entry |
 |---|---|---|
-| excluded | falsified at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed | K1 verdict table, Section 2c |
+| excluded | falsified (D68) at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed. Footnote, verbatim: "excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)" | K1 verdict table, Section 2c |
 | not excluded | not falsified, with a feasible or kinetically stabilised K1 verdict (class A or B named) | K1 verdict table, Section 2c |
-| thermodynamically suitable against dissolution (a necessary condition) for [phase] in [region] | K2 passes at every state of the registered grid, label text of Section 11b | K2 test of Section 11a |
+| suitable against dissolution | K2 passes at every state of the registered grid; always inside the row text of Section 11a ("a necessary condition, in [region]"), the full label of Section 11b | K2 test of Section 11a |
 | open | not falsified, no lower bound: the test is inconclusive on both sides, or the bracket contains the cutoff | verdict row 6 of Section 2c |
 | undetermined | data missing: a gap key, an unbenchmarked number or an unregistered sink (`undetermined (data missing)`) | verdict row 7 of Section 2c |
 
+**Kinetic stabilisation.** "excluded" is a thermodynamic statement. Kinetic stabilisation is not ruled out for
+phosphates: tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones. A sentence of the paper never
+says "fails at high voltage" without the word "thermodynamically" in the same sentence.
+
+**Acid-adjusted slurry state row.** The table carries a row for the acid-adjusted slurry state (the incumbent
+phosphoric-acid pH control, `params.ph_slurry_acid_adjusted`, whose range is registered there and printed by macro). Where calcite is undersaturated there, the
+carbonate cell reads "excluded against dissolution". The Ca-phosphate phases are tested on K2 in the same state with the
+same code path, and their cells are the K2 outputs of that state. If a Ca phosphate does not pass there, the table
+says so in that cell; no cell is softened. The cells are generated from the K2 outputs.
+
 Every cell is **generated** from the hash-pinned ladder and the production outputs only: the ladder file, the margins
 file and the production verdict files named in the blocks of `theory/thresholds.md`, through the macro generator. No
-cell is typed, and a cell with no source in those files reads `undetermined`. The term "suitable" appears only inside
-the full label text of Section 11b.
+cell is typed, and a cell with no source in those files reads `undetermined`.
 
 ### 11e. X4 as ruled: the f_min interval
 
@@ -999,6 +1022,11 @@ Against PH-C0's registration the form and the use are unchanged; the keys are re
 end is fixed to the square lattice (PH-C0 left the 2D lattice open). The interval is therefore re-registered in block
 version 8; the percolation keys are created by PH-W1.6 and no value appears here.
 
+**Deferred to cp5b (cp5 closure ruling Q6).** The f_min interval stays a recorded sensitivity and does not gate: its
+two ends come from `p_c_site_square` and `p_c_site_sc`, and the triangular lattice value (`p_c_site_triangular`) is
+the sensitivity inside the 2D range. The numbers are read from the keys by macro; none is typed in this file. The
+interval, the Al polyphosphate K_sp and A_patch are all decided at cp5b.
+
 ### 11f. C6: status lines
 
 - The bracket rule of block version 7 (Section 10e) is **inactive in v1**: E_lb is pending, so no tier-1 pass is possible
@@ -1007,3 +1035,17 @@ version 8; the percolation keys are created by PH-W1.6 and no value appears here
   they gate nothing.
 - R_cap, the t-quantile and the cluster sizes defer to v2.
 - The abstract order is not set here; the integrator adds it to the plan text. `ops/tracks/*` is not edited.
+
+### 11g. Definitions (cp5 closure ruling Q3)
+
+**K_P.** K_P = K * c0 with c0 = 1 mol dm^-3 (molar), so K_P is dimensionless and activity-based: K is the
+thermodynamic constant written on activities, and K_P is its value on the molar standard state. The molal conversion
+is stated: a constant given on the molal scale is converted to the molar scale with the solvent density, c = m * rho_solvent
+(dilute limit), and the conversion is applied in code, never by hand. A literature K in molal or per-litre form is
+converted by this rule, never copied. K_P is bound in `symbol_bindings` with a unit test (W4).
+
+**TATB scale.** The Li+ PC key and every benchmark ion are declared on the TATB scale. A source on another scale is
+converted by a documented rule or excluded; the declared scale is printed beside each such key.
+
+**Ca(PO3)2 glass-to-crystal bound.** The bound registered in Section 10b stays as registered (ruling (b)). The sign
+bound DG_g-to-c >= 0 is kept for falsification (I17). It is not tightened without new calorimetry.
