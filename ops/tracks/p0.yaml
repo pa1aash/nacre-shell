@@ -633,6 +633,21 @@ days:
     master_trace: none
     requires: []
     note: 'Pending the planning chat: a ratio grid P_T = Ca_T/1.5 and Ca_T/1.67 as one more labelled run.'
+  - id: PH-W8.2f
+    lane: p0-w8
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: []
+    note: 'Align the per-pH wording of the regime table with the figure rule for the open cells; add the Al-salt table from the W6 CSV; the fig17 caption statement on phases without a K1 bound; correct any text that says suitable from pH 4.5 without its dose.'
+  - id: PH-W6.3b
+    lane: p0-w6
+    day: 6
+    model: Sonnet
+    master_trace: none
+    requires: []
+    optional: true
+    note: 'Optional: pathway schematic and four-conditions diagram completion; the hero stays optional and first to cut.'
 - day: 7
   status: pending
   opened_utc: null
@@ -1144,6 +1159,8 @@ decisions:
 - {id: D78, date: '2026-10-22', decision: '"open" (table) and "not excluded" (prose) are defined in one sentence;
     "suitable against dissolution" names the count, the Ca_T window, the pH window and the P_T assumption
     by macro.', reason: Planning-chat ruling at cp5b.}
+- {id: D79, date: '2026-10-22', decision: 'cp5b F1 to F5 applied or pending as recorded in ops/reports/P0-I6e.md; PH-W4.6 pending on the planning chat''s ruling (ratio grid).',
+  reason: Integrator record at PH-I6e.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1500,7 +1517,7 @@ deferred_v2:
   model: Sonnet
   master_trace: none
   requires: [cp5]
-done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2, PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b, PH-W8.2b, PH-W6.2c, PH-W6.2d, PH-W8.2d, PH-W1.8, PH-W4.5]
+done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2, PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b, PH-W8.2b, PH-W6.2c, PH-W6.2d, PH-W8.2d, PH-W1.8, PH-W4.5, PH-W8.2e, PH-W6.3]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
