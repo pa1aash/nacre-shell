@@ -133,3 +133,15 @@ Re-audit: cp5b
 ## 2026-10-21 results/preprint/screen/*_ph/, results/preprint/precision_ph/
 Change: PH-W4.2 (13 production runs, pre-run sha 8073c8e) and PH-W4.3 add new directories under results/preprint/screen/*_ph/ and results/preprint/precision_ph/. Additive: no frozen path changed, no existing result file edited. Noted for the record only.
 Re-audit: cp5b
+
+## 2026-10-21 configs/preprint/thresholds.yaml
+Change: PH-W4.2g regenerates the file from thresholds block v9 (ops/reports/P0-W4.PH-W4.2g.md). Text-only diff; the equality of the copy with the block was checked by the copy-equality test. The version pins in src/nacre/screen/ph_prov.py and the screen tests move from 8 to 9 with it.
+Re-audit: cp5b
+
+## 2026-10-21 preprint/paper/**, preprint/claims.yaml
+Change: PH-W8.2 and PH-W8.2c (ops/reports/P0-W8.PH-W8.2.md, P0-W8.PH-W8.2c.md) rewrite the Introduction, Design rules and Methods in the regime frame, apply source corrections, trim length and mark the patent references as missing inputs (D74). Not frozen paths; noted for the record only.
+Re-audit: cp5b
+
+## 2026-10-21 figures/src/schemas/upstream.yaml
+Change: PH-W6.2b re-pins thresholds_screen_ph to the thresholds copy of block v9 (sha256 37c17b67...cb61, PH-W4.2g commit 2345f00). Pins only; merged_tree.same_bytes is recomputed against origin/preprint/p0 after the push.
+Re-audit: cp5b
