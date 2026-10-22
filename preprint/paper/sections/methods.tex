@@ -40,6 +40,12 @@ In this version $E_\mathrm{lb}$ is pending, because the transfer free energies o
 \paragraph*{Solubility and the aluminium window.}
 Supersaturations (Eq.~\eqref{eq:stability}) follow from measured solubility products and the slurry speciation, and the passivation window of aluminium comes from our own Al--O--H Pourbaix construction on benchmarked ion data\cite{persson2012prediction}, governed by amorphous \ce{Al(OH)3}, the least ordered hydroxide and the one expected on the foil in water at room temperature, with boehmite as the reference and both published windows beside them\cite{tolchard2023insights,kuhnel2016water}. % CL-D05, CL-M13
 
+% (3b) Dose grid and control states (PH-W8.2e; cp5b F2 and F4). Ratio-grid run: session PH-W4.6.
+\paragraph*{Dose grid and control states.}
+The phosphate dissolution test crosses total calcium and total phosphate independently on one decade grid, \NumRegGridCaCount\ values of each and \NumRegGridPairs\ pairs per cell group, so the Ca:P ratios of the cells are powers of ten and the apatite ratios \NumRatioTcp\ and \NumRatioHap\ do not occur in the production grid. % CL-M04
+The Ca:P range of the passing cells is reported with each pass count (hydroxyapatite: \NumRegCaPHapLo\ to \NumRegCaPHapHi; \nacreSIref{si:regime}{Regime table detail and later reruns}), and a ratio-grid run, with total phosphate at the calcium dose divided by each apatite ratio, is pending. % CL-M04
+The supersaturated control state of a phase and state is defined by a rule: the grid state of maximum $\Omega$ for that phase and state, which must report suitable against dissolution; the undersaturated control is the low-dose corner of the grid. % CL-M04
+
 % (4) Thresholds and decision rules.
 \paragraph*{Thresholds and decision rules.}
 Each condition has one decisive quantity and an edge where the physics changes, moved by a margin for method error (Table~\ref{tab:thresholds}); it is feasible if the prior mass on its good side is at least the credible level $p_\mathrm{cred}=\NumPcred$, falsified if the mass on the other side is, and inconclusive otherwise; the nucleation margin is $m_{\cos}=\NumMcos$, and the degradation step of the deletion test is $p_\mathrm{deg}=1-p_\mathrm{cred}$, \NumPdeg\ at the primary level; the published sweeps of both are in \nacreSIref{si:methods}{Methods detail and the carbonate control}. % CL-M04, CL-P02
@@ -67,6 +73,7 @@ Coacervate wetting (route) & $S_\mathrm{coac}\ge m_S$; $\gsn\le\gsl$ when $\gnl$
 % (5) Propagation, sensitivity and the required precision.
 \paragraph*{Propagation and sensitivity.}
 Monte Carlo draws from the joint prior, with copula rank correlations, are propagated through the relations of Section~\ref{sec:design}; Sobol indices rank independent inputs\cite{saltelli2002making,archer1997sensitivity} and Shapley effects correlated ones\cite{iooss2017shapley}, with draws sized by a rule on the half-widths of the band masses (\nacreSIref{si:methods}{Methods detail and the carbonate control}). % CL-M03
+The Sobol indices of the nucleation chain reach a total-order half-width of \NumSobolNucHalfWidth\ against the target of \NumSobolNucTarget, capped at \NumSobolNucBase\ base rows, so they are indicative and the Shapley effects carry the ranking. % CL-M03
 
 % (6) Materials Project data, with the attribution text and both database versions.
 \paragraph*{Materials Project data.}
@@ -81,10 +88,11 @@ Its nucleation half was tested against literature cases with measured outcomes: 
 % carbonate control (frozen)
 % (8) Disclosures.
 \paragraph*{Disclosures.}
-Four parts of the method were set with some values in view. % CL-M08
+Five parts of the method were set with some values in view. % CL-M08
 An earlier rough estimate under the calcite framing was available when the project was designed, and the framings were chosen on literature grounds (\nacreSIref{si:methods}{Methods detail and the carbonate control}). % CL-M08
 The upper bounds of the oxidation onsets were seen before the regime-matched frame of this paper was adopted. % CL-M08
 Two choices were made after the values they affect had been seen: amorphous \ce{Al(OH)3} as the film solid that governs the passivation window, and the bounds of the glass-to-crystal correction of \ce{Ca(PO3)2}. % CL-M08
+The supersaturated control state of the phosphate dissolution test was moved from pH \NumCtlPhFrom\ to pH \NumCtlPhTo\ after a dry run, an output seen before the choice; the new runs use the maximum-$\Omega$ rule, which moves \NumCtlCellsMoved\ cells of the original keys. % CL-M08
 The parameter table, the benchmark, the thresholds with their numeric margins and the decision rules were fixed with content hashes before the production screen, and any later change is recorded as a dated deviation with its effect on the verdicts; they were not set before every calculation the project made, as these cases show. % CL-M15, CL-M08
 
 % (9) Reproducibility: the one procedural paragraph. The one plain sentence on fixing the rules closes the Disclosures.
