@@ -57,9 +57,9 @@ DATA = {
                          "screen_ignorance.json",
                          "fig5 input: P0-W4.3 production run ignorance (barrier prefactor; theta prior mass, a property of the prior)"),
     # PH-W6.1: phosphate screen outputs of lane p0-w5 (CSV and JSON) and the cutoff classes of the merged thresholds.
-    "ladder_v3": ("p0-w5", "preprint/p0-w5", "results/preprint/pourbaix/ph_w52/ladder_v3.csv", "ladder_v3.csv",
+    "ladder_v3": ("p0-w5", "preprint/p0", "results/preprint/pourbaix/ph_w52/ladder_v3.csv", "ladder_v3.csv",
                   "fig9 input: K1 tier-1 ladder v3 (verdict per phase, framing and cutoff class)"),
-    "ladder_v3_sens40": ("p0-w5", "preprint/p0-w5", "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv",
+    "ladder_v3_sens40": ("p0-w5", "preprint/p0", "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv",
                          "ladder_v3_sens40.csv", "fig9 check: the ladder with 4.0 V as the lowest class edge"),
     "benchmark_w51": ("p0-w5", "preprint/p0-w5", "results/preprint/pourbaix/ph_w51/benchmark_w51.csv",
                       "benchmark_w51.csv", "fig10 input: DFT minus experiment formation enthalpy per phase"),
@@ -71,6 +71,13 @@ DATA = {
                   "fig11 reference bars: the two published pH windows"),
     "thresholds_screen_ph": ("p0-w4", "preprint/p0", "configs/preprint/thresholds.yaml", "thresholds_screen_ph.yaml",
                              "fig9 tick labels: the registered cutoff classes (screen_ph.margins_v6.cutoff_classes)"),
+    # PH-W6.2: production outputs read from the merged tree (origin/preprint/p0).
+    "k2_grid_ph": ("p0-w4", "preprint/p0", "results/preprint/screen/k2_grid_ph/summary.json", "k2_grid_ph.json",
+                   "fig12 input: K2 verdict over the registered Ca_T by C_T grid per polymorph, and the acid-adjusted comparator"),
+    "precision_map_ph": ("p0-w4", "preprint/p0", "results/preprint/screen/precision_ph/precision_map.json",
+                         "precision_map_ph.json", "fig14 input: prior range, flip value and required precision per quantity"),
+    "phosphate_films_ph": ("p0-w4", "preprint/p0", "results/preprint/screen/phosphate_films_ph/summary.json",
+                           "phosphate_films_ph.json", "fig15 processing column: K2 regime of each phosphate and comparator film"),
 }
 
 

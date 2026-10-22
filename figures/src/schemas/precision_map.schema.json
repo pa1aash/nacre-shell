@@ -1,0 +1,64 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "precision_map.json (lane p0-w4, PH-W4.3) as read by fig14",
+ "type": "object",
+ "required": [
+  "rows"
+ ],
+ "properties": {
+  "mock": {
+   "type": "boolean"
+  },
+  "rows": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "object",
+    "required": [
+     "id",
+     "link",
+     "kind"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "link": {
+      "type": "string"
+     },
+     "kind": {
+      "enum": [
+       "closed",
+       "mc",
+       "gap"
+      ]
+     },
+     "prior": {
+      "type": [
+       "object",
+       "null"
+      ]
+     },
+     "flip": {
+      "type": [
+       "object",
+       "null"
+      ]
+     },
+     "required_precision": {
+      "type": [
+       "object",
+       "null"
+      ]
+     },
+     "summary": {
+      "type": [
+       "object",
+       "null"
+      ]
+     }
+    }
+   }
+  }
+ }
+}

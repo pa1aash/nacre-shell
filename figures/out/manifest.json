@@ -72,6 +72,40 @@
    },
    "checker": "pass (artists and PDF text)"
   },
+  "fig14": {
+   "id": "fig14",
+   "claim": "Few quantities can settle a verdict by measurement alone: most flip values lie outside the present prior range or need a width well below it, and the rows without a registered prior have no required precision at all.",
+   "caption_key": "One row per quantity, grouped by the verdict link it settles (gaps between groups). (a) The prior range of the quantity, scaled to width one (grey band; log scale for a log-uniform prior), and the flip value with its 5 to 95 percent range where the output gives one. (b) The required width of the measurement as a fraction of the present prior width (bar from zero). (c) Rows with no numerical required width: left, no flip in the physical range or closed by definition; middle, unreachable at the prior; right, gap or not computable. Marker: evidence grade of the present input (circle A, square B, triangle C, inverted triangle D, diamond ignorance prior, cross no grade); open marker and dashed line: gap row, no registered prior.",
+   "mock": false,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    13.0
+   ],
+   "input": "results/preprint/screen/precision_ph/precision_map.json",
+   "input_sha256": "be5dcb073c204fd63de01631b1713c2878391d3d0b8d3785849f5385a54f20df",
+   "input_source": {
+    "owner": "p0-w4",
+    "path": "results/preprint/screen/precision_ph/precision_map.json",
+    "commit": "9842d9497db4401bb07e2dd3692f79b131d25131",
+    "sha256": "be5dcb073c204fd63de01631b1713c2878391d3d0b8d3785849f5385a54f20df"
+   },
+   "schema": "figures/src/schemas/precision_map.schema.json",
+   "aux": {},
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/fig14.pdf": "6dacd67c55908602ec0505c3c9314aa4d4ed102d8619ea090199ce2bad69d97c",
+    "figures/out/fig14.png": "8af664cd7684c01e576d38a62507b361741bae2b2fb0b179c6016b44eb686cf2",
+    "figures/out/cvd/fig14_deuteranopia.png": "1c7edbe82e02611e6f1654e79bc685af1a849e7b9d71ed8f22a4101fde76677a",
+    "figures/out/cvd/fig14_protanopia.png": "1c7edbe82e02611e6f1654e79bc685af1a849e7b9d71ed8f22a4101fde76677a",
+    "figures/out/cvd/fig14_tritanopia.png": "1c7edbe82e02611e6f1654e79bc685af1a849e7b9d71ed8f22a4101fde76677a"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
   "fig4": {
    "id": "fig4",
    "claim": "The model orders the two surfaces of a case as observed where the case's input acts on the template-nucleus contact (crystal-template adhesion, gamma_sn), and mostly fails where it acts on the template-liquid interface (gamma_sl); overall the retrodiction falls short of its registered pass count, and inputs shuffled across cases come close to it.",
@@ -470,32 +504,6 @@
     "figures/out/templates/cvd/fig13_deuteranopia.png": "120a873161f7ce457d38017624f7ac92bc128669dcf94e3f05761055ff1a0a8e",
     "figures/out/templates/cvd/fig13_protanopia.png": "120a873161f7ce457d38017624f7ac92bc128669dcf94e3f05761055ff1a0a8e",
     "figures/out/templates/cvd/fig13_tritanopia.png": "120a873161f7ce457d38017624f7ac92bc128669dcf94e3f05761055ff1a0a8e"
-   },
-   "checker": "pass (artists and PDF text; placeholder on every plot area)"
-  },
-  "fig14": {
-   "id": "fig14",
-   "status": "template",
-   "release": "blocked: placeholder, no data yet",
-   "claim": "The precision each input must reach, relative to its present width, against each decision threshold.",
-   "caption_key": "Rows: inputs, ranked as in Fig. 6; columns: decision thresholds; colour: required width of the input's prior relative to its present width (colour bar).",
-   "width": "double",
-   "size_cm": [
-    17.1,
-    7.0
-   ],
-   "waits_for": "P0-W4.4 Sobol and required-precision output (Fig. 6 inputs)",
-   "font": {
-    "family": "Arial",
-    "file": "Arial.ttf",
-    "release": true
-   },
-   "outputs": {
-    "figures/out/templates/fig14.pdf": "9651ba1a50ec5b7c9912c89416746aafc008b7b057f5b54b41db97eaf244ae80",
-    "figures/out/templates/fig14.png": "3592970dd969eeea2a19d7004fb667055ce4b4e4b9b50dae2d199d8658268e2c",
-    "figures/out/templates/cvd/fig14_deuteranopia.png": "242b3a4b66fded102046679350b3a9a54fdf7b7535063f65a2adb3dcd776435e",
-    "figures/out/templates/cvd/fig14_protanopia.png": "5ed3eaab62659aa1693fd5cb450df0a9655e0126903e15dbdc3fb11ffabe55b5",
-    "figures/out/templates/cvd/fig14_tritanopia.png": "557ff9ce521a1abb8399a2f9b4e7f15b5da5d512f2eb40b589051cb83b3c9044"
    },
    "checker": "pass (artists and PDF text; placeholder on every plot area)"
   },

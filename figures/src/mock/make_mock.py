@@ -284,7 +284,11 @@ def params():
     return {
         "mock": True,
         "meta": {"note": NOTE, "layout": "lit/params.yaml (lane p0-w1)"},
-        "params": {"dic_slurry": row("dic_slurry", 9.0, 4.0, 16.0, "mol m^-3")},
+        "params": {"dic_slurry": row("dic_slurry", 9.0, 4.0, 16.0, "mol m^-3"),
+                   "ph_slurry": row("ph_slurry", 12.0, 10.0, 13.0),
+                   "log10_ksp_calcite": row("log10_ksp_calcite", -8.5),
+                   "log10_ksp_aragonite_25c_i0": row("log10_ksp_aragonite_25c_i0", -8.3),
+                   "log10_ksp_acc": row("log10_ksp_acc", -7.4)},
         "thresholds": {"C3": {"margin_cos_theta": row("m_cos", 0.2)},
                        "decision": {"credible_level": row("p_cred", 0.9)}},
         "regimes": {
@@ -340,6 +344,99 @@ def passivation():
     return _table(cols, rows)
 
 
+# ------------------------------------------------------------------------- figs 12, 14 and 15
+
+def precision_map():
+    """Rows in the layout of precision_ph/precision_map.json: a closed row with a flip and a ratio, a Monte
+    Carlo row, a K2 row with a median ratio, an unreachable row, a no-flip row and two gap rows."""
+    def row(rid, link, kind, **kw):
+        return {"id": rid, "link": link, "kind": kind, "quantity": rid, **kw}
+    rows = [
+        row("gamma_sn", "C3a / K3a", "closed", evidence_grade="ignorance prior (mock)",
+            prior={"central95_J_m2": [0.02, 0.8], "gap": False}, flip={"q05_q50_q95": [0.0002, 0.0012, 0.0029]},
+            required_precision={"status": "already_clears", "width_ratio": 1.0}),
+        row("gamma_nv", "K3a / K4", "closed", evidence_grade="gap (mock)", prior={"gap": True},
+            flip={"note": "mock"}, required_precision={"status": "no_flip"}),
+        row("c1_analog_w_adh_wet", "C1", "mc", evidence_grade="B",
+            prior={"family": "loguniform", "gap": False, "low_high_J_m2": [0.0001, 0.015]},
+            flip={"value": 0.0038}, required_precision={"status": "ok", "width_ratio": 0.56}),
+        row("c1_dupre_gamma_ow", "C1", "mc", evidence_grade="ignorance prior (mock)",
+            prior={"family": "ignorance", "gap": False, "low_high_J_m2": [0.0, 0.12]},
+            flip={"flip_q05_q50_q95": [0.007, 0.05, 0.095]},
+            required_precision={"status": "unreachable", "width_ratio": None}),
+        row("k2_ksp_hap", "K2", "mc", evidence_grade="A",
+            prior={"evidence_grade": "A", "gap": False, "low": -57.5, "high": -54.5},
+            flip=None, required_precision=None, summary={"median_width_ratio": 0.79, "unreachable": 3, "ok": 3}),
+        row("k2_ksp_btcp", "K2", "mc", evidence_grade="A",
+            prior={"evidence_grade": "A", "gap": False, "low": -28.9, "high": -28.8}, flip=None,
+            required_precision=None, summary={"median_width_ratio": None, "unreachable": 6, "ok": 0}),
+        row("k2_ksp_brushite", "K2", "gap", evidence_grade="D", prior={"gap": True}, flip={"note": "mock"},
+            required_precision={"status": "gap"}),
+        row("binodal_map", "route layer", "gap", evidence_grade="gap", prior={"gap": True}, flip={"quantity": None},
+            required_precision={"status": "not_computable"}),
+    ]
+    return {"mock": True, "note": NOTE, "session": "MOCK", "rows": rows}
+
+
+MOCK_AXES = [("%g mol dm^-3" % ca, "dic_slurry@" + ct) for ca in (1e-5, 1e-4, 1e-3, 1e-2) for ct in ("min", "value", "max")]
+
+
+def _k2_cells(phases_axes, passing):
+    cells = {}
+    for i, axes in enumerate(phases_axes):
+        v = "feasible" if passing(i) else ("inconclusive" if i % 5 == 1 else "falsified")
+        cells["; ".join("%s=%s" % kv for kv in axes.items())] = {
+            "axes": axes, "verdict": v, "a_Ca_median": 1e-5 * (1 + i % 4), "a_CO3_median": 1e-4 * (1 + i % 3), "state": "slurry"}
+    return cells
+
+
+def k2_grid():
+    ph_axes = [{"Ca_T": ca, "C_T": ct, "pH": "pH@value", "I": "I@value", "a_w": aw}
+               for ca, ct in MOCK_AXES for aw in ("wet_film", "dry_room_min")]
+    acid_axes = [{"Ca_T": ca, "C_T": ct, "pH": "%s 1" % ph, "I": "I@value"} for ca, ct in MOCK_AXES for ph in (4.5, 5.5, 6.5, 7.5, 8.5)]
+    p_axes = [{"Ca_T": ca, "P_T": "0.001 mol dm^-3", "pH": "%s 1" % ph, "I": "I@value"}
+              for ca, _ct in MOCK_AXES[::3] for ph in (4.5, 5.5, 6.5, 7.5, 8.5)]
+    poly = {}
+    acid_carb = {}
+    for i, (name, key) in enumerate((("calcite", "log10_ksp_calcite"), ("aragonite", "log10_ksp_aragonite_25c_i0"),
+                                     ("ACC", "log10_ksp_acc"))):
+        poly[name] = {"ksp_key": key, "cells": _k2_cells(ph_axes, lambda j, i=i: (j + i) % 3 != 0)}
+        acid_carb[name] = {"ksp_key": key, "cells": _k2_cells(acid_axes, lambda j, i=i: j % 5 >= 3 - i)}
+    phos = {}
+    for name, lp in (("hap", "HAp"), ("acp", "ACP"), ("ocp", "OCP"), ("btcp", "b-TCP"), ("brushite", "brushite"),
+                     ("atcp", "a-TCP"), ("li3po4", "Li3PO4")):
+        if name in ("brushite", "atcp", "li3po4"):
+            cells = {"; ".join("%s=%s" % kv for kv in a.items()): {"axes": a, "verdict": "undetermined", "state": "slurry"}
+                     for a in p_axes}
+        elif name == "ocp":
+            cells = {"; ".join("%s=%s" % kv for kv in a.items()): {"axes": a, "verdict": "inconclusive", "state": "slurry"}
+                     for a in p_axes}
+        else:
+            cells = _k2_cells(p_axes, lambda j: j % 5 >= 2)
+        phos[name] = {"ladder_phase": lp, "cells": cells}
+    return {"mock": True, "note": NOTE,
+            "extensions": {"p0-w4": {"k2_grid": {
+                "carbonate": {"polymorphs": poly},
+                "acid_adjusted": {"carbonate": acid_carb, "phosphate": phos, "pH_grid": ["%s 1" % p for p in (4.5, 5.5, 6.5, 7.5, 8.5)]}}}},
+            "ph_rows": [
+                {"row_id": "k2:carbonate:%s:registered" % n, "framing": n, "phase": "CaCO3 (%s)" % n,
+                 "K2": {"regime": "suitable against dissolution", "verdict": "feasible"}} for n in poly] + [
+                {"row_id": "k2:carbonate:%s:acid" % n, "framing": n, "phase": "CaCO3 (%s)" % n,
+                 "K2": {"regime": "suitable against dissolution", "verdict": "feasible"}} for n in poly] + [
+                {"row_id": "k2:%s:acid" % n, "framing": lp, "phase": b.get("formula", lp),
+                 "K2": {"regime": "mock", "verdict": "feasible"}} for n, b in phos.items() for lp in (b["ladder_phase"],)]}
+
+
+def phosphate_films():
+    rows = []
+    for ph, regime, verdict in (("HAp", "suitable against dissolution", "feasible"), ("brushite", "undetermined", "undetermined"),
+                                ("OCP", "open", "inconclusive"), ("CaSiO3", None, "undetermined")):
+        rows.append({"row_id": "%s:slurry" % ph.lower(), "phase": ph, "stage": "slurry",
+                     "K2": {"regime": regime, "verdict": verdict}})
+        rows.append({"row_id": "%s:cell" % ph.lower(), "phase": ph, "stage": "cell", "K1": {}})
+    return {"mock": True, "note": NOTE, "ph_rows": rows}
+
+
 def main():
     rng = np.random.default_rng(SEED)
     _write_json("retro_results.json", retro_results(rng))
@@ -355,6 +452,9 @@ def main():
     _write_json("benchmark_w51_summary.json", {"mock": True, "summary": {"e_form": {"max": 5.0},
                                                                          "oxide_correction_kJ_per_O": -60.0}})
     _write_json("passivation_window_v3.json", passivation())
+    _write_json("precision_map.json", precision_map())
+    _write_json("k2_grid.json", k2_grid())
+    _write_json("phosphate_films.json", phosphate_films())
     _write_json("al_window.json", {"mock": True, "conventions": {"ph_range": [3.0, 10.0]},
                                    "published": {"MOCK-1": {"lower": 4.5, "upper": 8.5}, "MOCK-2": {"lower": 4.0, "upper": 8.0}}})
     (HERE / "params.yaml").write_text(
