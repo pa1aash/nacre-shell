@@ -1,6 +1,6 @@
 # Hash manifest of the cp5 freeze (PH-I5d)
 
-Integrated tree preprint/p0 at 7ebb4b3500ff670642332757d714dba4b65711c6 (before the manifest commit). Date 2026-10-22.
+Integrated tree preprint/p0 at b7f805beae1a246c2432da15b4d6c6ba682d58f9 (before the manifest commit). Date 2026-10-22.
 
 | file | sha256 | git blob | last commit |
 |---|---|---|---|
@@ -14,6 +14,8 @@ Integrated tree preprint/p0 at 7ebb4b3500ff670642332757d714dba4b65711c6 (before 
 | results/preprint/pourbaix/ph_w52/ladder_v3.csv | 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b | e2f05519c6cdd47ce260df631f851a798f25ad15 | 73316df2314b14fb5a16ba6bf15077dfcc658c8c |
 | results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv | 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b | e2f05519c6cdd47ce260df631f851a798f25ad15 | 73316df2314b14fb5a16ba6bf15077dfcc658c8c |
 | theory/protocol_computational.md | 57fafbeda8f3535fa4ff654917fb4f93ff9ee0394e3000251348a927c2f1d02e | ddcacc57b69815347ffbfebc746ef926aead7e53 | d4555387933b6df639224f678404ebaa2e1d39cf |
+| lit/corpus/si_table/params_table.tex | c873c04005fa0c597402dcc0f8e5e663906571e654d7a22230bf34f79f182df6 | 39912bd3e2a0145ff2e4cba9a1410e10d797c05e | a09d4b432011aeaad4c7a336c16ffb4f5604b0a4 |
+| figures/src/schemas/upstream.yaml | 346600b66fc27be84c10aed783e2038da8445b2d0351b4e7ae5de91ea8c5ee82 | c2fcc6fd41902a78c291923f311be5a9d18d9df6 | 49b7ea1b473ad1dcd1022ae0adf5ba8093bc87e6 |
 
 symbol_bindings.yaml header hash (file with line 2 removed): 543ca9db6c8b1567c781e78307d47087ff8e724cac8b4ac52df8a8bcd076a4e9 (header records 543ca9db6c8b1567c781e78307d47087ff8e724cac8b4ac52df8a8bcd076a4e9)
 
@@ -34,5 +36,5 @@ MP database books (mp_database_version):
 | results/preprint/pourbaix/supplement_d3/cache/manifest.json | 2026.04.13 | 1d00c351f041328ece324f20727c5a21c234a95ebc77f4a91845e3806747d1e2 | 9911ee8f0f38b1127d1a4fb78884fb9003fe26a0 |
 
 Block: thresholds.md machine block version 8, sha256 d92b42e9106e574fd330635fdc0d54e56d4a1dec4a7f38ece93d8bdfe922b04b (expected value; verified, equal).
-Ladder_v3.csv expected sha256 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b: see table (compare below).
-Final preprint/p0 sha: recorded in the END BLOCK and the tag p0-cp5 (the commit that adds this file).
+ladder_v3.csv sha256 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b (expected value; verified, equal). ladder_v3_sens40.csv is byte-identical to it.
+Final preprint/p0 sha: the commit tagged p0-cp5 (the commit that adds this file); see the END BLOCK.
