@@ -696,9 +696,9 @@ def markdown(rows):
         prior = r.get("prior") or {}
         pr = "gap" if prior.get("gap") else (str(prior.get("low_high_J_m2") or prior.get("central95_J_m2") or prior.get("registered_interval") or prior.get("low")))
         ratio = rp.get("width_ratio")
-        mb = (r.get("measurable_by") or {}).get("assessment", "")
+        mb = "; ".join(a["assessment"].split(" (")[0] for a in (r.get("measurable_by") or {}).get("assessments", []))
         return "| %s | %s | %s | %s | %s | %s | %s | %s |" % (r["id"], r["link"], pr, str(flip)[:90], rp.get("status", "") + ("" if ratio is None else " s*=%.3f" % ratio),
-                                                                  (r.get("settles") or "")[:50], str(r.get("evidence_grade"))[:40], mb[:40])
+                                                                  (r.get("settles") or "")[:50], str(r.get("evidence_grade"))[:40], mb[:70])
     head = "| id | verdict link | prior | flip | required precision | settles | evidence grade | measurable by |\n|---|---|---|---|---|---|---|---|\n"
     return head + "\n".join(fmt(r) for r in rows) + "\n"
 
