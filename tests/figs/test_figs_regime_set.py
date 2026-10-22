@@ -9,7 +9,28 @@ from figs_helpers import REPO
 from nacre.figs import build, colours, paths, style, upstream
 
 LADDER_SHA = "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b"
-TEMPLATE_IDS = ["fig13"]  # fig12, fig14 and fig15 became data figures in PH-W6.2
+TEMPLATE_SOURCE = '''
+from nacre.figs import style
+from nacre.figs.template import placeholder
+
+FIGURE = {"id": "fig99", "status": "template", "waits_for": "a test input", "claim": "c", "caption_key": "k",
+          "width": "single", "height_cm": 7.0}
+
+
+def build(data, root, aux):
+    import matplotlib.pyplot as plt
+    fig, ax = plt.subplots(figsize=style.figsize(FIGURE["width"], FIGURE["height_cm"], root))
+    ax.set_xlabel("x")
+    ax.set_ylabel("y")
+    placeholder(ax, root)
+    return fig
+'''
+
+
+def _synthetic_template(tmp_path):
+    path = tmp_path / "fig99.py"
+    path.write_text(TEMPLATE_SOURCE)
+    return build.load_template(path)
 
 
 def _mod(fid):
@@ -82,17 +103,19 @@ def test_new_captions_stay_within_seventy_words_and_avoid_banned_words(fid):
     assert not re.search(r"\b(works?|protects?|outperforms?|failed)\b", draft, re.I)
 
 
-@pytest.mark.parametrize("fid", TEMPLATE_IDS)
-def test_template_is_registered_and_marked_blocked(fid):
-    rec = _manifest()["templates"][fid]
-    assert rec["status"] == "template" and rec["release"].startswith("blocked")
-    assert "figures" not in rec and fid not in _manifest()["figures"]
+def test_no_template_remains_and_fig13_is_dropped():
+    """PH-W6.3: the Al-salt template is deregistered; the Al-salt ladder is a table input."""
+    man = _manifest()
+    assert not man.get("templates") and "fig13" not in man["figures"]
+    assert not (paths(REPO)["src"] / "fig13.py").exists()
+    assert not list((REPO / "figures/out").glob("**/fig13*"))
+    assert "al_salt_ladder" in man["tables"]
 
 
-def test_release_check_fails_while_templates_or_stubs_remain():
+def test_release_check_fails_while_stubs_remain():
     out = build.release_problems(REPO)
-    for fid in TEMPLATE_IDS + ["fig16"]:
-        assert any(x.startswith(fid + ":") for x in out), fid
+    assert any(x.startswith("fig16:") for x in out)
+    assert not any("template" in x for x in out)
 
 
 def test_release_check_passes_on_a_clean_manifest(tmp_path):
@@ -104,7 +127,7 @@ def test_release_check_passes_on_a_clean_manifest(tmp_path):
 
 
 def test_template_without_placeholder_is_refused(tmp_path):
-    mod = _mod("fig13")
+    mod = _synthetic_template(tmp_path)
     real = mod.build
 
     def bare(data, root, aux):
@@ -118,7 +141,6 @@ def test_template_without_placeholder_is_refused(tmp_path):
         build.render_template(REPO, mod, tmp_path, cvd=False)
 
 
-def test_templates_are_skipped_in_mock_mode_and_have_no_input():
-    for fid in TEMPLATE_IDS:
-        fig = _mod(fid).FIGURE
-        assert fig["status"] == "template" and "input" not in fig and fig["waits_for"]
+def test_a_template_has_no_input_and_is_skipped_in_mock_mode(tmp_path):
+    fig = _synthetic_template(tmp_path).FIGURE
+    assert fig["status"] == "template" and "input" not in fig and fig["waits_for"]

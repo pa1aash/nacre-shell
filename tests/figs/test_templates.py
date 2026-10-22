@@ -20,7 +20,7 @@ def _mod(fid):
 
 
 def test_discovery_finds_the_templates():
-    assert [p.stem for p in build.discover(REPO)] == sorted(TEMPLATES + ["fig13"], key=lambda f: int(f[3:]))
+    assert [p.stem for p in build.discover(REPO)] == sorted(TEMPLATES, key=lambda f: int(f[3:]))
 
 
 @pytest.mark.parametrize("fid", TEMPLATES)
