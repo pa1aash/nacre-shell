@@ -121,3 +121,15 @@ Re-audit: cp5b
 ## 2026-10-21 configs/preprint/symbol_bindings.yaml, configs/preprint/gap_resolution_ph.yaml
 Change: PH-W4.2d (7e69504, ops/reports/P0-W4.PH-W4.2d.md) and PH-W4.2f (1eb77f8, ops/reports/P0-W4.PH-W4.2f.md). symbol_bindings.yaml version 2: bindings per the cp5a rulings, rows 1, 6, 7, 8, 9 (8 resolved, 3 unresolved); PH-W4.2f binds 5 further keys (linear-chain Al beta1 key, Na/K/Rb/Cs transfer free energies on the TATB scale) and states reasons for the alumina isotherm keys. gap_resolution_ph.yaml gains treatments for 8 gap keys (transfer_multi_*, exchange_entropy_al_crystal_bound, s0_cameta_glass, h_cryst_cameta_glass), each unresolved or comparison-only, never a pass. No prior, threshold, verdict rule or K1 number changed. Recorded although the freeze block may not cover the paths.
 Re-audit: cp5b
+
+## 2026-10-21 lit/params.yaml
+Change: PH-W1.7 (ops/reports/P0-W1.PH-W1.7.md) adds 2 evidence rows (TR-120, TR-121) and 4 keys (log10_ksp_brushite, log10_ksp_atcp, log10_ksp_li3po4, log10_ksp_ocp_ca4h_basis); none of the existing keys changed (the params diff has additions and the meta hashes only). Conversion rules are in lit/corpus/params_README.md section 9 (non-TATB transfer energies, molal to molar and K_P = K c0, formula-unit factor for K_sp). Additions under rule 15; the frozen production (PH-W4.2, pre-run sha 8073c8e) does not read them (D73).
+Re-audit: cp5b
+
+## 2026-10-21 theory/thresholds.md, theory/claims_redirect.md
+Change: PH-W3.7 (ops/reports/P0-W3.PH-W3.7.md). Thresholds block version 8 to 9: the aragonite K2 input key is named log10_ksp_aragonite_25c_i0 (the older key is superseded, not read) and the label text follows the cp5 closure rulings (no nacre-type label; per-row labels; regime-table vocabulary, excluded footnote, kinetic-stabilisation note and acid-adjusted row as text). Checked by the integrator against block v8 (p0-cp5): no numeric value, margin, class edge or interval changed. claims_redirect.md: Section 11a key name and label rule, 11d vocabulary, 11g definitions of K_P and TATB, f_min recorded as deferred; names, labels and definitions only.
+Re-audit: cp5b
+
+## 2026-10-21 results/preprint/screen/*_ph/, results/preprint/precision_ph/
+Change: PH-W4.2 (13 production runs, pre-run sha 8073c8e) and PH-W4.3 add new directories under results/preprint/screen/*_ph/ and results/preprint/precision_ph/. Additive: no frozen path changed, no existing result file edited. Noted for the record only.
+Re-audit: cp5b
