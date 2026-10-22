@@ -1,4 +1,5 @@
-"""The Introduction (P0-W8.2): ledger markers, citations of its evidence, and the wording it must avoid."""
+"""The Introduction (P0-W8.2; regime frame at PH-W8.2): ledger markers, citations of its evidence, and the wording
+it must avoid."""
 import re
 
 import pytest
@@ -13,12 +14,19 @@ SCOPE_SENTENCES = (
     "This paper does not claim that the barrier works.",
     "This paper does not claim any corrosion rate, capacity or device performance.",
     "This paper does not claim any result from the full ab initio or machine-learned-potential calculations.",
+    "This paper does not claim that the nucleation or template half of the chain is validated.",
+    "This paper does not claim priority for any film, route or combination.",
 )
 # Wording the Introduction must not use (prompt P0-W8.2, lane notes N4 and N5, lit/novelty.md U1 to U12).
 FORBIDDEN = {
     "supersaturation (the sequestration route is settled at cp2)": r"supersaturat",
     "enrichment asserted by this paper": r"\benrichment\b",
-    "chitosan as dissolved chains (N4)": r"chitosan",
+    "chitosan as dissolved chains (N4) or as a component of nacre (PH-W2.4b)": r"chitosan(?![^.]*partly deacetylated)",
+    "polyphosphate as a bone-mineral precursor (PH-W2.4b)": r"polyphosphate[^.]{0,60}precursor",
+    "polyelectrolytes as a matrix class (PH-W2.4b)": r"polyelectrolyte",
+    "the nacre-type label (cp5 closure ruling Q5)": r"nacre-type",
+    "first, novel, self-heal (PH-W8.2 wording policy)": r"\bfirst\b|\bnovel|self-heal",
+    "aragonite formation asserted at slurry pH (NU19)": r"aragonite (forms|precipitates|grows) (in|from|at)",
     "engineered out (N5)": r"engineered out",
     "thresholds set before the calculation (N5)": r"\b(set|fixed|chosen) (before|in advance)",
     "first as a priority claim (U1, U3 to U8)": (r"\bfirst (ever )?(report|study|demonstration|use|example|time|"
@@ -95,16 +103,45 @@ def test_contrary_evidence_is_cited():
     assert "yu2023study" in cited                       # lit/contrary.md B10
 
 
-def test_novelty_wording_keeps_its_qualifiers():
+def test_no_novelty_negative_is_stated():
+    """PH-W8.2: the regime-frame Introduction states prior art plainly and makes no scan-limited negative
+    (N1, NS5 and NS7 stay out; NS7 would need its four qualifiers and the patent-search gap)."""
     prose = " ".join(_prose().split())
-    assert "patent literature not searched" in prose
-    assert "within the searched literature" in prose
+    assert not re.search(r"no previous study|to our knowledge|none (reports|combines)", prose, re.I)
 
 
 def test_length_and_paragraphs_follow_the_brief():
     paras = _paragraphs()
-    assert len(paras) == 6
-    assert 550 <= sum(_words(p) for p in paras) <= 700
+    assert len(paras) == 7      # PH-W8.2: problem, incumbents, lineage, control, frame, bone mineral, scope
+    assert 600 <= sum(_words(p) for p in paras) <= 780   # about 700 (brief); the count includes marker text
+
+
+def test_lineage_and_polymorph_statements_are_the_supported_ones():
+    prose = " ".join(_prose().split())
+    assert "partly deacetylated derivative of chitin" in prose
+    assert "name this lineage only" in prose
+    assert "The screen does not test layered architecture or polymorph structure" in prose
+    assert "alternating aragonite and calcite layers are not nacre-like" in prose
+    assert "not reported to form from solution at slurry pH and room temperature" in prose
+
+
+def test_excluded_is_always_thermodynamic_and_carries_the_footnote():
+    prose = " ".join(_prose().split())
+    hits = re.findall(r"[^.]*\bexclud\w*[^.]*\.", prose)
+    assert hits
+    for s in hits:
+        if "does not claim" in s:
+            continue
+        assert "thermodynamically excluded" in s, s
+        assert "fn:excluded" in s or "\\nacreExcludedMark" in s, s
+    assert r"\label{fn:excluded}\NumExcludedNote" in prose
+
+
+def test_bone_mineral_and_carbonate_numbers_are_macros():
+    prose = _prose()
+    for macro in (r"\NumOnsetBoneLow", r"\NumOnsetBoneHigh", r"\NumCarbonateCrossover", r"\NumPatentAlPhosA",
+                  r"\NumPatentAlPhosB", r"\NumPatentLiPolyA", r"\NumPatentLiPolyB"):
+        assert macro in prose, macro
 
 
 def test_hero_figure_is_cited_and_labelled():

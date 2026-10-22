@@ -1,4 +1,5 @@
-"""sections/model.tex and sections/methods.tex (P0-W8.3): order, ledger markers, wording, figures.
+"""sections/model.tex and sections/methods.tex (P0-W8.3; regime frame at PH-W8.2): order, ledger markers, wording,
+figures.
 
 The Physical model follows the derivation as audited at cp2 and cp3 in physical order; the Methods
 follows the order of the P0-W8.3 prompt (Task C). Every prose sentence carries a ledger marker, and
@@ -15,6 +16,7 @@ from preprint_helpers import REPO
 SECTIONS = paths.paper(REPO) / "sections"
 MODEL = SECTIONS / "model.tex"
 METHODS = SECTIONS / "methods.tex"
+SI = paths.paper(REPO) / "si" / "main_si.tex"
 MARKER = re.compile(r"%\s*(CL-[A-Z]\d{2}(?:,\s*CL-[A-Z]\d{2})*)\s*$")
 
 MODEL_ORDER = [  # the seven steps of the prompt, each opened by its comment
@@ -22,11 +24,18 @@ MODEL_ORDER = [  # the seven steps of the prompt, each opened by its comment
     "% (4) Heterogeneous nucleation", "% (5) Film coverage", "% (6) Stability",
     "% (7) What the model leaves out",
 ]
-METHODS_ORDER = [
+METHODS_ORDER = [  # PH-W8.2: the main-text Methods; the carbonate-era detail is in the SI section si:methods
+    r"\paragraph*{Parameters and priors.}", r"\paragraph*{Oxidation onsets.}",
+    r"\paragraph*{Solubility and the aluminium window.}", r"\paragraph*{Thresholds and decision rules.}",
+    r"\paragraph*{Propagation and sensitivity.}", r"\paragraph*{Materials Project data.}",
+    r"\paragraph*{Baselines, control and retrodiction.}", r"\paragraph*{Disclosures.}",
+    r"\paragraph*{Reproducibility.}",
+]
+SI_METHODS_ORDER = [
     r"\paragraph*{Priors.}", r"\paragraph*{Propagation and sensitivity.}",
     r"\paragraph*{Thresholds and the decision rule.}", r"\paragraph*{Retrodiction.}",
     r"\paragraph*{Pourbaix and window settings.}", r"\paragraph*{Compute anchor.}",
-    r"\paragraph*{Reproducibility.}", r"\paragraph*{Disclosures.}",
+    r"\paragraph*{Disclosures of the carbonate screen.}",
 ]
 FORBIDDEN = {
     "engineered out (lane note N5)": r"engineered\s+out",
@@ -37,10 +46,17 @@ FORBIDDEN = {
 }
 
 
-def _prose_lines(path):
+def _si_methods_text():
+    text = SI.read_text(encoding="utf-8")
+    start = text.index(r"\section{Methods detail and the carbonate control}")
+    return text[start:text.index(r"\section{", start + 1)]
+
+
+def _prose_lines(path, text=None):
     """Sentence lines: not comments, not blank, outside floats and displayed equations."""
     out, skip = [], 0
-    for no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+    text = path.read_text(encoding="utf-8") if text is None else text
+    for no, line in enumerate(text.splitlines(), 1):
         s = line.strip()
         if re.match(r"\\begin\{(figure\*?|table\*?|equation)\}", s):
             skip += 1
@@ -64,6 +80,8 @@ def ledger():
 def test_every_sentence_line_names_a_ledger_entry_of_its_section(path, section, ledger):
     lines = _prose_lines(path)
     assert lines, path
+    if path == METHODS:   # the carbonate-era Methods detail moved to the SI at PH-W8.2 and keeps its markers
+        lines += _prose_lines(SI, _si_methods_text())
     used = set()
     for no, line in lines:
         m = MARKER.search(line)
@@ -78,9 +96,9 @@ def test_every_sentence_line_names_a_ledger_entry_of_its_section(path, section, 
         assert ledger[cid]["status"] in ("drafted", "verified"), cid
 
 
-@pytest.mark.parametrize("path,order", [(MODEL, MODEL_ORDER), (METHODS, METHODS_ORDER)])
+@pytest.mark.parametrize("path,order", [(MODEL, MODEL_ORDER), (METHODS, METHODS_ORDER), (SI, SI_METHODS_ORDER)])
 def test_sections_follow_the_registered_order(path, order):
-    text = path.read_text(encoding="utf-8")
+    text = _si_methods_text() if path == SI else path.read_text(encoding="utf-8")
     positions = [text.index(s) for s in order]
     assert positions == sorted(positions)
 
@@ -100,30 +118,41 @@ def test_model_states_the_binding_consequence_and_the_single_entry_rule():
     assert "a neutral solute, is an approximation" in text
     assert "belongs to the template--nucleus energy" in text
     assert "Every template-dependent input enters once" in text
-    assert "Hydrophilic is meant here in that relative sense" in text
-    assert re.search(r"\\Omb\\ge1", text) and "Pourbaix" in text
+    si = " ".join(SI.read_text(encoding="utf-8").split())   # the wetting bound moved to si:templating at PH-W8.2c
+    assert "Hydrophilic is meant here in that relative sense" in si and "The bound holds because" in si
+    assert "cannot be wetted completely by a solid-like nucleus" in text
+    assert r"\eqref{eq:stability}" in text and r"\ref{sec:conditions}" in text   # stability is K1 and K2
 
 
 def test_model_equations_carry_the_argument_only():
     text = MODEL.read_text(encoding="utf-8")
     labels = re.findall(r"\\begin\{equation\}\\label\{(eq:[^}]+)\}", text)
-    assert labels == ["eq:dupre", "eq:dmu", "eq:gibbs", "eq:het", "eq:access", "eq:spread", "eq:stability"]
+    assert labels == ["eq:dmu", "eq:het", "eq:access", "eq:spread"]   # eq:dupre and eq:gibbs moved to si:templating
     assert r"\Dmu=\kB T\ln\Omb" in text                  # the bulk driving force, no local credit
     assert r"\cos\theta=\frac{\gslz+\dga-\gsn}{\gnl}" in text   # bare gamma_nl in Young
 
 
 def test_methods_disclosures_and_conventions():
     text = " ".join(METHODS.read_text(encoding="utf-8").split())
+    si = " ".join(_si_methods_text().split())
     assert "An earlier rough estimate under the calcite framing was available when the project was designed" in text
     assert "the framings were chosen on literature grounds" in text
-    assert "after the scheme values for calcium carbonate with lithium perchlorate had been seen" in text
+    assert "were seen before the regime-matched frame of this paper was adopted" in text
+    assert "amorphous \\ce{Al(OH)3} as the film solid that governs the passivation window" in text
+    assert "glass-to-crystal correction of \\ce{Ca(PO3)2}" in text
     assert "they were not set before every calculation the project made" in text
-    for macro in (r"\NumPcred", r"\NumPcredSweepLow", r"\NumPcredSweepHigh", r"\NumMcos", r"\NumMcosSweepLow",
-                  r"\NumMcosSweepHigh", r"\NumPdeg", r"\NumSizingDrawCap", r"\NumRetroPassCount"):
+    assert "after the scheme values for calcium carbonate with lithium perchlorate had been seen" in si
+    for macro in (r"\NumPcredSweepLow", r"\NumPcredSweepHigh", r"\NumMcosSweepLow", r"\NumMcosSweepHigh"):
+        assert macro in si, macro    # the published sweeps moved to si:methods at PH-W8.2c
+    for macro in (r"\NumPcred", r"\NumMcos", r"\NumPdeg", r"\NumRetroCorrect", r"\NumRetroUsableCases",
+                  r"\NumRetroPassCount", r"\NumMpDatabaseVersionComparator", r"\NumDftTolerance"):
         assert macro in text, macro
+    assert r"\NumSizingDrawCap" in si and r"\NumSizingBandHalfWidth" in si
     assert "is never reported as a finding" in text
     assert "does not imply endorsement by the Materials Project" in text
     assert r"\NumMpDatabaseVersion" in text and "creativecommons.org/licenses/by/" in text
+    assert "$E_\\mathrm{lb}$ is pending" in text
+    assert "the nucleation half is not validated" in text
 
 
 def test_methods_has_one_reproducibility_paragraph_and_no_procedure():

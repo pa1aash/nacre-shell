@@ -1,58 +1,60 @@
 % Introduction. Brief: briefs/introduction.md. Claims carried: the entries of ../claims.yaml with section introduction.
-% Prose: P0-W8.2 (carbonate-era text, kept for adaptation at PH-W8.2 to the phosphate paper;
-% paragraphs marked `carbonate control (frozen)` are carbonate-specific and shrink to one paragraph, one
-% table row and one figure panel; the new beats are in briefs/introduction.md). Each sentence that carries a claim ends with a comment naming its ledger id; the
-% scope sentences are the does-not-claim entries, verbatim. No number appears in this section.
+% Prose: PH-W8.2, in the regime frame (ops/tracks/redirect_plan.md, REGIME FRAME and CP5 CLOSURE RULINGS),
+% adapted from the carbonate-era text of P0-W8.2; the carbonate control is one paragraph, marked
+% `carbonate control (frozen)`. Each sentence that carries a claim ends with a comment naming its ledger id;
+% the scope sentences are the does-not-claim entries, verbatim. Every number is a macro; no result is
+% stated here beyond the framing the Results section reports.
 \section{Introduction}\label{sec:introduction}
 
-% (1) The setting: water-processed cathodes, the alkaline slurry and the native oxide.
-Water-processed lithium-ion cathodes replace the fluorinated binder and organic solvent of conventional manufacture with fluorine-free binders cast from water\cite{heidbuchel2022enabling}. % CL-K01
+% (1) The problem: the aluminium collector in fluorine-free, water-processed electrodes, and its two stages.
+Water-processed lithium-ion cathodes replace the fluorinated binder and organic solvent with fluorine-free binders cast from water\cite{heidbuchel2022enabling}. % CL-K01
 Lithium leaching from the active particles then drives the slurry strongly alkaline\cite{hawley2020lithium,bauer2019effects}, and at that pH the native \ce{Al2O3}/\ce{AlOOH} film on the aluminium collector converts to hydroxide and dissolves, exposing the metal during slurry contact\cite{heidbuchel2022enabling,li2016effect,doberdo2014enabling}. % CL-K02, CL-K03
-The slurry stage is therefore a regime of its own, an alkaline aqueous contact between mixing and drying, distinct from the non-aqueous cell that follows, which is a second set of conditions. % CL-K04
+Anything that covers the collector therefore meets two sets of conditions: the alkaline aqueous contact between mixing and drying (the slurry stage) and the non-aqueous cell, where the collector sits at the anodic potential of the cathode (the cell stage). % CL-K04
 
-% carbonate control (frozen)
-% (2) The biomineralisation idea as a physical hypothesis; each link a free-energy question.
-Biomineralisation suggests another route. % CL-K05
-Nacre grows calcium carbonate on an organic matrix whose macromolecules select the polymorph\cite{falini1996control}; amorphous calcium carbonate appears among the precursor phases at its growth front and coats the mature tablets\cite{devol2015nanoscale,schmidt2024myriad,nassif2005amorphous}, and organic macromolecules can stabilise such a precursor\cite{gong2012phase}. % CL-K05, CL-K06
-We treat the transplant of this sequence to the collector as a physical hypothesis with four links, each a free-energy question (Fig.~\ref{fig:hero}). % CL-R06
-Does a catechol-bearing layer adhere to the hydrated oxide once it has displaced interfacial water? % CL-R06
-Does \ce{Ca^2+} bind at the layer, relative to the hydrated ion? % CL-R06
-Does the layer template \ce{CaCO3} nucleation, lowering the heterogeneous barrier through its interfacial energies with the nucleus and the solution\cite{giuffre2013polysaccharide}? % CL-R06, CL-R07
-Is the resulting film stable in each regime? % CL-R06
-How ion binding enters the barrier is made precise in Section~\ref{sec:model}. % CL-R07
+% (2) The incumbents and the prior art, with the facts the prior-art scan recorded.
+Two routes address the slurry stage today. % CL-V05, CL-V06
+Phosphoric acid added to the slurry lowers its pH and so avoids corrosion of the aluminium collector\cite{chen2024study,carvalho2016study}, at the price of careful control of stoichiometry and drying against reactive phosphate residues\cite{tolchard2023insights}, and a carbon-coated collector keeps the slurry off the metal\cite{bichon2021performance}. % CL-V05, CL-V06
+Phosphate films on the metal itself are claimed prior art: US~\NumPatentAlPhosA\ claims a film of \ce{Al_{x}M_{y}PO4} or \ce{Al_{x}M_{y}(PO3)3} on a metal plate of aluminium, copper, nickel or their alloys (example: a \NumPatentFoilUm\,$\mu$m aluminium foil), and US~\NumPatentAlPhosB\ claims the method, with a heat treatment between \NumPatentCureLow\ and \NumPatentCureHigh\,$^\circ$C\nacreMissing{patent citations, pending}. % CL-V03
+The only test printed is immersion in hydrochloric acid for \NumPatentAcidHours\,h with no bubbles seen; the acid concentration is not stated. % CL-V03
+A collector coating of a vitreous alkali-metal phosphate or polyphosphate with a conduction additive is claimed in US~\NumPatentLiPolyA, and US~\NumPatentLiPolyB\ claims the borate or polyborate form\nacreMissing{patent citations, pending}; the printed cell is a polymer-electrolyte cell cycled at \NumPatentCellTemp\,$^\circ$C with a recharge limit of \NumPatentRechargeV\,V. % CL-V04
+On steel, films grow in situ from dosed polyphosphate and polyvalent cations, while the polyphosphate hydrolyses to orthophosphate in competition\cite{morsch2018unexpected}. % CL-V10
+
+% (3) The biomineral lineage: what "nacre-inspired" and "bone-inspired" mean here.
+Two biominerals that grow from water at room temperature name this paper's lineage. % CL-K12
+Nacre is aragonite platelets in an organic matrix of proteins and chitin\cite{sedira2026nacre,osunamascaro2015ultrastructure}, grown through amorphous calcium carbonate precursors observed at its growth front\cite{devol2015nanoscale,gong2012phase}; chitosan, the partly deacetylated derivative of chitin\cite{younes2015chitin}, is the processable form used here. % CL-K12, CL-K06
+In zebrafish fin bone, mineral arrives as amorphous calcium phosphate that transforms into apatite in the collagen matrix\cite{mahamid2010mapping}. % CL-K13
+Here ``nacre-inspired'' and ``bone-inspired'' name this lineage only, an amorphous precursor that transforms under an organic matrix (Fig.~\ref{fig:hero}). % CL-K14
+The screen does not test layered architecture or polymorph structure, and alternating aragonite and calcite layers are not nacre-like. % CL-L10
 
 \begin{figure}[t]
   \centering
-  \nacreMissing{hero render of the chain at a glance, from the rendering lane}
-  \caption{The chain at a glance: a catechol-bearing layer on the hydrated native oxide of the aluminium collector in the alkaline slurry, \ce{Ca^2+} bound at the layer, a \ce{CaCO3} nucleus on the layer and the resulting film. The scene is illustrative and carries no numbers; its charge is balanced with dissolved carbonate ions.}
+  \nacreMissing{hero render, pending}
+  \caption{Illustrative construction; the screen does not test layered architecture or polymorph structure. (a) A layered carbonate film on the hydrated alumina of an aluminium collector in water, the nacre lineage of the slurry stage. (b) A condensed phosphate film formed on the same collector by one of the in-situ routes of Section~\ref{sec:routes}, the bone lineage of the cell stage.}
   \label{fig:hero}
 \end{figure}
 
-% (3) Why the question is thermodynamic, and what is unknown.
-The question is thermodynamic: a link that is unfavourable for every plausible input ends the sequence whatever the kinetics. % CL-R08
-Those inputs are weakly constrained by experiment. % CL-K07
-The oxide--water interfacial free energy is known only through calorimetric surface enthalpies of hydroxylated or dry surfaces\cite{majzlan2000surface,tavakoli2013amorphous}; wet adhesion of catechol-bearing proteins has been measured on mica and silica, not on alumina\cite{lu2013adhesion}; and nucleus--organic interfacial energies exist only as effective values from nucleation-rate fits\cite{giuffre2013polysaccharide,knight2024kinetics}, beside a contact-angle bound on a mineral surface\cite{li2018apparent}. % CL-K07, CL-K08, CL-K09
-Several other inputs rest on a single original determination. % CL-K10
-A screen that ranks the inputs and states the precision each needs addresses that gap. % CL-G03
-
 % carbonate control (frozen)
-% (4) Prior work and the gap: novelty wordings N1 and N2 of lit/novelty.md.
-To our knowledge, based on a structured search of the indexed journal and preprint literature (Semantic Scholar, OpenAlex, arXiv, OpenAIRE and Crossref, \NumNoveltySearchMonth; patent literature not searched), no previous study has evaluated, for an aluminium current collector in the alkaline aqueous-slurry regime, the combined thermodynamic chain of wet adhesion of a catechol or polysaccharide template to the native oxide, \ce{Ca^2+} sequestration by that template, templated \ce{CaCO3} nucleation on it, and the stability of the resulting film. % CL-V01
-Each link has precedent on its own: catechol adsorption on alumina in water has been simulated\cite{yeh2015molecular,yeh2019molecular,shrestha2025dft}; polydopamine enriches interfaces with \ce{Ca^2+} and templates calcium minerals, including continuous \ce{CaCO3} films, on other substrates\cite{ryu2010musselinspired,li2017biomimetic,ko2017natureinspired} and stabilises amorphous \ce{CaCO3}\cite{wang2013amorphous}; and aluminium corrosion in aqueous cathode slurries is mitigated by pH control, carbon coating, phosphate buffering or acidic binders\cite{li2016effect,doberdo2014enabling,maffre2025buffer,soeda2015alginic}. % CL-V02
-What has not been reported, within the searched literature, is the evaluation of these links as one chain for this interface and regime. % CL-V01
+% (4) The carbonate control, in one paragraph.
+Carbonate, the mineral of nacre, was screened before the phosphates, and it runs through the same pipeline as their control: positive for the solubility condition in the slurry and negative for the oxidation condition in the cell (Section~\ref{sec:res-carbonate}). % CL-S02
+In the cell, oxidation releases its calcium and lattice oxygen, and calcium carbonate is thermodynamically excluded\footnote{\label{fn:excluded}\NumExcludedNote.} above about \NumCarbonateCrossover; lithium carbonate is observed to oxidise close to the equilibrium limit of the same reaction\cite{mahne2018electrochemical,cao2022oxidative}. % CL-S02, CL-R13
+Aragonite, the polymorph of nacre, is not reported to form from solution at slurry pH and room temperature; it needs magnesium, a polyamine or heating\cite{nahi2022polyamines,hanifa2025effects}. % CL-K15
+Calcite scale on aluminium alloys was porous with attack beneath it\cite{osoriocelestino2020influence}, and a polydopamine coating reduced carbonate deposition\cite{yu2023study}. % CL-E01, CL-E02
 
-% carbonate control (frozen)
-% (5) Contrary evidence: lit/contrary.md B1 and B10.
-Two findings cut against the premise. % CL-E01, CL-E02
-Calcite scale precipitated onto aluminium alloys from hot brines was porous and accompanied more alloy corrosion than a non-scaling brine, with attack beneath the deposit\cite{osoriocelestino2020influence}. % CL-E01
-An electrodeposited polydopamine coating reduced \ce{CaCO3} deposition relative to bare steel\cite{yu2023study}, the opposite of what templated nucleation needs; the sign of the template's effect is therefore open, not a premise. % CL-E02
-The initial finding concerns a porous scale formed in the bulk and settled on the metal, not a coherent film nucleated on a template; that distinction is central to what follows and must be argued from the nucleation and conformality links, not assumed. % CL-E03
+% (5) The regime-matched frame and the question.
+The two stages ask different things of a mineral, so one phase need not serve both: a barrier must stay undissolved in the alkaline slurry and unoxidised at the cell cutoff, which the cathode sets. % CL-D19, CL-D04
+The question is therefore matched to the regime: for each stage and each cutoff class, which mineral phases are thermodynamically excluded\nacreExcludedMark, which are left open, and which conditions decide? % CL-D19
+It is a thermodynamic question: a condition that fails for every plausible input ends the chain whatever the kinetics. % CL-R08
 
-% (6) What this paper does and does not do.
-This paper is a thermodynamic screen of the chain with literature-bounded inputs. % CL-P03
-It writes the four links so that each interfacial free energy enters once (Section~\ref{sec:model}), bounds every input by fetched literature values (Section~\ref{sec:methods}), ranks the inputs by their share of each link's variance, reports the retrodiction of literature cases as it came out and treats the aqueous phase diagram as a thermodynamic proxy (Sections~\ref{sec:methods} and~\ref{sec:results}). % CL-R05, CL-B01, CL-G01, CL-T01, CL-X01
-For each governing quantity it states the accuracy an ab initio value must reach to move the outcome across a decision criterion (Section~\ref{sec:results}). % CL-P03
-% CL-N01, CL-N02, CL-N03: the does-not-claim sentences, verbatim and unmarked, so the scope linter matches them exactly.
+% (6) Bone mineral sits near carbonate, so bone-inspired chemistry means the condensed and aluminium phosphates.
+Bone mineral does not escape the carbonate limit: oxidising hydroxyapatite or a tricalcium phosphate, like carbonate, strips calcium from a lattice of isolated anions, and their onsets at the solid-salt sink lie at \NumOnsetBoneLow\ to \NumOnsetBoneHigh, beside that of carbonate (Section~\ref{sec:res-phosphate}). % CL-S01
+The calcium orthophosphates therefore share the low-cutoff frame of carbonate, and ``bone-inspired chemistry'' in this paper means the condensed and aluminium phosphates, whose anions are linked into chains or bound to aluminium and which are thermodynamically excluded\nacreExcludedMark\ at no cutoff class (Section~\ref{sec:res-condensed}). % CL-D02
+
+% (7) What the paper does and does not do.
+This paper is a thermodynamic screen. % CL-P03
+It states four conditions and the stage at which each applies (Section~\ref{sec:design}), bounds every input by sourced data (Section~\ref{sec:methods}), reports per phase and cutoff class whether a phase is thermodynamically excluded\nacreExcludedMark, open or undecided, with the precision that would decide it, and turns the outcome into conditional predictions (Sections~\ref{sec:results} and~\ref{sec:predictions}). % CL-P03
+% CL-N01, CL-N02, CL-N03, CL-N08, CL-N09: the does-not-claim sentences, verbatim and unmarked, so the scope linter matches them exactly.
 This paper does not claim that the barrier works.
 This paper does not claim any corrosion rate, capacity or device performance.
 This paper does not claim any result from the full ab initio or machine-learned-potential calculations.
+This paper does not claim that the nucleation or template half of the chain is validated.
+This paper does not claim priority for any film, route or combination.

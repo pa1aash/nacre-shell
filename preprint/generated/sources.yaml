@@ -461,3 +461,148 @@ macros:
     mock: true
     real_source: lit/params.yaml and lit/conflicts.md (p0-w1), assumed summary
     claim: CL-B02
+  # --- PH-W8.2: Introduction, Design rules and Methods in the regime frame ---
+  # Onset ladder v3 (PH-W5.2, tier one, solid-salt sink, aggregate rows). The ladder is a CSV, read as text.
+  NumOnsetBoneLow:
+    source: results/preprint/pourbaix/ph_w52/ladder_v3.csv
+    pattern: '^a-TCP,crystalline,slurry,ALL,[^,]*,([0-9.]+),'
+    format: .2f
+    unit: '\mathrm{V}'
+    claim: CL-S01
+  NumOnsetBoneHigh:
+    source: results/preprint/pourbaix/ph_w52/ladder_v3.csv
+    pattern: '^HAp,crystalline,slurry,ALL,[^,]*,([0-9.]+),'
+    format: .2f
+    unit: '\mathrm{V}'
+    claim: CL-S01
+  NumCarbonateCrossover:
+    source: results/preprint/pourbaix/ph_w52/ladder_v3.csv
+    pattern: '^CaCO3,crystalline,control,ALL,.*?falsified above ([0-9.]+) V'
+    format: .2f
+    unit: '\mathrm{V}'
+    claim: CL-S02
+  # Regime-table footnote, verbatim (theory/claims_redirect.md Section 11d; cp5 closure ruling Q4).
+  NumExcludedNote:
+    source: theory/claims_redirect.md
+    section: '11d. C5: the regime-table vocabulary'
+    pattern: 'Footnote, verbatim: "([^"]+)"'
+    format: text
+    claim: CL-D04
+  # Patent numbers of the incumbents (lit/novelty.md, baseline rows BL1 to BL4; no DOI exists).
+  NumPatentAlPhosA:
+    source: lit/novelty.md
+    pattern: '^\| BL3 \| US ([0-9,]+) B2'
+    format: text
+    claim: CL-V03
+  NumPatentAlPhosB:
+    source: lit/novelty.md
+    pattern: '^\| BL4 \| US ([0-9,]+) B2'
+    format: text
+    claim: CL-V03
+  NumPatentLiPolyA:
+    source: lit/novelty.md
+    pattern: '^\| BL1 \| US ([0-9,]+) B1'
+    format: text
+    claim: CL-V04
+  NumPatentLiPolyB:
+    source: lit/novelty.md
+    pattern: '^\| BL2 \| US ([0-9,]+) B2'
+    format: text
+    claim: CL-V04
+  # Printed facts of the four patents (lit/novelty.md, printed-data table under the baseline rows).
+  NumPatentCureLow:
+    source: lit/novelty.md
+    pattern: '^\| Cure range \| Heat treatment ([0-9]+) to [0-9]+ C'
+    format: text
+    claim: CL-V03
+  NumPatentCureHigh:
+    source: lit/novelty.md
+    pattern: '^\| Cure range \| Heat treatment [0-9]+ to ([0-9]+) C'
+    format: text
+    claim: CL-V03
+  NumPatentFoilUm:
+    source: lit/novelty.md
+    pattern: 'example 52 nm on ([0-9]+) um Al foil'
+    format: text
+    claim: CL-V03
+  NumPatentAcidHours:
+    source: lit/novelty.md
+    pattern: '^\| Durations \| Immersion in HCl ([0-9]+) h'
+    format: text
+    claim: CL-V03
+  NumPatentCellTemp:
+    source: lit/novelty.md
+    pattern: '^\| Temperature \|.*\| Cycling at ([0-9]+) C \(Example 3\)'
+    format: text
+    claim: CL-V04
+  NumPatentRechargeV:
+    source: lit/novelty.md
+    pattern: 'Recharge upper voltage limit ([0-9.]+) V'
+    format: text
+    claim: CL-V04
+  # Cutoff classes and the sensitivity line (thresholds copy; equal to block v9 for these keys).
+  NumClassLo:
+    source: configs/preprint/thresholds.yaml
+    key: screen_ph/margins_v6/cutoff_classes/C_lo/E_c_V/0
+    format: .2f
+    unit: '\mathrm{V}'
+    claim: CL-D04
+  NumClassSensitivity:
+    source: configs/preprint/thresholds.yaml
+    key: screen_ph/w36/low_voltage/sensitivity_line/E_c_V/0
+    format: .1f
+    unit: '\mathrm{V}'
+    claim: CL-D04
+  NumClassMidLow:
+    source: configs/preprint/thresholds.yaml
+    key: screen_ph/margins_v6/cutoff_classes/C_mid/E_c_V/0
+    format: .1f
+    claim: CL-D04
+  NumClassMidHigh:
+    source: configs/preprint/thresholds.yaml
+    key: screen_ph/margins_v6/cutoff_classes/C_mid/E_c_V/1
+    format: .1f
+    unit: '\mathrm{V}'
+    claim: CL-D04
+  NumClassHiLow:
+    source: configs/preprint/thresholds.yaml
+    key: screen_ph/margins_v6/cutoff_classes/C_hi/E_c_V/0
+    format: .1f
+    claim: CL-D04
+  NumClassHiHigh:
+    source: configs/preprint/thresholds.yaml
+    key: screen_ph/margins_v6/cutoff_classes/C_hi/E_c_V/1
+    format: .1f
+    unit: '\mathrm{V}'
+    claim: CL-D04
+  # Phosphate thermochemistry benchmark (PH-W5.1, benchmark_w51.json): the database version of every
+  # comparator column, the published formation-energy error used as the benchmark tolerance, and the
+  # measured error range of the phosphates.
+  NumMpDatabaseVersionComparator:
+    source: results/preprint/pourbaix/ph_w51/benchmark_w51.json
+    key: inputs/mp_database_version
+    format: text
+    claim: CL-M16
+  NumDftTolerance:
+    source: results/preprint/pourbaix/ph_w51/benchmark_w51.json
+    key: summary/e_form/max
+    format: .2f
+    unit: '\mathrm{kJ\,mol^{-1}}'
+    claim: CL-M10
+  NumDftPhosErrLow:
+    source: results/preprint/pourbaix/ph_w51/benchmark_w51.json
+    key: summary/phosphate_dfH_error_range_kJ/0
+    format: .0f
+    claim: CL-M10
+  NumDftPhosErrHigh:
+    source: results/preprint/pourbaix/ph_w51/benchmark_w51.json
+    key: summary/phosphate_dfH_error_range_kJ/1
+    format: .0f
+    unit: '\mathrm{kJ\,mol^{-1}}'
+    claim: CL-M10
+  # Retrodiction outcome (P0-W2.3, preprint/retrodiction/results/results.json; rule in criterion.md).
+  NumRetroCorrect:
+    source: preprint/retrodiction/results/results.json
+    key: summary/correct
+    format: d
+    claim: CL-T03

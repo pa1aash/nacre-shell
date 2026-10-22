@@ -60,7 +60,7 @@ def test_results_subsections_follow_the_outline():
 
 
 def test_carbonate_text_is_marked_with_the_source_comment():
-    for name, n in (("introduction", 3), ("methods", 4), ("model", 1), ("results", 1), ("design", 1)):
+    for name, n in (("introduction", 1), ("methods", 1), ("model", 1), ("results", 1), ("design", 1)):
         text = (PAPER / "sections" / (name + ".tex")).read_text(encoding="utf-8")
         assert text.count("% carbonate control (frozen)") >= n, name
 
@@ -113,14 +113,14 @@ def test_f6_is_in_the_abstract_and_introduction_briefs():
         assert "solid-salt sink" in text and "tier one" in text or "tier one" in text, name
         assert "calcium orthophosphates only" in text, name
         assert "condensed and aluminium phosphates decide" in text, name
-        assert "NumK1HApLow" in text and "NumK1HApHigh" in text, name
+        assert "NumOnsetBoneLow" in text and "NumOnsetBoneHigh" in text, name
 
 
 def test_f8_prior_art_is_stated_plainly_in_the_introduction_brief():
     text = _flat(_brief("introduction"))
-    assert "Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 on Al foil are claimed prior art" in text or \
-        "Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 on Al foil are claimed prior art".replace("on Al foil", "on Al foil") in text.replace(
-            "films of the forms ", "").replace("Aluminophosphate ", "")
+    # PH-W8.2c: the claim scope is a metal plate (example: aluminium foil), not aluminium foil
+    assert "Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 on a metal plate (example: aluminium foil) are claimed" in text
+    assert "recites no film formula" in text
     assert "US 8,252,463" in text and "US 8,821,969" in text
     assert "four qualifiers" in text and "in situ" in text
 

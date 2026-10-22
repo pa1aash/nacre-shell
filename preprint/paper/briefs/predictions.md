@@ -20,7 +20,7 @@ None. A reference to `fig:precision` and `fig:ladder`.
 
 ## Macros needed
 
-`NumHoldLow`, `NumHoldHigh` (registered, from the ruling record); `NumK1HApLow` (planned).
+`NumHoldLow`, `NumHoldHigh` (registered, from the ruling record); `NumOnsetBoneLow` (registered).
 
 ## Claims carried
 

@@ -63,6 +63,151 @@
 % locator, benchmark status, gap marks.
 \nacrePlaceholder{sourced parameter provenance}
 
+\section{Templating detail}\label{si:templating}
+% Moved from sections/model.tex and sections/design.tex at PH-W8.2c to keep the main text to length: the
+% work of adhesion in water, the Gibbs adsorption step, the single-entry rule, the nucleus-density count,
+% the wetting bound and the stage, route and tier detail. The sentences are those of the main text before the
+% move, one per line with its ledger id; the main text states each result and points here.
+\paragraph*{Templating thermodynamics.}
+In the slurry the template never meets a dry oxide: the hydroxylated \ce{Al2O3}/\ce{AlOOH} surface carries hydrogen-bonded water and the template is hydrated, so a template--oxide contact forms only by displacing that water. % CL-R01
+The reversible work per area that separates contact from the two wetted surfaces is the Dupr\'e work in water, % CL-R01
+\begin{equation}\label{eq:dupre}
+\Wwet=\gow+\gpw-\gop=\Wdry+2\gw-W_\mathrm{ow}-W_\mathrm{pw},
+\end{equation}
+where $W_\mathrm{ow}$ and $W_\mathrm{pw}$ are the works with which water binds each surface and $\Wdry=\go+\gp-\gop$ is the adhesion against vacuum. % CL-R01
+A large dry adhesion is offset by the binding of water to each surface, and a hydroxylated oxide and a hydrophilic template both bind water strongly, so $\Wwet$ can be small or negative where $\Wdry$ is large; the dry work describes a state the slurry never presents and is kept only as a comparator. % CL-R01
+The bare oxide has $\Wwet=0$ and fixes the zero; $\Wwet$ is the potential of mean force of a template fragment pulled from the oxide in explicit water per contact area, which already contains the displacement penalty and the entropy of the released water, and it is a descriptor of the template, not a gate. % CL-R01, CL-D03
+The template can hold \ce{Ca^2+} only if its coordinating groups compete successfully with the hydration shell of the ion. % CL-R02
+The transfer free energy $\DGseq$ of one \ce{Ca^2+} from the hydrated bulk to a site, built as a thermodynamic cycle that includes the deprotonation of the site at the slurry pH and the activity corrections at its ionic strength, measures that competition, and $\DGseq<0$ means that the ion accumulates at the sites. % CL-R02
+The interfacial region exchanges ions with the slurry, so at equilibrium every ion carries the same electrochemical potential at a site as in the bulk: binding lowers the local standard potential of the ion by exactly as much as it raises the concentration term, and a mean electrostatic potential cancels in the neutral solid. % CL-R02
+Binding reaches the barrier only through the interfacial free energies. % CL-R02
+Bound \ce{Ca^2+} is a surface excess $\GCa=\Gs\Theta-\ds\cb$ of the template--liquid interface, with $\Theta$ the Langmuir occupancy of sites of areal density $\Gs$ in a binding layer of thickness $\ds$ and $\cb$ the free-ion concentration, and the Gibbs adsorption equation turns that excess into a change of the template--liquid energy, % CL-R02
+\begin{equation}\label{eq:gibbs}
+\dga=\gsl-\gslz=-\Rg T\big[\Gs\ln(1+x)-\ds\cb\big],\qquad x=\frac{\ds\cb}{\Gs}\,\e^{-\DGseq/\Rg T},
+\end{equation}
+which is negative whenever the excess $\GCa$ is positive; $\gslz$ is the energy of the \ce{Ca}-free template. % CL-R02
+Treating the adsorbing component as \ce{Ca^2+} with its compensating charge, a neutral solute, is an approximation: it leaves out the change of the diffuse-layer free energy when binding changes the surface charge, a correction that ionic strength screens and to which the model assigns no sign. % CL-R02
+Young's relation carries the bare $\gnl$, the same energy that sets the homogeneous barrier: water displaced from under the contact sits on the contact disc and never touches the free surface of the cap, so a displacement cost enters $\gsn$ once, as a positive correction that raises $\theta$, and not at all when $\gsn$ is already a full in-water contact energy. % CL-R03, CL-R05
+Every template-dependent input enters once, in one interfacial energy, and only through $\theta$: $\Omb$ depends on bulk activities alone, while $\DGseq$, $\Gs$ and $\ds$ enter only through $\dga$, added once to the \ce{Ca}-free $\gslz$; crediting the bound ions to the driving force instead would give binding the opposite effect on the barrier, and crediting them to both would count the binding free energy twice (proof in the Supplementary Information, \nacreSIref{si:no-double-counting}{No double counting of interfacial terms}). % CL-R05
+The required density follows from the contact patch $A_\mathrm{patch}$ through which a cathode particle meets the collector: if nuclei land independently, the number under one patch is Poisson distributed, and allowing at most a fraction $q_0$ of the patches to stay empty gives the second relation. % CL-R11
+Only $\ln J_0$ enters, so an order-of-magnitude prefactor moves $B_\mathrm{acc}$ by a few $\kB T$; the count ignores exclusion zones around growing islands, so it is an upper estimate and the criterion is necessary, not sufficient. % CL-R11
+The bound holds because $\gsn\ge0$: a negative interfacial free energy between two immiscible solids would make them create contact without limit, so no sharp contact would exist. % CL-R12
+Hydrophilic is meant here in that relative sense: a small water contact angle in air does not by itself place $\gsl$ below $\gnl$, so whether a template meets the condition is a question for the inputs, and the screen reports the prior mass with $\gsl>\gnl$. % CL-R12
+The model leaves out four things, each taken up in the Discussion: the validity of classical nucleation theory at the size of a nucleus, with its capillarity approximation, isotropic $\gnl$ and lack of non-classical pathways such as prenucleation clusters or liquid precursors other than the coacervate of the route layer; the double-layer term of the adsorption energy; kinetics beyond the accessibility bound, including any local excess of driving force during drying; and the persistence of the layer, since anchoring, binding and nucleation are not computed in the cell. % CL-L06
+\paragraph*{Conditions and routes.}
+These bounds are tier one; tier two is a measured service limit $E_\mathrm{svc}$ from a potential hold on coated foil, a coated cathode particle cycled to a stated cutoff or voltammetry of the bulk phase, in that order of weight. % CL-D09
+A phase is falsified at a cutoff only where tier one and the available tier two both fall below it, a hold or particle record above the cutoff makes a tier-one fall read not excluded and kinetically stabilised, and a record in a fluorinated electrolyte, where aluminium fluoride forms on the foil, can counter-indicate but never support. % CL-D09
+Slurry-stage phases (brushite, amorphous calcium phosphate, hydroxyapatite) are tested on $K_2$ to $K_4$, cell-stage phases (calcium pyrophosphate and metaphosphate, the aluminium phosphates) on $K_1$, and a conversion step joins a precursor to its cell-stage product through the water activity at which it dehydrates or condenses, the literature conversion temperature and the cure range of the baked aluminophosphate. % CL-D11
+A barrier need not be thermodynamically stable at the cutoff if its corrosion product is insoluble and oxidation-stable: aluminium fluoride plays that part in fluorinated electrolytes, and the fluorine-free analogue would be an aluminium phosphate or borate film. % CL-D12
+The screen tests the properties of such a film, its oxidation onset, its insolubility in the electrolyte and its blocking of the corrosion ions, while the supply of phosphate to a pit is a hypothesis outside the screen. % CL-D12
+Three in-situ routes try to outrun that hydrolysis: gelation of a soluble polyphosphate at the oxide by the aluminium ions released there; a calcium polyphosphate coacervate, a dense liquid phase that separates from solution\cite{wang2024liquidliquid}, which wets the foil and dries to a glass; and calcium polyphosphate trapped by fast drying, which has no formation criterion of its own and is decided by hydrolysis and the amorphous onset alone. % CL-D13
+Here $t_\mathrm{wet}$ runs from mixing to the end of drying, and $k_\mathrm{eff}$ is the rate constant measured on alumina particles at room temperature\cite{wan2019polyphosphate} times a transfer factor to the process state, bracketed from both sides. % CL-D14
+With the oxide film present the free \ce{Al^3+} activity is pinned by the oxide itself, because complexation by polyphosphate lowers the free ligand and not the free cation; at the cell stage it is the activity in a corrosion pit, a separate state never combined with the slurry-stage one. % CL-D15
+Adsorption of polyphosphate on alumina lowers both energies equally, because the coexisting liquids have equal chemical potentials of every component, so it gives the oxide no preference; the preference is the difference of the polyphosphate-free contacts, which is unmeasured, and the spreading coefficient on alumina is a design result with its flip value, while the self-limiting thickness of the film is a descriptor. % CL-D16
+
+\section{Methods detail and the carbonate control}\label{si:methods}
+% carbonate control (frozen)
+% Moved from sections/methods.tex at PH-W8.2 (the main-text Methods keeps one paragraph per topic and
+% points here). The text is the carbonate-era Methods of P0-W8.3, kept in full: priors, propagation and
+% the sizing rule, the carbonate link thresholds (tab:thresholds-carbonate), the retrodiction rule, the
+% Pourbaix and window settings, the compute anchor and the carbonate disclosures. One sentence per line,
+% each with its ledger id; every number is a macro.
+% (1) Priors.
+\paragraph*{Priors.}
+Every input of the chain is a prior built from fetched evidence by one rule, written down before any value entered the parameter table and before any screen output existed; the clauses for truncation, widening, analog, ignorance, derived and recorded entries were added later, after some values existed, and select or move no value by judgement. % CL-M01
+A literature row is admitted for an input only if it measures the quantity the input defines, under its conditions or under conditions stated as different; a proxy, a different quantity used in its place, is never admitted, and rows that cite one original determination count once. % CL-M01
+Each row carries a grade, from A and B for determinations read at source to C for model fits, derivations and compilations and D for abstract-only or unchecked secondary citations, and the grade limits the prior: a normal prior needs concordant grade-A or grade-B values with stated uncertainties, grade-C and grade-D rows give only uniform or log-uniform priors over the sourced span, and grade-D rows enter only where nothing better exists. % CL-M01
+Inputs that a source or the physics ties together, such as the three interfacial energies of Young's relation or the solubility products of the framings and the amorphous offset, form correlation groups, which are held independent where no source reports a correlation, so that the sensitivity of the results to that assumption can be tested. % CL-M01
+A binding free energy that rests on a single source is widened to at least the method error of its class and flagged, and any verdict that would change under the unwidened span is marked as resting on one source. % CL-M01
+Interfacial energies that no admitted row measures, the template--nucleus contact and the oxide--water and oxide--template energies of the adhesion comparator, carry ignorance priors: uniform between zero, which the stability of a sharp interface requires, and the sum of the two dry surface energies, which the positivity of the dry work of adhesion allows. % CL-M02
+Such a prior encodes the admissible range, not knowledge, so a probability of feasibility computed under it measures the width of that range against an edge and is never reported as a finding; the report gives instead the values of the unmeasured input at which the verdict flips, and the precision a measurement would need to decide it. % CL-M02
+Where measured analogs exist, such as the contact energy of a different organic template against calcite, the analog prior runs side by side with the ignorance prior, flagged, and its verdict is stated as conditional on the analog. % CL-M02
+Process variables and the class of cathode, namely the free \ce{Ca^2+} activity and the dissolved inorganic carbon of the slurry and the charge cutoff that the cathode sets in the cell, are design axes: verdicts are computed at each design point and mapped over the axes, never averaged over them. % CL-M02
+
+% (2) Propagation and sensitivity.
+\paragraph*{Propagation and sensitivity.}
+For every state of each regime, slurry contact and each drying state, Monte Carlo draws from the joint prior are propagated through the relations of the \nacreMainref{sec:model}{Templating thermodynamics}, with the rank correlations of each group imposed through a Gaussian copula. % CL-M03
+Main-effect and total-order Sobol indices with bootstrap confidence intervals rank the independent inputs\cite{saltelli2002making,archer1997sensitivity}, and Shapley effects, which share variance among correlated inputs without assuming independence, rank them where a correlation group is active\cite{iooss2017shapley}; the Shapley ranking is repeated under independence as a check. % CL-M03
+The draws are sized by a rule stated with the thresholds: they are raised until every verdict-band mass has a half-width of at most \NumSizingBandHalfWidth\ and the leading total-order Sobol indices a half-width of at most \NumSizingSobolHalfWidth, a half-width being twice the Monte Carlo standard error. % CL-M03
+Two caps stop a run, whichever is reached earlier, \NumSizingDrawCap\ base draws per regime state and \NumSizingWallClockCap\ of wall-clock time, and a run stopped by a cap is reported as capped with the half-widths it reached; draws stream in chunks of \NumSizingChunk, so memory does not grow with the draw count. % CL-M03
+The required precision of a governing input is the least narrowing of its prior about its median, with every other input at its prior, at which the verdict is decided; it is reported as a width in the variable in which that prior is stated, or as unreachable when no narrowing of that input alone decides the verdict. % CL-M03
+
+% (3) Thresholds and the decision rule.
+\paragraph*{Thresholds and the decision rule.}
+Each link has one decisive quantity and an edge where the physics changes, moved by a margin in the conservative direction for method error that the priors do not already carry (Table~\ref{tab:thresholds-carbonate}). % CL-M04
+The edges come from the model: the sign of $\Wwet$ for adhesion; for nucleation, the hemisphere, the only shape factor between zero and one at which the Young numerator changes sign, so that on its wetting side the template prefers the nucleus to the liquid, together with the absolute criterion of the accessibility criterion (\nacreMainref{eq:access}{Templating thermodynamics}); for coverage, complete wetting or closure by nucleation density; for slurry stability $\Omb\ge1$ and a competing-phase tolerance from the formation-energy error of the database; and for the cell the window rule of the \nacreMainref{sec:model}{Templating thermodynamics}. % CL-M04
+The statistic is the prior-weighted mass on each side of the edge: a link is feasible if the mass on the side it needs is at least the credible level $p_\mathrm{cred}$, falsified if the mass on the other side is, and inconclusive otherwise. % CL-M04
+The primary credible level is $p_\mathrm{cred}=\NumPcred$, with a published sweep at \NumPcredSweepLow, \NumPcred\ and \NumPcredSweepHigh, and the nucleation margin is $m_{\cos}=\NumMcos$, because each interfacial-energy prior carries its own method error, with published sweeps at \NumMcosSweepLow\ and \NumMcosSweepHigh; a sweep is reported beside the primary result, and a verdict that changes within it is reported as sensitive to that convention. % CL-M04
+The admissible fraction of empty patches in the accessibility criterion (\nacreMainref{eq:access}{Templating thermodynamics}) is $q_0=1-p_\mathrm{cred}$, and the smallest rise of a falsified-side mass that counts as degradation is $p_\mathrm{deg}=1-p_\mathrm{cred}$, \NumPdeg\ at the primary level, so both move with the sweep. % CL-M04
+A link with several tests is good on a draw only if every test is, and coverage if either route is; its masses are formed on the same draws, a worst-state link takes its worst state, and the accessibility criterion sums nuclei along the path of states. % CL-M04
+With a state missing, a worst-state link can still be falsified at an evaluated state but cannot pass, while for the path sum a pass stands and a shortfall is inconclusive, because the missing terms can only add nuclei. % CL-M04
+The study gates on adhesion, nucleation, coverage and stability, while \ce{Ca^2+} binding is reported as a descriptor with its own finding on the premise $\DGseq<0$; the study is falsified if any gating link is falsified, and feasible only if all are feasible and a deletion test holds, in which replacing the template by the bare oxide and by poly(vinylidene fluoride) must degrade nucleation or coverage, or the result describes generic adhesion rather than the mechanism. % CL-M05
+Calcite and amorphous calcium carbonate are both framings, and each is run as a whole chain with its own solubility product, molar volume and nucleus--liquid energy, never mixed across links; the verdict is falsified only if the study is falsified under every framing and feasible if it is feasible under at least one, which is then named with the other beside it, while the dissolution test uses the calcite solubility product under both. % CL-M05
+The thresholds and decision rules were fixed before the production screen, and any later change is recorded as a dated deviation. % CL-P02
+
+\begin{table*}[t]
+\small
+\caption{Decisive quantity, criterion and physical origin of each link. A link is feasible when the prior-weighted mass satisfying its criterion is at least $p_\mathrm{cred}$, falsified when the mass violating it is, and inconclusive otherwise; the margins $m$ cover method error the priors do not carry. Symbols as in the \nacreMainref{sec:model}{Templating thermodynamics}.}
+\label{tab:thresholds-carbonate}
+\begin{tabular*}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}>{\raggedright\arraybackslash}p{0.39\textwidth}@{}}
+\hline
+Link (regime) & Criterion for the good side & Physical origin of the edge\\
+\hline
+Adhesion (\Rs) & $\Wwet>m_W$ & sign of the Dupr\'e work in water; the bare oxide is the zero\\
+\ce{Ca^2+} binding (\Rs) & descriptor: $\DGseq<0$ reported as the premise & no gate; binding acts on nucleation only through $\dga$\\
+Nucleation, wetting (\Rs) & $\cos\theta\ge m_{\cos}$ & the hemisphere, where the Young numerator changes sign\\
+Nucleation, accessibility (\Rs) & $N_\mathrm{nuc}\ge N_\mathrm{req}$, i.e.\ $\DGhet\le B_\mathrm{acc}$ & enough nuclei per contact patch in the time at the states of the grid\\
+Coverage (\Rs; bound from \Rc) & $\Ssp\ge m_S$ or closure below $d_\mathrm{max}$ & complete wetting, or islands that meet before they are too thick\\
+Dissolution (\Rs) & $\Omb\ge1$ & the driving force of nucleation; calcite solubility product\\
+Competing solids (\Rs) & hull distance within the formation-energy tolerance & no other solid below \ce{CaCO3} at fixed carbonate carbon\\
+Oxidation (\Rc) & $E_\mathrm{ox}-m_\mathrm{expt}\ge E_\mathrm{cell}^{\max}$, solvated sink & carbonate oxidation with the electrolyte-fixed sink\\
+Reduction (\Rc) & $E_\mathrm{red}+m_\mathrm{expt}\le E_\mathrm{cell}^{\min}$ & lithiation of the phase\\
+\hline
+\end{tabular*}
+\end{table*}
+
+% carbonate control (frozen)
+% (4) Retrodiction.
+\paragraph*{Retrodiction.}
+The nucleation link is tested against literature cases with measured outcomes; the case selection, the cases, the correctness rule and the pass rule were written down before the run, and the controls and the interface mapping below were added in a further revision, also before the run. % CL-T02
+The usable cases are pairwise orderings within one study, and each input maps to the interface it belongs to: \ce{Ca^2+} binding to the template--liquid energy through the Gibbs--Langmuir term, and template--crystal adhesion to the template--nucleus energy; the one case initially specified through a local enrichment of the driving force is remapped to that bookkeeping. % CL-T02
+For each case the run propagates \NumRetroDraws\ joint draws, with the template-independent inputs shared by both surfaces, and scores the per-draw difference between the barriers on the test and the reference surface. % CL-T02
+A case is correct when the central \NumRetroIntervalLevel\ interval of that difference excludes zero on the observed side, incorrect when it excludes zero on the other side, and inconclusive otherwise, and an inconclusive case counts as a miss. % CL-T02
+The retrodiction passes if at least \NumRetroPassCount\ of the \NumRetroUsableCases\ usable cases are correct, the smallest count whose probability is at most \NumRetroChanceBound\ when each case is an independent fair coin. % CL-T02
+The code that computes a barrier never sees the observed relation, and swapping test and reference must reverse the sign of the difference draw by draw; a permutation null over the case labels is reported as a descriptive control. % CL-T02
+The limits are stated with the rule: several cases share a study or a reference surface, all observed relations run the same way, the source itself already reports the link between input and outcome in \NumRetroLinkReported\ of the \NumRetroUsableCases\ cases, no hydroxyl-terminated case could be built, and only the sign of a within-study difference is tested, not an absolute barrier. % CL-T02
+
+% carbonate control (frozen)
+% (5) Pourbaix and window settings.
+\paragraph*{Pourbaix and window settings.}
+Solid-phase energies were taken from the Materials Project\cite{jain2013commentary} (database version \NumMpDatabaseVersion), retrieved through its interface and used under the Creative Commons Attribution \NumMpLicenceVersion\ International licence (CC~BY~\NumMpLicenceVersion, \url{https://creativecommons.org/licenses/by/4.0/}). % CL-M06
+Entries derived from GNoME, licensed CC~BY-NC~\NumMpLicenceVersion, were excluded, and every entry used carries the CC~BY tag. % CL-M06
+We modified the data as follows: the \NumMpCorrectionScheme\ compatibility corrections and the aqueous-compatibility adjustments were applied; the Pourbaix entries were rebuilt offline from the solid entries and the aqueous ion reference data following the scheme of Persson and co-workers\cite{persson2012prediction}; amorphous calcium carbonate was represented as calcite plus a literature free-energy offset; and for the lithium-referenced window an all-experimental thermochemical route replaced the computed energies where experimental data exist, with the computed gas-reference schemes reported as benchmarked comparators. % CL-M06
+The aqueous ion reference data are the MPContribs project ``Aqueous Ion Reference Data'', contributed data owned by its contributors and licensed CC~BY~\NumMpLicenceVersion; use of these data does not imply endorsement by the Materials Project or by the contributors of this work. % CL-M06
+The slurry construction holds carbon in the carbonate system at the regime dissolved inorganic carbon, removes the dissolved calcium species from the hull because dissolution is the $\Omb$ test, and evaluates the worst point of the specified pH and potential region against a tolerance from the formation-energy error of the database\cite{stevanovic2012correcting,wang2021framework}; a construction that allows carbon redox is a labelled sensitivity. % CL-M06
+The $\Omb$ test is checked at an undersaturated and a supersaturated control state, where it must report dissolution and stability respectively, and a failed control makes the dissolution verdict inconclusive. % CL-M06
+Because the cell limits combine database solids with a \ce{CO2} and \ce{O2} reference, each gas-reference scheme, one with the tabulated \ce{CO2} enthalpy and one with the database's own \ce{CO2}, was benchmarked against the measured free energies of carbonate decomposition and oxidation reactions, and the two schemes bracket experiment from opposite sides. % CL-M06
+The all-experimental route uses tabulated thermochemistry for every reactant and product\cite{rossini1971selected,rossini1981selected}\nacreMissing{reference for the NIST-JANAF tables, whose DOI the bibliography tool could not resolve}, and its margin $m_\mathrm{expt}$ combines the tabulated uncertainties per transferred electron with a bound on the neglected solid entropy of \ce{Ca(ClO4)2} taken from analog salts. % CL-M06
+Where an input of that route is missing, a limit is decided over the computed schemes, a pass under the scheme with the lowest onset and a falsification under every scheme, and is marked as decided by them; a limit whose sink thermochemistry is missing is undetermined and never counts as a pass. % CL-M06
+
+% carbonate control (frozen)
+% (6) The compute anchor protocol.
+\paragraph*{Compute anchor.}
+A single anchor calculation checks the computational pipeline and is not an input of the screen: the free energy of replacing inner-shell water of hydrated \ce{Ca^2+} by a carboxylate or catecholate ligand in water. % CL-M07
+Its level was chosen from published benchmarks for \ce{Ca^2+} with oxygen-donor ligands rather than copied from a periodic set-up: the \NumAnchorFunctional\ functional, which had the lowest error among the functionals benchmarked against coupled-cluster references for \ce{Ca^2+} binding by carboxylate-type ligands\cite{friedman2021preferential}, with the all-electron \NumAnchorBasis\ basis and \NumAnchorDispersion\ dispersion\cite{goerigk2017look}, and the SMD continuum model for water\cite{marenich2009universal}, whose non-electrostatic term a run must include or record as omitted. % CL-M07
+Geometries, conformers and thermal corrections come from \NumAnchorGeometryMethod\ with implicit water and a conformer search\cite{bannwarth2019gfn2,ehlert2021robust,pracht2020automated}. % CL-M07
+The binding cycle converts every solute from the \NumAnchorGasStandardState\ to the \NumAnchorSolutionStandardState\ standard state and treats water as one cluster, at \NumAnchorTemperature, and the electronic and solvation errors are carried separately. % CL-M07
+The anchor value is compared with the prior of the corresponding input; it never replaces that prior and never enters a verdict. % CL-M07
+
+% carbonate control (frozen)
+% (8) Disclosures (lane note N5; cp3 rulings R1, R2 and R6).
+\paragraph*{Disclosures of the carbonate screen.}
+Three rules were set with some values already in view, and each is therefore not independent of them. % CL-M08
+An earlier rough estimate under the calcite framing was available when the project was designed, and it lay near the shape-factor edge of the nucleation criterion that was set later; the framings were chosen on literature grounds, calcite as the stable polymorph and the amorphous phase as the precursor seen at the growth front of nacre\cite{devol2015nanoscale}, and both are run as whole chains so that the verdict does not depend on a framing chosen after that estimate. % CL-M08
+The scheme rule of the cell regime, with the experimental route governing, was set after the scheme values for calcium carbonate with lithium perchlorate had been seen. % CL-M08
+The rule that decides slurry dissolution from $\Omb$ was set after the Pourbaix control had been seen not to report dissolution where it must, and after the values of $\Omb$ from the sourced solubility product had been printed at the design points. % CL-M08
+The thresholds were set and then amended once, each time before any output of the screen existed, and were then held fixed; they were not set before every calculation the project made, as the three cases above show. % CL-M08
+
 \section{Anchor details}\label{si:anchor}
 % Supplied by: W5 anchor results.
 \nacrePlaceholder{anchor calculation set-up and convergence}

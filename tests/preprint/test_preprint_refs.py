@@ -17,6 +17,7 @@ def _tree(tmp_path, bib, intro):
     for section in (paths.paper(root) / "sections").glob("*.tex"):   # only the given text cites
         write(section, "\\section{%s}\n" % section.stem)
     write(paths.paper(root) / "sections" / "introduction.tex", intro)
+    write(paths.paper(root) / "si" / "main_si.tex", "\\section{S}\n")   # the SI cites since PH-W8.2
     return root
 
 
