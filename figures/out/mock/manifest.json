@@ -66,6 +66,39 @@
    },
    "checker": "pass (artists and PDF text)"
   },
+  "fig12": {
+   "id": "fig12",
+   "claim": "In the registered alkaline slurry every polymorph passes K2 over part of the dose window and the Omega_bulk = 1 line runs through it; in the acid-adjusted state the carbonates are thermodynamically excluded at the low pH values and pass only near the top of the registered range, and the calcium phosphates differ among themselves.",
+   "caption_key": "(a to c) K2 verdict of calcite, aragonite and ACC over the registered total calcium dose (horizontal, log scale) and total dissolved carbonate (vertical) at the registered slurry pH value, ionic strength value and the wet-film water activity; fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); line: Omega_bulk = 1 at the median activities. (d) Comparator: the acid-adjusted slurry state at each of its registered pH values; one row per carbonate and Ca-phosphate phase; a cell takes the regime of its grid cells (suitable where any cell passes, otherwise open where any is inconclusive, otherwise excluded); K2 only, no K3 or K4 verdict is drawn from this state.",
+   "mock": true,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    11.0
+   ],
+   "input": "figures/src/mock/k2_grid.json",
+   "input_sha256": "7cb6ce8c64cb8475dbf223cf2e5e32dc5cc2c41629d2b8b76a43eb3ae4d65692",
+   "input_source": {
+    "path": "figures/src/mock/k2_grid.json"
+   },
+   "schema": "figures/src/schemas/k2_grid.schema.json",
+   "aux": {
+    "params": "figures/src/mock/params.yaml sha256:ba922768ea5c4180044c4bd91632465a8a77c56b45cef25f2ac25f9e551002b7"
+   },
+   "font": {
+    "family": "Arial",
+    "file": "Arial.ttf",
+    "release": true
+   },
+   "outputs": {
+    "figures/out/mock/fig12.pdf": "d5d5744624839a8f75f19d66c86e2aaedeefefd71f697fb078dd8db84e608d86",
+    "figures/out/mock/fig12.png": "ac55208de9b9057041cdd26dc76686cbe9ca72897ae6949cb322c9300e0ba9ed",
+    "figures/out/mock/cvd/fig12_deuteranopia.png": "04d5e15ce65c3f2a648c2b6962f26e1d70841d3c86b029a3902d85ad7d29f822",
+    "figures/out/mock/cvd/fig12_protanopia.png": "6d65f107fa6d22e18f810154b8df01bb0e19302a8adfef38ba0b623321caa954",
+    "figures/out/mock/cvd/fig12_tritanopia.png": "754b6ab4b536bdc7db03647378c582374c4e77fbc817a3a99598f6968cfa75df"
+   },
+   "checker": "pass (artists and PDF text)"
+  },
   "fig14": {
    "id": "fig14",
    "claim": "Few quantities can settle a verdict by measurement alone: most flip values lie outside the present prior range or need a width well below it, and the rows without a registered prior have no required precision at all.",
