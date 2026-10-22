@@ -496,6 +496,10 @@ note that kinetics can shift the observed onset (TO-006, TO-014).
 - **KIT slides (pH 4 to 8.5):** no DOI and no text retrieved. The 4 to 8.5 statement is instead recorded from Kuhnel et al. 2016 (TR rows), with its Al3+ condition; the 4.5 to 8.5 statement from RSC Sustainability 2023.
 - **Report note:** B2131 and NBS TN 270 tables are scans whose text layers are garbled or rotated; every number from them was read from page images (stated in each row).
 
+## PH-W1.7 (2026-10-22)
+- **Aragonite K_sp primary source: not reached.** Plummer and Busenberg 1982 (10.1016/0016-7037(82)90056-4): no open copy (fulltext, attempt 1; metadata shows closed, no OA location). Two open papers that might print an aragonite constant were read and print none (Bergwerff et al. 2021, 10.3390/cryst11111318; Casella et al. 2017, 10.5194/bg-14-1461-2017). Semantic Scholar search returned HTTP 429, OpenAIRE returned nothing. Grade of log10_ksp_aragonite_25c_i0 stays C; no conflict.
+- **alpha-TCP K_sp primary: not reached.** The review value (TR-103, grade D) cites Fowler and Kuroda; two openalex searches and one crossref search found no open primary. The key log10_ksp_atcp rests on the D row alone (E5, P1).
+
 ### T-S
 
 Rows TS-001 to TS-016 are tier-2 records (class and electrolyte in each row's conditions; every record read is in a LiPF6 carbonate electrolyte, so every one carries the fluorinated-electrolyte label). TS-017 to TS-022 are the USGS B2131 volumes and formula weights of berlinite, whitlockite and hydroxyapatite (read from the page image), and TS-023 is pKw.
@@ -535,7 +539,3 @@ Searches ran on openalex, crossref, europepmc and semanticscholar; each source h
 - **Conversion temperatures:** found, with a method spread (TT-066 to TT-077): brushite to monetite from 160 C (XRD) or 110 to 215 C (TG), monetite to pyrophosphate from 375 C (XRD) to 436 C (TG), gamma to beta pyrophosphate at 535 C. The first XRD source is a preprint; the older values are secondary citations (grade D).
 - **Coacervate interfacial tension:** complex coacervates of synthetic polyelectrolytes, 180 to 880 uN/m at pH 6.5, 100 mM NaCl, 25 C (TT-083 to TT-087), with abstract-only values of 204 uN/m, about 100 uN/m and below 1 mN/m (TT-088 to TT-090). **Polyphosphate-containing coacervate: gap** (no measurement found; Spruijt 2010, Priftis 2012 and Ali 2019 are paywalled or without a retrievable copy).
 - **Al-polyphosphate complexation at pH 5 to 13 and Ksp of Al polyphosphate or aluminium metaphosphate: gap** (five query formulations, no result).
-
-## PH-W1.7 (2026-10-22)
-- **Aragonite K_sp primary source: not reached.** Plummer and Busenberg 1982 (10.1016/0016-7037(82)90056-4): no open copy (fulltext, attempt 1; metadata shows closed, no OA location). Two open papers that might print an aragonite constant were read and print none (Bergwerff et al. 2021, 10.3390/cryst11111318; Casella et al. 2017, 10.5194/bg-14-1461-2017). Semantic Scholar search returned HTTP 429, OpenAIRE returned nothing. Grade of log10_ksp_aragonite_25c_i0 stays C; no conflict.
-- **alpha-TCP K_sp primary: not reached.** The review value (TR-103, grade D) cites Fowler and Kuroda; two openalex searches and one crossref search found no open primary. The key log10_ksp_atcp rests on the D row alone (E5, P1).
