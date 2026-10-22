@@ -14,6 +14,10 @@ Conventions
       DG_tr(M(ClO4)z) - z DG_tr(LiClO4)); both forms are in J mol^-1, one solvent, one scale and one source.
   E_lb uses only the aqueous standard Gibbs energies of formation (keys dfg_*_aq, one scale); E_PC = E_aq +
       Delta_G_tr_rel/(n F). Hydration free energies are kept for a labelled Born-model comparison, never for E_lb.
+  K_P = K c0, c0 = 1 mol dm^-3 (molar, dimensionless), activity-based (k_p_from_k); a molal K is divided by the water
+      density (kg dm^-3), a per-litre K is multiplied by c0 after unit scaling; nothing is copied.
+  Single-ion transfer energies: every benchmark ion is declared on the TATB scale (Marcus 1983, mol dm^-3 scale); a value on
+      another scale is converted by no rule and is excluded, so DG_tr_rel mixes no scales.
   window_margin* keys belong to the frozen carbonate control and never reach a phosphate row.
 """
 import math
@@ -149,12 +153,39 @@ def gamma_p_to_mol_m2(value, unit, molar_mass_g_mol=None):
     raise ValueError("unit %r of Gamma_P is not convertible to mol m^-2" % (unit,))
 
 
-def k_p_activity_form(value, unit):
-    """K_P, dimensionless in the activity form (Theta = K_P a_P / (1 + K_P a_P)). A concentration-form constant
-    (L mol^-1 and the like) would need an activity coefficient and a standard state: raises ValueError."""
-    if unit == "1":
+C0_MOLAR = 1.0
+"""c0 = 1 mol dm^-3, the standard concentration of K_P (molar, dimensionless, activity-based)."""
+_K_PER_VOLUME_TO_DM3_MOL = {"dm^3 mol^-1": 1.0, "L mol^-1": 1.0, "M^-1": 1.0, "m^3 mol^-1": 1.0e3, "cm^3 mol^-1": 1.0e-3,
+                            "mL mol^-1": 1.0e-3}
+_K_MOLAL_UNITS = ("kg mol^-1",)
+K_P_SCALES = ("molar_c0", "molal_m0")
+
+
+def k_p_from_k(value, unit, basis="activity", rho_water_kg_dm3=None, scale=None):
+    """K_P = K c0 with c0 = 1 mol dm^-3: the dimensionless, activity-based Langmuir constant of the molar scale.
+
+    A literature K is converted, never copied:
+      per-litre forms (dm^3 mol^-1, L mol^-1, M^-1, m^3 mol^-1, cm^3 mol^-1, mL mol^-1): K_P = K[dm^3 mol^-1] c0;
+      molal form (kg mol^-1) or a dimensionless constant declared on the molal scale (m° = 1 mol kg^-1): with
+        c = rho_w m for a dilute aqueous solution, Theta = K_m m = K_m c / rho_w, so K_c = K_m / rho_w and
+        K_P = K_m c0 / rho_w, rho_w in kg dm^-3 (required, e.g. water_density / 1000);
+      a dimensionless constant needs its scale declared (molar_c0 or molal_m0): an unlabelled "1" is refused.
+    basis must be "activity": a concentration quotient is not an activity constant, so it is refused. Raises ValueError.
+    """
+    if basis != "activity":
+        raise ValueError("K_P is activity-based: basis %r (a concentration quotient) is refused, not copied" % (basis,))
+    if not _finite(value):
+        raise ValueError("K needs a finite number")
+    if unit in _K_PER_VOLUME_TO_DM3_MOL:
+        return value * _K_PER_VOLUME_TO_DM3_MOL[unit] * C0_MOLAR
+    molal = unit in _K_MOLAL_UNITS or (unit == "1" and scale == "molal_m0")
+    if molal:
+        if not (_finite(rho_water_kg_dm3) and rho_water_kg_dm3 > 0):
+            raise ValueError("a molal K needs the density of water (kg dm^-3) for the conversion to the molar scale")
+        return value * C0_MOLAR / rho_water_kg_dm3
+    if unit == "1" and scale == "molar_c0":
         return value
-    raise ValueError("K_P unit %r is not the activity form ('1'); no silent conversion" % (unit,))
+    raise ValueError("K unit %r (scale %r) is not convertible to the molar activity form K_P = K c0" % (unit, scale))
 
 
 def delta_p_to_m(value, unit):
@@ -188,7 +219,7 @@ def bind(key, value=None, table=None, **inputs):
 
     value is the W1 value in the key's W1 unit (None for a gap). Extra inputs by conversion:
       enthalpy_plus_entropy_bound (Delta_G_gc): s_resid (J K^-1 mol^-1 per formula unit), temperature (K).
-      ads_unit (Gamma_P, K_P, delta_P): unit, molar_mass_g_mol.
+      ads_unit (Gamma_P, K_P, delta_P): unit, molar_mass_g_mol; K_P also scale, basis, rho_water_kg_dm3 (k_p_from_k).
     A single-ion transfer or a hydration key returns the value tagged with its scale; combine with
     delta_g_tr_rel and require_one_hydration_scale.
     """
@@ -227,7 +258,8 @@ def bind(key, value=None, table=None, **inputs):
     if conv == "single_ion_transfer":
         if not rec.get("scale"):
             return _undetermined(symbol, "single-ion scale not named", unit)
-        return single_ion_bound(value, rec["scale"], rec.get("solvent"), rec.get("ion"), inputs.get("source"))
+        return single_ion_bound(value, rec["scale"], rec.get("solvent"), rec.get("ion"),
+                                inputs.get("source") or rec.get("source"))
     if conv == "aqueous_formation_energy" and rec.get("role") == "e_lb_input":
         notes = {"role": rec["role"], "uncertainty": rec.get("uncertainty")}
         return _checked(symbol, value, unit, scale=rec["scale"], notes=notes)
@@ -238,13 +270,14 @@ def bind(key, value=None, table=None, **inputs):
         return _checked(symbol, value, unit, "absolute Delta_G_hyd is negative; a conventional-scale value needs the proton "
                         "value added on a named real scale", scale=scale, notes={"role": "born_comparison_only"})
     if conv == "ads_unit":
-        symbol, unit = rec["symbol"], rec["unit"]
+        symbol, unit = rec["symbol"], {"Gamma_P": "mol m^-2", "K_P": "1", "delta_P": "m"}[rec["symbol"]]
         try:
             u = inputs["unit"]
             if symbol == "Gamma_P":
                 x = gamma_p_to_mol_m2(value, u, inputs.get("molar_mass_g_mol"))
             elif symbol == "K_P":
-                x = k_p_activity_form(value, u)
+                x = k_p_from_k(value, u, inputs.get("basis", "activity"), inputs.get("rho_water_kg_dm3"),
+                               inputs.get("scale"))
             else:
                 x = delta_p_to_m(value, u)
         except (KeyError, ValueError) as e:

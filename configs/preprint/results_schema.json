@@ -252,6 +252,96 @@
             "null"
           ],
           "description": "The registered rule and the gap-table amendment that applies it."
+        },
+        "thresholds_block_version": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Version of the thresholds block of theory/thresholds.md the copy holds (PH-W4.2)."
+        },
+        "thresholds_block_sha256": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "sha256 of the thresholds block text (PH-W4.2)."
+        },
+        "symbol_bindings_file": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Repository-relative path of the symbol-binding table (PH-W4.2)."
+        },
+        "symbol_bindings_hash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "sha256 of the raw bytes of the symbol-binding table."
+        },
+        "symbol_bindings_header_hash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Header hash of the symbol-binding table: the sha256 of the file with the hash line removed."
+        },
+        "gap_table_hashes": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {
+            "$ref": "#/$defs/sha256"
+          },
+          "description": "sha256 of each gap-resolution table read (carbonate and phosphate)."
+        },
+        "ladder_file": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Repository-relative path of the K1 ladder read (PH-W4.2)."
+        },
+        "ladder_hash": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "sha256 of the K1 ladder file."
+        },
+        "checkpoint_tag": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Freeze tag the inputs were frozen at (p0-cp5)."
+        },
+        "checkpoint_tag_commit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40}$",
+          "description": "Commit of the freeze tag."
         }
       },
       "description": "Run provenance. A screen document also requires prior_file and prior_file_hash."

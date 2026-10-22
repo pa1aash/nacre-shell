@@ -221,7 +221,7 @@ def test_form_b_salt_form_and_refusal_of_single_ions():
 
 def test_current_transfer_keys(table):
     li = bd.bind("transfer_free_energy_li_water_pc", 23800.0, table=table)
-    assert li.status == bd.UNDETERMINED and "scale" in li.reason
+    assert li.ok and li.scale == "TATB" and li.form == "A" and li.solvent == "PC"
     clo4 = bd.bind("transfer_free_energy_clo4_water_pc", -7700.0, table=table)
     assert clo4.ok and clo4.scale == "ferrocene" and clo4.solvent == "PC"
     for k in ("transfer_free_energy_ca_water_pc", "transfer_free_energy_al_water_pc"):
@@ -270,9 +270,6 @@ def test_gamma_p_units():
 
 
 def test_k_p_and_delta_p_units():
-    assert bd.k_p_activity_form(30.0, "1") == 30.0
-    with pytest.raises(ValueError):
-        bd.k_p_activity_form(30.0, "L mol^-1")
     assert bd.delta_p_to_m(2.0, "nm") == pytest.approx(2e-9)
     assert bd.delta_p_to_m(5.0, "angstrom") == pytest.approx(5e-10)
     with pytest.raises(ValueError):
@@ -280,18 +277,74 @@ def test_k_p_and_delta_p_units():
 
 
 def test_adsorption_keys_are_unresolved_while_they_are_gap_keys(table):
-    for k in ("polyp_ads_alumina_gamma_max", "polyp_ads_alumina_k_langmuir", "polyp_ads_alumina_layer_thickness"):
+    for k in ("polyp_ads_alumina_gamma_max", "polyp_ads_alumina_layer_thickness"):
         r = bd.bind(k, 1.0, table=table, unit="1")
         assert r.status == bd.UNDETERMINED and "gap key" in r.reason
 
 
+# ---- K_P = K c0, c0 = 1 mol dm^-3 (PH-W4.2 pre-run)
+def test_k_p_is_k_times_c0_molar_activity_form():
+    assert bd.C0_MOLAR == 1.0
+    assert bd.k_p_from_k(30.0, "L mol^-1") == pytest.approx(30.0)
+    assert bd.k_p_from_k(30.0, "dm^3 mol^-1") == pytest.approx(30.0)
+    assert bd.k_p_from_k(0.03, "m^3 mol^-1") == pytest.approx(30.0)            # 1 m^3 = 1000 dm^3
+    assert bd.k_p_from_k(3.0e4, "cm^3 mol^-1") == pytest.approx(30.0)
+    assert bd.k_p_from_k(30.0, "M^-1") == pytest.approx(30.0)
+
+
+def test_k_p_from_a_molal_constant_divides_by_the_water_density():
+    rho = 0.99705                                                                # kg dm^-3 at 25 C
+    assert bd.k_p_from_k(30.0, "kg mol^-1", rho_water_kg_dm3=rho) == pytest.approx(30.0 / rho)
+    assert bd.k_p_from_k(30.0, "1", rho_water_kg_dm3=rho, scale="molal_m0") == pytest.approx(30.0 / rho)
+    assert bd.k_p_from_k(30.0, "1", scale="molar_c0") == 30.0
+    with pytest.raises(ValueError):
+        bd.k_p_from_k(30.0, "kg mol^-1")                                         # the water density is required
+    # the conversion preserves the coverage: Theta = K_m m = K_P c / c0 with c = rho m
+    m = 0.01
+    assert 30.0 * m == pytest.approx(bd.k_p_from_k(30.0, "kg mol^-1", rho_water_kg_dm3=rho) * (rho * m) / bd.C0_MOLAR)
+
+
+@pytest.mark.parametrize("unit,kw", [("1", {}), ("mol m^-3", {}), ("L mol^-1", {"basis": "concentration"}), ("kg g^-1", {})])
+def test_k_p_is_never_copied(unit, kw):
+    with pytest.raises(ValueError):
+        bd.k_p_from_k(30.0, unit, **kw)
+    with pytest.raises(ValueError):
+        bd.k_p_from_k(float("nan"), "L mol^-1")
+
+
+def test_k_p_key_binds_through_the_conversion_and_a_gap_stays_undetermined(table):
+    key = "polyp_ads_alumina_k_langmuir"
+    r = bd.bind(key, 0.03, table=table, unit="m^3 mol^-1")
+    assert r.ok and r.symbol == "K_P" and r.unit == "1" and r.value == pytest.approx(30.0)
+    assert bd.bind(key, None, table=table, unit="m^3 mol^-1").status == bd.UNDETERMINED
+    assert bd.bind(key, 0.03, table=table, unit="m^3 mol^-1", basis="concentration").status == bd.UNDETERMINED
+
+
 # ---- PH-W1.5 keys (PH-W4.2f)
-def test_alkali_transfer_keys_bind_on_the_tatb_scale_but_li_names_no_scale(table):
+def test_alkali_and_li_transfer_keys_bind_on_the_tatb_scale_and_relative_energies_are_computable(table):
     li = bd.bind("transfer_free_energy_li_water_pc", 23800.0, table=table)
+    assert li.ok and li.scale == "TATB"
     for k, v in (("na", 14600.0), ("k", 5300.0), ("rb", -1000.0), ("cs", -7000.0)):
         r = bd.bind("transfer_free_energy_%s_water_pc" % k, v, table=table)
         assert r.ok and r.scale == "TATB" and r.form == "A" and r.solvent == "PC" and r.value == v
-        assert not bd.delta_g_tr_rel(r, li, 1).ok
+        rel = bd.delta_g_tr_rel(r, li, 1)
+        assert rel.ok and rel.value == pytest.approx(v - 23800.0) and rel.scale == "TATB"
+    for k in ("ca", "al"):                                            # gap keys: TATB is the declared scale, no value
+        assert bd.bind("transfer_free_energy_%s_water_pc" % k, None, table=table).status == bd.UNDETERMINED
+
+
+def test_every_transfer_key_is_on_tatb_or_excluded_by_name(table, params):
+    keys = _keys(table)
+    for k in params:
+        if not k.startswith("transfer_"):
+            continue
+        if k in keys:
+            rec = keys[k][1]
+            assert rec["scale"] in ("TATB", "ferrocene"), k
+            if rec["scale"] != "TATB":
+                assert rec["role"] == "anion_cancels"                    # other scale, never combined with a TATB cation
+        else:
+            assert "excluded" in table["not_bound"][k], k                # any other-scale source is excluded
 
 
 def test_linear_chain_unit_w15_key_is_a_gap_and_undetermined(table):

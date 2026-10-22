@@ -1,0 +1,4490 @@
+{
+ "design_point": "Ca_T=0.001 mol dm^-3; C_T=dic_slurry@min; a_w=wet_film",
+ "interval_level": 0.8,
+ "method": "configs/preprint/precision_method.md",
+ "n_mc": 262144,
+ "p_cred": 0.9,
+ "pre_run_sha": "8073c8e",
+ "production_runs": [
+  {
+   "git_sha": "4401915ac5a6f19289a60c47faef450ba70ac62b",
+   "path": "results/preprint/screen/table_ph/summary.json",
+   "run_label": "table_ph",
+   "sha256": "90770f03867aa36fad66137e80518b221ae90580a4b704a013baf84d70eea0be"
+  },
+  {
+   "git_sha": "8742ecc5d09e2025311c7a2a63de8078d243084f",
+   "path": "results/preprint/screen/k2_grid_ph/summary.json",
+   "run_label": "k2_grid_ph",
+   "sha256": "9df2b4b54159d074ff94ca46ea2959a1c5fcd82102de821d0779820d9a2b1fc8"
+  },
+  {
+   "git_sha": "8612b89295d1b3c316b8ed3aa526c55a7f59f04c",
+   "path": "results/preprint/screen/phosphate_films_ph/summary.json",
+   "run_label": "phosphate_films_ph",
+   "sha256": "9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800"
+  },
+  {
+   "git_sha": "3512cba8204c356f327cedd2a5ed0548848cd090",
+   "path": "results/preprint/screen/ignorance_ph/summary.json",
+   "run_label": "ignorance_ph",
+   "sha256": "8335354aed587ae431c828025706b3fb7c4be30e30b9603f6d8b32ea42a1b838"
+  },
+  {
+   "git_sha": "55a3281503f33dbea1331318dc8f16c3aceffdbb",
+   "path": "results/preprint/screen/sweep_independent_ph/summary.json",
+   "run_label": "sweep_independent_ph",
+   "sha256": "f358ef19d585656b35a3c9cbdd3d868bf9dc623ffeb0f5d902d39a84c1869ea0"
+  },
+  {
+   "git_sha": "9c7c1a901792a95882729bac8606b7e66d74fe52",
+   "path": "results/preprint/screen/sweep_pcred_0.6_ph/summary.json",
+   "run_label": "sweep_pcred_0.6_ph",
+   "sha256": "2d20a44240b3be666037bd2e2ad71bab32682f91965d973776a3e604c28c3fc7"
+  },
+  {
+   "git_sha": "cd17326cfd2bb0169e964a61240a7743a9302b87",
+   "path": "results/preprint/screen/sweep_pcred_0.99_ph/summary.json",
+   "run_label": "sweep_pcred_0.99_ph",
+   "sha256": "4cb47e4d30fae316bfdde9cac95fe76652f5fcb011ce611b6050307c3a8b32c4"
+  },
+  {
+   "git_sha": "1e316993b1a2f0c3bb316c0aa503d498af200f60",
+   "path": "results/preprint/screen/sweep_mcos_0.1_ph/summary.json",
+   "run_label": "sweep_mcos_0.1_ph",
+   "sha256": "bc275f97020629b37ce000613d27db41b1c3bfa59606fbc082a261755dcfb90a"
+  },
+  {
+   "git_sha": "22543728768c7056914aaae69097d73eec3f2bf5",
+   "path": "results/preprint/screen/sweep_mcos_0.2_ph/summary.json",
+   "run_label": "sweep_mcos_0.2_ph",
+   "sha256": "8892fba906611848049757135dfcd924afe7692748912c968a183201e5c65cee"
+  },
+  {
+   "git_sha": "55974a42f0d35cb85c2e3bca46fb8d4f77b23ab6",
+   "path": "results/preprint/screen/sweep_untruncated_ph/summary.json",
+   "run_label": "sweep_untruncated_ph",
+   "sha256": "159cfbc50b9eca24cdb0115e7d6d864bb6a8d0247fb83ed10949d85aadd61492"
+  },
+  {
+   "git_sha": "f579e7303a21f5108ea46523bcbbd854c2533b69",
+   "path": "results/preprint/screen/sens_acc_omega_ph/summary.json",
+   "run_label": "sens_acc_omega_ph",
+   "sha256": "597af794cedcd31bfd64351740de25c6ab25e3fb748fb96f086c0bc70e69c96c"
+  },
+  {
+   "git_sha": "b887472bf7b7e01b211a9989684652d71821efd1",
+   "path": "results/preprint/screen/sens_gamma_sl0_untruncated_ph/summary.json",
+   "run_label": "sens_gamma_sl0_untruncated_ph",
+   "sha256": "1ccf5aded002ba4cff2cb4cac4e64cc6d7c46ea64e7dd6638b5b8389e5f4b63b"
+  },
+  {
+   "git_sha": "9b7f24e7ea63b45bbc19dd282cf9a30f516d8208",
+   "path": "results/preprint/screen/sens_gamma_sl0_untruncated_r2_ph/summary.json",
+   "run_label": "sens_gamma_sl0_untruncated_r2_ph",
+   "sha256": "4f0741c05a113bdcf7db285574ff0f4c4eb7591b3933334e8f6af1d7b75894ea"
+  }
+ ],
+ "provenance": {
+  "admissibility_rule": "thresholds.decision.admissibility (gap table AM3)",
+  "admissibility_sha": "fd5846fd43d43e457566068f381a43ed96a8c1c3",
+  "checkpoint_tag": "p0-cp5",
+  "checkpoint_tag_commit": "1682411984b16e66c06c05b10e5eac52839d022b",
+  "config_file": "configs/preprint/screen.yaml",
+  "config_file_hash": "sha256:800e81fad01a51dfc51368b39cd395cf4051abf64715495fb6c1ea35056c13ef",
+  "config_hash": "sha256:5e1e52a1ebd833f656f6ceb919510d20c7f1d493ad3f3ef1d17f572febf698c6",
+  "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
+  "gap_table_file": "configs/preprint/gap_resolution.yaml",
+  "gap_table_hash": "sha256:3c17a00f29dcea7adb791e119df9b3dc6ddf942d79df48659c006e11dbd828fb",
+  "gap_table_hashes": {
+   "configs/preprint/gap_resolution.yaml": "sha256:3c17a00f29dcea7adb791e119df9b3dc6ddf942d79df48659c006e11dbd828fb",
+   "configs/preprint/gap_resolution_ph.yaml": "sha256:ac7baeed37deb1b7903d50a3c73e2ae70a5c3592b95a6a8923df272e22f067aa"
+  },
+  "gap_table_sha": "ccb653dddc92dba4d4077336d037ef1ed5ad6ba8",
+  "git_dirty": false,
+  "git_sha": "d0226135cd39c29213201ccb0ea093761a9358b8",
+  "ladder_file": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
+  "ladder_hash": "sha256:595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
+  "params_sha": "5b955b06f4c36ab6e660711b1bbe8f67ff338976",
+  "params_sha_at_tag": "fbe252b23a5a80e9fff25db72d1d3b85e8454ce8",
+  "params_tag": "p0-cp3",
+  "prior_file": "lit/params.yaml",
+  "prior_file_hash": "sha256:0ee35c055bac4f744083e4e594b74576989ea084dc180fe5c9882dcfa92c811e",
+  "run_label": "precision_ph",
+  "schema_sha": "8073c8ed020c810dabd44f13f655718a1d9e8610",
+  "session": "PH-W4.3",
+  "symbol_bindings_file": "configs/preprint/symbol_bindings.yaml",
+  "symbol_bindings_hash": "sha256:416c954b1d0cebe707f7640dd1efb2491da4c724aea5f202573b106d9ae1e3e9",
+  "symbol_bindings_header_hash": "sha256:78efeb1971a5c633b066fb244c9270e9e014db183c47c8a310807423a09c0ee1",
+  "thresholds_block_sha256": "sha256:d92b42e9106e574fd330635fdc0d54e56d4a1dec4a7f38ece93d8bdfe922b04b",
+  "thresholds_block_version": 8,
+  "thresholds_file": "configs/preprint/thresholds.yaml",
+  "thresholds_hash": "sha256:48d99f4292ee162903ec426df1c8cbc8218fc8ad5b5950d0c34f9d04d09280b8",
+  "thresholds_source_sha": "12c1f2d886b7fbc05aecc6a3f5a0de0c252c8a52"
+ },
+ "reproduction_check": {
+  "M_adm_reproduced": 0.12725830078125,
+  "P_good_C3a_reproduced": 0.0028776978417266188,
+  "P_good_C3a_stored": 0.0028776978417266188,
+  "design_point": "Ca_T=0.001 mol dm^-3; C_T=dic_slurry@min; a_w=wet_film",
+  "equal": true
+ },
+ "rows": [
+  {
+   "evidence_grade": "ignorance prior (bounds gamma_p B, gamma_nv B)",
+   "flip": {
+    "prior_mass_below_flip": 0.0028776978417266188,
+    "q05_q50_q95": [
+     0.0001840204144831822,
+     0.0012193036152489043,
+     0.002877082604096524
+    ],
+    "quantity": "gamma_sn* = gamma_sl - m_cos*gamma_nl (m_cos = 0)",
+    "unit": "J m^-2"
+   },
+   "id": "gamma_sn",
+   "kind": "closed",
+   "link": "C3a / K3a",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.005, stated; needed 0.334)",
+      "purpose": "confirm falsified (true value at the prior median)",
+      "required_half_width": 0.3337656059922272,
+      "unit": "J m^-2"
+     },
+     {
+      "assessment": "not within reach (smallest figure 0.005, stated; needed 0.00122)",
+      "purpose": "reverse to feasible (true value below the flip)",
+      "required_half_width": 0.0012193036152489043,
+      "unit": "J m^-2"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "experiment: optical nucleation-rate counting, CNT fit (F = 16/3pi, omega = 6.13e-23 cm3)",
+      "n_rows": 6,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TH-014",
+       "TH-015",
+       "TH-016",
+       "TH-017",
+       "TH-018",
+       "TH-019"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.054,
+       0.066
+      ]
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "experiment: in situ GISAXS nucleation rates, CNT",
+      "n_rows": 5,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TC-084",
+       "TC-085",
+       "TC-086",
+       "TC-089",
+       "TC-090"
+      ],
+      "stated_uncertainty_min": 0.005,
+      "value_spread": [
+       0.024,
+       0.048
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "experiment: optical nucleation rates in flow cell, CNT with shape factor 19.1 for (012) rhomb",
+      "n_rows": 4,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TC-061",
+       "TC-062",
+       "TC-063",
+       "TC-064"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.081,
+       0.095
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "experiment: optical nucleation rates in flow cell, CNT with F = 16 for {10.4}",
+      "n_rows": 3,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TC-068",
+       "TC-069",
+       "TC-070"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.068,
+       0.1
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "experiment: optical nucleation rates in flow cell, CNT with F = 16/3pi",
+      "n_rows": 3,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TC-076",
+       "TC-077",
+       "TC-078"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.057,
+       0.07200000000000001
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: Giuffre et al. 2013 PNAS recalculated with F = 16/3pi",
+      "n_rows": 3,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TC-079",
+       "TC-080",
+       "TC-081"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.051000000000000004,
+       0.075
+      ]
+     }
+    ]
+   },
+   "parameter": "aux:u_gamma_sn",
+   "prior": {
+    "central95_J_m2": [
+     0.01749945865377309,
+     0.7731085701804293
+    ],
+    "family": "ignorance (carbonate: gamma_nv sourced); for HAp and ACP gamma_nv is a gap, so the range is undefined",
+    "gap": false
+   },
+   "quantity": "gamma_sn (template-nucleus energy, ignorance prior u*(gamma_p+gamma_nv))",
+   "required_precision": {
+    "note": "decided (falsified) at the prior; reversal needs a measured gamma_sn below the flip: a true value at 0 needs +-0.00122 J m^-2, at the prior median 0.335 needs +-0.334",
+    "required_half_width_at_prior_median_J_m2": 0.3337656059922272,
+    "status": "already_clears",
+    "width_ratio": 1.0
+   },
+   "sensitivity": {
+    "link": "nucleate",
+    "quantity": "f_theta",
+    "run": "ignorance_ph",
+    "top": [
+     {
+      "parameter": "aux:u_gamma_sn",
+      "shapley": 0.8688,
+      "shapley_ci_low": 0.8369,
+      "sobol_total": 0.9394
+     },
+     {
+      "parameter": "gamma_nl_calcite",
+      "shapley": 0.0952,
+      "shapley_ci_low": 0.0722,
+      "sobol_total": 0.1707
+     },
+     {
+      "parameter": "template_layer_thickness",
+      "shapley": 0.0316,
+      "shapley_ci_low": -0.0026,
+      "sobol_total": 0.0
+     }
+    ]
+   },
+   "settles": "C3a / K3a (cos theta >= 0): feasible only if gamma_sn <= gamma_sl",
+   "unit": "J m^-2",
+   "verdict_now": "falsified (P_good = P(gamma_sn <= gamma_sl) = 0.0029 at the detail point; carbonate chain, admitted draws)"
+  },
+  {
+   "evidence_grade": "gap (HAp, ACP); calcite B",
+   "flip": {
+    "note": "needs gamma_p + gamma_nv <= 0.0014 J m^-2 but gamma_p alone is >= 0.0433 J m^-2: no gamma_nv >= 0 reaches the flip",
+    "quantity": "gamma_p + gamma_nv <= gamma_sl / p_cred for P(gamma_sn <= gamma_sl) >= p_cred",
+    "unit": "J m^-2",
+    "value": 0.0013547817947210047
+   },
+   "id": "gamma_nv",
+   "kind": "closed",
+   "link": "K3a / K4",
+   "measurable_by": {
+    "assessments": [],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: anhydrous surface energy with the Rohl et al. calcite force field (GULP, relaxed two-region slab)",
+      "n_rows": 7,
+      "quantity": "surface_energy_calcite_dry",
+      "rows": [
+       "TL-009",
+       "TL-010",
+       "TL-011",
+       "TL-012",
+       "TL-013",
+       "TL-014",
+       "TL-015"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.534,
+       1.232
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "computation: DFT PBE-GGA with Grimme D3 dispersion, PAW, periodic slab (VASP)",
+      "n_rows": 6,
+      "quantity": "surface_energy_calcite_dry",
+      "rows": [
+       "TL-002",
+       "TL-003",
+       "TL-004",
+       "TL-005",
+       "TL-006",
+       "TL-007"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.66,
+       1.84
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: derived via Young equation from printed Owens-Wendt surface energy and water contact angle",
+      "n_rows": 3,
+      "quantity": "gamma_organic_water",
+      "rows": [
+       "TH-052",
+       "TH-054",
+       "TH-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       1.5,
+       3.4
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "computation: classical MD (statement of method limits)",
+      "n_rows": 1,
+      "quantity": "gamma_organic_water",
+      "rows": [
+       "TC-095"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: review of interfacial-energy simulation methods",
+      "n_rows": 1,
+      "quantity": "gamma_organic_water",
+      "rows": [
+       "TH-036"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: derived via Young-Dupre from printed contact angle and van Oss surface energy",
+      "n_rows": 1,
+      "quantity": "gamma_organic_water",
+      "rows": [
+       "TH-049"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "gamma_nv_hap, gamma_nv_acp (gaps)",
+   "prior": {
+    "calcite_analog_range_J_m2": [
+     0.428,
+     0.86
+    ],
+    "gap": true
+   },
+   "quantity": "gamma_nv (nucleus-vapour energy; gap for HAp and ACP, sourced for calcite)",
+   "required_precision": {
+    "rule": "K3a is falsified under the ignorance prior of gamma_sn for every gamma_nv >= 0; a measurement of gamma_nv cannot settle K3a or K4 towards feasible",
+    "status": "no_flip"
+   },
+   "sensitivity": {
+    "link": "nucleate",
+    "quantity": "S_spread",
+    "run": "ignorance_ph",
+    "top": [
+     {
+      "parameter": "aux:u_gamma_sn",
+      "shapley": 0.6894,
+      "shapley_ci_low": 0.6708,
+      "sobol_total": 0.7117
+     },
+     {
+      "parameter": "gamma_nl_calcite",
+      "shapley": 0.2423,
+      "shapley_ci_low": 0.2283,
+      "sobol_total": 0.2506
+     },
+     {
+      "parameter": "gamma_nv_calcite",
+      "shapley": 0.0769,
+      "shapley_ci_low": 0.051,
+      "sobol_total": 0.0908
+     }
+    ]
+   },
+   "settles": "K3a and K4 (through gamma_sn <= u*(gamma_p + gamma_nv))",
+   "unit": "J m^-2",
+   "verdict_now": "undetermined for HAp and ACP (gap); the carbonate chain is falsified"
+  },
+  {
+   "evidence_grade": "calcite B; HAp, ACP gap",
+   "flip": {
+    "P_gamma_sl_gt_gamma_nl": 0.0,
+    "note": "a spreading verdict of feasible needs gamma_nl below about 0.0012 J m^-2, 59x below the lowest calcite value 0.072",
+    "quantity": "gamma_nl* = gamma_sl - gamma_sn - m_S <= gamma_sl",
+    "unit": "J m^-2",
+    "upper_bound_q05_q50_q95": [
+     0.0001840204144831822,
+     0.0012193036152489043,
+     0.002877082604096524
+    ]
+   },
+   "id": "gamma_nl",
+   "kind": "closed",
+   "link": "K4 (spreading) / C4",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.005, stated; needed 0.0708)",
+      "purpose": "confirm falsified (value at the calcite minimum)",
+      "required_half_width": 0.0707806963847511,
+      "unit": "J m^-2"
+     },
+     {
+      "assessment": "not within reach (smallest figure 0.005, stated; needed 0.00122)",
+      "purpose": "reverse to feasible (value below the flip)",
+      "required_half_width": 0.0012193036152489043,
+      "unit": "J m^-2"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "experiment: optical nucleation-rate counting, CNT fit (F = 16/3pi, omega = 6.13e-23 cm3)",
+      "n_rows": 6,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TH-014",
+       "TH-015",
+       "TH-016",
+       "TH-017",
+       "TH-018",
+       "TH-019"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.054,
+       0.066
+      ]
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "experiment: in situ GISAXS nucleation rates, CNT",
+      "n_rows": 5,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TC-084",
+       "TC-085",
+       "TC-086",
+       "TC-089",
+       "TC-090"
+      ],
+      "stated_uncertainty_min": 0.005,
+      "value_spread": [
+       0.024,
+       0.048
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "experiment: optical nucleation rates in flow cell, CNT with shape factor 19.1 for (012) rhomb",
+      "n_rows": 4,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TC-061",
+       "TC-062",
+       "TC-063",
+       "TC-064"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.081,
+       0.095
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "experiment: optical nucleation rates in flow cell, CNT with F = 16 for {10.4}",
+      "n_rows": 3,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TC-068",
+       "TC-069",
+       "TC-070"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.068,
+       0.1
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "experiment: optical nucleation rates in flow cell, CNT with F = 16/3pi",
+      "n_rows": 3,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TC-076",
+       "TC-077",
+       "TC-078"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.057,
+       0.07200000000000001
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: Giuffre et al. 2013 PNAS recalculated with F = 16/3pi",
+      "n_rows": 3,
+      "quantity": "gamma_eff_het",
+      "rows": [
+       "TC-079",
+       "TC-080",
+       "TC-081"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.051000000000000004,
+       0.075
+      ]
+     }
+    ]
+   },
+   "parameter": "gamma_nl_calcite; gamma_nl_hap, gamma_nl_acp (gaps)",
+   "prior": {
+    "family": "uniform (calcite); HAp, ACP none registered",
+    "gap": false,
+    "low_high_J_m2": [
+     0.072,
+     0.487
+    ]
+   },
+   "quantity": "gamma_nl (nucleus-liquid energy; calcite sourced, HAp and ACP gaps)",
+   "required_precision": {
+    "required_half_width_J_m2": 0.0707806963847511,
+    "rule": "any estimate of gamma_nl_hap with an uncertainty below its own distance to the flip (0.0012 J m^-2) decides; for a value as low as the calcite minimum this is +-0.071 J m^-2",
+    "status": "ok_by_inspection"
+   },
+   "sensitivity": {
+    "link": "nucleate",
+    "quantity": "S_spread",
+    "run": "ignorance_ph",
+    "top": [
+     {
+      "parameter": "aux:u_gamma_sn",
+      "shapley": 0.6894,
+      "shapley_ci_low": 0.6708,
+      "sobol_total": 0.7117
+     },
+     {
+      "parameter": "gamma_nl_calcite",
+      "shapley": 0.2423,
+      "shapley_ci_low": 0.2283,
+      "sobol_total": 0.2506
+     },
+     {
+      "parameter": "gamma_nv_calcite",
+      "shapley": 0.0769,
+      "shapley_ci_low": 0.051,
+      "sobol_total": 0.0908
+     }
+    ]
+   },
+   "settles": "K4 spreading route S_spread = gamma_sl - gamma_sn - gamma_nl >= m_S",
+   "unit": "J m^-2",
+   "verdict_now": "falsified for calcite (P(S_spread >= 0) = 0); undetermined for HAp and ACP (gap)"
+  },
+  {
+   "evidence_grade": "gap",
+   "flip": {
+    "N_nuc_q_1_minus_p": 0.0,
+    "N_nuc_q_p": 1.1310069322323085e-11,
+    "falsified_for_A_below": 203587177706.27206,
+    "note": "C3b is falsified for every A_patch below 2.04e+11 m^2; a feasible verdict is impossible (q_(1-p) of N_nuc is 0 m^-2)",
+    "quantity": "A* = ln(1/(1-p)) / q_p(N_nuc) for the falsified side; the feasible side needs N_nuc q_(1-p) >= N_req",
+    "unit": "m^2"
+   },
+   "id": "A_patch",
+   "kind": "gap",
+   "link": "C3b / K3b",
+   "measurable_by": {
+    "assessments": [],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: laser diffraction particle size analysis (MicroTrac Sync)",
+      "n_rows": 5,
+      "quantity": "cathode_particle_diameter",
+      "rows": [
+       "TN-016",
+       "TN-017",
+       "TN-018",
+       "TN-019",
+       "TN-020"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       9.0,
+       17.0
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: particle size distribution from 40x lab micro-CT segmentation",
+      "n_rows": 2,
+      "quantity": "cathode_particle_diameter",
+      "rows": [
+       "TN-023",
+       "TN-024"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: SEM average particle size",
+      "n_rows": 2,
+      "quantity": "cathode_particle_diameter",
+      "rows": [
+       "TN-025",
+       "TN-026"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       50.0,
+       350.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: review statement of typical commercial morphology",
+      "n_rows": 2,
+      "quantity": "cathode_particle_diameter",
+      "rows": [
+       "TN-027",
+       "TN-028"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: laser diffraction (Horiba LA950)",
+      "n_rows": 1,
+      "quantity": "cathode_particle_diameter",
+      "rows": [
+       "TN-021"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: SEM image estimate",
+      "n_rows": 1,
+      "quantity": "cathode_particle_diameter",
+      "rows": [
+       "TN-022"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "patch_area",
+   "prior": {
+    "gap": true,
+    "registered_bound": "a_asp <= A_patch <= pi d_p^2/4 (loguniform); both bound keys absent"
+   },
+   "quantity": "A_patch (receiving patch area; N_req = ln(1/(1-p))/A_patch)",
+   "required_precision": {
+    "rule": "A_patch is a micrometre-scale contact patch (<= pi d_p^2/4); the flip lies ~20 orders above it, so the verdict does not depend on A_patch",
+    "status": "no_flip_in_physical_range"
+   },
+   "sensitivity": {
+    "link": "nucleate",
+    "quantity": "N_nuc",
+    "run": "ignorance_ph",
+    "top": [
+     {
+      "parameter": "gamma_nl_calcite",
+      "shapley": 0.9827,
+      "shapley_ci_low": 0.9511,
+      "sobol_total": 0.9325
+     },
+     {
+      "parameter": "aux:u_gamma_sn",
+      "shapley": 0.0454,
+      "shapley_ci_low": 0.0066,
+      "sobol_total": 0.0449
+     },
+     {
+      "parameter": "pk1_carbonic",
+      "shapley": -0.044,
+      "shapley_ci_low": -0.0786,
+      "sobol_total": 0.0
+     }
+    ]
+   },
+   "settles": "C3b falsified",
+   "unit": "m^2",
+   "verdict_now": "inconclusive (gap counted inconclusive)"
+  },
+  {
+   "evidence_grade": "ignorance prior (bounds: gamma_o B, gamma_w C, gamma_p B)",
+   "flip": {
+    "flip_q05_q50_q95": [
+     0.006617738191970616,
+     0.04970450857939729,
+     0.09551304007797368
+    ],
+    "m_W": 0.00376938758553,
+    "quantity": "gamma_ow* = gamma_op - gamma_pw + m_W",
+    "unit": "J m^-2"
+   },
+   "id": "c1_dupre_gamma_ow",
+   "kind": "mc",
+   "link": "C1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "not assessed",
+      "purpose": "single-parameter narrowing",
+      "required_half_width": null,
+      "unit": "J m^-2"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: surface forces apparatus",
+      "n_rows": 4,
+      "quantity": "w_adh_wet",
+      "rows": [
+       "TD-026",
+       "TD-027",
+       "TD-028",
+       "TD-029"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0008,
+       0.0029900000000000005
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: water and diiodomethane contact angles, Owens-Wendt",
+      "n_rows": 2,
+      "quantity": "gamma_oxide_surface",
+      "rows": [
+       "TH-062",
+       "TH-063"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.03136,
+       0.04912
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: water and alpha-bromonaphthalene contact angles, Owens-Wendt",
+      "n_rows": 2,
+      "quantity": "gamma_oxide_surface",
+      "rows": [
+       "TH-064",
+       "TH-065"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.05419,
+       0.056600000000000004
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: surface forces apparatus (JKR)",
+      "n_rows": 2,
+      "quantity": "work_of_adhesion_catechol_oxide",
+      "rows": [
+       "TM-035",
+       "TM-036"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0007,
+       0.002
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: AFM colloidal probe (W_ad = F_ad/1.5 pi R)",
+      "n_rows": 2,
+      "quantity": "work_of_adhesion_catechol_oxide",
+      "rows": [
+       "TM-038",
+       "TM-039"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0001,
+       0.0077
+      ]
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "experiment: high-temperature oxide-melt solution calorimetry vs surface area",
+      "n_rows": 1,
+      "quantity": "gamma_oxide_water",
+      "rows": [
+       "TB-052"
+      ],
+      "stated_uncertainty_min": 0.12,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "aux:u_gamma_ow",
+   "prior": {
+    "family": "ignorance: uniform on [0, sum of dry energies]",
+    "gap": false,
+    "low_high_J_m2": [
+     0.0,
+     0.11597756491870283
+    ]
+   },
+   "quantity": "gamma_ow (ignorance prior u*(sum of dry energies))",
+   "required_precision": {
+    "interval_at_prior": [
+     -0.047418711115145486,
+     0.07030571840549624
+    ],
+    "monotone": true,
+    "n": 262144,
+    "nearest_threshold": 0.00376938758553,
+    "prior_width_J_m2": 0.11017868667276769,
+    "prior_width_stated_variable": 0.95,
+    "replicate": {
+     "seed": 3648228980,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    "required_width_J_m2": null,
+    "required_width_stated_variable": null,
+    "seed": 3648228979,
+    "status": "unreachable",
+    "width_ratio": null
+   },
+   "sensitivity": {
+    "link": "anchor",
+    "quantity": "W_adh_wet_comparator",
+    "run": "ignorance_ph",
+    "top": [
+     {
+      "parameter": "aux:u_gamma_ow",
+      "shapley": 0.5886,
+      "shapley_ci_low": 0.5808,
+      "sobol_total": 0.5907
+     },
+     {
+      "parameter": "aux:u_gamma_op",
+      "shapley": 0.4097,
+      "shapley_ci_low": 0.4028,
+      "sobol_total": 0.4073
+     },
+     {
+      "parameter": "w_adh_wet_catechol_oxide_analog",
+      "shapley": 0.0068,
+      "shapley_ci_low": -0.0027,
+      "sobol_total": 0.0
+     }
+    ]
+   },
+   "settles": "C1 (Dupre comparator) feasible or falsified",
+   "unit": "J m^-2 (stated variable u, scaled by the median bound 0.116 J m^-2)",
+   "verdict_now": "inconclusive (Dupre comparator; P_good 0.566; never a finding)"
+  },
+  {
+   "evidence_grade": "ignorance prior (bounds: gamma_o B, gamma_w C, gamma_p B)",
+   "flip": {
+    "flip_q05_q50_q95": [
+     0.003827732743251365,
+     0.055648909024542045,
+     0.1084019058820585
+    ],
+    "m_W": 0.00376938758553,
+    "quantity": "gamma_op* = gamma_ow + gamma_pw - m_W",
+    "unit": "J m^-2"
+   },
+   "id": "c1_dupre_gamma_op",
+   "kind": "mc",
+   "link": "C1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "not assessed",
+      "purpose": "single-parameter narrowing",
+      "required_half_width": null,
+      "unit": "J m^-2"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: surface forces apparatus",
+      "n_rows": 4,
+      "quantity": "w_adh_wet",
+      "rows": [
+       "TD-026",
+       "TD-027",
+       "TD-028",
+       "TD-029"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0008,
+       0.0029900000000000005
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: water and diiodomethane contact angles, Owens-Wendt",
+      "n_rows": 2,
+      "quantity": "gamma_oxide_surface",
+      "rows": [
+       "TH-062",
+       "TH-063"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.03136,
+       0.04912
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: water and alpha-bromonaphthalene contact angles, Owens-Wendt",
+      "n_rows": 2,
+      "quantity": "gamma_oxide_surface",
+      "rows": [
+       "TH-064",
+       "TH-065"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.05419,
+       0.056600000000000004
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: surface forces apparatus (JKR)",
+      "n_rows": 2,
+      "quantity": "work_of_adhesion_catechol_oxide",
+      "rows": [
+       "TM-035",
+       "TM-036"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0007,
+       0.002
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: AFM colloidal probe (W_ad = F_ad/1.5 pi R)",
+      "n_rows": 2,
+      "quantity": "work_of_adhesion_catechol_oxide",
+      "rows": [
+       "TM-038",
+       "TM-039"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0001,
+       0.0077
+      ]
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "experiment: high-temperature oxide-melt solution calorimetry vs surface area",
+      "n_rows": 1,
+      "quantity": "gamma_oxide_water",
+      "rows": [
+       "TB-052"
+      ],
+      "stated_uncertainty_min": 0.12,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "aux:u_gamma_op",
+   "prior": {
+    "family": "ignorance: uniform on [0, sum of dry energies]",
+    "gap": false,
+    "low_high_J_m2": [
+     0.0,
+     0.09630292313503346
+    ]
+   },
+   "quantity": "gamma_op (ignorance prior u*(sum of dry energies))",
+   "required_precision": {
+    "interval_at_prior": [
+     -0.047418711115145486,
+     0.07030571840549624
+    ],
+    "monotone": true,
+    "n": 262144,
+    "nearest_threshold": 0.00376938758553,
+    "prior_width_J_m2": 0.09148777697828178,
+    "prior_width_stated_variable": 0.95,
+    "replicate": {
+     "seed": 3648228980,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    "required_width_J_m2": null,
+    "required_width_stated_variable": null,
+    "seed": 3648228979,
+    "status": "unreachable",
+    "width_ratio": null
+   },
+   "sensitivity": {
+    "link": "anchor",
+    "quantity": "W_adh_wet_comparator",
+    "run": "ignorance_ph",
+    "top": [
+     {
+      "parameter": "aux:u_gamma_ow",
+      "shapley": 0.5886,
+      "shapley_ci_low": 0.5808,
+      "sobol_total": 0.5907
+     },
+     {
+      "parameter": "aux:u_gamma_op",
+      "shapley": 0.4097,
+      "shapley_ci_low": 0.4028,
+      "sobol_total": 0.4073
+     },
+     {
+      "parameter": "w_adh_wet_catechol_oxide_analog",
+      "shapley": 0.0068,
+      "shapley_ci_low": -0.0027,
+      "sobol_total": 0.0
+     }
+    ]
+   },
+   "settles": "C1 (Dupre comparator) feasible or falsified",
+   "unit": "J m^-2 (stated variable u, scaled by the median bound 0.0963 J m^-2)",
+   "verdict_now": "inconclusive (Dupre comparator; P_good 0.566; never a finding)"
+  },
+  {
+   "evidence_grade": "ignorance prior",
+   "flip": {
+    "m_W": 0.00376938758553,
+    "quantity": "gamma_op* = gamma_ow + gamma_pw - m_W",
+    "unit": "J m^-2"
+   },
+   "id": "c1_dupre_joint",
+   "kind": "mc",
+   "link": "C1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.00065, spread; needed 0.00542)",
+      "purpose": "both contact energies narrowed together",
+      "required_half_width": 0.005423152404864945,
+      "unit": "J m^-2"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: water and diiodomethane contact angles, Owens-Wendt",
+      "n_rows": 2,
+      "quantity": "gamma_oxide_surface",
+      "rows": [
+       "TH-062",
+       "TH-063"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.03136,
+       0.04912
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: water and alpha-bromonaphthalene contact angles, Owens-Wendt",
+      "n_rows": 2,
+      "quantity": "gamma_oxide_surface",
+      "rows": [
+       "TH-064",
+       "TH-065"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.05419,
+       0.056600000000000004
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: surface forces apparatus (JKR)",
+      "n_rows": 2,
+      "quantity": "work_of_adhesion_catechol_oxide",
+      "rows": [
+       "TM-035",
+       "TM-036"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0007,
+       0.002
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: AFM colloidal probe (W_ad = F_ad/1.5 pi R)",
+      "n_rows": 2,
+      "quantity": "work_of_adhesion_catechol_oxide",
+      "rows": [
+       "TM-038",
+       "TM-039"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0001,
+       0.0077
+      ]
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "experiment: high-temperature oxide-melt solution calorimetry vs surface area",
+      "n_rows": 1,
+      "quantity": "gamma_oxide_water",
+      "rows": [
+       "TB-052"
+      ],
+      "stated_uncertainty_min": 0.12,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: Navrotsky-group calorimetric surface enthalpy (Majzlan et al. 2000)",
+      "n_rows": 1,
+      "quantity": "gamma_oxide_water",
+      "rows": [
+       "TB-053"
+      ],
+      "stated_uncertainty_min": 0.1,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "aux:u_gamma_ow + aux:u_gamma_op",
+   "prior": {
+    "family": "ignorance",
+    "gap": false
+   },
+   "quantity": "gamma_ow and gamma_op together (both contracted by s)",
+   "required_precision": {
+    "monotone": true,
+    "n": 262144,
+    "parameters": [
+     "aux:u_gamma_ow",
+     "aux:u_gamma_op"
+    ],
+    "required_width_J_m2": {
+     "gamma_op": 0.01084630480972989,
+     "gamma_ow": 0.013062199767650386
+    },
+    "seed": 3648228979,
+    "status": "ok",
+    "width_ratio": 0.11855468749999999
+   },
+   "sensitivity": {
+    "link": "anchor",
+    "quantity": "W_adh_wet_comparator",
+    "run": "ignorance_ph",
+    "top": [
+     {
+      "parameter": "aux:u_gamma_ow",
+      "shapley": 0.5886,
+      "shapley_ci_low": 0.5808,
+      "sobol_total": 0.5907
+     },
+     {
+      "parameter": "aux:u_gamma_op",
+      "shapley": 0.4097,
+      "shapley_ci_low": 0.4028,
+      "sobol_total": 0.4073
+     },
+     {
+      "parameter": "w_adh_wet_catechol_oxide_analog",
+      "shapley": 0.0068,
+      "shapley_ci_low": -0.0027,
+      "sobol_total": 0.0
+     }
+    ]
+   },
+   "settles": "C1 (Dupre comparator)",
+   "unit": "J m^-2",
+   "verdict_now": "inconclusive (Dupre comparator; no single parameter decides it)"
+  },
+  {
+   "evidence_grade": "B",
+   "flip": {
+    "quantity": "W_adh,wet = m_W",
+    "unit": "J m^-2",
+    "value": 0.00376938758553
+   },
+   "id": "c1_analog_w_adh_wet",
+   "kind": "mc",
+   "link": "C1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.00065, spread; needed 0.00177)",
+      "purpose": "true value at the analog median 0.002 J m^-2",
+      "required_half_width": 0.0017693875855299998,
+      "unit": "J m^-2"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: surface forces apparatus",
+      "n_rows": 4,
+      "quantity": "w_adh_wet",
+      "rows": [
+       "TD-026",
+       "TD-027",
+       "TD-028",
+       "TD-029"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0008,
+       0.0029900000000000005
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: AFM single-molecule force spectroscopy",
+      "n_rows": 3,
+      "quantity": "adhesion_force",
+      "rows": [
+       "TD-019",
+       "TD-020",
+       "TD-021"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: 180 degree peel test",
+      "n_rows": 2,
+      "quantity": "adhesion_force",
+      "rows": [
+       "TA-033",
+       "TA-036"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: surface forces apparatus (JKR)",
+      "n_rows": 2,
+      "quantity": "work_of_adhesion_catechol_oxide",
+      "rows": [
+       "TM-035",
+       "TM-036"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0007,
+       0.002
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: AFM colloidal probe (W_ad = F_ad/1.5 pi R)",
+      "n_rows": 2,
+      "quantity": "work_of_adhesion_catechol_oxide",
+      "rows": [
+       "TM-038",
+       "TM-039"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0001,
+       0.0077
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: qualitative tape peel test (Fig. S3)",
+      "n_rows": 1,
+      "quantity": "adhesion_force",
+      "rows": [
+       "TA-026"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "w_adh_wet_catechol_oxide_analog",
+   "prior": {
+    "family": "loguniform",
+    "gap": false,
+    "low_high_J_m2": [
+     0.0001,
+     0.015
+    ]
+   },
+   "quantity": "W_adh,wet (flagged analog key)",
+   "required_precision": {
+    "interval_at_prior": [
+     0.0001647702124111223,
+     0.009115764752503454
+    ],
+    "monotone": true,
+    "n": 262144,
+    "nearest_threshold": 0.00376938758553,
+    "prior_width_stated_variable": 4.760103529391441,
+    "replicate": {
+     "seed": 3648228980,
+     "status": "ok",
+     "width_ratio": 0.56044921875
+    },
+    "required_width_stated_variable": 2.6654720349150893,
+    "seed": 3648228979,
+    "status": "ok",
+    "width_ratio": 0.5599609374999999
+   },
+   "sensitivity": {
+    "link": "anchor",
+    "quantity": "W_adh_wet_analog",
+    "run": "ignorance_ph",
+    "top": [
+     {
+      "parameter": "w_adh_wet_catechol_oxide_analog",
+      "shapley": 1.0169,
+      "shapley_ci_low": 0.9994,
+      "sobol_total": 1.0
+     },
+     {
+      "parameter": "aux:u_gamma_ow",
+      "shapley": 0.0162,
+      "shapley_ci_low": 0.0033,
+      "sobol_total": 0.0
+     }
+    ]
+   },
+   "settles": "C1 (analog) feasible or falsified",
+   "unit": "ln(J m^-2) (loguniform prior, stated variable ln)",
+   "verdict_now": "inconclusive (analog; P_good 0.276)"
+  },
+  {
+   "evidence_grade": "gap",
+   "flip": {
+    "quantity": "W_adh,wet* = m_W; Delta_F_pmf* = m_W * A_c",
+    "unit": "J m^-2",
+    "value": 0.00376938758553
+   },
+   "id": "c1_pmf",
+   "kind": "gap",
+   "link": "C1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.00065, spread; needed 0.00177)",
+      "purpose": "true value at the analog median 0.002 J m^-2",
+      "required_half_width": 0.0017693875855299998,
+      "unit": "J m^-2"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: surface forces apparatus",
+      "n_rows": 4,
+      "quantity": "w_adh_wet",
+      "rows": [
+       "TD-026",
+       "TD-027",
+       "TD-028",
+       "TD-029"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0008,
+       0.0029900000000000005
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: AFM single-molecule force spectroscopy",
+      "n_rows": 3,
+      "quantity": "adhesion_force",
+      "rows": [
+       "TD-019",
+       "TD-020",
+       "TD-021"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: 180 degree peel test",
+      "n_rows": 2,
+      "quantity": "adhesion_force",
+      "rows": [
+       "TA-033",
+       "TA-036"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: surface forces apparatus (JKR)",
+      "n_rows": 2,
+      "quantity": "work_of_adhesion_catechol_oxide",
+      "rows": [
+       "TM-035",
+       "TM-036"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0007,
+       0.002
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: AFM colloidal probe (W_ad = F_ad/1.5 pi R)",
+      "n_rows": 2,
+      "quantity": "work_of_adhesion_catechol_oxide",
+      "rows": [
+       "TM-038",
+       "TM-039"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0001,
+       0.0077
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: qualitative tape peel test (Fig. S3)",
+      "n_rows": 1,
+      "quantity": "adhesion_force",
+      "rows": [
+       "TA-026"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "Delta_F_pmf, A_c",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "Delta_F_pmf and A_c (registered PMF route W = Delta_F_pmf / A_c)",
+   "required_precision": {
+    "rule": "no registered prior or bound: a W (or Delta_F/A_c) known to +-d decides the verdict when |W - 0.00377| > d; for W at the analog median 0.002 J m^-2 that is d < 0.00177 J m^-2",
+    "status": "gap"
+   },
+   "sensitivity": null,
+   "settles": "C1 (decisive route)",
+   "unit": "J m^-2 for W; J for Delta_F_pmf",
+   "verdict_now": "inconclusive (gap, counted inconclusive)"
+  },
+  {
+   "cells": [
+    {
+     "axes": {
+      "Ca_T": "0.0001 mol dm^-3",
+      "I": "I@max",
+      "P_T": "0.001 mol dm^-3",
+      "a_w": "dry_room_min",
+      "pH": "pH@max"
+     },
+     "cell": "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@max; a_w=dry_room_min",
+     "interval_at_prior_omega": [
+      0.7337274653459974,
+      26809.64178804055
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 2.9354999999999976,
+     "required_width_log10": 2.2566656249999983,
+     "status": "ok",
+     "width_ratio": 0.76875
+    },
+    {
+     "axes": {
+      "Ca_T": "0.0001 mol dm^-3",
+      "I": "I@min",
+      "P_T": "0.01 mol dm^-3",
+      "a_w": "dry_room_min",
+      "pH": "pH@value"
+     },
+     "cell": "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@value; I=I@min; a_w=dry_room_min",
+     "interval_at_prior_omega": [
+      0.00033273925729073025,
+      12.80187012675643
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 2.9354999999999976,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    {
+     "axes": {
+      "Ca_T": "0.001 mol dm^-3",
+      "I": "I@value",
+      "P_T": "0.1 mol dm^-3",
+      "a_w": "dry_room_min",
+      "pH": "pH@value"
+     },
+     "cell": "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value; a_w=dry_room_min",
+     "interval_at_prior_omega": [
+      0.37953669890851455,
+      14647.973599997244
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 2.9354999999999976,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    {
+     "axes": {
+      "Ca_T": "1e-05 mol dm^-3",
+      "I": "I@min",
+      "P_T": "0.01 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@max"
+     },
+     "cell": "Ca_T=1e-05 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@min; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.009248728108352661,
+      356.0367784329044
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 2.9354999999999976,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    {
+     "axes": {
+      "Ca_T": "1e-05 mol dm^-3",
+      "I": "I@value",
+      "P_T": "0.1 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@value"
+     },
+     "cell": "Ca_T=1e-05 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@value; a_w=wet_film",
+     "interval_at_prior_omega": [
+      3.38233705514769e-05,
+      1.3053690189840945
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 2.9354999999999976,
+     "required_width_log10": 2.387387109374998,
+     "status": "ok",
+     "width_ratio": 0.81328125
+    },
+    {
+     "axes": {
+      "Ca_T": "1e-06 mol dm^-3",
+      "I": "I@value",
+      "P_T": "0.0001 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@min"
+     },
+     "cell": "Ca_T=1e-06 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@value; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.0010769067137619793,
+      1.5691354853529411
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 2.9354999999999976,
+     "required_width_log10": 2.328619775390623,
+     "status": "ok",
+     "width_ratio": 0.7932617187500001
+    }
+   ],
+   "evidence_grade": "A",
+   "id": "k2_ksp_hap",
+   "kind": "mc",
+   "link": "K2",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.06, stated; needed 1.16)",
+      "purpose": "median required half-width over the cells where K_sp alone decides",
+      "required_half_width": 1.1643098876953115,
+      "unit": "log10"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "A"
+      ],
+      "method": "experiment: solubility isotherms, least-squares adjustment of Ca, P and pH subject to electroneutrality, constant activity product and stoichiometric dissolution",
+      "n_rows": 2,
+      "quantity": "ksp_hap",
+      "rows": [
+       "TR-055",
+       "TR-056"
+      ],
+      "stated_uncertainty_min": 0.06,
+      "value_spread": [
+       -57.43,
+       -54.6
+      ]
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: commonly accepted literature value quoted by the authors",
+      "n_rows": 1,
+      "quantity": "ksp_hap",
+      "rows": [
+       "TR-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: linear correlation of pKS per Ca versus Ca/P of the calcium orthophosphates, extrapolated to HAP",
+      "n_rows": 1,
+      "quantity": "ksp_hap",
+      "rows": [
+       "TR-058"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "n_inconclusive_cells": 98,
+   "parameter": "log10_ksp_hap",
+   "prior": {
+    "evidence_grade": "A",
+    "family": "uniform",
+    "gap": false,
+    "high": -54.46,
+    "key": "log10_ksp_hap",
+    "low": -57.55,
+    "sources": [
+     "TR-055",
+     "TR-056"
+    ],
+    "status": "sourced",
+    "unit": "1",
+    "value": -56.015
+   },
+   "quantity": "log10 K_sp (Ca5(PO4)3OH)",
+   "sensitivity": null,
+   "settles": "K2 (dissolution stability) in the inconclusive cells",
+   "summary": {
+    "already_clears": 0,
+    "cells_evaluated": 6,
+    "median_required_half_width_log10": 1.1643098876953115,
+    "median_width_ratio": 0.7932617187500001,
+    "note": "unreachable: narrowing K_sp alone leaves the cell inconclusive; the speciation inputs must improve with it",
+    "ok": 3,
+    "prior_width_log10": 2.9354999999999976,
+    "unreachable": 3
+   },
+   "unit": "log10 units (stated variable; log10-transform key)",
+   "verdict_now": "suitable against dissolution (98 of 648 cells inconclusive)"
+  },
+  {
+   "cells": [
+    {
+     "axes": {
+      "Ca_T": "0.0001 mol dm^-3",
+      "I": "I@max",
+      "P_T": "0.001 mol dm^-3",
+      "a_w": "dry_room_min",
+      "pH": "pH@max"
+     },
+     "cell": "Ca_T=0.0001 mol dm^-3; P_T=0.001 mol dm^-3; pH=pH@max; I=I@max; a_w=dry_room_min",
+     "interval_at_prior_omega": [
+      0.04646928105502824,
+      11.096612424773763
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 0.15679711876320113,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    {
+     "axes": {
+      "Ca_T": "0.0001 mol dm^-3",
+      "I": "I@max",
+      "P_T": "0.01 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@max"
+     },
+     "cell": "Ca_T=0.0001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@max; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.004265789228379601,
+      1.0755205364676492
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 0.15679711876320113,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    {
+     "axes": {
+      "Ca_T": "0.0001 mol dm^-3",
+      "I": "I@value",
+      "P_T": "0.1 mol dm^-3",
+      "a_w": "dry_room_min",
+      "pH": "pH@min"
+     },
+     "cell": "Ca_T=0.0001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@min; I=I@value; a_w=dry_room_min",
+     "interval_at_prior_omega": [
+      0.016606157914779176,
+      4.052640118004095
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 0.15679711876320113,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    {
+     "axes": {
+      "Ca_T": "0.0001 mol dm^-3",
+      "I": "I@max",
+      "P_T": "1e-05 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@value"
+     },
+     "cell": "Ca_T=0.0001 mol dm^-3; P_T=1e-05 mol dm^-3; pH=pH@value; I=I@max; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.16728754142275268,
+      4.975750170751422
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 0.15679711876320113,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    {
+     "axes": {
+      "Ca_T": "0.001 mol dm^-3",
+      "I": "I@min",
+      "P_T": "0.1 mol dm^-3",
+      "a_w": "dry_room_min",
+      "pH": "pH@value"
+     },
+     "cell": "Ca_T=0.001 mol dm^-3; P_T=0.1 mol dm^-3; pH=pH@value; I=I@min; a_w=dry_room_min",
+     "interval_at_prior_omega": [
+      0.3358429010562073,
+      84.78680943940995
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 0.15679711876320113,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    {
+     "axes": {
+      "Ca_T": "0.01 mol dm^-3",
+      "I": "I@max",
+      "P_T": "1e-06 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@max"
+     },
+     "cell": "Ca_T=0.01 mol dm^-3; P_T=1e-06 mol dm^-3; pH=pH@max; I=I@max; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.12795870276533639,
+      5.1064553665879355
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 0.15679711876320113,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    }
+   ],
+   "evidence_grade": "A",
+   "id": "k2_ksp_btcp",
+   "kind": "mc",
+   "link": "K2",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "not assessed",
+      "purpose": "median required half-width over the cells where K_sp alone decides",
+      "required_half_width": null,
+      "unit": "log10"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "A",
+       "B"
+      ],
+      "method": "experiment: equilibrium immersion of beta-TCP powder, Ca and P by ICP, pH, ionic model with ion pairs",
+      "n_rows": 2,
+      "quantity": "ksp_beta_tcp",
+      "rows": [
+       "TR-069",
+       "TR-070"
+      ],
+      "stated_uncertainty_min": 0.04,
+      "value_spread": [
+       -29.05,
+       -28.87
+      ]
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: Table 1 of the review, values from the cited primary works",
+      "n_rows": 1,
+      "quantity": "ksp_beta_tcp",
+      "rows": [
+       "TR-104"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "n_inconclusive_cells": 82,
+   "parameter": "log10_ksp_btcp",
+   "prior": {
+    "evidence_grade": "A",
+    "family": "normal",
+    "gap": false,
+    "high": -28.79,
+    "key": "log10_ksp_btcp",
+    "low": -28.95,
+    "sources": [
+     "TR-069"
+    ],
+    "status": "single-source",
+    "unit": "1",
+    "value": -28.87
+   },
+   "quantity": "log10 K_sp (Ca3(PO4)2)",
+   "sensitivity": null,
+   "settles": "K2 (dissolution stability) in the inconclusive cells",
+   "summary": {
+    "already_clears": 0,
+    "cells_evaluated": 6,
+    "median_required_half_width_log10": null,
+    "median_width_ratio": null,
+    "note": "unreachable: narrowing K_sp alone leaves the cell inconclusive; the speciation inputs must improve with it",
+    "ok": 0,
+    "prior_width_log10": 0.15679711876320113,
+    "unreachable": 6
+   },
+   "unit": "log10 units (stated variable; log10-transform key)",
+   "verdict_now": "suitable against dissolution (82 of 648 cells inconclusive)"
+  },
+  {
+   "cells": [
+    {
+     "axes": {
+      "Ca_T": "0.0001 mol dm^-3",
+      "I": "I@max",
+      "P_T": "0.0001 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@max"
+     },
+     "cell": "Ca_T=0.0001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@max; I=I@max; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.00022988528474050048,
+      1.515928648646397
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 4.180000000000003,
+     "required_width_log10": 3.6783183593750026,
+     "status": "ok",
+     "width_ratio": 0.8799804687499999
+    },
+    {
+     "axes": {
+      "Ca_T": "0.001 mol dm^-3",
+      "I": "I@min",
+      "P_T": "0.0001 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@min"
+     },
+     "cell": "Ca_T=0.001 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@min; I=I@min; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.05483631502957445,
+      279.5142828696874
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 4.180000000000003,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    },
+    {
+     "axes": {
+      "Ca_T": "0.001 mol dm^-3",
+      "I": "I@min",
+      "P_T": "0.01 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@max"
+     },
+     "cell": "Ca_T=0.001 mol dm^-3; P_T=0.01 mol dm^-3; pH=pH@max; I=I@min; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.0004630066454131782,
+      6.806008219734986
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 4.180000000000003,
+     "required_width_log10": 1.115210937500001,
+     "status": "ok",
+     "width_ratio": 0.26679687500000004
+    },
+    {
+     "axes": {
+      "Ca_T": "0.001 mol dm^-3",
+      "I": "I@min",
+      "P_T": "1e-05 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@max"
+     },
+     "cell": "Ca_T=0.001 mol dm^-3; P_T=1e-05 mol dm^-3; pH=pH@max; I=I@min; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.00034869539802378103,
+      2.0333713104745783
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 4.180000000000003,
+     "required_width_log10": 3.3272636718750026,
+     "status": "ok",
+     "width_ratio": 0.79599609375
+    },
+    {
+     "axes": {
+      "Ca_T": "0.01 mol dm^-3",
+      "I": "I@value",
+      "P_T": "0.0001 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@value"
+     },
+     "cell": "Ca_T=0.01 mol dm^-3; P_T=0.0001 mol dm^-3; pH=pH@value; I=I@value; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.5773197364232049,
+      3377.8531809668443
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 4.180000000000003,
+     "required_width_log10": 3.5260585937500033,
+     "status": "ok",
+     "width_ratio": 0.8435546875000002
+    },
+    {
+     "axes": {
+      "Ca_T": "0.01 mol dm^-3",
+      "I": "I@value",
+      "P_T": "1e-05 mol dm^-3",
+      "a_w": "wet_film",
+      "pH": "pH@value"
+     },
+     "cell": "Ca_T=0.01 mol dm^-3; P_T=1e-05 mol dm^-3; pH=pH@value; I=I@value; a_w=wet_film",
+     "interval_at_prior_omega": [
+      0.0058256920072524586,
+      34.085731569390866
+     ],
+     "nearest_threshold": 1.0,
+     "prior_width_log10": 4.180000000000003,
+     "required_width_log10": null,
+     "status": "unreachable",
+     "width_ratio": null
+    }
+   ],
+   "evidence_grade": "D",
+   "id": "k2_ksp_acp",
+   "kind": "mc",
+   "link": "K2",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "not within reach (smallest figure 2.2, spread; needed 1.71)",
+      "purpose": "median required half-width over the cells where K_sp alone decides",
+      "required_half_width": 1.7133305664062515,
+      "unit": "log10"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: Table 1 of the review, values from the cited primary works",
+      "n_rows": 6,
+      "quantity": "ksp_acc_phosphate",
+      "rows": [
+       "TR-097",
+       "TR-098",
+       "TR-099",
+       "TR-100",
+       "TR-101",
+       "TR-102"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       -28.3,
+       -23.9
+      ]
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: critical reading of the literature by the review authors",
+      "n_rows": 1,
+      "quantity": "ksp_acc_phosphate",
+      "rows": [
+       "TR-105"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "n_inconclusive_cells": 94,
+   "parameter": "log10_ksp_acp",
+   "prior": {
+    "evidence_grade": "D",
+    "family": "uniform",
+    "gap": false,
+    "high": -23.9,
+    "key": "log10_ksp_acp",
+    "low": -28.3,
+    "sources": [
+     "TR-097",
+     "TR-098",
+     "TR-099",
+     "TR-100",
+     "TR-101",
+     "TR-102"
+    ],
+    "status": "single-source",
+    "unit": "1",
+    "value": -25.5
+   },
+   "quantity": "log10 K_sp (Ca3(PO4)2.nH2O)",
+   "sensitivity": null,
+   "settles": "K2 (dissolution stability) in the inconclusive cells",
+   "summary": {
+    "already_clears": 0,
+    "cells_evaluated": 6,
+    "median_required_half_width_log10": 1.7133305664062515,
+    "median_width_ratio": 0.819775390625,
+    "note": "unreachable: narrowing K_sp alone leaves the cell inconclusive; the speciation inputs must improve with it",
+    "ok": 4,
+    "prior_width_log10": 4.180000000000003,
+    "unreachable": 2
+   },
+   "unit": "log10 units (stated variable; log10-transform key)",
+   "verdict_now": "suitable against dissolution (94 of 648 cells inconclusive)"
+  },
+  {
+   "id": "k2_ksp_ocp",
+   "kind": "mc",
+   "kind_note": "control-gated",
+   "link": "K2",
+   "parameter": "log10_ksp_ocp",
+   "quantity": "log10 K_sp (Ca8H2(PO4)6.5H2O)",
+   "required_precision": {
+    "n_inconclusive_cells_before_control": 0,
+    "note": "the phase's cells are inconclusive only through its failed falsifiability control (False)",
+    "status": "no_inconclusive_cell_before_control"
+   },
+   "settles": "K2",
+   "verdict_now": "open"
+  },
+  {
+   "evidence_grade": "evidence-table row exists, no params key: A",
+   "evidence_values": [
+    [
+     "TR-081",
+     "-6.592",
+     "A"
+    ]
+   ],
+   "flip": {
+    "n_cells": 324,
+    "note": "stoichiometry from the formula unit (not registered in screen.yaml k2_phases); IAP from the registered phosphate speciation",
+    "over_cells_q05_median_q95_of_medians": [
+     -13.737090786303368,
+     -10.750607130784612,
+     -7.684958886821796
+    ],
+    "quantity": "log10 K_sp* = log10 IAP (per cell, slurry state, a_w = 1)",
+    "unit": "log10",
+    "within_cell_spread_q05_q95_median": 0.8923650731456636
+   },
+   "id": "k2_ksp_brushite",
+   "kind": "gap",
+   "link": "K2",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.008, stated; needed 0.446)",
+      "purpose": "below the within-cell speciation spread",
+      "required_half_width": 0.4461825365728318,
+      "unit": "log10"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "A"
+      ],
+      "method": "experiment: solubility isotherms, generalized least squares subject to constant solubility product, electroneutrality and congruent dissolution",
+      "n_rows": 1,
+      "quantity": "ksp_brushite",
+      "rows": [
+       "TR-081"
+      ],
+      "stated_uncertainty_min": 0.008,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "no key (gap)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "log10 K_sp (CaHPO4.2H2O)",
+   "required_precision": {
+    "rule": "no registered bound; log10 K_sp known to +-d decides a cell when |log10 K_sp - flip| > d (the speciation spread within a cell is +-0.45 log10)",
+    "status": "gap"
+   },
+   "settles": "K2 in every cell of the registered slurry grid",
+   "unit": "log10 units",
+   "verdict_now": "undetermined (no K_sp key in lit/params.yaml)"
+  },
+  {
+   "evidence_grade": "evidence-table row exists, no params key: D",
+   "evidence_values": [
+    [
+     "TR-103",
+     "-25.5",
+     "D"
+    ]
+   ],
+   "flip": {
+    "n_cells": 324,
+    "note": "stoichiometry from the formula unit (not registered in screen.yaml k2_phases); IAP from the registered phosphate speciation",
+    "over_cells_q05_median_q95_of_medians": [
+     -35.45691962474084,
+     -28.460319709949083,
+     -20.0352065124639
+    ],
+    "quantity": "log10 K_sp* = log10 IAP (per cell, slurry state, a_w = 1)",
+    "unit": "log10",
+    "within_cell_spread_q05_q95_median": 1.8015598064456029
+   },
+   "id": "k2_ksp_atcp",
+   "kind": "gap",
+   "link": "K2",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "undetermined (no listed method gives an uncertainty or a spread in this unit)",
+      "purpose": "below the within-cell speciation spread",
+      "required_half_width": 0.9007799032228014,
+      "unit": "log10"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: Table 1 of the review, values from the cited primary works",
+      "n_rows": 1,
+      "quantity": "ksp_alpha_tcp",
+      "rows": [
+       "TR-103"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "no key (gap)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "log10 K_sp (alpha-Ca3(PO4)2)",
+   "required_precision": {
+    "rule": "no registered bound; log10 K_sp known to +-d decides a cell when |log10 K_sp - flip| > d (the speciation spread within a cell is +-0.90 log10)",
+    "status": "gap"
+   },
+   "settles": "K2 in every cell of the registered slurry grid",
+   "unit": "log10 units",
+   "verdict_now": "undetermined (no K_sp key in lit/params.yaml)"
+  },
+  {
+   "evidence_grade": "evidence-table rows grade B (solubility) and D (K_sp compilation); no params key",
+   "flip": {
+    "note": "not computable: the speciation carries no Li+ activity",
+    "quantity": "log10 K_sp* = log10 IAP"
+   },
+   "id": "k2_ksp_li3po4",
+   "kind": "gap",
+   "link": "K2",
+   "measurable_by": {
+    "assessments": [],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: static isothermal dissolution, Li by ICP-OES",
+      "n_rows": 2,
+      "quantity": "solubility_li3po4",
+      "rows": [
+       "TR-076",
+       "TR-077"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.0244,
+       0.0437
+      ]
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: literature value quoted in the Introduction (refs 30, 31)",
+      "n_rows": 1,
+      "quantity": "ksp_li3po4",
+      "rows": [
+       "TR-078"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: literature value quoted in the Introduction",
+      "n_rows": 1,
+      "quantity": "ksp_li3po4",
+      "rows": [
+       "TR-079"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "no key (gap)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "log10 K_sp (Li3PO4)",
+   "required_precision": {
+    "status": "not_computable"
+   },
+   "settles": "K2 of the competing phase",
+   "unit": "log10 units",
+   "verdict_now": "undetermined"
+  },
+  {
+   "evidence_grade": "gap (acp_water_content: one compilation row)",
+   "flip": {
+    "fraction_of_cells_with_median_n_star_ge_0": 0.3148148148148148,
+    "n_cells": 324,
+    "over_cells_median_of_medians": -0.4002218296376576,
+    "q05_q95_of_medians": [
+     -1.5734772205881233,
+     1.0139008886315706
+    ],
+    "quantity": "n* = ln(Omega_anhydrous) / ln(1/a_w); K2 passes for n <= n*",
+    "unit": "1"
+   },
+   "id": "n_hyd_acp",
+   "kind": "gap",
+   "link": "K2 (ACP, drying)",
+   "measurable_by": {
+    "assessments": [],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "A"
+      ],
+      "method": "experiment: thermogravimetric analysis",
+      "n_rows": 6,
+      "quantity": "acc_hydration_n",
+      "rows": [
+       "TL-053",
+       "TL-054",
+       "TL-055",
+       "TL-056",
+       "TL-057",
+       "TL-058"
+      ],
+      "stated_uncertainty_min": 0.01,
+      "value_spread": [
+       0.25,
+       1.58
+      ]
+     },
+     {
+      "grades": [
+       "A",
+       "B"
+      ],
+      "method": "experiment: thermogravimetric analysis, mean of three determinations",
+      "n_rows": 2,
+      "quantity": "acc_hydration_n",
+      "rows": [
+       "TL-059",
+       "TL-060"
+      ],
+      "stated_uncertainty_min": 0.03,
+      "value_spread": [
+       0.5,
+       1.1
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "experiment: thermogravimetric analysis; n derived",
+      "n_rows": 1,
+      "quantity": "acc_hydration_n",
+      "rows": [
+       "TL-062"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: statement in the text citing refs 71 and 72",
+      "n_rows": 1,
+      "quantity": "acp_water_content",
+      "rows": [
+       "TR-106"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "n_hyd_acp (gap)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "n_hyd (ACP structural water per formula unit)",
+   "required_precision": {
+    "rule": "n known to +-d decides a cell when |n - n*| > d; evidence-table values of acc_hydration_n (calcium carbonate ACC, 0.25 to 1.58) are not an ACP datum",
+    "status": "gap"
+   },
+   "settles": "K2 of ACP at drying cells",
+   "unit": "mol H2O per formula unit",
+   "verdict_now": "undetermined at drying cells with a_w < 1"
+  },
+  {
+   "evidence_grade": "E_ub sourced (tabulated thermochemistry); E_lb pending (no measured Ca2+ or Al3+ transfer free energy water to PC; the evidence-table Ca2+ transfer rows are water to acetonitrile)",
+   "flip": {
+    "E_ub_V": 4.2658,
+    "by_class": {
+     "C_hi": {
+      "E_c_sup_V": 4.5,
+      "E_lb_flip_V": 4.6665,
+      "headroom_V": -0.4007000000000005,
+      "headroom_kJ_per_formula_reaction": -77.3233451609681,
+      "pass_possible": false
+     },
+     "C_lo": {
+      "E_c_sup_V": 3.65,
+      "E_lb_flip_V": 3.8165,
+      "headroom_V": 0.4492999999999996,
+      "headroom_kJ_per_formula_reaction": 86.70171944303192,
+      "pass_possible": true
+     },
+     "C_mid": {
+      "E_c_sup_V": 4.3,
+      "E_lb_flip_V": 4.4665,
+      "headroom_V": -0.20070000000000032,
+      "headroom_kJ_per_formula_reaction": -38.72921231296806,
+      "pass_possible": false
+     }
+    },
+    "m_expt_V": 0.1665,
+    "n_e": 2.0,
+    "quantity": "E_lb* = sup(E_c) + m_expt",
+    "unit": "V"
+   },
+   "id": "k1_brushite_crystalline",
+   "kind": "closed",
+   "link": "K1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.8, spread; needed 86.7)",
+      "purpose": "headroom at C_lo (kJ per formula reaction)",
+      "required_half_width": 86.70171944303192,
+      "unit": "kJ mol^-1"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 3,
+      "quantity": "transfer_multi_ca2_water_acetonitrile",
+      "rows": [
+       "TT-118",
+       "TT-119",
+       "TT-120"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       25.0,
+       50.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 2,
+      "quantity": "transfer_free_energy_li_pc_compiled",
+      "rows": [
+       "TT-096",
+       "TT-101"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.2,
+       23.8
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991 (J. Chem. Soc. Faraday Trans. 87, 2995)",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-054"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-055"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6-4 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "E_lb / Delta_G_tr_rel (transfer premise)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "E_lb (aqueous-ion lower bound of the onset), brushite crystalline",
+   "required_precision": {
+    "rule": "E_lb known to +-d decides a class when |E_lb - E_lb*| > d; the pass is possible only where headroom_V > 0, and a computed premise adds u_tr/(n_e F) to the edge",
+    "status": "gap"
+   },
+   "settles": "K1 pass (E_lb >= E_c + m_expt) at the listed classes",
+   "unit": "V (and kJ mol^-1 of reaction via n_e F)",
+   "verdict_now": "inconclusive at C_lo, C_mid, C_hi (E_ub 4.2658 V, E_lb pending)"
+  },
+  {
+   "evidence_grade": "E_ub sourced (tabulated thermochemistry); E_lb pending (no measured Ca2+ or Al3+ transfer free energy water to PC; the evidence-table Ca2+ transfer rows are water to acetonitrile)",
+   "flip": {
+    "E_ub_V": 4.0223,
+    "by_class": {
+     "C_lo": {
+      "E_c_sup_V": 3.65,
+      "E_lb_flip_V": 3.798,
+      "headroom_V": 0.2243000000000004,
+      "headroom_kJ_per_formula_reaction": 43.28331998903207,
+      "pass_possible": true
+     }
+    },
+    "m_expt_V": 0.148,
+    "n_e": 2.0,
+    "quantity": "E_lb* = sup(E_c) + m_expt",
+    "unit": "V"
+   },
+   "id": "k1_acp_crystalline",
+   "kind": "closed",
+   "link": "K1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.8, spread; needed 43.3)",
+      "purpose": "headroom at C_lo (kJ per formula reaction)",
+      "required_half_width": 43.28331998903207,
+      "unit": "kJ mol^-1"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 3,
+      "quantity": "transfer_multi_ca2_water_acetonitrile",
+      "rows": [
+       "TT-118",
+       "TT-119",
+       "TT-120"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       25.0,
+       50.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 2,
+      "quantity": "transfer_free_energy_li_pc_compiled",
+      "rows": [
+       "TT-096",
+       "TT-101"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.2,
+       23.8
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991 (J. Chem. Soc. Faraday Trans. 87, 2995)",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-054"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-055"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6-4 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "E_lb / Delta_G_tr_rel (transfer premise)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "E_lb (aqueous-ion lower bound of the onset), ACP crystalline",
+   "required_precision": {
+    "rule": "E_lb known to +-d decides a class when |E_lb - E_lb*| > d; the pass is possible only where headroom_V > 0, and a computed premise adds u_tr/(n_e F) to the edge",
+    "status": "gap"
+   },
+   "settles": "K1 pass (E_lb >= E_c + m_expt) at the listed classes",
+   "unit": "V (and kJ mol^-1 of reaction via n_e F)",
+   "verdict_now": "inconclusive at C_lo (E_ub 4.0223 V, E_lb pending)"
+  },
+  {
+   "evidence_grade": "E_ub sourced (tabulated thermochemistry); E_lb pending (no measured Ca2+ or Al3+ transfer free energy water to PC; the evidence-table Ca2+ transfer rows are water to acetonitrile)",
+   "flip": {
+    "E_ub_V": 4.0674,
+    "by_class": {
+     "C_lo": {
+      "E_c_sup_V": 3.65,
+      "E_lb_flip_V": 3.7744,
+      "headroom_V": 0.29300000000000015,
+      "headroom_kJ_per_formula_reaction": 113.08080924464007,
+      "pass_possible": true
+     }
+    },
+    "m_expt_V": 0.1244,
+    "n_e": 4.0,
+    "quantity": "E_lb* = sup(E_c) + m_expt",
+    "unit": "V"
+   },
+   "id": "k1_hap_crystalline",
+   "kind": "closed",
+   "link": "K1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.8, spread; needed 113)",
+      "purpose": "headroom at C_lo (kJ per formula reaction)",
+      "required_half_width": 113.08080924464007,
+      "unit": "kJ mol^-1"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 3,
+      "quantity": "transfer_multi_ca2_water_acetonitrile",
+      "rows": [
+       "TT-118",
+       "TT-119",
+       "TT-120"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       25.0,
+       50.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 2,
+      "quantity": "transfer_free_energy_li_pc_compiled",
+      "rows": [
+       "TT-096",
+       "TT-101"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.2,
+       23.8
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991 (J. Chem. Soc. Faraday Trans. 87, 2995)",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-054"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-055"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6-4 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "E_lb / Delta_G_tr_rel (transfer premise)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "E_lb (aqueous-ion lower bound of the onset), HAp crystalline",
+   "required_precision": {
+    "rule": "E_lb known to +-d decides a class when |E_lb - E_lb*| > d; the pass is possible only where headroom_V > 0, and a computed premise adds u_tr/(n_e F) to the edge",
+    "status": "gap"
+   },
+   "settles": "K1 pass (E_lb >= E_c + m_expt) at the listed classes",
+   "unit": "V (and kJ mol^-1 of reaction via n_e F)",
+   "verdict_now": "inconclusive at C_lo (E_ub 4.0674 V, E_lb pending)"
+  },
+  {
+   "evidence_grade": "E_ub sourced (tabulated thermochemistry); E_lb pending (no measured Ca2+ or Al3+ transfer free energy water to PC; the evidence-table Ca2+ transfer rows are water to acetonitrile)",
+   "flip": {
+    "E_ub_V": 4.0223,
+    "by_class": {
+     "C_lo": {
+      "E_c_sup_V": 3.65,
+      "E_lb_flip_V": 3.798,
+      "headroom_V": 0.2243000000000004,
+      "headroom_kJ_per_formula_reaction": 43.28331998903207,
+      "pass_possible": true
+     }
+    },
+    "m_expt_V": 0.148,
+    "n_e": 2.0,
+    "quantity": "E_lb* = sup(E_c) + m_expt",
+    "unit": "V"
+   },
+   "id": "k1_b_tcp_crystalline",
+   "kind": "closed",
+   "link": "K1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.8, spread; needed 43.3)",
+      "purpose": "headroom at C_lo (kJ per formula reaction)",
+      "required_half_width": 43.28331998903207,
+      "unit": "kJ mol^-1"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 3,
+      "quantity": "transfer_multi_ca2_water_acetonitrile",
+      "rows": [
+       "TT-118",
+       "TT-119",
+       "TT-120"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       25.0,
+       50.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 2,
+      "quantity": "transfer_free_energy_li_pc_compiled",
+      "rows": [
+       "TT-096",
+       "TT-101"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.2,
+       23.8
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991 (J. Chem. Soc. Faraday Trans. 87, 2995)",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-054"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-055"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6-4 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "E_lb / Delta_G_tr_rel (transfer premise)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "E_lb (aqueous-ion lower bound of the onset), b-TCP crystalline",
+   "required_precision": {
+    "rule": "E_lb known to +-d decides a class when |E_lb - E_lb*| > d; the pass is possible only where headroom_V > 0, and a computed premise adds u_tr/(n_e F) to the edge",
+    "status": "gap"
+   },
+   "settles": "K1 pass (E_lb >= E_c + m_expt) at the listed classes",
+   "unit": "V (and kJ mol^-1 of reaction via n_e F)",
+   "verdict_now": "inconclusive at C_lo (E_ub 4.0223 V, E_lb pending)"
+  },
+  {
+   "evidence_grade": "E_ub sourced (tabulated thermochemistry); E_lb pending (no measured Ca2+ or Al3+ transfer free energy water to PC; the evidence-table Ca2+ transfer rows are water to acetonitrile)",
+   "flip": {
+    "E_ub_V": 3.981,
+    "by_class": {
+     "C_lo": {
+      "E_c_sup_V": 3.65,
+      "E_lb_flip_V": 3.8154,
+      "headroom_V": 0.16559999999999997,
+      "headroom_kJ_per_formula_reaction": 31.955941998143995,
+      "pass_possible": true
+     }
+    },
+    "m_expt_V": 0.1654,
+    "n_e": 2.0,
+    "quantity": "E_lb* = sup(E_c) + m_expt",
+    "unit": "V"
+   },
+   "id": "k1_a_tcp_crystalline",
+   "kind": "closed",
+   "link": "K1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.8, spread; needed 32)",
+      "purpose": "headroom at C_lo (kJ per formula reaction)",
+      "required_half_width": 31.955941998143995,
+      "unit": "kJ mol^-1"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 3,
+      "quantity": "transfer_multi_ca2_water_acetonitrile",
+      "rows": [
+       "TT-118",
+       "TT-119",
+       "TT-120"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       25.0,
+       50.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 2,
+      "quantity": "transfer_free_energy_li_pc_compiled",
+      "rows": [
+       "TT-096",
+       "TT-101"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.2,
+       23.8
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991 (J. Chem. Soc. Faraday Trans. 87, 2995)",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-054"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-055"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6-4 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "E_lb / Delta_G_tr_rel (transfer premise)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "E_lb (aqueous-ion lower bound of the onset), a-TCP crystalline",
+   "required_precision": {
+    "rule": "E_lb known to +-d decides a class when |E_lb - E_lb*| > d; the pass is possible only where headroom_V > 0, and a computed premise adds u_tr/(n_e F) to the edge",
+    "status": "gap"
+   },
+   "settles": "K1 pass (E_lb >= E_c + m_expt) at the listed classes",
+   "unit": "V (and kJ mol^-1 of reaction via n_e F)",
+   "verdict_now": "inconclusive at C_lo (E_ub 3.9810 V, E_lb pending)"
+  },
+  {
+   "evidence_grade": "E_ub sourced (tabulated thermochemistry); E_lb pending (no measured Ca2+ or Al3+ transfer free energy water to PC; the evidence-table Ca2+ transfer rows are water to acetonitrile)",
+   "flip": {
+    "E_ub_V": 4.4497,
+    "by_class": {
+     "C_hi": {
+      "E_c_sup_V": 4.5,
+      "E_lb_flip_V": 4.7308,
+      "headroom_V": -0.28110000000000035,
+      "headroom_kJ_per_formula_reaction": -54.24405371786408,
+      "pass_possible": false
+     },
+     "C_lo": {
+      "E_c_sup_V": 3.65,
+      "E_lb_flip_V": 3.8808,
+      "headroom_V": 0.5689000000000002,
+      "headroom_kJ_per_formula_reaction": 109.78101088613604,
+      "pass_possible": true
+     },
+     "C_mid": {
+      "E_c_sup_V": 4.3,
+      "E_lb_flip_V": 4.5308,
+      "headroom_V": -0.08110000000000017,
+      "headroom_kJ_per_formula_reaction": -15.649920869864035,
+      "pass_possible": false
+     }
+    },
+    "m_expt_V": 0.2308,
+    "n_e": 2.0,
+    "quantity": "E_lb* = sup(E_c) + m_expt",
+    "unit": "V"
+   },
+   "id": "k1_ca2p2o7_crystalline",
+   "kind": "closed",
+   "link": "K1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.8, spread; needed 110)",
+      "purpose": "headroom at C_lo (kJ per formula reaction)",
+      "required_half_width": 109.78101088613604,
+      "unit": "kJ mol^-1"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 3,
+      "quantity": "transfer_multi_ca2_water_acetonitrile",
+      "rows": [
+       "TT-118",
+       "TT-119",
+       "TT-120"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       25.0,
+       50.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 2,
+      "quantity": "transfer_free_energy_li_pc_compiled",
+      "rows": [
+       "TT-096",
+       "TT-101"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.2,
+       23.8
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991 (J. Chem. Soc. Faraday Trans. 87, 2995)",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-054"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-055"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6-4 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "E_lb / Delta_G_tr_rel (transfer premise)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "E_lb (aqueous-ion lower bound of the onset), Ca2P2O7 crystalline",
+   "required_precision": {
+    "rule": "E_lb known to +-d decides a class when |E_lb - E_lb*| > d; the pass is possible only where headroom_V > 0, and a computed premise adds u_tr/(n_e F) to the edge",
+    "status": "gap"
+   },
+   "settles": "K1 pass (E_lb >= E_c + m_expt) at the listed classes",
+   "unit": "V (and kJ mol^-1 of reaction via n_e F)",
+   "verdict_now": "inconclusive at C_lo, C_mid, C_hi (E_ub 4.4497 V, E_lb pending)"
+  },
+  {
+   "evidence_grade": "E_ub sourced (tabulated thermochemistry); E_lb pending (no measured Ca2+ or Al3+ transfer free energy water to PC; the evidence-table Ca2+ transfer rows are water to acetonitrile)",
+   "flip": {
+    "E_ub_V": 4.9818,
+    "by_class": {
+     "C_hi": {
+      "E_c_sup_V": 4.5,
+      "E_lb_flip_V": 4.69,
+      "headroom_V": 0.2917999999999994,
+      "headroom_kJ_per_formula_reaction": 56.308839825231885,
+      "pass_possible": true
+     },
+     "C_lo": {
+      "E_c_sup_V": 3.65,
+      "E_lb_flip_V": 3.84,
+      "headroom_V": 1.1418,
+      "headroom_kJ_per_formula_reaction": 220.333904429232,
+      "pass_possible": true
+     },
+     "C_mid": {
+      "E_c_sup_V": 4.3,
+      "E_lb_flip_V": 4.49,
+      "headroom_V": 0.49179999999999957,
+      "headroom_kJ_per_formula_reaction": 94.90297267323193,
+      "pass_possible": true
+     }
+    },
+    "m_expt_V": 0.19,
+    "n_e": 2.0,
+    "quantity": "E_lb* = sup(E_c) + m_expt",
+    "unit": "V"
+   },
+   "id": "k1_ca_po3_2_ca_polyphosphat_crystalline",
+   "kind": "closed",
+   "link": "K1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.8, spread; needed 220)",
+      "purpose": "headroom at C_lo (kJ per formula reaction)",
+      "required_half_width": 220.333904429232,
+      "unit": "kJ mol^-1"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 3,
+      "quantity": "transfer_multi_ca2_water_acetonitrile",
+      "rows": [
+       "TT-118",
+       "TT-119",
+       "TT-120"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       25.0,
+       50.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 2,
+      "quantity": "transfer_free_energy_li_pc_compiled",
+      "rows": [
+       "TT-096",
+       "TT-101"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.2,
+       23.8
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991 (J. Chem. Soc. Faraday Trans. 87, 2995)",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-054"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-055"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6-4 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "E_lb / Delta_G_tr_rel (transfer premise)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "E_lb (aqueous-ion lower bound of the onset), Ca(PO3)2 / Ca-polyphosphate glass crystalline",
+   "required_precision": {
+    "rule": "E_lb known to +-d decides a class when |E_lb - E_lb*| > d; the pass is possible only where headroom_V > 0, and a computed premise adds u_tr/(n_e F) to the edge",
+    "status": "gap"
+   },
+   "settles": "K1 pass (E_lb >= E_c + m_expt) at the listed classes",
+   "unit": "V (and kJ mol^-1 of reaction via n_e F)",
+   "verdict_now": "inconclusive at C_lo, C_mid, C_hi (E_ub 4.9818 V, E_lb pending)"
+  },
+  {
+   "evidence_grade": "E_ub sourced (tabulated thermochemistry); E_lb pending (no measured Ca2+ or Al3+ transfer free energy water to PC; the evidence-table Ca2+ transfer rows are water to acetonitrile)",
+   "flip": {
+    "E_ub_V": 4.8929,
+    "by_class": {
+     "C_hi": {
+      "E_c_sup_V": 4.5,
+      "E_lb_flip_V": 4.6348,
+      "headroom_V": 0.2580999999999998,
+      "headroom_kJ_per_formula_reaction": 49.80572844034396,
+      "pass_possible": true
+     },
+     "C_lo": {
+      "E_c_sup_V": 3.65,
+      "E_lb_flip_V": 3.7847999999999997,
+      "headroom_V": 1.1081000000000003,
+      "headroom_kJ_per_formula_reaction": 213.8307930443441,
+      "pass_possible": true
+     },
+     "C_mid": {
+      "E_c_sup_V": 4.3,
+      "E_lb_flip_V": 4.4348,
+      "headroom_V": 0.45809999999999995,
+      "headroom_kJ_per_formula_reaction": 88.399861288344,
+      "pass_possible": true
+     }
+    },
+    "m_expt_V": 0.1348,
+    "n_e": 2.0,
+    "quantity": "E_lb* = sup(E_c) + m_expt",
+    "unit": "V"
+   },
+   "id": "k1_ca_po3_2_ca_polyphosphat_amorphous",
+   "kind": "closed",
+   "link": "K1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.8, spread; needed 214)",
+      "purpose": "headroom at C_lo (kJ per formula reaction)",
+      "required_half_width": 213.8307930443441,
+      "unit": "kJ mol^-1"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 3,
+      "quantity": "transfer_multi_ca2_water_acetonitrile",
+      "rows": [
+       "TT-118",
+       "TT-119",
+       "TT-120"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       25.0,
+       50.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 2,
+      "quantity": "transfer_free_energy_li_pc_compiled",
+      "rows": [
+       "TT-096",
+       "TT-101"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.2,
+       23.8
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991 (J. Chem. Soc. Faraday Trans. 87, 2995)",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-054"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-055"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6-4 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "E_lb / Delta_G_tr_rel (transfer premise)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "E_lb (aqueous-ion lower bound of the onset), Ca(PO3)2 / Ca-polyphosphate glass amorphous",
+   "required_precision": {
+    "rule": "E_lb known to +-d decides a class when |E_lb - E_lb*| > d; the pass is possible only where headroom_V > 0, and a computed premise adds u_tr/(n_e F) to the edge",
+    "status": "gap"
+   },
+   "settles": "K1 pass (E_lb >= E_c + m_expt) at the listed classes",
+   "unit": "V (and kJ mol^-1 of reaction via n_e F)",
+   "verdict_now": "inconclusive at C_lo, C_mid, C_hi (E_ub 4.8929 V, E_lb pending)"
+  },
+  {
+   "evidence_grade": "E_ub sourced (tabulated thermochemistry); E_lb pending (no measured Ca2+ or Al3+ transfer free energy water to PC; the evidence-table Ca2+ transfer rows are water to acetonitrile)",
+   "flip": {
+    "E_ub_V": 5.0208,
+    "by_class": {
+     "C_hi": {
+      "E_c_sup_V": 4.5,
+      "E_lb_flip_V": 4.6202,
+      "headroom_V": 0.40060000000000073,
+      "headroom_kJ_per_formula_reaction": 38.65202404727208,
+      "pass_possible": true
+     },
+     "C_lo": {
+      "E_c_sup_V": 3.65,
+      "E_lb_flip_V": 3.7702,
+      "headroom_V": 1.2506000000000004,
+      "headroom_kJ_per_formula_reaction": 120.66455634927203,
+      "pass_possible": true
+     },
+     "C_mid": {
+      "E_c_sup_V": 4.3,
+      "E_lb_flip_V": 4.4201999999999995,
+      "headroom_V": 0.6006000000000009,
+      "headroom_kJ_per_formula_reaction": 57.94909047127209,
+      "pass_possible": true
+     }
+    },
+    "m_expt_V": 0.1202,
+    "n_e": 1.0,
+    "quantity": "E_lb* = sup(E_c) + m_expt",
+    "unit": "V"
+   },
+   "id": "k1_lipo3_n_hydro_quebec_fil_crystalline",
+   "kind": "closed",
+   "link": "K1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.8, spread; needed 121)",
+      "purpose": "headroom at C_lo (kJ per formula reaction)",
+      "required_half_width": 120.66455634927203,
+      "unit": "kJ mol^-1"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 3,
+      "quantity": "transfer_multi_ca2_water_acetonitrile",
+      "rows": [
+       "TT-118",
+       "TT-119",
+       "TT-120"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       25.0,
+       50.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 2,
+      "quantity": "transfer_free_energy_li_pc_compiled",
+      "rows": [
+       "TT-096",
+       "TT-101"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.2,
+       23.8
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991 (J. Chem. Soc. Faraday Trans. 87, 2995)",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-054"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-055"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6-4 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "E_lb / Delta_G_tr_rel (transfer premise)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "E_lb (aqueous-ion lower bound of the onset), (LiPO3)n Hydro-Quebec film crystalline",
+   "required_precision": {
+    "rule": "E_lb known to +-d decides a class when |E_lb - E_lb*| > d; the pass is possible only where headroom_V > 0, and a computed premise adds u_tr/(n_e F) to the edge",
+    "status": "gap"
+   },
+   "settles": "K1 pass (E_lb >= E_c + m_expt) at the listed classes",
+   "unit": "V (and kJ mol^-1 of reaction via n_e F)",
+   "verdict_now": "inconclusive at C_lo, C_mid, C_hi (E_ub 5.0208 V, E_lb pending)"
+  },
+  {
+   "evidence_grade": "E_ub sourced (tabulated thermochemistry); E_lb pending (no measured Ca2+ or Al3+ transfer free energy water to PC; the evidence-table Ca2+ transfer rows are water to acetonitrile)",
+   "flip": {
+    "E_ub_V": 4.9842,
+    "by_class": {
+     "C_hi": {
+      "E_c_sup_V": 4.5,
+      "E_lb_flip_V": 4.7484,
+      "headroom_V": 0.23580000000000023,
+      "headroom_kJ_per_formula_reaction": 22.751241313896024,
+      "pass_possible": true
+     },
+     "C_lo": {
+      "E_c_sup_V": 3.65,
+      "E_lb_flip_V": 3.8984,
+      "headroom_V": 1.0858000000000003,
+      "headroom_kJ_per_formula_reaction": 104.76377361589603,
+      "pass_possible": true
+     },
+     "C_mid": {
+      "E_c_sup_V": 4.3,
+      "E_lb_flip_V": 4.5484,
+      "headroom_V": 0.4358000000000004,
+      "headroom_kJ_per_formula_reaction": 42.048307737896046,
+      "pass_possible": true
+     }
+    },
+    "m_expt_V": 0.2484,
+    "n_e": 1.0,
+    "quantity": "E_lb* = sup(E_c) + m_expt",
+    "unit": "V"
+   },
+   "id": "k1_lipo3_n_hydro_quebec_fil_amorphous",
+   "kind": "closed",
+   "link": "K1",
+   "measurable_by": {
+    "assessments": [
+     {
+      "assessment": "within reach (smallest figure 0.8, spread; needed 105)",
+      "purpose": "headroom at C_lo (kJ per formula reaction)",
+      "required_half_width": 104.76377361589603,
+      "unit": "kJ mol^-1"
+     }
+    ],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "D"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 3,
+      "quantity": "transfer_multi_ca2_water_acetonitrile",
+      "rows": [
+       "TT-118",
+       "TT-119",
+       "TT-120"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       25.0,
+       50.0
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: single-ion Gibbs energy of transfer from one determination in a critical compilation",
+      "n_rows": 2,
+      "quantity": "transfer_free_energy_li_pc_compiled",
+      "rows": [
+       "TT-096",
+       "TT-101"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.2,
+       23.8
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991 (J. Chem. Soc. Faraday Trans. 87, 2995)",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-054"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-055"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: experimental HFE from Marcus 1991",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-056"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "computation: TI free energy, 12-6-4 LJ, PME",
+      "n_rows": 1,
+      "quantity": "hydration_free_energy_ca",
+      "rows": [
+       "TD-057"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "E_lb / Delta_G_tr_rel (transfer premise)",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "E_lb (aqueous-ion lower bound of the onset), (LiPO3)n Hydro-Quebec film amorphous",
+   "required_precision": {
+    "rule": "E_lb known to +-d decides a class when |E_lb - E_lb*| > d; the pass is possible only where headroom_V > 0, and a computed premise adds u_tr/(n_e F) to the edge",
+    "status": "gap"
+   },
+   "settles": "K1 pass (E_lb >= E_c + m_expt) at the listed classes",
+   "unit": "V (and kJ mol^-1 of reaction via n_e F)",
+   "verdict_now": "inconclusive at C_lo, C_mid, C_hi (E_ub 4.9842 V, E_lb pending)"
+  },
+  {
+   "evidence_grade": "rates: C single-source (4 keys); t_wet, transfer factor, temperature tolerance: gap",
+   "flip": {
+    "by_case": {
+     "high_3D_sc_fastest": {
+      "f_min": 0.68839195,
+      "k_s-1": 5.25e-07,
+      "t_wet_flip_days": 8.231854243734789,
+      "t_wet_flip_s": 711232.2066586858
+     },
+     "high_3D_sc_slowest": {
+      "f_min": 0.68839195,
+      "k_s-1": 4.05555555556e-08,
+      "t_wet_flip_days": 106.56304466192945,
+      "t_wet_flip_s": 9207047.058790704
+     },
+     "low_2D_square_fastest": {
+      "f_min": 0.40725394191,
+      "k_s-1": 5.25e-07,
+      "t_wet_flip_days": 19.804196477288595,
+      "t_wet_flip_s": 1711082.5756377345
+     },
+     "low_2D_square_slowest": {
+      "f_min": 0.40725394191,
+      "k_s-1": 4.05555555556e-08,
+      "t_wet_flip_days": 256.3693927536604,
+      "t_wet_flip_s": 22150315.533916257
+     }
+    },
+    "note": "conditional on transferring the gamma-Al2O3 particle rates (pH 6 and 8, 0 and 1 mM Ca2+, 298.15 K) unchanged; the transfer factor is a gap",
+    "quantity": "t_wet* = ln(1/f_min) / k, f_cond = exp(-k t)",
+    "unit": "s"
+   },
+   "id": "t_wet",
+   "kind": "gap",
+   "link": "K2h",
+   "measurable_by": {
+    "assessments": [],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "experiment: orthophosphate released from polyphosphate on gamma-Al2O3, fitted with a first-order model",
+      "n_rows": 12,
+      "quantity": "hydrolysis_polyp_k_al2o3",
+      "rows": [
+       "TT-001",
+       "TT-002",
+       "TT-003",
+       "TT-004",
+       "TT-005",
+       "TT-006",
+       "TT-007",
+       "TT-008"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       0.000146,
+       0.00189
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: process setpoint",
+      "n_rows": 6,
+      "quantity": "drying_time",
+      "rows": [
+       "TJ-053",
+       "TJ-066",
+       "TJ-070",
+       "TJ-078",
+       "TJ-083",
+       "TJ-087"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       4.0,
+       60.0
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: process setpoint",
+      "n_rows": 5,
+      "quantity": "slurry_time",
+      "rows": [
+       "TJ-057",
+       "TJ-067",
+       "TJ-071",
+       "TJ-074",
+       "TJ-076"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       2.0,
+       10.0
+      ]
+     },
+     {
+      "grades": [
+       "B",
+       "C"
+      ],
+      "method": "experiment: process steps",
+      "n_rows": 2,
+      "quantity": "slurry_time",
+      "rows": [
+       "TJ-064",
+       "TJ-090"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       22.0,
+       30.0
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: process step",
+      "n_rows": 1,
+      "quantity": "slurry_time",
+      "rows": [
+       "TJ-061"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: process estimate",
+      "n_rows": 1,
+      "quantity": "slurry_time",
+      "rows": [
+       "TJ-084"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "hydrolysis_t_wet_* (gap)",
+   "prior": {
+    "gap": true,
+    "slurry_residence_time_key_s": [
+     1200.0,
+     1209600.0
+    ]
+   },
+   "quantity": "t_wet (wet residence time at which the polyphosphate fraction falls to f_min)",
+   "required_precision": {
+    "rule": "t_wet known to a factor r decides when t_wet is outside [t*/r, t* r]; the key t_proc_slurry spans 1.2e3 to 1.2e6 s, all below the fastest-rate flip 7.11e+05 s",
+    "status": "gap"
+   },
+   "settles": "K2h_falsify (f_cond < f_min at the slowest rate) or K2h_not_gating (f_cond >= f_min at the fastest rate)",
+   "unit": "s",
+   "verdict_now": "undetermined (coverage: temperature tolerance, transfer factor and t_wet are gaps)"
+  },
+  {
+   "evidence_grade": "p_c keys B (computation: transfer-matrix and Monte Carlo)",
+   "flip": {
+    "f_cond_at_longest_t_proc": {
+     "fastest": 0.5299142913219785,
+     "slowest": 0.9521278090481827
+    },
+    "note": "for a wet time t the condensed fraction is exp(-k t): at 1.2e6 s and the fastest rate it is 0.5299, at the slowest 0.9521",
+    "quantity": "f_min* = exp(-k t_wet)",
+    "unit": "1"
+   },
+   "id": "f_min",
+   "kind": "closed",
+   "link": "K2h",
+   "measurable_by": {
+    "assessments": [],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "computation: transfer-matrix calculation with finite-size scaling",
+      "n_rows": 1,
+      "quantity": "p_c_site_square",
+      "rows": [
+       "TT-132"
+      ],
+      "stated_uncertainty_min": 3e-08,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "computation: Monte Carlo, finite-size scaling of the wrapping probability R_L^(h)",
+      "n_rows": 1,
+      "quantity": "p_c_site_square",
+      "rows": [
+       "TT-133"
+      ],
+      "stated_uncertainty_min": 1.3e-07,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "computation: Monte Carlo simulation, finite-size scaling",
+      "n_rows": 1,
+      "quantity": "p_c_site_sc",
+      "rows": [
+       "TT-135"
+      ],
+      "stated_uncertainty_min": 4e-07,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: value of Ballesteros et al. (ref. [27]) tabulated in Lorenz and Ziff",
+      "n_rows": 1,
+      "quantity": "p_c_site_sc",
+      "rows": [
+       "TT-136"
+      ],
+      "stated_uncertainty_min": 1.3e-06,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "p_c_site_square, p_c_site_sc",
+   "prior": {
+    "gap": false,
+    "registered_interval": [
+     0.40725394191,
+     0.68839195
+    ],
+    "triangular_2D_sensitivity": 0.5
+   },
+   "quantity": "f_min (condensed fraction below which the film's K1 is lost)",
+   "required_precision": {
+    "rule": "f_min is computed (percolation thresholds, grade B), not measured; the interval width 0.281 is a lattice-dimension choice, not an uncertainty that a measurement narrows",
+    "status": "closed"
+   },
+   "settles": "K2h at the interval ends",
+   "unit": "1",
+   "verdict_now": "undetermined"
+  },
+  {
+   "evidence_grade": "gap",
+   "flip": {
+    "note": "flip K_sp* = IAP_AlPP needs a(Al3+) and a(PP): both gaps",
+    "quantity": null
+   },
+   "id": "ksp_alpp",
+   "kind": "gap",
+   "link": "route layer",
+   "measurable_by": {
+    "assessments": [],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: ion-exchange distribution ratios",
+      "n_rows": 6,
+      "quantity": "polyp_al_binding_logbeta1",
+      "rows": [
+       "TT-019",
+       "TT-020",
+       "TT-021",
+       "TT-022",
+       "TT-023",
+       "TT-024"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       2.8,
+       6.52
+      ]
+     }
+    ]
+   },
+   "parameter": "polyp_al_log_k_oxide, polyp_log10_ksp_al, polyp_al_log_beta1_linear",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "log10 K_sp,AlPP (R1 aluminium polyphosphate)",
+   "required_precision": {
+    "rule": "flip K_sp* = IAP_AlPP needs a(Al3+) and a(PP): both gaps",
+    "status": "not_computable"
+   },
+   "settles": "route verdict (report-only, never gating)",
+   "unit": "-",
+   "verdict_now": "undetermined (F1r)"
+  },
+  {
+   "evidence_grade": "gap",
+   "flip": {
+    "note": "no map: B1 at every state",
+    "quantity": null
+   },
+   "id": "binodal_map",
+   "kind": "gap",
+   "link": "route layer",
+   "measurable_by": {
+    "assessments": [],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: coacervate formation in exudate containing about 1.5 mM Ca2+",
+      "n_rows": 1,
+      "quantity": "coacervate_ca_threshold",
+      "rows": [
+       "TT-025"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: turbidimetric titration",
+      "n_rows": 1,
+      "quantity": "coacervate_onset_volume",
+      "rows": [
+       "TT-031"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "coacervate_binodal_map",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "coacervate binodal map (R2)",
+   "required_precision": {
+    "rule": "no map: B1 at every state",
+    "status": "not_computable"
+   },
+   "settles": "route verdict (report-only, never gating)",
+   "unit": "-",
+   "verdict_now": "undetermined"
+  },
+  {
+   "evidence_grade": "gap",
+   "flip": {
+    "note": "flip S_coac = m_S needs the contact difference: gaps",
+    "quantity": null
+   },
+   "id": "gamma_nl_coacervate",
+   "kind": "gap",
+   "link": "route layer",
+   "measurable_by": {
+    "assessments": [],
+    "basis": "stated uncertainty or spread across the evidence-table rows of each method (a reproducibility proxy)",
+    "methods_from_evidence_table": [
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: deformed-drop retraction in a shear cell with measured zero-shear viscosities",
+      "n_rows": 4,
+      "quantity": "coacervate_gamma_complex",
+      "rows": [
+       "TT-083",
+       "TT-084",
+       "TT-085",
+       "TT-086"
+      ],
+      "stated_uncertainty_min": 18.0,
+      "value_spread": [
+       180.0,
+       880.0
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: sessile-drop water contact angle",
+      "n_rows": 3,
+      "quantity": "water_contact_angle_alumina",
+      "rows": [
+       "TM-040",
+       "TM-045",
+       "TM-046"
+      ],
+      "stated_uncertainty_min": 2.5,
+      "value_spread": [
+       0.0,
+       90.2
+      ]
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: water contact angle reported by Akhtar et al. (ref. 30) and summarised in the review",
+      "n_rows": 2,
+      "quantity": "water_contact_angle_alumina",
+      "rows": [
+       "TM-042",
+       "TM-043"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": [
+       20.0,
+       80.0
+      ]
+     },
+     {
+      "grades": [
+       "B"
+      ],
+      "method": "experiment: sessile-drop water contact angle versus time",
+      "n_rows": 1,
+      "quantity": "water_contact_angle_alumina",
+      "rows": [
+       "TM-041"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     },
+     {
+      "grades": [
+       "C"
+      ],
+      "method": "compilation: literature contact angle for ordered hydroxylated sapphire-c (ref. 10 of the review)",
+      "n_rows": 1,
+      "quantity": "water_contact_angle_alumina",
+      "rows": [
+       "TM-044"
+      ],
+      "stated_uncertainty_min": null,
+      "value_spread": null
+     }
+    ]
+   },
+   "parameter": "coacervate_gamma_nl, coacervate_contact_angle_alumina",
+   "prior": {
+    "gap": true
+   },
+   "quantity": "coacervate gamma_nl and contact angle (K4, R2)",
+   "required_precision": {
+    "rule": "flip S_coac = m_S needs the contact difference: gaps",
+    "status": "not_computable"
+   },
+   "settles": "route verdict (report-only, never gating)",
+   "unit": "-",
+   "verdict_now": "undetermined"
+  }
+ ],
+ "session": "PH-W4.3",
+ "statement": "flip values and required precisions are conditional on the frozen priors and thresholds; an ignorance prior is never a finding"
+}

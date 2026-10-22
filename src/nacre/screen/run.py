@@ -24,7 +24,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from nacre.screen import admissibility, chain, decision, gaps, params_adapter, propagate, shapley, sobol, study, summary
+from nacre.screen import admissibility, chain, decision, gaps, params_adapter, ph_prov, propagate, shapley, sobol, study, summary
 from nacre.screen import thresholds as thr
 from nacre.screen.mineral import CALCITE
 
@@ -37,7 +37,7 @@ DRYRUN_PH_DIR = SCREEN_DIR / "dryrun_ph"            # PH-W4.1: phosphate dry run
 LEDGER = Path("jobs") / "ledger" / "p0-w4.jsonl"
 CHECKPOINT_TAG = "p0-cp3"
 #: Session that writes production documents (ledger lines and provenance).
-SESSION = "P0-W4.3b"
+SESSION = "PH-W4.2"
 #: Mass groups that count refused draws (activity model, geometric bounds), not clipped boundaries.
 REFUSAL_GROUPS = ("speciation", "geometry")
 
@@ -364,6 +364,7 @@ def _provenance(root, cfg, cfg_path, rp_list, thresholds_path, dry):
             "gap_table_file": gaps.GAP_TABLE.as_posix() if gt.exists() else None,
             "gap_table_sha": _git(root, "log", "-1", "--format=%H", "--", gaps.GAP_TABLE.as_posix()) or None,
             "gap_table_hash": _sha256_file(gt) if gt.exists() else None,
+            **ph_prov.extra(root),
             "params_tag": CHECKPOINT_TAG if _git(root, "tag", "-l", CHECKPOINT_TAG) else None,
             "params_sha_at_tag": _git(root, "log", "-1", "--format=%H", CHECKPOINT_TAG, "--",
                                       params_adapter.PRODUCTION_PARAMS.as_posix()) or None
@@ -371,6 +372,7 @@ def _provenance(root, cfg, cfg_path, rp_list, thresholds_path, dry):
 
 
 def _inputs_frozen(root, thresholds_path=THRESHOLDS):
+    ph_prov.check_frozen(root)                     # p0-cp5: the ladder, the bindings hash and the tag (PH-W4.2)
     if not _git(root, "tag", "-l", CHECKPOINT_TAG):
         raise ProductionRefused("tag %s is missing: production screens need cp1, cp2 and cp3" % CHECKPOINT_TAG)
     if not (Path(root) / thresholds_path).exists():
