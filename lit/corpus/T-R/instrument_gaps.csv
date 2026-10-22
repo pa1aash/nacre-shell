@@ -78,3 +78,4 @@ utc,source,query_or_id,failure_kind,detail
 2026-10-20T03:35:33Z,unpaywall,10.2136/sssaj1959.03615995002300050017x,paywalled,"no open copy on unpaywall, openalex or europepmc"
 2026-10-20T03:35:36Z,unpaywall,10.2136/sssaj1955.03615995001900040017x,paywalled,"no open copy on unpaywall, openalex or europepmc"
 2026-10-20T03:35:42Z,unpaywall,10.2136/sssaj1992.03615995005600010009x,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-22T09:58:48Z,unpaywall,10.3390/cryst15121045,http_error,HTTP 403 https://www.mdpi.com/2073-4352/15/12/1045/pdf?version=1765204321

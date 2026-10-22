@@ -106,3 +106,8 @@ utc,source,query_or_id,failure_kind,detail
 2026-10-20T14:26:06Z,unpaywall,10.1002/chin.197452030,paywalled,"no open copy on unpaywall, openalex or europepmc"
 2026-10-21T21:23:24Z,unpaywall,10.1016/0016-7037(82)90056-4,paywalled,"no open copy on unpaywall, openalex or europepmc"
 2026-10-21T21:25:50Z,unpaywall,10.1088/0305-4470/31/40/009,parse_error,not a PDF: https://iopscience.iop.org/article/10.1088/0305-4470/31/40/009/pdf
+2026-10-22T09:55:34Z,unpaywall,10.1016/0016-7037(82)90056-4,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-22T09:55:51Z,unpaywall,10.3390/cryst11111318,http_error,HTTP 403 https://www.mdpi.com/2073-4352/11/11/1318/pdf?version=1635497732
+2026-10-22T09:57:23Z,semanticscholar,"Plummer Busenberg 1982 solubilities of calcite, aragonite and vaterite in CO2-H2O solutions",rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-22T09:57:25Z,openaire,aragonite solubility product thermodynamic 25 C pure water calcite vaterite,not_indexed,no publication results
+2026-10-22T09:57:26Z,openaire,aragonite solubility product thermodynamic 25 C pure water calcite vaterite,not_indexed,no dataset results
