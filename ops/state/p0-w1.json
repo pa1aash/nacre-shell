@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-W1.6c",
+  "last_session": "PH-W1.7",
   "status": "DONE",
-  "day": 5,
+  "day": 6,
   "artifacts": [
     ".local/early_read/params_table_for_coauthors.pdf (local-only)",
     "jobs/ledger/p0-w1.jsonl",
@@ -58,17 +58,18 @@
     "ops/reports/P0-W1.PH-W1.2.md",
     "ops/reports/P0-W1.PH-W1.3.md",
     "ops/reports/P0-W1.PH-W1.5.md",
-    "ops/reports/P0-W1.PH-W1.6.md"
+    "ops/reports/P0-W1.PH-W1.6.md",
+    "ops/reports/P0-W1.PH-W1.7.md"
   ],
-  "notes": "PH-W1.6: 6 rows (TT-131 to TT-136), 4 keys (470 total): log10_ksp_aragonite_25c_i0 (-8.336 +- 0.020, grade C, sensitivity of the existing log10_ksp_aragonite), p_c_site_square/triangular/sc. v_m_aragonite already existed. Li+ hydration keys: cause was the (-oo, 0) interval of Delta_G_hyd on a conventional-scale key; per-key spec interval added, rebuild equals the committed table. Deviation text: Re-audit: cp5b. Next: integrator.",
+  "notes": "PH-W1.7: aragonite primary gap (grade C stays); +2 rows (TR-120, TR-121), +4 keys (474): brushite, alpha-TCP (D), Li3PO4, OCP Ca4H basis; README section 9 conversion rules. Deviation text: Re-audit: cp5b.",
   "params": {
     "status": "ready",
-    "sha": "9792fa070c7677f34dd0ea9b7bf8ade8ec42ae5f",
+    "sha": "f1a8061e62752e4d873ed70b1a556b3d7f6e102f",
     "post_cp3": true,
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
     "rule": "lit/corpus/params_README.md (rule version 3, section 8)",
-    "keys": 470,
+    "keys": 474,
     "new_keys": 4,
     "edited_keys": [],
     "cp3_tag_table": "p0-cp3 (production screens)"
