@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W4.2",
+  "last_session": "PH-W4.3",
   "status": "DONE",
   "day": 6,
   "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
@@ -13,7 +13,7 @@
     "mock_priors": "configs/preprint/mock_priors.yaml",
     "mock_summary": "results/preprint/screen/mock/summary.json",
     "screen_scaffold": "src/nacre/screen/",
-    "report": "ops/reports/P0-W4.PH-W4.2b.md",
+    "report": "ops/reports/P0-W4.PH-W4.3.md",
     "screen_config": "configs/preprint/screen.yaml",
     "thresholds_copy": "configs/preprint/thresholds.yaml",
     "precision_method": "configs/preprint/precision_method.md",
@@ -53,7 +53,8 @@
     "report_w4_2d": "ops/reports/P0-W4.PH-W4.2d.md",
     "k2_carbonate": "src/nacre/screen/k2_carbonate.py",
     "report_w4_2e": "ops/reports/P0-W4.PH-W4.2e.md",
-    "report_w4_2f": "ops/reports/P0-W4.PH-W4.2f.md"
+    "report_w4_2f": "ops/reports/P0-W4.PH-W4.2f.md",
+    "precision_map": "results/preprint/screen/precision_ph/precision_map.json"
   },
   "notes": [
     "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
