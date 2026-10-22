@@ -124,9 +124,11 @@ claims:
     status: drafted
     notes: Written in the wording of the frame that the ladder gives; the Abstract states which frame applies.
   - id: CL-V03
-    statement: Aluminophosphate films of the forms AlxMyPO4 and AlxMy(PO3)3, applied from a phosphoric-acid solution
-      and cured by heating, on aluminium foil are claimed prior art, in two patents of one family (Tsinghua University
-      and Hon Hai Precision).
+    statement: >-
+      Films of AlxMyPO4 and AlxMy(PO3)3 on a metal plate (aluminium, copper, nickel or their alloys; example: aluminium
+      foil) are claimed prior art in one of two patents of one family (Tsinghua University and Hon Hai Precision);
+      the other claims the method, with a heat treatment, and recites no film formula; the only printed test is
+      immersion of the coated foil in hydrochloric acid with no bubbles seen, the acid concentration not being stated.
     section: introduction
     type: novelty
     polarity: claims
@@ -144,16 +146,26 @@ claims:
       ref: NumPatentAlPhosA
     - kind: macro
       ref: NumPatentAlPhosB
+    - kind: macro
+      ref: NumPatentCureLow
+    - kind: macro
+      ref: NumPatentCureHigh
+    - kind: macro
+      ref: NumPatentFoilUm
+    - kind: macro
+      ref: NumPatentAcidHours
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
     status: drafted
-    notes: 'F8: stated plainly in the Introduction. The patents have no DOI, so `nacre bib add` cannot take them: the
+    notes: 'PH-W8.2c: PH-W2.6 verdict (d), partly supported: the claim scope is a metal plate, not aluminium foil; US 8,821,969 recites no film formula. F8: stated plainly in the Introduction. The patents have no DOI, so `nacre bib add` cannot take them: the
       numbers are text macros from lit/novelty.md rows BL3 and BL4 and the citation is a missing-input marker (PH-W8.2
       outstanding).'
   - id: CL-V04
-    statement: A vitreous lithium polyphosphate binder with conductive carbon, coated on the collector from an aqueous
-      solution, is claimed in one Hydro-Quebec patent and described in its continuation, which claims borate only.
+    statement: >-
+      One Hydro-Quebec patent claims collector coatings of a vitreous alkali-metal phosphate or polyphosphate
+      with a conduction additive and its continuation the borate or polyborate form; the printed cell is a
+      polymer-electrolyte cell, cycled at a stated temperature with a stated recharge limit.
     section: introduction
     type: novelty
     polarity: claims
@@ -169,6 +181,10 @@ claims:
       ref: NumPatentLiPolyA
     - kind: macro
       ref: NumPatentLiPolyB
+    - kind: macro
+      ref: NumPatentCellTemp
+    - kind: macro
+      ref: NumPatentRechargeV
     - kind: dossier
       ref: lit/novelty.md#BL2
     checkpoint: cp4
@@ -176,8 +192,11 @@ claims:
     scope_check: clean
     status: drafted
   - id: CL-V05
-    statement: Phosphoric-acid pH control of aqueous electrode slurries is the incumbent route to slurry-stage
-      protection of aluminium, with a residue risk.
+    statement: >-
+      Phosphoric acid lowers the pH of water-processed electrode slurries to avoid corrosion of the aluminium collector,
+      and aqueous processing with phosphoric acid needs careful control of stoichiometry and drying to avoid reactive
+      phosphate residues; a pH window attributed to the latter source is not stated, and the window is
+      reported only as appearing in the pH-control literature (grade D).
     section: introduction
     type: novelty
     polarity: claims
@@ -192,11 +211,17 @@ claims:
     - kind: doi
       ref: 10.1039/d3su00031a
     - kind: doi
+      ref: 10.1039/d4ta03592e
+    - kind: row
+      ref: TR-090
+    - kind: doi
       ref: 10.1016/j.jpowsour.2020.229097
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
     status: drafted
+    notes: 'PH-W8.2c: PH-W2.6 verdict (e). Chen 2024 supports pH control against Al-collector corrosion; Tolchard 2023
+      supports the stoichiometry and drying statement; the window is not written in the text.'
   - id: CL-V06
     statement: Carbon-coated aluminium collectors are a prior route to the same benefit.
     section: introduction
@@ -1343,9 +1368,8 @@ claims:
 
   # ----- added at PH-W8.2 (regime frame: Introduction, Design rules, Methods) -----
   - id: CL-K12
-    statement: Nacre is aragonite platelets in an organic matrix of proteins and chitin; chitosan, the partly
-      deacetylated derivative of chitin, is the processable form of that polysaccharide, and is not stated to occur
-      in natural nacre.
+    statement: Nacre is aragonite platelets in an organic matrix of proteins and chitin; chitin is a component of that
+      matrix, and chitosan, its partly deacetylated derivative, is the processable form used here.
     section: introduction
     type: background
     polarity: claims

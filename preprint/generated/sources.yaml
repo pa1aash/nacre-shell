@@ -509,6 +509,37 @@ macros:
     pattern: '^\| BL2 \| US ([0-9,]+) B2'
     format: text
     claim: CL-V04
+  # Printed facts of the four patents (lit/novelty.md, printed-data table under the baseline rows).
+  NumPatentCureLow:
+    source: lit/novelty.md
+    pattern: '^\| Cure range \| Heat treatment ([0-9]+) to [0-9]+ C'
+    format: text
+    claim: CL-V03
+  NumPatentCureHigh:
+    source: lit/novelty.md
+    pattern: '^\| Cure range \| Heat treatment [0-9]+ to ([0-9]+) C'
+    format: text
+    claim: CL-V03
+  NumPatentFoilUm:
+    source: lit/novelty.md
+    pattern: 'example 52 nm on ([0-9]+) um Al foil'
+    format: text
+    claim: CL-V03
+  NumPatentAcidHours:
+    source: lit/novelty.md
+    pattern: '^\| Durations \| Immersion in HCl ([0-9]+) h'
+    format: text
+    claim: CL-V03
+  NumPatentCellTemp:
+    source: lit/novelty.md
+    pattern: '^\| Temperature \|.*\| Cycling at ([0-9]+) C \(Example 3\)'
+    format: text
+    claim: CL-V04
+  NumPatentRechargeV:
+    source: lit/novelty.md
+    pattern: 'Recharge upper voltage limit ([0-9.]+) V'
+    format: text
+    claim: CL-V04
   # Cutoff classes and the sensitivity line (thresholds copy; equal to block v9 for these keys).
   NumClassLo:
     source: configs/preprint/thresholds.yaml

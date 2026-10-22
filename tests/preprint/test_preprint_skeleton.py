@@ -113,14 +113,14 @@ def test_f6_is_in_the_abstract_and_introduction_briefs():
         assert "solid-salt sink" in text and "tier one" in text or "tier one" in text, name
         assert "calcium orthophosphates only" in text, name
         assert "condensed and aluminium phosphates decide" in text, name
-        assert "NumK1HApLow" in text and "NumK1HApHigh" in text, name
+        assert "NumOnsetBoneLow" in text and "NumOnsetBoneHigh" in text, name
 
 
 def test_f8_prior_art_is_stated_plainly_in_the_introduction_brief():
     text = _flat(_brief("introduction"))
-    assert "Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 on Al foil are claimed prior art" in text or \
-        "Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 on Al foil are claimed prior art".replace("on Al foil", "on Al foil") in text.replace(
-            "films of the forms ", "").replace("Aluminophosphate ", "")
+    # PH-W8.2c: the claim scope is a metal plate (example: aluminium foil), not aluminium foil
+    assert "Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 on a metal plate (example: aluminium foil) are claimed" in text
+    assert "recites no film formula" in text
     assert "US 8,252,463" in text and "US 8,821,969" in text
     assert "four qualifiers" in text and "in situ" in text
 

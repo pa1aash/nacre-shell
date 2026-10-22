@@ -25,34 +25,21 @@ The relations hold for any mineral phase, written per formula unit with its own 
 \end{figure*}
 
 % (2) Adhesion in water: the Dupre work with water competition.
-In the slurry the template never meets a dry oxide: the hydroxylated \ce{Al2O3}/\ce{AlOOH} surface carries hydrogen-bonded water and the template is hydrated, so a template--oxide contact forms only by displacing that water (Fig.~\ref{fig:chain}a). % CL-R01
-The reversible work per area that separates contact from the two wetted surfaces is the Dupr\'e work in water, % CL-R01
-\begin{equation}\label{eq:dupre}
-\Wwet=\gow+\gpw-\gop=\Wdry+2\gw-W_\mathrm{ow}-W_\mathrm{pw},
-\end{equation}
-where $W_\mathrm{ow}$ and $W_\mathrm{pw}$ are the works with which water binds each surface and $\Wdry=\go+\gp-\gop$ is the adhesion against vacuum. % CL-R01
-A large dry adhesion is offset by the binding of water to each surface, and a hydroxylated oxide and a hydrophilic template both bind water strongly, so $\Wwet$ can be small or negative where $\Wdry$ is large; the dry work describes a state the slurry never presents and is kept only as a comparator. % CL-R01
-The bare oxide has $\Wwet=0$ and fixes the zero; $\Wwet$ is the potential of mean force of a template fragment pulled from the oxide in explicit water per contact area, which already contains the displacement penalty and the entropy of the released water, and it is a descriptor of the template, not a gate. % CL-R01, CL-D03
+In the slurry the template meets a hydrated oxide, so a template--oxide contact forms only by displacing water, and the work that decides it is the Dupr\'e work in water $\Wwet$, which already contains the displacement penalty (Fig.~\ref{fig:chain}a; \nacreSIref{si:templating}{Templating detail}). % CL-R01
+The bare oxide fixes $\Wwet=0$, and $\Wwet$ is a descriptor of the template, not a gate. % CL-R01, CL-D03
 
 % (3) Ca2+ binding as a descriptor.
-The template can hold \ce{Ca^2+} only if its coordinating groups compete successfully with the hydration shell of the ion. % CL-R02
-The transfer free energy $\DGseq$ of one \ce{Ca^2+} from the hydrated bulk to a site, built as a thermodynamic cycle that includes the deprotonation of the site at the slurry pH and the activity corrections at its ionic strength, measures that competition, and $\DGseq<0$ means that the ion accumulates at the sites (Fig.~\ref{fig:chain}b). % CL-R02
+The template can hold \ce{Ca^2+} only if its coordinating groups compete successfully with the hydration shell of the ion, and the transfer free energy $\DGseq$ of one \ce{Ca^2+} from the hydrated bulk to a site measures that competition, $\DGseq<0$ meaning that the ion accumulates at the sites (Fig.~\ref{fig:chain}b). % CL-R02
 Binding raises the local \ce{Ca^2+} concentration, but it cannot raise the driving force for nucleation. % CL-R02
-The interfacial region exchanges ions with the slurry, so at equilibrium every ion carries the same electrochemical potential at a site as in the bulk: binding lowers the local standard potential of the ion by exactly as much as it raises the concentration term, and a mean electrostatic potential cancels in the neutral solid. % CL-R02
-The driving force per formula unit at the template is therefore the bulk one, % CL-R02
+At equilibrium every ion carries the same electrochemical potential at a site as in the bulk, so the driving force per formula unit at the template is the bulk one, % CL-R02
 \begin{equation}\label{eq:dmu}
 \Dmu=\kB T\ln\Omb,
 \end{equation}
 with $\Omb$ the bulk supersaturation of Eq.~\eqref{eq:stability}, built from the free-ion activities $a_i$ of the speciation at the slurry state, the ions $\nu_i$ and structural water $n$ per formula unit, and the solubility product $\Ksp$ of the framing. % CL-R02
-Binding reaches the barrier only through the interfacial free energies. % CL-R02
-Bound \ce{Ca^2+} is a surface excess $\GCa=\Gs\Theta-\ds\cb$ of the template--liquid interface, with $\Theta$ the Langmuir occupancy of sites of areal density $\Gs$ in a binding layer of thickness $\ds$ and $\cb$ the free-ion concentration, and the Gibbs adsorption equation turns that excess into a change of the template--liquid energy, % CL-R02
-\begin{equation}\label{eq:gibbs}
-\dga=\gsl-\gslz=-\Rg T\big[\Gs\ln(1+x)-\ds\cb\big],\qquad x=\frac{\ds\cb}{\Gs}\,\e^{-\DGseq/\Rg T},
-\end{equation}
-which is negative whenever the excess $\GCa$ is positive; $\gslz$ is the energy of the \ce{Ca}-free template. % CL-R02
-Treating the adsorbing component as \ce{Ca^2+} with its compensating charge, a neutral solute, is an approximation: it leaves out the change of the diffuse-layer free energy when binding changes the surface charge, a correction that ionic strength screens and to which the model assigns no sign. % CL-R02
-\ce{Ca^2+} held at the template--crystal contact, for example bridging a carboxylate to the crystal, is not part of $\dga$: it belongs to the template--nucleus energy $\gsn$, which is taken from contact data at the slurry state (Fig.~\ref{fig:cycle}). % CL-R02
-$\DGseq$ is therefore a binding descriptor, reported with the occupancy, the excess and $\dga$, and not a criterion of its own. % CL-R02, CL-D03
+Binding reaches the barrier only through the interfacial free energies: bound \ce{Ca^2+} is a surface excess of the template--liquid interface, and the Gibbs adsorption equation turns that excess into a change $\dga$ of the template--liquid energy, negative whenever the excess is positive (\nacreSIref{si:templating}{Templating detail}). % CL-R02
+Treating the adsorbing component as \ce{Ca^2+} with its compensating charge, a neutral solute, is an approximation that leaves out the diffuse-layer correction (\nacreSIref{si:templating}{Templating detail}). % CL-R02
+\ce{Ca^2+} held at the template--crystal contact is not part of $\dga$: it belongs to the template--nucleus energy $\gsn$, which is taken from contact data at the slurry state (Fig.~\ref{fig:cycle}). % CL-R02
+$\DGseq$ is therefore a binding descriptor, not a criterion of its own. % CL-R02, CL-D03
 The consequence is plain: at a fixed template--nucleus energy, binding alone raises the nucleation barrier, because the bound ions must be stripped from the area a nucleus covers, as for an adsorbed inhibitor. % CL-R10
 The template helps nucleation only if the template--nucleus energy falls by more than the adsorption lowers the template--liquid energy. % CL-R10
 
@@ -75,17 +62,16 @@ In the capillarity approximation for a spherical cap, % CL-R03
 \cos\theta=\frac{\gslz+\dga-\gsn}{\gnl},
 \end{gathered}
 \end{equation}
-with $\vm$ the volume per formula unit and $\Dmu$ the bulk driving force of Eq.~\eqref{eq:dmu}. % CL-R03
-The sign convention is fixed: $\theta$ is measured through the nucleus, and $\cos\theta$ is the free energy gained per area by replacing template--liquid interface with template--nucleus interface, in units of the nucleus--liquid energy, so $\theta=0$ is complete wetting with no barrier and $\theta=\pi$ is no wetting and the homogeneous barrier. % CL-R03
-Young's relation carries the bare $\gnl$, the same energy that sets the homogeneous barrier: water displaced from under the contact sits on the contact disc and never touches the free surface of the cap, so a displacement cost enters $\gsn$ once, as a positive correction that raises $\theta$, and not at all when $\gsn$ is already a full in-water contact energy. % CL-R03, CL-R05
-Every template-dependent input enters once, in one interfacial energy, and only through $\theta$: $\Omb$ depends on bulk activities alone, while $\DGseq$, $\Gs$ and $\ds$ enter only through $\dga$, added once to the \ce{Ca}-free $\gslz$; crediting the bound ions to the driving force instead would give binding the opposite effect on the barrier, and crediting them to both would count the binding free energy twice (proof in the Supplementary Information, \nacreSIref{si:no-double-counting}{No double counting of interfacial terms}). % CL-R05
+with $\vm$ the volume per formula unit, $\gslz$ the template--liquid energy of the \ce{Ca}-free template and $\Dmu$ the bulk driving force of Eq.~\eqref{eq:dmu}. % CL-R03
+The sign convention is fixed: $\theta$ is measured through the nucleus, so $\theta=0$ is complete wetting with no barrier and $\theta=\pi$ is no wetting and the homogeneous barrier. % CL-R03
+Every template-dependent input enters once, in one interfacial energy, and only through $\theta$: $\Omb$ depends on bulk activities alone, while $\DGseq$, $\Gs$ and $\ds$ enter only through $\dga$, so no term is counted twice (proof in the Supplementary Information, \nacreSIref{si:no-double-counting}{No double counting of interfacial terms}). % CL-R05
 A barrier is low enough only relative to the number of attempts the system makes in the time available. % CL-R11
 Nuclei form on the template at a rate per area $J=J_0\e^{-\DGhet/\kB T}$, so over the time $t_\mathrm{p}$ the template spends at the slurry states the areal density of nuclei must reach a required density, % CL-R11
 \begin{equation}\label{eq:access}
 \DGhet\le B_\mathrm{acc}=\kB T\ln\frac{J_0t_\mathrm{p}}{N_\mathrm{req}},\qquad N_\mathrm{req}=\frac{\ln(1/q_0)}{A_\mathrm{patch}}.
 \end{equation}
-The required density follows from the contact patch $A_\mathrm{patch}$ through which a cathode particle meets the collector: if nuclei land independently, the number under one patch is Poisson distributed, and allowing at most a fraction $q_0$ of the patches to stay empty gives the second relation. % CL-R11
-Only $\ln J_0$ enters, so an order-of-magnitude prefactor moves $B_\mathrm{acc}$ by a few $\kB T$; the count ignores exclusion zones around growing islands, so it is an upper estimate and the criterion is necessary, not sufficient. % CL-R11
+The required density follows from the contact patch $A_\mathrm{patch}$ and the fraction $q_0$ of patches allowed to stay empty, by Poisson statistics (\nacreSIref{si:templating}{Templating detail}). % CL-R11
+Only $\ln J_0$ enters, so an order-of-magnitude prefactor moves $B_\mathrm{acc}$ by a few $\kB T$, and the criterion is necessary, not sufficient. % CL-R11
 
 % (5) Film coverage: spreading, and why complete wetting is excluded when gamma_sl <= gamma_nl.
 A low barrier says where nuclei form easily, not whether they make a continuous film, and a single gap leaves a path from the electrolyte to the collector. % CL-R12
@@ -94,14 +80,12 @@ Whether the mineral spreads over the template or beads up on it is a wetting bal
 \Ssp=\gsl-\gsn-\gnl\le\gsl-\gnl,
 \end{equation}
 where $\Ssp\ge0$ means complete wetting and growth layer by layer and $\Ssp<0$ means growth by islands. % CL-R12
-The bound holds because $\gsn\ge0$: a negative interfacial free energy between two immiscible solids would make them create contact without limit, so no sharp contact would exist. % CL-R12
-Complete wetting therefore needs $\gsl\ge\gnl$, and a template that water wets at least as favourably as it wets the mineral, $\gsl\le\gnl$, cannot be wetted completely by a solid-like nucleus, whatever its contact with the nucleus; \ce{Ca^2+} binding pushes the same way by lowering $\gsl$. % CL-R12
-Hydrophilic is meant here in that relative sense: a small water contact angle in air does not by itself place $\gsl$ below $\gnl$, so whether a template meets the condition is a question for the inputs, and the screen reports the prior mass with $\gsl>\gnl$. % CL-R12
+Complete wetting therefore needs $\gsl\ge\gnl$, and a template that water wets at least as favourably as it wets the mineral, $\gsl\le\gnl$, cannot be wetted completely by a solid-like nucleus; the screen reports the prior mass with $\gsl>\gnl$. % CL-R12
 On such a template a continuous film can form only when islands meet before they grow too thick (Fig.~\ref{fig:chain}d): for equal caps on a square lattice, closure below an admissible thickness $d_\mathrm{max}$ needs an island density that rises steeply with $\theta$ and with the inverse square of $d_\mathrm{max}$, which is set by electron transport through the insulating film in the cell. % CL-R12
 A liquid precursor is the exception the route layer uses: its tension against the dilute liquid is small, so the bound above no longer forbids spreading (Section~\ref{sec:routes}). % CL-R12, CL-D16
 
 % (6) Stability: carried by the conditions.
-Whether a film, once formed, persists is not a templating question: dissolution in the slurry and oxidation in the cell are the conditions $K_2$ and $K_1$ of Section~\ref{sec:conditions}, and dissolution is decided by the same supersaturation $\Omb$ that drives nucleation, so a slurry state that cannot nucleate the mineral is one in which a film of it dissolves, and binding at the template changes neither. % CL-D05
+Whether a film, once formed, persists is not a templating question: dissolution in the slurry and oxidation in the cell are the conditions $K_2$ and $K_1$ of Section~\ref{sec:conditions}, and a slurry state that cannot nucleate the mineral is one in which a film of it dissolves. % CL-D05
 
 % (7) What the model leaves out (stated briefly; the full list is in the Discussion).
-The model leaves out four things, each taken up in the Discussion: the validity of classical nucleation theory at the size of a nucleus, with its capillarity approximation, isotropic $\gnl$ and lack of non-classical pathways such as prenucleation clusters or liquid precursors other than the coacervate of the route layer; the double-layer term of the adsorption energy; kinetics beyond the accessibility bound, including any local excess of driving force during drying; and the persistence of the layer, since anchoring, binding and nucleation are not computed in the cell. % CL-L06
+The model leaves out the validity of classical nucleation theory at the size of a nucleus, the double-layer term of the adsorption energy, kinetics beyond the accessibility bound and the persistence of the layer in the cell, each taken up in the Discussion. % CL-L06

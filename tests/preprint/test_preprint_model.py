@@ -118,7 +118,8 @@ def test_model_states_the_binding_consequence_and_the_single_entry_rule():
     assert "a neutral solute, is an approximation" in text
     assert "belongs to the template--nucleus energy" in text
     assert "Every template-dependent input enters once" in text
-    assert "Hydrophilic is meant here in that relative sense" in text
+    si = " ".join(SI.read_text(encoding="utf-8").split())   # the wetting bound moved to si:templating at PH-W8.2c
+    assert "Hydrophilic is meant here in that relative sense" in si and "The bound holds because" in si
     assert "cannot be wetted completely by a solid-like nucleus" in text
     assert r"\eqref{eq:stability}" in text and r"\ref{sec:conditions}" in text   # stability is K1 and K2
 
@@ -126,7 +127,7 @@ def test_model_states_the_binding_consequence_and_the_single_entry_rule():
 def test_model_equations_carry_the_argument_only():
     text = MODEL.read_text(encoding="utf-8")
     labels = re.findall(r"\\begin\{equation\}\\label\{(eq:[^}]+)\}", text)
-    assert labels == ["eq:dupre", "eq:dmu", "eq:gibbs", "eq:het", "eq:access", "eq:spread"]
+    assert labels == ["eq:dmu", "eq:het", "eq:access", "eq:spread"]   # eq:dupre and eq:gibbs moved to si:templating
     assert r"\Dmu=\kB T\ln\Omb" in text                  # the bulk driving force, no local credit
     assert r"\cos\theta=\frac{\gslz+\dga-\gsn}{\gnl}" in text   # bare gamma_nl in Young
 
@@ -141,8 +142,9 @@ def test_methods_disclosures_and_conventions():
     assert "glass-to-crystal correction of \\ce{Ca(PO3)2}" in text
     assert "they were not set before every calculation the project made" in text
     assert "after the scheme values for calcium carbonate with lithium perchlorate had been seen" in si
-    for macro in (r"\NumPcred", r"\NumPcredSweepLow", r"\NumPcredSweepHigh", r"\NumMcos", r"\NumMcosSweepLow",
-                  r"\NumMcosSweepHigh", r"\NumPdeg", r"\NumRetroCorrect", r"\NumRetroUsableCases",
+    for macro in (r"\NumPcredSweepLow", r"\NumPcredSweepHigh", r"\NumMcosSweepLow", r"\NumMcosSweepHigh"):
+        assert macro in si, macro    # the published sweeps moved to si:methods at PH-W8.2c
+    for macro in (r"\NumPcred", r"\NumMcos", r"\NumPdeg", r"\NumRetroCorrect", r"\NumRetroUsableCases",
                   r"\NumRetroPassCount", r"\NumMpDatabaseVersionComparator", r"\NumDftTolerance"):
         assert macro in text, macro
     assert r"\NumSizingDrawCap" in si and r"\NumSizingBandHalfWidth" in si

@@ -33,7 +33,7 @@ Figures: `fig:ladder`, `fig:k1panel`, `fig:phmap`, `fig:nucmap`, `fig:precision`
 
 ## Macros needed
 
-Planned from the PH-W5.1, PH-W4.2 and PH-W4.3 result files, registered at PH-W8.3 (names reserved): `NumK1HApLow`, `NumK1HApHigh`, `NumK1CarbonateOnset`, `NumK1CondensedLowerBound`, `NumPbxAlWindowLow`, `NumPbxAlWindowHigh`, `NumFcondR1`, `NumFcondR2`, `NumPrecGammaSubNuc` (registered, mock until PH-W4.3). Registered now: `NumRetroPassCount`, `NumRetroUsableCases`.
+Planned from the PH-W5.1, PH-W4.2 and PH-W4.3 result files, registered at PH-W8.3 (names reserved): `NumK1CarbonateOnset`, `NumK1CondensedLowerBound`, `NumPbxAlWindowLow`, `NumPbxAlWindowHigh`, `NumFcondR1`, `NumFcondR2`, `NumPrecGammaSubNuc` (registered, mock until PH-W4.3). Registered now: `NumRetroPassCount`, `NumRetroUsableCases`.
 
 ## Claims carried
 

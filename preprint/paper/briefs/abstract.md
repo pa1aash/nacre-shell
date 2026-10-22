@@ -24,7 +24,7 @@ None.
 
 ## Macros needed
 
-At most three, and only if a number is essential: the bone-mineral onset range (`NumK1HApLow`, `NumK1HApHigh`, planned, from the onset ladder file of PH-W5.1) and one required precision (`NumPrecGammaSubNuc`, registered). The abstract prefers words to numbers.
+At most three, and only if a number is essential: the bone-mineral onset range (`NumOnsetBoneLow`, `NumOnsetBoneHigh`, registered, from the onset ladder file of PH-W5.1) and one required precision (`NumPrecGammaSubNuc`, registered). The abstract prefers words to numbers.
 
 ## Claims carried
 
