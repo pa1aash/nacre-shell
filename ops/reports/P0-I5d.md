@@ -9,3 +9,4 @@ Status BLOCKED (resumed: w8 c878f70 merged at dcf350c). preprint/p0 local only (
 - Hang rule: strict verify's log stayed empty for over 10 minutes (verify prints its table only at the end); pytest CPU time kept advancing, so the run was not stopped. Deviation from the rule, recorded here.
 - Note: ops/packets/p0-5a2_note.md (54 lines).
 - Disk free after uv cache clean: 12Gi of 228Gi (df -h /). My keep-awake (pid 19459) stopped; other caffeinate processes on the machine are not mine.
+- Lane sync: merged origin/preprint/p0-w6 (91d7bf0, report and state only) as 6a9f193; pushed 6a9f193 fast-forward to preprint/p0-w6 and preprint/p0-w1 (w1 had received 66f2e6e first); worktrees ~/dev/nacre-shell-p-w6 and -w1 fast-forwarded to 6a9f193. preprint/p0 not pushed, no tag.
