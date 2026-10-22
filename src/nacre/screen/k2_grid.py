@@ -209,6 +209,7 @@ def phosphate_point(params_path, cfg, spec, design, fixed, n, seed, chunk, p, mi
     om = study.omega_point(per, p)
     if om is None:
         return {"verdict": "undetermined", "gap": "Omega_bulk not evaluable for %s" % spec["formula"]}
+    om["omega_median_by_state"] = {sid: study._median(o["speciation"]["Omega_bulk"]) for sid, (o, _, _) in per.items()}
     gap_states = [sid for sid, (o, _, _) in per.items() if not np.any(np.isfinite(o["speciation"]["Omega_bulk"]))]
     if gap_states:
         om = dict(om, verdict="undetermined", gap="no Omega draw at state %s (a key of the water term or the speciation is a gap)"
@@ -368,7 +369,7 @@ def apply_controls(cells, ok):
 
 def brief(r):
     keys = ("verdict", "verdict_before_control", "P_good", "P_bad", "half_width", "n_used", "draws", "capped", "state",
-            "by_state", "a_Ca_median", "a_CO3_median", "gap", "axes")
+            "by_state", "omega_median_by_state", "a_Ca_median", "a_CO3_median", "gap", "axes")
     return {k: r[k] for k in keys if k in r}
 
 
@@ -450,9 +451,14 @@ def eval_carbonate(params_path, cfg, resolver, polymorph, cells, p, allow_mock=F
     return rec
 
 
-def eval_phosphate(params_path, cfg, resolver, name, cells, p, minerals, states, allow_mock=False, log=None):
-    """Cells, controls and the headline of one Ca phosphate (or an undetermined phase) on a list of phosphate cells."""
-    spec = cfg["k2_phases"][name]
+def eval_phosphate(params_path, cfg, resolver, name, cells, p, minerals, states, allow_mock=False, log=None,
+                   supersaturated_from=None, phases=None):
+    """Cells, controls and the headline of one Ca phosphate (or an undetermined phase) on a list of phosphate cells.
+
+    supersaturated_from: optional callable (cell records) -> control record that replaces the configured supersaturated state
+    (PH-W4.5: the grid state of maximum Omega); the configured state is then run and reported beside it, not gating.
+    phases: optional {name: spec} replacing cfg["k2_phases"]."""
+    spec = (phases or cfg["k2_phases"])[name]
     chunk = int(cfg["propagation"]["chunk"])
     seed = int(cfg["propagation"]["seed"])
     base = minerals["hap"]
@@ -468,11 +474,18 @@ def eval_phosphate(params_path, cfg, resolver, name, cells, p, minerals, states,
             r = phosphate_point(params_path, cfg, spec, design, fixed, START_DRAWS, seed, min(chunk, START_DRAWS), p, base,
                                 ("slurry",), allow_mock)
             ctl[cname] = dict(r, axes=labels)
+        legacy = None
+        if supersaturated_from is not None:
+            legacy = ctl["supersaturated"]
+            ctl["supersaturated"] = supersaturated_from(recs)
         res = controls_pass(ctl)
         ok = all(res.values())
         rec["controls"] = {"gating": {k: brief(v) for k, v in ctl.items()}, "pass": res,
                            "low_dose_corner_flags_omega_below_1": res["undersaturated"],
                            "supersaturated_reports_stability": res["supersaturated"]}
+        if legacy is not None:
+            rec["controls"]["supersaturated_configured_state_not_gating"] = brief(legacy)
+            rec["controls"]["supersaturated_control_cell"] = {k: ctl["supersaturated"].get(k) for k in ("control_cell", "omega_median")}
     recs = apply_controls(recs, ok)
     sets, head = window_of(recs)
     rec.update({"verdict": head, "regime": REGIME[head], "controls_pass": ok, "sets": {k: len(v) for k, v in sets.items()},

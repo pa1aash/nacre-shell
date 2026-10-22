@@ -13,6 +13,8 @@
                                                               PH-W4.2: K2 over the registered grid, the controls and the acid-adjusted state
     python -m nacre.screen ph-production --out O [--dry] [--stride N] [--label L]
                                                               PH-W4.2: phosphate films (stage rows, K2 maps, K3 and K4 gaps, route layer, baselines)
+    python -m nacre.screen k2-ph2 --out O [--grids alkaline acid] [--label L]
+                                                              PH-W4.5: phosphate K2 rerun (post-freeze keys, max-Omega control), new <run>_ph2/ directory
     python -m nacre.screen thresholds copy|check --ref R      copy or check the thresholds block of
                                                               theory/thresholds.md at a git ref
 """
@@ -21,7 +23,7 @@ import sys
 from pathlib import Path
 
 from nacre._util import repo_root
-from nacre.screen import k2_grid, ph_dry, ph_precision, ph_prod, ph_route_dry, ph_prov, run, smoke
+from nacre.screen import k2_grid, k2_ph2, ph_dry, ph_precision, ph_prod, ph_route_dry, ph_prov, run, smoke
 from nacre.screen import thresholds as thr
 from nacre.screen.priors import MockPriorsRefused
 
@@ -90,6 +92,10 @@ def main(argv=None):
     kg.add_argument("--dry", action="store_true", help="dry run: output under results/preprint/screen/dryrun_ph/, no ledger")
     kg.add_argument("--stride", type=int, default=1, help="dry run only: every N-th cell of a grid")
     kg.add_argument("--label")
+    k2 = sub.add_parser("k2-ph2", help="phosphate K2 rerun with the post-freeze keys and the rule-based control (PH-W4.5)")
+    k2.add_argument("--out", required=True)
+    k2.add_argument("--grids", nargs="+", default=["alkaline", "acid"], choices=("alkaline", "acid"))
+    k2.add_argument("--label")
     pp = sub.add_parser("ph-production", help="phosphate films: stage rows, K2 maps, K3 and K4 gaps, route layer (PH-W4.2)")
     pp.add_argument("--out", required=True)
     pp.add_argument("--dry", action="store_true")
@@ -127,6 +133,15 @@ def main(argv=None):
         try:
             path, doc, stats = k2_grid.run_k2_grid(root, root / args.out, tuple(args.parts), args.dry, label=args.label,
                                                    log=log if args.dry else None, stride=args.stride)
+        except (run.ProductionRefused, ph_prov.Frozen, run.params_adapter.PriorFileError) as exc:
+            print("refused: %s" % exc, file=sys.stderr)
+            return 2
+        print("wrote %s  (%.1f s, peak %.0f MB, %d cells, %d capped)" % (path.relative_to(root), stats["seconds"], stats["peak_mb"],
+                                                                         stats["cells"], stats["capped_cells"]))
+        return 0
+    if args.cmd == "k2-ph2":
+        try:
+            path, doc, stats = k2_ph2.run_ph2(root, root / args.out, tuple(args.grids), label=args.label)
         except (run.ProductionRefused, ph_prov.Frozen, run.params_adapter.PriorFileError) as exc:
             print("refused: %s" % exc, file=sys.stderr)
             return 2
