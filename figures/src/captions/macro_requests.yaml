@@ -91,6 +91,12 @@ requests:
     format: g
     unit: '\,\mathrm{mol\,dm^{-3}}'
     figure: Fig 15 and Fig 17
+  NumPrecisionRows:
+    source: results/preprint/screen/precision_ph/precision_map.json
+    pattern: '^   "id": "([^"]+)"'
+    reduce: count
+    format: d
+    figure: Fig 14
 # Already defined by W8 (preprint/generated/sources.yaml on preprint/p0-w8, not yet merged into this
 # branch) and used as they are.
 defined_by_w8:
