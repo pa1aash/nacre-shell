@@ -261,7 +261,7 @@ claims:
   - id: CL-V08
     statement: Among the open sources scanned, none reports a crosslinked, water-insoluble polyphosphate
       film formed in situ on aluminium foil in a fluorine-free battery electrode context.
-    section: introduction
+    section: discussion
     type: novelty
     polarity: claims
     origin: redirect
@@ -281,7 +281,7 @@ claims:
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
-    status: planned
+    status: drafted
     notes: NS7 stands only with all four qualifiers. Dropping in situ brings in the baked aluminophosphate
       films; dropping fluorine-free brings in the lithium polyphosphate coating on aluminium. No priority
       or novelty wording accompanies it.
@@ -1540,10 +1540,13 @@ claims:
     checkpoint: cp5r
     supplier: p0-w8
     scope_check: clean
+    notes: 'At PH-W8.3 the risk is reported as a result, not a risk: the orthophosphates are thermodynamically
+      excluded at the higher classes (CL-S14) and the nucleation window is undetermined (CL-S19).'
     status: planned
   - id: CL-L08
-    statement: Slurry competing phases, the insulating film thickness and novelty against the incumbents
-      remain open risks; the patent search stays a logged gap.
+    statement: 'Against the incumbents the screen shows nothing comparative: phosphoric-acid pH control is the
+      comparator state of the dissolution test, carbon-coated foil and the patent baselines enter only through
+      their rows, and the patent search stays a logged gap.'
     section: discussion
     type: limitation
     polarity: claims
@@ -1556,10 +1559,11 @@ claims:
     checkpoint: cp5r
     supplier: p0-w8
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-L09
-    statement: Every record of a service limit so far is in a fluorinated electrolyte, where aluminium fluoride
-      forms on the foil; in the fluorine-free regime such a record is context only.
+    statement: 'Kinetic stabilisation is not ruled out for phosphates: tier-two records of coated cathode
+      particles exist in fluorinated electrolytes, where aluminium fluoride forms, not in fluorine-free ones,
+      where such a record is context only.'
     section: discussion
     type: limitation
     polarity: claims
@@ -1567,10 +1571,12 @@ claims:
     evidence:
     - kind: record
       ref: ops/tracks/redirect_plan.md#Evidence consequences
+    - kind: record
+      ref: theory/claims_redirect.md#tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones
     checkpoint: cp5r
     supplier: p0-w2
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-N06
     statement: This paper does not claim that phosphate supply at a pit works or that any film is self-healing;
       both are design hypotheses.
@@ -1597,10 +1603,11 @@ claims:
       ref: ops/tracks/redirect_plan.md#INCUMBENTS
     - kind: dossier
       ref: lit/novelty.md#NU4
+    - {kind: record, ref: 'preprint/paper/sections/discussion.tex#or the baked aluminophosphate baseline.'}
     checkpoint: cp4
     supplier: p0-w8
     scope_check: allowlisted
-    status: planned
+    status: drafted
   - id: CL-N08
     statement: This paper does not claim that the nucleation or template half of the chain is validated.
     section: discussion
@@ -1643,10 +1650,11 @@ claims:
       ref: ops/tracks/redirect_plan.md#C2. Formation criteria
     - kind: record
       ref: ops/tracks/redirect_plan.md#C3. Liquid wetting
+    - {kind: record, ref: 'preprint/paper/sections/discussion.tex#formation and wetting are criteria screened thermodynamically.'}
     checkpoint: cp4
     supplier: p0-w8
     scope_check: allowlisted
-    status: planned
+    status: drafted
   - id: CL-N11
     statement: This paper does not claim that a thermodynamic onset is a measured service limit, or that
       a record in a fluorinated electrolyte supports a pass.
@@ -1657,10 +1665,11 @@ claims:
     evidence:
     - kind: record
       ref: ops/tracks/redirect_plan.md#Evidence consequences
+    - {kind: record, ref: 'preprint/paper/sections/discussion.tex#supports a pass.'}
     checkpoint: cp4
     supplier: p0-w8
     scope_check: allowlisted
-    status: planned
+    status: drafted
   - id: CL-N12
     statement: This paper does not claim any result for a fluorinated electrolyte or any fluoride phase,
       including as a comparator.
@@ -1671,10 +1680,11 @@ claims:
     evidence:
     - kind: record
       ref: ops/tracks/redirect_plan.md#No fluorides anywhere
+    - {kind: record, ref: 'preprint/paper/sections/discussion.tex#including as a comparator.'}
     checkpoint: cp4
     supplier: p0-w8
     scope_check: allowlisted
-    status: planned
+    status: drafted
   - id: CL-N13
     statement: This paper does not claim the acid-adjusted slurry as a regime of the barrier; it is a comparator
       to the incumbent.
@@ -1685,10 +1695,11 @@ claims:
     evidence:
     - kind: record
       ref: ops/tracks/redirect_plan.md#acid-adjusted state
+    - {kind: record, ref: 'preprint/paper/sections/discussion.tex#it is a comparator to the incumbent.'}
     checkpoint: cp4
     supplier: p0-w8
     scope_check: allowlisted
-    status: planned
+    status: drafted
 
   # ----- added at PH-W8.2 (regime frame: Introduction, Design rules, Methods) -----
   - id: CL-K12
@@ -1790,6 +1801,87 @@ claims:
     scope_check: clean
     status: drafted
     notes: NU20 has no source (PH-W2.5); it is the ruling's plain statement, not a literature claim.
+  - id: CL-L11
+    statement: The largest limit is the sink bracket; with no measured transfer free energy of Ca2+ or Al3+
+      into the cell solvent its lower end is pending, so no phase passes the oxidation condition and every
+      open row is open on its upper bound alone.
+    section: discussion
+    type: limitation
+    polarity: claims
+    origin: redirect
+    evidence:
+    - kind: claim
+      ref: CL-M17
+    - kind: claim
+      ref: CL-S16
+    checkpoint: cp5r
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+
+  - id: CL-L12
+    statement: The wetting machinery leaves out the electrostatic double-layer term of the charged oxide;
+      kinetics, including kinetic stabilisation and the race against hydrolysis, are outside the screen; and
+      the screen tests the properties a film would need at each stage, not that a layer persists through drying
+      and cell assembly.
+    section: discussion
+    type: limitation
+    polarity: claims
+    origin: redirect
+    evidence:
+    - kind: record
+      ref: theory/claims_redirect.md#Neutral-solute limitation (stated)
+    - kind: claim
+      ref: CL-L06
+    - kind: claim
+      ref: CL-D13
+    checkpoint: cp5r
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+
+  - id: CL-L13
+    statement: Solid energies come from two database versions and decide no row; several inputs are grade D;
+      the aragonite solubility product is a tertiary source graded C; and some interpretive choices were made
+      with values in view, the regime framing, the governing film solid, the glass-correction bounds, the
+      control move and the mapping of falsified onto excluded.
+    section: discussion
+    type: limitation
+    polarity: claims
+    origin: redirect
+    evidence:
+    - kind: macro
+      ref: NumMpDatabaseVersion
+    - kind: macro
+      ref: NumMpDatabaseVersionComparator
+    - kind: record
+      ref: ops/tracks/redirect_plan.md#Upgrade the grade only if W1 reaches the primary source
+    - kind: claim
+      ref: CL-M08
+    checkpoint: cp5r
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+
+  - id: CL-O05
+    statement: A second version would replace the missing transfer data by a computed premise, transfer free
+      energies of Li+, Ca2+ and Al3+ from water to propylene carbonate in one benchmarked cluster-continuum
+      method, and would label any resulting pass (computed premise); the path is described, not taken, and
+      this version contains no such pass.
+    section: discussion
+    type: outlook
+    polarity: claims
+    origin: redirect
+    evidence:
+    - kind: record
+      ref: ops/tracks/redirect_plan.md#COMPUTATIONAL PACKAGE (pending cp5a2)
+    - kind: record
+      ref: theory/claims_redirect.md#The bracket rule of block version 7 (Section 10e) is **inactive in v1**
+    checkpoint: cp5r
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+
   - id: CL-D19
     statement: The two stages ask different things of a mineral, so one phase need not serve both; the question is
       matched to the regime, per stage and per cutoff class, asking which phases are thermodynamically excluded, which
@@ -2194,19 +2286,20 @@ claims:
     notes: "Withdrawn in the redirect; no new density functional or machine-learned-potential calculation is run (decision D36)."
   - id: CL-L01
     origin: carbonate control (frozen)
-    statement: >-
-      The Pourbaix result is a thermodynamic proxy: it says which phases are stable, not how
-      fast any of them forms or dissolves.
+    statement: The passivation window is a thermodynamic proxy for the state of the oxide; it says which phases
+      are stable, not how fast any of them forms or dissolves.
     section: discussion
     type: limitation
     polarity: claims
     evidence:
-      - {kind: claim, ref: CL-X01}
-      - {kind: figure, ref: Fig 7}
+    - kind: claim
+      ref: CL-M13
+    - kind: macro
+      ref: NumAcidModelLo
     checkpoint: cp4
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-L02
     origin: carbonate control (frozen)
     statement: >-
@@ -2216,54 +2309,68 @@ claims:
     type: limitation
     polarity: claims
     evidence:
-      - {kind: table, ref: Table 1}
-      - {kind: claim, ref: CL-B01}
+    - kind: table
+      ref: tab:parameters
+    - kind: claim
+      ref: CL-B01
     checkpoint: cp3
     supplier: p0-w1
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-L03
     origin: carbonate control (frozen)
-    statement: >-
-      Classical nucleation theory with a spherical-cap nucleus of one registered polymorph is
-      an approximation; amorphous precursors and non-classical pathways are outside the model.
+    statement: Classical nucleation theory with a spherical-cap nucleus of one registered phase is an
+      approximation at nucleus size; amorphous precursors and non-classical pathways are outside the model,
+      and its retrodiction failed, so every templating statement is a model statement.
     section: discussion
     type: limitation
     polarity: claims
     evidence:
-      - {kind: derivation, ref: si:derivation}
+    - kind: derivation
+      ref: si:derivation
+    - kind: macro
+      ref: NumRetroCorrect
+    - kind: claim
+      ref: CL-T03
     checkpoint: cp2
     supplier: p0-w3
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-L04
     origin: carbonate control (frozen)
-    statement: >-
-      Calcium carbonate is an electronic insulator, so film thickness is bounded from above by
-      electronic resistance; the paper reports this bound only as a limitation.
+    statement: A mineral film is an electronic insulator, so its thickness is bounded from above by electronic
+      resistance; the bound is not evaluated for want of a film resistivity and is reported only as a
+      limitation.
     section: discussion
     type: limitation
     polarity: claims
     evidence:
-      - {kind: reference, ref: charter/scope_guard.md (insulating film thickness)}
+    - kind: reference
+      ref: charter/scope_guard.md (insulating film thickness)
+    - kind: record
+      ref: 'ops/reports/P0-W4.PH-W4.2.md#K3 and K4 of every phosphate framing: undetermined'
     checkpoint: none
     supplier: p0-w8
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-L05
     origin: carbonate control (frozen)
-    statement: >-
-      Contrary evidence in the literature, including Osorio-Celestino and co-workers (2020),
-      is reported and weighed against the chain rather than omitted.
+    statement: Contrary records, calcite scale on aluminium alloys with attack beneath it and a polydopamine
+      coating that reduced carbonate deposition, are reported and weighed; neither tests a templated film.
     section: discussion
     type: limitation
     polarity: claims
     evidence:
-      - {kind: reference, ref: "pending: entry via nacre bib add from lit/contrary.md (p0-w2)"}
+    - kind: claim
+      ref: CL-E01
+    - kind: claim
+      ref: CL-E02
+    - kind: reference
+      ref: osoriocelestino2020influence
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
-    status: planned
+    status: drafted
     notes: >-
       The citation enters refs.bib only through nacre bib add with the DOI recorded in
       lit/contrary.md; its content is summarised from that record, not from memory.
@@ -2320,10 +2427,11 @@ claims:
     polarity: does-not-claim
     evidence:
       - {kind: reference, ref: charter/scope_guard.md}
+      - {kind: record, ref: 'preprint/paper/sections/discussion.tex#film thickness is optimal.'}
     checkpoint: none
     supplier: p0-w8
     scope_check: allowlisted
-    status: planned
+    status: drafted
   - id: CL-N05
     origin: carbonate control (frozen)
     statement: This paper does not claim experimental validation.
@@ -2332,10 +2440,11 @@ claims:
     polarity: does-not-claim
     evidence:
       - {kind: reference, ref: charter/scope_guard.md}
+      - {kind: record, ref: 'preprint/paper/sections/discussion.tex#does not claim experimental validation.'}
     checkpoint: none
     supplier: p0-w8
     scope_check: allowlisted
-    status: planned
+    status: drafted
   # --- Introduction (P0-W8.2): background, hypothesis framing, novelty, contrary evidence ---
   # Each entry is the claim of one or more sentences of sections/introduction.tex; the sentence
   # ends with a comment naming the id. Literature statements trace to evidence rows or DOIs.

@@ -27,7 +27,9 @@ None new.
 
 ## Claims carried
 
-CL-L07 to CL-L09, CL-N06 to CL-N13; carbonate era: CL-L01 to CL-L05, CL-N01 to CL-N05.
+CL-L07 to CL-L09, CL-L11 to CL-L13, CL-N06 to CL-N13, CL-O05, CL-V08 (NS7, moved here from the Introduction at PH-W8.3); carbonate era: CL-L01 to CL-L05, CL-N01 to CL-N05.
+
+At PH-W8.3 the section follows the session prompt: what the screen does and does not show; the limits list; contrary evidence; the incumbents; the second-version path (described, not claimed); the experiment as the way forward.
 
 ## Supplying lanes
 
