@@ -50,9 +50,9 @@ def test_one_brief_per_section_with_the_required_parts():
 def test_results_subsections_follow_the_outline():
     text = (PAPER / "sections" / "results.tex").read_text(encoding="utf-8")
     heads = re.findall(r"\\subsection\{([^}]*)\}", text)
-    assert heads == ["Carbonate control", "Phosphate phases, including hydroxide and water",
-                     "Condensed and amorphous phases", "The processing regime",
-                     "Required precision for the template--nucleus energy", "Candidate ranking with baselines"]
+    assert heads == ["The regime map", "Processing-stage dissolution stability and the acid-adjusted comparator",
+                     "The carbonate control and the $K_1$ exclusion map", "Phosphates and the condensed and aluminium phosphates",
+                     "Nucleation and templating as model statements", "The required-precision map", "The baselines"]
     design = (PAPER / "sections" / "design.tex").read_text(encoding="utf-8")
     assert re.findall(r"\\subsection\{([^}]*)\}", design) == ["The four conditions", "The route layer"]
     assert "\\subsection{Templating thermodynamics}" in (PAPER / "sections" / "model.tex").read_text(encoding="utf-8")

@@ -6,6 +6,8 @@
 % the text makes has an entry in ../claims.yaml. Section order: abstract, introduction, design rules (with the templating thermodynamics), methods,
 % results, predictions, discussion and limits, declarations; the SI is si/main_si.tex.
 \input{nacre-preamble}
+% Numbers before the front matter: the abstract, typeset inside the template head, uses macros.
+\input{../generated/numbers}
 \input{../generated/front}
 \input{../generated/authors}
 \input{../generated/declarations}
@@ -15,7 +17,6 @@
   \footnotetext{\dag~Electronic supplementary information (ESI) available. See DOI: \nacreSIDOI}}
 
 \input{build/rsc_head}
-\input{../generated/numbers}
 % Shared notation from the theory package, when it is present (path relative to preprint/paper).
 \IfFileExists{../../theory/macros.tex}{\input{../../theory/macros.tex}}{}
 % Layout-only helpers (panel letters set outside the artwork); not prose, not linted.
