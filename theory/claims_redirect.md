@@ -99,7 +99,7 @@ T1 = tier 1 (the bracket [E_lb, E_ub] of Section 2f against E_c, margin m_1; "be
 | 1 | pass: E_lb >= E_c + m_1 (Section 2f), benchmarked route, transfer premise supported | any or none | feasible | `tier 1`; if T2 is below, `service limit below cutoff, class X` printed beside | E_ox = E_c + 2 m_1 |
 | 2 | below: E_ub < E_c - m_1 (Section 2f) | available and below: E_svc < E_c - m_svc | **falsified at E_c** | `tier 1 and tier 2 (class X)` | E_ox = E_c - 2 m_1, E_svc = E_c - 2 m_svc |
 | 3 | below | none | falsified at E_c | `tier 1 only` (no tier 2 exists) | E_ox = E_c - 2 m_1 |
-| 4 | below | class A or B, E_svc >= E_c + m_svc | **not excluded, kinetically stabilised** | label carries the class (A or B) | E_ox = E_c - 2 m_1, E_svc = E_c + 2 m_svc |
+| 4 | below | class A or B, E_svc >= E_c + m_svc | **kinetically stabilised** (tier 1 below; amended PH-W3.8, D78) | label carries the class (A or B); thermodynamically excluded at tier 1 printed beside | E_ox = E_c - 2 m_1, E_svc = E_c + 2 m_svc |
 | 5 | below | class C only, E_svc >= E_c + m_svc | inconclusive | `bulk-phase LSV only; not evidence for a film` | as row 4 with class C |
 | 6 | within the bracket: neither E_lb >= E_c + m_1 nor E_ub < E_c - m_1 | any | inconclusive | tier 2 printed beside; E_lb, E_ub printed | E_lb < E_c < E_ub |
 | 7 | undetermined (Section 2a) | any | inconclusive | `undetermined never passes`; tier 2 printed beside | E_r unsourced |
@@ -120,8 +120,8 @@ A phase proceeds to K3 and K4 unless its K1 verdict is falsified at EVERY regist
 inconclusive or undetermined at any class proceeds, and its K1 status is shown in its row.
 
 Equivalently: K3 and K4 are skipped only for a phase whose class verdict (Section 2e) is `falsified for the class`
-for C_lo, C_mid and C_hi alike; its row then says so. A phase that is feasible or not excluded (kinetically
-stabilised, class A or B) at some class proceeds with that class named; a phase that is only inconclusive,
+for C_lo, C_mid and C_hi alike; its row then says so. A phase that is feasible or kinetically stabilised
+(class A or B) at some class proceeds with that class named; a phase that is only inconclusive,
 undetermined or partial proceeds with its per-class K1 status printed in its row beside K2 to K4. The reason (cp4
 ruling): while the solvated sink is a gap no phase can pass K1, and the earlier rule (proceed only on a pass) would
 have run nothing. K2 is evaluated for every phase (it is a property of the slurry) and gates the study row, not the
@@ -322,8 +322,8 @@ up by at least p_deg). A pass that does not degrade is labelled `generic`, not t
 Film candidates: AlPO4, Al(PO3)3, Al-borate, Al-oxalate, Al2O3, and the bare-Al onset as the reference rung. Cut order
 keeps AlPO4, Al(PO3)3 and Al2O3. A film F passes the ladder iff all three hold at the cutoff E_c:
 
-- **(a) Oxidation limit.** The K1 table of Section 2c for F at E_c is feasible or not excluded (kinetically
-  stabilised, class A or B); tier 1 and tier 2 both printed. Undetermined never passes.
+- **(a) Oxidation limit.** The K1 table of Section 2c for F at E_c is feasible or kinetically stabilised
+  (class A or B); tier 1 and tier 2 both printed. Undetermined never passes.
 - **(b) Insolubility in the electrolyte.** With K_sp,el(F) the solubility product of F in the registered electrolyte
   (solvent and salt set; `params`), the equilibrium dissolved level of the film cation at the registered anion
   activity is s_sat = (K_sp,el / prod_other a_i^nu_i)^(1/nu_Al). Pass iff s_sat <= s_tol (the loss budget that keeps
@@ -412,8 +412,8 @@ existing keys used: `dfg_ca2_aq`, `dfg_al3_aq`, `dfg_li_aq`, `hydration_free_ene
 - **I3.** Rows 6 and 7: within the margin band, or undetermined tier 1, is inconclusive even where tier 2 is above or
   below; the plan's falsification needs tier 1 below.
 - **I4.** Superseded by cp4 F1 (Section 2d): the test is no longer "passes at any class" but "not falsified at every
-  class"; the not-excluded, kinetically stabilised verdict (class A or B) is one of the statuses that proceed.
-- **I5.** Tier 2 records logged with a fluoride-containing electrolyte are kept, labelled F_el, and not excluded; the
+  class"; the kinetically stabilised verdict (class A or B) is one of the statuses that proceed.
+- **I5.** Tier 2 records logged with a fluoride-containing electrolyte are kept, labelled F_el, and retained; the
   plan asks only that the electrolyte be logged.
 - **I6.** The bulk-precipitation competition in K3 uses the same absolute criterion B_acc for the homogeneous
   barrier (as stated in the brief); a separate bulk prefactor and volume is deferred to PH-W3.2 as a labelled sensitivity.
@@ -479,7 +479,7 @@ same formula unit (`polyp_log10_ksp_al`, a gap):
 |---|---|---|---|
 | F1r | K_sp,AlPP is a gap | undetermined | flip value K_sp* = IAP_AlPP printed (the K_sp below which the gel is accessible) |
 | F2r | P(Omega_AlPP < 1) >= p_cred | falsified at that state | `gel cannot form (thermodynamic accessibility)` |
-| F3r | P(Omega_AlPP > 1) >= p_cred | not excluded | `not excluded by thermodynamic accessibility` (never a pass) |
+| F3r | P(Omega_AlPP > 1) >= p_cred | open | `open (not thermodynamically excluded by accessibility)` (never a pass; Section 11d) |
 | F4r | otherwise | inconclusive | |
 
 - **Two labelled a(Al3+) states.** *Oxide-equilibrium* (slurry stage): a_Al fixed by the oxide or hydroxide in contact,
@@ -499,7 +499,7 @@ same formula unit (`polyp_log10_ksp_al`, a gap):
 |---|---|---|---|
 | B1 | state outside the covered region | any | undetermined |
 | B2 | covered | state outside the two-phase region with P >= p_cred | falsified at that state (`no liquid precursor`) |
-| B3 | covered | state inside the two-phase region with P >= p_cred | not excluded (a liquid precursor exists; K4 route form next) |
+| B3 | covered | state inside the two-phase region with P >= p_cred | open (a liquid precursor exists; K4 route form next; Section 11d) |
 | B4 | covered | otherwise | inconclusive |
 
 - **R3** has no formation criterion of its own: it is the dried form of the slurry state and is decided by K2h (9a)
@@ -648,7 +648,7 @@ Section 2g).
 - **I11.** C1: first-order loss in the condensed fraction; coverage includes interpolation in pH between the two measured
   values and nothing else; with Ca2+ present only the Ca rows bracket the state.
 - **I12.** C2: with the oxide present a(Al3+) is pinned by the oxide equilibrium, so polyphosphate complexation acts on
-  the free ligand; a complexation gap is evaluated at f_PP,free = 1 and flagged (falsification stands, not-excluded
+  the free ligand; a complexation gap is evaluated at f_PP,free = 1 and flagged (falsification stands, open
   labelled optimistic).
 - **I13.** C3: at coexistence the Gibbs-Langmuir site and exclusion terms cancel in gamma_sl - gamma_sn; the substrate
   preference is the site-free contact difference (a gap) and the R2 K4 route form is undetermined until it or a contact
@@ -697,8 +697,8 @@ water, at room temperature. Three points decide the extension:
    window supports (the film holds at that state).
 3. *R1 runs the other way.* At oxide equilibrium a(Al3+) is pinned by the film solid, and the amorphous solid gives the
    highest a(Al3+) (`a_al3_oxide.csv`). For the falsifying-only R1 test the amorphous state is the hardest to falsify, so
-   an R1 falsification there stands under every film framing. A "not excluded" verdict there is optimistic if the film is
-   in fact crystalline.
+   an R1 falsification there stands under every film framing. An open verdict there (not thermodynamically excluded,
+   Section 11d) is optimistic if the film is in fact crystalline.
 
 **Ruling.** The extension of C4 to the oxide film is justified in direction, by points 1 and 2, and conditional on the
 phase identity of point 1. The rows are:
@@ -708,8 +708,8 @@ phase identity of point 1. The rows are:
 | passivation window (comparator state, Section 5) | Al(OH)3 am, at the TR-091 Al level | boehmite (grade A, the gated Al phase of the R-cell window) | gibbsite, corundum; every registered Al level; the published windows TR-090 and TR-091 |
 | R1 oxide-equilibrium a(Al3+) (Section 9b) | Al(OH)3 am | boehmite | none |
 
-Both rows are reported wherever either is used. An R1 "not excluded" (F3r) that holds at the amorphous state and fails
-at the boehmite state is labelled `not excluded only if the film is amorphous`. An R1 falsification (F2r) at the
+Both rows are reported wherever either is used. An R1 open verdict (F3r) that holds at the amorphous state and fails
+at the boehmite state is labelled `open only if the film is amorphous` (amended PH-W3.8, Section 11d). An R1 falsification (F2r) at the
 amorphous state is reported as robust to the film framing. Corundum is an anhydrous high-temperature phase. It is a
 reference only, never a candidate for the hydrated film.
 
@@ -960,7 +960,7 @@ or "the slurry". The rules that go with the label, in the same section of the pa
 
 ### 11c. C4: the low-voltage wording
 
-**Class.** The low-voltage class is **not excluded** at the nominal cutoff (the C_lo class of Section 2e,
+**Class.** The low-voltage class is **not thermodynamically excluded** (table word `open`, Section 11d) at the nominal cutoff (the C_lo class of Section 2e,
 `regimes.R-cell.parameters.cutoff_classes`), with a cutoff of 4 V registered as a sensitivity line beside it (a
 registered design cutoff, not a result). Both are read off the K1 verdict table of Section 2c for the carbonate row and
 the phosphate rows, per cutoff, and the word "excluded" is used only in the sense of Section 11d.
@@ -982,15 +982,38 @@ printed and the sentence is dropped. Proposed; the planning chat rules at cp5b.
 
 ### 11d. C5: the regime-table vocabulary
 
-The regime table of the paper uses exactly these terms, and no other verdict word (cp5 closure ruling Q4):
+The regime table of the paper uses exactly these terms, and no other verdict word (cp5 closure ruling Q4, amended at
+PH-W3.8 by D78; the amendment is recorded below the table):
 
 | Term | Meaning | Source of the entry |
 |---|---|---|
 | excluded | falsified (D68) at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed. Footnote, verbatim: "excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)" | K1 verdict table, Section 2c |
-| not excluded | not falsified, with a feasible or kinetically stabilised K1 verdict (class A or B named) | K1 verdict table, Section 2c |
+| open | not falsified, no lower bound: the test is inconclusive on both sides, or the bracket contains the cutoff. Never a pass, and never evidence of feasibility | verdict row 6 of Section 2c, and every row whose tier 1 is solid-salt-only and not below (E_lb pending) |
 | suitable against dissolution | K2 passes at every state of the registered grid; always inside the row text of Section 11a ("a necessary condition, in [region]"), the full label of Section 11b | K2 test of Section 11a |
-| open | not falsified, no lower bound: the test is inconclusive on both sides, or the bracket contains the cutoff | verdict row 6 of Section 2c |
 | undetermined | data missing: a gap key, an unbenchmarked number or an unregistered sink (`undetermined (data missing)`) | verdict row 7 of Section 2c |
+| inconclusive | a K2 entry that neither passes at every state nor fails at every state of a pH, or whose falsifiability control fails (`inconclusive (control fails)`); a K2 word only | K2 test of Section 11a |
+| feasible; kinetically stabilised (class A or B) | reserved for verdict rows 1 and 4 of Section 2c; no cell of version 1 can carry them (E_lb is pending, Section 11f, and no class A or B record exists in a fluorine-free electrolyte) | K1 verdict table, Section 2c |
+
+**Amendment (PH-W3.8; D78, binding).** The term "not excluded" of the cp5 closure table, defined there as "not
+falsified, with a feasible or kinetically stabilised K1 verdict", is withdrawn. D78 governs: the prose phrase means the
+table word **open** (not falsified, no lower bound). Rules:
+
+1. The paper writes the full phrase **not thermodynamically excluded**, never the bare "not excluded", in the text, the
+   captions, the table legend and the SI. Its meaning is defined once, at its first use: "not thermodynamically excluded
+   (open): not falsified at the cutoff, with no lower bound on the onset". Every later use carries that meaning only.
+2. The phrase never implies feasibility, a pass, stability or protection. A sentence that needs a positive statement uses
+   a pass word of its own test (feasible, suitable against dissolution with its conditions), and in version 1 no K1
+   sentence can.
+3. The former second meaning is split. A tier-1 pass is **feasible** (row 1); a tier-1 fall with a class A or B record
+   above the cutoff is **kinetically stabilised (class X)**, printed with "thermodynamically excluded at tier 1" beside it
+   (row 4). The two are not synonyms of open.
+4. "open" is a K1 word. A K2 cell that is neither a pass nor a falsification reads `inconclusive`, and a K2 cell whose
+   falsifiability control fails reads `inconclusive (control fails)`; neither reads open.
+5. The same reading holds for every falsifying-only test (the R1 gelation criterion, Section 9b, F3r): a state that is
+   not falsified there is open in the table and not thermodynamically excluded in the prose, and the label of Section 10a
+   reads `open only if the film is amorphous`.
+
+The machine form is `screen_ph.w36.regime_table` of the thresholds block (block version 10).
 
 **Kinetic stabilisation.** "excluded" is a thermodynamic statement. Kinetic stabilisation is not ruled out for
 phosphates: tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones. A sentence of the paper never

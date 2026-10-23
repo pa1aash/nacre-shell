@@ -836,7 +836,7 @@ checks that every expression parses, that only registered ids appear, and that e
 unit of its quantity.
 
 ```thresholds
-version: 9
+version: 10
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
@@ -862,6 +862,8 @@ revised_w36: {session: PH-W3.6, rule: 'carbonate K2 polymorph framings and the l
               disclosure: 'registered after the K1 ladder outputs and the carbonate K2 results existed and were seen; no carbonate link, edge or margin changed'}
 revised_w37: {session: PH-W3.7, rule: 'cp5 closure rulings Q1 and Q5: aragonite K2 input key log10_ksp_aragonite_25c_i0; label rule without a nacre-type label (screen_ph.w36.carbonate_k2)',
               authority: theory/claims_redirect.md Sections 11a and 11g, no_value_computed: true, screen_output_consulted: false}
+revised_w38: {session: PH-W3.8, rule: 'planning-chat rulings after the draft review: (1) regime vocabulary amended by D78 (open; prose "not thermodynamically excluded"); (2) the solid-salt reference state and the dilute-electrolyte margin m_sink (structure only, value unbound); (3) the same-composition reading of I17 (amendment proposed, not registered); (6) the comparator window',
+              authority: theory/claims_redirect.md Sections 2h, 9h and 11d to 11h, no_value_computed: true, screen_output_consulted: 'the PH-W3.3 review figures only (crossovers of the ladder and K2 pass counts, read, not recomputed)'}
 contract_version: 6
 decision:
   statistic: band_mass
@@ -1367,7 +1369,10 @@ screen_ph:
       falsifiability_control: 'the same test flags undersaturation (Omega_bulk < 1) at the low-dose corner of the grid, for each polymorph; otherwise that polymorph is inconclusive in every row'
       authority: claims_redirect Section 11a
     regime_table:
-      vocabulary: [excluded, not excluded, suitable against dissolution, open, undetermined]
+      vocabulary: [excluded, open, suitable against dissolution, undetermined, inconclusive]
+      reserved: {feasible: 'verdict row 1 (no v1 cell)', kinetically_stabilised: 'verdict row 4, class A or B named, with thermodynamically excluded at tier 1 beside (no v1 cell)'}
+      prose_open: {phrase: not thermodynamically excluded, means: open, defined: once at first use, bare_not_excluded: never written, implies_feasibility: never, authority: D78}
+      k2_words: {neither_pass_nor_falsified: inconclusive, control_fails: inconclusive (control fails), open: never a K2 word}
       excluded_footnote: 'excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)'
       kinetic_note: 'kinetic stabilisation is not ruled out for phosphates (tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones); never "fails at high voltage" without "thermodynamically"'
       acid_adjusted_row: {state: params.ph_slurry_acid_adjusted (range from the key), carbonate: 'excluded against dissolution where calcite is undersaturated', ca_phosphates: 'tested on K2 in the same state; failures stated in the cell', source: generated from K2 outputs}
