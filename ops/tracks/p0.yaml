@@ -476,9 +476,9 @@ days:
     master_trace: none
     requires: []
 - day: 6
-  status: open
+  status: closed
   opened_utc: '2026-10-22T08:42:21Z'
-  closed_utc: null
+  closed_utc: '2026-10-23T11:54:19Z'
   carried: [P0-W7.4]
   sessions:
   - id: PH-W4.2
@@ -490,9 +490,9 @@ days:
     note: 'Production screens on the MacBook, no pods, no spending: slurry-stage K2 to K4 for carbonate
       (calcite, aragonite, ACC) and phosphate phases, K1 read from ladder_v3, framings, baselines, the
       F1 proceed rule, deletion test, sensitivity sweeps. First step (D57): commit the gap-table treatments
-      for the 72 pending keys and the 11 symbol bindings before any output. Per D71 the first step, committed before any output, also covers (a) the K_P
-      binding with unit test and the TATB declaration, (b) the labels of Q5, (c) the second control of
-      Q2, (d) K2 tests in the acid-adjusted state; then production.'
+      for the 72 pending keys and the 11 symbol bindings before any output. Per D71 the first step, committed
+      before any output, also covers (a) the K_P binding with unit test and the TATB declaration, (b)
+      the labels of Q5, (c) the second control of Q2, (d) K2 tests in the acid-adjusted state; then production.'
   - id: PH-W4.3
     lane: p0-w4
     day: 6
@@ -542,18 +542,18 @@ days:
     master_trace: none
     requires: []
     note: 'Update theory/claims_redirect.md per D71 and D72: section 11a names log10_ksp_aragonite_25c_i0
-      and marks the older key superseded, not read; the label rule and the two row labels of Q5; the
-      regime-table footnote and the kinetic-stabilisation sentence of Q4; the acid-adjusted row; K_P and
-      the TATB declaration as definitions; f_min recorded as deferred; check_contract passes.'
+      and marks the older key superseded, not read; the label rule and the two row labels of Q5; the regime-table
+      footnote and the kinetic-stabilisation sentence of Q4; the acid-adjusted row; K_P and the TATB declaration
+      as definitions; f_min recorded as deferred; check_contract passes.'
   - id: PH-W1.7
     lane: p0-w1
     day: 6
     model: Sonnet
     master_trace: none
     requires: []
-    note: 'Non-gating. Try to reach Plummer and Busenberg 1982 or another primary source for the aragonite
+    note: Non-gating. Try to reach Plummer and Busenberg 1982 or another primary source for the aragonite
       Ksp and upgrade the grade if read, otherwise record the gap. Document the conversion rule for any
-      non-TATB transfer source and the molal-to-molar conversion for any K.'
+      non-TATB transfer source and the molal-to-molar conversion for any K.
   - id: PH-W4.2g
     lane: p0-w4
     day: 6
@@ -611,21 +611,22 @@ days:
     model: Sonnet
     master_trace: none
     requires: []
-    note: 'Per-pH dose table and dose-qualifier text in the regime table generator and prose; the F1 wording.'
+    note: Per-pH dose table and dose-qualifier text in the regime table generator and prose; the F1 wording.
   - id: PH-W6.3
     lane: p0-w6
     day: 6
     model: Sonnet
     master_trace: none
     requires: []
-    note: 'Stability-map figure; drop fig13 for the Al-salt table; correct the PH-W6.2 report row count to 32; fig15 from the per-pH minimum doses.'
+    note: Stability-map figure; drop fig13 for the Al-salt table; correct the PH-W6.2 report row count
+      to 32; fig15 from the per-pH minimum doses.
   - id: PH-I6e
     lane: p0-int
     day: 6
     model: Sonnet
     master_trace: none
     requires: []
-    note: 'Merges PH-W8.2e and PH-W6.3; F5 deviation entries; cp5b tag.'
+    note: Merges PH-W8.2e and PH-W6.3; F5 deviation entries; cp5b tag.
   - id: PH-W4.6
     lane: p0-w4
     day: 6
@@ -639,7 +640,9 @@ days:
     model: Sonnet
     master_trace: none
     requires: []
-    note: 'Align the per-pH wording of the regime table with the figure rule for the open cells; add the Al-salt table from the W6 CSV; the fig17 caption statement on phases without a K1 bound; correct any text that says suitable from pH 4.5 without its dose.'
+    note: Align the per-pH wording of the regime table with the figure rule for the open cells; add the
+      Al-salt table from the W6 CSV; the fig17 caption statement on phases without a K1 bound; correct
+      any text that says suitable from pH 4.5 without its dose.
   - id: PH-W6.3b
     lane: p0-w6
     day: 6
@@ -647,12 +650,13 @@ days:
     master_trace: none
     requires: []
     optional: true
-    note: 'Optional: pathway schematic and four-conditions diagram completion; the hero stays optional and first to cut.'
+    note: 'Optional: pathway schematic and four-conditions diagram completion; the hero stays optional
+      and first to cut.'
 - day: 7
-  status: pending
-  opened_utc: null
+  status: open
+  opened_utc: '2026-10-23T11:54:19Z'
   closed_utc: null
-  carried: []
+  carried: [P0-W7.4]
   sessions:
   - id: PH-W8.3
     lane: p0-w8
@@ -1136,10 +1140,9 @@ decisions:
     ledger does not list, so the day-close check read them as not run.'}
 - {id: D71, date: '2026-10-21', decision: 'cp5 closure PASS. Rulings Q1 to Q6 recorded in the CP5 CLOSURE
     RULINGS section of redirect_plan.md: aragonite key log10_ksp_aragonite_25c_i0 (older key superseded,
-    not read); second low-dose control in the unmodified alkaline slurry; TATB for Li+ and benchmark
-    ions, Ca(PO3)2 bound kept, K_P = K * c0; excluded = falsified with the tier-1 footnote; label rule;
-    f_min, Al polyphosphate K_sp and A_patch deferred to cp5b.', reason: Planning-chat ruling at cp5
-    closure.}
+    not read); second low-dose control in the unmodified alkaline slurry; TATB for Li+ and benchmark ions,
+    Ca(PO3)2 bound kept, K_P = K * c0; excluded = falsified with the tier-1 footnote; label rule; f_min,
+    Al polyphosphate K_sp and A_patch deferred to cp5b.', reason: Planning-chat ruling at cp5 closure.}
 - {id: D72, date: '2026-10-21', decision: 'Label rule change (changes C2): nacre-type requires aragonite
     passing K2 and its formation supported under the registered processing conditions. NU19 says it is
     not, so the regime table has no nacre-type row.', reason: Planning-chat ruling at cp5 closure (Q5).}
@@ -1147,24 +1150,26 @@ decisions:
     are complete; the post-freeze keys of PH-W1.7 are not used by them; the rerun (PH-W4.5) requires a
     ruling at cp5b.', reason: Integrator record at PH-I6b.}
 - {id: D74, date: '2026-10-21', decision: 'fig15 acid-adjusted column rule (single cell versus split by
-    pH) is deferred to the planning chat at cp5b. The patent references (US 8,252,463; US 8,821,969;
-    US 6,485,866; US 6,844,114) stay as missing-input markers until a fetched-metadata route exists.',
-  reason: Integrator record at PH-I6c.}
-- {id: D75, date: '2026-10-21', decision: 'The results packet cp5b is built; the strict verify runs at cp6.',
-  reason: Integrator record at PH-I6.}
-- {id: D76, date: '2026-10-22', decision: 'cp5b verdict PASS once F1 to F5 are applied; F6 is Palaash''s.',
+    pH) is deferred to the planning chat at cp5b. The patent references (US 8,252,463; US 8,821,969; US
+    6,485,866; US 6,844,114) stay as missing-input markers until a fetched-metadata route exists.', reason: Integrator
+    record at PH-I6c.}
+- {id: D75, date: '2026-10-21', decision: The results packet cp5b is built; the strict verify runs at
+    cp6., reason: Integrator record at PH-I6.}
+- {id: D76, date: '2026-10-22', decision: cp5b verdict PASS once F1 to F5 are applied; F6 is Palaash's.,
   reason: Planning-chat ruling at cp5b.}
-- {id: D77, date: '2026-10-22', decision: 'Route A is confirmed for the narrowing.', reason: Planning-chat
+- {id: D77, date: '2026-10-22', decision: Route A is confirmed for the narrowing., reason: Planning-chat
     ruling at cp5b.}
-- {id: D78, date: '2026-10-22', decision: '"open" (table) and "not excluded" (prose) are defined in one sentence;
-    "suitable against dissolution" names the count, the Ca_T window, the pH window and the P_T assumption
-    by macro.', reason: Planning-chat ruling at cp5b.}
-- {id: D79, date: '2026-10-22', decision: 'cp5b F1 to F5 applied or pending as recorded in ops/reports/P0-I6e.md; PH-W4.6 pending on the planning chat''s ruling (ratio grid).',
-  reason: Integrator record at PH-I6e.}
-- {id: D80, date: '2026-10-22', decision: 'cp5b closed: F1 to F5 applied, F6 deferred; the ratio grid PH-W4.6 run beside the frozen production (additive; no verdict changed); the strict verify runs at cp6 (D75).',
-  reason: Integrator record at PH-I6f.}
-- {id: D81, date: '2026-10-23', decision: 'The finished day-6 integrator sessions (PH-I6, PH-I6e) are recorded done from their reports.',
-  reason: Integrator record at PH-I6g; both reports and state commits read DONE and are pushed.}
+- {id: D78, date: '2026-10-22', decision: '"open" (table) and "not excluded" (prose) are defined in one
+    sentence; "suitable against dissolution" names the count, the Ca_T window, the pH window and the P_T
+    assumption by macro.', reason: Planning-chat ruling at cp5b.}
+- {id: D79, date: '2026-10-22', decision: cp5b F1 to F5 applied or pending as recorded in ops/reports/P0-I6e.md;
+    PH-W4.6 pending on the planning chat's ruling (ratio grid)., reason: Integrator record at PH-I6e.}
+- {id: D80, date: '2026-10-22', decision: 'cp5b closed: F1 to F5 applied, F6 deferred; the ratio grid
+    PH-W4.6 run beside the frozen production (additive; no verdict changed); the strict verify runs at
+    cp6 (D75).', reason: Integrator record at PH-I6f.}
+- {id: D81, date: '2026-10-23', decision: 'The finished day-6 integrator sessions (PH-I6, PH-I6e) are
+    recorded done from their reports.', reason: Integrator record at PH-I6g; both reports and state commits
+    read DONE and are pushed.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1521,7 +1526,10 @@ deferred_v2:
   model: Sonnet
   master_trace: none
   requires: [cp5]
-done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2, PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b, PH-W8.2b, PH-W6.2c, PH-W6.2d, PH-W8.2d, PH-W1.8, PH-W4.5, PH-W8.2e, PH-W6.3, PH-W4.6, PH-W8.2f, PH-W8.2g, PH-W6.3c, PH-W6.3d, PH-I6, PH-I6e]
+done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2,
+  PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b,
+  PH-W8.2b, PH-W6.2c, PH-W6.2d, PH-W8.2d, PH-W1.8, PH-W4.5, PH-W8.2e, PH-W6.3, PH-W4.6, PH-W8.2f, PH-W8.2g,
+  PH-W6.3c, PH-W6.3d, PH-I6, PH-I6e]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
