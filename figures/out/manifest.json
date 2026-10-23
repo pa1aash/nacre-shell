@@ -515,6 +515,84 @@
    }
   }
  },
+ "renders": {
+  "fig1": {
+   "id": "fig1",
+   "kind": "render",
+   "claim": "An illustrative construction of the two stages the screen addresses, drawn as two separate single-phase panels: carbonate crystallites on aluminium foil in water (processing), and a condensed phosphate film on foil in electrolyte (cell). It shows no data and no result.",
+   "caption_key": "Two panels left to right, with panel letters set outside the artwork by the manuscript layout. (a) Carbonate crystallites on foil in water. (b) A condensed phosphate film on foil in electrolyte; an open candidate, not a result. The caption states that the construction is illustrative and that layering and polymorph structure are not tested by the screen.",
+   "mock": false,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    6.27
+   ],
+   "blender": {
+    "version": "Blender 5.2.2 LTS",
+    "scene": "5.2.2 LTS"
+   },
+   "script": "figures/src/blender/hero.py",
+   "script_sha256": "72ab02d16bc842c60f03fa7098714f44be177329e190a78450a634621bc80a5c",
+   "seed": 7,
+   "samples": 128,
+   "engine": "CYCLES",
+   "device": "CPU",
+   "threads": 1,
+   "denoise": false,
+   "palette": {
+    "carbonate": [
+     0.3704,
+     0.7206,
+     0.918
+    ],
+    "foil": [
+     0.6,
+     0.6,
+     0.6
+    ],
+    "liquid": [
+     0.715,
+     0.8424,
+     0.9139
+    ],
+    "phosphate": [
+     0.9441,
+     0.8994,
+     0.2959
+    ]
+   },
+   "palette_sha256": "de6fafc52f261b654f85222c6bfbd4d7913933de501b09cd43288ef757d7b32b",
+   "palette_min_delta_e_solids": 22.4,
+   "scene_objects": {
+    "a": {
+     "CAMERA": 1,
+     "LIGHT": 2,
+     "MESH": 154
+    },
+    "b": {
+     "CAMERA": 1,
+     "LIGHT": 2,
+     "MESH": 5
+    }
+   },
+   "renders": 2,
+   "render_hashes": [
+    "3a8a5a4a4729a0b6ebc419ea084bbc843dc01a21305e1ea3d27a3c2f34534a2a",
+    "3a8a5a4a4729a0b6ebc419ea084bbc843dc01a21305e1ea3d27a3c2f34534a2a"
+   ],
+   "render_hashes_identical": true,
+   "reproducibility": "byte-identical across 2 renders",
+   "font": "none (no text)",
+   "outputs": {
+    "figures/out/fig1.png": "3a8a5a4a4729a0b6ebc419ea084bbc843dc01a21305e1ea3d27a3c2f34534a2a",
+    "figures/out/fig1.pdf": "78d7769f9a54d2a139cbdeb69adff32e44ef30a33e031b5b40e9ded986c6fc98",
+    "figures/out/cvd/fig1_deuteranopia.png": "e2065a6d47e3a0dba9eea83affd2db6c29cbb889d59bd0fbe1fe58566d927731",
+    "figures/out/cvd/fig1_protanopia.png": "e5e19fa0570d6a0dbfff5cb6a9617508f57e4b97dead758519ca001959cc7564",
+    "figures/out/cvd/fig1_tritanopia.png": "8fd997f4ba4f609db0dde1f4f1a033bc9ded5a1fd1a01eee854bceaa1b565eb6"
+   },
+   "checker": "pass (raster: size, mode, no text chunks; PDF wrapper: no text; scene: no text objects)"
+  }
+ },
  "schematics": {
   "fig16": {
    "tex": "figures/tikz/fig16.tex",

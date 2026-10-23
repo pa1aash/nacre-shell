@@ -1,0 +1,23 @@
+# Rendered (raster) figures. Built only on request (`nacre figs --only fig1`): a render takes
+# about an hour on one CPU thread and needs Blender; a full `nacre figs` leaves them as committed.
+# Each entry names a headless Blender script, its panels and the composite layout; the palette
+# is derived from the stability-map palette by nacre.figs.rendered, never written here.
+renders:
+  fig1:
+    script: figures/src/blender/hero.py
+    claim: >-
+      An illustrative construction of the two stages the screen addresses, drawn as two separate
+      single-phase panels: carbonate crystallites on aluminium foil in water (processing), and a
+      condensed phosphate film on foil in electrolyte (cell). It shows no data and no result.
+    caption_key: >-
+      Two panels left to right, with panel letters set outside the artwork by the manuscript
+      layout. (a) Carbonate crystallites on foil in water. (b) A condensed phosphate film on foil
+      in electrolyte; an open candidate, not a result. The caption states that the construction
+      is illustrative and that layering and polymorph structure are not tested by the screen.
+    width: double
+    panels: [a, b]
+    gutter_px: 93
+    height_px: 1480
+    seed: 7
+    samples: 128
+    liquid_lighten: 0.7

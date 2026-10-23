@@ -10,7 +10,7 @@ from figs_helpers import REPO
 from nacre.figs import upstream
 
 CAPTIONS = REPO / "figures/src/captions"
-FIGS = ["fig3", "fig4", "fig5", "fig7", "fig9", "fig10", "fig11", "fig12", "fig14", "fig15"]
+FIGS = ["fig1", "fig3", "fig4", "fig5", "fig7", "fig9", "fig10", "fig11", "fig12", "fig14", "fig15"]
 MAX_WORDS = 80  # "about 70 words" (P0-W6.3), counting the bold figure label
 MACRO_RE = re.compile(r"\\(Num[A-Z][A-Za-z]*)")
 # Digits a caption may carry that are not numbers of the study: the figure label, case and link

@@ -304,7 +304,8 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
         wanted = set(only)
         templates = [t for t in templates if t.stem in wanted]
         from nacre.figs import schematic
-        others = set(schematic.table(root)) | {"rdkit", "al_salt"}
+        from nacre.figs import rendered
+        others = set(schematic.table(root)) | set(rendered.table(root)) | {"rdkit", "al_salt"}
         missing = wanted - {t.stem for t in templates} - others
         for m in sorted(missing):
             failures.append("%s: no template figures/src/%s.py, schematic or structure set" % (m, m))
@@ -361,6 +362,16 @@ def run(root, mock=False, only=None, tiff=False, cvd=True, log=print):
         manifest.write_text(json.dumps(dict(sorted(old.items())), indent=1) + "\n")
     n_other, other_failures = build_drawings(root, only=only, cvd=cvd, log=log)
     failures += other_failures
+    if only and not mock:
+        from nacre.figs import rendered
+        recs, fails = rendered.build(root, only=only, cvd=cvd, log=log)
+        failures += fails
+        if recs:
+            manifest = p["out"] / "manifest.json"
+            old = json.loads(manifest.read_text()) if manifest.exists() else {}
+            old.setdefault("renders", {}).update(recs)
+            manifest.write_text(json.dumps(dict(sorted(old.items())), indent=1) + "\n")
+        n_other += len(recs)
     return records + [None] * (n_other + len(templates_built)), failures
 
 
