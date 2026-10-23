@@ -1173,3 +1173,7 @@ ph_additive_h3po4_solution_mass_per_g_active:
   label: mass of 1 M H3PO4 solution per mass of NMC811
 p_total_slurry_h3po4_window:
   label: total phosphate in the slurry liquid, H3PO4-dosed window
+liclo4_solubility_pc:
+  label: saturation concentration of LiClO4 in propylene carbonate
+liclo4_gamma_pc:
+  label: mean ionic activity coefficient of LiClO4 in propylene carbonate

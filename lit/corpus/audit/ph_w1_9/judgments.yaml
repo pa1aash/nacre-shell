@@ -1,0 +1,78 @@
+# Hand-written judgments for citation_outcomes.csv (PH-W1.9, 2026-10-24).
+# build_citation_outcomes.py merges this file with the cite sites of lit/corpus/audit/ph_w1_4/inputs and the
+# evidence table; it checks that every listed row exists and carries the key's DOI (or the replacement DOI).
+#
+# outcome:   supported | recommend drop | recommend replace
+# support:   full | partial | none    (partial: a row supports part of the sentence, or the point differs, stated in note)
+# rows:      evidence-table row ids registered or named for this key ([] when none)
+# replacement_doi: the DOI that replaces the key (recommend replace only); the build resolves it at Crossref
+# bib_doi:   a DOI that nacre bib add should take for the same work (iooss2017shapley only)
+# note:      what the rows do and do not cover
+
+bichon2021performance:
+  outcome: supported
+  support: full
+  rows: [TP-009]
+  note: abstract only (grade D). The abstract names both halves of the sentence (acid buffering of the slurry pH, and a carbon-coated collector). Not a swap with doberdo2014enabling, see that key.
+doberdo2014enabling:
+  outcome: recommend drop
+  support: none
+  rows: []
+  note: cited at introduction.tex:11 for conversion and dissolution of the native oxide film at high pH. The work has no retrievable abstract or text; its title (carbon coating of the aluminium collector) matches the carbon-coated-collector sentence at introduction.tex:16, not this one, but Bichon 2021 already carries that sentence (TP-009). The pH sentence keeps heidbuchel2022enabling (TA-006, TA-007, TB-014) and li2016effect (TA-046, TB-022). Drop it from the group at line 11; adding it to line 16 would rest on a title alone.
+hanifa2025effects:
+  outcome: supported
+  support: partial
+  rows: [TP-010, TP-011, TP-012]
+  note: no aragonite at any pH tested at room temperature, onset of aragonite by heating (at or below 50 C, 96 percent at 80 C). No additive was tested, so magnesium and polyamines come from nahi2022polyamines in the same cite group. Both papers are cited together twice.
+jain2013commentary:
+  outcome: supported
+  support: partial
+  rows: [TP-026]
+  note: abstract only (grade D), describes the database as an open computed-properties dataset. The version and licence statements rest on the cache manifest (macro NumMpDatabaseVersion), not on this work.
+mahamid2010mapping:
+  outcome: supported
+  support: full
+  rows: [TP-015]
+  note: abstract only (grade D); states ACP nanospheres that transform into apatite platelets in the collagen matrix of zebrafish fin bone.
+morsch2018unexpected:
+  outcome: supported
+  support: partial
+  rows: [TP-016, TP-017]
+  note: hydrolysis of polyphosphate to orthophosphate under alkaline conditions is printed (citing an earlier work); the film is formed on a galvanised steel cut edge from a strontium aluminium polyphosphate pigment that leaches its cations, not from a dosed solution, and carbonate precipitates first. The sentence says dosed polyphosphate and polyvalent cations; reword to pigment leachate or accept the difference.
+nahi2022polyamines:
+  outcome: supported
+  support: full
+  rows: [TP-013, TP-014]
+  note: polyamines and magnesium ions generate aragonite (abstract); aragonite is only a minor product from additive-free solutions under ambient conditions (introduction), which is weaker than "not reported".
+osunamascaro2015ultrastructure:
+  outcome: supported
+  support: full
+  rows: [TP-018, TP-019]
+  note: chitin-protein fibres in the interlamellar membranes of nacre (experiment, grade B); aragonite platelets with a silk-fibroin and beta-chitin matrix (introduction, citing earlier diffraction work, grade C).
+sedira2026nacre:
+  outcome: supported
+  support: full
+  rows: [TP-020, TP-021, TP-022]
+  note: review (grade C). Aragonite nanograins in an organic matrix of proteins and chitin; also states ACC precursors at the growth front of nacre in gastropod shells.
+yu2023study:
+  outcome: supported
+  support: full
+  rows: [TP-023, TP-024]
+  note: PDA coating cut CaCO3 scale deposition by 55.02 percent at 70 C and 66.96 percent at 90 C against carbon steel (grade B, flagged contrary). The substrate is Q235 carbon steel in a hot supersaturated solution, not aluminium at slurry conditions; the sentence only says a polydopamine coating reduced carbonate deposition.
+younes2015chitin:
+  outcome: supported
+  support: full
+  rows: [TP-025]
+  note: review (grade C) defines chitosan as the partially deacetylated derivative of chitin.
+gong2012phase:
+  outcome: recommend replace
+  support: partial
+  rows: [TC-004, TC-002, TP-022]
+  replacement_doi: 10.1038/s41467-024-46117-x
+  note: the work is on sea urchin embryo spicules (TC-005 says not nacre), but the sentence says ACC precursors are observed at the growth front of nacre. Replacement is Schmidt et al. 2024 (Nature Communications), which maps the forming nacre surface of Haliotis rufescens and finds ACC as 36 percent of the precursor pixels (TC-004, grade B, full text, open). devol2015nanoscale (TC-002, abstract, grade D) is already cited beside it. Sedira 2026 (TP-022, grade C) states the same sentence for gastropod shells. Keep gong2012 only if the sentence is widened to biominerals in general.
+iooss2017shapley:
+  outcome: recommend replace
+  support: full
+  rows: [TP-027, TP-028, TP-029, TP-030]
+  bib_doi: 10.1615/int.j.uncertaintyquantification.2019028372
+  note: same work as the arXiv record (TP-001 to TP-004). The journal DOI resolves at Crossref; TP-027 to TP-030 are read from the green open author version (hal-01556303v7), so the key keeps evidence after the DOI changes. The paper is not edited here; W8 runs nacre bib add with the DOI in bib_dois.csv and re-keys.
