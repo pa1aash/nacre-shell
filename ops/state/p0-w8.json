@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W8.2f",
+  "last_session": "PH-W8.2g",
   "status": "DONE",
   "day": 6,
   "artifacts": [
@@ -57,7 +57,8 @@
     "preprint/paper/sections/results.tex",
     "ops/reports/P0-W8.PH-W8.2e.md",
     "tests/preprint/test_preprint_regime_perph.py",
-    "ops/reports/P0-W8.PH-W8.2f.md"
+    "ops/reports/P0-W8.PH-W8.2f.md",
+    "ops/reports/P0-W8.PH-W8.2g.md"
   ],
   "notes": [
     "skeleton retargeted: design, predictions added; inputs and outlook removed; carbonate text marked 'carbonate control (frozen)'",
@@ -69,6 +70,7 @@
     "PH-W8.2c: PH-W2.6 corrections (chitosan, patents, pH control); 6 patent macros; design+templating 2469 words, methods 823; si:templating added; SI wording pass; briefs renamed to NumOnsetBone*; patent references pending (bib tool is DOI-only)",
     "PH-W8.2b: regime table generated (19 rows x 5 columns, 95 cells, 28 macros, CSV with sha256 of 6 inputs); acid-adjusted column split by pH (alternative b); tab:regime wired into Results; booktabs required",
     "PH-W8.2e: per-pH dose table (8 phases x 5 pH), dose qualifier, post-freeze rerun table, F1 to F5 wording; regime table regenerated, 300 macros added; 223 passed",
-    "PH-W8.2f: below-lowest-pass words follow the figure rule (ACP open at 4.5; ACC excluded below 6.5, open at 6.5 and 7.5); Al-salt table (6 undetermined rows) generated beside the regime table; fig17 omission statement and dose-order sentence; 6 macros; 223 passed; W6 pin of regime_table.csv stale"
+    "PH-W8.2f: below-lowest-pass words follow the figure rule (ACP open at 4.5; ACC excluded below 6.5, open at 6.5 and 7.5); Al-salt table (6 undetermined rows) generated beside the regime table; fig17 omission statement and dose-order sentence; 6 macros; 223 passed; W6 pin of regime_table.csv stale",
+    "PH-W8.2g: ratio-grid numbers in the wording; second column group in the per-pH table, both doses in the HAp and beta-TCP first-pass cells, Methods F2 and SI text, 60+ macros; 228 passed; W6 pin of regime_table.csv stale"
   ]
 }

@@ -92,7 +92,7 @@ def test_no_forbidden_wording_and_scope_clean(rows):
     blocks = lint_scope._blocks_tex(tex.splitlines())
     assert lint_scope.check_text_blocks(blocks, rt.OUT_TEX, rs, lint_scope.allowlist(REPO), warn) == []
     allow = lint_numbers.allowlist(REPO)
-    layout = re.compile(r"\\multicolumn\{[0-9]+\}|\[[0-9.]+pt\]")   # column counts and rule skips are layout, not numbers
+    layout = re.compile(r"\\multicolumn\{[0-9]+\}|\\cmidrule\(lr\)\{[0-9]+-[0-9]+\}|\[[0-9.]+pt\]")   # column counts, column ranges and rule skips are layout, not numbers
     leftover = [(l, re.findall(r"[0-9][0-9.,]*", lint_numbers.scrub(layout.sub(" ", l), allow))) for l in body.splitlines()]
     assert [x for x in leftover if x[1]] == []
 
