@@ -1414,7 +1414,14 @@ screen_ph:
       k2_words: {neither_pass_nor_falsified: inconclusive, control_fails: inconclusive (control fails), open: never a K2 word}
       excluded_footnote: 'excluded (thermodynamic, tier 1: solid-salt upper bound plus margin, for a LiClO4-saturated sink)'
       kinetic_note: 'kinetic stabilisation is not ruled out for phosphates (tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones); never "fails at high voltage" without "thermodynamically"'
-      acid_adjusted_row: {state: params.ph_slurry_acid_adjusted (range from the key), carbonate: 'excluded against dissolution where calcite is undersaturated', ca_phosphates: 'tested on K2 in the same state; failures stated in the cell', source: generated from K2 outputs}
+      acid_adjusted_row: {state: params.ph_slurry_acid_adjusted (range from the key), carbonate: 'excluded against dissolution where calcite is undersaturated, with the pH threshold', ca_phosphates: 'tested on K2 in the same state; failures stated in the cell', source: generated from K2 outputs}
+      comparator_window:
+        primary_state: 'params.ph_slurry_acid_adjusted (sourced slurry range after acid adjustment; min to max by macro)'
+        grid_context: 'the K2 acid grid (configs/preprint/screen.yaml pH_acid_adjusted) spans the Al passivation window: the published statement (grade D, comparator E5 of params.al_passivation_window) and the W5 model windows at the registered Al level'
+        rule: 'a phase whose first passing pH lies inside the sourced range is not excluded against dissolution in sourced acid-adjusted slurries; its exclusion holds only below that pH, in the lower part of the passivation window'
+        carbonate: 'excluded against dissolution only below the first passing pH of calcite and aragonite (macros), not in sourced acid-adjusted slurries; never "carbonate fails in acid-adjusted slurries" without the pH threshold; never "chemically opposed"'
+        denominators: 'a pass count at or above the first passing pH uses the cells of those pH values'
+        authority: claims_redirect Section 11d (PH-W3.8, ruling 6)
       authority: claims_redirect Section 11d
     low_voltage:
       class: not excluded at the nominal cutoff (regimes.R-cell.parameters.cutoff_classes, C_lo)

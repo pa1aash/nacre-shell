@@ -1041,8 +1041,9 @@ or "the slurry". The rules that go with the label, in the same section of the pa
 
 - It does not address Al's own instability above its passivation window and is not evidence of protection. It is a
   statement about the mineral against its solution at the registered states, and nothing else.
-- The acid-adjusted pH state (`params.ph_slurry_acid_adjusted`) is shown as the incumbent comparator in the same table,
-  evaluated by the same test and printed beside the registered region.
+- The acid-adjusted pH state is shown as the incumbent comparator in the same table, evaluated by the same test and
+  printed beside the registered region. Its primary comparator state is the sourced slurry range after acid adjustment,
+  the range of `params.ph_slurry_acid_adjusted` (amended PH-W3.8, ruling 6; Section 11d).
 - No sentence of the paper may use "suitable" without the conditions "for [phase] in [region]" within six words. A
   sentence that cannot carry both conditions uses the vocabulary of Section 11d instead.
 
@@ -1108,8 +1109,26 @@ phosphates: tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-
 says "fails at high voltage" without the word "thermodynamically" in the same sentence.
 
 **Acid-adjusted slurry state row.** The table carries a row for the acid-adjusted slurry state (the incumbent
-phosphoric-acid pH control, `params.ph_slurry_acid_adjusted`, whose range is registered there and printed by macro). Where calcite is undersaturated there, the
-carbonate cell reads "excluded against dissolution". The Ca-phosphate phases are tested on K2 in the same state with the
+phosphoric-acid pH control). Where calcite is undersaturated there, the carbonate cell reads "excluded against
+dissolution", with the pH threshold.
+
+**Comparator window (PH-W3.8, ruling 6; binding).** Two pH ranges are in play and are never interchanged:
+
+| Range | Source | Role |
+|---|---|---|
+| the sourced slurry range after acid adjustment, `params.ph_slurry_acid_adjusted` (min to max, by macro) | sourced slurries | the **primary comparator state** of the text |
+| the aluminium passivation window: the published statement (grade D, comparator E5 of `params.al_passivation_window`) and the model windows of our Al-O-H construction at the registered Al level (W5, `al_window.json`) | literature and W5 | **context** for the K2 acid grid, which spans that window (`configs/preprint/screen.yaml`, `pH_acid_adjusted`) |
+
+Rules. (i) The text names the sourced range as the comparator state and the grid as spanning the passivation window;
+the grid is never called the incumbent's pH. (ii) A K2 statement made on the grid is read against both: where a phase's
+first passing pH (by macro, for calcite `NumRegAcidFirstCalcite`) lies inside the sourced range, the phase is not
+excluded against dissolution in sourced acid-adjusted slurries, and its exclusion against dissolution holds only in the
+lower part of the passivation window, below that pH. (iii) For carbonate this is the case: calcite and aragonite first
+pass inside the sourced range, so carbonate is excluded against dissolution only in the lower part of the passivation
+window (pH below the first passing pH), not in sourced acid-adjusted slurries. The sentence "carbonate fails (or
+dissolves) in acid-adjusted slurries" is never written without the pH threshold, and "chemically opposed" is not used
+for the carbonate route and the incumbent state. (iv) A pass count at or above the first passing pH is printed with the
+cells of those pH values as its denominator, never the whole acid grid. The Ca-phosphate phases are tested on K2 in the same state with the
 same code path, and their cells are the K2 outputs of that state. If a Ca phosphate does not pass there, the table
 says so in that cell; no cell is softened. The cells are generated from the K2 outputs.
 
