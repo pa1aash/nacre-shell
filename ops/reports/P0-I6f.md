@@ -13,3 +13,5 @@ Open items for cp6:
 - Pathway schematic and four-conditions diagram (PH-W6.3b, optional); the hero (optional, first to cut).
 - Patent references.
 Pins: thresholds_screen_ph same_bytes true. regime_table committed pin sha256 aa754f35... equals the merged tree file; pin_upstream.py re-run reads origin/preprint/p0 (pre-push) so reports 146e76a6... until this push; the branch field (preprint/p0-w8) cannot be changed by the integrator.
+Day 7: `nacre track open-day 7` refused: "day 6 is not complete: PH-I6 is not run; PH-I6e is not run (finish them or pass --carry)" (with --carry P0-W7.4 only); nothing else carried. `track check PH-W8.3` therefore reads "belongs to day 7, but day 6 is open".
+Tag p0-cp5b sits on 03b2812 (the ledger commit after the final merge fbb77a5), signed, pushed.
