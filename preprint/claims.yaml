@@ -825,22 +825,29 @@ claims:
     scope_check: clean
     status: drafted
   - id: CL-S03
-    statement: Carbonate fails the oxidation condition above its thermodynamic onset at the solid-salt sink
-      and passes the solubility condition, so it serves as the negative control for the oxidation condition and the positive control for the solubility condition.
+    statement: Carbonate is open at the nominal low class and thermodynamically excluded above its crossover,
+      at every cutoff of the two higher classes, from its upper bound at the solid-salt sink; it is the
+      negative control of the oxidation condition and the positive control of the dissolution condition.
     section: results
     type: screen result
     polarity: claims
     origin: redirect
     stage: cell
     evidence:
+    - kind: macro
+      ref: NumCarbonateOnset
+    - kind: macro
+      ref: NumCarbonateCrossover
+    - kind: macro
+      ref: NumClassLo
+    - kind: figure
+      ref: 'fig:ladder'
     - kind: record
-      ref: ops/reports/carbonate_control_inventory.md#Falsified for every cutoff above
-    - kind: record
-      ref: ops/tracks/redirect_plan.md#CONTROL LOGIC
+      ref: 'ops/tracks/redirect_plan.md#CONTROL LOGIC'
     checkpoint: cp5r
     supplier: p0-w8
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-S04
     statement: For each phosphate phase the oxidation window is reported per cutoff class as the bracket
       between the onset with the solid-salt sink and the onset with the hydration lower bound, with the
@@ -862,9 +869,8 @@ claims:
     scope_check: clean
     status: planned
   - id: CL-S05
-    statement: For hydroxyapatite and the hydrated phases the per-reaction table separates lattice oxygen
-      release, structural hydroxide oxidation and the oxidation of water of hydration, with the water activity
-      and hydroxide activity as design axes.
+    statement: For hydroxyapatite the limiting oxidation is lattice-oxygen release with condensation of the
+      remaining phosphate to pyrophosphate, below the oxidation of its structural hydroxide.
     section: results
     type: screen result
     polarity: claims
@@ -872,18 +878,18 @@ claims:
     stage: cell
     conditional: true
     depends_on:
-    - per-reaction onset table (PH-W5.1)
+    - the registered reactions of the onset ladder (solid-salt sink)
     evidence:
-    - kind: reference
-      ref: 'pending: K1 ladder and per-reaction table (PH-W5.1)'
+    - kind: record
+      ref: 'results/preprint/pourbaix/ph_w52/ladder_v3.csv#limiting r1s: falsified above'
     checkpoint: cp5r
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-S06
-    statement: Condensed and amorphous phases are compared with the orthophosphates and with their crystalline
-      counterparts in one panel, the amorphous row governing and the crystalline row an optimistic upper
-      reference, with dehydration and condensation thresholds reported as thresholds.
+    statement: Condensed calcium phosphates have higher upper bounds than the orthophosphates and, with no lower
+      bound, are not excluded at any cutoff class, which is not a pass; the glass row governs the in-situ
+      routes and the crystal is an optimistic reference; the amorphous pyrophosphate row is undetermined.
     section: results
     type: screen result
     polarity: claims
@@ -891,19 +897,25 @@ claims:
     stage: cell
     conditional: true
     depends_on:
-    - glass enthalpy, entropy and crystallisation correction (PH-W1.3)
-    - Al metaphosphate formation data, a gap
+    - the lower end of the sink bracket (transfer data), pending
     evidence:
-    - kind: reference
-      ref: 'pending: glass thermochemistry and conversion data (PH-W1.3, PH-W5.1)'
+    - kind: macro
+      ref: NumPyroOnset
+    - kind: macro
+      ref: NumMetaGlassOnset
+    - kind: macro
+      ref: NumMetaCrystalOnset
+    - kind: record
+      ref: 'preprint/generated/regime_table.csv#ca_meta_glass'
     checkpoint: cp5r
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-S07
-    statement: At the processing pH the calcium orthophosphates are insoluble, as the solubility condition
-      requires, and the competing slurry phases (lithium phosphate, aluminium phosphate) are reported beside
-      them.
+    statement: At the alkaline processing stage the supersaturation of a calcium mineral grows with pH; the
+      dissolution test passes hydroxyapatite, beta-TCP and amorphous calcium phosphate in part of the slurry
+      grid, octacalcium phosphate is open because its control fails, and brushite, alpha-TCP and lithium
+      phosphate are undetermined in the frozen run.
     section: results
     type: screen result
     polarity: claims
@@ -911,18 +923,26 @@ claims:
     stage: slurry
     conditional: true
     depends_on:
-    - sourced solubility products (PH-W1.2)
+    - sourced solubility products and the registered slurry grid
     evidence:
-    - kind: reference
-      ref: 'pending: sourced solubility products and speciation (PH-W1.2, PH-W4.2)'
+    - kind: macro
+      ref: NumRegSlurryPassHap
+    - kind: macro
+      ref: NumRegSlurryPassBtcp
+    - kind: macro
+      ref: NumRegSlurryPassAcp
+    - kind: record
+      ref: 'preprint/generated/regime_table.csv#open (falsifiability control fails)'
     checkpoint: cp5r
     supplier: p0-w4
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-S08
-    statement: The processing regime is shown as a map of pH against supersaturation with the aluminium
-      passivation window, the derived window and the published window both reported; the acid-adjusted state
-      is shown as a comparator to the incumbent, not as a regime of the barrier.
+    statement: In the acid-adjusted comparator state calcite dissolves below its lowest passing pH, while
+      hydroxyapatite and beta-TCP pass at every pH of the grid but only at high dose at the lowest pH, on the
+      crossed grid and at their own Ca:P, and at low dose at their own stoichiometry at higher pH; brushite
+      stays a high-dose phase at the lowest pH; the doses are comparable to the order of the sourced additive
+      doses, never equal to them; the state is the incumbent comparator, not a regime of the barrier.
     section: results
     type: screen result
     polarity: claims
@@ -930,18 +950,37 @@ claims:
     stage: slurry
     conditional: true
     depends_on:
-    - Al-O-H Pourbaix window (PH-W5.1)
+    - the acid-adjusted pH range (grade D) and the registered dose grid
     evidence:
-    - kind: reference
-      ref: 'pending: Al-O-H Pourbaix passivation window (PH-W5.1)'
+    - kind: macro
+      ref: NumRegAcidFirstCalcite
+    - kind: macro
+      ref: NumRegAcidMinCaHap
+    - kind: macro
+      ref: NumRegAcidStoichCaHap
+    - kind: macro
+      ref: NumRegOwnHapAcidCa
+    - kind: macro
+      ref: NumRegOwnBtcpAcidCa
+    - kind: macro
+      ref: NumRegPhStoichCaBrushiteFourFive
+    - kind: macro
+      ref: NumDoseMolPerKgLiquid
+    - kind: macro
+      ref: NumAcidSourcedLo
+    - kind: macro
+      ref: NumAcidModelLo
+    - kind: derivation
+      ref: 'si:regime'
     checkpoint: cp5r
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-S09
-    statement: For each in-situ route the condensed fraction at the end of the wet period is reported against
-      its minimum under the slowest and the fastest plausible hydrolysis rate, with the evidence grade beside
-      it.
+    statement: 'Screened as thermodynamics every in-situ route is undetermined: the hydrolysis descriptor is
+      outside its data at every process state, gelation lacks the solubility product of the aluminium
+      polyphosphate and the coacervate route lacks a phase map; the race against hydrolysis stays a
+      labelled hypothesis.'
     section: results
     type: screen result
     polarity: claims
@@ -949,14 +988,16 @@ claims:
     stage: slurry
     conditional: true
     depends_on:
-    - hydrolysis rates outside the particle data, a gap
+    - hydrolysis transfer factor, temperature tolerance and wet residence time (gaps)
     evidence:
-    - kind: reference
-      ref: 'pending: hydrolysis rates and transfer factor (PH-W1.2, PH-W4.2a)'
+    - kind: record
+      ref: 'ops/reports/P0-W4.PH-W4.2.md#Route layer, report-only: K2h, R1, R2, wetting undetermined'
+    - kind: record
+      ref: 'results/preprint/screen/precision_ph/precision_map.md#ksp_alpp'
     checkpoint: cp5r
     supplier: p0-w4
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-S10
     statement: The nucleation-barrier map shows where along the dose axis the heterogeneous barrier could
       meet the criterion; it is a hypothesis map, and no nucleation or wetting number is a finding.
@@ -976,8 +1017,10 @@ claims:
     scope_check: clean
     status: planned
   - id: CL-P04
-    statement: The required-precision map states the accuracy a template-nucleus energy must reach to move
-      the nucleation verdict across its criterion, and the flip values of the governing inputs.
+    statement: 'The required-precision map gives the flip value and required precision of every open verdict,
+      with closed, Monte Carlo and gap rows counted, and names the three most decisive measurements: the
+      template-nucleus or nucleus-liquid energy of hydroxyapatite, the calcium transfer free energy into
+      propylene carbonate, and both contact energies of the Dupre comparator.'
     section: results
     type: required precision
     polarity: claims
@@ -985,36 +1028,52 @@ claims:
     stage: slurry
     conditional: true
     depends_on:
-    - production screen output (PH-W4.2)
+    - the registered priors and thresholds of the production screen
     evidence:
-    - kind: reference
-      ref: 'pending: required-precision map and flip values (PH-W4.3)'
+    - kind: macro
+      ref: NumPrecRows
+    - kind: macro
+      ref: NumPrecClosed
+    - kind: macro
+      ref: NumPrecMonteCarlo
+    - kind: macro
+      ref: NumPrecGap
+    - kind: macro
+      ref: NumPrecGammaSnMj
+    - kind: macro
+      ref: NumPrecTransferCaKj
+    - kind: macro
+      ref: NumPrecDupreMj
     checkpoint: cp5r
     supplier: p0-w4
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-S11
-    statement: The candidates are ranked on the four conditions in one heatmap, with the baselines through
-      the oxidation, solubility and thin-film conditions only, and every cell marked determined, inconclusive
-      or undetermined.
+    statement: 'The two patent baselines enter only through the oxidation and dissolution rows: the lithium
+      polyphosphate film is not excluded at any cutoff class on its glass row and undetermined on
+      dissolution, the baked aluminophosphate undetermined on both; no ranking against them follows.'
     section: results
     type: screen result
     polarity: claims
     origin: redirect
     conditional: true
     depends_on:
-    - production screen output (PH-W4.2)
+    - composition-based solubilities of the baselines (gaps)
     evidence:
-    - kind: reference
-      ref: 'pending: production screen and baseline rows (PH-W4.2)'
+    - kind: macro
+      ref: NumLipoGlassOnset
+    - kind: figure
+      ref: 'fig:heatmap'
+    - kind: record
+      ref: 'preprint/generated/regime_table.csv#lipo3n'
     checkpoint: cp5r
     supplier: p0-w4
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-S12
-    statement: The aluminium-salt film ladder ranks aluminium phosphate, aluminium metaphosphate, aluminium
-      polyphosphate and aluminium oxide against the bare-aluminium onset on oxidation limit, insolubility
-      in carbonate electrolyte and ionic blocking, with a gap where no source exists.
+    statement: Every row of the aluminium-salt film ladder is undetermined, for want of a bound on the exchange
+      entropy of the aluminium perchlorate sink and of thermochemistry for aluminium metaphosphate; the single
+      most useful datum is the Gibbs energy or entropy of solid aluminium perchlorate.
     section: results
     type: screen result
     polarity: claims
@@ -1022,20 +1081,26 @@ claims:
     stage: cell
     conditional: true
     depends_on:
-    - Al-salt ladder rows (PH-W5.1)
+    - Gibbs energy or entropy of solid aluminium perchlorate (a gap)
     evidence:
-    - kind: record
-      ref: ops/tracks/redirect_plan.md#Al-salt film ladder (core)
-    - kind: reference
-      ref: 'pending: Al-salt ladder (PH-W5.1)'
+    - kind: macro
+      ref: NumAlSaltRows
+    - kind: macro
+      ref: NumAlSaltNoMeta
+    - kind: macro
+      ref: NumRegNoKOneBound
+    - kind: derivation
+      ref: 'si:regime'
     checkpoint: cp5r
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-S13
-    statement: 'The headline is the outcome frame that the oxidation ladder gives: a phosphate that clears
-      the high-cutoff class (A), one that clears only a lower class (B), or none above the LFP class (C),
-      where the headline is the design rule and the LFP-class and processing-stage result.'
+    statement: 'The headline is a regime-matched design rule: carbonate meets the dissolution condition
+      at the alkaline processing stage and is thermodynamically excluded above its crossover near four volts,
+      bone mineral shares that ceiling, and the condensed and aluminium phosphates are the rows left not
+      excluded or undetermined at the higher cutoff classes; it is the outcome frame C of the plan for the
+      calcium orthophosphates.'
     section: results
     type: screen result
     polarity: claims
@@ -1043,18 +1108,218 @@ claims:
     frame: A, B, C
     conditional: true
     depends_on:
-    - GO/NO-GO at the cp5 freeze (PH-I5)
+    - the solid-salt upper bounds of the onset ladder (no lower bound in this version)
     evidence:
     - kind: record
-      ref: ops/tracks/redirect_plan.md#DECISION
-    - kind: record
-      ref: ops/tracks/redirect_plan.md#Evidence consequences
-    checkpoint: cp5
+      ref: 'ops/tracks/redirect_plan.md#REGIME FRAME'
+    - kind: macro
+      ref: NumCarbonateCrossover
+    - kind: macro
+      ref: NumOnsetBoneLow
+    - kind: macro
+      ref: NumOnsetBoneHigh
+    - kind: figure
+      ref: 'fig:heatmap'
+    checkpoint: cp5r
     supplier: p0-int
     scope_check: clean
-    status: planned
-    notes: If no condensed phosphate has a lower-bound onset above the high-cutoff class, the abstract says
-      so and the operator decides whether to post.
+    status: drafted
+    notes: Stated in the Results and the abstract; the regime map is the generated table tab:regime
+      (preprint/generated/regime_table.tex). Frame wording replaced by the regime frame at PH-W8.3.
+  - id: CL-S14
+    statement: Hydroxyapatite, beta-TCP and alpha-TCP, and amorphous calcium phosphate on its crystalline
+      beta-TCP reference, are thermodynamically excluded at the two higher cutoff classes; brushite is
+      excluded only above its crossover inside the highest class; the amorphous row of amorphous calcium
+      phosphate is undetermined because its glass correction is a gap.
+    section: results
+    type: screen result
+    polarity: claims
+    origin: redirect
+    stage: slurry
+    conditional: true
+    depends_on:
+    - the solid-salt upper bounds and margins of the onset ladder
+    evidence:
+    - kind: macro
+      ref: NumHapCrossover
+    - kind: macro
+      ref: NumRegCrossBrushiteHi
+    - kind: macro
+      ref: NumClassMidLow
+    - kind: figure
+      ref: fig:ladder
+    - kind: record
+      ref: 'preprint/generated/regime_table.tex#ACP & slurry & suitable against dissolution'
+    checkpoint: cp5r
+    supplier: p0-w5
+    scope_check: clean
+    status: drafted
+    notes: Slurry-stage K1 is the phase's own ceiling, not a gate for that stage.
+
+  - id: CL-S15
+    statement: Lithium carbonate is measured to oxidise at the equilibrium limit of the same reaction, so the
+      carbonate claim is worded as low voltage up to about the tier-two onset; at the sensitivity line the
+      carbonate crossover lies within the margin, so carbonate is close to thermodynamic exclusion there,
+      and the ladder rebuilt at that line changes no verdict.
+    section: results
+    type: screen result
+    polarity: claims
+    origin: redirect
+    stage: cell
+    conditional: true
+    depends_on:
+    - the tier-two record of lithium carbonate oxidation (glyme electrolytes), read for calcium carbonate
+    evidence:
+    - kind: macro
+      ref: NumTierTwoLow
+    - kind: macro
+      ref: NumTierTwoHigh
+    - kind: macro
+      ref: NumClassSensitivity
+    - kind: macro
+      ref: NumCarbonateCrossover
+    - kind: record
+      ref: preprint/generated/regime_table.tex#is byte-identical to the nominal ladder
+    checkpoint: cp5r
+    supplier: p0-w5
+    scope_check: clean
+    status: drafted
+    notes: The ladder has no tier-two row; the onset is read from the parameter key li2co3_oxidation_onset
+      (sources TK-059, TK-062, TI-061). The predicate of the close-to-exclusion sentence holds (crossover within
+      the margin of the line).
+
+  - id: CL-S16
+    statement: No phase passes the oxidation condition in this version, because the lower end of the sink
+      bracket has no transfer data; the map can exclude a phase but not admit one.
+    section: results
+    type: screen result
+    polarity: claims
+    origin: redirect
+    stage: cell
+    conditional: true
+    depends_on:
+    - measured transfer free energies of Ca2+ and Al3+ into the cell solvent (gaps)
+    evidence:
+    - kind: claim
+      ref: CL-M17
+    - kind: record
+      ref: theory/claims_redirect.md#E_lb is pending, so no tier-1 pass is possible
+    checkpoint: cp5r
+    supplier: p0-w5
+    scope_check: clean
+    status: drafted
+
+  - id: CL-S17
+    statement: Calcite is thermodynamically suitable against dissolution (a necessary condition) for calcite
+      in the passing cells of the processing grid, named by count, calcium window, pH window and the
+      phosphate assumption; aragonite passes as dissolution stability only, its formation unsupported at
+      slurry pH and room temperature; amorphous calcium carbonate is reported beside them and not required;
+      the low-dose corner reports dissolution for each.
+    section: results
+    type: screen result
+    polarity: claims
+    origin: redirect
+    stage: slurry
+    conditional: true
+    depends_on:
+    - the registered slurry grid and the sourced solubility products of the polymorphs
+    evidence:
+    - kind: macro
+      ref: NumRegSlurryPassCalcite
+    - kind: macro
+      ref: NumRegWindowLoCalcite
+    - kind: macro
+      ref: NumRegSlurryPhLow
+    - kind: macro
+      ref: NumRegWindowPLo
+    - kind: macro
+      ref: NumRegSlurryPassAragonite
+    - kind: macro
+      ref: NumRegSlurryPassAcc
+    - kind: record
+      ref: ops/reports/P0-W4.PH-W4.2.md#flags Omega < 1 for all three
+    checkpoint: cp5r
+    supplier: p0-w4
+    scope_check: clean
+    status: drafted
+    notes: The one positive statement of the paper. Not evidence of protection; does not address the
+      instability of aluminium above its passivation window (CL-D20).
+
+  - id: CL-S18
+    statement: After the freeze, brushite and octacalcium phosphate on the Ca4H basis pass the dissolution
+      test in part of both grids, reported beside the frozen rows; alpha-TCP and lithium phosphate stay
+      undetermined.
+    section: results
+    type: screen result
+    polarity: claims
+    origin: redirect
+    stage: slurry
+    conditional: true
+    depends_on:
+    - solubility-product keys added after the freeze
+    evidence:
+    - kind: macro
+      ref: NumRegRerunBrushiteAlkalineRerun
+    - kind: macro
+      ref: NumRegRerunOcpCahAlkalineRerun
+    - kind: macro
+      ref: NumRegRerunOcpCahAcidRerun
+    - kind: derivation
+      ref: si:regime
+    checkpoint: cp5r
+    supplier: p0-w4
+    scope_check: clean
+    status: drafted
+
+  - id: CL-S19
+    statement: The deletion test of the carbonate chain fails at every point-framing, so no step can be
+      credited to the template; the Sobol indices of the nucleation link miss their half-width target, so
+      Shapley effects carry the ranking, led by the template-nucleus energy; the nucleation-window and
+      thin-film conditions of every phosphate framing are undetermined.
+    section: results
+    type: screen result
+    polarity: claims
+    origin: redirect
+    stage: slurry
+    conditional: true
+    depends_on:
+    - the registered ignorance priors of the interfacial energies
+    evidence:
+    - kind: macro
+      ref: NumDeletionFails
+    - kind: macro
+      ref: NumDeletionFramings
+    - kind: macro
+      ref: NumSobolNucHalfWidth
+    - kind: record
+      ref: ops/reports/P0-W4.PH-W4.2.md#Top total-order Sobol / Shapley
+    - kind: record
+      ref: 'ops/reports/P0-W4.PH-W4.2.md#K3 and K4 of every phosphate framing: undetermined'
+    checkpoint: cp5r
+    supplier: p0-w4
+    scope_check: clean
+    status: drafted
+
+  - id: CL-D21
+    statement: In the regime table a phase that is not falsified at a cutoff but has no lower bound reads
+      open; in the text it is called not excluded; neither is a pass.
+    section: results
+    type: design rule
+    polarity: claims
+    origin: redirect
+    conditional: true
+    depends_on:
+    - the regime-table vocabulary of the cp5 closure ruling (excluded for falsified, D68)
+    evidence:
+    - kind: record
+      ref: preprint/generated/regime_table.tex#in the prose, not excluded means the same
+    - kind: record
+      ref: theory/claims_redirect.md#open | not falsified, no lower bound
+    checkpoint: cp5
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+
   - id: CL-T03
     statement: The nucleation and template half of the chain did not meet its pre-registered retrodiction
       rule, so it is not validated, and template and nucleation results are hypotheses plus the required-precision
@@ -1083,8 +1348,10 @@ claims:
     notes: 'PH-W8.2: reported in the Methods as one sentence with the counts by macro (results.json of P0-W2.3) and
       a pointer to the SI; moved from the Results section.'
   - id: CL-X03
-    statement: The spread of density functional values on one reaction is itself a reportable finding, shown
-      in an SI table, and density functional numbers are never shown unlabelled.
+    statement: Database formation energies of the phosphates differ from tabulated enthalpies over a wide span,
+      because the oxide correction of the database is applied to every oxygen, lattice water and covalent
+      phosphate oxygen included; the spread of the onsets on one reaction is a method finding, and density
+      functional values are only labelled comparators.
     section: results
     type: proxy result
     polarity: claims
@@ -1094,12 +1361,24 @@ claims:
     depends_on:
     - per-reaction DFT and experimental onsets (PH-W5.1)
     evidence:
-    - kind: record
-      ref: ops/tracks/redirect_plan.md#Agree. The DFT spread
+    - kind: macro
+      ref: NumDftCaPhosLow
+    - kind: macro
+      ref: NumDftCaPhosHigh
+    - kind: macro
+      ref: NumMpOxideCorr
+    - kind: macro
+      ref: NumBrushiteWaterExcess
+    - kind: macro
+      ref: NumDftOnsetSpreadLow
+    - kind: macro
+      ref: NumDftOnsetSpreadHigh
+    - kind: derivation
+      ref: 'si:thermo'
     checkpoint: cp5r
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-Q01
     statement: 'The initial experiment tests a film made by route one or route two against a baked aluminophosphate,
       hydroxyapatite, bare foil and carbon-coated foil: (a) water insolubility and aqueous-slurry immersion;
@@ -1701,7 +1980,8 @@ claims:
     checkpoint: cp4
     supplier: p0-w4
     scope_check: clean
-    status: planned
+    notes: 'Withdrawn at PH-W8.3: not carried by the Results of the regime frame; replaced by CL-S19.'
+    status: withdrawn
   - id: CL-G02
     origin: carbonate control (frozen)
     statement: >-
@@ -1717,7 +1997,8 @@ claims:
     checkpoint: cp4
     supplier: p0-w4
     scope_check: clean
-    status: planned
+    notes: 'Withdrawn at PH-W8.3: not carried by the Results of the regime frame; replaced by CL-T03.'
+    status: withdrawn
   # --- required precision ---
   - id: CL-P01
     origin: carbonate control (frozen)
@@ -1729,15 +2010,12 @@ claims:
     type: required precision
     polarity: claims
     evidence:
-      - {kind: figure, ref: Fig 6}
-      - {kind: table, ref: Table 2}
-      - {kind: macro, ref: NumPrecGammaNucLiq}
-      - {kind: macro, ref: NumPrecGammaSubNuc}
-      - {kind: macro, ref: NumPrecDGbind}
+      - {kind: macro, ref: NumNucDecideWithin}
+      - {kind: macro, ref: NumNucGslMedian}
     checkpoint: cp4
     supplier: p0-w4
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-P02
     origin: carbonate control (frozen)
     statement: >-
@@ -1776,7 +2054,8 @@ claims:
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
-    status: planned
+    notes: 'Withdrawn at PH-W8.3: not carried by the Results of the regime frame; replaced by CL-T03.'
+    status: withdrawn
   # --- proxy results ---
   - id: CL-X01
     origin: carbonate control (frozen)
@@ -1796,7 +2075,8 @@ claims:
     checkpoint: cp4
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    notes: 'Withdrawn at PH-W8.3: not carried by the Results of the regime frame; replaced by CL-S17.'
+    status: withdrawn
   - id: CL-X02
     origin: carbonate control (frozen)
     statement: >-
@@ -1813,7 +2093,8 @@ claims:
     checkpoint: cp4
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    notes: 'Withdrawn at PH-W8.3: not carried by the Results of the regime frame; replaced by CL-N03.'
+    status: withdrawn
   # --- outlook: the calculations that would decide the question ---
   - id: CL-O01
     origin: carbonate control (frozen)

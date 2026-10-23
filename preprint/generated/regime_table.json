@@ -9,12 +9,14 @@
   "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
   "results/preprint/pourbaix/ph_w52/passivation_window_v3.csv": "5aaf04dafbd21993b577a1a42ed50c18860771c670d489476e9b771e2a43267f",
   "results/preprint/screen/f3_ph2/f3_numbers.json": "01c27b815d9db8b8b1b9cdb9417456fb6b6f4fced638f8e9b16c3b0cc7578927",
+  "results/preprint/screen/ignorance_ph/summary.json": "8335354aed587ae431c828025706b3fb7c4be30e30b9603f6d8b32ea42a1b838",
   "results/preprint/screen/k2_grid_ph/summary.json": "9df2b4b54159d074ff94ca46ea2959a1c5fcd82102de821d0779820d9a2b1fc8",
   "results/preprint/screen/k2_perph_ph2/perph.csv": "a41716b2ca1afb730f6bbcd4b9244903542bb85e906502c099e06a4d821f6b32",
   "results/preprint/screen/k2_perph_ph2/perph.json": "d2de4e735c2f152f17d48e4582666933aa9b25ed2a218a640611a18c89bdb558",
   "results/preprint/screen/k2_perph_ph3/perph.csv": "f2c661266dd346d7b4c344e7ceeb13f7cf18c5d8db32917d4b0fac67eda031c1",
   "results/preprint/screen/k2_perph_ph3/perph.json": "74069749a7d0b5d8be745e533676649c8e7276822ef738189afa37caa518c431",
-  "results/preprint/screen/phosphate_films_ph/summary.json": "9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800"
+  "results/preprint/screen/phosphate_films_ph/summary.json": "9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800",
+  "results/preprint/screen/precision_ph/precision_map.json": "be5dcb073c204fd63de01631b1713c2878391d3d0b8d3785849f5385a54f20df"
  },
  "numbers": {
   "acid": {
@@ -83,6 +85,10 @@
    "brushite": {
     "C_hi": 4.4323
    }
+  },
+  "deletion": {
+   "fails": 216,
+   "point_framings": 216
   },
   "dose": {
    "high_statements": 31,
@@ -455,6 +461,15 @@
     "7.5": 7.5,
     "8.5": 8.5
    }
+  },
+  "precision": {
+   "closed": 14,
+   "dupre_mJ": 5.423152404864945,
+   "gamma_sn_mJ": 1.2193036152489043,
+   "gap": 10,
+   "mc": 8,
+   "rows": 32,
+   "transfer_ca_kJ": 31.955941998143995
   },
   "ratio": {
    "brushite": 1.0,

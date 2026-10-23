@@ -37,7 +37,9 @@ Planned from the PH-W5.1, PH-W4.2 and PH-W4.3 result files, registered at PH-W8.
 
 ## Claims carried
 
-CL-S03 to CL-S12, CL-S13, CL-P04, CL-T03, CL-X03; carbonate era: CL-G01, CL-G02, CL-P01, CL-T01, CL-X01, CL-X02.
+CL-S03 to CL-S19, CL-D21, CL-P04, CL-T03, CL-X03; carbonate era: CL-P01 (CL-G01, CL-G02, CL-T01, CL-X01, CL-X02 withdrawn at PH-W8.3).
+
+Subsection order at PH-W8.3 (session prompt): the regime map; processing-stage dissolution stability and the acid-adjusted comparator; the carbonate control and the K1 exclusion map (`fig:ladder`, the stability map fig17; `fig:heatmap`, the regime heatmap fig15); phosphates and the condensed and aluminium phosphates; nucleation and templating as model statements; the required-precision map; the baselines.
 
 ## Supplying lanes
 
