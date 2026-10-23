@@ -1380,9 +1380,10 @@ claims:
     scope_check: clean
     status: drafted
   - id: CL-Q01
-    statement: 'The initial experiment tests a film made by route one or route two against a baked aluminophosphate,
-      hydroxyapatite, bare foil and carbon-coated foil: (a) water insolubility and aqueous-slurry immersion;
-      (b) an anodic potential hold from \NumHoldLow to \NumHoldHigh V in a fluorine-free electrolyte.'
+    statement: 'The initial experiment tests bare foil, carbon-coated foil, and foil carrying a carbonate film, a
+      hydroxyapatite film, a baked aluminophosphate film or a film from route one or route two of the in-situ
+      routes: (a) water insolubility by aqueous-slurry immersion in a model alkaline slurry; (b) an anodic
+      potential hold at the nominal low cutoff and from \NumHoldLow to \NumHoldHigh in a fluorine-free electrolyte.'
     section: predictions
     type: prediction
     polarity: claims
@@ -1394,17 +1395,23 @@ claims:
     evidence:
     - kind: record
       ref: ops/tracks/redirect_plan.md#First experiment
-    - kind: record
-      ref: ops/tracks/redirect_plan.md#PREDICTIONS
+    - kind: macro
+      ref: NumHoldLow
+    - kind: macro
+      ref: NumHoldHigh
+    - kind: macro
+      ref: NumClassLo
     checkpoint: cp5r
     supplier: p0-w8
     scope_check: clean
-    status: planned
+    status: drafted
     notes: The two hold limits are macros registered from the ruling record. The earlier version added a
       fluorine-free phosphate source as a variable; the ruled version replaces it.
   - id: CL-Q02
-    statement: If the oxidation ladder holds, hydroxyapatite fails the anodic hold near the onset of carbonate,
-      around four volts.
+    statement: If the screen's model holds, then hydroxyapatite is not oxidised at the low hold and is
+      thermodynamically excluded at the high hold, above its crossover, losing calcium with oxygen evolution
+      and leaving pyrophosphate; calcium loss at the low hold would refute the ladder, an unchanged film at
+      the high hold would show kinetic stabilisation.
     section: predictions
     type: prediction
     polarity: claims
@@ -1412,20 +1419,23 @@ claims:
     stage: cell
     conditional: true
     depends_on:
-    - onset ladder (PH-W5.1)
-    - the anodic hold itself, not run
+    - the solid-salt upper bound of hydroxyapatite and its margin (onset ladder)
     evidence:
     - kind: record
       ref: ops/tracks/redirect_plan.md#Conditional predictions
-    - kind: reference
-      ref: 'pending: K1 ladder and per-reaction table (PH-W5.1)'
+    - kind: macro
+      ref: NumHapCrossover
+    - kind: claim
+      ref: CL-S05
     checkpoint: cp5r
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-Q03
-    statement: If the oxidation ladder holds, the condensed phases survive the anodic hold in the high-cutoff
-      class where the orthophosphates do not.
+    statement: If the screen's model holds, then a condensed calcium phosphate or aluminium phosphate film is
+      not excluded at the high hold; oxidation of calcium metaphosphate well below its upper bound would
+      refute the ladder, oxidation of the pyrophosphate inside the hold range would refute nothing, and an
+      aluminium phosphate result would be a measurement where the screen has none.
     section: predictions
     type: prediction
     polarity: claims
@@ -1433,17 +1443,18 @@ claims:
     stage: cell
     conditional: true
     depends_on:
-    - condensed-phase lower-bound onset above the high-cutoff class (PH-W5.1)
-    - the anodic hold itself, not run
+    - the solid-salt upper bounds of the condensed phases; no lower bound (transfer data)
     evidence:
     - kind: record
       ref: ops/tracks/redirect_plan.md#Conditional predictions
-    - kind: reference
-      ref: 'pending: K1 ladder and per-reaction table (PH-W5.1)'
+    - kind: macro
+      ref: NumMetaGlassOnset
+    - kind: macro
+      ref: NumPyroOnset
     checkpoint: cp5r
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-Q04
     statement: If the route forms a gelled or coacervate film, it resists water where lithium polyphosphate
       dissolves.
@@ -1464,10 +1475,40 @@ claims:
     checkpoint: cp5r
     supplier: p0-w8
     scope_check: clean
-    status: planned
+    notes: 'Withdrawn at PH-W8.3: the route films are undetermined in water (no solubility product of the
+      aluminium polyphosphate, no coacervate phase map), so the screen supports no prediction for them.'
+    status: withdrawn
+  - id: CL-Q05
+    statement: If the screen's model holds, then a calcite film stays undissolved in the model slurry inside the
+      passing region and dissolves at the low-dose corner, is not oxidised at the low hold below the measured
+      lithium carbonate onset, and is thermodynamically excluded above its crossover, losing calcium with
+      carbon dioxide at the high hold; calcium released inside the passing region or carbon dioxide at the
+      low hold would refute it, an unchanged film at the high hold would show kinetic stabilisation.
+    section: predictions
+    type: prediction
+    polarity: claims
+    origin: redirect
+    conditional: true
+    depends_on:
+    - the registered slurry grid, the solid-salt upper bound of carbonate and the tier-two lithium carbonate record
+    evidence:
+    - kind: record
+      ref: ops/tracks/redirect_plan.md#Carbonate resists the slurry and holds at 3.65 V
+    - kind: claim
+      ref: CL-S17
+    - kind: claim
+      ref: CL-S15
+    - kind: macro
+      ref: NumCarbonateCrossover
+    checkpoint: cp5r
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+
   - id: CL-O04
-    statement: A measured template-nucleus energy at the stated precision would decide the nucleation verdict;
-      nothing in this paper supplies it.
+    statement: A measured or computed template-nucleus energy at the stated precision would decide the
+      nucleation verdict, and a measured calcium transfer free energy at its stated precision would allow an
+      oxidation pass at the low class; nothing in this paper supplies either.
     section: predictions
     type: outlook
     polarity: claims
@@ -1476,12 +1517,16 @@ claims:
     depends_on:
     - a measured or computed template-nucleus energy
     evidence:
-    - kind: reference
-      ref: 'pending: required-precision map (PH-W4.3)'
+    - kind: macro
+      ref: NumPrecGammaSnMj
+    - kind: macro
+      ref: NumPrecTransferCaKj
+    - kind: claim
+      ref: CL-P04
     checkpoint: cp5r
     supplier: p0-w4
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-L07
     statement: Phosphate may fail the oxidation condition too, and the nucleation condition may have no
       accessible window because bulk precipitation competes.

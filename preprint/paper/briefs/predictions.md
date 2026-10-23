@@ -24,7 +24,7 @@ None. A reference to `fig:precision` and `fig:ladder`.
 
 ## Claims carried
 
-CL-Q01 to CL-Q04, CL-O04. Withdrawn: CL-O01 to CL-O03.
+CL-Q01 to CL-Q03, CL-Q05, CL-O04. Withdrawn: CL-O01 to CL-O03; CL-Q04 at PH-W8.3 (the route films are undetermined in water, so the screen supports no prediction for them).
 
 ## Supplying lanes
 
