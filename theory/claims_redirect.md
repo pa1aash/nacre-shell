@@ -1180,3 +1180,26 @@ converted by a documented rule or excluded; the declared scale is printed beside
 **Ca(PO3)2 glass-to-crystal bound.** The bound registered in Section 10b stays as registered (ruling (b)). The sign
 bound DG_g-to-c >= 0 is kept for falsification (I17). It is not tightened without new calorimetry. The sign bound is a same-composition statement; its reading for
 hydrated amorphous phases is the proposed I17a (Section 9h).
+
+### 11h. PH-W3.8 wording registrations (no ruling needed)
+
+Three points of the draft review are registered here as wording rules; their paper sentences are listed for W8 in
+`ops/reports/P0-W3.PH-W3.8.md` (section "text changes for W8").
+
+1. **Sign of the dissolution free energy.** Per mole of formula units, Delta_G_diss = + R T ln Omega_bulk, the free energy
+   of dissolving the mineral into the solution of the state (zero at saturation, positive when the mineral is stable,
+   Omega_bulk >= 1). The form with a minus sign is the free energy of precipitation and is not written as
+   Delta_G_diss.
+2. **Pass-class wording of the transfer precision.** The required precision of the Ca2+ transfer is a precision on the
+   charge-balanced Delta_G_tr_rel = DG_tr(Ca2+) - 2 DG_tr(Li+) (Section 2f), the headroom of the row it decides; it is
+   not a single-ion precision on DG_tr(Ca2+). It decides the low class for the calcium orthophosphates. It does not
+   restrict the condensed rows to the low class: the Ca(PO3)2 glass could pass up to the highest class (its upper bound
+   clears every class edge), while Ca2P2O7 can never pass above the low class, whatever the transfer data, because its
+   upper bound plus margin lies below the top of C_mid. The sentence "opens a pass at the low class only" is withdrawn.
+   The headroom is printed with its row, by macro.
+3. **Calcite region (review B2).** The passing region of calcite on grid R-slurry K2 is named by its Ca_T bound, not by
+   the box of the grid: "Ca_T >= [NumRegWindowFullLoCalcite] for calcite ([NumRegSlurryPassFullCalcite] cells), plus 2
+   cells at [NumRegWindowLoCalcite]", every figure by macro (the threshold, the count of the full region, the count and
+   the Ca_T of the two further cells). A sentence that names the region at Ca_T from the lowest grid value states the
+   failing cells inside it, or is not written; the label of Section 11b ("over which Omega_bulk >= 1 holds at every
+   state") applies to the full region only.
