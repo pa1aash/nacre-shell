@@ -726,6 +726,31 @@ Section 2g).
   falsified wherever its crystalline row is falsified, labelled `falsified (bound)`, and stays undetermined everywhere
   else. It can never pass this way. For the nucleus framings (ACP versus apatite) this makes "falsified under every
   framing" decidable from the crystalline row alone, on the falsifying side only.
+- **I17a.** (PH-W3.8, ruling 3; **proposed, not registered**.) *Check.* The bound DeltaG_g->c >= 0 holds only between
+  phases of the same composition. Contract version 7 states DeltaG_gc = G_glass - G_crystal "per formula unit"
+  (`E_window_glass`, `E_lb_glass`, `E_ub_glass`): that is the same-composition form for an anhydrous glass of the
+  crystal's formula (the Ca(PO3)2 glass, the (LiPO3)n glass), but it does not state the reference of a hydrated
+  amorphous phase, whose formula unit carries n_hyd water that the crystal does not. For ACP (and for the amorphous
+  framings of HAp, beta-TCP and alpha-TCP, which are the ACP nucleus framing of Section 0) the form is therefore not
+  stated. *Proposed amendment.* For a hydrated amorphous phase A = C . n_hyd H2O the reference is the crystalline
+  phase or phases C of the same Ca:P (and OH, HPO4) composition PLUS n_hyd liquid water at a_w = 1:
+
+      DeltaG_g->c,w = G(A) - G(C) - n_hyd mu_w(l, a_w = 1) >= 0          (A is metastable against C + water)
+
+  The oxidation of A releases its water at the cell water activity a_w <= 1, so
+
+      E_ub(A) = E_ub(C) - [DeltaG_g->c,w - n_hyd R T ln a_w] / (Delta_n_Li F) <= E_ub(C)
+
+  (proposed contract function `E_ub_hydrated_am`, written out in the comment above `E_window_glass`; it passes the
+  checks of `theory/tools/check_contract.py` in a scratch registration). Any further reaction of the released water (r3)
+  only lowers the onset, since E_ox is a minimum. With the amendment registered, the amorphous row is excluded wherever
+  its same-composition crystalline reference row is, labelled `excluded (by the bound dG_g-to-c >= 0, against the
+  crystalline reference plus water)`. A crystalline reference of a different Ca:P (beta-TCP for an ACP of another
+  Ca:P) does not satisfy the condition. *Until the amendment is registered*: the amorphous rows of ACP, HAp, beta-TCP
+  and alpha-TCP read **undetermined** in the table and in the prose; the by-bound entries of
+  `margins_v6.tier1_amorphous_by_bound` for these rows are not a verdict basis (as the ladder notes already say); and
+  a calcium orthophosphate phase is not "falsified under every framing", because its ACP framing is undetermined: its
+  exclusion is stated on the crystalline framing, with the ACP framing named as undetermined beside it.
 
 ## 10. PH-W3.2 rulings: W5's post-hoc choices and the bracket verdict
 
@@ -843,7 +868,9 @@ Every tier-1 row therefore stays solid-salt-only (Section 2f, `plausible only`).
 **Go/no-go consequence.** With no pass possible, K1 can only falsify or leave a row inconclusive. By tier 1 alone (the
 ladder of PH-W5.1 with the margins of `margins_v6`, before any tier 2 record is applied), the following hold. HAp,
 beta-TCP and alpha-TCP, and ACP on its beta-TCP reference, are falsified at C_mid and C_hi. By I17 they are also
-falsified on the amorphous framing there, so under every nucleus framing. The carbonate control falls with them.
+falsified on the amorphous framing there, so under every nucleus framing (amended PH-W3.8: that reading needs the
+same-composition form of I17a, which is proposed and not registered; until then the amorphous framings read
+undetermined and the exclusion is stated on the crystalline framing only). The carbonate control falls with them.
 Brushite is partial at C_hi: falsified only above its crossover inside that class. The silicate comparator Ca2SiO4 is
 falsified at all three classes. Nothing is falsified at C_lo. Open, falsified at no class, are the condensed phases and
 the Al phosphates. Ca2P2O7 (crystalline; its amorphous row undetermined), Ca(PO3)2 glass and crystal, and the Li
@@ -1132,4 +1159,5 @@ converted by this rule, never copied. K_P is bound in `symbol_bindings` with a u
 converted by a documented rule or excluded; the declared scale is printed beside each such key.
 
 **Ca(PO3)2 glass-to-crystal bound.** The bound registered in Section 10b stays as registered (ruling (b)). The sign
-bound DG_g-to-c >= 0 is kept for falsification (I17). It is not tightened without new calorimetry.
+bound DG_g-to-c >= 0 is kept for falsification (I17). It is not tightened without new calorimetry. The sign bound is a same-composition statement; its reading for
+hydrated amorphous phases is the proposed I17a (Section 9h).

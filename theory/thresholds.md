@@ -1358,6 +1358,14 @@ screen_ph:
     K4: {m_S: 'unchanged (thresholds.C4.margin_S_spread, zero: the priors carry the method error)'}
   # END generated margins_v6
   proceed_rule: 'K3 and K4 run unless the K1 verdict is falsified at every registered cutoff class (cp4 F1)'
+  i17a:
+    authority: theory/claims_redirect.md I17a (PH-W3.8, ruling 3)
+    check: 'contract v7 states Delta_G_gc = G_glass - G_crystal per formula unit: the same-composition form for an anhydrous glass; not stated for a hydrated amorphous phase'
+    status: 'amendment proposed, not registered (reference of a hydrated amorphous phase: the same-composition crystalline phase(s) plus liquid water at a_w = 1; proposed function E_ub_hydrated_am)'
+    rows_until_registered: {ACP_amorphous: undetermined, HAp_amorphous: undetermined, b-TCP_amorphous: undetermined, a-TCP_amorphous: undetermined}
+    by_bound_entries: 'margins_v6.tier1_amorphous_by_bound is not a verdict basis for these rows'
+    framing_rule: 'a calcium orthophosphate is not falsified under every framing while its ACP framing is undetermined; its exclusion is stated on the crystalline framing, with the ACP framing named undetermined'
+    label_when_registered: 'excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)'
   sink_v10:
     authority: theory/claims_redirect.md Section 2h (PH-W3.8, ruling 2)
     status: 'structure registered; value unbound (the keys are unresolved here; W1 supplies them at PH-W1.9, W5 evaluates)'
