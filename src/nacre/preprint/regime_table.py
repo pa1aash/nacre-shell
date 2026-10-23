@@ -33,6 +33,8 @@ INPUTS = {
     "params": "lit/params.yaml",
     "perph": "results/preprint/screen/k2_perph_ph2/perph.csv",
     "perph_json": "results/preprint/screen/k2_perph_ph2/perph.json",
+    "perph3": "results/preprint/screen/k2_perph_ph3/perph.csv",
+    "perph3_json": "results/preprint/screen/k2_perph_ph3/perph.json",
     "f3": "results/preprint/screen/f3_ph2/f3_numbers.json",
     "gaps": "lit/corpus/gaps.md",
     "window": "results/preprint/pourbaix/ph_w52/passivation_window_v3.csv",
@@ -109,10 +111,10 @@ def read_inputs(root):
         if not p.is_file():
             raise RegimeTableError("missing input %s" % rel)
         shas[key] = sha256(p)
-    for key in ("ladder", "ladder_sens", "perph", "window", "al_salt"):
+    for key in ("ladder", "ladder_sens", "perph", "perph3", "window", "al_salt"):
         with (root / INPUTS[key]).open(encoding="utf-8", newline="") as fh:
             docs[key] = list(csv.DictReader(fh))
-    for key in ("k2", "films", "perph_json", "f3"):
+    for key in ("k2", "films", "perph_json", "perph3_json", "f3"):
         docs[key] = json.loads((root / INPUTS[key]).read_text(encoding="utf-8"))
     docs["gaps_text"] = (root / INPUTS["gaps"]).read_text(encoding="utf-8")
     docs["thresholds"] = yaml.safe_load((root / INPUTS["thresholds"]).read_text(encoding="utf-8"))
@@ -331,6 +333,61 @@ def check_perph(docs):
                     raise RegimeTableError("perph.csv: frozen and rerun rows differ for %s at pH %g in the %s grid" % (phase, ph, grid))
 
 
+# ---------------------------------------------------------------- ratio grid (PH-W4.6 outputs)
+
+RATIO_NUM = {"hap": ("NumRatioHap", "ratio/hap", 5 / 3), "btcp": ("NumRatioTcp", "ratio/tcp", 3 / 2), "brushite": ("NumRatioBrushite", "ratio/brushite", 1.0)}
+OWN_PHASE = {"hap": "HAp", "btcp": "b-TCP", "brushite": "brushite"}
+GRID_NAME = {"alkaline": "Slurry", "acid": "Acid"}
+
+
+def own_ratio(docs, key):
+    """The Num of the phase's own Ca:P and the file's label of it ('1.67'), checked against each other."""
+    name, nkey, value = RATIO_NUM[key]
+    label = docs["perph3_json"]["own_ratio"][key]
+    if float(label) != float("{:.3g}".format(value)):
+        raise RegimeTableError("own ratio of %s is %s in the ratio-grid output, not %.3g" % (key, label, value))
+    return Num(name, nkey, value, ".3g"), label
+
+
+def ratio_row(docs, grid, ratio, phase, ph):
+    sel = [r for r in docs["perph3"] if r["grid"] == grid and r["source"] == "ratio_" + ratio and r["phase"] == phase and float(r["pH"]) == ph]
+    if len(sel) != 1:
+        raise RegimeTableError("ratio-grid perph.csv has %d rows for %s, ratio %s, %s, pH %g" % (len(sel), grid, ratio, phase, ph))
+    r = sel[0]
+    return {"n_cells": int(r["n_cells"]), "n_pass": int(r["n_passing"]), "frac": float(r["passing_fraction"]),
+            "ca": _opt(r["min_passing_Ca_T_mol_dm3"]), "p": _opt(r["min_passing_P_T_mol_dm3"])}
+
+
+def check_ratio_grid(docs):
+    """The crossed rows of the ratio-grid table must be the crossed rows used here, and the ratio rows must sit on the ratio line."""
+    for grid in ("alkaline", "acid"):
+        if perph_phs(docs, grid) != sorted({float(r["pH"]) for r in docs["perph3"] if r["grid"] == grid}):
+            raise RegimeTableError("the ratio-grid output has other pH values than the per-pH table in the %s grid" % grid)
+    for key, csvname, _label, src in PERPH_ROWS:
+        for r in docs["perph3"]:
+            if r["source"] != "crossed" or r["phase"] != csvname:
+                continue
+            ph = float(r["pH"])
+            same = [x for x in docs["perph"] if (x["grid"], x["source"], x["phase"], float(x["pH"])) == (r["grid"], src, csvname, ph)]
+            if len(same) != 1 or any(same[0][c] != r[c] for c in r if c != "source"):
+                raise RegimeTableError("ratio-grid output: crossed row of %s at pH %g (%s) differs from the per-pH table" % (csvname, ph, r["grid"]))
+    for r in docs["perph3"]:
+        if r["source"].startswith("ratio_") and r["n_passing"] != "0":
+            ratio = float(r["source"][6:])
+            if not (abs(float(r["CaP_min"]) - ratio) < 1e-3 and abs(float(r["CaP_max"]) - ratio) < 1e-3):
+                raise RegimeTableError("ratio-grid output: %s at pH %s is not on the line %s" % (r["phase"], r["pH"], r["source"]))
+
+
+def own_minimum(docs, grid, key):
+    """Lowest passing dose of a phase on its own ratio line over all pH of a grid: (ph, row); ties go to the lowest pH."""
+    label = own_ratio(docs, key)[1]
+    rows = [(ph, ratio_row(docs, grid, label, OWN_PHASE[key], ph)) for ph in perph_phs(docs, grid)]
+    rows = [(ph, r) for ph, r in rows if r["n_pass"]]
+    if not rows:
+        raise RegimeTableError("%s has no passing cell on its own ratio line in the %s grid" % (key, grid))
+    return min(rows, key=lambda t: (t[1]["ca"], t[1]["p"], t[0]))
+
+
 def is_high(row):
     return any(v is not None and v >= HIGH_DOSE for v in (row["ca"], row["p"]))
 
@@ -347,17 +404,26 @@ def grid_axes(docs):
     return ca, pt
 
 
-def dose_parts(row_id, row, first_low):
-    """The dose qualifier of a first-pass entry: lowest passing Ca_T and P_T at the pH, by macro."""
+def dose_parts(row_id, row, first_low, stoich=None):
+    """The dose qualifier of a first-pass entry: lowest passing Ca_T and P_T at the pH on the crossed grid and, where the
+    phase has its own Ca:P, on that ratio line (stoich = (ratio Num, ratio-line row)), by macro."""
     nm = pascal(row_id)
     parts = [" lowest passing $\\mathrm{Ca_T}$ ",
              Num("NumRegAcidMinCa" + nm, "acid/%s/min_ca" % row_id, row["ca"], "sci:0",
                  DOSE_UNIT if row["p"] is None else "", DOSE_PLAIN if row["p"] is None else "")]
     if row["p"] is not None:
         parts += [" and $\\mathrm{P_T}$ ", Num("NumRegAcidMinP" + nm, "acid/%s/min_p" % row_id, row["p"], "sci:0", DOSE_UNIT, DOSE_PLAIN)]
-    parts += [" at pH~", first_low]
-    if is_high(row):
-        parts += ["; " + HIGH_TEXT]
+    parts += [" at pH~", first_low, " on the crossed grid"]
+    if stoich is None:
+        return parts + (["; " + HIGH_TEXT] if is_high(row) else [])
+    ratio, sr = stoich
+    parts += ["; at its own Ca:P of ", ratio, ", lowest passing $\\mathrm{Ca_T}$ ",
+              Num("NumRegAcidStoichCa" + nm, "acid/%s/stoich_ca" % row_id, sr["ca"], "sci:0"), " and $\\mathrm{P_T}$ ",
+              Num("NumRegAcidStoichP" + nm, "acid/%s/stoich_p" % row_id, sr["p"], "sci:1", DOSE_UNIT, DOSE_PLAIN)]
+    if is_high(row) and is_high(sr):
+        parts += ["; both " + HIGH_TEXT]
+    elif is_high(row) or is_high(sr):
+        raise RegimeTableError("%s: only one of the crossed and stoichiometric doses is high; the entry wording does not cover that" % row_id)
     return parts
 
 
@@ -415,11 +481,18 @@ def acid_cell(row_id, ref, docs):
     if dose["n_pass"] != per[first]["feasible"] or dose["n_cells"] != sum(per[first].values()):
         raise RegimeTableError("%s: perph.csv disagrees with the registered cells at pH %g" % (row_id, first))
     nm = pascal(row_id)
+    stoich = None
+    if row_id in ("hap", "btcp"):
+        ratio, label = own_ratio(docs, row_id)
+        sr = ratio_row(docs, "acid", label, OWN_PHASE[row_id], first)
+        if not sr["n_pass"]:
+            raise RegimeTableError("%s: no cell passes on its own ratio line at pH %g" % (row_id, first))
+        stoich = (ratio, sr)
     inner = [Num("NumRegAcidPass" + nm, "acid/%s/n_pass" % row_id, block["sets"]["feasible"], "d"), " of ",
-             Num("NumRegAcidCells" + nm, "acid/%s/n_cells" % row_id, len(block["cells"]), "d"), " cells;"] + dose_parts(row_id, dose, low)
+             Num("NumRegAcidCells" + nm, "acid/%s/n_cells" % row_id, len(block["cells"]), "d"), " cells;"] + dose_parts(row_id, dose, low, stoich)
     if first == phs[0]:
         return Cell(row_id, "acid", ["suitable against dissolution"],
-                    ["suitable against dissolution from pH~", low, " (every pH of the grid; "] + inner + [")"], ["k2", "perph"], ALT_B)
+                    ["suitable against dissolution from pH~", low, " (every pH of the grid; "] + inner + [")"], ["k2", "perph"] + (["perph3"] if stoich else []), ALT_B)
     runs = below_runs([ph for ph in phs if ph < first], per, row_id)
     lead, words = [], []
     for i, (word, run) in enumerate(runs):
@@ -432,7 +505,7 @@ def acid_cell(row_id, ref, docs):
         lead += seg + ["; "]
         words.append(word)
     return Cell(row_id, "acid", words + ["suitable against dissolution"],
-                lead + ["suitable against dissolution from pH~", low, " up ("] + inner + [")"], ["k2", "perph"], ALT_B)
+                lead + ["suitable against dissolution from pH~", low, " up ("] + inner + [")"], ["k2", "perph"] + (["perph3"] if stoich else []), ALT_B)
 
 
 def below_runs(phs, per, row_id):
@@ -626,7 +699,8 @@ def dose_note_short_parts(docs):
             Num("NumDoseMolPerKgLiquid", "dose/mol_per_kg_liquid", float(m.group(1)), ".2f", "\\mathrm{mol\\,kg^{-1}}", "mol kg^-1"),
             " of liquid), so the passing doses are comparable to the order of the sourced additive doses, not equal to them."]
             + dose_order_parts(float(m.group(1)))
-            + [" See \\nacreSIref{si:regime}{Regime table detail and later reruns}."])
+            + [" Where a phase has its own Ca:P (HAp, $\\beta$-TCP) the entry also names its lowest passing doses on that ratio line; ACP has no fixed ratio. "
+               "See \\nacreSIref{si:regime}{Regime table detail and later reruns}."])
 
 
 def ph_state_parts(docs):
@@ -756,6 +830,8 @@ def extra_numbers(docs):
     add("NumRegGridPtCount", "window/n_p", len(pt), "d")
     add("NumRatioTcp", "ratio/tcp", 3 / 2, ".3g")
     add("NumRatioHap", "ratio/hap", 5 / 3, ".3g")
+    for n in ratio_numbers(docs):
+        out[n.name] = n
     ratios = [perph_row(docs, g, "frozen", "HAp", ph) for g in ("alkaline", "acid") for ph in perph_phs(docs, g)]
     ratios = [r for r in ratios if r["rlo"] is not None]
     lo, hi = min(r["rlo"] for r in ratios), max(r["rhi"] for r in ratios)
@@ -766,6 +842,55 @@ def extra_numbers(docs):
     return out
 
 
+def ratio_numbers(docs):
+    """Counts of the ratio-grid run (PH-W4.6) and the lowest doses of the phases on their own Ca:P line, by macro.
+    The generator stops where the statements printed from them stop being true."""
+    pj = docs["perph3_json"]
+    head, diffs, out = pj["headline"], pj["differences"], []
+    phases = {len(g) for g in head.values()}
+    lines = {tuple(sorted(h["ratio_passing"])) for g in head.values() for h in g.values()}
+    cells = {(grid, h["ratio_cells_each"]) for grid, g in head.items() for h in g.values()}
+    if len(phases) != 1 or len(lines) != 1 or len({c for c in cells}) != 2:
+        raise RegimeTableError("the ratio-grid output is not the same phases and ratios in both grids")
+    nlines = len(next(iter(lines)))
+    flips = sum(d["passes_on_ratio"] != d["passes_on_crossed"] for d in diffs)
+    differ = [d for d in diffs if d["differs"]]
+    if any(d["min_Ca_T_ratio"] is None or d["min_Ca_T_crossed"] is None for d in differ):
+        raise RegimeTableError("a ratio-grid difference has no lowest passing Ca_T on one side")
+    shifts = {round(math.log10(d["min_Ca_T_ratio"] / d["min_Ca_T_crossed"]), 6) for d in differ}
+    if flips or shifts - {1.0, -1.0}:
+        raise RegimeTableError("the ratio-grid differences are no longer one-decade shifts of the lowest passing Ca_T without a pass-fail change")
+    same = sum(h["ratio_verdict"] == h["crossed_verdict"] for g in head.values() for h in g.values())
+    total = sum(len(g) for g in head.values())
+    cell_n = {grid: next(h["ratio_cells_each"] for h in g.values()) * nlines for grid, g in head.items()}
+    for name, key, v in (("NumRatioPhases", "ratio/phases", phases.pop()), ("NumRatioLines", "ratio/lines", nlines),
+                         ("NumRatioCellsAlkaline", "ratio/cells_alkaline", cell_n["alkaline"]), ("NumRatioCellsAcid", "ratio/cells_acid", cell_n["acid"]),
+                         ("NumRatioGroups", "ratio/groups", len(diffs)), ("NumRatioGroupsDiffer", "ratio/groups_differ", len(differ)),
+                         ("NumRatioGroupsHigher", "ratio/groups_higher", sum(d["min_Ca_T_ratio"] > d["min_Ca_T_crossed"] for d in differ)),
+                         ("NumRatioGroupsLower", "ratio/groups_lower", sum(d["min_Ca_T_ratio"] < d["min_Ca_T_crossed"] for d in differ)),
+                         ("NumRatioFlips", "ratio/flips", flips), ("NumRatioVerdictSame", "ratio/verdict_same", same),
+                         ("NumRatioVerdictTotal", "ratio/verdict_total", total)):
+        out.append(Num(name, key, v, "d"))
+    out.append(Num("NumRatioBrushite", RATIO_NUM["brushite"][1], RATIO_NUM["brushite"][2], ".3g"))
+    for key in OWN_PHASE:
+        nm = pascal(key)
+        own_ratio(docs, key)
+        for grid, gname in GRID_NAME.items():
+            ph, r = own_minimum(docs, grid, key)
+            if (key != "brushite") == is_high(r):
+                raise RegimeTableError("%s: the lowest dose on its own line in the %s grid is %s; the text says otherwise" % (key, grid, "high" if is_high(r) else "not high"))
+            base = "ratio/own/%s/%s" % (key, grid)
+            out += [Num("NumRegOwn%s%sCa" % (nm, gname), base + "/ca", r["ca"], "sci:0"),
+                    Num("NumRegOwn%s%sP" % (nm, gname), base + "/p", r["p"], "sci:1", DOSE_UNIT, DOSE_PLAIN),
+                    Num("NumRegOwn%s%sPh" % (nm, gname), base + "/ph", ph, ".1f")]
+    low = min(perph_phs(docs, "acid"))
+    for key in ("hap", "btcp"):
+        c, r = perph_row(docs, "acid", "frozen", OWN_PHASE[key], low), ratio_row(docs, "acid", own_ratio(docs, key)[1], OWN_PHASE[key], low)
+        if not (is_high(c) and is_high(r)):
+            raise RegimeTableError("%s: the doses at the lowest pH of the grid are no longer both high" % key)
+    return out
+
+
 def _bad_ratio(v):
     return v is not None and "e" in "{:g}".format(v)
 
@@ -773,6 +898,7 @@ def _bad_ratio(v):
 def perph_rows_parts(docs):
     """Rows of the per-pH table: lists of (label parts, cell parts per column). The acid-adjusted state, per phase and pH."""
     check_perph(docs)
+    check_ratio_grid(docs)
     phs = perph_phs(docs, "acid")
     rows = []
     for key, csvname, label, src in PERPH_ROWS:
@@ -797,12 +923,27 @@ def perph_rows_parts(docs):
                 frac, ca, pp, ratio, dose = ["--"], ["--"], ["--"], ["--"], ["--"]
             first = i == 0
             rows.append(([label if first else "", ("post-freeze rerun" if src == "rerun" else "frozen") if first else "", [phn],
-                          [npass, " of ", cells_n], frac, ca, pp, ratio, dose]))
+                          [npass, " of ", cells_n], frac, ca, pp, ratio, dose] + stoich_cells(docs, key, nm, ph, lt)))
     return rows
 
 
+def stoich_cells(docs, key, nm, ph, lt):
+    """The second column group of the per-pH table: the phase on its own Ca:P line (ratio, lowest Ca_T, lowest P_T, dose word)."""
+    if key not in OWN_PHASE:
+        return [["--"], ["--"], ["--"], ["--"]]
+    ratio, label = own_ratio(docs, key)
+    r = ratio_row(docs, "acid", label, OWN_PHASE[key], ph)
+    if not r["n_pass"]:
+        return [[ratio], ["--"], ["--"], ["--"]]
+    base = "perph/%s/%s" % (key, "%g" % ph)
+    return [[ratio], [Num("NumRegPhStoichCa" + nm + lt, base + "/stoich_ca", r["ca"], "sci:0")],
+            [Num("NumRegPhStoichP" + nm + lt, base + "/stoich_p", r["p"], "sci:1")], ["high" if is_high(r) else "not high"]]
+
+
 PERPH_HEAD = ["phase", "basis", "pH", "passing cells", "fraction", "lowest passing $\\mathrm{Ca_T}$", "lowest passing $\\mathrm{P_T}$",
-              "Ca:P of the passing cells", "against the sourced additive doses"]
+              "Ca:P of the passing cells", "against the sourced additive doses",
+              "own Ca:P", "lowest passing $\\mathrm{Ca_T}$", "lowest passing $\\mathrm{P_T}$", "against the sourced additive doses"]
+PERPH_GROUPS = "\\multicolumn{3}{l}{} & \\multicolumn{6}{c}{crossed decade grid} & \\multicolumn{4}{c}{ratio-grid run, own Ca:P} \\\\"
 
 
 def perph_notes(docs):
@@ -811,9 +952,12 @@ def perph_notes(docs):
              "doses are in $\\mathrm{mol\\,dm^{-3}}$. The $\\mathrm{Ca_T}$ and $\\mathrm{P_T}$ minima are taken separately. Frozen rows are the production run; "
              "post-freeze rows use keys added after the freeze (a necessary condition only; frozen and rerun rows agree wherever both exist)."],
             dose_note_parts(docs), ph_state_parts(docs),
-            ["$\\mathrm{Ca_T}$ and $\\mathrm{P_T}$ are crossed independently on one decade grid (", Num("NumRegGridPairs", "window/n_pairs", len(ca) * len(pt), "d"),
+            ["The left group of columns is the crossed decade grid, where $\\mathrm{Ca_T}$ and $\\mathrm{P_T}$ are crossed independently (", Num("NumRegGridPairs", "window/n_pairs", len(ca) * len(pt), "d"),
              " pairs per cell group), so the Ca:P ratios are powers of ten and the apatite ratios ", Num("NumRatioTcp", "ratio/tcp", 3 / 2, ".3g"), " and ",
-             Num("NumRatioHap", "ratio/hap", 5 / 3, ".3g"), " do not occur in the frozen grid; a ratio-grid run, with $\\mathrm{P_T}$ at $\\mathrm{Ca_T}$ divided by each of them, is pending."]]
+             Num("NumRatioHap", "ratio/hap", 5 / 3, ".3g"), " do not occur. The right group is the ratio-grid run, a separate labelled run beside it, with $\\mathrm{P_T}$ at $\\mathrm{Ca_T}$ divided by the Ca:P of the phase "
+             "(", Num("NumRatioHap", "ratio/hap", 5 / 3, ".3g"), " for HAp, ", Num("NumRatioTcp", "ratio/tcp", 3 / 2, ".3g"), " for $\\beta$-TCP, ", Num("NumRatioBrushite", "ratio/brushite", 1.0, ".3g"),
+             " for brushite), so the Ca:P of every passing cell is that ratio. ACP and the \\ce{Ca4H(PO4)3} basis of OCP were run on both apatite ratios and have no column of their own; "
+             "the carbonate rows were not run on it. The verdicts of the ratio-grid run are those of the crossed grid."]]
 
 
 VERDICT_WORD = {"feasible": "suitable against dissolution", "undetermined": "undetermined"}
@@ -894,7 +1038,7 @@ def sens_note(docs, shas):
 
 def high_dose_count(cells, perph_rows):
     n = sum(1 for c in cells.values() if HIGH_TEXT in tex_of(c.parts))
-    return n + sum(1 for r in perph_rows if r[8] == ["high"])
+    return n + sum(1 for r in perph_rows for i in (8, 12) if r[i] == ["high"])
 
 
 def collect_numbers(docs, cells, shas=None):
@@ -955,13 +1099,14 @@ def render_tex(docs, shas, cells):
             lines.append("%s & %s & %s \\\\" % (tex_of(row_label(rid, docs)), tag, " & ".join(cols)))
     lines += ["\\bottomrule", "\\end{tabular}"]
     lines += _notes_tex(notes_parts(docs, shas)) + ["}", ""]
-    lines += ["\\newcommand{\\nacreRegimePerPh}{%"] + _begin("")[:1] + ["\\begin{tabular}{lllllllp{0.12\\textwidth}p{0.12\\textwidth}}", "\\toprule", " & ".join(PERPH_HEAD) + " \\\\", "\\midrule"]
+    lines += ["\\newcommand{\\nacreRegimePerPh}{%"] + _begin("")[:1] + ["\\resizebox{\\textwidth}{!}{%", "\\begin{tabular}{lllllllp{0.12\\textwidth}p{0.12\\textwidth}lllp{0.12\\textwidth}}", "\\toprule", PERPH_GROUPS,
+                                                                  "\\cmidrule(lr){4-9}\\cmidrule(lr){10-13}", " & ".join(PERPH_HEAD) + " \\\\", "\\midrule"]
     prows = perph_rows_parts(docs)
     for k, r in enumerate(prows):
         if k and r[0]:
             lines.append("\\addlinespace[2pt]")
         lines.append(_row_tex(r))
-    lines += ["\\bottomrule", "\\end{tabular}"] + _notes_tex(perph_notes(docs)) + ["}", ""]
+    lines += ["\\bottomrule", "\\end{tabular}}"] + _notes_tex(perph_notes(docs)) + ["}", ""]
     lines += ["\\newcommand{\\nacreRegimeReruns}{%"] + _begin("")[:1] + ["\\begin{tabular}{lllp{0.2\\textwidth}p{0.2\\textwidth}}", "\\toprule", " & ".join(RERUN_HEAD) + " \\\\", "\\midrule"]
     lines += [_row_tex(r) for r in rerun_rows_parts(docs)]
     lines += ["\\bottomrule", "\\end{tabular}"] + _notes_tex(rerun_notes(docs)) + ["}", ""]

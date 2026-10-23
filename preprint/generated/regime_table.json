@@ -12,6 +12,8 @@
   "results/preprint/screen/k2_grid_ph/summary.json": "9df2b4b54159d074ff94ca46ea2959a1c5fcd82102de821d0779820d9a2b1fc8",
   "results/preprint/screen/k2_perph_ph2/perph.csv": "a41716b2ca1afb730f6bbcd4b9244903542bb85e906502c099e06a4d821f6b32",
   "results/preprint/screen/k2_perph_ph2/perph.json": "d2de4e735c2f152f17d48e4582666933aa9b25ed2a218a640611a18c89bdb558",
+  "results/preprint/screen/k2_perph_ph3/perph.csv": "f2c661266dd346d7b4c344e7ceeb13f7cf18c5d8db32917d4b0fac67eda031c1",
+  "results/preprint/screen/k2_perph_ph3/perph.json": "74069749a7d0b5d8be745e533676649c8e7276822ef738189afa37caa518c431",
   "results/preprint/screen/phosphate_films_ph/summary.json": "9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800"
  },
  "numbers": {
@@ -42,7 +44,9 @@
     "min_ca": 0.1,
     "min_p": 0.1,
     "n_cells": 540,
-    "n_pass": 145
+    "n_pass": 145,
+    "stoich_ca": 0.1,
+    "stoich_p": 0.0666667
    },
    "calcite": {
     "first_pass_ph": 6.5,
@@ -55,7 +59,9 @@
     "min_ca": 0.1,
     "min_p": 0.01,
     "n_cells": 540,
-    "n_pass": 193
+    "n_pass": 193,
+    "stoich_ca": 0.1,
+    "stoich_p": 0.0598802
    },
    "model_hi": 8.29,
    "model_lo": 4.98,
@@ -79,7 +85,7 @@
    }
   },
   "dose": {
-   "high_statements": 21,
+   "high_statements": 31,
    "high_threshold": 0.01,
    "mmol_per_g": 0.16,
    "mol_per_kg_liquid": 0.147,
@@ -223,7 +229,9 @@
      "min_p": 0.01,
      "n_pass": 9,
      "ratio_hi": 10.0,
-     "ratio_lo": 0.09999999999999999
+     "ratio_lo": 0.09999999999999999,
+     "stoich_ca": 0.1,
+     "stoich_p": 0.1
     },
     "5.5": {
      "fraction": 0.166667,
@@ -231,7 +239,9 @@
      "min_p": 0.001,
      "n_pass": 18,
      "ratio_hi": 100.0,
-     "ratio_lo": 0.01
+     "ratio_lo": 0.01,
+     "stoich_ca": 0.01,
+     "stoich_p": 0.01
     },
     "6.5": {
      "fraction": 0.203704,
@@ -239,7 +249,9 @@
      "min_p": 0.001,
      "n_pass": 22,
      "ratio_hi": 100.0,
-     "ratio_lo": 0.01
+     "ratio_lo": 0.01,
+     "stoich_ca": 0.01,
+     "stoich_p": 0.01
     },
     "7.5": {
      "fraction": 0.222222,
@@ -247,7 +259,9 @@
      "min_p": 0.001,
      "n_pass": 24,
      "ratio_hi": 100.0,
-     "ratio_lo": 0.01
+     "ratio_lo": 0.01,
+     "stoich_ca": 0.01,
+     "stoich_p": 0.01
     },
     "8.5": {
      "fraction": 0.111111,
@@ -255,7 +269,9 @@
      "min_p": 0.01,
      "n_pass": 12,
      "ratio_hi": 10.0,
-     "ratio_lo": 0.09999999999999999
+     "ratio_lo": 0.09999999999999999,
+     "stoich_ca": 0.01,
+     "stoich_p": 0.01
     },
     "n_cells": 108
    },
@@ -266,7 +282,9 @@
      "min_p": 0.1,
      "n_pass": 3,
      "ratio_hi": 1.0,
-     "ratio_lo": 1.0
+     "ratio_lo": 1.0,
+     "stoich_ca": 0.1,
+     "stoich_p": 0.0666667
     },
     "5.5": {
      "fraction": 0.12963,
@@ -274,7 +292,9 @@
      "min_p": 0.001,
      "n_pass": 14,
      "ratio_hi": 100.0,
-     "ratio_lo": 0.09999999999999999
+     "ratio_lo": 0.09999999999999999,
+     "stoich_ca": 0.01,
+     "stoich_p": 0.00666667
     },
     "6.5": {
      "fraction": 0.287037,
@@ -282,7 +302,9 @@
      "min_p": 1e-05,
      "n_pass": 31,
      "ratio_hi": 10000.0,
-     "ratio_lo": 0.01
+     "ratio_lo": 0.01,
+     "stoich_ca": 0.01,
+     "stoich_p": 0.00666667
     },
     "7.5": {
      "fraction": 0.425926,
@@ -290,7 +312,9 @@
      "min_p": 1e-06,
      "n_pass": 46,
      "ratio_hi": 100000.00000000001,
-     "ratio_lo": 0.001
+     "ratio_lo": 0.001,
+     "stoich_ca": 0.001,
+     "stoich_p": 0.000666667
     },
     "8.5": {
      "fraction": 0.472222,
@@ -298,7 +322,9 @@
      "min_p": 1e-06,
      "n_pass": 51,
      "ratio_hi": 100000.00000000001,
-     "ratio_lo": 0.01
+     "ratio_lo": 0.01,
+     "stoich_ca": 0.001,
+     "stoich_p": 0.000666667
     },
     "n_cells": 108
    },
@@ -333,7 +359,9 @@
      "min_p": 0.01,
      "n_pass": 5,
      "ratio_hi": 10.0,
-     "ratio_lo": 1.0
+     "ratio_lo": 1.0,
+     "stoich_ca": 0.1,
+     "stoich_p": 0.0598802
     },
     "5.5": {
      "fraction": 0.166667,
@@ -341,7 +369,9 @@
      "min_p": 0.0001,
      "n_pass": 18,
      "ratio_hi": 1000.0,
-     "ratio_lo": 0.09999999999999999
+     "ratio_lo": 0.09999999999999999,
+     "stoich_ca": 0.01,
+     "stoich_p": 0.00598802
     },
     "6.5": {
      "fraction": 0.388889,
@@ -349,7 +379,9 @@
      "min_p": 1e-06,
      "n_pass": 42,
      "ratio_hi": 100000.00000000001,
-     "ratio_lo": 0.001
+     "ratio_lo": 0.001,
+     "stoich_ca": 0.001,
+     "stoich_p": 0.000598802
     },
     "7.5": {
      "fraction": 0.546296,
@@ -357,7 +389,9 @@
      "min_p": 1e-06,
      "n_pass": 59,
      "ratio_hi": 100000.00000000001,
-     "ratio_lo": 0.001
+     "ratio_lo": 0.001,
+     "stoich_ca": 0.001,
+     "stoich_p": 0.000598802
     },
     "8.5": {
      "fraction": 0.638889,
@@ -365,7 +399,9 @@
      "min_p": 1e-06,
      "n_pass": 69,
      "ratio_hi": 100000.00000000001,
-     "ratio_lo": 0.001
+     "ratio_lo": 0.001,
+     "stoich_ca": 0.0001,
+     "stoich_p": 5.98802e-05
     },
     "n_cells": 108
    },
@@ -421,10 +457,60 @@
    }
   },
   "ratio": {
+   "brushite": 1.0,
+   "cells_acid": 270,
+   "cells_alkaline": 324,
+   "flips": 0,
+   "groups": 120,
+   "groups_differ": 43,
+   "groups_higher": 42,
+   "groups_lower": 1,
    "hap": 1.6666666666666667,
    "hap_hi": 100000.00000000001,
    "hap_lo": 0.001,
-   "tcp": 1.5
+   "lines": 3,
+   "own": {
+    "brushite": {
+     "acid": {
+      "ca": 0.01,
+      "p": 0.01,
+      "ph": 5.5
+     },
+     "alkaline": {
+      "ca": 0.1,
+      "p": 0.1,
+      "ph": 10.0
+     }
+    },
+    "btcp": {
+     "acid": {
+      "ca": 0.001,
+      "p": 0.000666667,
+      "ph": 7.5
+     },
+     "alkaline": {
+      "ca": 0.0001,
+      "p": 6.66667e-05,
+      "ph": 10.0
+     }
+    },
+    "hap": {
+     "acid": {
+      "ca": 0.0001,
+      "p": 5.98802e-05,
+      "ph": 8.5
+     },
+     "alkaline": {
+      "ca": 1e-05,
+      "p": 5.98802e-06,
+      "ph": 10.0
+     }
+    }
+   },
+   "phases": 5,
+   "tcp": 1.5,
+   "verdict_same": 10,
+   "verdict_total": 10
   },
   "rerun": {
    "ACC": {
