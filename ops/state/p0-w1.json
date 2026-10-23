@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-W1.8",
+  "last_session": "PH-W1.4",
   "status": "DONE",
-  "day": 6,
+  "day": 7,
   "artifacts": [
     ".local/early_read/params_table_for_coauthors.pdf (local-only)",
     "jobs/ledger/p0-w1.jsonl",
@@ -60,9 +60,11 @@
     "ops/reports/P0-W1.PH-W1.5.md",
     "ops/reports/P0-W1.PH-W1.6.md",
     "ops/reports/P0-W1.PH-W1.7.md",
-    "ops/reports/P0-W1.PH-W1.8.md"
+    "ops/reports/P0-W1.PH-W1.8.md",
+    "lit/corpus/audit/ph_w1_4/",
+    "ops/reports/P0-W1.PH-W1.4.md"
   ],
-  "notes": "PH-W1.8: H3PO4 pH-controller dose rows TR-122..TR-138, TR-140 and 4 dose keys; p_total_slurry_h3po4_window gap (liquid density missing); Al(ClO4)3 S/DfG gap. Deviation text: Re-audit: cp6.",
+  "notes": "PH-W1.4: reference audit of 40 cite keys (lit/corpus/audit/ph_w1_4/reference_audit.csv): 0 unresolved DOIs, 0 notices, 11 without support, 5 partial; patents blocked (Google Patents 503, bib tool takes DOIs only); no params change.",
   "params": {
     "status": "ready",
     "sha": "3620586694941e71f39c1c22d5fc51c49b2b3aa3",
