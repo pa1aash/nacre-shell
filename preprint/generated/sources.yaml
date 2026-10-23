@@ -647,6 +647,26 @@ macros:
 
     claim: CL-D04
 
+  NumAlSaltNoMeta:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/al_salt/rows_without_al_metaphosphate_data
+
+    format: d
+
+    claim: CL-D04
+
+  NumAlSaltRows:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/al_salt/rows
+
+    format: d
+
+    claim: CL-D04
+
   NumCtlCellsMoved:
 
     source: preprint/generated/regime_table.json
@@ -1085,6 +1105,26 @@ macros:
 
     claim: CL-D04
 
+  NumRegAcidOpenHiAcc:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/acc/open_ph_hi
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidOpenLoAcc:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/acc/open_ph_lo
+
+    format: .1f
+
+    claim: CL-D04
+
   NumRegAcidPassAcc:
 
     source: preprint/generated/regime_table.json
@@ -1197,6 +1237,18 @@ macros:
 
     claim: CL-D04
 
+  NumRegDoseSameOrder:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/dose/same_order
+
+    format: g
+
+    unit: \mathrm{mol\,dm^{-3}}
+
+    claim: CL-D04
+
   NumRegGridCaCount:
 
     source: preprint/generated/regime_table.json
@@ -1254,6 +1306,16 @@ macros:
     source: preprint/generated/regime_table.json
 
     key: numbers/dose/high_statements
+
+    format: d
+
+    claim: CL-D04
+
+  NumRegNoKOneBound:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/stability/phases_without_k1_bound
 
     format: d
 

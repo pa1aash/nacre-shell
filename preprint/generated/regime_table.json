@@ -2,6 +2,7 @@
  "generator": "nacre preprint regime-table",
  "inputs": {
   "configs/preprint/thresholds.yaml": "37c17b673ccef4b8526b41acefbccb6e31dbb1f247848c6667355c606686cb61",
+  "figures/out/tables/al_salt_ladder.csv": "44635488428bc08439030849796d2eaee34ddf0c6a7d01b5e37741d5c41d44e5",
   "lit/corpus/gaps.md": "0cb805078660f89922c93029dc83da9c84fdfd3b297c6c41aea35b0ea7311e0f",
   "lit/params.yaml": "f7c109d848ae1cb014a549954e2b9ccc92b248c390535dcd8a5adb0ec63e3666",
   "results/preprint/pourbaix/ph_w52/ladder_v3.csv": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
@@ -19,7 +20,9 @@
     "first_pass_ph": 8.5,
     "min_ca": 0.1,
     "n_cells": 270,
-    "n_pass": 5
+    "n_pass": 5,
+    "open_ph_hi": 7.5,
+    "open_ph_lo": 6.5
    },
    "acp": {
     "first_pass_ph": 5.5,
@@ -61,6 +64,10 @@
    "sourced_hi": 9.0,
    "sourced_lo": 6.3
   },
+  "al_salt": {
+   "rows": 6,
+   "rows_without_al_metaphosphate_data": 4
+  },
   "control": {
    "cells_moved": 0,
    "ph_from": 12.0,
@@ -76,6 +83,7 @@
    "high_threshold": 0.01,
    "mmol_per_g": 0.16,
    "mol_per_kg_liquid": 0.147,
+   "same_order": 0.1,
    "wt_hi": 2.68,
    "wt_lo": 0.5
   },
@@ -546,6 +554,9 @@
    "base": "2**17",
    "half_width": 0.09769737069065093,
    "target": 0.02
+  },
+  "stability": {
+   "phases_without_k1_bound": 4
   },
   "window": {
    "ca_hi": 0.1,

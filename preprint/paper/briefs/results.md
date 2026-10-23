@@ -49,3 +49,10 @@ CL-S03 to CL-S12, CL-S13, CL-P04, CL-T03, CL-X03; carbonate era: CL-G01, CL-G02,
 - DFT numbers never unlabelled; the DFT spread goes to the SI (CL-X03).
 - Tier-two rows in LiPF6 are context only in the fluorine-free regime.
 - No ranking of a film against a baseline (CL-N07); baselines enter through K1, K2 and K4 only.
+
+## Caption statements and tables added at PH-W8.2f
+
+- **Stability map (fig17), omitted phases.** Caption sentence, macro-using, for the paper's caption text: `OCP, \ce{Li3PO4}, \ce{Al(PO3)3} and the Al gel (\NumRegNoKOneBound\ phases) are omitted from the stability map because no $K_1$ bound exists for them.` The macro counts the phases whose crystalline ladder rows carry no upper bound; the generator stops if one of the four acquires a bound.
+- **Aluminium-salt ladder.** Generated table `\nacreAlSaltTable` (Table `tab:alsalt`, SI section `si:regime`), from `figures/out/tables/al_salt_ladder.csv` with its sha256 in `regime_table.json`: six rows, all undetermined, each with its reason. In the Results text the ladder is stated as undetermined, with the single datum to fetch: the standard Gibbs energy of formation (or entropy) of solid \ce{Al(ClO4)3}.
+- **Verdict words below the lowest passing pH (acid-adjusted column).** A pH reads excluded only where every cell is falsified, and open where no cell passes and some are inconclusive; the entries naming the lowest passing pH are kept. ACP at the lowest pH and ACC at the two middle pH values therefore read open.
+- **Dose wording.** The passing doses are comparable to the order of the sourced additive doses, never equal to them; the threshold `\NumRegHighDose` is below the one derivable sourced figure (`\NumDoseMolPerKgLiquid`) and `\NumRegDoseSameOrder` is of the same order. A lowest passing pH is never stated without its dose.
