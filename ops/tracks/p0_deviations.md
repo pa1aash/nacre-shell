@@ -161,3 +161,7 @@ Re-audit: cp6
 ## 2026-10-22 src/nacre/screen/k2_grid.py, configs/preprint/screen_ph2.yaml
 Change: PH-W4.5 adds the supersaturated control rule: per phase, the grid cell of maximum median Omega in the wet slurry state must report feasible (0 of 648 and 0 of 540 cells change for HAp, ACP, b-TCP, OCP original key). The earlier move of the control from pH 12 to pH 7.65 came from a dry run (output seen before the choice); this is disclosed. screen.yaml is unedited.
 Re-audit: cp6
+
+## 2026-10-22 results/preprint/screen/*_ph3/, results/preprint/screen/k2_perph_ph3/
+Change: PH-W4.6 (ops/reports/P0-W4.PH-W4.6.md; pre-run commit 6a86837) adds new directories k2_alkaline_ph3, k2_acid_ph3 and k2_perph_ph3 under results/preprint/screen/. Additive: no frozen path changed and no existing result file is edited. The Ca:P ratio grid changed no pass or fail and no headline verdict; 43 of 120 groups differ in the minimum passing Ca_T only.
+Re-audit: cp6
