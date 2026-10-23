@@ -129,10 +129,12 @@ def test_cells_follow_the_data_and_the_rulings(rows):
     for rid in ("brushite", "atcp", "li_ortho"):
         assert _cell(rows, rid, "slurry")["words"] == "undetermined"
     assert "[note b]" in _cell(rows, "brushite", "slurry")["text"] and "[note b]" not in _cell(rows, "li_ortho", "slurry")["text"]
-    for rid, ph in (("calcite", "6.5"), ("aragonite", "6.5"), ("acc", "8.5"), ("acp", "5.5")):
+    # below the first pass: excluded where every cell is falsified, open where none passes and some are inconclusive
+    for rid, ph, lead in (("calcite", "6.5", "excluded below pH 6.5; "), ("aragonite", "6.5", "excluded below pH 6.5; "),
+                          ("acc", "8.5", "excluded below pH 6.5; open at pH 6.5 and 7.5; "), ("acp", "5.5", "open below pH 5.5; ")):
         c = _cell(rows, rid, "acid")
         assert c["marker"] == "split by pH (alternative b)" and "[split by pH (alternative b)]" in c["text"]
-        assert c["text"].startswith("excluded below pH %s; suitable against dissolution from pH %s up" % (ph, ph))
+        assert c["text"].startswith(lead + "suitable against dissolution from pH %s up" % ph)
     for rid in ("hap", "btcp"):
         assert _cell(rows, rid, "acid")["text"].startswith("suitable against dissolution from pH 4.5")
     assert _cell(rows, "carbonate_ctl", "C_hi")["words"] == "excluded" and _cell(rows, "carbonate_ctl", "C_lo")["words"] == "open"
