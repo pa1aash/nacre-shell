@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W1.4",
+  "last_session": "PH-W1.9",
   "status": "DONE",
   "day": 7,
   "artifacts": [
@@ -62,18 +62,20 @@
     "ops/reports/P0-W1.PH-W1.7.md",
     "ops/reports/P0-W1.PH-W1.8.md",
     "lit/corpus/audit/ph_w1_4/",
-    "ops/reports/P0-W1.PH-W1.4.md"
+    "ops/reports/P0-W1.PH-W1.4.md",
+    "lit/corpus/audit/ph_w1_9/",
+    "ops/reports/P0-W1.PH-W1.9.md"
   ],
-  "notes": "PH-W1.4: reference audit of 40 cite keys (lit/corpus/audit/ph_w1_4/reference_audit.csv): 0 unresolved DOIs, 0 notices, 11 without support, 5 partial; patents blocked (Google Patents 503, bib tool takes DOIs only); no params change.",
+  "notes": "PH-W1.9: LiClO4 saturation in PC and its gamma are gaps (paywalled sources, no value, no scale); 28 rows, 2 gap keys; citation outcomes for the 11 unsupported keys: 10 supported by new rows, 1 drop (doberdo2014); gong2012 replace; bichon/doberdo not swapped; journal DOI listed for iooss2017shapley (lit/corpus/audit/ph_w1_9/).",
   "params": {
     "status": "ready",
-    "sha": "3620586694941e71f39c1c22d5fc51c49b2b3aa3",
+    "sha": "45643c4063abe897876d691723720a0815dd71cc",
     "post_cp3": true,
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
     "rule": "lit/corpus/params_README.md (rule version 3, section 8)",
-    "keys": 479,
-    "new_keys": 5,
+    "keys": 481,
+    "new_keys": 2,
     "edited_keys": [],
     "cp3_tag_table": "p0-cp3 (production screens)"
   }
