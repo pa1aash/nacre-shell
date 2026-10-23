@@ -1,0 +1,18 @@
+# PH-W4.6 (phosphate K2 on a Ca:P ratio grid). Additions beside configs/preprint/screen.yaml and screen_ph2.yaml, neither edited.
+# Grid definition: Ca_T is the decade grid of screen.yaml design_axes.Ca_T, P_T = Ca_T / ratio for each ratio below, pH and I_ionic
+# are the grids of the PH-W4.5 reruns (alkaline slurry pH 10/12/13 with the drying a_w points; acid-adjusted pH 4.5 to 8.5, wet).
+# Phases, K_sp keys, verdict rules, priors, thresholds and the max-Omega control rule are those of PH-W4.5 (screen_ph2.yaml).
+session: PH-W4.6
+suffix: _ph3
+reference_runs: [k2_alkaline_ph2, k2_acid_ph2]
+frozen_tag: p0-cp5
+ratios:
+  - {label: hap_1.67, CaP: 1.67, note: hydroxyapatite Ca5(PO4)3OH, P_T = Ca_T / 1.67}
+  - {label: tcp_1.5, CaP: 1.5, note: tricalcium phosphate Ca3(PO4)2, P_T = Ca_T / 1.5}
+  - {label: brushite_1.0, CaP: 1.0, note: brushite CaHPO4.2H2O, P_T = Ca_T}
+phase_order: [hap, acp, btcp, ocp_ca4h, brushite]
+# the stoichiometric ratio of each phase on the grid; a phase whose own ratio is not on the grid is reported at all three
+own_ratio: {hap: 1.67, btcp: 1.5, brushite: 1.0}
+supersaturated_control:
+  rule: grid cell of maximum median Omega (wet slurry state) of the phase over all ratio cells of that grid state, as PH-W4.5
+  state: slurry
