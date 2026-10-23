@@ -64,6 +64,20 @@ def part(ctx, ph2, ph3, grid):
                      "ratios": [r["CaP"] for r in ph3["ratios"]]}, "state": grid, "phases": out}
 
 
+def rows_of(body, doc):
+    rows = []
+    for grid, blk in body["states"].items():
+        for name, rec in blk["phases"].items():
+            keys = ((rec["ksp_key"],) if rec["ksp_key"] else ()) + k2_grid.PHOSPHATE_INPUTS
+            ev = k2_grid.evidence_of(doc, keys)
+            state = "registered alkaline slurry grid" if grid == "alkaline" else "acid-adjusted (incumbent phosphoric-acid pH control)"
+            rows.append(k2_grid._k2_row("k2:%s:%s:ph3" % (name, grid), "k2_%s" % name, rec["formula"],
+                                        "candidate" if grid == "alkaline" else "comparator", rec["ladder_phase"],
+                                        ["PH-W4.6 Ca:P ratio grid (P_T = Ca_T / ratio), rule-based supersaturated control"], rec, ev,
+                                        {"state": state}))
+    return rows
+
+
 def run_ph3(root, out_path, grids, dry=False, label=None):
     """Write one PH-W4.6 document (production: a new directory <run>_ph3, ledger line appended)."""
     root, out_path = Path(root), Path(out_path)
@@ -87,7 +101,7 @@ def run_ph3(root, out_path, grids, dry=False, label=None):
     prov = run._provenance(root, ctx.cfg, root / run.CONFIG, [params_adapter.RegimePriors("R-slurry", None, {}, str(ctx.params_path),
                            run._sha256_file(ctx.params_path), False)], run.THRESHOLDS, dry)
     prov["run_label"] = label or out_path.parent.name
-    doc = summary.build(None, prov, mock=dry or ctx.doc["mock"], extensions={"p0-w4": {"k2_ph3": body}}, ph_rows=[])
+    doc = summary.build(None, prov, mock=dry or ctx.doc["mock"], extensions={"p0-w4": {"k2_ph3": body}}, ph_rows=rows_of(body, ctx.doc))
     path = summary.write(doc, out_path)
     if not dry:
         ph_prov.ledger_append(root, SESSION, prov, prov["config_file"], prov["config_hash"], [path],
