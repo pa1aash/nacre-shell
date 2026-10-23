@@ -46,22 +46,24 @@
 claims:
   # ===== block 1: claims of the redirected paper (origin: redirect) =====
   - id: CL-D01
-    statement: The paper screens bone-inspired calcium phosphate barriers for aluminium current collectors
-      in fluorine-free lithium-ion cells against four gating conditions, reported per charge-cutoff class
-      and never as a single verdict.
+    statement: The paper is a thermodynamic screen of mineral films of the nacre and bone lineages for aluminium
+      current collectors in water-processed, fluorine-free lithium-ion cathodes, against the processing stage
+      and the cell stage, reported per cutoff class and never as a single verdict.
     section: abstract
     type: design rule
     polarity: claims
     origin: redirect
     evidence:
     - kind: record
-      ref: ops/tracks/redirect_plan.md#FOUR CONDITIONS (gating claims)
+      ref: ops/tracks/redirect_plan.md#REGIME FRAME
     - kind: record
-      ref: ops/tracks/redirect_plan.md#DECISION
+      ref: ops/tracks/redirect_plan.md#Abstract order
+    - kind: claim
+      ref: CL-D04
     checkpoint: cp4
     supplier: p0-w8
     scope_check: clean
-    status: planned
+    status: drafted
   - id: CL-S01
     statement: Bone mineral (hydroxyapatite) and the tricalcium phosphates have a thermodynamic oxidation
       onset near that of carbonate, at the solid-salt sink (tier one of the onset rule); the numbers are
