@@ -19,18 +19,19 @@ positive in an undersaturated electrolyte, so the onset of the solid-salt route 
     E_ss,cell = E_ub + Delta_E_sat,   Delta_E_sat = (2 R T / F) ln(a_pm,sat / a_pm) >= 0   (per Li, 1:1 salt).
 
 The thermodynamic onset is min(E_S, E_ss,cell) <= E_ss,cell. The guaranteed upper bound is therefore E_ub + Delta_E_sat, not
-E_ub. The term is one-sided (it only raises the bound), so it is not covered by a symmetric margin. SI line 190 says that
+E_ub. The term is one-sided (it only raises the bound), so it is not covered by a symmetric margin. The SI margin sentence (CL-M06) says that
 m_expt holds the tabulated uncertainties and the neglected Ca(ClO4)2 entropy, so the term is not in m_expt either.
-Headroom of the exclusions at the class infimum: HAp 4.2 - 4.1918 = 8 mV; beta-TCP 4.2 - 4.1703 = 30 mV;
-alpha-TCP 4.2 - 4.1464 = 54 mV; carbonate 4.2 - 4.0248 = 175 mV. 2RT/F = 51 mV per e-fold of the mean-activity ratio.
+Headroom of the exclusions at inf C_mid: inf C_mid minus `falsified_above_V` of `margins_v6.tier1_crossovers` for HAp,
+beta-TCP, alpha-TCP and CaCO3 (the values are printed in ops/reports/P0-W3.PH-W3.3.md, B3; HAp's is the smallest). The term
+is 2RT/F per e-fold of the mean-activity ratio. (Numbers moved out of theory/** at PH-W3.8, check 13.)
 Action for W3: register Delta_E_sat in Section 2f, either with the registered electrolyte state at LiClO4 saturation or with a
 sourced bound (LiClO4 solubility and mean activity coefficient in PC). W5 then reapplies it to the crossovers.
 
 ## 2. E_lb also needs a stated product activity (report M14)
 
 E_lb takes every ion at its aqueous standard state (activity 1). In a fresh electrolyte a(Ca2+) and a(Al3+) are far below 1.
-The onset falls by (R T / (z F)) ln a(M) per electron for z = 2 or 3, about -0.18 V for Ca2+ at a = 1e-6. E_lb is
-a lower bound only at the registered product activity (the Pourbaix convention of 1e-6 is the usual choice). This matters
+The onset falls by (R T / (z F)) ln a(M) per electron for z = 2 or 3, negative for any a(M) below one. E_lb is
+a lower bound only at the registered product activity (the Pourbaix convention of a product activity is the usual choice). This matters
 only for the pass side (v2), and the inequality E_lb <= E_solv in contract v6 holds at equal product activity. Section 2f
 should name the activity. The paper's text "every ion hydrated at its standard state gives a lower bound" needs the same
 qualifier.
@@ -48,7 +49,7 @@ Action: the generator labels the amorphous rows of HAp, beta-TCP, alpha-TCP and 
 11d registers "not excluded" as "feasible or kinetically stabilised (class A or B named)". D78 (planning chat, cp5b) rules
 that prose "not excluded" means table "open". The table legend lists both as registered words. Section 11d needs a dated
 amendment recording D78, or the prose should use "open". The regime table also uses "open" for K2 states (OCP control
-failure; ACC in the acid state at pH 6.5 and 7.5), which is a third meaning. The Design section's class vocabulary
+failure; ACC in the acid state at the two grid pH values from `NumRegAcidOpenLoAcc` to `NumRegAcidOpenHiAcc`), which is a third meaning. The Design section's class vocabulary
 ("feasible, falsified or partial") is that of Section 2e, not the table's.
 
 ## 5. Contract v6 and symbols against the Design rules
@@ -71,6 +72,6 @@ failure; ACC in the acid state at pH 6.5 and 7.5), which is a third meaning. The
   Delta_G_tr_rel >= 0 of Section 2f.
 - Crossovers are E_ub + m_1 for every row checked (CaCO3, HAp, brushite r3, alpha-TCP, beta-TCP).
 - Class verdicts follow Section 2e (falsified at inf C) for HAp, the TCPs and carbonate at C_mid; brushite is partial at C_hi.
-- Ca2P2O7 cannot pass C_mid or C_hi whatever the transfer data: E_ub = 4.4497 V < sup C + m_1 (4.5308 and 4.7308 V).
-  Ca(PO3)2 glass and crystal and the (LiPO3)n rows could pass every class (precision map headroom 0.26 to 0.60 V).
+- Ca2P2O7 cannot pass C_mid or C_hi whatever the transfer data: its E_ub lies below sup C + m_1 for both classes (ladder_v3.csv).
+  Ca(PO3)2 glass and crystal and the (LiPO3)n rows could pass every class (positive precision-map headroom at C_hi, precision_map.json).
 - The precision map counts (32 = 14 closed + 8 MC + 10 gap) match `precision_map.json`.
