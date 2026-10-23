@@ -863,6 +863,86 @@ macros:
 
     claim: CL-D04
 
+  NumRatioBrushite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/brushite
+
+    format: .3g
+
+    claim: CL-D04
+
+  NumRatioCellsAcid:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/cells_acid
+
+    format: d
+
+    claim: CL-D04
+
+  NumRatioCellsAlkaline:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/cells_alkaline
+
+    format: d
+
+    claim: CL-D04
+
+  NumRatioFlips:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/flips
+
+    format: d
+
+    claim: CL-D04
+
+  NumRatioGroups:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/groups
+
+    format: d
+
+    claim: CL-D04
+
+  NumRatioGroupsDiffer:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/groups_differ
+
+    format: d
+
+    claim: CL-D04
+
+  NumRatioGroupsHigher:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/groups_higher
+
+    format: d
+
+    claim: CL-D04
+
+  NumRatioGroupsLower:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/groups_lower
+
+    format: d
+
+    claim: CL-D04
+
   NumRatioHap:
 
     source: preprint/generated/regime_table.json
@@ -873,6 +953,26 @@ macros:
 
     claim: CL-D04
 
+  NumRatioLines:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/lines
+
+    format: d
+
+    claim: CL-D04
+
+  NumRatioPhases:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/phases
+
+    format: d
+
+    claim: CL-D04
+
   NumRatioTcp:
 
     source: preprint/generated/regime_table.json
@@ -880,6 +980,26 @@ macros:
     key: numbers/ratio/tcp
 
     format: .3g
+
+    claim: CL-D04
+
+  NumRatioVerdictSame:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/verdict_same
+
+    format: d
+
+    claim: CL-D04
+
+  NumRatioVerdictTotal:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/verdict_total
+
+    format: d
 
     claim: CL-D04
 
@@ -1205,6 +1325,50 @@ macros:
 
     claim: CL-D04
 
+  NumRegAcidStoichCaBtcp:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/btcp/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegAcidStoichCaHap:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/hap/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegAcidStoichPBtcp:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/btcp/stoich_p
+
+    format: sci:1
+
+    unit: \mathrm{mol\,dm^{-3}}
+
+    claim: CL-D04
+
+  NumRegAcidStoichPHap:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/hap/stoich_p
+
+    format: sci:1
+
+    unit: \mathrm{mol\,dm^{-3}}
+
+    claim: CL-D04
+
   NumRegCaPHapHi:
 
     source: preprint/generated/regime_table.json
@@ -1318,6 +1482,198 @@ macros:
     key: numbers/stability/phases_without_k1_bound
 
     format: d
+
+    claim: CL-D04
+
+  NumRegOwnBrushiteAcidCa:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/brushite/acid/ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegOwnBrushiteAcidP:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/brushite/acid/p
+
+    format: sci:1
+
+    unit: \mathrm{mol\,dm^{-3}}
+
+    claim: CL-D04
+
+  NumRegOwnBrushiteAcidPh:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/brushite/acid/ph
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegOwnBrushiteSlurryCa:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/brushite/alkaline/ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegOwnBrushiteSlurryP:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/brushite/alkaline/p
+
+    format: sci:1
+
+    unit: \mathrm{mol\,dm^{-3}}
+
+    claim: CL-D04
+
+  NumRegOwnBrushiteSlurryPh:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/brushite/alkaline/ph
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegOwnBtcpAcidCa:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/btcp/acid/ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegOwnBtcpAcidP:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/btcp/acid/p
+
+    format: sci:1
+
+    unit: \mathrm{mol\,dm^{-3}}
+
+    claim: CL-D04
+
+  NumRegOwnBtcpAcidPh:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/btcp/acid/ph
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegOwnBtcpSlurryCa:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/btcp/alkaline/ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegOwnBtcpSlurryP:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/btcp/alkaline/p
+
+    format: sci:1
+
+    unit: \mathrm{mol\,dm^{-3}}
+
+    claim: CL-D04
+
+  NumRegOwnBtcpSlurryPh:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/btcp/alkaline/ph
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegOwnHapAcidCa:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/hap/acid/ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegOwnHapAcidP:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/hap/acid/p
+
+    format: sci:1
+
+    unit: \mathrm{mol\,dm^{-3}}
+
+    claim: CL-D04
+
+  NumRegOwnHapAcidPh:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/hap/acid/ph
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegOwnHapSlurryCa:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/hap/alkaline/ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegOwnHapSlurryP:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/hap/alkaline/p
+
+    format: sci:1
+
+    unit: \mathrm{mol\,dm^{-3}}
+
+    claim: CL-D04
+
+  NumRegOwnHapSlurryPh:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/ratio/own/hap/alkaline/ph
+
+    format: .1f
 
     claim: CL-D04
 
@@ -3188,6 +3544,306 @@ macros:
     key: numbers/perph/ocp/6.5/ratio_lo
 
     format: g
+
+    claim: CL-D04
+
+  NumRegPhStoichCaBrushiteEightFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/brushite/8.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaBrushiteFiveFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/brushite/5.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaBrushiteFourFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/brushite/4.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaBrushiteSevenFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/brushite/7.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaBrushiteSixFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/brushite/6.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaBtcpEightFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/btcp/8.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaBtcpFiveFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/btcp/5.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaBtcpFourFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/btcp/4.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaBtcpSevenFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/btcp/7.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaBtcpSixFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/btcp/6.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaHapEightFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/hap/8.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaHapFiveFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/hap/5.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaHapFourFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/hap/4.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaHapSevenFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/hap/7.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichCaHapSixFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/hap/6.5/stoich_ca
+
+    format: sci:0
+
+    claim: CL-D04
+
+  NumRegPhStoichPBrushiteEightFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/brushite/8.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPBrushiteFiveFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/brushite/5.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPBrushiteFourFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/brushite/4.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPBrushiteSevenFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/brushite/7.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPBrushiteSixFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/brushite/6.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPBtcpEightFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/btcp/8.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPBtcpFiveFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/btcp/5.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPBtcpFourFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/btcp/4.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPBtcpSevenFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/btcp/7.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPBtcpSixFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/btcp/6.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPHapEightFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/hap/8.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPHapFiveFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/hap/5.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPHapFourFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/hap/4.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPHapSevenFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/hap/7.5/stoich_p
+
+    format: sci:1
+
+    claim: CL-D04
+
+  NumRegPhStoichPHapSixFive:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/perph/hap/6.5/stoich_p
+
+    format: sci:1
 
     claim: CL-D04
 

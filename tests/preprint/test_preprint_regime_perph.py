@@ -122,9 +122,12 @@ def test_f3_sentence_and_forbidden_words():
 def test_methods_f2_f4_f5_wording():
     meth = " ".join(re.sub(r"%.*", "", l) for l in _read("sections", "methods.tex").splitlines())
     meth = " ".join(meth.split())
-    assert "crosses total calcium and total phosphate independently on one decade grid" in meth
-    assert "the apatite ratios \\NumRatioTcp\\ and \\NumRatioHap\\ do not occur" in meth
-    assert "a ratio-grid run" in meth and "is pending" in meth
+    assert "The production run of the phosphate dissolution test crossed total calcium and total phosphate independently on one decade grid" in meth
+    assert "the apatite ratios \\NumRatioTcp\\ and \\NumRatioHap\\ do not occur in it" in meth
+    assert "A ratio grid was run as a separate, labelled run beside the production run" in meth and "ratio-grid run, with total phosphate" not in meth
+    assert "The verdicts are unchanged: \\NumRatioVerdictSame\\ of \\NumRatioVerdictTotal\\" in meth
+    assert "\\NumRatioGroupsDiffer\\ differ in the lowest passing $\\mathrm{Ca_T}$ only" in meth
+    assert "the ratio itself on a ratio line" in meth
     assert "the grid state of maximum $\\Omega$ for that phase and state" in meth
     assert "moved from pH \\NumCtlPhFrom\\ to pH \\NumCtlPhTo\\ after a dry run, an output seen before the choice" in meth
     assert "moves \\NumCtlCellsMoved\\ cells of the original keys" in meth
@@ -157,4 +160,84 @@ def test_planted_disagreement_between_frozen_and_rerun_rows_is_refused(tmp_path,
     lines[k] = ",".join(cols)
     perph.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     with pytest.raises(rt.RegimeTableError, match="differ"):
+        rt.generate(root)
+
+
+# ---------------------------------------------------------------- ratio grid (PH-W8.2g)
+
+def _sci(text):
+    m = re.match(r"([0-9.]+)\\times10\^\{(-?[0-9]+)", text)
+    return float(m.group(1) + "e" + m.group(2))
+
+
+def _mant_exp(v):
+    import math
+    e = math.floor(math.log10(v))
+    return round(v / 10 ** e, 1), e
+
+
+def _ratio_csv():
+    with (REPO / rt.INPUTS["perph3"]).open(encoding="utf-8", newline="") as fh:
+        return list(csv.DictReader(fh))
+
+
+def test_second_column_group_is_the_ratio_grid_file(docs, rendered):
+    rows_ = rt.perph_rows_parts(docs)
+    assert all(len(r) == 13 for r in rows_) and len(rt.PERPH_HEAD) == 13
+    src = {(r["grid"], r["source"], r["phase"], float(r["pH"])): r for r in _ratio_csv()}
+    for key, phase, ratio in (("hap", "HAp", "1.67"), ("btcp", "b-TCP", "1.5"), ("brushite", "brushite", "1")):
+        for ph in rt.perph_phs(docs, "acid"):
+            r = src[("acid", "ratio_" + ratio, phase, ph)]
+            lt, nm = rt.lettered(ph), rt.pascal(key)
+            assert _sci(rendered["NumRegPhStoichCa" + nm + lt]) == pytest.approx(float(r["min_passing_Ca_T_mol_dm3"]), rel=0.5)
+            assert rendered["NumRegPhStoichP" + nm + lt].startswith("%.1f\\times10^{%d" % tuple(_mant_exp(float(r["min_passing_P_T_mol_dm3"]))))
+    for r in rows_:
+        if r[0] in ("calcite", "aragonite", "ACC", "ACP") or r[0].startswith("OCP"):
+            assert [c[0] for c in r[9:]] == ["--"] * 4
+
+
+def test_own_ratio_minima_are_the_stated_doses(rendered):
+    want = {"HapSlurry": ("1e-05", "6.0e-06", "10.0"), "HapAcid": ("1e-04", "6.0e-05", "8.5"),
+            "BtcpSlurry": ("1e-04", "6.7e-05", "10.0"), "BtcpAcid": ("1e-03", "6.7e-04", "7.5"),
+            "BrushiteSlurry": ("1e-01", "1.0e-01", "10.0"), "BrushiteAcid": ("1e-02", "1.0e-02", "5.5")}
+    for k, (ca, p, ph) in want.items():
+        got = [rendered["NumRegOwn%s%s" % (k, q)] for q in ("Ca", "P", "Ph")]
+        assert got[2] == ph
+        assert [_sci(g) for g in got[:2]] == [float(ca), float(p)], (k, got)
+    assert rendered["NumRegPhGridFourFive"] == "4.5"
+
+
+def test_first_pass_cells_name_both_doses(rows):
+    for rid, ratio in (("hap", "1.67"), ("btcp", "1.5")):
+        text = [r for r in rows if r["row_id"] == rid and r["column"] == "acid"][0]["text"]
+        assert "on the crossed grid" in text and "at its own Ca:P of " + ratio + ", lowest passing Ca_T" in text, text
+        assert text.count("lowest passing Ca_T") == 2 and text.count("P_T") == 2 and rt.HIGH_TEXT in text
+    acp = [r for r in rows if r["row_id"] == "acp" and r["column"] == "acid"][0]["text"]
+    assert "own Ca:P" not in acp
+
+
+def test_ratio_grid_text_is_plain_and_scoped():
+    si = " ".join(re.sub(r"%.*", "", l) for l in _read("si", "main_si.tex").splitlines())
+    si = " ".join(si.split())
+    assert "a ratio-grid run is pending" not in si
+    assert "lie well below the order of the sourced additive doses" in si and "the comparison is of order only" in si
+    assert "stays a high-dose phase at the low-pH end" in si
+    assert "high against the sourced additive doses, on the crossed grid" in si
+    mine = si[si.index("The production run crossed"):si.index("on the crossed grid. ")]
+    assert "equal" not in mine and not re.search(r"suitable against dissolution from pH", si)
+
+
+def test_planted_ratio_grid_disagreement_is_refused(tmp_path):
+    root = tmp_path / "repo"
+    for rel in list(rt.INPUTS.values()) + ["preprint/generated/sources.yaml"]:
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(REPO / rel, root / rel)
+    path = root / rt.INPUTS["perph3"]
+    lines = path.read_text(encoding="utf-8").splitlines()
+    k = [i for i, l in enumerate(lines) if l.startswith("acid,crossed,HAp,4.5,")][0]
+    cols = lines[k].split(",")
+    cols[5] = str(int(cols[5]) + 1)
+    lines[k] = ",".join(cols)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    with pytest.raises(rt.RegimeTableError, match="differs from the per-pH table"):
         rt.generate(root)
