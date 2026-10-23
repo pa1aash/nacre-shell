@@ -663,25 +663,25 @@ days:
     day: 7
     model: Opus
     master_trace: none
-    requires: [cp5r]
+    requires: [cp5b]
   - id: PH-W7.1
     lane: p0-w7
     day: 7
     model: Sonnet
     master_trace: none
-    requires: [cp5r]
+    requires: [cp5b]
   - id: PH-W1.4
     lane: p0-w1
     day: 7
     model: Sonnet
     master_trace: none
-    requires: [cp5r]
+    requires: [cp5b]
   - id: PH-W3.3
     lane: p0-w3
     day: 7
     model: Opus
     master_trace: none
-    requires: [cp5r]
+    requires: [cp5b]
   - id: PH-I7
     lane: p0-int
     day: 7
@@ -718,7 +718,7 @@ checkpoints:
   satisfied_by: [p0-cp5]
 - id: cp5r
   day: 6
-  title: RESULTS after the production screen
+  title: RESULTS after the production screen (superseded by cp5b, D82; the day-7 requirements name cp5b)
   packet: ops/packets/p0-5r.md
   satisfied_by: [p0-cp5r]
 - id: cp6
@@ -1170,6 +1170,8 @@ decisions:
 - {id: D81, date: '2026-10-23', decision: 'The finished day-6 integrator sessions (PH-I6, PH-I6e) are
     recorded done from their reports.', reason: Integrator record at PH-I6g; both reports and state commits
     read DONE and are pushed.}
+- {id: D82, date: '2026-10-23', decision: 'The day-7 requirements are corrected from cp5r to cp5b (PH-W8.3, PH-W7.1, PH-W1.4, PH-W3.3); no new checkpoint is created and the tag p0-cp5r is not made.',
+  reason: Integrator record at PH-I6g; the audited checkpoint is cp5b (tag p0-cp5b exists).}
 lane_notes:
 - id: N1
   date: '2026-10-16'
