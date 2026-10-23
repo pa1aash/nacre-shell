@@ -1161,6 +1161,8 @@ decisions:
     by macro.', reason: Planning-chat ruling at cp5b.}
 - {id: D79, date: '2026-10-22', decision: 'cp5b F1 to F5 applied or pending as recorded in ops/reports/P0-I6e.md; PH-W4.6 pending on the planning chat''s ruling (ratio grid).',
   reason: Integrator record at PH-I6e.}
+- {id: D80, date: '2026-10-22', decision: 'cp5b closed: F1 to F5 applied, F6 deferred; the ratio grid PH-W4.6 run beside the frozen production (additive; no verdict changed); the strict verify runs at cp6 (D75).',
+  reason: Integrator record at PH-I6f.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1517,7 +1519,7 @@ deferred_v2:
   model: Sonnet
   master_trace: none
   requires: [cp5]
-done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2, PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b, PH-W8.2b, PH-W6.2c, PH-W6.2d, PH-W8.2d, PH-W1.8, PH-W4.5, PH-W8.2e, PH-W6.3, PH-W4.6, PH-W8.2f]
+done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2, PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b, PH-W8.2b, PH-W6.2c, PH-W6.2d, PH-W8.2d, PH-W1.8, PH-W4.5, PH-W8.2e, PH-W6.3, PH-W4.6, PH-W8.2f, PH-W8.2g, PH-W6.3c, PH-W6.3d]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
