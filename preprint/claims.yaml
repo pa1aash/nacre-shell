@@ -869,7 +869,8 @@ claims:
     checkpoint: cp5r
     supplier: p0-w5
     scope_check: clean
-    status: planned
+    notes: 'Withdrawn at PH-W8.3: the bracket per class is not reported, because its lower end is pending; the oxidation verdicts are carried by CL-S14 and CL-S16.'
+    status: withdrawn
   - id: CL-S05
     statement: For hydroxyapatite the limiting oxidation is lattice-oxygen release with condensation of the
       remaining phosphate to pyrophosphate, below the oxidation of its structural hydroxide.
@@ -1017,7 +1018,8 @@ claims:
     checkpoint: cp5r
     supplier: p0-w4
     scope_check: clean
-    status: planned
+    notes: 'Withdrawn at PH-W8.3: no nucleation-barrier map is drawn in this version; the nucleation statements are carried by CL-T03 and CL-S19 as model statements.'
+    status: withdrawn
   - id: CL-P04
     statement: 'The required-precision map gives the flip value and required precision of every open verdict,
       with closed, Monte Carlo and gap rows counted, and names the three most decisive measurements: the
@@ -1542,9 +1544,8 @@ claims:
     checkpoint: cp5r
     supplier: p0-w8
     scope_check: clean
-    notes: 'At PH-W8.3 the risk is reported as a result, not a risk: the orthophosphates are thermodynamically
-      excluded at the higher classes (CL-S14) and the nucleation window is undetermined (CL-S19).'
-    status: planned
+    notes: 'Withdrawn at PH-W8.3: the risk is now a result, carried by CL-S14 (orthophosphates thermodynamically excluded at the higher classes) and CL-S19 (nucleation window undetermined).'
+    status: withdrawn
   - id: CL-L08
     statement: 'Against the incumbents the screen shows nothing comparative: phosphoric-acid pH control is the
       comparator state of the dissolution test, carbon-coated foil and the patent baselines enter only through
@@ -1592,6 +1593,7 @@ claims:
     checkpoint: cp4
     supplier: p0-w8
     scope_check: allowlisted
+    notes: 'Not stated at PH-W8.3: the Discussion of the regime frame does not take up pit supply; the Design rules state that the supply of phosphate to a pit is a hypothesis outside the screen (CL-D12). Kept planned for the referee-style review.'
     status: planned
   - id: CL-N07
     statement: This paper does not claim that any film outperforms phosphoric-acid pH control, carbon-coated
