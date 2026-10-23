@@ -186,6 +186,18 @@ $\Delta G_\mathrm{hyd}$ & single-ion hydration free energy & $\mathrm{J}\,\mathr
 \multicolumn{4}{@{}l}{\textit{Registration constants (theory/thresholds.md)}}\\
 $m_\mathrm{svc}$ & K1 tier-2 margin & $\mathrm{V}$ & C\\
 $u_\mathrm{tr}$ & calibrated premise uncertainty & $\mathrm{J}\,\mathrm{mol}^{-1}$ & C\\
+\multicolumn{4}{@{}l}{\textit{Stability (C5)}}\\
+$m_\mathrm{sink}$ & dilute-electrolyte sink margin & $\mathrm{V}$ & C\\
+$\nu_\mathrm{s}$ & LiClO4 consumed per electron & -- & C\\
+$a_\pm$ & mean ionic activity of LiClO4 & -- & C\\
+$a_{\pm,\mathrm{sat}}$ & mean ionic activity of LiClO4 at saturation & -- & C\\
+$\gamma_\pm$ & mean ionic activity coefficient of LiClO4 & -- & C\\
+$\gamma_{\pm,\mathrm{sat}}$ & mean ionic activity coefficient at saturation & -- & C\\
+$c_\mathrm{s}$ & registered LiClO4 concentration & $\mathrm{mol}\,\mathrm{m}^{-3}$ & C\\
+$c_{\mathrm{s,sat}}$ & LiClO4 solubility in the cell solvent & $\mathrm{mol}\,\mathrm{m}^{-3}$ & C\\
+$\nu_\mathrm{p}$ & product salt released per electron & -- & C\\
+$x_\mathrm{p}$ & saturation ratio of the product salt & -- & C\\
+$E_\mathrm{ub}^\mathrm{c}$ & K1 upper bound at the registered salt concentration & $\mathrm{V}$ & C\\
 \multicolumn{4}{@{}l}{\textit{Insulating film (C4, R-cell)}}\\
 $d$ & film thickness & $\mathrm{m}$ & C\\
 $\rho_\mathrm{e}$ & film electronic resistivity & $\Omega\,\mathrm{m}$ & C\\
@@ -208,6 +220,9 @@ $a_\mathrm{w,dry}$ & water activity that ends the wet period & -- & S\\
 $f_\mathrm{cond}$ & condensed fraction at the end of the wet period & -- & S\\
 \multicolumn{4}{@{}l}{\textit{Registration constants (theory/thresholds.md)}}\\
 $f_\mathrm{min}$ & least condensed fraction & -- & S\\
+\hline\end{tabular}\end{minipage}\hfill
+\begin{minipage}[t]{\dimexpr(\textwidth-2mm)/2\relax}\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}[t]{@{}l p{\dimexpr\linewidth*29/50\relax} l l@{}}\hline
+Symbol & Meaning & SI unit & Reg.\\\hline
 \multicolumn{4}{@{}l}{\textit{Route layer of the redirected screen (K1 to K4, routes R1 to R3)}}\\
 $f_\mathrm{Ca}$ & Ca\textsuperscript{2+} enhancement of the hydrolysis rate & -- & S\\
 $K_\mathrm{ox}^\mathrm{Al}$ & oxide solubility constant for Al3+ & -- & S\\
@@ -221,10 +236,6 @@ $K_\mathrm{sp}^\mathrm{AlPP}$ & solubility product of the Al polyphosphate gel &
 $\Omega_\mathrm{AlPP}$ & saturation ratio of the Al polyphosphate gel & -- & S\\
 $\gamma_\mathrm{sl}^\mathrm{c}$ & oxide - dilute phase energy & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\gamma_\mathrm{sn}^\mathrm{c}$ & oxide - coacervate energy & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
-\hline\end{tabular}\end{minipage}\hfill
-\begin{minipage}[t]{\dimexpr(\textwidth-2mm)/2\relax}\footnotesize\setlength{\tabcolsep}{2pt}\begin{tabular}[t]{@{}l p{\dimexpr\linewidth*29/50\relax} l l@{}}\hline
-Symbol & Meaning & SI unit & Reg.\\\hline
-\multicolumn{4}{@{}l}{\textit{Route layer of the redirected screen (continued)}}\\
 $\gamma_\mathrm{sl}^{\mathrm{c},(0)}$ & site-free oxide - dilute contact & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\gamma_\mathrm{sn}^{\mathrm{c},(0)}$ & site-free oxide - coacervate contact & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\
 $\gamma_\mathrm{nl}^\mathrm{c}$ & coacervate - dilute tension & $\mathrm{J}\,\mathrm{m}^{-2}$ & S\\

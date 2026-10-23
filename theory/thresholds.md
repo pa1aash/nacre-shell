@@ -817,6 +817,10 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `thresholds.K1.premise_rmse_cap` | R_cap | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise (benchmark acceptance) |
 | `thresholds.K1.premise_inflation` | f_z | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise |
 | `thresholds.K1.premise_level` | q | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise |
+| `thresholds.K1.margin_sink` | m_sink (per reaction; one-sided) | derived (contract `m_sink` from the three keys below; structure registered at PH-W3.8, value unbound) | screen_ph K1 exclusion for an electrolyte below LiClO4 saturation |
+| `params.liclo4_solubility_pc` | c_salt_sat | literature (LiClO4 solubility in propylene carbonate, with DOI and locator; W1, PH-W1.9; unresolved here) | m_sink |
+| `params.liclo4_activity_coefficient_pc` | gamma_pm, gamma_pm_sat | literature (cited activity-coefficient treatment of LiClO4 in propylene carbonate, evaluated at c_salt and at c_salt_sat; W1, PH-W1.9; unresolved here) | m_sink |
+| `regimes.R-cell.parameters.c_liclo4` | c_salt | registration (design axis; primary one mole per cubic decimetre) | m_sink |
 | `params.hydrolysis_f_min` | f_min | registration (set with the K1 rows; PH-W3.2) | screen_ph K2h |
 | `params.log10_ksp_aragonite_25c_i0` | K_sp (aragonite; the older `log10_ksp_aragonite` is superseded, not read) | literature (W1) | screen_ph.w36 carbonate K2, label rule |
 | `params.log10_ksp_acc` | K_sp (ACC) | literature | screen_ph.w36 carbonate K2 (reported, not required) |
@@ -864,7 +868,7 @@ revised_w37: {session: PH-W3.7, rule: 'cp5 closure rulings Q1 and Q5: aragonite 
               authority: theory/claims_redirect.md Sections 11a and 11g, no_value_computed: true, screen_output_consulted: false}
 revised_w38: {session: PH-W3.8, rule: 'planning-chat rulings after the draft review: (1) regime vocabulary amended by D78 (open; prose "not thermodynamically excluded"); (2) the solid-salt reference state and the dilute-electrolyte margin m_sink (structure only, value unbound); (3) the same-composition reading of I17 (amendment proposed, not registered); (6) the comparator window',
               authority: theory/claims_redirect.md Sections 2h, 9h and 11d to 11h, no_value_computed: true, screen_output_consulted: 'the PH-W3.3 review figures only (crossovers of the ladder and K2 pass counts, read, not recomputed)'}
-contract_version: 6
+contract_version: 7
 decision:
   statistic: band_mass
   credible_level: {symbol: p_cred, params: thresholds.decision.credible_level}
@@ -1354,6 +1358,33 @@ screen_ph:
     K4: {m_S: 'unchanged (thresholds.C4.margin_S_spread, zero: the priors carry the method error)'}
   # END generated margins_v6
   proceed_rule: 'K3 and K4 run unless the K1 verdict is falsified at every registered cutoff class (cp4 F1)'
+  sink_v10:
+    authority: theory/claims_redirect.md Section 2h (PH-W3.8, ruling 2)
+    status: 'structure registered; value unbound (the keys are unresolved here; W1 supplies them at PH-W1.9, W5 evaluates)'
+    reference_state: 'E_ub (solid LiClO4 consumed, solid product) is the onset for a LiClO4-saturated sink'
+    m_sink:
+      function: m_sink
+      expression: '2 nu_salt (R T / F) ln(a_pm_sat / a_pm)  (= nu_salt (R T / F) ln(a_salt,sat / a_salt), a_salt = a_pm^2)'
+      per: [phase, framing, reaction]
+      nu_salt: 'LiClO4 consumed per transferred electron by the registered solid-salt reaction (one for the exchange route; zero if no salt is consumed)'
+      inputs: {c_salt: regimes.R-cell.parameters.c_liclo4, c_salt_sat: params.liclo4_solubility_pc, gamma_pm: params.liclo4_activity_coefficient_pc, gamma_pm_sat: params.liclo4_activity_coefficient_pc}
+      design_axis: {c_salt: {primary: 1, unit: mol dm^-3, role: design axis, reported_as: 'm_sink(c_salt) curve, never a single number off the primary'}}
+      scale: 'molar, a_pm = gamma_pm c / c_std; a molal source converted by the rule of claims_redirect Section 11g'
+      rigorous_bound: 'upper end of c_salt_sat and gamma_pm_sat, lower end of gamma_pm (the evaluation that makes m_sink largest)'
+      sign_analysis:
+        reactant_salt_below_saturation: 'raises the onset by m_sink >= 0 (a_pm <= a_pm_sat for any electrolyte not supersaturated, since the activity rises with concentration)'
+        product_salt_below_saturation: 'lowers the onset (contract E_ub_prod_unsat <= E_ub); the solid (saturated) product is the worst case for an exclusion, so no product term enters'
+        one_sided: 'raises the upper bound only; not inside the symmetric m_1; never enters the pass side (E_lb)'
+      dependence: {c_salt: 'decreasing; zero at c_salt = c_salt_sat', c_salt_sat: increasing, nu_salt: increasing, gamma_ratio: 'ln(gamma_pm_sat / gamma_pm) enters with either sign; the total stays >= 0'}
+      combine: {rule: linear sum, falsify_edge: E_c - m_expt - m_sink, crossover: E_x- = E_ub + m_expt + m_sink}
+      test: screen_ph.links.K1.tests.K1_falsify_dilute
+      unit_tests: contract m_sink, field unit_tests (W4)
+    verdict_change: 'a class verdict or crossover that changes when m_sink is bound is verdict-bearing: it needs a dated entry with a Re-audit line in ops/tracks/p0_deviations.md, written by the integrator, before the regenerated verdict is used'
+    prose_until_bound: 'every tier-1 exclusion reads "for a LiClO4-saturated sink (solid-salt reference state)"'
+    edge_rule:
+      tolerance: {value: 50, unit: mV}
+      rule: 'where a row''s crossover E_x- lies within the tolerance of a class edge, the prose states the robust threshold (the lowest registered class edge that clears the crossover by at least the tolerance: "excluded at [edge] and above") and names the edge sensitivity (the crossover and its distance to the near edge, by macro)'
+      source: crossovers from the hash-pinned ladder by macro; never typed
   w36:
     carbonate_k2:
       framings: [calcite, aragonite, ACC]
@@ -1373,7 +1404,7 @@ screen_ph:
       reserved: {feasible: 'verdict row 1 (no v1 cell)', kinetically_stabilised: 'verdict row 4, class A or B named, with thermodynamically excluded at tier 1 beside (no v1 cell)'}
       prose_open: {phrase: not thermodynamically excluded, means: open, defined: once at first use, bare_not_excluded: never written, implies_feasibility: never, authority: D78}
       k2_words: {neither_pass_nor_falsified: inconclusive, control_fails: inconclusive (control fails), open: never a K2 word}
-      excluded_footnote: 'excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)'
+      excluded_footnote: 'excluded (thermodynamic, tier 1: solid-salt upper bound plus margin, for a LiClO4-saturated sink)'
       kinetic_note: 'kinetic stabilisation is not ruled out for phosphates (tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones); never "fails at high voltage" without "thermodynamically"'
       acid_adjusted_row: {state: params.ph_slurry_acid_adjusted (range from the key), carbonate: 'excluded against dissolution where calcite is undersaturated', ca_phosphates: 'tested on K2 in the same state; failures stated in the cell', source: generated from K2 outputs}
       authority: claims_redirect Section 11d
@@ -1407,6 +1438,16 @@ screen_ph:
           tier2: 'claims_redirect Section 2c rows 2 to 5 (falsified only if the available tier 2 is also below)'
           params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.K1.margin_expt}
           where_expt_missing: {edge: E_c - m_E, label: DFT-decided, params: {m_E: thresholds.K1.margin_dft}}
+          reference_state: 'LiClO4-saturated sink (solid-salt reference state); every exclusion by this test alone is stated for that sink'
+        - id: K1_falsify_dilute
+          quantity: E_ub
+          comparator: '<'
+          edge: E_c - m_expt - m_sink
+          role: 'exclusion for an electrolyte at the registered LiClO4 concentration (below saturation); m_sink is an added, one-sided margin (PH-W3.8 ruling 2)'
+          tier2: as K1_falsify
+          params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.K1.margin_expt, m_sink: thresholds.K1.margin_sink}
+          where_expt_missing: {edge: E_c - m_E - m_sink, label: DFT-decided, params: {m_E: thresholds.K1.margin_dft, m_sink: thresholds.K1.margin_sink}}
+          missing_m_sink: 'undetermined for the dilute electrolyte; the K1_falsify exclusion is stated for the saturated sink only, never upgraded'
         - id: K1_tier2_pass
           quantity: E_svc
           comparator: '>='
@@ -1642,3 +1683,32 @@ re-derives the entry and fails on any difference. Nothing in it is typed. The ru
 A class verdict uses the per-class rule of Section 6 with these margins. "Tier 1 alone" verdicts (no tier 2 record
 consulted) are listed in the entry as `tier1_crossovers`; a tier 2 record above the cutoff moves such a row to row 4 or
 5 of claims_redirect.md Section 2c.
+
+## 8. The sink reference state and the margin m_sink (PH-W3.8, block version 10)
+
+Ruling 2 of the planning chat after the draft review (report P0-W3.PH-W3.3, finding B3). Structure and text only: no
+value is bound here, and the entry `screen_ph.sink_v10` of the block names the keys that will bind it. The derivation and
+the sign analysis are in `claims_redirect.md` Section 2h; the functions are `m_sink`, `E_ub_sink` and `E_ub_prod_unsat`
+of contract version 7.
+
+- **Reference state.** E_ub consumes solid LiClO4 and forms the solid product perchlorate, so it is the onset for a
+  LiClO4-saturated sink (the solid-salt reference state). Every exclusion made by `K1_falsify` alone is stated for that
+  sink.
+- **m_sink.** In an electrolyte below saturation the consumed salt is less energetic than the solid, and the onset of the
+  same route rises by m_sink = 2 nu_salt (R T / F) ln(a_pm,sat / a_pm) >= 0, (2 ln 10) R T / F per decade of the mean
+  ionic activity per LiClO4 consumed per electron. It is an added, one-sided margin: the exclusion for the registered
+  electrolyte is `K1_falsify_dilute`, E_ub < E_c - m_1 - m_sink, and the crossover becomes E_ub + m_1 + m_sink. The pass
+  side (E_lb) is unchanged.
+- **Product side.** A product perchlorate below saturation lowers the onset, so the solid product is already the worst
+  case for an exclusion and no product term is added.
+- **Binding.** m_sink is evaluated at the registered LiClO4 concentration (`regimes.R-cell.parameters.c_liclo4`, a design
+  axis with primary one mole per cubic decimetre) with the sourced solubility in propylene carbonate
+  (`params.liclo4_solubility_pc`) and the cited activity-coefficient treatment (`params.liclo4_activity_coefficient_pc`),
+  taking the end of each interval that makes m_sink largest. The keys are unresolved here (W1, PH-W1.9). A missing key
+  leaves the dilute-electrolyte exclusion undetermined; it never sets m_sink to zero.
+- **Verdict-bearing.** A class verdict or crossover that moves when m_sink is bound needs a dated deviation entry with a
+  `Re-audit:` line, written by the integrator, before it is used.
+- **Prose.** Until m_sink is bound, every tier-1 exclusion reads "for a LiClO4-saturated sink (solid-salt reference
+  state)". Where a crossover lies within the registered edge tolerance (`screen_ph.sink_v10.edge_rule`) of a class edge,
+  the prose states the robust threshold, the lowest registered class edge that clears the crossover by at least the
+  tolerance ("excluded at [edge] and above"), and names the edge sensitivity.

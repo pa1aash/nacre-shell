@@ -67,7 +67,8 @@ benchmark on tabulated formation data passes (W5): until then they are labelled 
 falsify. Every number in the per-reaction table carries one of `expt`, `dft-benchmarked`, `dft-unbenchmarked`.
 
 **Solvated sink and the bracket (cp4 F2).** Tier 1 is a bracket [E_lb, E_ub] per reaction (Section 2f): E_ub is the
-onset with the solid-salt (LiClO4) sink, an upper bound on the onset (a falsification on it stands); E_lb is the onset
+onset with the solid-salt (LiClO4) sink, an upper bound on the onset for a LiClO4-saturated sink (Section 2h; a
+falsification on it stands for that sink); E_lb is the onset
 with the most favourable sink, every ion aqueous from tabulated standard data, a lower bound under the transfer premise
 of Section 2f. A pass needs E_lb; a falsification needs E_ub. One scheme per row.
 
@@ -188,7 +189,8 @@ So E_lb is a lower bound on the onset in the carbonate solvent iff the **transfe
     Delta_G_tr_rel = DG_tr(M, w->S) - z DG_tr(Li+, w->S) >= 0     for every ionic product M (and for H+ in r3).
 
 The solid-salt sink is one of the product states the oxidation can reach, so the thermodynamic onset with every sink
-available is min(E_S, E_ub) <= E_ub: E_ub is an upper bound whatever the solvent.
+available is min(E_S, E_ub) <= E_ub: E_ub is an upper bound whatever the solvent, for a LiClO4-saturated sink (the
+consumed salt at the activity of the solid; Section 2h gives the bound below saturation).
 
 **Vetting.**
 
@@ -271,6 +273,65 @@ phase, and the Al-salt pairs where a precursor is registered). Fields:
 orthophosphate (slurry-stage) phase as one film. A film is reported across stages only as the chain slurry row,
 conversion row, cell row with the same `film_id`, and the chain is only as strong as its weakest member: a chain with an
 `undetermined` or `requires a higher temperature` conversion row is labelled so in its summary line.
+
+### 2h. The sink reference state of E_ub and the dilute-electrolyte margin m_sink (PH-W3.8, ruling 2)
+
+**Finding (P0-W3.PH-W3.3, B3).** The registered solid-salt reaction of Section 2f takes Li+ and the anion from solid
+LiClO4. In the cell they come from the electrolyte. The bound E_ub is therefore the onset for a **LiClO4-saturated sink
+(solid-salt reference state)**, and this section registers the correction for an electrolyte below saturation.
+
+**Derivation.** Write the solid-salt route with the salt taken from solution, nu_salt formula units of LiClO4 consumed
+per transferred electron (nu_salt = 1 for the exchange route, z salt units per z electrons):
+
+    P(s) + z [Li+ + ClO4-](S) -> M(ClO4)z(s) + (neutral products) + z Li(s)
+
+Its free energy differs from Delta_G_r_ss by z [mu_LiClO4(s) - mu_LiClO4(S)]. With the salt activity a_salt = a_pm^2 of
+the 1:1 salt (a_pm the stoichiometric mean ionic activity, ion pairing inside its coefficient), mu_LiClO4(S) =
+mu_LiClO4(s) + R T ln(a_salt / a_salt,sat), because the solution saturated with the solid has the solid's chemical
+potential. So the onset of the route in the cell is E_ub + m_sink with
+
+    m_sink = nu_salt (R T / F) ln(a_salt,sat / a_salt) = 2 nu_salt (R T / F) ln(a_pm,sat / a_pm)          (contract m_sink)
+
+that is (2 ln 10) R T / F per decade of the mean ionic activity per LiClO4 consumed per electron. In concentrations,
+a_pm = gamma_pm c_salt / c_std, so m_sink = 2 nu_salt (R T / F) [ln(c_salt,sat / c_salt) + ln(gamma_pm,sat / gamma_pm)].
+
+**Sign analysis.**
+
+1. *Reactant salt below saturation raises the onset.* For an electrolyte that is not supersaturated, a_pm <= a_pm,sat,
+   because the activity of a stable solution rises with its concentration; so m_sink >= 0, with equality only at
+   saturation. The term is one-sided: it raises the upper bound and is not covered by the symmetric margin m_1. The
+   activity-coefficient ratio can enter with either sign; the total stays non-negative.
+2. *Product salt below saturation lowers the onset.* If M(ClO4)z dissolves at a saturation ratio x_p < 1 instead of
+   precipitating, the onset falls by nu_p (R T / F) ln(1 / x_p), nu_p the product salt units per electron (contract E_ub_prod_unsat <= E_ub). The solid
+   product is the saturated-product case, the highest onset among the product states, so it is the worst case for an
+   exclusion and no product term enters the bound.
+3. *No salt consumed, no term.* A registered reaction that consumes no LiClO4 has nu_salt = 0 and m_sink = 0.
+4. *The pass side is untouched.* E_lb takes every ion aqueous and does not use the solid salt; m_sink never enters a pass.
+
+**Rule.** The rigorous upper bound for an electrolyte at the registered concentration is E_ub_sink = E_ub + m_sink. The
+exclusion for that electrolyte is E_ub < E_c - m_1 - m_sink (test `K1_falsify_dilute` of the thresholds block, version
+10), and the falsifying crossover of Section 2e becomes E_x- = E_ub + m_1 + m_sink. The registered state is a design
+axis: LiClO4 at c_salt (`regimes.R-cell.parameters.c_liclo4`, primary one mole per cubic decimetre) in propylene
+carbonate, the registered proxy of the cell solvent class. The inputs are bound by key name and are unresolved here:
+
+| Input | Key | Supplied by |
+|---|---|---|
+| c_salt,sat, LiClO4 solubility in propylene carbonate (with DOI and locator) | `liclo4_solubility_pc` | W1, PH-W1.9 |
+| gamma_pm at c_salt and gamma_pm,sat at c_salt,sat, from a cited activity-coefficient treatment of LiClO4 in propylene carbonate | `liclo4_activity_coefficient_pc` | W1, PH-W1.9 |
+| c_salt | `regimes.R-cell.parameters.c_liclo4` | registration (design axis) |
+
+The bound takes the end of each input interval that makes m_sink largest (upper c_salt,sat and gamma_pm,sat, lower
+gamma_pm). A solubility on the molal scale is converted by the rule of Section 11g. A missing key leaves the
+dilute-electrolyte exclusion undetermined; it never sets m_sink to zero.
+
+**Status and consequences.** The structure is registered; the value is unbound. A class verdict or crossover that moves
+when m_sink is bound is verdict-bearing and needs a dated entry with a `Re-audit:` line in `ops/tracks/p0_deviations.md`,
+written by the integrator, before the regenerated verdict is used. Until the value is bound:
+
+- every tier-1 exclusion of the paper reads "for a LiClO4-saturated sink (solid-salt reference state)";
+- where a row's crossover lies within the registered edge tolerance of a class edge (`screen_ph.sink_v10.edge_rule`, 50
+  mV), the prose states the robust threshold, the lowest registered class edge that clears the crossover by at least
+  the tolerance ("excluded at [edge] and above"), and names the edge sensitivity, with the crossover by macro.
 
 ## 3. K2, K3, K4
 
@@ -987,7 +1048,7 @@ PH-W3.8 by D78; the amendment is recorded below the table):
 
 | Term | Meaning | Source of the entry |
 |---|---|---|
-| excluded | falsified (D68) at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed. Footnote, verbatim: "excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)" | K1 verdict table, Section 2c |
+| excluded | falsified (D68) at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed. Footnote, verbatim (amended PH-W3.8, ruling 2): "excluded (thermodynamic, tier 1: solid-salt upper bound plus margin, for a LiClO4-saturated sink)" | K1 verdict table, Section 2c |
 | open | not falsified, no lower bound: the test is inconclusive on both sides, or the bracket contains the cutoff. Never a pass, and never evidence of feasibility | verdict row 6 of Section 2c, and every row whose tier 1 is solid-salt-only and not below (E_lb pending) |
 | suitable against dissolution | K2 passes at every state of the registered grid; always inside the row text of Section 11a ("a necessary condition, in [region]"), the full label of Section 11b | K2 test of Section 11a |
 | undetermined | data missing: a gap key, an unbenchmarked number or an unregistered sink (`undetermined (data missing)`) | verdict row 7 of Section 2c |
