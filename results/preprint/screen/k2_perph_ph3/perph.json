@@ -1,0 +1,6593 @@
+{
+ "definition": "a cell passes when its K2 verdict is feasible (worst over the registered states, after the control gate); 'wet' basis: the wet slurry state alone, honouring the control gate; doses in mol dm^-3; sources: 'crossed' = the PH-W4.5 rerun on the crossed decade grid (Ca:P = 10^k only), 'ratio_<r>' = the PH-W4.6 grid with P_T = Ca_T / r; the control cell of the ratio grid is the maximum-Omega cell over all three ratios of that grid state",
+ "differences": [
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 1e-05,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 5.98802e-06,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 1e-05,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 5.98802e-06,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 1e-05,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 5.98802e-06,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 1e-05,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 6.66667e-06,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 1e-05,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 6.66667e-06,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 1e-05,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 6.66667e-06,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 1e-05,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 1e-05,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 1e-05,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 1e-05,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 1e-05,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 1e-05,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.000666667,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.01,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.01,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.01,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 5.98802e-05,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 5.98802e-05,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 5.98802e-05,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 6.66667e-05,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 6.66667e-05,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 6.66667e-05,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.0001,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.0001,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.0001,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.000598802,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.000598802,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.000666667,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.000666667,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.001,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.001,
+   "pH": 12.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.01,
+   "pH": 13.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.1,
+   "min_P_T_ratio": 0.0598802,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": null,
+   "min_Ca_T_ratio": null,
+   "min_P_T_crossed": null,
+   "min_P_T_ratio": null,
+   "pH": 12.0,
+   "passes_on_crossed": false,
+   "passes_on_ratio": false,
+   "phase": "brushite",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": null,
+   "min_Ca_T_ratio": null,
+   "min_P_T_crossed": null,
+   "min_P_T_ratio": null,
+   "pH": 13.0,
+   "passes_on_crossed": false,
+   "passes_on_ratio": false,
+   "phase": "brushite",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.1,
+   "min_P_T_ratio": 0.0666667,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": null,
+   "min_Ca_T_ratio": null,
+   "min_P_T_crossed": null,
+   "min_P_T_ratio": null,
+   "pH": 12.0,
+   "passes_on_crossed": false,
+   "passes_on_ratio": false,
+   "phase": "brushite",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": null,
+   "min_Ca_T_ratio": null,
+   "min_P_T_crossed": null,
+   "min_P_T_ratio": null,
+   "pH": 13.0,
+   "passes_on_crossed": false,
+   "passes_on_ratio": false,
+   "phase": "brushite",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.1,
+   "min_P_T_ratio": 0.1,
+   "pH": 10.0,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": null,
+   "min_Ca_T_ratio": null,
+   "min_P_T_crossed": null,
+   "min_P_T_ratio": null,
+   "pH": 12.0,
+   "passes_on_crossed": false,
+   "passes_on_ratio": false,
+   "phase": "brushite",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "alkaline",
+   "min_Ca_T_crossed": null,
+   "min_Ca_T_ratio": null,
+   "min_P_T_crossed": null,
+   "min_P_T_ratio": null,
+   "pH": 13.0,
+   "passes_on_crossed": false,
+   "passes_on_ratio": false,
+   "phase": "brushite",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.0598802,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.000598802,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.000598802,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 5.98802e-05,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.0666667,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.000666667,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.000666667,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 6.66667e-05,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.1,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.01,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.001,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.001,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 1e-05,
+   "min_Ca_T_ratio": 0.0001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.0001,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "HAp",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": null,
+   "min_Ca_T_ratio": null,
+   "min_P_T_crossed": null,
+   "min_P_T_ratio": null,
+   "pH": 4.5,
+   "passes_on_crossed": false,
+   "passes_on_ratio": false,
+   "phase": "ACP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.1,
+   "min_P_T_ratio": 0.0598802,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.0598802,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": null,
+   "min_Ca_T_ratio": null,
+   "min_P_T_crossed": null,
+   "min_P_T_ratio": null,
+   "pH": 4.5,
+   "passes_on_crossed": false,
+   "passes_on_ratio": false,
+   "phase": "ACP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.1,
+   "min_P_T_ratio": 0.0666667,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.0666667,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": null,
+   "min_Ca_T_ratio": null,
+   "min_P_T_crossed": null,
+   "min_P_T_ratio": null,
+   "pH": 4.5,
+   "passes_on_crossed": false,
+   "passes_on_ratio": false,
+   "phase": "ACP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.1,
+   "min_P_T_ratio": 0.1,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.1,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.01,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.01,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "ACP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.1,
+   "min_P_T_ratio": 0.0598802,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 1e-05,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.000598802,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.000598802,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.1,
+   "min_P_T_ratio": 0.0666667,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 1e-05,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.000666667,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.000666667,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.1,
+   "min_P_T_ratio": 0.1,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.01,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 1e-05,
+   "min_P_T_ratio": 0.01,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.001,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-06,
+   "min_P_T_ratio": 0.001,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "b-TCP",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.0598802,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-05,
+   "min_P_T_ratio": 0.000598802,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-05,
+   "min_P_T_ratio": 0.000598802,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.0666667,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-05,
+   "min_P_T_ratio": 0.000666667,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-05,
+   "min_P_T_ratio": 0.000666667,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.1,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.1,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.01,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.0001,
+   "min_P_T_ratio": 0.01,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-05,
+   "min_P_T_ratio": 0.001,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.0001,
+   "min_Ca_T_ratio": 0.001,
+   "min_P_T_crossed": 1e-05,
+   "min_P_T_ratio": 0.001,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "OCP (Ca4H key)",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.0598802,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.67"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.00598802,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.67"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.0666667,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.5"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.00666667,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1.5"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.1,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.1,
+   "pH": 4.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.01,
+   "pH": 5.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.01,
+   "pH": 6.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1"
+  },
+  {
+   "differs": true,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.001,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.001,
+   "min_P_T_ratio": 0.01,
+   "pH": 7.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1"
+  },
+  {
+   "differs": false,
+   "grid": "acid",
+   "min_Ca_T_crossed": 0.01,
+   "min_Ca_T_ratio": 0.01,
+   "min_P_T_crossed": 0.01,
+   "min_P_T_ratio": 0.01,
+   "pH": 8.5,
+   "passes_on_crossed": true,
+   "passes_on_ratio": true,
+   "phase": "brushite",
+   "ratio": "1"
+  }
+ ],
+ "headline": {
+  "acid": {
+   "acp": {
+    "crossed_cells": 540,
+    "crossed_controls_pass": true,
+    "crossed_passing": 49,
+    "crossed_verdict": "feasible",
+    "display": "ACP",
+    "ratio_cells_each": 90,
+    "ratio_control_cell": "Ca_T=0.1 mol dm^-3; P_T=0.0666667 mol dm^-3; CaP=1.5; pH=8.5 1; I=I@min",
+    "ratio_controls_pass": true,
+    "ratio_passing": {
+     "1": 17,
+     "1.5": 17,
+     "1.67": 17
+    },
+    "ratio_verdict": "feasible"
+   },
+   "brushite": {
+    "crossed_cells": 540,
+    "crossed_controls_pass": true,
+    "crossed_passing": 85,
+    "crossed_verdict": "feasible",
+    "display": "brushite",
+    "ratio_cells_each": 90,
+    "ratio_control_cell": "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; CaP=1; pH=7.5 1; I=I@min",
+    "ratio_controls_pass": true,
+    "ratio_passing": {
+     "1": 27,
+     "1.5": 26,
+     "1.67": 26
+    },
+    "ratio_verdict": "feasible"
+   },
+   "btcp": {
+    "crossed_cells": 540,
+    "crossed_controls_pass": true,
+    "crossed_passing": 145,
+    "crossed_verdict": "feasible",
+    "display": "b-TCP",
+    "ratio_cells_each": 90,
+    "ratio_control_cell": "Ca_T=0.1 mol dm^-3; P_T=0.0666667 mol dm^-3; CaP=1.5; pH=8.5 1; I=I@min",
+    "ratio_controls_pass": true,
+    "ratio_passing": {
+     "1": 32,
+     "1.5": 32,
+     "1.67": 31
+    },
+    "ratio_verdict": "feasible"
+   },
+   "hap": {
+    "crossed_cells": 540,
+    "crossed_controls_pass": true,
+    "crossed_passing": 193,
+    "crossed_verdict": "feasible",
+    "display": "HAp",
+    "ratio_cells_each": 90,
+    "ratio_control_cell": "Ca_T=0.1 mol dm^-3; P_T=0.0666667 mol dm^-3; CaP=1.5; pH=8.5 1; I=I@min",
+    "ratio_controls_pass": true,
+    "ratio_passing": {
+     "1": 38,
+     "1.5": 38,
+     "1.67": 38
+    },
+    "ratio_verdict": "feasible"
+   },
+   "ocp_ca4h": {
+    "crossed_cells": 540,
+    "crossed_controls_pass": true,
+    "crossed_passing": 131,
+    "crossed_verdict": "feasible",
+    "display": "OCP (Ca4H key)",
+    "ratio_cells_each": 90,
+    "ratio_control_cell": "Ca_T=0.1 mol dm^-3; P_T=0.0666667 mol dm^-3; CaP=1.5; pH=8.5 1; I=I@min",
+    "ratio_controls_pass": true,
+    "ratio_passing": {
+     "1": 33,
+     "1.5": 32,
+     "1.67": 32
+    },
+    "ratio_verdict": "feasible"
+   }
+  },
+  "alkaline": {
+   "acp": {
+    "crossed_cells": 648,
+    "crossed_controls_pass": true,
+    "crossed_passing": 57,
+    "crossed_verdict": "feasible",
+    "display": "ACP",
+    "ratio_cells_each": 108,
+    "ratio_control_cell": "Ca_T=0.1 mol dm^-3; P_T=0.0666667 mol dm^-3; CaP=1.5; pH=pH@min; I=I@min; a_w=wet_film",
+    "ratio_controls_pass": true,
+    "ratio_passing": {
+     "1": 18,
+     "1.5": 19,
+     "1.67": 18
+    },
+    "ratio_verdict": "feasible"
+   },
+   "brushite": {
+    "crossed_cells": 648,
+    "crossed_controls_pass": true,
+    "crossed_passing": 3,
+    "crossed_verdict": "feasible",
+    "display": "brushite",
+    "ratio_cells_each": 108,
+    "ratio_control_cell": "Ca_T=0.1 mol dm^-3; P_T=0.1 mol dm^-3; CaP=1; pH=pH@min; I=I@min; a_w=wet_film",
+    "ratio_controls_pass": true,
+    "ratio_passing": {
+     "1": 3,
+     "1.5": 3,
+     "1.67": 3
+    },
+    "ratio_verdict": "feasible"
+   },
+   "btcp": {
+    "crossed_cells": 648,
+    "crossed_controls_pass": true,
+    "crossed_passing": 300,
+    "crossed_verdict": "feasible",
+    "display": "b-TCP",
+    "ratio_cells_each": 108,
+    "ratio_control_cell": "Ca_T=0.1 mol dm^-3; P_T=0.0666667 mol dm^-3; CaP=1.5; pH=pH@min; I=I@min; a_w=wet_film",
+    "ratio_controls_pass": true,
+    "ratio_passing": {
+     "1": 72,
+     "1.5": 72,
+     "1.67": 72
+    },
+    "ratio_verdict": "feasible"
+   },
+   "hap": {
+    "crossed_cells": 648,
+    "crossed_controls_pass": true,
+    "crossed_passing": 415,
+    "crossed_verdict": "feasible",
+    "display": "HAp",
+    "ratio_cells_each": 108,
+    "ratio_control_cell": "Ca_T=0.1 mol dm^-3; P_T=0.0598802 mol dm^-3; CaP=1.67; pH=pH@max; I=I@min; a_w=wet_film",
+    "ratio_controls_pass": true,
+    "ratio_passing": {
+     "1": 80,
+     "1.5": 79,
+     "1.67": 79
+    },
+    "ratio_verdict": "feasible"
+   },
+   "ocp_ca4h": {
+    "crossed_cells": 648,
+    "crossed_controls_pass": true,
+    "crossed_passing": 74,
+    "crossed_verdict": "feasible",
+    "display": "OCP (Ca4H key)",
+    "ratio_cells_each": 108,
+    "ratio_control_cell": "Ca_T=0.1 mol dm^-3; P_T=0.0666667 mol dm^-3; CaP=1.5; pH=pH@min; I=I@min; a_w=wet_film",
+    "ratio_controls_pass": true,
+    "ratio_passing": {
+     "1": 23,
+     "1.5": 24,
+     "1.67": 24
+    },
+    "ratio_verdict": "feasible"
+   }
+  }
+ },
+ "own_ratio": {
+  "brushite": "1",
+  "btcp": "1.5",
+  "hap": "1.67"
+ },
+ "session": "PH-W4.6",
+ "sources": {
+  "crossed": [
+   "k2_alkaline_ph2",
+   "k2_acid_ph2"
+  ],
+  "ratio": [
+   "k2_alkaline_ph3",
+   "k2_acid_ph3"
+  ]
+ },
+ "tables": {
+  "acid": {
+   "crossed": {
+    "acp": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 108,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.0
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 108,
+       "n_passing": 2,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.018518518518518517
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        10.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 108,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.08333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 17,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.1574074074074074
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 108,
+       "n_passing": 21,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.19444444444444445
+      }
+     },
+     "controls_pass": true,
+     "display": "ACP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_acp",
+     "n_cells": 540,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 108,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.0
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 108,
+       "n_passing": 2,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.018518518518518517
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        10.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 108,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.08333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 17,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.1574074074074074
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 108,
+       "n_passing": 21,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.19444444444444445
+      }
+     }
+    },
+    "brushite": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        10.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 108,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.08333333333333333
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 18,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 22,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.2037037037037037
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.2222222222222222
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        10.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 108,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.1111111111111111
+      }
+     },
+     "controls_pass": true,
+     "display": "brushite",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_brushite",
+     "n_cells": 540,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        10.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 108,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.08333333333333333
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 18,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 22,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.2037037037037037
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.2222222222222222
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        10.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 108,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.1111111111111111
+      }
+     }
+    },
+    "btcp": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 108,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.027777777777777776
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 14,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.12962962962962962
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        10000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 108,
+       "n_passing": 31,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.28703703703703703
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 108,
+       "n_passing": 46,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.42592592592592593
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 108,
+       "n_passing": 51,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.4722222222222222
+      }
+     },
+     "controls_pass": true,
+     "display": "b-TCP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_btcp",
+     "n_cells": 540,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 108,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.027777777777777776
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 14,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.12962962962962962
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        10000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 108,
+       "n_passing": 31,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.28703703703703703
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 108,
+       "n_passing": 46,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.42592592592592593
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 108,
+       "n_passing": 51,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.4722222222222222
+      }
+     }
+    },
+    "hap": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        10.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.01,
+       "n_cells": 108,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.046296296296296294
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 108,
+       "n_passing": 18,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 108,
+       "n_passing": 42,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3888888888888889
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 108,
+       "n_passing": 59,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5462962962962963
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 108,
+       "n_passing": 69,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.6388888888888888
+      }
+     },
+     "controls_pass": true,
+     "display": "HAp",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_hap",
+     "n_cells": 540,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        10.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.01,
+       "n_cells": 108,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.046296296296296294
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 108,
+       "n_passing": 18,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 108,
+       "n_passing": 42,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3888888888888889
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 108,
+       "n_passing": 59,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5462962962962963
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 108,
+       "n_passing": 69,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.6388888888888888
+      }
+     }
+    },
+    "ocp_ca4h": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        10.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.01,
+       "n_cells": 108,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.046296296296296294
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 15,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.1388888888888889
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 108,
+       "n_passing": 28,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.25925925925925924
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        10000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 108,
+       "n_passing": 41,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.37962962962962965
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        10000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 108,
+       "n_passing": 42,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3888888888888889
+      }
+     },
+     "controls_pass": true,
+     "display": "OCP (Ca4H key)",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_ocp_ca4h_basis",
+     "n_cells": 540,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        10.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.01,
+       "n_cells": 108,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.046296296296296294
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.001,
+       "n_cells": 108,
+       "n_passing": 15,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.1388888888888889
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 108,
+       "n_passing": 28,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.25925925925925924
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        10000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 108,
+       "n_passing": 41,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.37962962962962965
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        10000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 108,
+       "n_passing": 42,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3888888888888889
+      }
+     }
+    }
+   },
+   "ratio_1": {
+    "acp": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 18,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.0
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 2,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.1111111111111111
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     },
+     "controls_pass": true,
+     "display": "ACP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_acp",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 18,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.0
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 2,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.1111111111111111
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    },
+    "brushite": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     },
+     "controls_pass": true,
+     "display": "brushite",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_brushite",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    },
+    "btcp": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     },
+     "controls_pass": true,
+     "display": "b-TCP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_btcp",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     }
+    },
+    "hap": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 8,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.4444444444444444
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 18,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.6666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "HAp",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_hap",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 8,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.4444444444444444
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 18,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.6666666666666666
+      }
+     }
+    },
+    "ocp_ca4h": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     },
+     "controls_pass": true,
+     "display": "OCP (Ca4H key)",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_ocp_ca4h_basis",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     }
+    }
+   },
+   "ratio_1.5": {
+    "acp": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 18,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.0
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 2,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.1111111111111111
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     },
+     "controls_pass": true,
+     "display": "ACP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_acp",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 18,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.0
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 2,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.1111111111111111
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    },
+    "brushite": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     },
+     "controls_pass": true,
+     "display": "brushite",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_brushite",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    },
+    "btcp": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     },
+     "controls_pass": true,
+     "display": "b-TCP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_btcp",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     }
+    },
+    "hap": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 8,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.4444444444444444
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 6.66667e-05,
+       "n_cells": 18,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.6666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "HAp",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_hap",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 8,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.4444444444444444
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 6.66667e-05,
+       "n_cells": 18,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.6666666666666666
+      }
+     }
+    },
+    "ocp_ca4h": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     },
+     "controls_pass": true,
+     "display": "OCP (Ca4H key)",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_ocp_ca4h_basis",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     }
+    }
+   },
+   "ratio_1.67": {
+    "acp": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 18,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.0
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 2,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.1111111111111111
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     },
+     "controls_pass": true,
+     "display": "ACP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_acp",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 18,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.0
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 2,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.1111111111111111
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    },
+    "brushite": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     },
+     "controls_pass": true,
+     "display": "brushite",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_brushite",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    },
+    "btcp": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 4,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2222222222222222
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     },
+     "controls_pass": true,
+     "display": "b-TCP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_btcp",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 4,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2222222222222222
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     }
+    },
+    "hap": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 8,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.4444444444444444
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 5.98802e-05,
+       "n_cells": 18,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.6666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "HAp",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_hap",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 8,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.4444444444444444
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 5.98802e-05,
+       "n_cells": 18,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.6666666666666666
+      }
+     }
+    },
+    "ocp_ca4h": {
+     "cell": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     },
+     "controls_pass": true,
+     "display": "OCP (Ca4H key)",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_ocp_ca4h_basis",
+     "n_cells": 90,
+     "wet": {
+      "4.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 18,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 4.5,
+       "passing_fraction": 0.16666666666666666
+      },
+      "5.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 5,
+       "n_undetermined": 0,
+       "pH": 5.5,
+       "passing_fraction": 0.2777777777777778
+      },
+      "6.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 18,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 6.5,
+       "passing_fraction": 0.3333333333333333
+      },
+      "7.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 7.5,
+       "passing_fraction": 0.5
+      },
+      "8.5": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 18,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 8.5,
+       "passing_fraction": 0.5
+      }
+     }
+    }
+   }
+  },
+  "alkaline": {
+   "crossed": {
+    "acp": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 216,
+       "n_passing": 21,
+       "n_undetermined": 108,
+       "pH": 10.0,
+       "passing_fraction": 0.09722222222222222
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 216,
+       "n_passing": 18,
+       "n_undetermined": 108,
+       "pH": 12.0,
+       "passing_fraction": 0.08333333333333333
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 216,
+       "n_passing": 18,
+       "n_undetermined": 108,
+       "pH": 13.0,
+       "passing_fraction": 0.08333333333333333
+      }
+     },
+     "controls_pass": true,
+     "display": "ACP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_acp",
+     "n_cells": 648,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 216,
+       "n_passing": 42,
+       "n_undetermined": 108,
+       "pH": 10.0,
+       "passing_fraction": 0.19444444444444445
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 216,
+       "n_passing": 36,
+       "n_undetermined": 108,
+       "pH": 12.0,
+       "passing_fraction": 0.16666666666666666
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 216,
+       "n_passing": 36,
+       "n_undetermined": 108,
+       "pH": 13.0,
+       "passing_fraction": 0.16666666666666666
+      }
+     }
+    },
+    "brushite": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 216,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.013888888888888888
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 216,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.0
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 216,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.0
+      }
+     },
+     "controls_pass": true,
+     "display": "brushite",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_brushite",
+     "n_cells": 648,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 216,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.027777777777777776
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 216,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.0
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 216,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.0
+      }
+     }
+    },
+    "btcp": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 108,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.5
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 96,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.4444444444444444
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 96,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.4444444444444444
+      }
+     },
+     "controls_pass": true,
+     "display": "b-TCP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_btcp",
+     "n_cells": 648,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 108,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.5
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 96,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.4444444444444444
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 96,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.4444444444444444
+      }
+     }
+    },
+    "hap": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 133,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.6157407407407407
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 139,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.6435185185185185
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 143,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.6620370370370371
+      }
+     },
+     "controls_pass": true,
+     "display": "HAp",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_hap",
+     "n_cells": 648,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 160,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.7407407407407407
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 164,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.7592592592592593
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        0.001,
+        100000.00000000001
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-06,
+       "n_cells": 216,
+       "n_passing": 166,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.7685185185185185
+      }
+     }
+    },
+    "ocp_ca4h": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 216,
+       "n_passing": 36,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.16666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 216,
+       "n_passing": 23,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.10648148148148148
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.001,
+       "n_cells": 216,
+       "n_passing": 15,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.06944444444444445
+      }
+     },
+     "controls_pass": true,
+     "display": "OCP (Ca4H key)",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_ocp_ca4h_basis",
+     "n_cells": 648,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        0.01,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 216,
+       "n_passing": 72,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.3333333333333333
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        0.09999999999999999,
+        1000.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 216,
+       "n_passing": 46,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.21296296296296297
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        100.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.001,
+       "n_cells": 216,
+       "n_passing": 30,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.1388888888888889
+      }
+     }
+    }
+   },
+   "ratio_1": {
+    "acp": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 18,
+       "pH": 10.0,
+       "passing_fraction": 0.16666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 18,
+       "pH": 12.0,
+       "passing_fraction": 0.16666666666666666
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 18,
+       "pH": 13.0,
+       "passing_fraction": 0.16666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "ACP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_acp",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 18,
+       "pH": 10.0,
+       "passing_fraction": 0.3333333333333333
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 18,
+       "pH": 12.0,
+       "passing_fraction": 0.3333333333333333
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 18,
+       "pH": 13.0,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    },
+    "brushite": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 36,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.08333333333333333
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.0
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.0
+      }
+     },
+     "controls_pass": true,
+     "display": "brushite",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_brushite",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.1,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.16666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.0
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.0
+      }
+     }
+    },
+    "btcp": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.6666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "b-TCP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_btcp",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 0.0001,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.6666666666666666
+      }
+     }
+    },
+    "hap": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 36,
+       "n_passing": 26,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.7222222222222222
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 36,
+       "n_passing": 27,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.75
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 36,
+       "n_passing": 27,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.75
+      }
+     },
+     "controls_pass": true,
+     "display": "HAp",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_hap",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 36,
+       "n_passing": 28,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.7777777777777778
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 36,
+       "n_passing": 30,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.8333333333333334
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 1e-05,
+       "n_cells": 36,
+       "n_passing": 30,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.8333333333333334
+      }
+     }
+    },
+    "ocp_ca4h": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 36,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.25
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 36,
+       "n_passing": 8,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.2222222222222222
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.16666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "OCP (Ca4H key)",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_ocp_ca4h_basis",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 36,
+       "n_passing": 18,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.5
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.001,
+       "n_cells": 36,
+       "n_passing": 16,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.4444444444444444
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.0,
+        1.0
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": false,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.01,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    }
+   },
+   "ratio_1.5": {
+    "acp": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 36,
+       "n_passing": 7,
+       "n_undetermined": 18,
+       "pH": 10.0,
+       "passing_fraction": 0.19444444444444445
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 18,
+       "pH": 12.0,
+       "passing_fraction": 0.16666666666666666
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 18,
+       "pH": 13.0,
+       "passing_fraction": 0.16666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "ACP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_acp",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 36,
+       "n_passing": 14,
+       "n_undetermined": 18,
+       "pH": 10.0,
+       "passing_fraction": 0.3888888888888889
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 18,
+       "pH": 12.0,
+       "passing_fraction": 0.3333333333333333
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 18,
+       "pH": 13.0,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    },
+    "brushite": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 36,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.08333333333333333
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.0
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.0
+      }
+     },
+     "controls_pass": true,
+     "display": "brushite",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_brushite",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.4999992500003752,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0666667,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.16666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.0
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.0
+      }
+     }
+    },
+    "btcp": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 6.66667e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 6.66667e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 6.66667e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.6666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "b-TCP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_btcp",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 6.66667e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 6.66667e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 6.66667e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.6666666666666666
+      }
+     }
+    },
+    "hap": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 6.66667e-06,
+       "n_cells": 36,
+       "n_passing": 25,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.6944444444444444
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 6.66667e-06,
+       "n_cells": 36,
+       "n_passing": 27,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.75
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 6.66667e-06,
+       "n_cells": 36,
+       "n_passing": 27,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.75
+      }
+     },
+     "controls_pass": true,
+     "display": "HAp",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_hap",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 6.66667e-06,
+       "n_cells": 36,
+       "n_passing": 28,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.7777777777777778
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 6.66667e-06,
+       "n_cells": 36,
+       "n_passing": 30,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.8333333333333334
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 6.66667e-06,
+       "n_cells": 36,
+       "n_passing": 30,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.8333333333333334
+      }
+     }
+    },
+    "ocp_ca4h": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 36,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.25
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 36,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.25
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.16666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "OCP (Ca4H key)",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_ocp_ca4h_basis",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 36,
+       "n_passing": 18,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.5
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000666667,
+       "n_cells": 36,
+       "n_passing": 18,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.5
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.499999250000375,
+        1.4999992500003752
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00666667,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    }
+   },
+   "ratio_1.67": {
+    "acp": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 18,
+       "pH": 10.0,
+       "passing_fraction": 0.16666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 18,
+       "pH": 12.0,
+       "passing_fraction": 0.16666666666666666
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 18,
+       "pH": 13.0,
+       "passing_fraction": 0.16666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "ACP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_acp",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 18,
+       "pH": 10.0,
+       "passing_fraction": 0.3333333333333333
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 18,
+       "pH": 12.0,
+       "passing_fraction": 0.3333333333333333
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 18,
+       "pH": 13.0,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    },
+    "brushite": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 36,
+       "n_passing": 3,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.08333333333333333
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.0
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.0
+      }
+     },
+     "controls_pass": true,
+     "display": "brushite",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_brushite",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.1,
+       "min_passing_P_T": 0.0598802,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.16666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.0
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": null,
+       "min_passing_Ca_T": null,
+       "min_passing_P_T": null,
+       "n_cells": 36,
+       "n_passing": 0,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.0
+      }
+     }
+    },
+    "btcp": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 5.98802e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 5.98802e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 5.98802e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.6666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "b-TCP",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_btcp",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 5.98802e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 5.98802e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.6666666666666666
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.0001,
+       "min_passing_P_T": 5.98802e-05,
+       "n_cells": 36,
+       "n_passing": 24,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.6666666666666666
+      }
+     }
+    },
+    "hap": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 5.98802e-06,
+       "n_cells": 36,
+       "n_passing": 25,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.6944444444444444
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 5.98802e-06,
+       "n_cells": 36,
+       "n_passing": 27,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.75
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 5.98802e-06,
+       "n_cells": 36,
+       "n_passing": 27,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.75
+      }
+     },
+     "controls_pass": true,
+     "display": "HAp",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_hap",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 5.98802e-06,
+       "n_cells": 36,
+       "n_passing": 28,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.7777777777777778
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 5.98802e-06,
+       "n_cells": 36,
+       "n_passing": 30,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.8333333333333334
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 1e-05,
+       "min_passing_P_T": 5.98802e-06,
+       "n_cells": 36,
+       "n_passing": 30,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.8333333333333334
+      }
+     }
+    },
+    "ocp_ca4h": {
+     "cell": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 36,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.25
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 36,
+       "n_passing": 9,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.25
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 36,
+       "n_passing": 6,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.16666666666666666
+      }
+     },
+     "controls_pass": true,
+     "display": "OCP (Ca4H key)",
+     "headline_verdict": "feasible",
+     "ksp_key": "log10_ksp_ocp_ca4h_basis",
+     "n_cells": 108,
+     "wet": {
+      "10.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 36,
+       "n_passing": 18,
+       "n_undetermined": 0,
+       "pH": 10.0,
+       "passing_fraction": 0.5
+      },
+      "12.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007277
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.001,
+       "min_passing_P_T": 0.000598802,
+       "n_cells": 36,
+       "n_passing": 18,
+       "n_undetermined": 0,
+       "pH": 12.0,
+       "passing_fraction": 0.5
+      },
+      "13.0": {
+       "CaP_ratio_range_passing": [
+        1.6700011022007275,
+        1.6700011022007275
+       ],
+       "CaP_ratios_1p5_1p67_in_passing": true,
+       "min_passing_Ca_T": 0.01,
+       "min_passing_P_T": 0.00598802,
+       "n_cells": 36,
+       "n_passing": 12,
+       "n_undetermined": 0,
+       "pH": 13.0,
+       "passing_fraction": 0.3333333333333333
+      }
+     }
+    }
+   }
+  }
+ }
+}
