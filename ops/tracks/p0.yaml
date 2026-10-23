@@ -1517,7 +1517,7 @@ deferred_v2:
   model: Sonnet
   master_trace: none
   requires: [cp5]
-done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2, PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b, PH-W8.2b, PH-W6.2c, PH-W6.2d, PH-W8.2d, PH-W1.8, PH-W4.5, PH-W8.2e, PH-W6.3]
+done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2, PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b, PH-W8.2b, PH-W6.2c, PH-W6.2d, PH-W8.2d, PH-W1.8, PH-W4.5, PH-W8.2e, PH-W6.3, PH-W4.6, PH-W8.2f]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
