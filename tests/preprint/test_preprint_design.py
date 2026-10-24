@@ -66,13 +66,14 @@ def test_four_conditions_stage_rule_and_label():
     assert ("thermodynamically suitable against dissolution (a necessary condition) for that phase in that grid"
             in text)
     assert "is not evidence of protection" in text
-    assert "the condition reduces to $\\gsn\\le\\gsl$" in text
+    assert "the condition reduces to $\\gamma_\\mathrm{sn}^\\mathrm{c}\\le\\gamma_\\mathrm{sl}^\\mathrm{c}$" in text   # review m7: the registered route symbols
     assert "stays a labelled hypothesis" in text
     assert "undetermined and never passes" in text
 
 
 def test_process_language_is_one_plain_sentence_in_the_methods():
-    hits = [(name, s) for name in FRAME_FILES for s in _sentences(name) if PROCESS.search(s)]
+    # ruling (2) of PH-W8.4: the dilute-electrolyte correction is "registered but unevaluated", said once in Methods and in the limits
+    hits = [(name, s) for name in FRAME_FILES for s in _sentences(name) if PROCESS.search(s.replace("is registered but unevaluated", ""))]
     assert len(hits) == 1, hits
     assert hits[0][0] == "methods" and "fixed with content hashes before the production screen" in hits[0][1]
 
@@ -85,6 +86,8 @@ def test_excluded_is_thermodynamic_and_marked(name):
         for m in re.finditer(r"\bexclud\w*", s):
             before = s[max(0, m.start() - 20):m.start()]
             after = s[m.end():m.end() + 40]
+            if s[max(0, m.start() - 22):m.start()] == "not thermodynamically ":
+                continue    # ruling (1) of PH-W8.4: "not thermodynamically excluded" is the prose of the table word open, not an exclusion
             if "excluded" in m.group(0) and ("thermodynamically" in before):
                 assert "nacreExcludedMark" in after or "fn:excluded" in after, s
             elif name in ("introduction", "design"):
