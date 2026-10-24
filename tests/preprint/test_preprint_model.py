@@ -169,7 +169,7 @@ def test_fig2_panel_letters_are_set_by_the_layout_at_the_artwork_geometry():
     width = float(re.search(r"\\useasboundingbox \(0,0\) rectangle \(([0-9.]+),", tikz).group(1))
     starts = [float(x) for x in re.search(r"\\foreach \\x in \{([0-9.,]+)\} \{\\fill\[statebox\]", tikz).group(1).split(",")]
     layout = (paths.paper(REPO) / "layout" / "panel_letters.tex").read_text(encoding="utf-8")
-    offsets = re.findall(r"\\nacrePanelLetter\{\\dimexpr\\linewidth\*([0-9]+)/([0-9]+)\\relax\}\{([a-d])\}", layout)
+    offsets = re.findall(r"\\nacrePanelLetter\{\\dimexpr\\linewidth\*([0-9]+)/([0-9]+)\\relax\}\{([a-d])\}", layout[layout.index(r"\newcommand{\nacreFigTwoPanelLetters}"):layout.index(r"\newcommand{\nacreFigOnePanelLetters}")])
     assert [o[2] for o in offsets] == list("abcd")
     for (num, den, _), start in zip(offsets, starts):
         assert abs(int(num) / int(den) - start / width) < 1e-9
@@ -178,3 +178,16 @@ def test_fig2_panel_letters_are_set_by_the_layout_at_the_artwork_geometry():
     assert fig.index(r"\nacreFigTwoPanelLetters") < fig.index(r"\includegraphics")
     main = (paths.paper(REPO) / "main.tex").read_text(encoding="utf-8")
     assert r"\input{layout/panel_letters}" in main
+
+
+def test_hero_is_hooked_with_panel_letters_outside_the_image():
+    """fig:hero shows the two-panel render; letters a and b sit above the left edge of each panel (977 and 1023 of 2000 units)."""
+    layout = (paths.paper(REPO) / "layout" / "panel_letters.tex").read_text(encoding="utf-8")
+    block = layout[layout.index(r"\newcommand{\nacreFigOnePanelLetters}"):]
+    offsets = re.findall(r"\\nacrePanelLetter\{\\dimexpr\\linewidth\*([0-9]+)/2000\\relax\}\{([ab])\}", block)
+    assert [o[1] for o in offsets] == ["a", "b"] and int(offsets[0][0]) < 977 < 1023 <= int(offsets[1][0])
+    intro = (paths.paper(REPO) / "sections" / "introduction.tex").read_text(encoding="utf-8")
+    fig = intro[intro.index(r"\begin{figure}"):intro.index(r"\label{fig:hero}")]
+    assert fig.index(r"\nacreFigOnePanelLetters") < fig.index(r"\includegraphics") and "figures/out/fig1.pdf" in fig
+    assert "Nothing shows whether or how a film forms." in fig and "polymorph structure are not tested by the screen" in fig
+    assert "schematic length" in fig and r"\ce{P-O}" in fig and r"\ce{Cl-O}" in fig
