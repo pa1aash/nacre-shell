@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W3.8",
+  "last_session": "PH-W3.9",
   "status": "DONE",
   "day": 7,
   "equation_sheet": {
@@ -289,5 +289,16 @@
     "I17": "same-composition form not stated for hydrated amorphous phases; amendment proposed (I17a, E_ub_hydrated_am), not registered; ACP and amorphous HAp/TCP rows undetermined",
     "text_changes_for_w8": 48,
     "for_w4": "regenerate configs/preprint/thresholds.yaml from block v10 (tests/screen/test_screen_thresholds.py asserts 9/6); implement m_sink, E_ub_sink, E_ub_prod_unsat for contract v7"
+  },
+  "ph_w39": {
+    "report": "ops/reports/P0-W3.PH-W3.9.md",
+    "contract_version": 8,
+    "functions": 111,
+    "thresholds_block_version": 11,
+    "sha256_thresholds_block": "660930a92fb77d4f34cc9f38783d0f5f7412f804cc9f04d68bafbedfdd014a16",
+    "check_contract": "PASS (111 functions)",
+    "I17a": "registered (E_ub_hydrated_am, Delta_G_gc_w); amorphous rows of ACP, HAp, b-TCP, a-TCP excluded by the bound where the crystalline reference row is excluded (C_mid, C_hi), undetermined elsewhere; brushite, Ca2P2O7, OCP, Al phosphates amorphous stay undetermined; ACC not covered",
+    "text_changes_for_w8": 12,
+    "for_w4": "regenerate configs/preprint/thresholds.yaml from block v11, pin contract v8; implement E_ub_hydrated_am and its eight unit tests"
   }
 }

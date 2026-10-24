@@ -32,9 +32,20 @@
 #   demonstrations      named composites that are wrong on purpose, implemented only to show
 #                       the size of an error (C3 item 13); never used for a verdict
 
-version: 7
-session: PH-W3.8 (planning-chat rulings after the draft review)
+version: 8
+session: PH-W3.9 (I17a registered)
 changes:
+  - version: 8
+    session: PH-W3.9 (I17a registered; planning-chat ruling 3)
+    reason: >-
+      I17a: the bound Delta_G_g->c >= 0 is a same-composition statement. For a hydrated amorphous phase the reference is
+      the crystalline phase or phases of the same Ca:P (and OH, HPO4) composition plus n_hyd liquid water at a_w = 1,
+      Delta_G_gc_w = G(A) - G(C) - n_hyd mu_w(l, a_w = 1) >= 0 (A is metastable against C plus water). The function
+      E_ub_hydrated_am states the upper end of the K1 bracket on that reference; the symbol Delta_G_gc_w is registered.
+      No v7 expression changed; the anhydrous-glass functions keep Delta_G_gc.
+    added: [E_ub_hydrated_am]
+    changed: []
+    removed: []
   - version: 7
     session: PH-W3.8 (planning-chat rulings after the draft review)
     reason: >-
@@ -1821,33 +1832,42 @@ functions:
       - {at: {c_n: c_l}, expected: '0', note: 'equal concentrations: the only case consistent with the ideal-dilute isotherm at equal activity'}
 
   # ------------------------------------------------------------------ framings of the route products (v6; ruling C4)
-  # I17 check (PH-W3.8, ruling 3). Delta_G_gc = G_glass - G_crystal "per formula unit" is the same-composition form
-  # for an anhydrous glass of the crystal's formula; it does not state the reference of a HYDRATED amorphous phase
-  # (ACP, n_hyd water per formula unit), so it is not the same-composition form there. PROPOSED AMENDMENT, NOT
-  # REGISTERED (the planning chat registers it; until then the hydrated amorphous rows read undetermined;
-  # claims_redirect.md I17a). Proposed symbol and function, verified with check_contract.py in a scratch
-  # registration (parse, dimension, two limits, the inequality and the monotonicity all symbolic PASS):
-  #
-  #   symbol: {id: Delta_G_gc_w, latex: '\Delta G_\mathrm{g\to c}^\mathrm{w}', unit: J mol^-1, interval: '[0, oo)',
-  #            meaning: 'G(A) - G(C) - n_hyd mu_w(l, a_w = 1) per formula unit of the hydrated amorphous phase A, with C
-  #            the crystalline phase or phases of the same Ca:P (and OH, HPO4) composition; >= 0 because A is
-  #            metastable against C plus liquid water'}
-  #   - name: E_ub_hydrated_am
-  #     claim: K1
-  #     regime: R-cell
-  #     unit: V
-  #     expression: (Delta_G_r_ss - Delta_G_gc_w + n_hyd*R_gas*T*log(a_w))/(Delta_n_Li*F_c)
-  #     note: upper end of the K1 bracket of a hydrated amorphous phase; Delta_G_r_ss is the solid-salt reaction of the
-  #           same-composition crystalline reference, and the released water leaves at the cell water activity a_w
-  #     limits:
-  #       - {at: {Delta_G_gc_w: '0', n_hyd: '0'}, expected: '@E_ub'}
-  #       - {at: {a_w: '1', Delta_G_gc_w: Delta_G_gc}, expected: '@E_ub_glass'}
-  #     inequalities:
-  #       - {expr: '@E_ub_hydrated_am', relation: '<=', rhs: '@E_ub', subs: {a_w: 1/(1 + aux_u)},
-  #          domains: {Delta_G_gc_w: '[0, oo)', n_hyd: '[0, oo)', Delta_n_Li: '(0, oo)'},
-  #          note: 'excluded wherever the same-composition crystalline reference is (a_w <= 1)'}
-  #     monotonicity:
-  #       - {wrt: Delta_G_gc_w, direction: decreasing, subs: {Delta_n_Li: aux_u}}
+  # I17a (PH-W3.9, registered; planning-chat ruling 3). Delta_G_gc = G_glass - G_crystal "per formula unit" is the
+  # same-composition form for an anhydrous glass of the crystal's formula. For a HYDRATED amorphous phase A (ACP,
+  # n_hyd water per formula unit) the reference is the crystalline phase or phases C of the same Ca:P (and OH, HPO4)
+  # composition PLUS n_hyd liquid water at a_w = 1, and Delta_G_gc_w = G(A) - G(C) - n_hyd mu_w(l, a_w = 1) >= 0
+  # because A is metastable against C plus liquid water. claims_redirect.md I17a.
+  - name: E_ub_hydrated_am
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: (Delta_G_r_ss - Delta_G_gc_w + n_hyd*R_gas*T*log(a_w))/(Delta_n_Li*F_c)
+    note: >-
+      upper end of the K1 bracket of a hydrated amorphous phase against its same-composition crystalline reference plus
+      liquid water at a_w = 1 (I17a); Delta_G_r_ss is the solid-salt reaction of that crystalline reference, and the
+      released water leaves at the cell water activity a_w <= 1. Its use is the falsifying side only: the amorphous
+      row is excluded wherever the crystalline reference row is excluded, E_ub_hydrated_am <= E_ub, and it never passes
+    limits:
+      - {at: {Delta_G_gc_w: '0', n_hyd: '0'}, expected: '@E_ub'}
+      - {at: {a_w: '1', Delta_G_gc_w: Delta_G_gc}, expected: '@E_ub_glass'}
+    inequalities:
+      - {expr: '@E_ub_hydrated_am', relation: '<=', rhs: '@E_ub', subs: {a_w: 1/(1 + aux_u)},
+         domains: {Delta_G_gc_w: '[0, oo)', n_hyd: '[0, oo)', Delta_n_Li: '(0, oo)'},
+         note: 'excluded wherever the same-composition crystalline reference is (a_w <= 1)'}
+    monotonicity:
+      - {wrt: Delta_G_gc_w, direction: decreasing, subs: {Delta_n_Li: aux_u}}
+    unit_tests: >-
+      W4: (i) with Delta_G_gc_w = 0 and n_hyd = 0 the value equals E_ub of the reference row, exactly; (ii) with a_w = 1
+      and Delta_G_gc_w = Delta_G_gc it equals E_ub_glass, exactly; (iii) for every a_w in (0, 1], Delta_G_gc_w >= 0 and
+      n_hyd >= 0 the value is no larger than E_ub of the reference row (property test on a grid); (iv) it decreases
+      strictly in Delta_G_gc_w and does not increase in n_hyd at a_w < 1; (v) the evaluation used for a verdict while
+      Delta_G_gc_w is a gap is the sign bound Delta_G_gc_w = 0, a_w = 1, which returns E_ub of the reference row, never
+      a different number; (vi) the same-composition guard: if the reference row does not carry the same Ca:P (and OH,
+      HPO4) per formula unit as the amorphous phase less its n_hyd water, the function returns undetermined and does not
+      evaluate; (vii) the amorphous row's K1_falsify and K1_falsify_dilute verdicts equal the reference row's tier 1
+      verdicts at every cutoff (same margin, same m_sink), the label is the I17a label, and the function never yields a
+      pass; (viii) a reference row that is not excluded, or is a gap, gives undetermined for the amorphous row
+
   - name: E_window_glass
     claim: K1
     regime: R-cell
