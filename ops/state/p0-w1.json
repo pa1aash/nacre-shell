@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W1.9",
+  "last_session": "PH-W1.10",
   "status": "DONE",
   "day": 7,
   "artifacts": [
@@ -64,18 +64,20 @@
     "lit/corpus/audit/ph_w1_4/",
     "ops/reports/P0-W1.PH-W1.4.md",
     "lit/corpus/audit/ph_w1_9/",
-    "ops/reports/P0-W1.PH-W1.9.md"
+    "ops/reports/P0-W1.PH-W1.9.md",
+    "ops/reports/P0-W1.PH-W1.10.md",
+    "lit/corpus/inputs/.gitignore"
   ],
-  "notes": "PH-W1.9: LiClO4 saturation in PC and its gamma are gaps (paywalled sources, no value, no scale); 28 rows, 2 gap keys; citation outcomes for the 11 unsupported keys: 10 supported by new rows, 1 drop (doberdo2014); gong2012 replace; bichon/doberdo not swapped; journal DOI listed for iooss2017shapley (lit/corpus/audit/ph_w1_9/).",
+  "notes": "PH-W1.10: Kirillov 2014 not supplied; Barthel 1993 (supplied as j-barthel.pdf) prints neither a pure-PC saturation value nor a solution density; K_A of LiClO4 in PC at 298.15 K registered (TK-082, key liclo4_ka_pc_25c, grade C); liclo4_solubility_pc and liclo4_gamma_pc stay gaps.",
   "params": {
     "status": "ready",
-    "sha": "45643c4063abe897876d691723720a0815dd71cc",
+    "sha": "12eedd603e8b8f7cc8b3c24c9b5c79335b0e9011",
     "post_cp3": true,
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
     "rule": "lit/corpus/params_README.md (rule version 3, section 8)",
-    "keys": 481,
-    "new_keys": 2,
+    "keys": 482,
+    "new_keys": 1,
     "edited_keys": [],
     "cp3_tag_table": "p0-cp3 (production screens)"
   }
