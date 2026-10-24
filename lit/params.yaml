@@ -7,9 +7,9 @@ meta:
   generated_by: uv run python -m nacre.lit.build_params
   spec: lit/corpus/params_spec.yaml
   rule: lit/corpus/params_README.md
-  rule_sha256: 444cfdc2b83220c7cd2b9f3c183f5aa4a758653ca8047b2405bb2fce98f2a105
-  evidence_table_sha256: ca23577fd3a5926cdb0b1caeb0016a37e880b31a854c7410a3bb82dce02d01f4
-  generated_utc: '2026-10-24T07:02:57Z'
+  rule_sha256: 8e1f90d15a99a9f302e702296b054f8fe37129e1a832d8fe3df01286e8df5918
+  evidence_table_sha256: 0f2d25880d7231e40a23a816e17112897b94141033a2413413e90ca7f2438604
+  generated_utc: '2026-10-24T07:46:40Z'
   session: P0-W1.2
   inputs_from:
   - theory/derivation_body.tex section 11
