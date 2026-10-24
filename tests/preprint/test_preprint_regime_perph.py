@@ -115,7 +115,7 @@ def test_f3_sentence_and_forbidden_words():
         assert frag in res, frag
     assert "cannot" not in res
     assert res.count("impossible") == 1 and res.index("impossible") > res.index("so this is a model statement")
-    for m in re.finditer(r"falsified", res):
+    for m in re.finditer(r"(?<!not )falsified", res):    # "not falsified" defines the word open (W3.8 R1-1), not a verdict
         assert "within the registered model" in res[m.start() - 80:m.start() + 60]
 
 

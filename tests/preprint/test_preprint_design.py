@@ -86,6 +86,8 @@ def test_excluded_is_thermodynamic_and_marked(name):
         for m in re.finditer(r"\bexclud\w*", s):
             before = s[max(0, m.start() - 20):m.start()]
             after = s[m.end():m.end() + 40]
+            if s[max(0, m.start() - 22):m.start()] == "not thermodynamically ":
+                continue    # ruling (1) of PH-W8.4: "not thermodynamically excluded" is the prose of the table word open, not an exclusion
             if "excluded" in m.group(0) and ("thermodynamically" in before):
                 assert "nacreExcludedMark" in after or "fn:excluded" in after, s
             elif name in ("introduction", "design"):
