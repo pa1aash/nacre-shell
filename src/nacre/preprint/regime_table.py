@@ -22,6 +22,8 @@ from pathlib import Path
 
 import yaml
 
+from nacre.physics import amorphous
+from nacre.physics.constants import FARADAY
 from nacre.preprint import macros, paths
 
 INPUTS = {
@@ -82,12 +84,25 @@ class Num:
         return text + (" " + self.plain_unit if self.plain_unit else "")
 
 
+class Lit:
+    """A fixed phrase with its own TeX and plain forms (not a number)."""
+
+    def __init__(self, tex, plain):
+        self._tex, self._plain = tex, plain
+
+    def tex(self):
+        return self._tex
+
+    def plain(self):
+        return self._plain
+
+
 def tex_of(parts):
-    return "".join(p.tex() if isinstance(p, Num) else p for p in parts)
+    return "".join(p.tex() if isinstance(p, (Num, Lit)) else p for p in parts)
 
 
 def plain_of(parts):
-    out = "".join(p.plain() if isinstance(p, Num) else p for p in parts)
+    out = "".join(p.plain() if isinstance(p, (Num, Lit)) else p for p in parts)
     out = out.replace(MARK, "").replace(DISS_MARK, "").replace("\\textsuperscript{b}", " [note b]").replace("$\\beta$", "beta").replace("$\\mathrm{Ca_T}\\ge$", "Ca_T >=").replace("$\\mathrm{Ca_T}$", "Ca_T").replace("$\\mathrm{P_T}$", "P_T")
     out = re.sub(r"\$([A-Za-z]+)_\{?([a-z0-9]+)\}?\$", r"\1\2", out).replace("$", "")
     return " ".join(out.replace("~", " ").split())
@@ -708,28 +723,73 @@ def build_cells(docs):
         else:
             cells[(rid, "acid")] = route_cell(rid, "acid") if group == "cell" else na_cell(rid, "acid")
         for col in CLASSES:
-            if rid in AMORPHOUS_REF:
+            if k1spec and k1spec[0] in amorphous_rule(docs)[1] and k1spec[2] == "slurry":
                 cells[(rid, col)] = amorphous_ref_cell(rid, k1spec, col, docs, with_sens)
             else:
                 cells[(rid, col)] = k1_cell(rid, k1spec, col, docs, with_sens) if k1spec else na_cell(rid, col)
     return cells
 
 
-# rows whose K1 entry is read on a crystalline reference while the amorphous framing waits for I17a (theory/thresholds.md
-# block v10, screen_ph.i17a): row id -> (ladder phase of the reference row, tex label of the reference)
-AMORPHOUS_REF = {"acp": ("ACP", "$\\beta$-TCP reference")}
+# I17a (contract v8, theory/thresholds.md block v11 screen_ph.i17a): the amorphous framing of the calcium orthophosphates
+# in `amorphous_rows.rows_excluded_by_bound` is excluded by the bound dG_g-to-c >= 0 against the crystalline reference plus
+# water where the crystalline reference row is excluded, and undetermined elsewhere. row id -> reading of the reference row.
+REF_LABEL = {"acp": "$\\beta$-TCP reference: "}
+BOUND_SYMBOL = "dG_g-to-c >= 0"
+BOUND_TEX = "$\\Delta G_{\\mathrm{g}\\to\\mathrm{c}}\\ge0$"
+
+
+def amorphous_rule(docs):
+    """(label, phases excluded by the bound, by-bound listing) of block v11, checked for consistency."""
+    sp = docs["thresholds"]["screen_ph"]
+    i17a, rows = sp["i17a"], sp["w36"]["regime_table"]["amorphous_rows"]
+    if not str(i17a.get("status", "")).startswith("registered") or i17a.get("label") != rows.get("cell_word_excluded"):
+        raise RegimeTableError("the thresholds copy no longer registers the I17a rule for the amorphous rows")
+    if rows.get("cell_word_otherwise") != "undetermined":
+        raise RegimeTableError("the thresholds copy reads an amorphous row otherwise than undetermined")
+    listing = {e["phase"]: e["classes"] for e in sp["margins_v6"]["tier1_amorphous_by_bound"]}
+    return rows["cell_word_excluded"], list(rows["rows_excluded_by_bound"]), listing
+
+
+def label_part(label):
+    if BOUND_SYMBOL not in label:
+        raise RegimeTableError("the I17a label no longer names the bound %s" % BOUND_SYMBOL)
+    return Lit(label.replace(BOUND_SYMBOL, BOUND_TEX), label)
+
+
+def amorphous_word(refrow, col, edges, label, listed):
+    """The amorphous word of one class from the contract function over the crystalline reference row, checked against the
+    by-bound listing of the thresholds copy. The reference row's own K1 word leads; the bound only falsifies."""
+    ref_word, _x = k1_class(refrow, LADDER_COL[col], edges)
+    word = "undetermined"
+    if ref_word == "excluded":
+        ref = {"composition": {}, "Delta_G_r_ss": float(refrow["E_ub_V"]) * FARADAY, "Delta_n_Li": 1.0}
+        got = {amorphous.k1_verdicts(ref, {"composition": {}}, e, float(refrow["margin_V"]), None, label)["K1_falsify"] for e in edges}
+        if got != {label}:
+            raise RegimeTableError("%s at %s: the reference row is excluded but E_ub_hydrated_am at its sign bound is not" % (refrow["phase"], col))
+        word = label
+    classes = listed if isinstance(listed, dict) else {c: listed for c in CLASSES}
+    if (classes.get(col) == "falsified (bound)") != (word == label):
+        raise RegimeTableError("%s at %s: the by-bound listing of the thresholds copy disagrees with the reference row" % (refrow["phase"], col))
+    return word
 
 
 def amorphous_ref_cell(row_id, spec, col, docs, with_sens):
-    phase, ref_label = AMORPHOUS_REF[row_id]
-    am = k1_cell(row_id, spec, col, docs, with_sens)
-    if am.words[0] != "undetermined":
-        raise RegimeTableError("%s: the amorphous framing is no longer undetermined; the reference wording does not apply" % row_id)
-    if "I17a" not in docs["thresholds_v10_text"] or "rows_until_registered: {ACP_amorphous: undetermined" not in docs["thresholds_v10_text"]:
-        raise RegimeTableError("theory/thresholds.md no longer holds the I17a rule for the amorphous rows")
-    ref = k1_cell(row_id, (phase, "crystalline", spec[2]), col, docs, with_sens)
-    return Cell(row_id, col, ref.words + ["undetermined"], [ref_label + ": "] + ref.parts + ["; amorphous: undetermined"],
-                ref.sources, ref.note + "; amorphous framing: undetermined (I17a not registered)")
+    """K1 cell of a row whose amorphous framing is read from its crystalline reference row (I17a)."""
+    phase, _framing, stage = spec
+    label, excluded_rows, listing = amorphous_rule(docs)
+    am = ladder_row(docs["ladder"], phase, "amorphous", stage)
+    refrow = ladder_row(docs["ladder"], phase, "crystalline", stage)
+    if am[LADDER_COL[col]] != "undetermined":
+        raise RegimeTableError("%s: the ladder reads the amorphous framing as something other than undetermined; the bound does not apply" % row_id)
+    ref = k1_cell(row_id, (phase, "crystalline", stage), col, docs, with_sens)
+    word = amorphous_word(refrow, col, edges_of(docs["thresholds"])[col], label, listing[phase])
+    cite = "crystalline reference row %s, %s (%s)" % (phase, stage, INPUTS["ladder"])
+    if word == "undetermined":
+        return Cell(row_id, col, ref.words + ["undetermined"], [REF_LABEL.get(row_id, "crystalline: ")] + ref.parts + ["; amorphous: undetermined"],
+                    ref.sources, ref.note + "; amorphous framing: undetermined (I17a: the %s is not excluded at this class)" % cite)
+    prefix = REF_LABEL.get(row_id, "crystalline: ")
+    return Cell(row_id, col, ref.words + ["excluded"], [prefix] + ref.parts + ["; amorphous: ", label_part(label), MARK],
+                ref.sources, ref.note + "; amorphous framing: excluded by the bound %s (I17a), %s" % (BOUND_SYMBOL, cite))
 
 
 # ---------------------------------------------------------------- labels, header, notes
@@ -861,9 +921,9 @@ def notes_parts(docs, shas):
          "A dash means the test is not applied to the row; route criteria means the row is cell-stage and the route criteria replace $K_2$."],
         ["\\nacreExcludedMark{} \\NumExcludedNote. Kinetic stabilisation is not ruled out for phosphates: tier-two class B records exist in "
          "\\ce{LiPF6} electrolytes, not in fluorine-free ones."],
-        ["The $K_1$ entries of the calcium orthophosphates are on their crystalline framing (for ACP, its crystalline $\\beta$-TCP reference); "
-         "on the amorphous framing every one of them is undetermined, because the same-composition reference with water is not yet registered, "
-         "so none is excluded under every framing."],
+        ["The $K_1$ entries of the calcium orthophosphates are on their crystalline framing (for ACP, its crystalline $\\beta$-TCP reference). "
+         "An amorphous cell of a calcium orthophosphate reads excluded by the bound ", label_part(BOUND_SYMBOL), " against the crystalline reference plus water "
+         "where its crystalline row is excluded, and undetermined otherwise."],
         [DISS_MARK + " Excluded against dissolution (thermodynamic, $K_2$: $\\Omega_\\mathrm{bulk}<1$ at every cell of that pH); not the tier-one oxidation footnote."],
         ["Suitable against dissolution is a necessary condition, stated for the cells of the registered grid that pass; it does not address "
          "the instability of aluminium above its passivation window and is not evidence of protection. Pass counts are given per row, with the windows: "]
