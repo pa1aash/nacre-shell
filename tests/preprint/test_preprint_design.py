@@ -66,7 +66,7 @@ def test_four_conditions_stage_rule_and_label():
     assert ("thermodynamically suitable against dissolution (a necessary condition) for that phase in that grid"
             in text)
     assert "is not evidence of protection" in text
-    assert "the condition reduces to $\\gsn\\le\\gsl$" in text
+    assert "the condition reduces to $\\gamma_\\mathrm{sn}^\\mathrm{c}\\le\\gamma_\\mathrm{sl}^\\mathrm{c}$" in text   # review m7: the registered route symbols
     assert "stays a labelled hypothesis" in text
     assert "undetermined and never passes" in text
 

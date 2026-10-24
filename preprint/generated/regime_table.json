@@ -471,11 +471,13 @@
   "precision": {
    "closed": 14,
    "dupre_mJ": 5.423152404864945,
+   "gamma_sn_confirm_J": 0.3338,
    "gamma_sn_mJ": 1.2193036152489043,
    "gap": 10,
    "mc": 8,
+   "meta_glass_hi_headroom_V": 0.2581,
    "rows": 32,
-   "transfer_ca_kJ": 31.955941998143995
+   "transfer_ca_kJ": 30.0
   },
   "ratio": {
    "brushite": 1.0,
@@ -652,6 +654,9 @@
      "rerun": 74
     }
    }
+  },
+  "sensitivity": {
+   "shapley_gamma_sn_shape_factor": 0.8688
   },
   "slurry": {
    "ph_high": 13.0,

@@ -24,7 +24,7 @@ None.
 
 ## Macros needed
 
-At most three, and only if a number is essential: the bone-mineral onset range (`NumOnsetBoneLow`, `NumOnsetBoneHigh`, registered, from the onset ladder file of PH-W5.1) and one required precision (`NumPrecGammaSubNuc`, registered). The abstract prefers words to numbers.
+At most nine (amended at PH-W8.4, review M4; D78 supersedes the cap of three): the D78 set for the one positive statement (the full-region Ca_T bound and its cell count, `NumRegWindowFullLoCalcite`, `NumRegSlurryPassFullCalcite`, and the pH window, `NumRegSlurryPhLow`, `NumRegSlurryPhHigh`), the F6 bone-mineral onset range (`NumOnsetBoneLow`, `NumOnsetBoneHigh`, from the onset ladder file), the carbonate crossover (`NumCarbonateCrossover`), the robust threshold of the edge rule (`NumClassMidHigh`) and the lowest passing pH of calcite in the acid-adjusted grid (`NumRegAcidFirstCalcite`, ruling 6). The abstract prefers words to numbers.
 
 ## Claims carried
 

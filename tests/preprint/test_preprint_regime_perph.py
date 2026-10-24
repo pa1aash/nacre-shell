@@ -74,9 +74,9 @@ def test_high_dose_rule_on_the_per_ph_rows(docs):
     for key, csvname, _label, src in rt.PERPH_ROWS:
         for ph in phs:
             r = rt.perph_row(docs, "acid", src, csvname, ph)
-            expect.append("--" if not r["n_pass"] else ("high" if max(v for v in (r["ca"], r["p"]) if v is not None) >= 0.01 else "not high"))
+            expect.append("--" if not r["n_pass"] else ("yes" if max(v for v in (r["ca"], r["p"]) if v is not None) >= 0.01 else "no"))
     got = [r[8][0] if isinstance(r[8], list) else r[8] for r in rows_]
-    assert got == expect and "high" in got and "not high" in got
+    assert got == expect and "yes" in got and "no" in got
 
 
 def test_dose_qualifier_wording(rows):
@@ -130,7 +130,7 @@ def test_methods_f2_f4_f5_wording():
     assert "the ratio itself on a ratio line" in meth
     assert "the grid state of maximum $\\Omega$ for that phase and state" in meth
     assert "moved from pH \\NumCtlPhFrom\\ to pH \\NumCtlPhTo\\ after a dry run, an output seen before the choice" in meth
-    assert "moves \\NumCtlCellsMoved\\ cells of the original keys" in meth
+    assert "leaves every cell of the original keys unchanged (\\NumCtlCellsMoved\\ cells moved)" in meth   # review m12
     assert "so they are indicative and the Shapley effects carry the ranking" in meth and "\\NumSobolNucHalfWidth" in meth
 
 
@@ -222,7 +222,7 @@ def test_ratio_grid_text_is_plain_and_scoped():
     assert "a ratio-grid run is pending" not in si
     assert "lie well below the order of the sourced additive doses" in si and "the comparison is of order only" in si
     assert "stays a high-dose phase at the low-pH end" in si
-    assert "high against the sourced additive doses, on the crossed grid" in si
+    assert "the lowest passing dose of the apatites is at or above \\NumRegHighDose, on the crossed grid" in si   # review M9: the flag names its threshold
     mine = si[si.index("The production run crossed"):si.index("on the crossed grid. ")]
     assert "equal" not in mine and not re.search(r"suitable against dissolution from pH", si)
 

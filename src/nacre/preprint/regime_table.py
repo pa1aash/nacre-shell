@@ -8,8 +8,8 @@ preprint/generated:
   regime_table.json  the numbers the macros read (the macro block of sources.yaml points here).
 It also rewrites the delimited macro block of sources.yaml. Nothing in the table is typed: a cell
 is a function of the input files, and the vocabulary is the registered one (theory/claims_redirect.md
-Section 11d, cp5 closure ruling Q4): excluded, not excluded, suitable against dissolution, open,
-undetermined. `--check` regenerates in memory and compares byte for byte.
+Section 11d, cp5 closure ruling Q4, amended at PH-W3.8 by D78): excluded, open, suitable against dissolution,
+inconclusive (a K2 word only), undetermined. `--check` regenerates in memory and compares byte for byte.
 """
 import csv
 import hashlib
@@ -50,7 +50,8 @@ JSON_SOURCE = "preprint/generated/regime_table.json"
 CLASSES = ("C_lo", "C_mid", "C_hi")
 LADDER_COL = {"C_lo": "k1_class_lfp", "C_mid": "k1_class_42_43", "C_hi": "k1_class_44_45"}
 COLUMNS = ("slurry", "acid", "C_lo", "C_mid", "C_hi")
-VOCAB = ("excluded", "not excluded", "suitable against dissolution", "open", "undetermined")
+VOCAB = ("excluded", "open", "suitable against dissolution", "inconclusive", "undetermined", "feasible")
+K2_OPEN = "inconclusive"  # claims_redirect 11d, amendment rule 4: a K2 cell that neither passes nor is falsified is inconclusive, never open
 MARK = "\\nacreExcludedMark{}"
 DISS_MARK = "\\nacreDissolutionMark{}"
 DISS_WORD = "excluded against dissolution"
@@ -87,7 +88,7 @@ def tex_of(parts):
 
 def plain_of(parts):
     out = "".join(p.plain() if isinstance(p, Num) else p for p in parts)
-    out = out.replace(MARK, "").replace(DISS_MARK, "").replace("\\textsuperscript{b}", " [note b]").replace("$\\mathrm{Ca_T}\\ge$", "Ca_T >=").replace("$\\mathrm{Ca_T}$", "Ca_T").replace("$\\mathrm{P_T}$", "P_T")
+    out = out.replace(MARK, "").replace(DISS_MARK, "").replace("\\textsuperscript{b}", " [note b]").replace("$\\beta$", "beta").replace("$\\mathrm{Ca_T}\\ge$", "Ca_T >=").replace("$\\mathrm{Ca_T}$", "Ca_T").replace("$\\mathrm{P_T}$", "P_T")
     out = re.sub(r"\$([A-Za-z]+)_\{?([a-z0-9]+)\}?\$", r"\1\2", out).replace("$", "")
     return " ".join(out.replace("~", " ").split())
 
@@ -198,7 +199,7 @@ def k1_class(row, col, edges):
             return "excluded above", x
         return "open", None
     if verdict in ("feasible", "pass"):
-        return "not excluded", None
+        return "feasible", None
     raise RegimeTableError("unknown ladder verdict %r for %s" % (verdict, row["phase"]))
 
 
@@ -248,7 +249,7 @@ GROUPS = (
     ("carbonate", "carbonate: the polymorph rows are $K_2$ (dissolution), the control row is $K_1$ (oxidation)"),
     ("slurry", "slurry-stage phosphates: $K_2$ at the processing stage; $K_1$ is the phase's own ceiling if it were retained, not a gate"),
     ("cell", "cell-stage condensed and aluminium phosphates: $K_1$; the route criteria replace $K_2$"),
-    ("baseline", "baselines: $K_1$ and $K_2$ only"),
+    ("baseline", "baselines: $K_1$ and $K_2$; $K_4$ is undetermined for both, for want of a film thickness"),
 )
 COLUMN_NAMES = {"slurry": "processing stage (alkaline slurry)", "acid": "acid-adjusted comparator"}
 
@@ -273,7 +274,7 @@ def k2_word(block):
     if regime not in VOCAB:
         raise RegimeTableError("K2 regime %r is outside the registered vocabulary" % regime)
     if "controls_pass" in block and block["controls_pass"] is False:
-        return "open"
+        return K2_OPEN
     if regime == "suitable against dissolution" and not block.get("n_passing_cells"):
         raise RegimeTableError("a suitable K2 row has no passing cell")
     return regime
@@ -296,7 +297,8 @@ def acid_split(block):
 # ---------------------------------------------------------------- per-pH doses (PH-W4.5 outputs)
 
 HIGH_DOSE = 0.01
-HIGH_TEXT = "high against the sourced additive doses"
+HIGH_TEX = "at or above \\NumRegHighDose{}"
+HIGH_TEXT = "at or above 0.01 mol dm^-3"  # the plain form of HIGH_TEX, as the CSV prints it
 DIGIT_WORDS = "Zero One Two Three Four Five Six Seven Eight Nine".split()
 DOSE_UNIT, DOSE_PLAIN = "\\mathrm{mol\\,dm^{-3}}", "mol dm^-3"
 MJ_UNIT, MJ_PLAIN = "\\mathrm{mJ\\,m^{-2}}", "mJ m^-2"
@@ -406,6 +408,10 @@ def own_minimum(docs, grid, key):
     return min(rows, key=lambda t: (t[1]["ca"], t[1]["p"], t[0]))
 
 
+def high_parts(lead):
+    return [lead + "at or above ", Num("NumRegHighDose", "dose/high_threshold", HIGH_DOSE, "g", DOSE_UNIT, DOSE_PLAIN)]
+
+
 def is_high(row):
     return any(v is not None and v >= HIGH_DOSE for v in (row["ca"], row["p"]))
 
@@ -433,13 +439,13 @@ def dose_parts(row_id, row, first_low, stoich=None):
         parts += [" and $\\mathrm{P_T}$ ", Num("NumRegAcidMinP" + nm, "acid/%s/min_p" % row_id, row["p"], "sci:0", DOSE_UNIT, DOSE_PLAIN)]
     parts += [" at pH~", first_low, " on the crossed grid"]
     if stoich is None:
-        return parts + (["; " + HIGH_TEXT] if is_high(row) else [])
+        return parts + (high_parts("; ") if is_high(row) else [])
     ratio, sr = stoich
     parts += ["; at its own Ca:P of ", ratio, ", lowest passing $\\mathrm{Ca_T}$ ",
               Num("NumRegAcidStoichCa" + nm, "acid/%s/stoich_ca" % row_id, sr["ca"], "sci:0"), " and $\\mathrm{P_T}$ ",
               Num("NumRegAcidStoichP" + nm, "acid/%s/stoich_p" % row_id, sr["p"], "sci:1", DOSE_UNIT, DOSE_PLAIN)]
     if is_high(row) and is_high(sr):
-        parts += ["; both " + HIGH_TEXT]
+        parts += high_parts("; both ")
     elif is_high(row) or is_high(sr):
         raise RegimeTableError("%s: only one of the crossed and stoichiometric doses is high; the entry wording does not cover that" % row_id)
     return parts
@@ -503,8 +509,8 @@ def slurry_cell(row_id, ref, docs):
                       " to ", Num("NumRegWindowHi" + name, "k2/%s/dose_hi" % row_id, hi, "sci:0",
                                   "\\mathrm{mol\\,dm^{-3}}", "mol dm^-3")]
         parts.append(")")
-    elif word == "open":
-        parts.append(" (falsifiability control fails)")
+    elif word == K2_OPEN:
+        parts.append(" (control fails)")
         note = "controls_pass is false"
     elif row_id in ("brushite", "atcp", "li3po4") and word == "undetermined":
         parts += [" (data missing)\\textsuperscript{b}"]
@@ -523,10 +529,10 @@ def acid_cell(row_id, ref, docs):
     if all(set(c) == {"undetermined"} for c in per.values()):
         return Cell(row_id, "acid", ["undetermined"], ["undetermined (data missing)"], ["k2"])
     if block.get("controls_pass") is False:
-        return Cell(row_id, "acid", ["open"], ["open (falsifiability control fails)"], ["k2"], "controls_pass is false")
+        return Cell(row_id, "acid", [K2_OPEN], [K2_OPEN + " (control fails)"], ["k2"], "controls_pass is false")
     passing = [ph for ph in phs if per[ph]["feasible"]]
     if not passing:
-        word = "open" if any(per[ph]["inconclusive"] for ph in phs) else "excluded"
+        word = K2_OPEN if any(per[ph]["inconclusive"] for ph in phs) else "excluded"
         return Cell(row_id, "acid", [word], [(DISS_WORD + DISS_MARK if word == "excluded" else word) + " at every pH of the grid"], ["k2"])
     first = passing[0]
     if passing != [ph for ph in phs if ph >= first]:
@@ -591,14 +597,14 @@ def below_sourced_parts(docs, run, first):
 
 
 def below_runs(phs, per, row_id):
-    """The pH values under the first pass, as runs of one word: excluded where every cell is falsified, open where none passes and some are inconclusive."""
+    """The pH values under the first pass, as runs of one word: excluded where every cell is falsified, inconclusive where none passes and some are inconclusive."""
     out = []
     for ph in phs:
         c = per[ph]
         if set(c) == {"falsified"}:
             word = "excluded"
         elif c["inconclusive"] and not c["feasible"] and set(c) <= {"falsified", "inconclusive"}:
-            word = "open"
+            word = K2_OPEN
         else:
             raise RegimeTableError("%s: pH %g has cells the below-first-pass rule does not cover (%s)" % (row_id, ph, dict(c)))
         if out and out[-1][0] == word:
@@ -680,7 +686,17 @@ def na_cell(row_id, col):
     return Cell(row_id, col, [], ["--"], [], "not applied to this row")
 
 
+def baseline_k4_check(docs):
+    """The baseline group title says K4 is undetermined for both baselines for want of a film thickness."""
+    for r in docs["films"]["ph_rows"]:
+        if r["row_id"] in ("baseline_hq_lipo3n:slurry", "baseline_tsinghua:slurry"):
+            k4 = r["K4"]
+            if k4["verdict"] != "undetermined" or "film thickness is a gap" not in k4.get("note", ""):
+                raise RegimeTableError("%s: K4 is no longer undetermined for want of a film thickness" % r["row_id"])
+
+
 def build_cells(docs):
+    baseline_k4_check(docs)
     cells, with_sens = {}, k1_sens_differs(docs)
     for rid, group, _l, _p, tag, k2ref, acidref, k1spec in ROWS:
         if k2ref:
@@ -692,8 +708,28 @@ def build_cells(docs):
         else:
             cells[(rid, "acid")] = route_cell(rid, "acid") if group == "cell" else na_cell(rid, "acid")
         for col in CLASSES:
-            cells[(rid, col)] = k1_cell(rid, k1spec, col, docs, with_sens) if k1spec else na_cell(rid, col)
+            if rid in AMORPHOUS_REF:
+                cells[(rid, col)] = amorphous_ref_cell(rid, k1spec, col, docs, with_sens)
+            else:
+                cells[(rid, col)] = k1_cell(rid, k1spec, col, docs, with_sens) if k1spec else na_cell(rid, col)
     return cells
+
+
+# rows whose K1 entry is read on a crystalline reference while the amorphous framing waits for I17a (theory/thresholds.md
+# block v10, screen_ph.i17a): row id -> (ladder phase of the reference row, tex label of the reference)
+AMORPHOUS_REF = {"acp": ("ACP", "$\\beta$-TCP reference")}
+
+
+def amorphous_ref_cell(row_id, spec, col, docs, with_sens):
+    phase, ref_label = AMORPHOUS_REF[row_id]
+    am = k1_cell(row_id, spec, col, docs, with_sens)
+    if am.words[0] != "undetermined":
+        raise RegimeTableError("%s: the amorphous framing is no longer undetermined; the reference wording does not apply" % row_id)
+    if "I17a" not in docs["thresholds_v10_text"] or "rows_until_registered: {ACP_amorphous: undetermined" not in docs["thresholds_v10_text"]:
+        raise RegimeTableError("theory/thresholds.md no longer holds the I17a rule for the amorphous rows")
+    ref = k1_cell(row_id, (phase, "crystalline", spec[2]), col, docs, with_sens)
+    return Cell(row_id, col, ref.words + ["undetermined"], [ref_label + ": "] + ref.parts + ["; amorphous: undetermined"],
+                ref.sources, ref.note + "; amorphous framing: undetermined (I17a not registered)")
 
 
 # ---------------------------------------------------------------- labels, header, notes
@@ -783,7 +819,7 @@ def dose_note_parts(docs):
         raise RegimeTableError("lit/corpus/gaps.md no longer states the dose per kg of liquid")
     return (["Doses are in $\\mathrm{mol\\,dm^{-3}}$ and are the lowest passing $\\mathrm{Ca_T}$ and $\\mathrm{P_T}$ of the pH, taken separately, "
             "so they need not occur in one cell. A minimum passing dose at or above ", Num("NumRegHighDose", "dose/high_threshold", HIGH_DOSE, "g", DOSE_UNIT, DOSE_PLAIN),
-            " is stated as " + HIGH_TEXT + ". The sourced \\ce{H3PO4} additions are ", Num("NumDoseWtLo", "dose/wt_lo", wt["min"] * 100, "g"), " to ",
+            " is flagged in the entry; the flag names a threshold and is not a comparison with the sourced doses. The sourced \\ce{H3PO4} additions are ", Num("NumDoseWtLo", "dose/wt_lo", wt["min"] * 100, "g"), " to ",
             Num("NumDoseWtHi", "dose/wt_hi", wt["max"] * 100, ".2g", "\\mathrm{wt\\%}", "wt%"),
             " of the active material in five studies\\cite{tolchard2023insights,chen2024study,xu2022effect,carvalho2016study,kukay2021aqueous} and ",
             Num("NumDoseMmolPerG", "dose/mmol_per_g", mmol, ".2f", "\\mathrm{mmol\\,g^{-1}}", "mmol g^-1"),
@@ -799,7 +835,7 @@ def dose_note_short_parts(docs):
     if not m:
         raise RegimeTableError("lit/corpus/gaps.md no longer states the dose per kg of liquid")
     return (["Doses are the lowest passing $\\mathrm{Ca_T}$ and $\\mathrm{P_T}$ of the pH; a minimum at or above ",
-            Num("NumRegHighDose", "dose/high_threshold", HIGH_DOSE, "g", DOSE_UNIT, DOSE_PLAIN), " is stated as " + HIGH_TEXT + ". The sourced \\ce{H3PO4} doses "
+            Num("NumRegHighDose", "dose/high_threshold", HIGH_DOSE, "g", DOSE_UNIT, DOSE_PLAIN), " is flagged in the entry. The sourced \\ce{H3PO4} doses "
             "could not be converted to a concentration (no liquid volume or density is printed; the only derivable figure is ",
             Num("NumDoseMolPerKgLiquid", "dose/mol_per_kg_liquid", float(m.group(1)), ".2f", "\\mathrm{mol\\,kg^{-1}}", "mol kg^-1"),
             " of liquid), so the passing doses are comparable to the order of the sourced additive doses, not equal to them."]
@@ -819,17 +855,21 @@ def ph_state_parts(docs):
 
 def notes_parts(docs, shas):
     notes = [
-        ["Verdict words are the registered ones: excluded, not excluded, suitable against dissolution, open and undetermined (data missing). "
-         "In the table, open means not falsified and with no lower bound; in the prose, not excluded means the same. "
+        ["Verdict words are the registered ones: excluded, open, suitable against dissolution, inconclusive and undetermined (data missing). "
+         "Open means not falsified at the cutoff, with no lower bound on the onset (in the prose: not thermodynamically excluded); it is not a pass. "
+         "Inconclusive is a $K_2$ word: the cells of a pH neither all pass nor all fail, or the falsifiability control fails. "
          "A dash means the test is not applied to the row; route criteria means the row is cell-stage and the route criteria replace $K_2$."],
         ["\\nacreExcludedMark{} \\NumExcludedNote. Kinetic stabilisation is not ruled out for phosphates: tier-two class B records exist in "
          "\\ce{LiPF6} electrolytes, not in fluorine-free ones."],
+        ["The $K_1$ entries of the calcium orthophosphates are on their crystalline framing (for ACP, its crystalline $\\beta$-TCP reference); "
+         "on the amorphous framing every one of them is undetermined, because the same-composition reference with water is not yet registered, "
+         "so none is excluded under every framing."],
         [DISS_MARK + " Excluded against dissolution (thermodynamic, $K_2$: $\\Omega_\\mathrm{bulk}<1$ at every cell of that pH); not the tier-one oxidation footnote."],
         ["Suitable against dissolution is a necessary condition, stated for the cells of the registered grid that pass; it does not address "
          "the instability of aluminium above its passivation window and is not evidence of protection. Pass counts are given per row, with the windows: "]
         + window_parts(docs) + ["."],
         dose_note_short_parts(docs),
-        ["Acid-adjusted column: split by pH (alternative b): below the lowest pH of the grid that has a passing cell, a pH reads excluded where every cell is falsified and open where none passes and some are inconclusive; "
+        ["Acid-adjusted column: split by pH (alternative b): below the lowest pH of the grid that has a passing cell, a pH reads excluded against dissolution where every cell is falsified and inconclusive where none passes and some cells are inconclusive; "
          "suitable against dissolution from the lowest passing pH up. Slurry-stage $K_1$ is the phase's own ceiling and is not a gate for that stage."],
     ]
     if post_freeze_note(docs, shas):
@@ -939,10 +979,10 @@ def extra_numbers(docs):
     ratios = [perph_row(docs, g, "frozen", "HAp", ph) for g in ("alkaline", "acid") for ph in perph_phs(docs, g)]
     ratios = [r for r in ratios if r["rlo"] is not None]
     lo, hi = min(r["rlo"] for r in ratios), max(r["rhi"] for r in ratios)
-    for name, key, v in (("NumRegCaPHapLo", "ratio/hap_lo", lo), ("NumRegCaPHapHi", "ratio/hap_hi", hi)):
-        if "e" in "{:g}".format(v):
-            raise RegimeTableError("a Ca:P ratio does not print without an exponent")
-        add(name, key, v, "g")
+    if "e" in "{:g}".format(lo):
+        raise RegimeTableError("a Ca:P ratio does not print without an exponent")
+    add("NumRegCaPHapLo", "ratio/hap_lo", lo, "g")
+    add("NumRegCaPHapHi", "ratio/hap_hi", hi, "sci:0")
     return out
 
 
@@ -967,9 +1007,24 @@ def results_numbers(docs):
     dupre = [a["required_half_width"] for a in by_id["c1_dupre_joint"]["measurable_by"]["assessments"]]
     if not head or len(dupre) != 1:
         raise RegimeTableError("the precision map no longer gives a transfer headroom or one joint Dupre precision")
+    # the Ca(PO3)2 glass could pass up to the highest class; Ca2P2O7 cannot pass above the low class whatever the transfer data
+    glass = by_id["k1_ca_po3_2_ca_polyphosphat_amorphous"]["flip"]["by_class"]
+    pyro = by_id["k1_ca2p2o7_crystalline"]["flip"]["by_class"]
+    if not glass["C_hi"]["pass_possible"] or any(pyro[c]["pass_possible"] for c in ("C_mid", "C_hi")) or not pyro["C_lo"]["pass_possible"]:
+        raise RegimeTableError("the precision map no longer says that the Ca(PO3)2 glass could pass at C_hi and Ca2P2O7 only at C_lo")
+    confirm = [a for a in by_id["gamma_sn"]["measurable_by"]["assessments"] if a["purpose"].startswith("confirm falsified")]
+    if len(confirm) != 1 or not confirm[0]["assessment"].startswith("within reach"):
+        raise RegimeTableError("the precision map no longer gives one within-reach precision to confirm the nucleation failure")
     out += [Num("NumPrecGammaSnMj", "precision/gamma_sn_mJ", sn, ".0f", MJ_UNIT, MJ_PLAIN),
-            Num("NumPrecTransferCaKj", "precision/transfer_ca_kJ", min(head), ".0f", KJ_UNIT, KJ_PLAIN),
-            Num("NumPrecDupreMj", "precision/dupre_mJ", dupre[0] * 1000, ".0f", MJ_UNIT, MJ_PLAIN)]
+            Num("NumPrecTransferCaKj", "precision/transfer_ca_kJ", float("%.1g" % min(head)), ".0f", KJ_UNIT, KJ_PLAIN),
+            Num("NumPrecDupreMj", "precision/dupre_mJ", dupre[0] * 1000, ".0f", MJ_UNIT, MJ_PLAIN),
+            Num("NumPrecMetaGlassHiHeadroom", "precision/meta_glass_hi_headroom_V", round(glass["C_hi"]["headroom_V"], 4), ".2f", "\\mathrm{V}", "V"),
+            Num("NumPrecGammaSnConfirm", "precision/gamma_sn_confirm_J", round(confirm[0]["required_half_width"], 4), ".2f", "\\mathrm{J\\,m^{-2}}", "J m^-2")]
+    shape = docs["chain"]["regimes"]["R-slurry"]["links"]["nucleate"]["shapley"]["f_theta"]
+    top = max(shape, key=lambda k: shape[k]["estimate"])
+    if top != "aux:u_gamma_sn":
+        raise RegimeTableError("the template-nucleus energy no longer carries the largest Shapley share of the shape factor")
+    out.append(Num("NumShapleyGsnShape", "sensitivity/shapley_gamma_sn_shape_factor", round(shape[top]["estimate"], 4), ".2f"))
     points = docs["chain"]["study"]["deletion_test"]["by_point"]
     framings = [f for p in points.values() for f in p.values()]
     held = sum(1 for f in framings if f["holds"])
@@ -1054,7 +1109,7 @@ def perph_rows_parts(docs):
                 pp = [Num("NumRegPhMinP" + nm + lt, base + "/min_p", r["p"], "sci:0")] if r["p"] is not None else ["--"]
                 ratio = ([Num("NumRegPhRatioLo" + nm + lt, base + "/ratio_lo", r["rlo"], "g"), " to ",
                           Num("NumRegPhRatioHi" + nm + lt, base + "/ratio_hi", r["rhi"], "g")] if r["rlo"] is not None else ["--"])
-                dose = ["high" if is_high(r) else "not high"]
+                dose = ["yes" if is_high(r) else "no"]
             else:
                 frac, ca, pp, ratio, dose = ["--"], ["--"], ["--"], ["--"], ["--"]
             first = i == 0
@@ -1073,12 +1128,12 @@ def stoich_cells(docs, key, nm, ph, lt):
         return [[ratio], ["--"], ["--"], ["--"]]
     base = "perph/%s/%s" % (key, "%g" % ph)
     return [[ratio], [Num("NumRegPhStoichCa" + nm + lt, base + "/stoich_ca", r["ca"], "sci:0")],
-            [Num("NumRegPhStoichP" + nm + lt, base + "/stoich_p", r["p"], "sci:1")], ["high" if is_high(r) else "not high"]]
+            [Num("NumRegPhStoichP" + nm + lt, base + "/stoich_p", r["p"], "sci:1")], ["yes" if is_high(r) else "no"]]
 
 
 PERPH_HEAD = ["phase", "basis", "pH", "passing cells", "fraction", "lowest passing $\\mathrm{Ca_T}$", "lowest passing $\\mathrm{P_T}$",
-              "Ca:P of the passing cells", "against the sourced additive doses",
-              "own Ca:P", "lowest passing $\\mathrm{Ca_T}$", "lowest passing $\\mathrm{P_T}$", "against the sourced additive doses"]
+              "Ca:P of the passing cells", "lowest dose " + HIGH_TEX,
+              "own Ca:P", "lowest passing $\\mathrm{Ca_T}$", "lowest passing $\\mathrm{P_T}$", "lowest dose " + HIGH_TEX]
 PERPH_GROUPS = "\\multicolumn{3}{l}{} & \\multicolumn{6}{c}{crossed decade grid} & \\multicolumn{4}{c}{ratio-grid run, own Ca:P} \\\\"
 
 
@@ -1109,7 +1164,7 @@ def rerun_word(verdict, controls):
     if verdict is None:
         return None
     if controls is False:
-        return "open"
+        return K2_OPEN + " (control fails)"
     return VERDICT_WORD[verdict]
 
 
@@ -1173,8 +1228,8 @@ def sens_note(docs, shas):
 
 
 def high_dose_count(cells, perph_rows):
-    n = sum(1 for c in cells.values() if HIGH_TEXT in tex_of(c.parts))
-    return n + sum(1 for r in perph_rows for i in (8, 12) if r[i] == ["high"])
+    n = sum(1 for c in cells.values() if HIGH_TEX in tex_of(c.parts))
+    return n + sum(1 for r in perph_rows for i in (8, 12) if r[i] == ["yes"])
 
 
 def collect_numbers(docs, cells, shas=None):

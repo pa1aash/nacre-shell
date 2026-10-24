@@ -132,14 +132,15 @@ def test_row_labels_match_the_rulings(rows):
 def test_cells_follow_the_data_and_the_rulings(rows):
     assert _cell(rows, "brushite", "C_hi")["text"] == "excluded above 4.43 V"
     assert _cell(rows, "brushite", "C_mid")["text"] == "open"
-    assert _cell(rows, "ocp", "slurry")["words"] == "open" and _cell(rows, "ocp", "acid")["words"] == "open"
+    # a K2 cell whose control fails reads inconclusive, never open (claims_redirect 11d, amendment rule 4)
+    assert _cell(rows, "ocp", "slurry")["text"] == "inconclusive (control fails)" and _cell(rows, "ocp", "acid")["words"] == "inconclusive"
     for rid in ("brushite", "atcp", "li_ortho"):
         assert _cell(rows, rid, "slurry")["words"] == "undetermined"
     assert "[note b]" in _cell(rows, "brushite", "slurry")["text"] and "[note b]" not in _cell(rows, "li_ortho", "slurry")["text"]
     # below the first pass: excluded where every cell is falsified, open where none passes and some are inconclusive
     below = "excluded against dissolution below pH 6.5 (lower passivation window, below the sourced range); "
     for rid, ph, lead in (("calcite", "6.5", below), ("aragonite", "6.5", below),
-                          ("acc", "8.5", below + "open at pH 6.5 and 7.5; "), ("acp", "5.5", "open below pH 5.5; ")):
+                          ("acc", "8.5", below + "inconclusive at pH 6.5 and 7.5; "), ("acp", "5.5", "inconclusive below pH 5.5; ")):
         c = _cell(rows, rid, "acid")
         assert c["marker"] == "split by pH (alternative b)" and "[split by pH (alternative b)]" in c["text"]
         assert c["text"].startswith(lead + "suitable against dissolution from pH %s up" % ph)

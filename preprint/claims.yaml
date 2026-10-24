@@ -935,7 +935,7 @@ claims:
     - kind: macro
       ref: NumRegSlurryPassAcp
     - kind: record
-      ref: 'preprint/generated/regime_table.csv#open (falsifiability control fails)'
+      ref: 'preprint/generated/regime_table.csv#inconclusive (control fails)'
     checkpoint: cp5r
     supplier: p0-w4
     scope_check: clean
@@ -1316,7 +1316,7 @@ claims:
     - the regime-table vocabulary of the cp5 closure ruling (excluded for falsified, D68)
     evidence:
     - kind: record
-      ref: preprint/generated/regime_table.tex#in the prose, not excluded means the same
+      ref: 'preprint/generated/regime_table.tex#in the prose: not thermodynamically excluded'
     - kind: record
       ref: theory/claims_redirect.md#open | not falsified, no lower bound
     checkpoint: cp5

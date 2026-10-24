@@ -151,7 +151,8 @@ def test_methods_disclosures_and_conventions():
     assert "is never reported as a finding" in text
     assert "does not imply endorsement by the Materials Project" in text
     assert r"\NumMpDatabaseVersion" in text and "creativecommons.org/licenses/by/" in text
-    assert "$E_\\mathrm{lb}$ is pending" in text
+    # review M14: E_lb is computed, and bounds the onset only under the transfer premise
+    assert "bounds the onset only if $\\Delta G_\\mathrm{tr}^\\mathrm{rel}\\ge0$, which no measured datum tests" in text
     assert "the nucleation half is not validated" in text
 
 
