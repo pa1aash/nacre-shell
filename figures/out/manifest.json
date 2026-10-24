@@ -515,6 +515,144 @@
    }
   }
  },
+ "renders": {
+  "fig1": {
+   "id": "fig1",
+   "kind": "render",
+   "claim": "An illustrative molecular construction of the two stages the screen addresses, drawn as two separate single-phase panels: an aluminium (111) slab under water with dissolved Ca2+ and CO3(2-) ions (processing), and the same slab carrying one condensed phosphate chain under propylene carbonate with Li+ and ClO4- ions (cell). It shows no data and no result.",
+   "caption_key": "Two panels left to right, with panel letters set outside the artwork by the manuscript layout. (a) Al(111) under water with Ca2+ and CO3(2-). (b) Al(111) with a condensed phosphate chain under propylene carbonate with Li+ and ClO4-; an open candidate, not a result. Positions are schematic; P-O lengths are normalised, not measured.",
+   "mock": false,
+   "width": "double",
+   "size_cm": [
+    17.1,
+    6.27
+   ],
+   "blender": {
+    "version": "Blender 5.2.2 LTS",
+    "scene": "5.2.2 LTS"
+   },
+   "script": "figures/src/blender/hero.py",
+   "script_sha256": "8dc3af1083dd65f59d308594a1d95257703e95922c8cc7ecf645b37316523750",
+   "seed": 7,
+   "samples": 128,
+   "engine": "CYCLES",
+   "device": "CPU",
+   "threads": 1,
+   "denoise": false,
+   "palette": {
+    "Al": [
+     0.3368,
+     0.3026,
+     0.2653
+    ],
+    "C": [
+     0.565,
+     0.565,
+     0.565
+    ],
+    "Ca": [
+     0.239,
+     1.0,
+     0.0
+    ],
+    "Cl": [
+     0.122,
+     0.941,
+     0.122
+    ],
+    "H": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "Li": [
+     0.8,
+     0.502,
+     1.0
+    ],
+    "O": [
+     1.0,
+     0.051,
+     0.051
+    ],
+    "carbonate": [
+     0.3704,
+     0.7206,
+     0.918
+    ],
+    "phosphate": [
+     0.9441,
+     0.8994,
+     0.2959
+    ]
+   },
+   "palette_sha256": "e6b6308663d0b4be5f2f8c7c1387b517ed8da6700605bd48c00148b3ed4aa8f6",
+   "palette_min_delta_e_solids": 21.0,
+   "palette_rule": "slab, carbonate and phosphate pairwise, and slab against every class, >= delta_e_min",
+   "palette_min_delta_e_all_classes": [
+    2.7,
+    "Cl",
+    "phosphate"
+   ],
+   "geometry_sha256": "8ba0f873b3d5158022ebd37e90c3700f94c21a9c167fd006b050e55c9286a001",
+   "geometry_sources": {
+    "Al": "ase.build.fcc111, a = 4.0500 Angstrom from ase.data.reference_states (ase 3.29.0)",
+    "water": "ase.build.molecule('H2O'), G2 geometry (ase 3.29.0)",
+    "carbonate": "C-O 1.2814 Angstrom, lit/params.yaml c_o_bond_length_calcite (TM-030)",
+    "propylene_carbonate": "RDKit 2026.9.1 ETKDGv3 (seed 7) + MMFF94",
+    "phosphate": "schematic: regular corner-sharing tetrahedra, P-O normalised to 1.00 x the calcite C-O length",
+    "perchlorate": "schematic: the same normalised tetrahedron"
+   },
+   "geometry_counts": {
+    "a": {
+     "carbonate": 7,
+     "Ca": 7,
+     "solvent": 3487,
+     "solvent_target": 3487
+    },
+    "b": {
+     "Cl": 7,
+     "Li": 7,
+     "solvent": 738,
+     "solvent_target": 738
+    }
+   },
+   "atoms": {
+    "a": 12544,
+    "b": 11721
+   },
+   "scene_objects": {
+    "a": {
+     "CAMERA": 1,
+     "LIGHT": 3,
+     "MESH": 3,
+     "POINTCLOUD": 5
+    },
+    "b": {
+     "CAMERA": 1,
+     "LIGHT": 3,
+     "MESH": 5,
+     "POINTCLOUD": 7
+    }
+   },
+   "renders": 2,
+   "render_hashes": [
+    "d918157e69a56e3a3421123619c68afd8884817931796d63dba0286a918e8bd9",
+    "d918157e69a56e3a3421123619c68afd8884817931796d63dba0286a918e8bd9"
+   ],
+   "render_hashes_identical": true,
+   "reproducibility": "byte-identical across 2 renders",
+   "font": "none (no text)",
+   "outputs": {
+    "figures/out/fig1.png": "d918157e69a56e3a3421123619c68afd8884817931796d63dba0286a918e8bd9",
+    "figures/out/fig1.pdf": "ed375dce42123a42578d5023bb89facd37b64f05a72c3d62d64736465e15f088",
+    "figures/out/cvd/fig1_deuteranopia.png": "786492e9ac416b2bdd5374087e33ba2614c63d184c39479ed7ae3dffd3d47296",
+    "figures/out/cvd/fig1_protanopia.png": "1b3a44892ba92881417a17d80cd047928acfe130c054e85fc14aa51bcdaafd26",
+    "figures/out/cvd/fig1_tritanopia.png": "9df5d27c9075636dc19dd75635393617b7a811b004cec4b47a783a710000546e"
+   },
+   "checker": "pass (raster: size, mode, no text chunks; PDF wrapper: no text; scene: no text objects)"
+  }
+ },
  "schematics": {
   "fig16": {
    "tex": "figures/tikz/fig16.tex",

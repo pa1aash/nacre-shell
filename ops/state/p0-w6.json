@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-W6.3",
+  "last_session": "PH-W6.3c-hero",
   "status": "DONE",
-  "day": 6,
+  "day": 7,
   "palette_sha": "9307edcac3e6a014920e02ed8e8a855c4d56660e",
   "font": {
     "chain": [
@@ -47,7 +47,18 @@
     "src/nacre/figs/build.py",
     "tests/figs/test_fig_captions.py",
     "tests/figs/test_fig_provenance.py",
-    "ops/reports/P0-W6.3.md"
+    "ops/reports/P0-W6.3.md",
+    "ops/reports/P0-W6.PH-W6.4.md",
+    "figures/out/fig1.png",
+    "figures/out/fig1.pdf",
+    "figures/src/blender/hero.py",
+    "figures/src/blender/renders.yaml",
+    "figures/src/captions/fig1.md",
+    "src/nacre/figs/rendered.py",
+    "tests/figs/test_figs_rendered.py",
+    "ops/reports/P0-W6.PH-W6.3b.md",
+    "src/nacre/figs/hero_geometry.py",
+    "ops/reports/P0-W6.PH-W6.3c-hero.md"
   ],
   "notes": [
     "N18 font fallback explicit and recorded in provenance; RDKit tests font-independent (Linux CI confirmation pending on this push)",
@@ -58,6 +69,9 @@
     "W8 must add the 9 macros in figures/src/captions/macro_requests.yaml",
     "Re-pin after integration (pin_upstream.py drops copies that match the tree)",
     "Fig 6 waits for P0-W4.4; Fig 8 for the pod",
-    "PH-W6.3: fig17 stability map, fig15 per pH with high-dose hatch, fig13 dropped (Al-salt table CSV, W8 table request), PH-W6.2 row count corrected to 32"
+    "PH-W6.3: fig17 stability map, fig15 per pH with high-dose hatch, fig13 dropped (Al-salt table CSV, W8 table request), PH-W6.2 row count corrected to 32",
+    "PH-W6.4: caption macros renamed to registered ones, 9 requests remain, regime_table pin unchanged (needs a run against preprint/p0 after W8 merges), fig16 left a stub",
+    "PH-W6.3b: hero fig1 rendered in Blender, two renders byte-identical, checker.check_raster added",
+    "PH-W6.3c-hero: fig1 rebuilt as a molecular scene (generated Al(111), G2 water, RDKit PC, TM-030 C-O, schematic P-O/Cl-O), two renders byte-identical; Cl-phosphate 2.7 and Ca-carbonate 16.8 CVD dE recorded, not gated"
   ]
 }
