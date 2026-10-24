@@ -2502,7 +2502,6 @@ claims:
       - {kind: row, ref: TB-022}
       - {kind: doi, ref: 10.1002/cssc.202202161}
       - {kind: doi, ref: 10.1002/maco.201608843}
-      - {kind: doi, ref: 10.1016/j.jpowsour.2013.10.039}
       - {kind: dossier, ref: "lit/contrary.md#### B11."}
       - {kind: record, ref: preprint/paper/sections/introduction.tex#CL-K03}
     checkpoint: none
@@ -2555,9 +2554,9 @@ claims:
     polarity: claims
     evidence:
       - {kind: row, ref: TC-002}
-      - {kind: row, ref: TC-005}
+      - {kind: row, ref: TC-004}
       - {kind: doi, ref: 10.1021/jacs.5b07931}
-      - {kind: doi, ref: 10.1073/pnas.1118085109}
+      - {kind: doi, ref: 10.1038/s41467-024-46117-x}
       - {kind: record, ref: preprint/paper/sections/introduction.tex#CL-K06}
     checkpoint: none
     supplier: p0-w1
