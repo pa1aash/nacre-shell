@@ -109,6 +109,14 @@ Rule behind the table: falsified at E_c only if tier 1 and the available tier 2 
 no tier 2 exists. Rows 5 to 7 and the tier-2-below note of row 1 are the places where the plan is silent: they are
 registered here conservatively (interpretations I1 to I3, Section 8).
 
+**Amorphous rows of hydrated amorphous phases (I17a, PH-W3.9).** The amorphous row of ACP, HAp, beta-TCP and alpha-TCP
+takes its K1 verdict from the crystalline reference row of the same composition (interpretation I17a, Section 9h): where
+that row is falsified at a cutoff (row 2 or 3, tier 1 below by more than the margin), the amorphous row reads
+**excluded** with the label `excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)`, in
+place of the labels of rows 2 and 3, and the label of the reference row is printed beside it. Where the reference row is
+not falsified (rows 1, 4 to 6) or is a gap (row 7), the amorphous row reads **undetermined** (row 7), never open and
+never feasible. The bound only falsifies: no amorphous row passes by it.
+
 **Carbonate.** CaCO3 runs through the same table (reaction r1 with the exchange route registered in C5c_ox; its
 tier 2 records are looked up like any other). Its row is the negative control for K1; it is expected to remain
 falsified at the classes where its experimental onset is below E_c, because a measured service limit near its
@@ -651,7 +659,9 @@ Dgamma = gamma_nl cos theta directly).
 - **Baked baselines** (unspecified structure): both framings are reported, neither governs; the row carries
   `structure unspecified`.
 - **Nucleus framings unchanged.** For the Ca orthophosphate nucleus framings (ACP versus apatite), "falsified only if
-  falsified under every framing" stays (Section 3d). The governing rule above applies to the route products only.
+  falsified under every framing" stays (Section 3d). The governing rule above applies to the route products only. The
+  ACP framing of HAp, beta-TCP and alpha-TCP, and ACP itself, is excluded wherever the same-composition crystalline row
+  is, by the bound of I17a (Section 9h; reference: the crystalline phase plus liquid water at a_w = 1).
 
 ### 9e. Matrix and baseline rules (rulings C5, C6)
 
@@ -726,31 +736,41 @@ Section 2g).
   falsified wherever its crystalline row is falsified, labelled `falsified (bound)`, and stays undetermined everywhere
   else. It can never pass this way. For the nucleus framings (ACP versus apatite) this makes "falsified under every
   framing" decidable from the crystalline row alone, on the falsifying side only.
-- **I17a.** (PH-W3.8, ruling 3; **proposed, not registered**.) *Check.* The bound DeltaG_g->c >= 0 holds only between
-  phases of the same composition. Contract version 7 states DeltaG_gc = G_glass - G_crystal "per formula unit"
-  (`E_window_glass`, `E_lb_glass`, `E_ub_glass`): that is the same-composition form for an anhydrous glass of the
-  crystal's formula (the Ca(PO3)2 glass, the (LiPO3)n glass), but it does not state the reference of a hydrated
-  amorphous phase, whose formula unit carries n_hyd water that the crystal does not. For ACP (and for the amorphous
-  framings of HAp, beta-TCP and alpha-TCP, which are the ACP nucleus framing of Section 0) the form is therefore not
-  stated. *Proposed amendment.* For a hydrated amorphous phase A = C . n_hyd H2O the reference is the crystalline
+- **I17a.** (PH-W3.9, planning-chat ruling 3, binding; **registered**, contract version 8.) *Check.* The bound
+  DeltaG_g->c >= 0 holds only between phases of the SAME composition. Contract version 7 states DeltaG_gc = G_glass -
+  G_crystal "per formula unit" (`E_window_glass`, `E_lb_glass`, `E_ub_glass`): that is the same-composition form for an
+  anhydrous glass of the crystal's formula (the Ca(PO3)2 glass, the (LiPO3)n glass), and I17 stands for those rows as
+  written. It does not state the reference of a hydrated amorphous phase, whose formula unit carries n_hyd water that the
+  crystal does not. *Registered form.* For a hydrated amorphous phase A = C . n_hyd H2O the reference is the crystalline
   phase or phases C of the same Ca:P (and OH, HPO4) composition PLUS n_hyd liquid water at a_w = 1:
 
-      DeltaG_g->c,w = G(A) - G(C) - n_hyd mu_w(l, a_w = 1) >= 0          (A is metastable against C + water)
+      DeltaG_g->c,w = G(A) - G(C) - n_hyd mu_w(l, a_w = 1) >= 0          (A is metastable against C + water; symbol `Delta_G_gc_w`)
 
   The oxidation of A releases its water at the cell water activity a_w <= 1, so
 
-      E_ub(A) = E_ub(C) - [DeltaG_g->c,w - n_hyd R T ln a_w] / (Delta_n_Li F) <= E_ub(C)
+      E_ub(A) = E_ub(C) - [DeltaG_g->c,w - n_hyd R T ln a_w] / (Delta_n_Li F) <= E_ub(C)       (function `E_ub_hydrated_am`)
 
-  (proposed contract function `E_ub_hydrated_am`, written out in the comment above `E_window_glass`; it passes the
-  checks of `theory/tools/check_contract.py` in a scratch registration). Any further reaction of the released water (r3)
-  only lowers the onset, since E_ox is a minimum. With the amendment registered, the amorphous row is excluded wherever
-  its same-composition crystalline reference row is, labelled `excluded (by the bound dG_g-to-c >= 0, against the
-  crystalline reference plus water)`. A crystalline reference of a different Ca:P (beta-TCP for an ACP of another
-  Ca:P) does not satisfy the condition. *Until the amendment is registered*: the amorphous rows of ACP, HAp, beta-TCP
-  and alpha-TCP read **undetermined** in the table and in the prose; the by-bound entries of
-  `margins_v6.tier1_amorphous_by_bound` for these rows are not a verdict basis (as the ladder notes already say); and
-  a calcium orthophosphate phase is not "falsified under every framing", because its ACP framing is undetermined: its
-  exclusion is stated on the crystalline framing, with the ACP framing named as undetermined beside it.
+  Any further reaction of the released water (r3) only lowers the onset, since E_ox is a minimum. *Reference-state
+  sentence.* The reference of a hydrated amorphous phase is the crystalline phase or phases of the same composition plus
+  liquid water at a_w = 1; ACP is metastable against crystalline calcium phosphates in water. A crystalline reference of
+  a different Ca:P (beta-TCP for an ACP of another Ca:P) does not satisfy the condition. *Rule.* The sign bound is
+  exact, so the amorphous row uses the margin of its crystalline reference row, unchanged (the same m_expt, and the same
+  m_sink where a dilute electrolyte is stated), and the reference state of the sink (Section 2h) carries over. The
+  amorphous row is **excluded** at a cutoff exactly where its same-composition crystalline reference row is excluded
+  (falsified at tier 1; tier 2 of the amorphous framing is read like any other row, and none is registered for these
+  rows), with the label `excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)`. It can
+  never pass this way. *Rows.* The rule applies to the amorphous rows of ACP (on its beta-TCP reference row, the
+  composition registered for the ACP formula unit), HAp (on the HAp row), beta-TCP (on the beta-TCP row) and alpha-TCP
+  (on the alpha-TCP row), at the classes where that reference row is excluded. *Rows that stay undetermined.* Every
+  amorphous phase whose crystalline reference row is not excluded at the class (brushite, whose reference row is partial
+  at the highest class and not falsified below it; Ca2P2O7, whose reference row is not falsified), and every amorphous
+  phase whose reference row is a gap (OCP, the aluminium phosphates), reads **undetermined**; so does every row at a
+  class where its reference row is not falsified. Amorphous calcium carbonate has no K1 amorphous row registered and is
+  not covered by this rule. A calcium orthophosphate whose crystalline row is excluded at a class is then excluded under
+  every nucleus framing at that class, because both of its framings (apatite and ACP) are. *Unit tests* for W4 are
+  specified on the function `E_ub_hydrated_am` in `theory/contract.yaml` (items i to viii). Table and prose say the same:
+  where a table cell reads excluded by this bound, the prose states the same bound and the same reference; where a cell
+  reads undetermined, the prose does not call the phase excluded on that framing.
 
 ## 10. PH-W3.2 rulings: W5's post-hoc choices and the bracket verdict
 
@@ -868,9 +888,9 @@ Every tier-1 row therefore stays solid-salt-only (Section 2f, `plausible only`).
 **Go/no-go consequence.** With no pass possible, K1 can only falsify or leave a row inconclusive. By tier 1 alone (the
 ladder of PH-W5.1 with the margins of `margins_v6`, before any tier 2 record is applied), the following hold. HAp,
 beta-TCP and alpha-TCP, and ACP on its beta-TCP reference, are falsified at C_mid and C_hi. By I17 they are also
-falsified on the amorphous framing there, so under every nucleus framing (amended PH-W3.8: that reading needs the
-same-composition form of I17a, which is proposed and not registered; until then the amorphous framings read
-undetermined and the exclusion is stated on the crystalline framing only). The carbonate control falls with them.
+excluded on the amorphous framing there, so under every nucleus framing (amended PH-W3.9: by the bound dG_g-to-c >= 0
+in the same-composition form of I17a, against the crystalline reference plus liquid water at a_w = 1; each amorphous
+row is excluded exactly at the classes where its crystalline reference row is, and reads undetermined elsewhere). The carbonate control falls with them.
 Brushite is partial at C_hi: falsified only above its crossover inside that class. The silicate comparator Ca2SiO4 is
 falsified at all three classes. Nothing is falsified at C_lo. Open, falsified at no class, are the condensed phases and
 the Al phosphates. Ca2P2O7 (crystalline; its amorphous row undetermined), Ca(PO3)2 glass and crystal, and the Li
@@ -1076,7 +1096,7 @@ PH-W3.8 by D78; the amendment is recorded below the table):
 
 | Term | Meaning | Source of the entry |
 |---|---|---|
-| excluded | falsified (D68) at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed. Footnote, verbatim (amended PH-W3.8, ruling 2): "excluded (thermodynamic, tier 1: solid-salt upper bound plus margin, for a LiClO4-saturated sink)" | K1 verdict table, Section 2c |
+| excluded | falsified (D68) at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed. Footnote, verbatim (amended PH-W3.8, ruling 2): "excluded (thermodynamic, tier 1: solid-salt upper bound plus margin, for a LiClO4-saturated sink)". For an amorphous row of ACP, HAp, beta-TCP or alpha-TCP the cell reads, verbatim (PH-W3.9, I17a): "excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)", with the footnote of its crystalline reference row | K1 verdict table, Section 2c; I17a for the amorphous rows |
 | open | not falsified, no lower bound: the test is inconclusive on both sides, or the bracket contains the cutoff. Never a pass, and never evidence of feasibility | verdict row 6 of Section 2c, and every row whose tier 1 is solid-salt-only and not below (E_lb pending) |
 | suitable against dissolution | K2 passes at every state of the registered grid; always inside the row text of Section 11a ("a necessary condition, in [region]"), the full label of Section 11b | K2 test of Section 11a |
 | undetermined | data missing: a gap key, an unbenchmarked number or an unregistered sink (`undetermined (data missing)`) | verdict row 7 of Section 2c |
@@ -1102,7 +1122,16 @@ table word **open** (not falsified, no lower bound). Rules:
    not falsified there is open in the table and not thermodynamically excluded in the prose, and the label of Section 10a
    reads `open only if the film is amorphous`.
 
-The machine form is `screen_ph.w36.regime_table` of the thresholds block (block version 10).
+**Amendment (PH-W3.9; planning-chat ruling 3, binding).** The vocabulary is unchanged (no new verdict word). The amorphous
+rows of the four calcium orthophosphates take the word of their crystalline reference row by the bound of I17a: the
+cell reads `excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)` where the reference
+row is excluded, and `undetermined` where the reference row is not excluded; every other amorphous row (brushite,
+Ca2P2O7, OCP, the aluminium phosphates) reads `undetermined` unless it has its own budget. A cell never reads open on
+the amorphous framing by this rule, and never feasible. Prose and table agree: the prose phrase is "excluded by the bound
+dG_g-to-c >= 0, against the crystalline reference plus water", never "excluded" for an amorphous framing without that
+reference, and never for a row that reads undetermined.
+
+The machine form is `screen_ph.w36.regime_table` of the thresholds block (block version 11).
 
 **Kinetic stabilisation.** "excluded" is a thermodynamic statement. Kinetic stabilisation is not ruled out for
 phosphates: tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones. A sentence of the paper never
@@ -1179,7 +1208,7 @@ converted by a documented rule or excluded; the declared scale is printed beside
 
 **Ca(PO3)2 glass-to-crystal bound.** The bound registered in Section 10b stays as registered (ruling (b)). The sign
 bound DG_g-to-c >= 0 is kept for falsification (I17). It is not tightened without new calorimetry. The sign bound is a same-composition statement; its reading for
-hydrated amorphous phases is the proposed I17a (Section 9h).
+hydrated amorphous phases is I17a (Section 9h, registered at PH-W3.9: the crystalline reference plus liquid water at a_w = 1).
 
 ### 11h. PH-W3.8 wording registrations (no ruling needed)
 
