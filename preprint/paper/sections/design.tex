@@ -9,16 +9,26 @@
 
 % (1) What a mineral barrier has to do, and the four conditions that follow.
 A mineral film is of use on the collector only if it forms where it is needed, is continuous, outlasts the water it forms in and then holds at the cathode potential. % CL-D04, CL-D05, CL-D06, CL-D07
-Each requirement is a free-energy test that a phase can fail, unless a measured service limit shows kinetic stabilisation ($K_1$, tier two), so each becomes a necessary condition (Fig.~\ref{fig:conditions}): % CL-D04, CL-D05, CL-D06, CL-D07
+Each requirement is a free-energy test that a phase can fail, unless a measured service limit shows kinetic stabilisation ($K_1$, tier two), so each becomes a necessary condition (Table~\ref{tab:conditions}): % CL-D04, CL-D05, CL-D06, CL-D07
 $K_1$, the oxidation onset of the phase lies above the charge cutoff; $K_2$, the phase does not dissolve at the slurry states; $K_3$, a dose window exists in which the phase nucleates on the template but not in the bulk; and $K_4$, the film is continuous while thin enough to conduct. % CL-D04, CL-D05, CL-D06, CL-D07
 Adhesion of the template to the oxide and \ce{Ca^2+} binding at the template are descriptors reported beside the conditions, not gates, and a pass of $K_3$ or $K_4$ must degrade when the template is replaced by the bare oxide, or it is labelled generic. % CL-D03
 
-\begin{figure}[t]
-  \centering
-  \nacreMissing{four-conditions diagram, pending}
-  \caption{The four conditions and the stage at which each applies: the oxidation condition at the cell stage; the dissolution, nucleation-window and thin-film conditions at the slurry stage; and the conversion step that joins a slurry-stage precursor to its cell-stage product.}
-  \label{fig:conditions}
-\end{figure}
+\begin{table}[t]
+\small
+\caption{The four conditions, their test and their status in this version; the criteria and margins are in Table~\ref{tab:thresholds}.}
+\label{tab:conditions}
+\begin{tabular*}{\columnwidth}{@{}>{\raggedright\arraybackslash}p{0.2\columnwidth}>{\raggedright\arraybackslash}p{0.36\columnwidth}>{\raggedright\arraybackslash}p{0.36\columnwidth}@{}}
+\hline
+Condition (stage) & Test & Status\\
+\hline
+$K_1$ (cell) & oxidation onset against the cutoff, per class & excluded\nacreExcludedMark{} for a \ce{LiClO4}-saturated sink (solid-salt reference state), or open, per class; no pass, for want of transfer data\\
+$K_2$ (slurry) & $\Omb\ge1$ at every state of the grid & calcite suitable against dissolution over a named region; the other rows in Table~\ref{tab:regime}\\
+$K_3$ (slurry) & a templated nucleation window before bulk precipitation & carbonate chain falsified within the model; undetermined for every phosphate framing\\
+$K_4$ (slurry) & spreading, or closure below the insulating thickness & undetermined\\
+Conversion (slurry to cell) & precursor to cell-stage product & pending\\
+\hline
+\end{tabular*}
+\end{table}
 
 % (2) K1: the oxidation onset as a bracket, with two tiers, per cutoff class.
 At the cutoff the cell holds the collector at a fixed lithium chemical potential, and a film oxidises once releasing its cation and oxygen, with the electrons going to plate lithium, lowers the free energy. % CL-D08
@@ -78,7 +88,7 @@ The routes enter the screen as thermodynamic criteria; whether gelation or dryin
 \end{figure}
 
 % (2) The hydrolysis constraint.
-Hydrolysis removes condensed phosphorus at a rate proportional to what is left, so the condensed fraction at the end of the wet period is $f_\mathrm{cond}=\exp(-k_\mathrm{eff}t_\mathrm{wet})$ and halves with every half-life of hydrolysis (Fig.~\ref{fig:pathway}). % CL-D14
+Hydrolysis removes condensed phosphorus at a rate proportional to what is left, so the condensed fraction at the end of the wet period is $f_\mathrm{cond}=\exp(-k_\mathrm{eff}t_\mathrm{wet})$ and halves with every half-life of hydrolysis. % CL-D14
 Here $k_\mathrm{eff}$ is the rate constant measured on alumina particles at room temperature\cite{wan2019polyphosphate} times a transfer factor to the process state, bracketed from both sides. % CL-D14
 The smallest tolerable condensed fraction is a percolation bound for the orthophosphate that hydrolysis leaves, so the descriptor is reported beside each route and never gates a row; states outside the measured pH and temperature are undetermined. % CL-D14
 
