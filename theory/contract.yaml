@@ -32,9 +32,24 @@
 #   demonstrations      named composites that are wrong on purpose, implemented only to show
 #                       the size of an error (C3 item 13); never used for a verdict
 
-version: 6
-session: PH-W3.2a (cp4 F2, route layer C1 to C6)
+version: 7
+session: PH-W3.8 (planning-chat rulings after the draft review)
 changes:
+  - version: 7
+    session: PH-W3.8 (planning-chat rulings after the draft review)
+    reason: >-
+      Ruling 2 (sink bound): E_ub takes the consumed LiClO4 from the solid salt, so it is the onset for a LiClO4-saturated
+      sink. The dilute-electrolyte correction is registered as the one-sided added margin m_sink = 2 nu_salt (R T / F)
+      ln(a_pm_sat / a_pm) >= 0 (reactant salt below saturation raises the onset), with the rigorous upper bound
+      E_ub_sink = E_ub + m_sink at the registered concentration and the product-side sign analysis E_ub_prod_unsat <= E_ub
+      (a product below saturation lowers the onset). Values are bound by keys later (W1 PH-W1.9); nothing is computed.
+      Ruling 3 (I17): the glass functions state Delta_G_gc = G_glass - G_crystal per formula unit, which is the
+      same-composition form for an anhydrous glass but does not state the reference of a hydrated amorphous phase; the
+      amendment is proposed in the comment above E_window_glass and is not registered. No v6 expression changed.
+    added: [m_sink, E_ub_sink, E_ub_prod_unsat]
+    changed:
+      - {name: E_ub, what: 'note only: the bound holds for a LiClO4-saturated sink (solid-salt reference state); below saturation the bound is E_ub_sink; expression unchanged'}
+    removed: []
   - version: 6
     session: PH-W3.2a (cp4 F2, route layer C1 to C6)
     reason: >-
@@ -1480,7 +1495,8 @@ functions:
     note: >-
       onset with the solid-salt sink (the cation leaves as its solid perchlorate, Li from solid LiClO4); an upper bound
       on the thermodynamic onset whatever the solvent, because the solid salt is one of the product states the minimum
-      runs over
+      runs over, for a LiClO4-saturated sink (solid-salt reference state); in an electrolyte below saturation the
+      consumed salt is less energetic and the bound is E_ub_sink = E_ub + m_sink (v7)
     identities:
       - {note: 'the E_window form with the solid-salt reaction free energy', subs: {Delta_G_r_ss: Delta_G_r}, equals: '@E_window'}
     monotonicity:
@@ -1531,6 +1547,76 @@ functions:
     inequalities:
       - {expr: '@Delta_G_tr_rel_born', relation: '>=', rhs: '0', subs: {r_M: z_M*r_Li/(1 + aux_u)},
          domains: {B_born: '[0, oo)'}, note: 'a cation of higher charge density than Li+ (r_M < z_M r_Li) satisfies the premise'}
+
+  # ------------------------------------------------------------------ sink reference state of E_ub (v7; PH-W3.8 ruling 2; claims_redirect Section 2h)
+  # E_ub takes the consumed LiClO4 from the solid salt, so it is the onset for a LiClO4-saturated sink. From an
+  # electrolyte below saturation the reactant salt is less energetic and the onset rises by m_sink >= 0; a product salt
+  # below saturation lowers the onset, so the solid (saturated) product is the worst case for an exclusion.
+  - name: m_sink
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: 2*nu_salt*R_gas*T/F_c*log(a_pm_sat/a_pm)
+    note: >-
+      one-sided added margin of the solid-salt upper bound: nu_salt (R T / F) ln(a_salt,sat / a_salt) with the salt
+      activity a_salt = a_pm^2 of the 1:1 salt, so twice the log ratio of the mean ionic activities per LiClO4 consumed
+      per electron ((2 ln 10) R T / F per decade of a_pm); zero at saturation, positive below it, and decreasing as the
+      registered concentration approaches saturation. The value is bound by keys (liclo4_solubility_pc,
+      liclo4_activity_coefficient_pc) at the registered concentration c_salt; the rigorous upper bound takes the end of
+      each input interval that makes m_sink largest
+    limits:
+      - {at: {a_pm: a_pm_sat}, expected: '0', note: 'electrolyte saturated in LiClO4: the solid-salt reference state, E_ub unchanged'}
+      - {at: {nu_salt: '0'}, expected: '0', note: 'a reaction that consumes no LiClO4 has no sink term'}
+    identities:
+      - {note: 'concentration form: a_pm = gamma_pm c_salt / c_std and a_pm_sat = gamma_pm_sat c_salt_sat / c_std (molar scale, claims_redirect 11g)',
+         subs: {a_pm: gamma_pm*c_salt/c_std, a_pm_sat: gamma_pm_sat*c_salt_sat/c_std},
+         equals: '2*nu_salt*R_gas*T/F_c*(log(c_salt_sat/c_salt) + log(gamma_pm_sat/gamma_pm))'}
+    derivative_identities:
+      - {wrt: a_pm, equals: '-2*nu_salt*R_gas*T/(F_c*a_pm)', note: 'slope (2 ln 10) nu_salt R T / F per decade of a_pm'}
+    inequalities:
+      - {expr: '@m_sink', relation: '>=', rhs: '0', subs: {a_pm: a_pm_sat/(1 + aux_u)},
+         note: 'an electrolyte below saturation (a_pm < a_pm_sat) raises the bound: one-sided, never covered by the symmetric m_1'}
+    monotonicity:
+      - {wrt: a_pm, direction: decreasing, subs: {nu_salt: aux_u}, note: 'more salt, smaller term; zero at saturation'}
+      - {wrt: a_pm_sat, direction: increasing, subs: {nu_salt: aux_u}, note: 'a more soluble salt, a larger term'}
+      - {wrt: nu_salt, direction: increasing, subs: {a_pm: a_pm_sat/(1 + aux_u)}}
+    unit_tests: >-
+      W4: (i) m_sink = 0 at a_pm = a_pm_sat and at nu_salt = 0, exactly; (ii) m_sink > 0 for a_pm < a_pm_sat; (iii) the
+      activity and concentration forms agree at the equivalence tolerance of W4 on a grid of (c_salt, c_salt_sat, gamma_pm, gamma_pm_sat);
+      (iv) one decade of a_pm moves m_sink by 2 ln(10) nu_salt R T / F; (v) the salt-activity form nu_salt R T / F
+      ln(a_pm_sat^2 / a_pm^2) agrees; (vi) the rigorous-bound evaluation takes the upper end of c_salt_sat and of
+      gamma_pm_sat and the lower end of gamma_pm, and is never smaller than the central evaluation; (vii) a missing key
+      returns undetermined, never zero
+
+  - name: E_ub_sink
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: '@E_ub + @m_sink'
+    note: >-
+      rigorous upper bound on the onset for an electrolyte at the registered LiClO4 concentration; a K1 exclusion for that
+      electrolyte needs E_ub_sink < E_c - m_1 (claims_redirect Section 2h); E_ub alone is the bound for a
+      LiClO4-saturated sink only
+    limits:
+      - {at: {a_pm: a_pm_sat}, expected: '@E_ub', note: 'saturated electrolyte'}
+    inequalities:
+      - {expr: '@E_ub', relation: '<=', rhs: '@E_ub_sink', subs: {a_pm: a_pm_sat/(1 + aux_u)}, domains: {nu_salt: '[0, oo)'},
+         note: 'the saturated-sink bound is the lower of the two'}
+
+  - name: E_ub_prod_unsat
+    claim: K1
+    regime: R-cell
+    unit: V
+    expression: '@E_ub + nu_prod*R_gas*T/F_c*log(x_sat_prod)'
+    note: >-
+      sign analysis of the product side: the onset of the solid-salt route when the product perchlorate dissolves below
+      saturation (x_sat_prod < 1) instead of precipitating; it is never above E_ub, so the solid (saturated) product is
+      the worst case for an exclusion and no product term enters the bound. Reported, not a verdict quantity
+    limits:
+      - {at: {x_sat_prod: '1'}, expected: '@E_ub', note: 'solid product: the registered reaction'}
+    inequalities:
+      - {expr: '@E_ub_prod_unsat', relation: '<=', rhs: '@E_ub', subs: {x_sat_prod: 1/(1 + aux_u)}, domains: {nu_prod: '[0, oo)'},
+         note: 'a product below saturation lowers the onset'}
 
   # ------------------------------------------------------------------ hydrolysis descriptor (v6; ruling C1)
   - name: k_hyd_eff
@@ -1735,6 +1821,33 @@ functions:
       - {at: {c_n: c_l}, expected: '0', note: 'equal concentrations: the only case consistent with the ideal-dilute isotherm at equal activity'}
 
   # ------------------------------------------------------------------ framings of the route products (v6; ruling C4)
+  # I17 check (PH-W3.8, ruling 3). Delta_G_gc = G_glass - G_crystal "per formula unit" is the same-composition form
+  # for an anhydrous glass of the crystal's formula; it does not state the reference of a HYDRATED amorphous phase
+  # (ACP, n_hyd water per formula unit), so it is not the same-composition form there. PROPOSED AMENDMENT, NOT
+  # REGISTERED (the planning chat registers it; until then the hydrated amorphous rows read undetermined;
+  # claims_redirect.md I17a). Proposed symbol and function, verified with check_contract.py in a scratch
+  # registration (parse, dimension, two limits, the inequality and the monotonicity all symbolic PASS):
+  #
+  #   symbol: {id: Delta_G_gc_w, latex: '\Delta G_\mathrm{g\to c}^\mathrm{w}', unit: J mol^-1, interval: '[0, oo)',
+  #            meaning: 'G(A) - G(C) - n_hyd mu_w(l, a_w = 1) per formula unit of the hydrated amorphous phase A, with C
+  #            the crystalline phase or phases of the same Ca:P (and OH, HPO4) composition; >= 0 because A is
+  #            metastable against C plus liquid water'}
+  #   - name: E_ub_hydrated_am
+  #     claim: K1
+  #     regime: R-cell
+  #     unit: V
+  #     expression: (Delta_G_r_ss - Delta_G_gc_w + n_hyd*R_gas*T*log(a_w))/(Delta_n_Li*F_c)
+  #     note: upper end of the K1 bracket of a hydrated amorphous phase; Delta_G_r_ss is the solid-salt reaction of the
+  #           same-composition crystalline reference, and the released water leaves at the cell water activity a_w
+  #     limits:
+  #       - {at: {Delta_G_gc_w: '0', n_hyd: '0'}, expected: '@E_ub'}
+  #       - {at: {a_w: '1', Delta_G_gc_w: Delta_G_gc}, expected: '@E_ub_glass'}
+  #     inequalities:
+  #       - {expr: '@E_ub_hydrated_am', relation: '<=', rhs: '@E_ub', subs: {a_w: 1/(1 + aux_u)},
+  #          domains: {Delta_G_gc_w: '[0, oo)', n_hyd: '[0, oo)', Delta_n_Li: '(0, oo)'},
+  #          note: 'excluded wherever the same-composition crystalline reference is (a_w <= 1)'}
+  #     monotonicity:
+  #       - {wrt: Delta_G_gc_w, direction: decreasing, subs: {Delta_n_Li: aux_u}}
   - name: E_window_glass
     claim: K1
     regime: R-cell
