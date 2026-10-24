@@ -2,8 +2,8 @@
 # Copied verbatim; the authority is theory/thresholds.md (rule R-thr). Do not edit:
 # after tag p0-cp3 a change goes through a dated entry in ops/tracks/p0_deviations.md.
 # source: theory/thresholds.md
-# source-sha: ea4bfb2558d039bbcb82a6968342c80336ba2016
-version: 10
+# source-sha: 2f6aec1f95e23e06521407d5e9f23fbac1814c11
+version: 11
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
@@ -31,7 +31,9 @@ revised_w37: {session: PH-W3.7, rule: 'cp5 closure rulings Q1 and Q5: aragonite 
               authority: theory/claims_redirect.md Sections 11a and 11g, no_value_computed: true, screen_output_consulted: false}
 revised_w38: {session: PH-W3.8, rule: 'planning-chat rulings after the draft review: (1) regime vocabulary amended by D78 (open; prose "not thermodynamically excluded"); (2) the solid-salt reference state and the dilute-electrolyte margin m_sink (structure only, value unbound); (3) the same-composition reading of I17 (amendment proposed, not registered); (6) the comparator window',
               authority: theory/claims_redirect.md Sections 2h, 9h and 11d to 11h, no_value_computed: true, screen_output_consulted: 'the PH-W3.3 review figures only (crossovers of the ladder and K2 pass counts, read, not recomputed)'}
-contract_version: 7
+revised_w39: {session: PH-W3.9, rule: 'planning-chat ruling 3 (binding): I17a registered, the same-composition glass-to-crystal bound for hydrated amorphous phases (reference: the crystalline phase or phases plus liquid water at a_w = 1); the amorphous rows of ACP, HAp, beta-TCP and alpha-TCP read excluded by the bound where their crystalline reference row is excluded, undetermined elsewhere (screen_ph.i17a, screen_ph.w36.regime_table.amorphous_rows)',
+              authority: theory/claims_redirect.md Sections 2c, 9h and 11d, contract version 8 (function E_ub_hydrated_am), text and structure only, no_value_computed: true, screen_output_consulted: false}
+contract_version: 8
 decision:
   statistic: band_mass
   credible_level: {symbol: p_cred, params: thresholds.decision.credible_level}
@@ -522,13 +524,18 @@ screen_ph:
   # END generated margins_v6
   proceed_rule: 'K3 and K4 run unless the K1 verdict is falsified at every registered cutoff class (cp4 F1)'
   i17a:
-    authority: theory/claims_redirect.md I17a (PH-W3.8, ruling 3)
-    check: 'contract v7 states Delta_G_gc = G_glass - G_crystal per formula unit: the same-composition form for an anhydrous glass; not stated for a hydrated amorphous phase'
-    status: 'amendment proposed, not registered (reference of a hydrated amorphous phase: the same-composition crystalline phase(s) plus liquid water at a_w = 1; proposed function E_ub_hydrated_am)'
-    rows_until_registered: {ACP_amorphous: undetermined, HAp_amorphous: undetermined, b-TCP_amorphous: undetermined, a-TCP_amorphous: undetermined}
-    by_bound_entries: 'margins_v6.tier1_amorphous_by_bound is not a verdict basis for these rows'
-    framing_rule: 'a calcium orthophosphate is not falsified under every framing while its ACP framing is undetermined; its exclusion is stated on the crystalline framing, with the ACP framing named undetermined'
-    label_when_registered: 'excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)'
+    authority: theory/claims_redirect.md I17a (PH-W3.9, ruling 3, registered)
+    check: 'contract v7 stated Delta_G_gc = G_glass - G_crystal per formula unit: the same-composition form for an anhydrous glass, not for a hydrated amorphous phase'
+    status: 'registered (contract v8, function E_ub_hydrated_am, symbol Delta_G_gc_w): reference of a hydrated amorphous phase = the crystalline phase or phases of the same Ca:P (and OH, HPO4) composition plus liquid water at a_w = 1; ACP is metastable against crystalline calcium phosphates in water'
+    bound: 'Delta_G_gc_w = G(A) - G(C) - n_hyd mu_w(l, a_w = 1) >= 0; E_ub(A) <= E_ub(C); margins and the sink reference state of the crystalline reference row carry over unchanged; the bound only falsifies, never passes'
+    applies_to: {ACP_amorphous: 'reference row ACP crystalline (beta-TCP formula unit)', HAp_amorphous: 'reference row HAp crystalline', b-TCP_amorphous: 'reference row b-TCP crystalline', a-TCP_amorphous: 'reference row a-TCP crystalline'}
+    rule: 'amorphous row = excluded at a class where its crystalline reference row is excluded (falsified at tier 1), undetermined at every class where it is not excluded or is a gap'
+    label: 'excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)'
+    stay_undetermined: {brushite_amorphous: 'reference row partial at the highest class, not falsified below', Ca2P2O7_amorphous: 'reference row not falsified', OCP_amorphous: 'reference row is a gap', Al_phosphates_amorphous: 'reference rows are gaps', all_amorphous_rows_at_C_lo: 'reference rows not falsified at the lowest class'}
+    not_covered: 'amorphous calcium carbonate (no K1 amorphous row registered)'
+    by_bound_entries: 'margins_v6.tier1_amorphous_by_bound (generated, unchanged) is the by-bound listing; its falsified (bound) entries are the registered excluded-by-bound cells for ACP, HAp, b-TCP and a-TCP, read with the label above; its undetermined entries stay undetermined'
+    framing_rule: 'a calcium orthophosphate whose crystalline row is excluded at a class is excluded under every nucleus framing at that class (apatite and ACP framings both)'
+    unit_tests: 'contract.yaml function E_ub_hydrated_am, unit_tests items i to viii (W4)'
   sink_v10:
     authority: theory/claims_redirect.md Section 2h (PH-W3.8, ruling 2)
     status: 'structure registered; value unbound (the keys are unresolved here; W1 supplies them at PH-W1.9, W5 evaluates)'
@@ -576,6 +583,7 @@ screen_ph:
       prose_open: {phrase: not thermodynamically excluded, means: open, defined: once at first use, bare_not_excluded: never written, implies_feasibility: never, authority: D78}
       k2_words: {neither_pass_nor_falsified: inconclusive, control_fails: inconclusive (control fails), open: never a K2 word}
       excluded_footnote: 'excluded (thermodynamic, tier 1: solid-salt upper bound plus margin, for a LiClO4-saturated sink)'
+      amorphous_rows: {authority: 'claims_redirect I17a (PH-W3.9)', cell_word_excluded: 'excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)', cell_word_otherwise: undetermined, rows_excluded_by_bound: [ACP, HAp, b-TCP, a-TCP], rule: 'word of the crystalline reference row; excluded only where that row is excluded; never open, never feasible', every_other_amorphous_row: undetermined, prose: 'excluded by the bound dG_g-to-c >= 0, against the crystalline reference plus water; never excluded on an amorphous framing without that reference, never for a row that reads undetermined'}
       kinetic_note: 'kinetic stabilisation is not ruled out for phosphates (tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones); never "fails at high voltage" without "thermodynamically"'
       acid_adjusted_row: {state: params.ph_slurry_acid_adjusted (range from the key), carbonate: 'excluded against dissolution where calcite is undersaturated, with the pH threshold', ca_phosphates: 'tested on K2 in the same state; failures stated in the cell', source: generated from K2 outputs}
       comparator_window:
@@ -688,7 +696,7 @@ screen_ph:
           params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.K1.margin_expt}
           where_expt_missing: {edge: E_c - m_E, label: DFT-decided, params: {m_E: thresholds.K1.margin_dft}}
       labels: {crystalline_pass_amorphous_fail: requires crystallisation, baked_baselines: both framings reported, structure unspecified}
-      nucleus_framings: unchanged (falsified only if falsified under every framing; ACP versus apatite)
+      nucleus_framings: unchanged (falsified only if falsified under every framing; ACP versus apatite); the ACP framing of ACP, HAp, b-TCP and a-TCP is excluded where the crystalline reference row is excluded, by the bound of I17a (screen_ph.i17a)
     K2_route:
       role: K2 of the route products under the governing amorphous framing (ruling C4)
       regime: R-slurry
