@@ -1,7 +1,7 @@
 {
-  "checked_utc": "2026-10-24T07:10:29Z",
-  "contract_sha": "733277275edfb1ccf6060be8581ac9aed34404ed",
-  "contract_version": 7,
+  "checked_utc": "2026-10-24T19:48:30Z",
+  "contract_sha": "2f6aec1f95e23e06521407d5e9f23fbac1814c11",
+  "contract_version": 8,
   "coverage": [],
   "functions": {
     "A_carb_fn": {
@@ -238,6 +238,16 @@
       "max_rel_err": 2.493727738494001e-16,
       "monotonicity_samples": 0,
       "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_ub_hydrated_am": {
+      "limit_cases": 2,
+      "max_rel_err": 5.956397779383405e-16,
+      "monotonicity_samples": 0,
+      "notes": [
+        "skipped Delta_G_gc_w (reparametrised statement; proven by the theory checker)"
+      ],
       "points": 256,
       "status": "PASS"
     },
@@ -925,10 +935,10 @@
       "status": "PASS"
     }
   },
-  "implementation_sha": "ce054c8700095b6d66f7294c7f71e10da148035a",
+  "implementation_sha": "f7d283918d3956b1ea055aba9a0cda1bf6eab9ed",
   "points": 256,
-  "ref": "origin/preprint/p0-w3",
-  "ref_sha": "3fb0745df75b09d31bdcfe231e5b514c48f20b07",
+  "ref": "HEAD",
+  "ref_sha": "f7d283918d3956b1ea055aba9a0cda1bf6eab9ed",
   "reference": "40-digit evaluation of the contract expression; a point beyond rtol passes only where the implementation is at least as accurate as the direct floating-point evaluation of the contract expression (ill-conditioned points, listed in notes)",
   "rtol": 1e-12,
   "seed": 0,
