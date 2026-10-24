@@ -8,8 +8,8 @@ meta:
   spec: lit/corpus/params_spec.yaml
   rule: lit/corpus/params_README.md
   rule_sha256: 5962efb79d1436865a2556802705dacd32ff50eede8629dbb1471ce62e97205e
-  evidence_table_sha256: 48cfd2ef8e2edb9d319a0c628efd73d48d4c12a57fb306c43dcb7b37fd9dad25
-  generated_utc: '2026-10-22T19:33:26Z'
+  evidence_table_sha256: 8d895cd6080de6e87995b37236314d5a6d38462b6c2793659fa3039b2dcaa79f
+  generated_utc: '2026-10-23T22:46:28Z'
   session: P0-W1.2
   inputs_from:
   - theory/derivation_body.tex section 11
@@ -11666,6 +11666,59 @@ params:
     notes: ''
     method: no admitted row (X1)
     added_in: P0-W1.PH-W1.8
+    role: primary
+    flags: []
+  liclo4_solubility_pc:
+    symbol: s_liclo4_pc
+    transform: none
+    unit: mol kg^-1
+    regimes:
+    - R-cell
+    status: gap
+    value: null
+    range: null
+    range_reason: 'gap (PH-W1.9): no source with a retrievable text prints the saturation concentration of LiClO4
+      in propylene carbonate at about 25 C, so no value, grade or scale is registered (the first source found must
+      state molal or molar; the unit here is molal because every PC solubility series read is molal). The two papers
+      that hold it are paywalled (Varlamova and Yurina 2006 ternary LiClO4-DEC-PC at 25 C; Kirillov et al. 2014
+      binary LiClO4-PC phase diagram), details in lit/corpus/T-K/gaps.md. The rows that bear on it are comparators,
+      not values.'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Comparators (not admitted, E2): TK-076, TK-080, TK-081.'
+    method: no admitted row (X1)
+    added_in: P0-W1.PH-W1.9
+    role: primary
+    flags: []
+  liclo4_gamma_pc:
+    symbol: gamma_pm_liclo4_pc
+    transform: none
+    unit: '1'
+    regimes:
+    - R-cell
+    status: gap
+    value: null
+    range: null
+    range_reason: 'gap (PH-W1.9): no measured or computed mean ionic activity coefficient of LiClO4 in propylene
+      carbonate at 1 mol dm^-3 (or at any concentration) in a source with a retrievable text. The one open Debye-Hueckel
+      plus Born treatment found covers LiPF6 in PC (molal scale, up to 1 molal, shown as a plot offset by an arbitrary
+      constant, no printed values) and LiClO4 only in DMC; its radii for LiPF6 in PC are comparators. The saturated
+      activity of LiClO4 is not given by any source (it needs the solubility key and this one on the same scale).'
+    prior:
+      family: none
+    rule: X1
+    sources: []
+    best_grade: null
+    conditions: n.s.
+    correlation_group: null
+    notes: 'Comparators (not admitted, E2): TK-077, TK-078, TK-079.'
+    method: no admitted row (X1)
+    added_in: P0-W1.PH-W1.9
     role: primary
     flags: []
   p_c_site_square:
