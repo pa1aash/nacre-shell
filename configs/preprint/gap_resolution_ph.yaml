@@ -289,3 +289,4 @@ post_cp3_accounted:
   k1_tier2: [margin_service, t_svc_min, j_svc]                                 # margins and read_from_w5 above
   ladder_film: [log10_ksp_el_<film>, sigma_corr_<film>, rho_film_<film>, dv_film, j_corr_max, t_max_corr, s_tol]
   slurry_acid_window: [p_total_slurry_h3po4_window]                            # PH-W1.8 gap key (mol m^-3), no value: unresolved
+  sink_margin: [liclo4_solubility_pc, liclo4_gamma_pc]                         # PH-W1.9 keys of m_sink (thresholds sink_v10), no value: a gap leaves the dilute exclusion undetermined
