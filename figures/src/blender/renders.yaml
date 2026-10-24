@@ -1,23 +1,59 @@
 # Rendered (raster) figures. Built only on request (`nacre figs --only fig1`): a render takes
 # about an hour on one CPU thread and needs Blender; a full `nacre figs` leaves them as committed.
-# Each entry names a headless Blender script, its panels and the composite layout; the palette
-# is derived from the stability-map palette by nacre.figs.rendered, never written here.
+# Each entry names a headless Blender script, its panels, the composite layout, the geometry
+# settings read by nacre.figs.hero_geometry and the drawing settings read by the script; the
+# colours are derived from the repository palette by nacre.figs.rendered, never written here.
 renders:
   fig1:
     script: figures/src/blender/hero.py
     claim: >-
-      An illustrative construction of the two stages the screen addresses, drawn as two separate
-      single-phase panels: carbonate crystallites on aluminium foil in water (processing), and a
-      condensed phosphate film on foil in electrolyte (cell). It shows no data and no result.
+      An illustrative molecular construction of the two stages the screen addresses, drawn as two
+      separate single-phase panels: an aluminium (111) slab under water with dissolved Ca2+ and
+      CO3(2-) ions (processing), and the same slab carrying one condensed phosphate chain under
+      propylene carbonate with Li+ and ClO4- ions (cell). It shows no data and no result.
     caption_key: >-
       Two panels left to right, with panel letters set outside the artwork by the manuscript
-      layout. (a) Carbonate crystallites on foil in water. (b) A condensed phosphate film on foil
-      in electrolyte; an open candidate, not a result. The caption states that the construction
-      is illustrative and that layering and polymorph structure are not tested by the screen.
+      layout. (a) Al(111) under water with Ca2+ and CO3(2-). (b) Al(111) with a condensed
+      phosphate chain under propylene carbonate with Li+ and ClO4-; an open candidate, not a
+      result. Positions are schematic; P-O lengths are normalised, not measured.
     width: double
     panels: [a, b]
     gutter_px: 93
     height_px: 1480
     seed: 7
     samples: 128
-    liquid_lighten: 0.7
+    # The slab takes the palette's Al colour scaled by this factor (towards black): the plain Al
+    # colour sits 9.6 CAM02-UCS units from the phosphate fill, the scaled one clears delta_e_min
+    # against every class in both panels.
+    al_shade: 0.4
+    geometry:
+      slab_x: 92.0
+      slab_y: 82.0
+      slab_layers: 2
+      liquid_bottom: 2.4
+      liquid_height: 40.0
+      # Cutaway: the liquid starts this far in front of the slab centre, the slab runs on to its front edge.
+      liquid_front: -41.0
+      # Fraction of the liquid number density drawn, so that the slab stays visible through it.
+      density_fraction: 0.4
+      liquid_density_g_cm3: {water: 1.0, propylene_carbonate: 1.2}
+      min_heavy_separation: 2.7
+      # Ions are placed in a zone around the focus plane, so that they are seen sharp.
+      ion_zone: {x: [-16.0, 16.0], y: [-28.0, -12.0], z: [3.0, 13.0]}
+      ions_a: {Ca: 7, CO3: 7}
+      ions_b: {Li: 7, ClO4: 7}
+      chain_units: 9
+      chain_z: 2.3
+      chain_y: -20.0
+      # P-O and Cl-O are drawn at this multiple of the committed calcite C-O length (schematic).
+      schematic_bond_factor: 1.0
+    scene:
+      background: [0.93, 0.93, 0.92]
+      bond_radius: 0.13
+      radius_factor: {default: 0.42, Al: 1.18, Ca: 0.5, Li: 0.5, carbonate: 0.45, phosphate: 0.5}
+      target: [0.0, 0.0, 10.0]
+      camera: {location: [0.0, -75.0, 12.0], lens_mm: 50.0, focus: [0.0, -20.0, 3.0], fstop: 0.04}
+      lights:
+        - [key, [-30.0, -60.0, 60.0], 40000.0, 40.0]
+        - [fill, [40.0, -70.0, 20.0], 12000.0, 40.0]
+        - [rim, [0.0, 20.0, 70.0], 8000.0, 50.0]

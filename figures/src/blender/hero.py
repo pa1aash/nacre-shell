@@ -1,40 +1,42 @@
-"""Hero figure scene: two separate single-phase panels, rendered headless.
+"""Hero figure scene: two separate single-phase molecular panels, rendered headless.
 
-  blender -b -P figures/src/blender/hero.py -- --palette p.json --out-dir DIR [--seed 7]
-          [--samples 128] [--width-px 1973] [--height-px 1480] [--scale 1.0] [--panel a|b]
+  blender -b -P figures/src/blender/hero.py -- --palette p.json --geometry g.json --out-dir DIR
+          [--seed 7] [--samples 128] [--width-px 1973] [--height-px 1480] [--scale 1.0] [--panel a|b]
 
-Panel a: carbonate crystallites on aluminium foil in water (processing stage).
-Panel b: a condensed phosphate film on foil in electrolyte (cell stage).
-Illustrative construction: no text objects, no scale, no data. The two solids are never in one
-scene. Colours come from the palette file written by nacre.figs.rendered (the figure palette of
-the stability map). Deterministic: Cycles on the CPU with one thread, a fixed seed, a fixed
-sample count, no denoiser, no adaptive sampling, and a private random generator.
-Writes hero_a.png and hero_b.png (or one, with --panel) and hero_scene_<panels>.json (engine settings and object counts).
+Panel a (processing stage): an Al(111) slab under water, with dissolved Ca2+ and CO3(2-) ions.
+Panel b (cell stage): the same slab with a condensed phosphate chain lying on it, under propylene
+carbonate with Li+ and ClO4- ions. Atom positions come from nacre.figs.hero_geometry (generated
+lattice, package molecule geometries, a committed C-O length, schematic tetrahedra); this script
+only draws them ball-and-stick. Illustrative construction: no text objects, no scale, no data.
+Colours come from the palette file written by nacre.figs.rendered: one colour per element, the
+stability-map fills for the carbonate ion and the phosphate chain. Deterministic: Cycles on the
+CPU with one thread, a fixed seed, a fixed sample count, no denoiser, no adaptive sampling.
+Writes hero_<panel>.png and hero_scene_<panel>.json (engine settings and object counts).
 """
 import argparse
 import json
 import math
-import random
 import sys
 
 import bpy
-import bmesh
-from mathutils import Euler, Vector
+import numpy as np
+from mathutils import Vector
 
-HALF_X, HALF_Y, LIQ_H, FOIL_T = 5.0, 3.2, 3.3, 0.16
+FORBIDDEN = {"FONT", "GPENCIL", "GREASEPENCIL"}
 
 
 def args():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     p = argparse.ArgumentParser()
     p.add_argument("--palette", required=True)
+    p.add_argument("--geometry", required=True)
     p.add_argument("--out-dir", required=True)
     p.add_argument("--seed", type=int, default=7)
     p.add_argument("--samples", type=int, default=128)
     p.add_argument("--width-px", type=int, default=1973)
     p.add_argument("--height-px", type=int, default=1480)
     p.add_argument("--scale", type=float, default=1.0)
-    p.add_argument("--panel", choices=("a", "b"), help="render one panel only (default both)")
+    p.add_argument("--panel", choices=("a", "b"), required=True)
     return p.parse_args(argv)
 
 
@@ -43,7 +45,7 @@ def lin(c):
     return [f(x) for x in c]
 
 
-def material(name, srgb, rough=0.5, metallic=0.0, spec=0.5, alpha=1.0):
+def material(name, srgb, rough=0.35, metallic=0.0, spec=0.5, coat=0.0):
     m = bpy.data.materials.new(name)
     m.use_nodes = True
     b = m.node_tree.nodes["Principled BSDF"]
@@ -51,120 +53,136 @@ def material(name, srgb, rough=0.5, metallic=0.0, spec=0.5, alpha=1.0):
     b.inputs["Roughness"].default_value = rough
     b.inputs["Metallic"].default_value = metallic
     b.inputs["Specular IOR Level"].default_value = spec
-    b.inputs["Alpha"].default_value = alpha
+    b.inputs["Coat Weight"].default_value = coat
     return m
 
 
-def put(obj, mat, smooth=True):
-    obj.data.materials.append(mat)
-    if smooth:
-        for poly in obj.data.polygons:
-            poly.use_smooth = True
-    return obj
+def _template_cylinder(segments=16):
+    """Open unit cylinder along z from -0.5 to 0.5, radius 1, as triangles."""
+    ang = np.arange(segments) * 2 * np.pi / segments
+    ring = np.stack([np.cos(ang), np.sin(ang)], axis=1)
+    verts = np.vstack([np.c_[ring, np.full(segments, -0.5)], np.c_[ring, np.full(segments, 0.5)]])
+    k = np.arange(segments)
+    n = (k + 1) % segments
+    faces = np.vstack([np.stack([k, n, n + segments], 1), np.stack([k, n + segments, k + segments], 1)])
+    return verts, faces
 
 
-def box(name, size, loc, mat, bevel=0.0):
-    bpy.ops.mesh.primitive_cube_add(size=1.0, location=loc)
-    o = bpy.context.active_object
-    o.name = name
-    o.scale = size
-    bpy.ops.object.transform_apply(scale=True)
-    if bevel:
-        mod = o.modifiers.new("bevel", "BEVEL")
-        mod.width, mod.segments = bevel, 3
-        bpy.ops.object.modifier_apply(modifier="bevel")
-    return put(o, mat, smooth=False)
+def _rotations_z_to(d):
+    """Rotation matrices taking +z onto each unit vector in d (Rodrigues)."""
+    z = np.array([0.0, 0.0, 1.0])
+    out = np.empty((len(d), 3, 3))
+    for i, v in enumerate(d):
+        c = float(np.dot(z, v))
+        if c < -1.0 + 1e-9:
+            out[i] = np.diag([1.0, -1.0, -1.0])
+            continue
+        w = np.cross(z, v)
+        k = np.array([[0, -w[2], w[1]], [w[2], 0, -w[0]], [-w[1], w[0], 0]])
+        out[i] = np.eye(3) + k + k @ k / (1.0 + c)
+    return out
 
 
-def crystallite(rng, mat, size, loc):
-    """A rhombohedron: a bevelled cube sheared along its body diagonal."""
-    bpy.ops.mesh.primitive_cube_add(size=1.0, location=loc)
-    o = bpy.context.active_object
-    o.name = "crystallite"
-    me = o.data
-    shear = rng.uniform(0.18, 0.34)
-    for v in me.vertices:
-        v.co.x += shear * v.co.z
-        v.co.y += 0.5 * shear * v.co.z
-    stretch = rng.uniform(0.8, 1.3)
-    o.scale = (size, size, size * stretch)
-    o.rotation_euler = Euler((rng.uniform(-0.12, 0.12), rng.uniform(-0.12, 0.12), rng.uniform(0, math.tau)))
-    bpy.ops.object.transform_apply(scale=True, rotation=True)
-    mod = o.modifiers.new("bevel", "BEVEL")
-    mod.width, mod.segments = size * 0.06, 2
-    bpy.ops.object.modifier_apply(modifier="bevel")
-    o.location.z = FOIL_T / 2 * 0 + size * stretch * 0.5 * 0.92
-    return put(o, mat, smooth=False)
-
-
-def scatter(rng, n, rmin, rmax):
-    pts = []
-    tries = 0
-    while len(pts) < n and tries < 40000:
-        tries += 1
-        s = rng.uniform(rmin, rmax)
-        x, y = rng.uniform(-HALF_X + 0.5, HALF_X - 0.5), rng.uniform(-HALF_Y + 0.4, HALF_Y - 0.4)
-        if all((x - px) ** 2 + (y - py) ** 2 > (0.82 * (s + ps)) ** 2 for px, py, ps in pts):
-            pts.append((x, y, s))
-    return pts
-
-
-def film(rng, mat, thickness=0.2):
-    """A continuous condensed layer: one displaced slab, rounded at the cut edges."""
-    nx, ny = 220, 110
-    me = bpy.data.meshes.new("film")
-    bm = bmesh.new()
-    bmesh.ops.create_grid(bm, x_segments=nx, y_segments=ny, size=1.0)
-    waves = [(rng.uniform(0.35, 0.9), rng.uniform(0.35, 0.9), rng.uniform(0, math.tau), rng.uniform(0.012, 0.03))
-             for _ in range(6)]
-    for v in bm.verts:
-        x, y = v.co.x * (HALF_X - 0.25), v.co.y * (HALF_Y - 0.25)
-        z = sum(a * math.sin(fx * x + fy * y + ph) for fx, fy, ph, a in waves)
-        v.co = Vector((x, y, thickness + z))
-    bm.to_mesh(me)
-    bm.free()
-    o = bpy.data.objects.new("film", me)
+def mesh_object(name, verts, faces, mat):
+    me = bpy.data.meshes.new(name)
+    me.vertices.add(len(verts))
+    me.vertices.foreach_set("co", verts.astype(np.float32).ravel())
+    me.loops.add(faces.size)
+    me.loops.foreach_set("vertex_index", faces.astype(np.int32).ravel())
+    me.polygons.add(len(faces))
+    me.polygons.foreach_set("loop_start", (np.arange(len(faces)) * 3).astype(np.int32))
+    me.update(calc_edges=True)
+    me.shade_smooth()
+    me.materials.append(mat)
+    o = bpy.data.objects.new(name, me)
     bpy.context.scene.collection.objects.link(o)
-    bpy.context.view_layer.objects.active = o
-    mod = o.modifiers.new("solid", "SOLIDIFY")
-    mod.thickness, mod.offset = thickness + 0.05, -1.0
-    bpy.ops.object.modifier_apply(modifier="solid")
-    return put(o, mat)
+    return o
 
 
-def lights():
-    for name, kind, loc, energy, size in (("key", "AREA", (-4.0, -6.0, 11.0), 1500.0, 9.0),
-                                          ("fill", "AREA", (8.0, -9.0, 5.0), 350.0, 8.0)):
-        d = bpy.data.lights.new(name, kind)
+def points_object(name, pos, rad, mat):
+    """Atoms as a point cloud: Cycles renders each point as an exact sphere."""
+    pc = bpy.data.pointclouds.new(name)
+    pc.resize(len(pos))
+    pc.attributes["position"].data.foreach_set("vector", pos.astype(np.float32).ravel())
+    if "radius" not in pc.attributes:
+        pc.attributes.new("radius", "FLOAT", "POINT")
+    pc.attributes["radius"].data.foreach_set("value", rad.astype(np.float32))
+    pc.materials.append(mat)
+    o = bpy.data.objects.new(name, pc)
+    bpy.context.scene.collection.objects.link(o)
+    return o
+
+
+def _tile(tv, tf, transform):
+    """Copies of a template mesh, one per transform (n, 3, 3 linear part; n, 3 offset)."""
+    lin, off = transform
+    verts = np.einsum("nij,vj->nvi", lin, tv) + off[:, None, :]
+    faces = tf[None, :, :] + (np.arange(len(lin)) * len(tv))[:, None, None]
+    return verts.reshape(-1, 3), faces.reshape(-1, 3)
+
+
+def draw(geo, style, mats):
+    """One point cloud of atoms and one merged mesh of half-bonds per colour class."""
+    atoms, bonds = geo["atoms"], geo["bonds"]
+    cls = np.array([a[0] for a in atoms])
+    el = [a[1] for a in atoms]
+    pos = np.array([a[2:] for a in atoms], dtype=float)
+    rf = style["radius_factor"]
+    rad = np.array([rf.get(c, rf["default"]) * style["covalent"][e] for c, e in zip(cls, el)])
+    cyl = _template_cylinder()
+    br = style["bond_radius"]
+    b = np.array(bonds, dtype=int).reshape(-1, 2)
+    starts = np.vstack([pos[b[:, 0]], pos[b[:, 1]]])
+    mids = np.vstack([(pos[b[:, 0]] + pos[b[:, 1]]) / 2] * 2)
+    bcls = np.concatenate([cls[b[:, 0]], cls[b[:, 1]]])
+    vec = mids - starts
+    length = np.linalg.norm(vec, axis=1)
+    keep = length > 1e-6
+    for c in sorted(set(cls)):
+        points_object("atoms_" + c, pos[cls == c], rad[cls == c], mats[c])
+        sel = (bcls == c) & keep
+        if sel.any():
+            d = vec[sel] / length[sel][:, None]
+            lin = _rotations_z_to(d) @ np.einsum("n,ij->nij", np.ones(sel.sum()), np.diag([br, br, 1.0]))
+            lin[:, :, 2] *= length[sel][:, None]
+            v, f = _tile(cyl[0], cyl[1], (lin, (starts[sel] + mids[sel]) / 2))
+            mesh_object("bonds_" + c, v, f, mats[c])
+
+
+def lights(style):
+    for name, loc, energy, size in style["lights"]:
+        d = bpy.data.lights.new(name, "AREA")
         d.energy, d.size = energy, size
         o = bpy.data.objects.new(name, d)
         o.location = loc
         bpy.context.scene.collection.objects.link(o)
-        direction = Vector((0.0, 0.0, 0.6)) - Vector(loc)
-        o.rotation_euler = direction.to_track_quat("-Z", "Y").to_euler()
+        o.rotation_euler = (Vector(style["target"]) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
 
 
-def camera(aspect):
+def camera(style):
+    c = style["camera"]
     d = bpy.data.cameras.new("cam")
-    d.lens, d.sensor_width = 42.0, 36.0
+    d.lens, d.sensor_width = c["lens_mm"], 36.0
+    d.clip_end = 1000.0
     o = bpy.data.objects.new("cam", d)
     bpy.context.scene.collection.objects.link(o)
-    o.location = (1.2, -12.5, 8.2)
-    o.rotation_euler = (Vector((0.0, 0.2, 1.0)) - o.location).to_track_quat("-Z", "Y").to_euler()
+    o.location = c["location"]
+    target = Vector(style["target"])
+    o.rotation_euler = (target - o.location).to_track_quat("-Z", "Y").to_euler()
+    d.dof.use_dof = True
+    d.dof.focus_distance = (Vector(c["focus"]) - o.location).length
+    d.dof.aperture_fstop = c["fstop"]
     bpy.context.scene.camera = o
 
 
-def reset():
+def setup(a, w, h, style):
     bpy.ops.wm.read_factory_settings(use_empty=True)
-
-
-def setup(a, w, h):
     sc = bpy.context.scene
     sc.render.engine = "CYCLES"
     c = sc.cycles
     c.device, c.samples, c.seed = "CPU", a.samples, a.seed
     c.use_animated_seed, c.use_adaptive_sampling, c.use_denoising = False, False, False
-    c.transmission_bounces, c.max_bounces, c.glossy_bounces = 10, 12, 6
+    c.max_bounces, c.glossy_bounces, c.diffuse_bounces = 8, 4, 4
     c.sample_clamp_indirect = 10.0
     sc.render.threads_mode, sc.render.threads = "FIXED", 1
     sc.render.resolution_x, sc.render.resolution_y, sc.render.resolution_percentage = w, h, 100
@@ -178,51 +196,42 @@ def setup(a, w, h):
     sc.world = bpy.data.worlds.new("w")
     sc.world.use_nodes = True
     bg = sc.world.node_tree.nodes["Background"]
-    bg.inputs["Color"].default_value = (1.0, 1.0, 1.0, 1.0)
+    bg.inputs["Color"].default_value = lin(style["background"]) + [1.0]
     bg.inputs["Strength"].default_value = 1.0
 
 
-def build(panel, pal, seed):
-    rng = random.Random(seed * 1000 + (1 if panel == "a" else 2))
-    foil = material("foil", pal["foil"], rough=0.45, metallic=0.6, spec=0.6)
-    liquid = material("liquid", pal["liquid"], rough=0.0, spec=0.5, alpha=0.2)
-    surface = material("surface", pal["liquid"], rough=0.0, spec=0.6, alpha=0.3)
-    ground = material("ground", (1.0, 1.0, 1.0), rough=1.0, spec=0.0)
-    box("ground", (60.0, 60.0, 0.1), (0.0, 0.0, -FOIL_T - 0.05 - 0.6), ground)
-    box("foil", (2 * HALF_X, 2 * HALF_Y, FOIL_T), (0.0, 0.0, -FOIL_T / 2), foil, bevel=0.03)
-    if panel == "a":
-        mat = material("carbonate", pal["carbonate"], rough=0.32, spec=0.7)
-        for x, y, s in scatter(rng, 150, 0.17, 0.46):
-            crystallite(rng, mat, s, (x, y, 0.0))
-    else:
-        film(rng, material("phosphate", pal["phosphate"], rough=0.42, spec=0.55))
-    body = box("liquid", (2 * HALF_X, 2 * HALF_Y, LIQ_H), (0.0, 0.0, LIQ_H / 2), liquid, bevel=0.05)
-    top = box("surface", (2 * HALF_X, 2 * HALF_Y, 0.04), (0.0, 0.0, LIQ_H), surface)
-    for o in (body, top):
-        o.visible_shadow = False  # the liquid is a tint, not an obstacle
-    lights()
+def materials(pal):
+    mats = {}
+    for cls, srgb in pal.items():
+        if cls == "Al":
+            mats[cls] = material(cls, srgb, rough=0.38, metallic=0.55, spec=0.6)
+        else:
+            mats[cls] = material(cls, srgb, rough=0.3, spec=0.5, coat=0.25)
+    return mats
 
 
 def main():
     a = args()
     pal = json.load(open(a.palette))
+    geo_all = json.load(open(a.geometry))
+    style = geo_all["style"]
+    geo = geo_all["panels"][a.panel]
     w, h = max(8, int(round(a.width_px * a.scale))), max(8, int(round(a.height_px * a.scale)))
+    setup(a, w, h, style)
+    draw(geo, style, materials(pal))
+    lights(style)
+    camera(style)
+    types = {}
+    for o in bpy.context.scene.objects:
+        types[o.type] = types.get(o.type, 0) + 1
+    if FORBIDDEN & set(types):
+        raise SystemExit("hero: text or annotation objects in the scene: %s" % types)
     meta = {"blender": bpy.app.version_string, "seed": a.seed, "samples": a.samples, "engine": "CYCLES",
-            "device": "CPU", "threads": 1, "denoise": False, "size_px": [w, h], "panels": {}}
-    for panel in ((a.panel,) if a.panel else ("a", "b")):
-        reset()
-        setup(a, w, h)
-        build(panel, pal, a.seed)
-        camera(w / h)
-        types = {}
-        for o in bpy.context.scene.objects:
-            types[o.type] = types.get(o.type, 0) + 1
-        if "FONT" in types or "GPENCIL" in types:
-            raise SystemExit("hero: text or annotation objects in the scene: %s" % types)
-        meta["panels"][panel] = types
-        bpy.context.scene.render.filepath = "%s/hero_%s.png" % (a.out_dir, panel)
-        bpy.ops.render.render(write_still=True)
-    json.dump(meta, open("%s/hero_scene_%s.json" % (a.out_dir, a.panel or "ab"), "w"), indent=1, sort_keys=True)
+            "device": "CPU", "threads": 1, "denoise": False, "size_px": [w, h],
+            "panels": {a.panel: types}, "atoms": len(geo["atoms"]), "bonds": len(geo["bonds"])}
+    bpy.context.scene.render.filepath = "%s/hero_%s.png" % (a.out_dir, a.panel)
+    bpy.ops.render.render(write_still=True)
+    json.dump(meta, open("%s/hero_scene_%s.json" % (a.out_dir, a.panel), "w"), indent=1, sort_keys=True)
 
 
 main()

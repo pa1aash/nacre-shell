@@ -63,27 +63,104 @@ def test_palette_is_the_stability_map_palette_and_the_solids_stay_distinct():
     e = rendered.table(REPO)["fig1"]
     pal = rendered.palette(e, REPO)
     fills = regimes.fills(REPO)
+    elements = style.palette(REPO)["elements"]
     assert pal["carbonate"] == list(fills["suitable against dissolution"])
     assert pal["phosphate"] == list(fills["open"])
-    problems, dmin = rendered.palette_problems(pal, REPO)
+    for el in ("O", "H", "C", "Ca", "Li"):
+        assert pal[el] == list(elements[el]["srgb"]), el
+    assert pal["Al"] == [round(x * e["al_shade"], 4) for x in elements["Al"]["srgb"]]
+    problems, dmin, dall = rendered.palette_problems(pal, REPO)
     assert problems == [] and dmin >= float(style.palette(REPO)["delta_e_min"])
+    assert dall[0] <= dmin
 
 
-def test_scene_script_builds_no_text_and_one_solid_phase_per_panel():
+@pytest.fixture(scope="module")
+def geometry():
+    from nacre.figs import hero_geometry
+    e = rendered.table(REPO)["fig1"]
+    return hero_geometry.build(e, REPO, e["seed"])
+
+
+def test_scene_script_builds_no_text_objects():
     src = (REPO / "figures/src/blender/hero.py").read_text()
     assert not re.search(r"text_add|font_curve|\.body\s*=", src)
-    assert '"FONT" in types' in src  # the scene itself is checked, not only the source
-    a, b = src.index('if panel == "a"'), src.index("else:", src.index('if panel == "a"'))
-    assert "carbonate" in src[a:b] and "phosphate" not in src[a:b]
-    assert "phosphate" in src[b:src.index("body = box")] and "carbonate" not in src[b:src.index("body = box")]
+    assert '"FONT"' in src and "FORBIDDEN & set(types)" in src  # the scene itself is checked, not only the source
+
+
+def test_one_solid_phase_per_panel(geometry):
+    a = {x[0] for x in geometry["panels"]["a"]["atoms"]}
+    b = {x[0] for x in geometry["panels"]["b"]["atoms"]}
+    assert {"Al", "carbonate", "Ca", "O", "H"} == a
+    assert {"Al", "phosphate", "Li", "Cl", "C", "O", "H"} == b
+
+
+def test_geometry_is_generated_and_deterministic(geometry):
+    from nacre.figs import hero_geometry
+    e = rendered.table(REPO)["fig1"]
+    assert hero_geometry.build(e, REPO, e["seed"]) == geometry
+    for panel in ("a", "b"):
+        c = geometry["counts"][panel]
+        assert c["solvent"] == c["solvent_target"] > 0
+    assert "TM-030" in geometry["sources"]["carbonate"]
+    assert geometry["sources"]["phosphate"].startswith("schematic")
+
+
+def test_slab_is_fcc111_with_the_reference_lattice_constant(geometry):
+    import numpy as np
+    from ase.data import atomic_numbers, reference_states
+    nn = reference_states[atomic_numbers["Al"]]["a"] / 2 ** 0.5
+    al = np.array([x[2:] for x in geometry["panels"]["a"]["atoms"] if x[0] == "Al"])
+    top = al[np.isclose(al[:, 2], 0.0)]
+    d = np.linalg.norm(top[1:] - top[0], axis=1)
+    assert abs(d.min() - nn) < 1e-3
+
+
+def _lengths(atoms, bonds, cls):
+    import numpy as np
+    return [float(np.linalg.norm(np.subtract(atoms[i][2:], atoms[j][2:]))) for i, j in bonds
+            if atoms[i][0] == cls and atoms[j][0] == cls]
+
+
+def test_carbonate_and_phosphate_lengths_come_from_the_committed_value(geometry):
+    from nacre.figs import hero_geometry
+    d_co, _src = hero_geometry.c_o_length(REPO)
+    e = rendered.table(REPO)["fig1"]
+    a, b = geometry["panels"]["a"], geometry["panels"]["b"]
+    assert all(abs(x - d_co) < 1e-3 for x in _lengths(a["atoms"], a["bonds"], "carbonate"))
+    po = _lengths(b["atoms"], b["bonds"], "phosphate")
+    assert po and all(abs(x - d_co * e["geometry"]["schematic_bond_factor"]) < 1e-3 for x in po)
+
+
+def test_phosphate_chain_is_corner_sharing_tetrahedra():
+    import math
+
+    import numpy as np
+    from nacre.figs import hero_geometry
+    c = hero_geometry.phosphate_chain(5, 1.0, 3.0)
+    pos, nb = np.array(c["pos"]), {}
+    for i, j in c["bonds"]:
+        nb.setdefault(i, []).append(j)
+        nb.setdefault(j, []).append(i)
+    for i, s in enumerate(c["symbols"]):
+        if s == "P":
+            assert len(nb[i]) == 4
+            for x in nb[i]:
+                for y in nb[i]:
+                    if x < y:
+                        ang = math.degrees(math.acos(np.dot(pos[x] - pos[i], pos[y] - pos[i])))
+                        assert abs(ang - 109.4712) < 1e-3
+    bridging = [i for i, s in enumerate(c["symbols"]) if s == "O" and len(nb[i]) == 2]
+    assert len(bridging) == 4
 
 
 def test_hero_caption_states_the_rulings():
     text = (REPO / "figures/src/captions/fig1.md").read_text()
     draft = re.search(r"^## Draft\n(.*?)(?=^## )", text, re.S | re.M).group(1).lower()
     for must in ("illustrative construction", "not tested by the screen", "open candidate", "not a result",
-                 "thermodynamically excluded at high voltage"):
+                 "thermodynamically excluded at high voltage", "schematic", "without quantitative meaning",
+                 "whether or how a film forms", "p–o lengths normalised"):
         assert must in draft, must
+    assert len(draft.split()) <= 70
 
 
 @pytest.mark.skipif(not any(Path(p).exists() for p in ("/Applications/Blender.app/Contents/MacOS/Blender",))
@@ -118,6 +195,7 @@ def test_manifest_records_the_render():
         assert r["reproducibility"] == "render not byte-reproducible; asset hash pinned"
     assert r["palette_min_delta_e_solids"] >= float(style.palette(REPO)["delta_e_min"])
     assert not {"FONT", "GPENCIL"} & {k for m in r["scene_objects"].values() for k in m}
+    assert len(r["geometry_sha256"]) == 64 and "carbonate" in r["geometry_sources"]
 
 
 def test_manifest_hashes_equal_the_committed_files():

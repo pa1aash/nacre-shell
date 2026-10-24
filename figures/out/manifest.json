@@ -519,8 +519,8 @@
   "fig1": {
    "id": "fig1",
    "kind": "render",
-   "claim": "An illustrative construction of the two stages the screen addresses, drawn as two separate single-phase panels: carbonate crystallites on aluminium foil in water (processing), and a condensed phosphate film on foil in electrolyte (cell). It shows no data and no result.",
-   "caption_key": "Two panels left to right, with panel letters set outside the artwork by the manuscript layout. (a) Carbonate crystallites on foil in water. (b) A condensed phosphate film on foil in electrolyte; an open candidate, not a result. The caption states that the construction is illustrative and that layering and polymorph structure are not tested by the screen.",
+   "claim": "An illustrative molecular construction of the two stages the screen addresses, drawn as two separate single-phase panels: an aluminium (111) slab under water with dissolved Ca2+ and CO3(2-) ions (processing), and the same slab carrying one condensed phosphate chain under propylene carbonate with Li+ and ClO4- ions (cell). It shows no data and no result.",
+   "caption_key": "Two panels left to right, with panel letters set outside the artwork by the manuscript layout. (a) Al(111) under water with Ca2+ and CO3(2-). (b) Al(111) with a condensed phosphate chain under propylene carbonate with Li+ and ClO4-; an open candidate, not a result. Positions are schematic; P-O lengths are normalised, not measured.",
    "mock": false,
    "width": "double",
    "size_cm": [
@@ -532,7 +532,7 @@
     "scene": "5.2.2 LTS"
    },
    "script": "figures/src/blender/hero.py",
-   "script_sha256": "72ab02d16bc842c60f03fa7098714f44be177329e190a78450a634621bc80a5c",
+   "script_sha256": "8dc3af1083dd65f59d308594a1d95257703e95922c8cc7ecf645b37316523750",
    "seed": 7,
    "samples": 128,
    "engine": "CYCLES",
@@ -540,20 +540,45 @@
    "threads": 1,
    "denoise": false,
    "palette": {
+    "Al": [
+     0.3368,
+     0.3026,
+     0.2653
+    ],
+    "C": [
+     0.565,
+     0.565,
+     0.565
+    ],
+    "Ca": [
+     0.239,
+     1.0,
+     0.0
+    ],
+    "Cl": [
+     0.122,
+     0.941,
+     0.122
+    ],
+    "H": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "Li": [
+     0.8,
+     0.502,
+     1.0
+    ],
+    "O": [
+     1.0,
+     0.051,
+     0.051
+    ],
     "carbonate": [
      0.3704,
      0.7206,
      0.918
-    ],
-    "foil": [
-     0.6,
-     0.6,
-     0.6
-    ],
-    "liquid": [
-     0.715,
-     0.8424,
-     0.9139
     ],
     "phosphate": [
      0.9441,
@@ -561,34 +586,69 @@
      0.2959
     ]
    },
-   "palette_sha256": "de6fafc52f261b654f85222c6bfbd4d7913933de501b09cd43288ef757d7b32b",
-   "palette_min_delta_e_solids": 22.4,
+   "palette_sha256": "e6b6308663d0b4be5f2f8c7c1387b517ed8da6700605bd48c00148b3ed4aa8f6",
+   "palette_min_delta_e_solids": 21.0,
+   "palette_rule": "slab, carbonate and phosphate pairwise, and slab against every class, >= delta_e_min",
+   "palette_min_delta_e_all_classes": [
+    2.7,
+    "Cl",
+    "phosphate"
+   ],
+   "geometry_sha256": "8ba0f873b3d5158022ebd37e90c3700f94c21a9c167fd006b050e55c9286a001",
+   "geometry_sources": {
+    "Al": "ase.build.fcc111, a = 4.0500 Angstrom from ase.data.reference_states (ase 3.29.0)",
+    "water": "ase.build.molecule('H2O'), G2 geometry (ase 3.29.0)",
+    "carbonate": "C-O 1.2814 Angstrom, lit/params.yaml c_o_bond_length_calcite (TM-030)",
+    "propylene_carbonate": "RDKit 2026.9.1 ETKDGv3 (seed 7) + MMFF94",
+    "phosphate": "schematic: regular corner-sharing tetrahedra, P-O normalised to 1.00 x the calcite C-O length",
+    "perchlorate": "schematic: the same normalised tetrahedron"
+   },
+   "geometry_counts": {
+    "a": {
+     "carbonate": 7,
+     "Ca": 7,
+     "solvent": 3487,
+     "solvent_target": 3487
+    },
+    "b": {
+     "Cl": 7,
+     "Li": 7,
+     "solvent": 738,
+     "solvent_target": 738
+    }
+   },
+   "atoms": {
+    "a": 12544,
+    "b": 11721
+   },
    "scene_objects": {
     "a": {
      "CAMERA": 1,
-     "LIGHT": 2,
-     "MESH": 154
+     "LIGHT": 3,
+     "MESH": 3,
+     "POINTCLOUD": 5
     },
     "b": {
      "CAMERA": 1,
-     "LIGHT": 2,
-     "MESH": 5
+     "LIGHT": 3,
+     "MESH": 5,
+     "POINTCLOUD": 7
     }
    },
    "renders": 2,
    "render_hashes": [
-    "3a8a5a4a4729a0b6ebc419ea084bbc843dc01a21305e1ea3d27a3c2f34534a2a",
-    "3a8a5a4a4729a0b6ebc419ea084bbc843dc01a21305e1ea3d27a3c2f34534a2a"
+    "d918157e69a56e3a3421123619c68afd8884817931796d63dba0286a918e8bd9",
+    "d918157e69a56e3a3421123619c68afd8884817931796d63dba0286a918e8bd9"
    ],
    "render_hashes_identical": true,
    "reproducibility": "byte-identical across 2 renders",
    "font": "none (no text)",
    "outputs": {
-    "figures/out/fig1.png": "3a8a5a4a4729a0b6ebc419ea084bbc843dc01a21305e1ea3d27a3c2f34534a2a",
-    "figures/out/fig1.pdf": "78d7769f9a54d2a139cbdeb69adff32e44ef30a33e031b5b40e9ded986c6fc98",
-    "figures/out/cvd/fig1_deuteranopia.png": "e2065a6d47e3a0dba9eea83affd2db6c29cbb889d59bd0fbe1fe58566d927731",
-    "figures/out/cvd/fig1_protanopia.png": "e5e19fa0570d6a0dbfff5cb6a9617508f57e4b97dead758519ca001959cc7564",
-    "figures/out/cvd/fig1_tritanopia.png": "8fd997f4ba4f609db0dde1f4f1a033bc9ded5a1fd1a01eee854bceaa1b565eb6"
+    "figures/out/fig1.png": "d918157e69a56e3a3421123619c68afd8884817931796d63dba0286a918e8bd9",
+    "figures/out/fig1.pdf": "ed375dce42123a42578d5023bb89facd37b64f05a72c3d62d64736465e15f088",
+    "figures/out/cvd/fig1_deuteranopia.png": "786492e9ac416b2bdd5374087e33ba2614c63d184c39479ed7ae3dffd3d47296",
+    "figures/out/cvd/fig1_protanopia.png": "1b3a44892ba92881417a17d80cd047928acfe130c054e85fc14aa51bcdaafd26",
+    "figures/out/cvd/fig1_tritanopia.png": "9df5d27c9075636dc19dd75635393617b7a811b004cec4b47a783a710000546e"
    },
    "checker": "pass (raster: size, mode, no text chunks; PDF wrapper: no text; scene: no text objects)"
   }

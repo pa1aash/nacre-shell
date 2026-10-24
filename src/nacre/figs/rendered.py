@@ -1,11 +1,12 @@
 """Rendered (raster) figures: a headless Blender scene composed into one RSC-width PNG and a PDF wrapper.
 
 figures/src/blender/renders.yaml registers each figure: a Blender script that renders one PNG per
-panel, the composite layout and the render settings. Colours are the stability-map palette
-(nacre.figs.regimes fills and the palette gray), exported to a JSON file the script reads.
+panel, the composite layout and the render settings. Atom positions are built by
+nacre.figs.hero_geometry and colours (repository element colours and the stability-map fills)
+by palette(); both are exported to JSON files the script reads.
 
 A render is not built by a plain `nacre figs`; it is built on request (`--only fig1`) because it
-takes about an hour on one CPU thread. The build renders the whole figure twice, compares the
+takes hours on one CPU thread. The build renders the whole figure twice, compares the
 composite sha256 and records the result: byte-identical, or "render not byte-reproducible; asset
 hash pinned" (the committed PNG is then the asset and the manifest pins its hash).
 
@@ -55,27 +56,44 @@ def blender_version(exe):
     return out[0].strip() if out else "unknown"
 
 
+SPECIES = ("O", "H", "C", "Ca", "Li", "Cl")
+PANEL_CLASSES = {"a": ("Al", "O", "H", "Ca", "carbonate"), "b": ("Al", "O", "H", "C", "Li", "Cl", "phosphate")}
+
+
 def palette(entry, root=None):
-    """Scene colours (sRGB) from the stability-map palette: the regime fills for the carbonate
-    ('suitable against dissolution') and the phosphate ('open'), the palette gray for the foil, and a
-    tint of the 'undetermined' fill for the liquid. The element colour of Al is not used: it sits
-    9.6 CAM02-UCS units from the phosphate fill, below delta_e_min."""
+    """Scene colours (sRGB), one per class: the element colours of the repository palette (ase
+    Jmol table, with its adjustments) for O, H, C, Ca and Li, the same ase table for Cl (absent from
+    the palette), the stability-map fills for the carbonate ion ('suitable against dissolution')
+    and the phosphate chain ('open'), and for the Al slab the palette's Al colour scaled by
+    entry['al_shade']: the plain Al colour sits 9.6 CAM02-UCS units from the phosphate fill."""
+    from ase.data import atomic_numbers
+    from ase.data.colors import jmol_colors
     fills = regimes.fills(root)
-    pal = style.palette(root)
-    return {
-        "foil": [float(x) for x in pal["categorical"]["okabe_ito"]["gray"]["srgb"]],
-        "carbonate": [float(x) for x in fills["suitable against dissolution"]],
-        "phosphate": [float(x) for x in fills["open"]],
-        "liquid": [float(x) for x in colours.lighten(fills["undetermined"], entry["liquid_lighten"])],
-    }
+    el = style.palette(root)["elements"]
+    pal = {k: [float(x) for x in el[k]["srgb"]] for k in SPECIES if k in el}
+    pal["Cl"] = [round(float(x), 4) for x in jmol_colors[atomic_numbers["Cl"]]]
+    pal["Al"] = [round(float(x) * float(entry["al_shade"]), 4) for x in el["Al"]["srgb"]]
+    pal["carbonate"] = [float(x) for x in fills["suitable against dissolution"]]
+    pal["phosphate"] = [float(x) for x in fills["open"]]
+    return pal
 
 
 def palette_problems(pal, root=None):
-    """The three solids must clear palette delta_e_min against each other under every vision
-    condition (the liquid is a tint over the scene and is not a separate class)."""
+    """The slab, the carbonate and the phosphate must clear palette delta_e_min against each other,
+    and the slab against every class drawn on it, under every vision condition. Returns
+    (problems, smallest distance of those pairs, smallest distance over all class pairs within a
+    panel, which is recorded but not gated: element pairs follow the repository palette)."""
     need = float(style.palette(root)["delta_e_min"])
-    got = colours.min_delta_e([pal["foil"], pal["carbonate"], pal["phosphate"]])
-    return [] if got >= need else ["scene solids: smallest CAM02-UCS distance %.1f < %.1f" % (got, need)], got
+    pairs = {("Al", "carbonate"), ("Al", "phosphate"), ("carbonate", "phosphate")}
+    for cls in PANEL_CLASSES.values():
+        pairs |= {("Al", c) for c in cls if c != "Al"}
+    got = {pq: colours.min_delta_e([pal[pq[0]], pal[pq[1]]]) for pq in sorted(pairs)}
+    low = [pq for pq, d in got.items() if d < need]
+    within = []
+    for cls in PANEL_CLASSES.values():
+        within += [(colours.min_delta_e([pal[x], pal[y]]), x, y) for i, x in enumerate(cls) for y in cls[i + 1:]]
+    probs = ["%s-%s: smallest CAM02-UCS distance %.1f < %.1f" % (x, y, got[(x, y)], need) for x, y in low]
+    return probs, min(got.values()), min(within)
 
 
 def _wait_for_memory(log, limit_min=60):
@@ -92,18 +110,23 @@ def _wait_for_memory(log, limit_min=60):
         waited += 5
 
 
-def render_panels(root, entry, pal_file, out_dir, exe, scale=1.0, samples=None, log=print):
-    """Run the Blender script, one process per panel, concurrently, one CPU thread each."""
+def render_panels(root, entry, pal_file, out_dir, exe, scale=1.0, samples=None, log=print, geometry_file=None):
+    """Run the Blender script, one process per panel, concurrently, one CPU thread each. The atom
+    positions are built by nacre.figs.hero_geometry into geometry_file (written when absent)."""
     dpi = int(style.applied(root)["raster_dpi"]["value"])
     width_px = int(round(style.width_in(entry["width"], root) * dpi))
     n = len(entry["panels"])
     panel_w = (width_px - entry["gutter_px"] * (n - 1)) // n
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    if geometry_file is None:
+        from nacre.figs import hero_geometry
+        geometry_file = out_dir / "geometry.json"
+        hero_geometry.write(entry, root, entry["seed"], geometry_file)
     procs = []
     for panel in entry["panels"]:
         cmd = [exe, "-b", "-P", str(Path(root) / entry["script"]), "--", "--palette", str(pal_file),
-               "--out-dir", str(out_dir), "--seed", str(entry["seed"]), "--samples", str(samples or entry["samples"]),
+               "--geometry", str(geometry_file), "--out-dir", str(out_dir), "--seed", str(entry["seed"]), "--samples", str(samples or entry["samples"]),
                "--width-px", str(panel_w), "--height-px", str(entry["height_px"]), "--scale", str(scale), "--panel", panel]
         logf = open(out_dir / ("blender_%s.log" % panel), "w")
         procs.append((panel, subprocess.Popen(cmd, stdout=logf, stderr=subprocess.STDOUT), logf))
@@ -179,18 +202,22 @@ def build(root, only=None, cvd=True, log=print, scale=1.0, samples=None, repeat=
         scratch = None
         try:
             pal = palette(entry, root)
-            problems, dmin = palette_problems(pal, root)
+            problems, dmin, dall = palette_problems(pal, root)
             if problems:
                 raise RenderError("%s: %s" % (fid, "; ".join(problems)))
             scratch = Path(tempfile.mkdtemp(prefix="nacre-render-"))
             pal_file = scratch / "palette.json"
             pal_file.write_text(json.dumps(pal, sort_keys=True))
+            from nacre.figs import hero_geometry
+            geo_file = scratch / "geometry.json"
+            geo, geo_sha = hero_geometry.write(entry, root, entry["seed"], geo_file)
             composites = []
             for run in range(repeat):
                 _wait_for_memory(log)
                 rdir = scratch / ("run%d" % run)
                 log("%s: render %d of %d (Blender, one thread per panel)" % (fid, run + 1, repeat))
-                scene, _pw = render_panels(root, entry, pal_file, rdir, exe, scale=scale, samples=samples, log=log)
+                scene, _pw = render_panels(root, entry, pal_file, rdir, exe, scale=scale, samples=samples, log=log,
+                                           geometry_file=geo_file)
                 png = rdir / (fid + ".png")
                 compose([rdir / ("hero_%s.png" % p) for p in entry["panels"]], entry["gutter_px"], dpi, png)
                 composites.append(png)
@@ -223,6 +250,10 @@ def build(root, only=None, cvd=True, log=print, scale=1.0, samples=None, repeat=
                 "palette": {k: [round(x, 4) for x in v] for k, v in sorted(pal.items())},
                 "palette_sha256": hashlib.sha256(json.dumps(pal, sort_keys=True).encode()).hexdigest(),
                 "palette_min_delta_e_solids": round(dmin, 1),
+                "palette_rule": "slab, carbonate and phosphate pairwise, and slab against every class, >= delta_e_min",
+                "palette_min_delta_e_all_classes": [round(dall[0], 1), dall[1], dall[2]],
+                "geometry_sha256": geo_sha, "geometry_sources": geo["sources"], "geometry_counts": geo["counts"],
+                "atoms": {p: m["atoms"] for p, m in sorted(scene.items())},
                 "scene_objects": {p: m["panels"][p] for p, m in sorted(scene.items())},
                 "renders": repeat, "render_hashes": hashes, "render_hashes_identical": identical,
                 "reproducibility": ("byte-identical across %d renders" % repeat) if identical
