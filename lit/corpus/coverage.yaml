@@ -1,6 +1,6 @@
-generated_utc: '2026-10-23T22:46:23Z'
+generated_utc: '2026-10-24T07:02:48Z'
 rule: 'covered: >=2 independent sources (distinct DOIs) with numeric rows; single-source: 1; gap: 0'
-rows: 1401
+rows: 1402
 duplicates_dropped:
 - dropped: TB-011
   kept: TA-006

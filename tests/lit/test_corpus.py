@@ -37,4 +37,7 @@ def test_corpus_files_free_of_scope_patterns():
 
 
 def test_no_full_text_in_lit():
-    assert not [p for p in (REPO / "lit").rglob("*") if p.suffix.lower() in (".pdf", ".txt", ".xml")]
+    # lit/corpus/inputs/ holds operator-supplied licensed PDFs; its own .gitignore keeps them out of the repository
+    skip = REPO / "lit" / "corpus" / "inputs"
+    assert not [p for p in (REPO / "lit").rglob("*") if p.suffix.lower() in (".pdf", ".txt", ".xml") and skip not in p.parents]
+    assert not skip.exists() or (skip / ".gitignore").read_text().split()[0] == "*"

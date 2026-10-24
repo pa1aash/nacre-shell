@@ -1177,3 +1177,5 @@ liclo4_solubility_pc:
   label: saturation concentration of LiClO4 in propylene carbonate
 liclo4_gamma_pc:
   label: mean ionic activity coefficient of LiClO4 in propylene carbonate
+liclo4_ka_pc_25c:
+  label: ion-pair association constant of LiClO4 in propylene carbonate at 298.15 K

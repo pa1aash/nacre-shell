@@ -7,9 +7,9 @@ meta:
   generated_by: uv run python -m nacre.lit.build_params
   spec: lit/corpus/params_spec.yaml
   rule: lit/corpus/params_README.md
-  rule_sha256: 5962efb79d1436865a2556802705dacd32ff50eede8629dbb1471ce62e97205e
-  evidence_table_sha256: 8d895cd6080de6e87995b37236314d5a6d38462b6c2793659fa3039b2dcaa79f
-  generated_utc: '2026-10-23T22:46:28Z'
+  rule_sha256: 444cfdc2b83220c7cd2b9f3c183f5aa4a758653ca8047b2405bb2fce98f2a105
+  evidence_table_sha256: ca23577fd3a5926cdb0b1caeb0016a37e880b31a854c7410a3bb82dce02d01f4
+  generated_utc: '2026-10-24T07:02:57Z'
   session: P0-W1.2
   inputs_from:
   - theory/derivation_body.tex section 11
@@ -11721,6 +11721,35 @@ params:
     added_in: P0-W1.PH-W1.9
     role: primary
     flags: []
+  liclo4_ka_pc_25c:
+    symbol: K_A_liclo4_pc
+    transform: none
+    unit: m^3 mol^-1
+    regimes:
+    - R-cell
+    status: single-source
+    value: 0.00525
+    range:
+      min: 0.00525
+      max: 0.00525
+    prior:
+      family: fixed
+      value: 0.00525
+    rule: P1
+    sources:
+    - TK-082
+    best_grade: C
+    conditions: LiClO4 in propylene carbonate at 298.15 K, molar scale, thermodynamic ion-pair association constant
+      from a conductivity fit (Barthel 1993, Table 5, 5.25 dm^3 mol^-1)
+    correlation_group: null
+    notes: 'Not an activity coefficient and not a substitute for liclo4_gamma_pc, which stays a gap (PH-W1.10: the
+      supplied Barthel 1993 PDF prints this association constant and no activity or osmotic coefficient; Kirillov
+      2014 was not supplied). One source, grade C, no printed uncertainty, so the width is not sourced.'
+    method: 'P1: one point value without uncertainty; the width is not sourced'
+    added_in: P0-W1.PH-W1.10
+    role: primary
+    flags:
+    - single_source
   p_c_site_square:
     symbol: p_c_site_square
     transform: none
