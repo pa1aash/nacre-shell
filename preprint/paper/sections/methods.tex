@@ -27,6 +27,7 @@ Process variables and the cutoff are design axes, never averaged; the cutoff cla
 \paragraph*{Oxidation onsets.}
 Each onset is the minimum over the oxidation reactions of the phase, staged products included, on the experimental route of tabulated formation data, with a margin that bounds the summed species uncertainties and the neglected sink entropy per electron (Table~\ref{tab:thermo}); a glass without its own data is its crystal plus a correction bounded below by zero, with a labelled uncertainty. % CL-M10, CL-M12
 Database formation energies are a comparator only, always printed with their measured error against tabulated enthalpies, benchmarked when it is within \NumDftTolerance\ per atom; the phosphate errors span \NumDftPhosErrLow\ to \NumDftPhosErrHigh\ per formula unit, and no database value decides a row (\nacreSIref{si:thermo}{Thermochemistry benchmark and the DFT spread}). % CL-M10
+Every tier-one exclusion is stated for a \ce{LiClO4}-saturated sink (solid-salt reference state): the one-sided correction for a dilute electrolyte, $m_\mathrm{sink}$ of Section~\ref{sec:design}, is registered but unevaluated, so no number is given for it. % CL-M17
 In this version $E_\mathrm{lb}$ is pending, because the transfer free energies of \ce{Ca^2+} and \ce{Al^3+} into the cell solvent are unmeasured, so every row rests on the solid-salt bound, which can falsify a phase but cannot pass it. % CL-M17
 
 \begin{table}[t]
@@ -38,7 +39,7 @@ In this version $E_\mathrm{lb}$ is pending, because the transfer free energies o
 
 % (3) Solubility, speciation and the aluminium passivation window.
 \paragraph*{Solubility and the aluminium window.}
-Supersaturations (Eq.~\eqref{eq:stability}) follow from measured solubility products and the slurry speciation, and the passivation window of aluminium comes from our own Al--O--H Pourbaix construction on benchmarked ion data\cite{persson2012prediction}, governed by amorphous \ce{Al(OH)3}, the least ordered hydroxide and the one expected on the foil in water at room temperature, with boehmite as the reference and both published windows beside them\cite{tolchard2023insights,kuhnel2016water}. % CL-D05, CL-M13
+Supersaturations (Eq.~\eqref{eq:stability}) follow from measured solubility products and the slurry speciation, and the passivation window of aluminium comes from our own Al--O--H Pourbaix construction on benchmarked ion data\cite{persson2012prediction}, governed by amorphous \ce{Al(OH)3}, the least ordered hydroxide and the one expected on the foil in water at room temperature, with boehmite as the reference and both published windows beside them\cite{kuhnel2016water}. % CL-D05, CL-M13
 
 % (3b) Dose grid and control states (PH-W8.2e; cp5b F2 and F4). Ratio-grid run: session PH-W4.6.
 \paragraph*{Dose grid and control states.}

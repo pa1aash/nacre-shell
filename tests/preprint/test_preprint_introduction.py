@@ -113,7 +113,7 @@ def test_no_novelty_negative_is_stated():
 def test_length_and_paragraphs_follow_the_brief():
     paras = _paragraphs()
     assert len(paras) == 7      # PH-W8.2: problem, incumbents, lineage, control, frame, bone mineral, scope
-    assert 600 <= sum(_words(p) for p in paras) <= 780   # about 700 (brief); the count includes marker text
+    assert 600 <= sum(_words(p) for p in paras) <= 840   # about 700 (brief), plus the qualifiers of the PH-W8.4 rulings and review fixes; the count includes marker text
 
 
 def test_lineage_and_polymorph_statements_are_the_supported_ones():

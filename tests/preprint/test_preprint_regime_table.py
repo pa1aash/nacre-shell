@@ -107,7 +107,12 @@ def test_vocabulary_footnote_and_kinetic_sentence(rows):
         if "excluded" in r["text"]:
             assert r["column"] != "slurry"
     excluded = [l for l in tex.splitlines() if "excluded" in l and l.startswith(("calcite", "carbonate", "HAp", "ACP", "$"))]
-    assert excluded and all("\\nacreExcludedMark{}" in l for l in excluded)
+    assert excluded and all("\\nacreExcludedMark{}" in l or "\\nacreDissolutionMark{}" in l for l in excluded)
+    # an exclusion against dissolution (K2) carries its own mark, never the tier-one footnote (review M8, W3.8 R6-8)
+    for r in rows:
+        if r["column"] == "acid" and "excluded" in r["text"]:
+            assert "excluded against dissolution" in r["text"], r["row_id"]
+    assert "\\nacreDissolutionMark{} Excluded against dissolution (thermodynamic, $K_2$" in tex
 
 
 def test_row_labels_match_the_rulings(rows):
@@ -116,7 +121,9 @@ def test_row_labels_match_the_rulings(rows):
     labels = {r["row_id"]: r["row_label"] for r in rows}
     assert labels["aragonite"] == "aragonite (dissolution stability only; formation unsupported at slurry pH and room temperature)"
     assert labels["calcite"].startswith("calcite (suitable against dissolution, a necessary condition, in [") and labels["calcite"].endswith("])")
-    assert "218 of 324" in labels["calcite"]
+    # the passing region is named by its Ca_T bound, not by the box of the grid (review B2, claims_redirect 11h)
+    assert "Ca_T >= 1e-04 mol dm^-3, 216 cells, plus 2 cells at 1e-05" in labels["calcite"]
+    assert "218 of 324 cells: Ca_T >= 1e-04" in _cell(rows, "calcite", "slurry")["text"]
     assert tex.count("calcite (suitable against dissolution, a necessary condition, in [") == 1
     assert [r["row_id"] for r in rows if r["column"] == "slurry"] == [r[0] for r in rt.ROWS]
     assert labels["carbonate_ctl"] == "carbonate (K1 control)"
@@ -130,8 +137,9 @@ def test_cells_follow_the_data_and_the_rulings(rows):
         assert _cell(rows, rid, "slurry")["words"] == "undetermined"
     assert "[note b]" in _cell(rows, "brushite", "slurry")["text"] and "[note b]" not in _cell(rows, "li_ortho", "slurry")["text"]
     # below the first pass: excluded where every cell is falsified, open where none passes and some are inconclusive
-    for rid, ph, lead in (("calcite", "6.5", "excluded below pH 6.5; "), ("aragonite", "6.5", "excluded below pH 6.5; "),
-                          ("acc", "8.5", "excluded below pH 6.5; open at pH 6.5 and 7.5; "), ("acp", "5.5", "open below pH 5.5; ")):
+    below = "excluded against dissolution below pH 6.5 (lower passivation window, below the sourced range); "
+    for rid, ph, lead in (("calcite", "6.5", below), ("aragonite", "6.5", below),
+                          ("acc", "8.5", below + "open at pH 6.5 and 7.5; "), ("acp", "5.5", "open below pH 5.5; ")):
         c = _cell(rows, rid, "acid")
         assert c["marker"] == "split by pH (alternative b)" and "[split by pH (alternative b)]" in c["text"]
         assert c["text"].startswith(lead + "suitable against dissolution from pH %s up" % ph)
@@ -139,6 +147,12 @@ def test_cells_follow_the_data_and_the_rulings(rows):
         assert _cell(rows, rid, "acid")["text"].startswith("suitable against dissolution from pH 4.5")
     assert _cell(rows, "carbonate_ctl", "C_hi")["words"] == "excluded" and _cell(rows, "carbonate_ctl", "C_lo")["words"] == "open"
     assert _cell(rows, "hap", "C_mid")["words"] == "excluded"
+    # edge rule of thresholds block v10: robust threshold and edge sensitivity within the tolerance (ruling 2)
+    for rid in ("hap", "btcp"):
+        assert _cell(rows, rid, "C_mid")["text"] == "excluded at 4.3 V; edge-sensitive at 4.2 (crossover within 50 mV)"
+    assert _cell(rows, "atcp", "C_mid")["text"] == "excluded"
+    # pass counts above the first passing pH use the cells of those pH values (claims_redirect 11d, comparator window iv)
+    assert "68 of 162 cells from that pH up" in _cell(rows, "calcite", "acid")["text"]
     assert _cell(rows, "ca_pyro", "slurry")["text"] == "route criteria"
     assert _cell(rows, "baked", "C_hi")["words"] == "undetermined"
 

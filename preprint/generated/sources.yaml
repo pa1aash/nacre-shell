@@ -485,7 +485,7 @@ macros:
   NumExcludedNote:
     source: theory/claims_redirect.md
     section: '11d. C5: the regime-table vocabulary'
-    pattern: 'Footnote, verbatim: "([^"]+)"'
+    pattern: 'Footnote, verbatim[^:]*: "([^"]+)"'
     format: text
     claim: CL-D04
   # Patent numbers of the incumbents (lit/novelty.md, baseline rows BL1 to BL4; no DOI exists).
@@ -617,6 +617,12 @@ macros:
   NumHapCrossover:
     source: results/preprint/pourbaix/ph_w52/ladder_v3.csv
     pattern: '^HAp,crystalline,slurry,ALL,.*?falsified above ([0-9.]+) V'
+    format: .2f
+    unit: '\mathrm{V}'
+    claim: CL-S14
+  NumBtcpCrossover:
+    source: results/preprint/pourbaix/ph_w52/ladder_v3.csv
+    pattern: '^b-TCP,crystalline,slurry,ALL,.*?falsified above ([0-9.]+) V'
     format: .2f
     unit: '\mathrm{V}'
     claim: CL-S14
@@ -846,6 +852,18 @@ macros:
     key: numbers/dose/wt_lo
 
     format: g
+
+    claim: CL-D04
+
+  NumEdgeTolerance:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/edge/tolerance_mV
+
+    format: d
+
+    unit: \mathrm{mV}
 
     claim: CL-D04
 
@@ -1185,31 +1203,41 @@ macros:
 
     claim: CL-D04
 
-  NumRegAcidCellsAcc:
+  NumRegAcidCellsAboveAcc:
 
     source: preprint/generated/regime_table.json
 
-    key: numbers/acid/acc/n_cells
+    key: numbers/acid/acc/n_cells_above
 
     format: d
 
     claim: CL-D04
 
-  NumRegAcidCellsAcp:
+  NumRegAcidCellsAboveAcp:
 
     source: preprint/generated/regime_table.json
 
-    key: numbers/acid/acp/n_cells
+    key: numbers/acid/acp/n_cells_above
 
     format: d
 
     claim: CL-D04
 
-  NumRegAcidCellsAragonite:
+  NumRegAcidCellsAboveAragonite:
 
     source: preprint/generated/regime_table.json
 
-    key: numbers/acid/aragonite/n_cells
+    key: numbers/acid/aragonite/n_cells_above
+
+    format: d
+
+    claim: CL-D04
+
+  NumRegAcidCellsAboveCalcite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/calcite/n_cells_above
 
     format: d
 
@@ -1220,16 +1248,6 @@ macros:
     source: preprint/generated/regime_table.json
 
     key: numbers/acid/btcp/n_cells
-
-    format: d
-
-    claim: CL-D04
-
-  NumRegAcidCellsCalcite:
-
-    source: preprint/generated/regime_table.json
-
-    key: numbers/acid/calcite/n_cells
 
     format: d
 
@@ -4659,6 +4677,26 @@ macros:
 
     claim: CL-D04
 
+  NumRegSlurryPassExtraCalcite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/k2/calcite/n_pass_extra
+
+    format: d
+
+    claim: CL-D04
+
+  NumRegSlurryPassFullCalcite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/k2/calcite/n_pass_full
+
+    format: d
+
+    claim: CL-D04
+
   NumRegSlurryPassHap:
 
     source: preprint/generated/regime_table.json
@@ -4711,6 +4749,18 @@ macros:
 
     claim: CL-D04
 
+  NumRegWindowFullLoCalcite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/k2/calcite/full_lo
+
+    format: sci:0
+
+    unit: \mathrm{mol\,dm^{-3}}
+
+    claim: CL-D04
+
   NumRegWindowHiAcc:
 
     source: preprint/generated/regime_table.json
@@ -4728,18 +4778,6 @@ macros:
     source: preprint/generated/regime_table.json
 
     key: numbers/k2/aragonite/dose_hi
-
-    format: sci:0
-
-    unit: \mathrm{mol\,dm^{-3}}
-
-    claim: CL-D04
-
-  NumRegWindowHiCalcite:
-
-    source: preprint/generated/regime_table.json
-
-    key: numbers/k2/calcite/dose_hi
 
     format: sci:0
 

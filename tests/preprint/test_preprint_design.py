@@ -72,7 +72,8 @@ def test_four_conditions_stage_rule_and_label():
 
 
 def test_process_language_is_one_plain_sentence_in_the_methods():
-    hits = [(name, s) for name in FRAME_FILES for s in _sentences(name) if PROCESS.search(s)]
+    # ruling (2) of PH-W8.4: the dilute-electrolyte correction is "registered but unevaluated", said once in Methods and in the limits
+    hits = [(name, s) for name in FRAME_FILES for s in _sentences(name) if PROCESS.search(s.replace("is registered but unevaluated", ""))]
     assert len(hits) == 1, hits
     assert hits[0][0] == "methods" and "fixed with content hashes before the production screen" in hits[0][1]
 
