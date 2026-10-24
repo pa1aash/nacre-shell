@@ -235,3 +235,16 @@ def test_every_amorphous_lowest_class_cell_reads_undetermined_explicitly(rows):
     for rid in ("hap", "btcp", "atcp"):
         assert _cell(rows, rid, "C_lo")["text"] == "crystalline: open; amorphous: undetermined"
     assert _cell(rows, "acp", "C_lo")["text"] == "beta-TCP reference: open; amorphous: undetermined"
+
+
+def test_table_and_prose_agree_on_the_amorphous_cells(rows):
+    # C12 of PH-W3.9: a cell that reads excluded by the bound is matched by prose naming the same bound and reference;
+    # a cell that reads undetermined is never called excluded in prose.
+    prose = " ".join((REPO / "preprint/paper/sections" / f).read_text() for f in ("results.tex", "discussion.tex", "design.tex"))
+    flat = re.sub(r"\s+", " ", prose)
+    by_bound = [r for r in rows if r["column"] in ("C_mid", "C_hi") and "excluded (by the bound" in r["text"]]
+    assert {r["row_id"] for r in by_bound} == set(AMORPHOUS_ROWS)
+    assert "$\\Delta G_{\\mathrm{g}\\to\\mathrm{c}}\\ge0$ against the crystalline reference of the same composition plus liquid water" in flat
+    assert "At the lowest class (\\NumClassLo) the crystalline rows are open and the amorphous framing of every phosphate stays undetermined" in flat
+    assert "undetermined: the bound" not in flat and "a reading not yet registered" not in flat
+    assert not any("excluded" in r["text"].split("amorphous:")[-1] for r in rows if r["column"] == "C_lo" and r["row_id"] in AMORPHOUS_ROWS)
