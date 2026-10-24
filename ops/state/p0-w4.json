@@ -1,9 +1,9 @@
 {
-  "last_session": "PH-W4.6",
+  "last_session": "PH-W4.7",
   "status": "DONE",
-  "day": 6,
-  "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
-  "contract_checked_ref": "2aa96fb (W3 contract v6)",
+  "day": 7,
+  "contract_sha": "733277275edfb1ccf6060be8581ac9aed34404ed",
+  "contract_checked_ref": "3fb0745 (W3 contract v7, block v10)",
   "artifacts": {
     "physics_core": "src/nacre/physics/",
     "contract_registry": "src/nacre/physics/contract.py",
@@ -57,7 +57,9 @@
     "precision_map": "results/preprint/screen/precision_ph/precision_map.json",
     "report_w4_2g": "ops/reports/P0-W4.PH-W4.2g.md",
     "report_w4_5": "ops/reports/P0-W4.PH-W4.5.md",
-    "report_w4_6": "ops/reports/P0-W4.PH-W4.6.md"
+    "report_w4_6": "ops/reports/P0-W4.PH-W4.6.md",
+    "sink_margin": "src/nacre/physics/sink.py",
+    "report_w4_7": "ops/reports/P0-W4.PH-W4.7.md"
   },
   "notes": [
     "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
