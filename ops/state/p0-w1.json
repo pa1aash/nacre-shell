@@ -68,10 +68,10 @@
     "ops/reports/P0-W1.PH-W1.10.md",
     "lit/corpus/inputs/.gitignore"
   ],
-  "notes": "PH-W1.10: Kirillov 2014 not supplied; Barthel 1993 (supplied as j-barthel.pdf) prints neither a pure-PC saturation value nor a solution density; K_A of LiClO4 in PC at 298.15 K registered (TK-082, key liclo4_ka_pc_25c, grade C); liclo4_solubility_pc and liclo4_gamma_pc stay gaps.",
+  "notes": "PH-W1.10: Kirillov 2014 (kirillov.pdf) prints no LiClO4-PC liquidus (cites Varlamova 2006); Barthel 1993 (j-barthel.pdf) prints neither a pure-PC saturation value nor a solution density; K_A of LiClO4 in PC at 298.15 K registered (TK-082, key liclo4_ka_pc_25c, grade C); liclo4_solubility_pc and liclo4_gamma_pc stay gaps.",
   "params": {
     "status": "ready",
-    "sha": "12eedd603e8b8f7cc8b3c24c9b5c79335b0e9011",
+    "sha": "bd63f41413381c577bb5614db980bda1b186781c",
     "post_cp3": true,
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
