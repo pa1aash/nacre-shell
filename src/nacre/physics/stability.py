@@ -90,6 +90,8 @@ def _onset(name, Delta_G, Delta_n_Li):
 def onset_solid_salt_sink(Delta_G_r_ss, Delta_n_Li):
     """E_ub = Delta_G_r_ss / (Delta_n_Li F), V vs Li+/Li: the onset with the solid-salt (LiClO4) sink.
 
+    The onset for a LiClO4-saturated sink (solid-salt reference state); below saturation the bound is E_ub_sink.
+
     An upper bound on the thermodynamic onset whatever the solvent: a falsification on it stands, a pass does not.
     """
     return scalar_or_array(_onset("Delta_G_r_ss (solid-salt reaction free energy)", Delta_G_r_ss, Delta_n_Li))
@@ -149,3 +151,57 @@ def onset_solid_salt_sink_glass(Delta_G_r_ss, Delta_G_gc, Delta_n_Li):
     g = real("Delta_G_r_ss (solid-salt reaction free energy)", Delta_G_r_ss)
     gc = non_negative("Delta_G_gc (glass-to-crystal free energy)", Delta_G_gc)
     return scalar_or_array(_onset("Delta_G_r_ss - Delta_G_gc", g - gc, Delta_n_Li))
+
+
+# ------------------------------------------------------------------ hydrated amorphous phases (contract v8; I17a)
+def onset_solid_salt_sink_hydrated_amorphous(Delta_G_r_ss, Delta_G_gc_w, n_hyd, a_w, T, Delta_n_Li):
+    """E_ub_hydrated_am = (Delta_G_r_ss - Delta_G_gc_w + n_hyd R T ln a_w) / (Delta_n_Li F), V vs Li+/Li.
+
+    Upper end of the K1 bracket of a hydrated amorphous phase against its same-composition crystalline reference plus
+    n_hyd liquid water at a_w = 1; Delta_G_r_ss is the solid-salt reaction of that crystalline reference and the released
+    water leaves at the cell water activity a_w <= 1. Delta_G_gc_w = G(A) - G(C) - n_hyd mu_w(l, a_w = 1) >= 0, so the
+    value never exceeds E_ub of the reference row: it falsifies only and never passes.
+    """
+    g = real("Delta_G_r_ss (solid-salt reaction free energy of the crystalline reference)", Delta_G_r_ss)
+    gc = non_negative("Delta_G_gc_w (hydrated glass-to-crystal free energy, water at unit activity)", Delta_G_gc_w)
+    n = non_negative("n_hyd (structural water per formula unit)", n_hyd)
+    aw = positive("a_w (water activity)", a_w)
+    if np.any(aw > 1.0):
+        raise ValueError("a_w must lie in (0, 1]")
+    t = positive("T (temperature)", T)
+    return scalar_or_array(_onset("Delta_G_r_ss - Delta_G_gc_w + n_hyd R T ln a_w",
+                                  g - gc + n * GAS_CONSTANT * t * np.log(aw), Delta_n_Li))
+
+
+# ------------------------------------------------------------------ sink reference state of E_ub (contract v7; PH-W3.8 ruling 2)
+def sink_margin(nu_salt, T, a_pm_sat, a_pm):
+    """m_sink = 2 nu_salt (R T / F) ln(a_pm_sat / a_pm), V: one-sided added margin of the solid-salt upper bound.
+
+    a_pm_sat and a_pm are the stoichiometric mean ionic activities of LiClO4 at saturation and at the registered
+    concentration (molar scale). Zero at saturation, positive below it (a_pm < a_pm_sat), negative if the inputs describe
+    a supersaturated electrolyte, which the one-sided margin never uses. Both activities are inputs: no value is bound here.
+    """
+    nu = non_negative("nu_salt (LiClO4 consumed per electron)", nu_salt)
+    t = positive("T (temperature)", T)
+    sat_ = positive("a_pm_sat (mean ionic activity at saturation)", a_pm_sat)
+    act = positive("a_pm (mean ionic activity)", a_pm)
+    return scalar_or_array(2.0 * nu * GAS_CONSTANT * t / FARADAY * np.log(sat_ / act))
+
+
+def onset_solid_salt_sink_dilute(Delta_G_r_ss, Delta_n_Li, nu_salt, T, a_pm_sat, a_pm):
+    """E_ub_sink = E_ub + m_sink, V vs Li+/Li: rigorous upper bound on the onset at the registered LiClO4 concentration."""
+    return scalar_or_array(onset_solid_salt_sink(Delta_G_r_ss, Delta_n_Li) + sink_margin(nu_salt, T, a_pm_sat, a_pm))
+
+
+def onset_solid_salt_sink_product_unsaturated(Delta_G_r_ss, Delta_n_Li, nu_prod, T, x_sat_prod):
+    """E_ub_prod_unsat = E_ub + nu_prod (R T / F) ln(x_sat_prod), V: the product perchlorate dissolves below saturation.
+
+    x_sat_prod lies in (0, 1]; the result never exceeds E_ub, so the solid product is the worst case for an exclusion.
+    Reported, never a verdict quantity.
+    """
+    nu = non_negative("nu_prod (product salt released per electron)", nu_prod)
+    t = positive("T (temperature)", T)
+    x = positive("x_sat_prod (saturation ratio of the product salt)", x_sat_prod)
+    if np.any(x > 1.0):
+        raise ValueError("x_sat_prod must lie in (0, 1]")
+    return scalar_or_array(onset_solid_salt_sink(Delta_G_r_ss, Delta_n_Li) + nu * GAS_CONSTANT * t / FARADAY * np.log(x))
