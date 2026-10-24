@@ -153,6 +153,26 @@ def onset_solid_salt_sink_glass(Delta_G_r_ss, Delta_G_gc, Delta_n_Li):
     return scalar_or_array(_onset("Delta_G_r_ss - Delta_G_gc", g - gc, Delta_n_Li))
 
 
+# ------------------------------------------------------------------ hydrated amorphous phases (contract v8; I17a)
+def onset_solid_salt_sink_hydrated_amorphous(Delta_G_r_ss, Delta_G_gc_w, n_hyd, a_w, T, Delta_n_Li):
+    """E_ub_hydrated_am = (Delta_G_r_ss - Delta_G_gc_w + n_hyd R T ln a_w) / (Delta_n_Li F), V vs Li+/Li.
+
+    Upper end of the K1 bracket of a hydrated amorphous phase against its same-composition crystalline reference plus
+    n_hyd liquid water at a_w = 1; Delta_G_r_ss is the solid-salt reaction of that crystalline reference and the released
+    water leaves at the cell water activity a_w <= 1. Delta_G_gc_w = G(A) - G(C) - n_hyd mu_w(l, a_w = 1) >= 0, so the
+    value never exceeds E_ub of the reference row: it falsifies only and never passes.
+    """
+    g = real("Delta_G_r_ss (solid-salt reaction free energy of the crystalline reference)", Delta_G_r_ss)
+    gc = non_negative("Delta_G_gc_w (hydrated glass-to-crystal free energy, water at unit activity)", Delta_G_gc_w)
+    n = non_negative("n_hyd (structural water per formula unit)", n_hyd)
+    aw = positive("a_w (water activity)", a_w)
+    if np.any(aw > 1.0):
+        raise ValueError("a_w must lie in (0, 1]")
+    t = positive("T (temperature)", T)
+    return scalar_or_array(_onset("Delta_G_r_ss - Delta_G_gc_w + n_hyd R T ln a_w",
+                                  g - gc + n * GAS_CONSTANT * t * np.log(aw), Delta_n_Li))
+
+
 # ------------------------------------------------------------------ sink reference state of E_ub (contract v7; PH-W3.8 ruling 2)
 def sink_margin(nu_salt, T, a_pm_sat, a_pm):
     """m_sink = 2 nu_salt (R T / F) ln(a_pm_sat / a_pm), V: one-sided added margin of the solid-salt upper bound.
