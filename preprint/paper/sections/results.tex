@@ -15,7 +15,7 @@ The map is a design rule matched to the regime: calcite meets the dissolution co
 No phase passes the oxidation condition in this version: $E_\mathrm{lb}$, computed from aqueous formation data at the stated product activity, bounds the onset only if $\Delta G_\mathrm{tr}^\mathrm{rel}\ge0$, which no measured datum tests, so no row can pass and the map can exclude a phase but not admit one. % CL-S16
 
 \begin{table*}[t]
-\caption{Regime map of the thermodynamic screen, generated from the onset ladder and the production outputs. Dissolution ($K_2$) is read at the processing stage (grid \NumRegGridId) and in the acid-adjusted comparator state, oxidation ($K_1$) per cutoff class. Entries use the vocabulary of the screen and carry their stage.}\label{tab:regime}
+\caption{Regime map of the thermodynamic screen, generated from the onset ladder and the production outputs. Dissolution ($K_2$) is read at the processing stage (grid \NumRegGridId) and in the acid-adjusted comparator, the sourced slurries at pH \NumAcidSourcedLo\ to \NumAcidSourcedHi\ on a grid that spans the passivation window of aluminium, oxidation ($K_1$) per cutoff class. Entries use the vocabulary of the screen and carry their stage.}\label{tab:regime}
 \input{../generated/regime_table}
 \nacreRegimeTable
 \end{table*}
@@ -71,7 +71,7 @@ The upper bounds of this ladder were seen before the regime framing of the paper
   \IfFileExists{\nacreRepoRoot/figures/out/fig15.pdf}{%
     \includegraphics[width=\textwidth]{\nacreRepoRoot/figures/out/fig15.pdf}}%
     {\nacreMissing{regime heatmap, pending}}
-  \caption{Regime of each candidate. Rows: slurry-stage phases, cell-stage phases and the carbonates. Columns: $K_2$ in the alkaline processing slurry, then in the acid-adjusted comparator by pH, then $K_1$ at the cutoff classes (nominal \NumClassLo), crystalline left and amorphous right. Dots: thermodynamically suitable against dissolution (a necessary condition) for the row's phase in its passing cells, with vertical lines where the lowest passing dose is at least \NumRegHighDose; plain: undetermined; single hatching: open; cross hatching: thermodynamically excluded\nacreExcludedMark.}
+  \caption{Regime of each candidate. Rows: slurry-stage phases, cell-stage phases and the carbonates. Columns: $K_2$ in the alkaline processing slurry, then in the acid-adjusted comparator (sourced slurries at pH \NumAcidSourcedLo\ to \NumAcidSourcedHi, on a grid spanning the passivation window) by pH, then $K_1$ at the cutoff classes (nominal \NumClassLo), crystalline left and amorphous right. Dots: thermodynamically suitable against dissolution (a necessary condition) for the row's phase in its passing cells, with vertical lines where the lowest passing dose is at least \NumRegHighDose; plain: undetermined; single hatching: open; cross hatching: thermodynamically excluded\nacreExcludedMark.}
   \label{fig:heatmap}
 \end{figure*}
 
