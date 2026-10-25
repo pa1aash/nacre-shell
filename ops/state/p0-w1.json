@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W1.11",
+  "last_session": "PH-W1.12",
   "status": "DONE",
   "day": 7,
   "artifacts": [
@@ -67,9 +67,10 @@
     "ops/reports/P0-W1.PH-W1.9.md",
     "ops/reports/P0-W1.PH-W1.10.md",
     "lit/corpus/inputs/.gitignore",
-    "ops/reports/P0-W1.PH-W1.11.md"
+    "ops/reports/P0-W1.PH-W1.11.md",
+    "ops/reports/P0-W1.PH-W1.12.md"
   ],
-  "notes": "PH-W1.11: SI table display labels for the two film-thickness comparator keys relabelled (chemistry only); keys and values unchanged.",
+  "notes": "PH-W1.12: SI key column prints display_key (lipo3, alpo4_baked) for the two film-thickness comparator keys; registry keys and values unchanged.",
   "params": {
     "status": "ready",
     "sha": "bd63f41413381c577bb5614db980bda1b186781c",

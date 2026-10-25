@@ -2,6 +2,7 @@
 import re
 
 import pytest
+import yaml
 
 from nacre import _util
 from nacre.lit import evidence as E
@@ -26,8 +27,9 @@ def test_committed_tables_are_current(generated):
 def test_every_key_has_a_row_and_every_doi_is_an_evidence_doi(generated):
     p = P.load_params(ROOT / P.PARAMS, ROOT)
     table = generated["params_table.tex"]
+    labels = yaml.safe_load((ROOT / S.LABELS).read_text(encoding="utf-8"))
     for key in p.entries:
-        assert S.texkey(key) in table, key
+        assert S.texkey(S.display_key(key, labels)) in table, key
     dois = {r["doi"].lower() for r in E.read_csv(ROOT / P.TABLE)[1]}
     cited = set(re.findall(r"\\paramcite\{([^}]*)\}", table + generated["conflicts_table.tex"]))
     assert cited and cited <= dois
@@ -59,3 +61,14 @@ def test_display_conversion_uses_pint():
 
 def test_tex_escapes_specials():
     assert S.tex("a_b & 50%") == r"a\_b \& 50\%"
+
+
+def test_display_key_overrides_the_printed_key_only(generated):
+    assert S.display_key("v_m_calcite", {}) == "v_m_calcite"
+    assert S.display_key("k", {"k": {"label": "x", "display_key": "shown"}}) == "shown"
+    params_tex = generated["params_table.tex"]
+    for shown in ("matrix_baseline_lipo3_film_thickness", "matrix_baseline_alpo4_baked_film_thickness"):
+        assert S.texkey(shown) in params_tex
+    for hidden in ("matrix_baseline_hq_film_thickness", "matrix_baseline_tsinghua_film_thickness"):
+        assert S.texkey(hidden) not in params_tex
+        assert S.texkey(hidden) not in generated["conflicts_table.tex"]

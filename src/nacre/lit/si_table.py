@@ -182,6 +182,11 @@ def label_of(key, e, symbols, labels=None):
     return tex(key.replace("_", " "))
 
 
+def display_key(key, labels=None):
+    """The key as printed in the key column: the label file's display_key where set, else the registry key."""
+    return ((labels or {}).get(key) or {}).get("display_key") or key
+
+
 def symbol_cell(e, symbols, override=None):
     sym = symbols.get(e["symbol"])
     if override:
@@ -259,7 +264,7 @@ def params_table(params, rows, symbols, sha, labels=None):
             e = params[k]
             lines.append(" & ".join([
                 symbol_cell(e, symbols, (labels.get(k) or {}).get("latex")) + marks(e),
-                r"%s \newline {\scriptsize %s}" % (label_of(k, e, symbols, labels), texkey(k)),
+                r"%s \newline {\scriptsize %s}" % (label_of(k, e, symbols, labels), texkey(display_key(k, labels))),
                 value_cell(e), prior_cell(e), tex(RULE_TEXT.get(e["rule"], e["rule"])),
                 e.get("best_grade") or "--", cite(dois_of(e, rows))]) + r" \\")
         lines.append(r"\midrule")
@@ -277,7 +282,7 @@ def conflicts_block(root):
     return yaml.safe_load(m.group(1)) or []
 
 
-def conflicts_table(entries, params, rows, sha):
+def conflicts_table(entries, params, rows, sha, labels=None):
     lines = [HEAD % {"sha": sha},
              r"\begin{longtable}{@{}p{0.03\linewidth}>{\raggedright}p{0.14\linewidth}>{\raggedright}p{0.17\linewidth}"
              r">{\raggedright}p{0.23\linewidth}>{\raggedright}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.13\linewidth}@{}}",
@@ -294,7 +299,7 @@ def conflicts_table(entries, params, rows, sha):
         spans = []
         for k in c["keys"]:
             e = params[k]
-            spans.append(r"%s: %s" % (texkey(k), value_cell(e) if e["prior"]["family"] != "categorical"
+            spans.append(r"%s: %s" % (texkey(display_key(k, labels)), value_cell(e) if e["prior"]["family"] != "categorical"
                                                 else prior_cell(e)))
         dois = []
         for r in c.get("rows") or []:
@@ -302,7 +307,7 @@ def conflicts_table(entries, params, rows, sha):
             if d not in dois:
                 dois.append(d)
         res = tex(c["resolution"]) + " " + "; ".join(
-            r"%s: %s" % (texkey(k), prior_cell(params[k])) for k in c["keys"])
+            r"%s: %s" % (texkey(display_key(k, labels)), prior_cell(params[k])) for k in c["keys"])
         lines.append(" & ".join([str(i), tex(c["title"]), r" \newline ".join(spans), tex(c["reason"]), res,
                                  cite(dois)]) + r" \\")
     lines += [r"\end{longtable}", ""]
@@ -335,7 +340,7 @@ def generate(root):
     if missing:
         raise ValueError("%s has no label for %s" % (LABELS, ", ".join(missing)))
     return {"params_table.tex": params_table(params, rows, symbols, sha, labels),
-            "conflicts_table.tex": conflicts_table(entries, params, rows, sha),
+            "conflicts_table.tex": conflicts_table(entries, params, rows, sha, labels),
             "params_table_dois.csv": "doi\n" + "\n".join(dois) + "\n"}
 
 
