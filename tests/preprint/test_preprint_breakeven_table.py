@@ -81,7 +81,8 @@ def test_the_one_negative_headroom_row_keeps_its_words():
 
 
 def test_no_digit_in_the_table_outside_macros_and_formulas():
-    body = re.sub(r"\\ce\{[^}]*\}|\\Num[A-Za-z]+\{\}|\\addlinespace\[[^]]*\]|\\setlength\{[^}]*\}\{[^}]*\}", "", _tex().split("\n", 2)[2])
+    body = re.sub(r"\\ce\{[^}]*\}|\\Num[A-Za-z]+\{\}|\\addlinespace\[[^]]*\]|\\setlength\{[^}]*\}\{[^}]*\}|\\begin\{tabular\}.*", "",
+                  _tex().split("\n", 2)[2])
     assert not re.search(r"[0-9]", body), re.findall(r".{20}[0-9].{20}", body)[:3]
 
 

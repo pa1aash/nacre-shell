@@ -140,7 +140,8 @@ def render_tex(shas, built):
              "% Defines \\nacreBreakevenTable (Results and Supplementary Information). Numbers only as macros.",
              "\\newcommand{\\nacreBreakevenTable}{%",
              "\\begingroup\\footnotesize\\setlength{\\tabcolsep}{4pt}",
-             "\\begin{tabular}{lrrl}", "\\toprule",
+             "\\begin{tabular}{>{\\raggedright\\arraybackslash}p{0.15\\textwidth}rr>{\\raggedright\\arraybackslash}p{0.1\\textwidth}}",
+             "\\toprule",
              "phase & cutoff (V) & headroom (V) & $r^*$ \\\\", "\\midrule"]
     last = None
     for phase, _claim, cells in built:
