@@ -6589,6 +6589,26 @@ macros:
 
     claim: CL-M11
 
+  NumParKspAragoniteHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_aragonite/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspAragoniteLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_aragonite/min
+
+    format: .2f
+
+    claim: CL-M11
+
   NumParKspAragoniteVal:
 
     source: preprint/generated/input_tables.json

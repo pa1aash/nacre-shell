@@ -90,3 +90,26 @@ def test_methods_and_table_three_cite_the_tabulated_data_sources():
     for part in (onsets, caption):
         cited = {k for c in re.findall(r"\\cite\{([^}]*)\}", part) for k in c.split(",")}
         assert janaf in cited and set(nbs) <= cited, (cited, janaf, nbs)
+
+
+def test_carbonate_rows_read_the_ksp_keys_that_k2_binds():
+    """PH-W8.9 (G3): the aragonite row read the superseded key; every carbonate row of Table 2 now reads the K_sp key
+    that the dissolution test binds in screen.yaml, and the generator refuses a row that does not."""
+    import copy
+
+    import pytest
+
+    from nacre.screen import k2_carbonate
+    docs, _ = it.read_inputs(REPO)
+    bound = k2_carbonate.ksp_keys(docs["screen"])
+    assert bound["aragonite"] == "log10_ksp_aragonite_25c_i0"
+    table = {pkey for _t, members in it.PARAM_GROUPS for _j, pkey, _s in members}
+    assert set(bound.values()) <= table and "log10_ksp_aragonite" not in table
+    it.check_k2_keys(docs["screen"])
+    stale = copy.deepcopy(docs["screen"])
+    stale["bindings"]["R-slurry"]["by_framing"]["aragonite"]["K_sp"] = "log10_ksp_aragonite"
+    with pytest.raises(it.InputTableError, match="aragonite"):
+        it.check_k2_keys(stale)
+    row = next(l for l in _body("nacreParameterTable").splitlines() if l.startswith("solubility product, aragonite"))
+    assert "uniform" in row and "& C &" in row and "\\citenum{ball1991users}" in row and "fixed" not in row
+    assert re.search(r"@\w+\{ball1991users,[^@]*10\.3133/ofr91183", refs.source(REPO).read_text(encoding="utf-8"), re.I)

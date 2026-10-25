@@ -1,6 +1,7 @@
 {
  "generator": "nacre preprint input-tables",
  "inputs": {
+  "configs/preprint/screen.yaml": "800e81fad01a51dfc51368b39cd395cf4051abf64715495fb6c1ea35056c13ef",
   "lit/corpus/si_table/labels.yaml": "f7fdab8b84f43846369ba880135045e722112b2320174e5b013dc329612f95af",
   "lit/params.yaml": "9e7fd52f4b608cb71f1292c83fc4e4b50f4d685a528e8e789374ab7244a1c11c",
   "preprint/paper/refs.bib": "95d6f55fad5b9f79f08b17371e6b2e14bb29713623972848ce7c2123a883483c",
@@ -290,7 +291,9 @@
     "value": -25.5
    },
    "log_ksp_aragonite": {
-    "value": -8.34
+    "max": -8.296,
+    "min": -8.376,
+    "value": -8.336
    },
    "log_ksp_atcp": {
     "value": -25.5
