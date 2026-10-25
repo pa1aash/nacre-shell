@@ -4,4 +4,4 @@ Source: `k2_grid_ph/summary.json` (lane p0-w4, PH-W4.2), pinned as `k2_grid_ph`;
 
 ## Draft
 
-**Fig. 12** K2 dissolution map. (a to c) Calcite, aragonite, ACC at pH \NumSlurryPh: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); line, Ω_bulk = 1 at median activities. (d) Acid-adjusted comparator, pH \NumRegAcidPhLow to \NumRegAcidPhHigh, carbonates and Ca phosphates; a cell is suitable where any grid cell passes. K2 only.
+**Fig. 12** K2 dissolution map. (a to c) Calcite, aragonite and ACC at pH \NumSlurryPh over Ca_T and C_T; (d) acid-adjusted comparator over pH \NumRegAcidPhLow to \NumRegAcidPhHigh, a cell being suitable where any grid cell passes. Dots: suitable against dissolution; plain: undetermined; single hatching: open; cross hatching: excluded; line: Ω_bulk = 1 at median activities.

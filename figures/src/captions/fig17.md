@@ -4,4 +4,4 @@ Source: `perph.csv` (K2 per-pH table, lane p0-w4, PH-W4.5) with the cell verdict
 
 ## Draft
 
-**Fig. 17** Stability map. (a) Rows from the bottom, in order of upper bound: calcite, $\alpha$-TCP, ACP, $\beta$-TCP (tied with ACP), HAp, brushite. Circle area: passing fraction; filled: lowest passing dose below \NumRegHighDose, open: above. Cross: excluded; plus: open; dot: undetermined. (b) Upper bounds only, bars open below. Crossed hatching, dashed edges: incomplete budget (silicates, \ce{AlPO4}, baked baseline). Grey: cutoff classes. \NumRegNoKOneBound\ phases without a bound omitted.
+**Fig. 17** (a) K2 stability map by slurry pH, rows from the bottom in order of K1 upper bound E_ub (calcite, α-TCP, ACP, β-TCP, HAp, brushite). Circle area: passing fraction, filled below a lowest passing dose of \NumRegHighDose and open above; cross: excluded; plus: open; dot: undetermined. (b) K1 upper bounds only, bars open below; crossed hatching with dashed edges: incomplete budget; grey: cutoff classes; \NumRegNoKOneBound phases without a bound omitted.
