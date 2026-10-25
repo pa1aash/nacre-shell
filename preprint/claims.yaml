@@ -246,10 +246,10 @@ claims:
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
-    status: drafted
-    notes: NS7 stands only with all four qualifiers. Dropping in situ brings in the baked aluminophosphate
+    status: withdrawn
+    notes: 'withdrawn: author decision (PH-W8.10): the Discussion sentence is deleted with the search-gap clause it carried. NS7 stands only with all four qualifiers. Dropping in situ brings in the baked aluminophosphate
       films; dropping fluorine-free brings in the lithium polyphosphate coating on aluminium. No priority
-      or novelty wording accompanies it.
+      or novelty wording accompanies it.'
   - id: CL-V09
     statement: No scanned source gives an oxidation-limit ladder across phosphate condensation states.
     section: introduction
