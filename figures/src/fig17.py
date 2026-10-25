@@ -1,5 +1,6 @@
 """Fig. 17: stability map of the candidates: K2 dose-dependent window by pH against the K1 upper bound."""
 import numpy as np
+from matplotlib.patches import Rectangle
 
 from nacre.figs import k2ph, regimes, style
 from nacre.figs.panels import panel_letters
@@ -42,6 +43,9 @@ K1_ON = {"CaCO3": "calcite"}  # the ladder's carbonate control row is drawn on t
 MAP_ORDER = ("calcite", "a-TCP", "ACP", "b-TCP", "HAp", "brushite")  # tie order, bottom to top
 NO_K2_MAP = ("CaSiO3", "Ca2SiO4", "Li2SiO3", "Ca2P2O7", "Ca(PO3)2 / Ca-polyphosphate glass",
              "(LiPO3)n Hydro-Quebec film", "AlPO4", "baked aluminophosphate (Tsinghua)")
+BAR_HALF = 0.32  # half width of a panel-b bar
+ARROW_PAD = 0.05  # V: height of the downward triangle above the axis floor
+HATCH_COMPLETE, HATCH_PARTIAL = "////", "\\\\\\\\"  # complete budget; incomplete budget
 TIE_STEP = 0.012  # V: vertical offset between rows of equal upper bound
 MARKER_MAX_PT = 7.0  # diameter at a passing fraction of one
 GREY = ("0.55", "0.85", "0.7")  # C_lo line, C_mid band, C_hi band
@@ -158,11 +162,17 @@ def build(data, root, aux):
     lows = [e for _p, e, _c in bars] + [e for _n, e, _b in rows] + [classes["C_lo"][0]]
     ax_a.set_ylim(min(e for _n, e, _b in rows) - 0.1, max(classes["C_hi"]) + 0.1)
     ax_b.set_ylim(min(lows) - 0.15, max(lows + classes["C_hi"]) + 0.1)
+    floor = ax_b.get_ylim()[0]
     for k, (_phase, e_ub, complete) in enumerate(bars):
-        ax_b.plot([k, k], [e_ub, ax_b.get_ylim()[0]], color="black", linewidth=data_lw, zorder=3,
-                  linestyle="-" if complete else (0, (2, 2)))
-        ax_b.plot([k], [e_ub], marker="_", markersize=5.0, markeredgewidth=data_lw, markeredgecolor="black",
-                  linestyle="none", zorder=3)
+        # An upper bound only: the bar is open at the bottom (no lower edge), hatched, and ends in a downward
+        # triangle. A bound with an incomplete uncertainty budget has crossed hatching and dashed edges.
+        left, right = k - BAR_HALF, k + BAR_HALF
+        ax_b.add_patch(Rectangle((left, floor), 2 * BAR_HALF, e_ub - floor, facecolor="none", edgecolor="black",
+                                 linewidth=0.0, hatch=HATCH_COMPLETE if complete else HATCH_PARTIAL, zorder=2))
+        edge = dict(color="black", linewidth=data_lw, zorder=3, linestyle="-" if complete else (0, (2, 2)))
+        ax_b.plot([left, left, right, right], [floor, e_ub, e_ub, floor], **edge)
+        ax_b.plot([k], [floor + ARROW_PAD], marker="v", markersize=4.0, markeredgewidth=data_lw,
+                  markeredgecolor="black", markerfacecolor="white", linestyle="none", zorder=4)
     ax_a.set_xticks(phs, ["%g" % p for p in phs])
     ax_a.set_xlim(min(phs) - 0.6, max(phs) + 0.6)
     ax_a.set_xlabel(symbol("pH", root) + " of the K2 slurry state")
