@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-W2.6",
+  "last_session": "PH-W2.7",
   "status": "DONE",
-  "day": 6,
+  "day": 7,
   "retro_schema": {
     "sha": "4ded6c789c9eb66c385db8d41e51ea15a48a28b9"
   },
@@ -25,7 +25,8 @@
     "ops/reports/P0-W2.PH-W2.5.md",
     "preprint/package/coauthor_pack.md",
     "ops/reports/P0-W2.PH-W2.2.md",
-    "ops/reports/P0-W2.PH-W2.6.md"
+    "ops/reports/P0-W2.PH-W2.6.md",
+    "ops/reports/P0-W2.PH-W2.7.md"
   ],
   "notes": [
     "ChemRxiv package scaffold: metadata.yaml (schema chemrxiv-package/v1), submission_checklist.md in form order, requirements_recheck.md; every captured requirement marked re-check live (B8).",
@@ -40,6 +41,7 @@
     "PH-W2.4b: lineage table (a) supported (b) supported (c) supported for chitin, chitosan in nacre unsupported (d) partly; retitled metadata.yaml; experiment_1.md; braun_note.md. tests/retro 5 fail only on title.working vs ops/tracks/p0.yaml meta.title_working (integrator edit).",
     "PH-W2.5: coatings on Al (14 rows; no deliberate carbonate or phosphate film on Al located), polymorph rows PM1-PM11 (alkaline slurry compatibility: no), route R4 paragraph, NE1-NE5, NU19/NU20 suggested, contrary B29-B31; tests/retro 59 passed.",
     "PH-W2.2: coauthor_pack.md (summary, per-author consent text, author decisions); metadata.yaml title.working equals p0.yaml meta.title_working, placeholders block added; checklist has final-structure section; package-check PASS; tests/retro 59 passed.",
-    "PH-W2.6: Introduction source check in lit/novelty.md V-1 to V-3: (a) (b) supported, (c) supported for chitin only, (d) (e) (f) partly; Tolchard 2023 pH 4.5 to 8.5 window unverified (RSC and NVA 403); W-3 'claimed on Al foil' corrected in V-2."
+    "PH-W2.6: Introduction source check in lit/novelty.md V-1 to V-3: (a) (b) supported, (c) supported for chitin only, (d) (e) (f) partly; Tolchard 2023 pH 4.5 to 8.5 window unverified (RSC and NVA 403); W-3 'claimed on Al foil' corrected in V-2.",
+    "PH-W2.7: patent record in lit/novelty.md PR-1 to PR-6 (four Google Patents pages read 2026-10-25, HTTP 200, sha256 and printed metadata recorded); paper sentences S1 to S9 checked against claims: S3, S5, S6 supported; S1 (one clause), S2, S4, S7 not supported by claims; kind codes absent in text; no operator input needed, W8 edits needed."
   ]
 }
