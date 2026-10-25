@@ -30,7 +30,7 @@ State the screening rules before any number appears: the four gating conditions,
 
 ## Figures and tables
 
-- `fig:pathway`: four-panel bone-like pathway schematic (W6.1).
+- `fig:pathway`: dropped (PH-W8.4 ruling 4; the figure environment and its caption were removed at cp6 F3).
 - `fig:conditions`: the four-conditions diagram, with stage marked (W6.1).
 - `fig:chain`, `fig:cycle`: legacy Figs 2 and 3, adapted (W6).
 - No table; `tab:thresholds` is in Methods.

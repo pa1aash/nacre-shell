@@ -32,6 +32,7 @@ def test_prepare_refuses_an_unresolved_key(tmp_path, monkeypatch):
     root = _tree(tmp_path, ENTRY_PAGES, "\\section{I}\nText\\cite{typed2024key}.\n")
     monkeypatch.setattr(build, "resolve_template", lambda r, out=print: (REPO / "paper", 0))
     monkeypatch.setattr(build.template, "render_head", lambda tdir: "")
+    monkeypatch.setattr(build, "strip_journal_front", lambda head: head)   # no template head in this tree
     with pytest.raises(build.PrepareError, match="typed2024key"):
         build.prepare(root, "draft", out=lambda *_: None)
 

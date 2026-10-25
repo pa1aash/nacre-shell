@@ -105,6 +105,25 @@ def _regime_table(args):
     return 0
 
 
+def _input_tables(args):
+    from nacre.preprint import input_tables
+    root = _util.repo_root()
+    try:
+        if args.check:
+            stale = input_tables.check(root)
+            for f in stale:
+                print("input-tables: STALE %s" % f.relative_to(root).as_posix())
+            print("input-tables: %s" % ("STALE (run `nacre preprint input-tables`)" if stale else "up to date"))
+            return 1 if stale else 0
+        written = input_tables.write(root)
+    except (input_tables.InputTableError, macros_error()) as exc:
+        print("input-tables: FAIL\n" + str(exc))
+        return 1
+    for f in written:
+        print("wrote " + f.relative_to(root).as_posix())
+    return 0
+
+
 def macros_error():
     from nacre.preprint import macros
     return macros.MacroError
@@ -138,5 +157,8 @@ def register(subparsers):
     q = sub.add_parser("regime-table", help="write the regime table, its CSV and its macro block from the committed results")
     q.add_argument("--check", action="store_true", help="only report whether the committed outputs are byte-identical to a fresh run")
     q.set_defaults(func=_regime_table)
+    q = sub.add_parser("input-tables", help="write the parameter, benchmark and conversion tables and their macro block")
+    q.add_argument("--check", action="store_true", help="only report whether the committed outputs are byte-identical to a fresh run")
+    q.set_defaults(func=_input_tables)
     q = sub.add_parser("guard", help="run the release guard only")
     q.set_defaults(func=_guard)

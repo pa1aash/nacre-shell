@@ -1,0 +1,369 @@
+{
+ "generator": "nacre preprint input-tables",
+ "inputs": {
+  "lit/corpus/si_table/labels.yaml": "f7fdab8b84f43846369ba880135045e722112b2320174e5b013dc329612f95af",
+  "lit/params.yaml": "9e7fd52f4b608cb71f1292c83fc4e4b50f4d685a528e8e789374ab7244a1c11c",
+  "preprint/paper/refs.bib": "95d6f55fad5b9f79f08b17371e6b2e14bb29713623972848ce7c2123a883483c",
+  "results/preprint/pourbaix/ph_w51/benchmark_w51.csv": "0bf8a20e34f8681b965eae968493b0f05b126ca9f06cc56ffbae714ce827ed39",
+  "results/preprint/pourbaix/ph_w52/ladder_v3.csv": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b"
+ },
+ "numbers": {
+  "conversion": {
+   "ConvA": {
+    "aw": 1.151,
+    "awhi": 7.987,
+    "awlo": 0.1658
+   },
+   "ConvB": {
+    "aw": 15.1,
+    "awhi": 940.0,
+    "awlo": 0.2424
+   },
+   "ConvC": {
+    "aw": 9.605e-05,
+    "awhi": 159.9,
+    "awlo": 5.769e-11
+   },
+   "ConvE": {
+    "aw": 59190.0,
+    "awhi": 1482000.0,
+    "awlo": 2363.0
+   }
+  },
+  "dft": {
+   "AlPOFour": {
+    "dft_minus_dfH_kJ": -67.54,
+    "dft_minus_dfH_kJ_per_atom": -11.26,
+    "expt_dfH_kJ": -1733.8
+   },
+   "CaPOThreeTwoglass": {
+    "dft_minus_dfH_kJ": -124.69,
+    "dft_minus_dfH_kJ_per_atom": -13.85,
+    "expt_dfH_kJ": -2456.01
+   },
+   "CaSiOThree": {
+    "dft_minus_dfH_kJ": -28.62,
+    "dft_minus_dfH_kJ_per_atom": -5.72,
+    "expt_dfH_kJ": -1634.8
+   },
+   "CaTwoPTwoOSeven": {
+    "dft_minus_dfH_kJ": -68.17,
+    "dft_minus_dfH_kJ_per_atom": -6.2,
+    "expt_dfH_kJ": -3338.83
+   },
+   "CaTwoSiOFour": {
+    "dft_minus_dfH_kJ": -41.41,
+    "dft_minus_dfH_kJ_per_atom": -5.92,
+    "expt_dfH_kJ": -2306.7
+   },
+   "HAp": {
+    "dft_minus_dfH_kJ": -102.9,
+    "dft_minus_dfH_kJ_per_atom": -4.68,
+    "expt_dfH_kJ": -6738.5
+   },
+   "LiClOFour": {
+    "dft_minus_dfH_kJ": -202.81,
+    "dft_minus_dfH_kJ_per_atom": -33.8,
+    "expt_dfH_kJ": -380.74
+   },
+   "LiPOThree": {
+    "dft_minus_dfH_kJ": -48.88,
+    "dft_minus_dfH_kJ_per_atom": -9.78,
+    "expt_dfH_kJ": -1255.2
+   },
+   "LiPOThreeglass": {
+    "dft_minus_dfH_kJ": -64.78,
+    "dft_minus_dfH_kJ_per_atom": -12.96,
+    "expt_dfH_kJ": -1239.3
+   },
+   "LiThreePOFour": {
+    "dft_minus_dfH_kJ": -29.61,
+    "dft_minus_dfH_kJ_per_atom": -3.7,
+    "expt_dfH_kJ": -2095.77
+   },
+   "LiTwoSiOThree": {
+    "dft_minus_dfH_kJ": -20.86,
+    "dft_minus_dfH_kJ_per_atom": -3.48,
+    "expt_dfH_kJ": -1648.08
+   },
+   "PTwoOFive": {
+    "dft_minus_dfH_kJ": -135.25,
+    "dft_minus_dfH_kJ_per_atom": -19.32,
+    "expt_dfH_kJ": -1504.9
+   },
+   "aTCP": {
+    "dft_minus_dfH_kJ": -61.88,
+    "dft_minus_dfH_kJ_per_atom": -4.76,
+    "expt_dfH_kJ": -4109.94
+   },
+   "bTCP": {
+    "dft_minus_dfH_kJ": -46.84,
+    "dft_minus_dfH_kJ_per_atom": -3.6,
+    "expt_dfH_kJ": -4120.8
+   },
+   "brushite": {
+    "dft_minus_dfH_kJ": -210.0,
+    "dft_minus_dfH_kJ_per_atom": -16.15,
+    "expt_dfH_kJ": -2403.58
+   },
+   "gibbsite": {
+    "dft_minus_dfH_kJ": -87.62,
+    "dft_minus_dfH_kJ_per_atom": -12.52,
+    "expt_dfH_kJ": -1293.1
+   },
+   "monetite": {
+    "dft_minus_dfH_kJ": -77.09,
+    "dft_minus_dfH_kJ_per_atom": -11.01,
+    "expt_dfH_kJ": -1814.39
+   }
+  },
+  "ladder": {
+   "main": {
+    "Acp": {
+     "dft_error": 3.6,
+     "e_ub": 4.0223,
+     "margin": 0.148
+    },
+    "AlOrtho": {
+     "dft_error": 11.3
+    },
+    "Atcp": {
+     "dft_error": 4.8,
+     "e_ub": 3.981,
+     "margin": 0.1654
+    },
+    "Baked": {
+     "dft_error": 11.3
+    },
+    "Brushite": {
+     "dft_error": 16.2,
+     "e_ub": 4.2658,
+     "margin": 0.1665
+    },
+    "Btcp": {
+     "dft_error": 3.6,
+     "e_ub": 4.0223,
+     "margin": 0.148
+    },
+    "CaMeta": {
+     "e_ub": 4.9818,
+     "margin": 0.19
+    },
+    "CaMetaAm": {
+     "e_ub": 4.8929,
+     "margin": 0.1348
+    },
+    "CaPyro": {
+     "dft_error": 6.2,
+     "e_ub": 4.4497,
+     "margin": 0.2308
+    },
+    "Carbonate": {
+     "e_ub": 3.9378,
+     "margin": 0.087
+    },
+    "Hap": {
+     "dft_error": 4.7,
+     "e_ub": 4.0674,
+     "margin": 0.1244
+    },
+    "LiMeta": {
+     "dft_error": 9.8,
+     "e_ub": 5.0208,
+     "margin": 0.1202
+    },
+    "LiMetaAm": {
+     "e_ub": 4.9842,
+     "margin": 0.2484
+    },
+    "LiOrtho": {
+     "dft_error": 3.7
+    }
+   },
+   "si": {
+    "AcpROne": {
+     "e_ub": 4.4846,
+     "margin": 0.0882
+    },
+    "AcpROneS": {
+     "e_ub": 4.0223,
+     "margin": 0.148
+    },
+    "AlOrthoRFour": {
+     "e_ub": 5.2105
+    },
+    "AtcpROne": {
+     "e_ub": 4.4708,
+     "margin": 0.094
+    },
+    "AtcpROneS": {
+     "e_ub": 3.981,
+     "margin": 0.1654
+    },
+    "BakedRFour": {
+     "e_ub": 5.2105
+    },
+    "BrushiteROne": {
+     "e_ub": 4.6947,
+     "margin": 0.1259
+    },
+    "BrushiteROneS": {
+     "e_ub": 4.4076,
+     "margin": 0.2794
+    },
+    "BrushiteRThree": {
+     "e_ub": 4.2658,
+     "margin": 0.1665
+    },
+    "BtcpROne": {
+     "e_ub": 4.4846,
+     "margin": 0.0882
+    },
+    "BtcpROneS": {
+     "e_ub": 4.0223,
+     "margin": 0.148
+    },
+    "CaMetaAmROne": {
+     "e_ub": 4.8929,
+     "margin": 0.1348
+    },
+    "CaMetaROne": {
+     "e_ub": 4.9818,
+     "margin": 0.19
+    },
+    "CaPyroROne": {
+     "e_ub": 4.7157,
+     "margin": 0.1017
+    },
+    "CaPyroROneS": {
+     "e_ub": 4.4497,
+     "margin": 0.2308
+    },
+    "CaSilMetaROne": {
+     "e_ub": 3.7171
+    },
+    "CaSilOrthoROne": {
+     "e_ub": 3.5866
+    },
+    "CaSilOrthoROneS": {
+     "e_ub": 3.4561,
+     "margin": 0.0937
+    },
+    "CarbonateROne": {
+     "e_ub": 3.9378,
+     "margin": 0.087
+    },
+    "HapROne": {
+     "e_ub": 4.4564,
+     "margin": 0.0847
+    },
+    "HapROneS": {
+     "e_ub": 4.0674,
+     "margin": 0.1244
+    },
+    "HapRTwo": {
+     "e_ub": 4.2029,
+     "margin": 0.2093
+    },
+    "LiMetaAmROne": {
+     "e_ub": 4.9842,
+     "margin": 0.2484
+    },
+    "LiMetaROne": {
+     "e_ub": 5.0208,
+     "margin": 0.1202
+    },
+    "LiSilROne": {
+     "e_ub": 3.6319
+    }
+   }
+  },
+  "params": {
+   "log_ksp_acc": {
+    "max": -5.51,
+    "min": -7.5376020021,
+    "value": -7.42021640338
+   },
+   "log_ksp_acp": {
+    "max": -23.9,
+    "min": -28.3,
+    "value": -25.5
+   },
+   "log_ksp_aragonite": {
+    "value": -8.34
+   },
+   "log_ksp_atcp": {
+    "value": -25.5
+   },
+   "log_ksp_brushite": {
+    "max": -6.576,
+    "min": -6.608,
+    "value": -6.592
+   },
+   "log_ksp_btcp": {
+    "max": -28.79,
+    "min": -28.95,
+    "value": -28.87
+   },
+   "log_ksp_calcite": {
+    "value": -8.48
+   },
+   "log_ksp_hap": {
+    "max": -54.46,
+    "min": -57.55,
+    "value": -56.015
+   },
+   "log_ksp_li3po4": {
+    "max": -8.752,
+    "min": -9.02,
+    "value": -8.886
+   },
+   "log_ksp_ocp": {
+    "max": -48.2,
+    "min": -48.6,
+    "value": -48.4
+   },
+   "log_ksp_ocp_ca4h": {
+    "max": -48.2,
+    "min": -48.6,
+    "value": -48.4
+   },
+   "pk1_carbonic": {
+    "max": 6.371,
+    "min": 6.331,
+    "value": 6.351
+   },
+   "pk2_carbonic": {
+    "max": 10.35,
+    "min": 10.31,
+    "value": 10.3295
+   },
+   "pka1_phosphoric": {
+    "max": 2.148,
+    "min": 2.127,
+    "value": 2.135
+   },
+   "pka2_phosphoric": {
+    "max": 7.208,
+    "min": 7.2,
+    "value": 7.2
+   },
+   "pka3_phosphoric": {
+    "max": 12.39,
+    "min": 12.325,
+    "value": 12.345
+   },
+   "pkw": {
+    "value": 13.99
+   }
+  },
+  "speciation": {
+   "co3_pct_low": 31.887945580653575,
+   "ph_low": 10.0,
+   "ph_mid": 12.0,
+   "po4_pct_low": 0.4491147934948912,
+   "po4_pct_mid": 31.12230339193754
+  }
+ },
+ "schema": 1
+}

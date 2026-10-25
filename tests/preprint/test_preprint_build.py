@@ -196,3 +196,13 @@ def test_every_regime_table_row_is_in_the_built_pdf(draft_build):
     assert not missing, "regime-table rows absent from the built PDF: %s" % ", ".join(missing)
     assert len(rows) == 19
 
+
+
+@pytest.mark.skipif(not HAVE_TEMPLATE, reason="needs the local-only template")
+def test_the_head_carries_no_journal_front_matter():
+    from nacre.report import template
+    head = build.strip_journal_front(template.render_head(paths.template_dir(REPO)))
+    assert "head_foot/" not in head
+    assert "\\nacreTitle" in head and "\\nacreAuthors" in head and "\\nacreAbstract" in head
+    with pytest.raises(build.PrepareError):
+        build.strip_journal_front(head)          # a head without the journal block is refused, not passed through
