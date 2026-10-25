@@ -4493,6 +4493,43 @@ params:
       55% in Kukay 2020) but none prints the liquid volume or a liquid density, and the density of water-isopropanol
       80:20 or of 1 M H3PO4 was not found in an open source (PH-W1.8, details in lit/corpus/T-R/gaps.md), so the dose per
       dm^3 (1 mol dm^-3 = 1000 mol m^-3, the loader's SI unit) is not derived; the dose is held per mass of active material in the keys ph_additive_h3po4_dose_*
+  liclo4_solubility_pc:
+    added_in: P0-W1.PH-W1.9
+    symbol: s_liclo4_pc
+    unit: mol kg^-1
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap (PH-W1.9): no source with a retrievable text prints the saturation concentration of LiClO4 in propylene
+      carbonate at about 25 C, so no value, grade or scale is registered (the first source found must state molal or
+      molar; the unit here is molal because every PC solubility series read is molal). The two papers that hold it are
+      paywalled (Varlamova and Yurina 2006 ternary LiClO4-DEC-PC at 25 C; Kirillov et al. 2014 binary LiClO4-PC phase
+      diagram), details in lit/corpus/T-K/gaps.md. The rows that bear on it are comparators, not values.
+    comparators: [TK-076, TK-080, TK-081]
+  liclo4_gamma_pc:
+    added_in: P0-W1.PH-W1.9
+    symbol: gamma_pm_liclo4_pc
+    unit: "1"
+    regimes: [R-cell]
+    status: gap
+    reason: >-
+      gap (PH-W1.9): no measured or computed mean ionic activity coefficient of LiClO4 in propylene carbonate at
+      1 mol dm^-3 (or at any concentration) in a source with a retrievable text. The one open Debye-Hueckel plus Born
+      treatment found covers LiPF6 in PC (molal scale, up to 1 molal, shown as a plot offset by an arbitrary constant,
+      no printed values) and LiClO4 only in DMC; its radii for LiPF6 in PC are comparators. The saturated activity of
+      LiClO4 is not given by any source (it needs the solubility key and this one on the same scale).
+    comparators: [TK-077, TK-078, TK-079]
+  liclo4_ka_pc_25c:
+    added_in: P0-W1.PH-W1.10
+    symbol: K_A_liclo4_pc
+    unit: m^3 mol^-1
+    regimes: [R-cell]
+    conditions: "LiClO4 in propylene carbonate at 298.15 K, molar scale, thermodynamic ion-pair association constant from a conductivity fit (Barthel 1993, Table 5, 5.25 dm^3 mol^-1)"
+    notes: >-
+      Not an activity coefficient and not a substitute for liclo4_gamma_pc, which stays a gap (PH-W1.10: the supplied
+      Barthel 1993 PDF prints this association constant and no activity or osmotic coefficient; Kirillov 2014 was not
+      supplied). One source, grade C, no printed uncertainty, so the width is not sourced.
+    admit: [{row: TK-082}]
   p_c_site_square:
     added_in: P0-W1.PH-W1.6
     symbol: p_c_site_square

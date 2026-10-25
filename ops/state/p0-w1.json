@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-W1.8",
+  "last_session": "PH-W1.10",
   "status": "DONE",
-  "day": 6,
+  "day": 7,
   "artifacts": [
     ".local/early_read/params_table_for_coauthors.pdf (local-only)",
     "jobs/ledger/p0-w1.jsonl",
@@ -60,18 +60,24 @@
     "ops/reports/P0-W1.PH-W1.5.md",
     "ops/reports/P0-W1.PH-W1.6.md",
     "ops/reports/P0-W1.PH-W1.7.md",
-    "ops/reports/P0-W1.PH-W1.8.md"
+    "ops/reports/P0-W1.PH-W1.8.md",
+    "lit/corpus/audit/ph_w1_4/",
+    "ops/reports/P0-W1.PH-W1.4.md",
+    "lit/corpus/audit/ph_w1_9/",
+    "ops/reports/P0-W1.PH-W1.9.md",
+    "ops/reports/P0-W1.PH-W1.10.md",
+    "lit/corpus/inputs/.gitignore"
   ],
-  "notes": "PH-W1.8: H3PO4 pH-controller dose rows TR-122..TR-138, TR-140 and 4 dose keys; p_total_slurry_h3po4_window gap (liquid density missing); Al(ClO4)3 S/DfG gap. Deviation text: Re-audit: cp6.",
+  "notes": "PH-W1.10: Kirillov 2014 (kirillov.pdf) prints no LiClO4-PC liquidus (cites Varlamova 2006); Barthel 1993 (j-barthel.pdf) prints neither a pure-PC saturation value nor a solution density; K_A of LiClO4 in PC at 298.15 K registered (TK-082, key liclo4_ka_pc_25c, grade C); liclo4_solubility_pc and liclo4_gamma_pc stay gaps.",
   "params": {
     "status": "ready",
-    "sha": "3620586694941e71f39c1c22d5fc51c49b2b3aa3",
+    "sha": "bd63f41413381c577bb5614db980bda1b186781c",
     "post_cp3": true,
     "file": "lit/params.yaml",
     "loader": "nacre.lit.params (prior, priors, prior_set, sample_correlated, resolve)",
     "rule": "lit/corpus/params_README.md (rule version 3, section 8)",
-    "keys": 479,
-    "new_keys": 5,
+    "keys": 482,
+    "new_keys": 1,
     "edited_keys": [],
     "cp3_tag_table": "p0-cp3 (production screens)"
   }

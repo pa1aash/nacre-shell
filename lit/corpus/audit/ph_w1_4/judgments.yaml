@@ -1,0 +1,212 @@
+# Hand-written judgments for lit/corpus/audit/ph_w1_4/reference_audit.csv (PH-W1.4, 2026-10-23).
+# build_reference_audit.py merges this file with the fetched responses and the evidence table;
+# it checks that every listed row exists, carries the key's DOI, and takes best_grade from the rows.
+#
+# use:       data_source | paraphrase | quote   (no direct quote was found; method citations count as paraphrase)
+# supported: y | partial | n
+#            y       a listed row measures or states what the cited sentence says
+#            partial a row supports part of the sentence, or only an abstract-level reading (stated in note)
+#            n       no evidence row for the work, or none that bears on the sentence
+# rows:      evidence-table row ids that bear on the cited claim ([] when none)
+# note:      what the rows do and do not cover; becomes the problems column together with the automatic flags
+
+archer1997sensitivity:
+  use: paraphrase
+  rows: [TE-035]
+  supported: y
+  note: abstract only (grade D); supports bootstrap confidence intervals on Sobol indices.
+bannwarth2019gfn2:
+  use: paraphrase
+  rows: [TE-075, TE-076, TE-077]
+  supported: y
+  note: method choice (GFN2-xTB geometries); benchmark errors are in the rows.
+bauer2019effects:
+  use: paraphrase
+  rows: [TA-017]
+  supported: y
+  note: abstract only (grade D); Li+/H+ exchange raises slurry pH.
+bichon2021performance:
+  use: paraphrase
+  rows: []
+  supported: n
+  note: no row for this DOI. TJ-085 names Bichon only as the original of a mixing time. The cited sentence (carbon-coated collector keeps the slurry off the metal) matches the title of doberdo2014enabling, which is cited in the Introduction for a different sentence; check that the two keys are not swapped.
+carvalho2016study:
+  use: paraphrase
+  rows: [TA-013, TA-014, TR-124]
+  supported: y
+  note: LTO slurry, pH 11.4 gave cavities with Al at their bottoms, with 1 wt% H3PO4 pH 6.7.
+cao2022oxidative:
+  use: data_source
+  rows: [TI-061, TK-061, TK-062, TK-063]
+  supported: y
+  note: onset about 3.8 V against an equilibrium potential of 3.82 V.
+chen2024study:
+  use: paraphrase
+  rows: [TR-125]
+  supported: partial
+  note: the only row is the H3PO4 dose (0.5 wt% of total electrode mass); no row states that the acid avoids Al corrosion in this work.
+devol2015nanoscale:
+  use: paraphrase
+  rows: [TC-002]
+  supported: y
+  note: abstract only (grade D); ACC precursors at the forming nacre surface of red abalone.
+doberdo2014enabling:
+  use: paraphrase
+  rows: []
+  supported: n
+  note: no evidence row and no mention in any extraction file; cited for hydroxide conversion and dissolution of the Al oxide film, whereas the title is about carbon-coated Al collectors.
+ehlert2021robust:
+  use: paraphrase
+  rows: [TE-081, TE-082, TE-083, TE-084]
+  supported: y
+  note: implicit-solvation benchmark for the xtb workflow.
+friedman2021preferential:
+  use: paraphrase
+  rows: [TE-061, TE-062, TE-063]
+  supported: y
+  note: smallest mean unsigned error of the four functionals against CCSD(T)/CBS for the Ca2+ and La3+ ligand set (water, acetate, acetamide, N-methylmethanimine).
+goerigk2017look:
+  use: paraphrase
+  rows: [TE-069, TE-070]
+  supported: y
+  note: dispersion-corrected hybrid recommendation.
+gong2012phase:
+  use: paraphrase
+  rows: [TC-005]
+  supported: partial
+  note: abstract only (grade D); the work is on sea urchin embryo spicules (row TC-005 says "not nacre"), but the sentence says ACC precursors are observed at the growth front of nacre.
+hanifa2025effects:
+  use: paraphrase
+  rows: []
+  supported: n
+  note: no evidence row; cited twice for aragonite needing magnesium, a polyamine or heating.
+hawley2020lithium:
+  use: paraphrase
+  rows: [TA-001, TA-002, TA-004]
+  supported: y
+  note: NCA slurry pH above 12, dissolved lithium about 100 ug/mL.
+heidbuchel2022enabling:
+  use: paraphrase
+  rows: [TA-006, TA-007, TB-014, TA-027]
+  supported: partial
+  note: rows support pH 11.44 and the statement that pH above 9 dissolves the Al2O3 layer (sentences 2 and 3); the sentence on replacing the fluorinated binder and organic solvent has only TA-027 (adhesion against an NMP/PVdF reference), which does not state it.
+iooss2017shapley:
+  use: paraphrase
+  rows: [TP-001, TP-002, TP-003, TP-004]
+  supported: y
+  note: Shapley effects share variance among correlated inputs and equal Sobol indices at zero correlation.
+jain2013commentary:
+  use: data_source
+  rows: []
+  supported: n
+  note: database attribution; the evidence table holds literature rows only, so there is none. The support is the cache manifest results/preprint/pourbaix/cache/manifest.json (version macro NumMpDatabaseVersion).
+kuhnel2016water:
+  use: paraphrase
+  rows: [TR-091]
+  supported: y
+  note: passivation window about pH 4 to 8.5 for 0.1 mM soluble Al3+.
+li2016effect:
+  use: paraphrase
+  rows: [TA-046, TB-022]
+  supported: y
+  note: abstract only (grade D), paywalled.
+mahamid2010mapping:
+  use: paraphrase
+  rows: []
+  supported: n
+  note: no evidence row; background claim on ACP to apatite in zebrafish fin bone.
+mahne2018electrochemical:
+  use: data_source
+  rows: [TI-059, TI-060, TK-059, TK-060]
+  supported: y
+  note: CO2 onset about 3.8 V, close to the equilibrium potential.
+marenich2009universal:
+  use: paraphrase
+  rows: [TE-067, TE-068]
+  supported: partial
+  note: abstract only (grade D); supports the SMD model for water; the clause on the non-electrostatic term has no row.
+morsch2018unexpected:
+  use: paraphrase
+  rows: []
+  supported: n
+  note: no evidence row; claim on polyphosphate films on steel and its hydrolysis to orthophosphate.
+nahi2022polyamines:
+  use: paraphrase
+  rows: []
+  supported: n
+  note: no evidence row; cited in the Introduction and in Results for aragonite formation needing a polyamine.
+osoriocelestino2020influence:
+  use: paraphrase
+  rows: [TB-001, TB-004]
+  supported: y
+  note: calcite scale on Al alloys porous with pitting or crevice attack beneath; conditions were 90 C brine for 576 h, not slurry conditions.
+osunamascaro2015ultrastructure:
+  use: paraphrase
+  rows: []
+  supported: n
+  note: no evidence row; background claim on nacre composition.
+persson2012prediction:
+  use: paraphrase
+  rows: [TE-036]
+  supported: y
+  note: abstract only (grade D), full text paywalled; supports the reference scheme, not any number.
+pracht2020automated:
+  use: paraphrase
+  rows: [TE-088]
+  supported: y
+  note: abstract only (grade D); the row says no accuracy numbers are printed in the abstract.
+rossini1971selected:
+  use: data_source
+  rows: [TK-018, TK-033, TK-034, TK-035, TK-036]
+  supported: y
+  note: tabulated entropies and formation enthalpies. The SI sentence names the NIST-JANAF tables, not NBS TN 270, and carries a missing-reference marker beside this citation.
+rossini1981selected:
+  use: data_source
+  rows: [TI-037, TI-038, TI-042, TI-044, TK-027]
+  supported: y
+  note: tabulated formation values for Li species. Same SI sentence and marker as rossini1971selected.
+saltelli2002making:
+  use: paraphrase
+  rows: [TE-024, TE-025, TE-026, TE-027]
+  supported: y
+  note: cost of Sobol first-order and total indices.
+sedira2026nacre:
+  use: paraphrase
+  rows: []
+  supported: n
+  note: no evidence row; background claim on nacre structure.
+stevanovic2012correcting:
+  use: paraphrase
+  rows: [TI-080, TI-081, TI-082]
+  supported: y
+  note: formation-energy error of the DFT fit.
+tolchard2023insights:
+  use: paraphrase
+  rows: [TR-090, TR-122, TJ-086]
+  supported: partial
+  note: rows give the 4.5 to 8.5 window (grade D, stated without derivation), the 0.5 and 1 wt% H3PO4 doses and drying temperatures; none states control of stoichiometry or reactive phosphate residues. Full text not retrievable in this session (RSC 403).
+wan2019polyphosphate:
+  use: data_source
+  rows: [TT-001, TT-002, TT-003, TT-004]
+  supported: y
+  note: k for polyphosphate hydrolysis on gamma-Al2O3 at room temperature, pH 6 (grade C, fit of orthophosphate release over 216 h).
+wang2021framework:
+  use: paraphrase
+  rows: [TI-083, TI-084]
+  supported: y
+  note: formation-energy RMSE of the corrected set.
+wang2024liquidliquid:
+  use: paraphrase
+  rows: [TT-025, TT-026, TT-027, TT-029]
+  supported: y
+  note: Ca-polyphosphate coacervate in human wound exudate; transfer to a slurry is by analogy (TT-029 says it is not a battery coating).
+yu2023study:
+  use: paraphrase
+  rows: []
+  supported: n
+  note: no evidence row; claim that a polydopamine coating reduced carbonate deposition.
+younes2015chitin:
+  use: paraphrase
+  rows: []
+  supported: n
+  note: no evidence row; textbook definition of chitosan.
