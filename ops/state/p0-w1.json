@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W1.10",
+  "last_session": "PH-W1.12",
   "status": "DONE",
   "day": 7,
   "artifacts": [
@@ -66,9 +66,11 @@
     "lit/corpus/audit/ph_w1_9/",
     "ops/reports/P0-W1.PH-W1.9.md",
     "ops/reports/P0-W1.PH-W1.10.md",
-    "lit/corpus/inputs/.gitignore"
+    "lit/corpus/inputs/.gitignore",
+    "ops/reports/P0-W1.PH-W1.11.md",
+    "ops/reports/P0-W1.PH-W1.12.md"
   ],
-  "notes": "PH-W1.10: Kirillov 2014 (kirillov.pdf) prints no LiClO4-PC liquidus (cites Varlamova 2006); Barthel 1993 (j-barthel.pdf) prints neither a pure-PC saturation value nor a solution density; K_A of LiClO4 in PC at 298.15 K registered (TK-082, key liclo4_ka_pc_25c, grade C); liclo4_solubility_pc and liclo4_gamma_pc stay gaps.",
+  "notes": "PH-W1.12: SI key column prints display_key (lipo3, alpo4_baked) for the two film-thickness comparator keys; registry keys and values unchanged.",
   "params": {
     "status": "ready",
     "sha": "bd63f41413381c577bb5614db980bda1b186781c",
