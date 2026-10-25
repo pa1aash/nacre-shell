@@ -57,21 +57,22 @@ def blender_version(exe):
 
 
 SPECIES = ("O", "H", "C", "Ca", "Li", "Cl")
+# Cl is drawn as a dark slate: the Jmol green sits 2.7 CAM02-UCS units from the phosphate fill under
+# colour-vision simulation; this one is 75 from it and 21.1 from the slab.
+CL_SLATE = (0.12, 0.16, 0.22)
 PANEL_CLASSES = {"a": ("Al", "O", "H", "Ca", "carbonate"), "b": ("Al", "O", "H", "C", "Li", "Cl", "phosphate")}
 
 
 def palette(entry, root=None):
     """Scene colours (sRGB), one per class: the element colours of the repository palette (ase
     Jmol table, with its adjustments) for O, H, C, Ca and Li, the same ase table for Cl (absent from
-    the palette), the stability-map fills for the carbonate ion ('suitable against dissolution')
+    the palette; replaced by CL_SLATE), the stability-map fills for the carbonate ion ('suitable against dissolution')
     and the phosphate chain ('open'), and for the Al slab the palette's Al colour scaled by
     entry['al_shade']: the plain Al colour sits 9.6 CAM02-UCS units from the phosphate fill."""
-    from ase.data import atomic_numbers
-    from ase.data.colors import jmol_colors
     fills = regimes.fills(root)
     el = style.palette(root)["elements"]
     pal = {k: [float(x) for x in el[k]["srgb"]] for k in SPECIES if k in el}
-    pal["Cl"] = [round(float(x), 4) for x in jmol_colors[atomic_numbers["Cl"]]]
+    pal["Cl"] = list(CL_SLATE)
     pal["Al"] = [round(float(x) * float(entry["al_shade"]), 4) for x in el["Al"]["srgb"]]
     pal["carbonate"] = [float(x) for x in fills["suitable against dissolution"]]
     pal["phosphate"] = [float(x) for x in fills["open"]]
@@ -80,11 +81,11 @@ def palette(entry, root=None):
 
 def palette_problems(pal, root=None):
     """The slab, the carbonate and the phosphate must clear palette delta_e_min against each other,
-    and the slab against every class drawn on it, under every vision condition. Returns
+    the chloride against the phosphate, and the slab against every class drawn on it, under every vision condition. Returns
     (problems, smallest distance of those pairs, smallest distance over all class pairs within a
     panel, which is recorded but not gated: element pairs follow the repository palette)."""
     need = float(style.palette(root)["delta_e_min"])
-    pairs = {("Al", "carbonate"), ("Al", "phosphate"), ("carbonate", "phosphate")}
+    pairs = {("Al", "carbonate"), ("Al", "phosphate"), ("carbonate", "phosphate"), ("Cl", "phosphate")}
     for cls in PANEL_CLASSES.values():
         pairs |= {("Al", c) for c in cls if c != "Al"}
     got = {pq: colours.min_delta_e([pal[pq[0]], pal[pq[1]]]) for pq in sorted(pairs)}
@@ -94,6 +95,20 @@ def palette_problems(pal, root=None):
         within += [(colours.min_delta_e([pal[x], pal[y]]), x, y) for i, x in enumerate(cls) for y in cls[i + 1:]]
     probs = ["%s-%s: smallest CAM02-UCS distance %.1f < %.1f" % (x, y, got[(x, y)], need) for x, y in low]
     return probs, min(got.values()), min(within)
+
+
+def pairs_below_min(pal, root=None):
+    """Every class pair within a panel under delta_e_min, as (distance, class, class): the accepted
+    exceptions that the manifest records."""
+    need = float(style.palette(root)["delta_e_min"])
+    out = set()
+    for cls in PANEL_CLASSES.values():
+        for i, x in enumerate(cls):
+            for y in cls[i + 1:]:
+                d = colours.min_delta_e([pal[x], pal[y]])
+                if d < need:
+                    out.add((d, x, y))
+    return sorted(out)
 
 
 def _wait_for_memory(log, limit_min=60):
@@ -203,6 +218,7 @@ def build(root, only=None, cvd=True, log=print, scale=1.0, samples=None, repeat=
         try:
             pal = palette(entry, root)
             problems, dmin, dall = palette_problems(pal, root)
+            below = pairs_below_min(pal, root)
             if problems:
                 raise RenderError("%s: %s" % (fid, "; ".join(problems)))
             scratch = Path(tempfile.mkdtemp(prefix="nacre-render-"))
@@ -250,8 +266,9 @@ def build(root, only=None, cvd=True, log=print, scale=1.0, samples=None, repeat=
                 "palette": {k: [round(x, 4) for x in v] for k, v in sorted(pal.items())},
                 "palette_sha256": hashlib.sha256(json.dumps(pal, sort_keys=True).encode()).hexdigest(),
                 "palette_min_delta_e_solids": round(dmin, 1),
-                "palette_rule": "slab, carbonate and phosphate pairwise, and slab against every class, >= delta_e_min",
+                "palette_rule": "slab, carbonate and phosphate pairwise, Cl against phosphate, and slab against every class, >= delta_e_min",
                 "palette_min_delta_e_all_classes": [round(dall[0], 1), dall[1], dall[2]],
+                "palette_pairs_below_delta_e_min_recorded": [[round(d, 1), a, b] for d, a, b in below],
                 "geometry_sha256": geo_sha, "geometry_sources": geo["sources"], "geometry_counts": geo["counts"],
                 "atoms": {p: m["atoms"] for p, m in sorted(scene.items())},
                 "scene_objects": {p: m["panels"][p] for p, m in sorted(scene.items())},
