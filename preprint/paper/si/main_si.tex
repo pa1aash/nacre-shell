@@ -25,10 +25,8 @@
 
 \section{Full derivation}\label{si:derivation}
 % Delivered by lane W3 (session P0-W3.4) as theory/si_derivation.tex, the SI text of the derivation
-% audited at cp2 and cp3 (path relative to preprint/paper). Until it is pushed the section holds a
-% placeholder; the audited working derivation is theory/derivation_body.tex.
-\IfFileExists{../../theory/si_derivation.tex}{\input{../../theory/si_derivation.tex}}%
-  {\nacrePlaceholder{SI derivation text from the derivation lane}}
+% audited at cp2 and cp3 (path relative to preprint/paper); committed, so it is input directly (PH-W8.7).
+\input{../../theory/si_derivation.tex}
 
 % cp6 F4: the proof that no interfacial term is counted twice is Section S1.7 of the derivation
 % (thsi:sec:nodouble); the parameter provenance and conflict tables are the last section.
@@ -38,9 +36,7 @@
 The required-precision map of the main text is drawn per quantity in Fig.~\ref{fig:si-precision}: few quantities can settle a verdict by measurement alone, and the rows without a prior have no required precision. % CL-P04
 \begin{figure}[t]
   \centering
-  \IfFileExists{\nacreRepoRoot/figures/out/fig14.pdf}{%
-    \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig14.pdf}}%
-    {\nacreMissing{precision map figure, pending}}
+  \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig14.pdf}
   \caption{Required precision for \NumPrecRows\ quantities, grouped by verdict link. (a) Prior range scaled to unit width (grey), with the flip value and its credible range. (b) Required width as a fraction of the present prior width. (c) No numerical width: no flip or closed (left), unreachable (middle), gap (right). Marker: evidence grade (circle A, square B, triangle C, inverted triangle D, diamond ignorance prior, cross none); open marker and dashed line: a gap row.}
   \label{fig:si-precision}
 \end{figure}
@@ -53,9 +49,7 @@ The required-precision map of the main text is drawn per quantity in Fig.~\ref{f
 The retrodiction of the nucleation half, \NumRetroCorrect\ of \NumRetroUsableCases\ against the \NumRetroPassCount\ required, is drawn per case in Fig.~\ref{fig:si-retro}: the ordering follows observation where the input acts on the template--nucleus contact and mostly fails where it acts on the template--liquid interface. % CL-T03
 \begin{figure}[t]
   \centering
-  \IfFileExists{\nacreRepoRoot/figures/out/fig4.pdf}{%
-    \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig4.pdf}}%
-    {\nacreMissing{retrodiction figure, pending}}
+  \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig4.pdf}
   \caption{Retrodiction of the nucleation half of the carbonate control on \NumRetroUsableCases\ same-study orderings. (a) Predicted barrier difference, test minus reference (median and \NumRetroIntervalLevel\ interval), grouped by the input interface: the template--nucleus contact $\gsn$, the net energy, then $\gsl$. Circle, correct; square, incorrect; open diamond, inconclusive and counted as a miss. Triangles: observed ordering. \NumRetroCorrect\ are correct against the \NumRetroPassCount\ the rule required, and the label-swap check holds. (b) Correct counts with the inputs shuffled within studies (solid) and across studies (dashed): median \NumRetroNullMedian, range \NumRetroNullLow\ to \NumRetroNullHigh. Line: the observed count.}
   \label{fig:si-retro}
 \end{figure}
@@ -68,9 +62,7 @@ The retrodiction of the nucleation half, \NumRetroCorrect\ of \NumRetroUsableCas
 The database formation enthalpies lie inside the error band for the ionic orthophosphates and outside it, on the over-bound side, for the condensed, acid and hydrated phosphates, the aluminium hydroxide and the sink salt (Fig.~\ref{fig:si-dft}). % CL-X03
 \begin{figure}[t]
   \centering
-  \IfFileExists{\nacreRepoRoot/figures/out/fig10.pdf}{%
-    \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig10.pdf}}%
-    {\nacreMissing{benchmark figure, pending}}
+  \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig10.pdf}
   \caption{Density functional minus tabulated formation enthalpy per atom for each phase with a like-for-like value, grouped by family (phosphates, silicates, Al--O--H phases, sink salt). Grey band: the registered error band, \NumDftTolerance\ per atom. Filled circle: inside the band; open square: outside; open diamond: the tabulated phase is a glass. The outside rows are consistent with one oxide correction, \NumMpOxideCorr\ per oxygen, applied to every oxygen; database values are comparators and decide no row.}
   \label{fig:si-dft}
 \end{figure}
@@ -238,18 +230,14 @@ The thresholds were set and then amended once, each time before any output of th
 The carbonate control, taken unchanged from the carbonate screen, is drawn in Fig.~\ref{fig:si-carbonate}: calcium carbonate resists dissolution in the slurry only where the calcium dose and the dissolved carbonate keep the bulk supersaturated, and in the cell it is oxidised below the cutoffs of most cathode classes. % CL-S02, CL-S03
 \begin{figure}[t]
   \centering
-  \IfFileExists{\nacreRepoRoot/figures/out/fig7.pdf}{%
-    \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig7.pdf}}%
-    {\nacreMissing{carbonate control figure, pending}}
+  \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig7.pdf}
   \caption{Carbonate control: calcium carbonate stability, taken unchanged from the carbonate screen. (a) Slurry dissolution verdict over the calcium dose $\mathrm{Ca_T}$ and the dissolved carbonate $\mathrm{C_T}$: suitable against dissolution (blue), inconclusive (yellow, hatched) and dissolving (vermillion, cross-hatched); both water activities agree. Line: median $\Omb$ at unity. (b) Oxidation windows against \ce{Li+}/Li with the solid \ce{LiClO4} sink, per phase: the experimental route (black, governing) and the JANAF-referenced (blue) and Materials Project (vermillion) density functional comparators, dashed when corrected. Open circle, undetermined; open square, no route. Grey: the margin, \NumCellMarginExpt, below the crossover at \NumCellFalsifiedAbove\ for a \ce{LiClO4}-saturated sink (solid-salt reference state). Dashed: the cutoffs of the cathode classes of the carbonate screen. Other sinks are undetermined.}
   \label{fig:si-carbonate}
 \end{figure}
 The passivation window of aluminium in the Methods comes from our Al--O--H construction (Fig.~\ref{fig:si-window}): the window narrows as the allowed dissolved aluminium falls, and the amorphous hydroxide that governs the film has its window inside that of boehmite. % CL-M13
 \begin{figure}[t]
   \centering
-  \IfFileExists{\nacreRepoRoot/figures/out/fig11.pdf}{%
-    \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig11.pdf}}%
-    {\nacreMissing{passivation window figure, pending}}
+  \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig11.pdf}
   \caption{The pH window in which an aluminium oxide film persists, at each dissolved-aluminium level (tick labels). Black: amorphous \ce{Al(OH)3}, the governing film phase. Blue, hatched: boehmite, the crystalline reference. Grey, top: the two published statements. Open circle: the window continues beyond the computed range; open square: no window at that level. Thermodynamic windows only; kinetics is not considered.}
   \label{fig:si-window}
 \end{figure}
