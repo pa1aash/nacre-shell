@@ -4,4 +4,4 @@ Source: `ladder_v3.csv` (K1), `perph.csv` with the cell verdicts of `k2_grid_ph`
 
 ## Draft
 
-**Fig. 15** Regime of each candidate (rows: slurry phases, cell phases, silicates, carbonates). Columns: K2 in the processing slurry, then in the acid-adjusted slurry by pH, then K1 at the registered cutoff classes (nominal \NumClassLo), crystalline left, amorphous right. Dots: suitable against dissolution, plus vertical lines at a lowest passing dose of at least \NumRegHighDose; plain: undetermined; single hatching: open; cross hatching: thermodynamically excluded. Carbonate K1: calcite row.
+**Fig. 15** Regime of each candidate (rows: slurry phases, cell phases, silicates, carbonates). Columns: K2 in the processing slurry, K2 in the acid-adjusted slurry by pH, then K1 at the registered cutoff classes (nominal \NumClassLo), crystalline left, amorphous right. Dots: suitable against dissolution, with vertical lines at a lowest passing dose of at least \NumRegHighDose; plain: undetermined; single hatching: open; cross hatching: excluded.

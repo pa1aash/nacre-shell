@@ -333,7 +333,7 @@
   "fig9": {
    "id": "fig9",
    "claim": "The tier-1 verdict depends on the cutoff class and on the framing: crystalline calcium orthophosphates and the carbonate control are excluded at the two higher classes and not at the lowest, Ca2SiO4 is excluded at all three, and the amorphous framing is undetermined except for two phases.",
-   "caption_key": "One row per phase, grouped top to bottom by regime and role: R-slurry phases, R-cell phases, silicate comparators, the carbonate control (gaps between groups). Three pairs of columns, one pair per registered cutoff class (tick labels, V vs Li+/Li; the lowest class is the nominal value, and the sensitivity with the sourced upper cutoff leaves every verdict unchanged); within a pair, crystalline framing left and amorphous framing right. Fill and hatching: verdict of the tier-1 aggregate at the class (excluded, cross hatching; inconclusive, single hatching; undetermined, plain).",
+   "caption_key": "One row per phase, grouped top to bottom by regime and role: R-slurry phases, R-cell phases, silicate comparators, the carbonate control (gaps between groups). Three pairs of columns, one pair per registered cutoff class (tick labels, V vs Li+/Li; the lowest class is the nominal value, and the sensitivity with the sourced upper cutoff leaves every verdict unchanged); within a pair, crystalline framing left and amorphous framing right. Fill and hatching: verdict of the tier-1 aggregate at the class (excluded, cross hatching; inconclusive, single hatching; undetermined, plain grey). Cells the regime table states are drawn from the table, the others from the ladder file.",
    "mock": false,
    "width": "double",
    "size_cm": [
@@ -350,7 +350,8 @@
    },
    "schema": "figures/src/schemas/ladder_v3.schema.json",
    "aux": {
-    "cutoffs": "configs/preprint/thresholds.yaml@2345f00 (p0-w4)",
+    "cutoffs": "configs/preprint/thresholds.yaml@597ad43 (p0-w4)",
+    "regime_table": "preprint/generated/regime_table.csv@265b095 (p0-w8)",
     "sens40": "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv@73316df (p0-w5)"
    },
    "font": {
@@ -359,11 +360,11 @@
     "release": true
    },
    "outputs": {
-    "figures/out/fig9.pdf": "2b9d1464968d504996ad440b8cafbe7aac32324ac765d7923b05c9c8b6b80f30",
-    "figures/out/fig9.png": "918fffcb88bce1e597f526809767bc77786542c828828d220d82ba27f3e2d8a4",
-    "figures/out/cvd/fig9_deuteranopia.png": "66b7a8a81fde22fe70f589ff7f0fbe9dc121b0ee0995d4584bf40e220546c9ac",
-    "figures/out/cvd/fig9_protanopia.png": "488f2e578a126e1a47ede44f3e9b4dbd6ada641e4726abad9cdc8448ae9c2f13",
-    "figures/out/cvd/fig9_tritanopia.png": "c2120a1b06c580b4ba215ebee103f1ff848cacc77215ac0b5ffac6b398f5bc33"
+    "figures/out/fig9.pdf": "89ded131f4c9eab521b657473901c2d3ba3026c296b6c5bf20cf1ce9c988ff85",
+    "figures/out/fig9.png": "90329bed8efcc6870ad4a7ff504c5b694a40755b8d4fa6eeac9887b9e3d69238",
+    "figures/out/cvd/fig9_deuteranopia.png": "8531e500e1a7ba5ebd08aa0e4f295338ed61594573eb3f7221a640b31a373dca",
+    "figures/out/cvd/fig9_protanopia.png": "869f83db292eaeef8ed8dba3457a02a82e75947a3134d2f6d67272edb3015163",
+    "figures/out/cvd/fig9_tritanopia.png": "312ca2c6254fe2d0b045a9f5ec54fb62977b94f9972fa02b0c72a27bc6712fb9"
    },
    "checker": "pass (artists and PDF text)"
   }

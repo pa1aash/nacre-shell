@@ -4,7 +4,7 @@ Built from W4's production run `ignorance` (`results/preprint/screen/ignorance/s
 
 ## Draft
 
-**Fig. 5** Heterogeneous barrier ΔG*_het/k_BT over contact angle θ and bulk supersaturation Ω_bulk, from the contract at the screen's reference inputs; the template does not change Ω_bulk. Vertical line: the C3a edge, cos θ = \NumMcos. Absolute-barrier bound: not drawn (A_patch is a registered gap). Outlines: central \NumFigFiveOutlineMass of ignorance-prior draws (slurry solid, drying dashed), a property of the prior. \NumBoundaryMassThetaPi of draws clip to complete non-wetting. Favourable template: γ_sn < γ_sl (model section).
+**Fig. 5** Heterogeneous barrier ΔG*_het/k_BT over contact angle θ and bulk supersaturation Ω_bulk at the screen's reference inputs. Vertical line: the C3a edge, cos θ = \NumMcos; outlines: central \NumFigFiveOutlineMass of ignorance-prior draws (slurry solid, drying dashed). The absolute-barrier bound is not drawn because A_patch is a registered gap.
 
 ## Checklist (R4, R5, R6, R7)
 

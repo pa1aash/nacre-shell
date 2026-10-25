@@ -4,7 +4,7 @@ Built from W2's retrodiction record `preprint/retrodiction/results/results.json`
 
 ## Draft
 
-**Fig. 4** Retrodiction of \NumRetroUsableCases same-study orderings. (a) Predicted barrier difference, test minus reference (median, \NumRetroIntervalLevel interval), grouped by input interface: γ_sn (crystal–template adhesion), net energy, then γ_sl. Circle, correct; square, incorrect; open diamond, inconclusive (RC04, counted as a miss). Triangles: observed ordering. \NumRetroCorrect are correct against \NumRetroPassCount required; the label-swap check holds. (b) Correct counts with inputs shuffled within (solid) and across studies (dashed): median \NumRetroNullMedian, range \NumRetroNullLow to \NumRetroNullHigh. Line: observed count.
+**Fig. 4** (a) Predicted barrier difference, test minus reference (median, \NumRetroIntervalLevel interval), for \NumRetroUsableCases same-study orderings grouped by input interface (γ_sn, net energy, γ_sl). Circle: correct; square: incorrect; open diamond: inconclusive (RC04); triangle: observed ordering. (b) Correct counts with inputs shuffled within (solid) and across studies (dashed), median \NumRetroNullMedian, range \NumRetroNullLow to \NumRetroNullHigh; line: observed count.
 
 ## Checklist (R4, R5, R7)
 

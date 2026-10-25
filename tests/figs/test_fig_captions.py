@@ -10,8 +10,9 @@ from figs_helpers import REPO
 from nacre.figs import upstream
 
 CAPTIONS = REPO / "figures/src/captions"
-FIGS = ["fig1", "fig3", "fig4", "fig5", "fig7", "fig9", "fig10", "fig11", "fig12", "fig14", "fig15"]
-MAX_WORDS = 80  # "about 70 words" (P0-W6.3), counting the bold figure label
+FIGS = ["fig1", "fig2", "fig3", "fig4", "fig5", "fig7", "fig9", "fig10", "fig11", "fig12", "fig14", "fig15", "fig17"]
+MAX_WORDS = 75  # PH-W6.7: short descriptive captions, counting the bold figure label
+MAX_SENTENCES = 3
 MACRO_RE = re.compile(r"\\(Num[A-Z][A-Za-z]*)")
 # Digits a caption may carry that are not numbers of the study: the figure label, case and link
 # identifiers (RC04, C3a), and the saturation condition Omega_bulk = 1, which is a definition.
@@ -50,8 +51,29 @@ def test_w8_defined_macros_exist_at_the_recorded_commit():
 
 
 @pytest.mark.parametrize("fid", FIGS)
-def test_draft_is_about_seventy_words(fid):
+def test_draft_is_short(fid):
     assert len(_draft(fid).split()) <= MAX_WORDS
+
+
+def _sentences(draft):
+    body = re.sub(r"^\*\*Fig\. [0-9]+\*\*\s*", "", draft)
+    return [x for x in re.split(r"(?<=[.!?])\s+(?=[A-Z(\\])", body) if x.strip()]
+
+
+@pytest.mark.parametrize("fid", FIGS)
+def test_draft_has_at_most_three_sentences(fid):
+    assert len(_sentences(_draft(fid))) <= MAX_SENTENCES, _sentences(_draft(fid))
+
+
+@pytest.mark.parametrize("fid", FIGS)
+def test_draft_states_no_findings_and_no_hedging_chains(fid):
+    text = _draft(fid)
+    assert not re.search(r"\b(consistent with|suggests?|appears?|may|might|could|shows? that|confirms?)\b", text, re.I)
+    assert "thermodynamically excluded" not in text
+
+
+def test_the_sentence_counter_catches_a_fourth_sentence():
+    assert len(_sentences("**Fig. 1** One. Two. Three. Four.")) == 4
 
 
 @pytest.mark.parametrize("fid", FIGS)

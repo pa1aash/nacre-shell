@@ -2,8 +2,7 @@
 import numpy as np
 from matplotlib.patches import Rectangle
 
-from nacre.figs import style
-from nacre.figs.colours import distinct_fills
+from nacre.figs import k1table, regimes, style
 from nacre.figs.symbols import symbol
 
 FIGURE = {
@@ -18,25 +17,26 @@ FIGURE = {
         "registered cutoff class (tick labels, V vs Li+/Li; the lowest class is the nominal value, and the "
         "sensitivity with the sourced upper cutoff leaves every verdict unchanged); within a pair, crystalline "
         "framing left and amorphous framing right. Fill and hatching: verdict of the tier-1 aggregate at the "
-        "class (excluded, cross hatching; inconclusive, single hatching; undetermined, plain)."),
+        "class (excluded, cross hatching; inconclusive, single hatching; undetermined, plain grey). Cells the "
+        "regime table states are drawn from the table, the others from the ladder file."),
     "width": "double",
     "height_cm": 9.0,
     "schema": "figures/src/schemas/ladder_v3.schema.json",
     "mock_input": "figures/src/mock/ladder_v3.json",
     "input": "upstream:ladder_v3",
     "aux": {"sens40": {"mock": "figures/src/mock/ladder_v3_sens40.json", "real": "upstream:ladder_v3_sens40"},
-            "cutoffs": {"mock": "figures/src/mock/ladder_cutoffs.yaml", "real": "upstream:thresholds_screen_ph"}},
+            "cutoffs": {"mock": "figures/src/mock/ladder_cutoffs.yaml", "real": "upstream:thresholds_screen_ph"},
+            "regime_table": {"mock": "figures/src/mock/regime_table.json", "real": "upstream:regime_table"}},
 }
 
 STAGES = ("slurry", "cell", "comparator", "control")  # regime and role, in drawing order
 FRAMINGS = ("crystalline", "amorphous")
 AGGREGATE = ("ALL", "-")  # the aggregate row of a (phase, framing, stage): ALL over reactions, '-' for a gap
 CLASS_COLUMNS = (("C_lo", "k1_class_lfp"), ("C_mid", "k1_class_42_43"), ("C_hi", "k1_class_44_45"))
-# The data's verdict word -> the registered word, drawing order, fill hue and hatching.
-VERDICTS = {"falsified": "excluded", "inconclusive": "inconclusive", "undetermined": "undetermined"}
+# The data's verdict word -> the registered word, drawing order and hatching.
+VERDICTS = {"falsified": "excluded", "inconclusive": "open", "undetermined": "undetermined"}
 ORDER = ("falsified", "inconclusive", "undetermined")
-HUE = {"falsified": "vermillion", "inconclusive": "yellow", "undetermined": "blue"}
-HATCH = {"falsified": "xxxx", "inconclusive": "////", "undetermined": None}
+HATCH = {v: regimes.HATCH[w] for v, w in VERDICTS.items()}
 LABELS = {
     "brushite": "brushite", "ACP": "ACP", "HAp": "HAp", "OCP": "OCP", "b-TCP": "$\\beta$-TCP",
     "a-TCP": "$\\alpha$-TCP", "Li3PO4": "Li$_3$PO$_4$", "Ca2P2O7": "Ca$_2$P$_2$O$_7$",
@@ -101,19 +101,29 @@ def class_labels(cutoffs):
 
 
 def verdict_fills(root):
-    fills, names, _f, _d = distinct_fills(len(ORDER), root)
-    by_name = dict(zip(names, fills))
-    if set(HUE.values()) != set(names):
-        return dict(zip(ORDER, fills))
-    return {v: by_name[HUE[v]] for v in ORDER}
+    """{data verdict: fill}: the regime fills of the paper (undetermined in the palette grey)."""
+    fills = regimes.fills(root)
+    return {v: fills[w] for v, w in VERDICTS.items()}
+
+
+def k1_cells(data, table):
+    """{(phase, framing): {class: registered word}}: the ladder's verdicts, with every cell the regime
+    table states taken from the table; refuses a table cell for a phase the ladder lacks."""
+    cells, groups = ladder_cells(data)
+    out = {k: {c: VERDICTS[v] for c, v in by.items()} for k, by in cells.items()}
+    for key, by_class in k1table.table_k1(table).items():
+        if key not in out:
+            raise ValueError("fig9: the regime table has K1 cells for %s %s, which the ladder does not" % key)
+        out[key].update(by_class)
+    return out, groups
 
 
 def build(data, root, aux):
     import matplotlib.pyplot as plt
 
     same_verdicts(data, aux["sens40"])
-    cells, groups = ladder_cells(data)
-    fills = verdict_fills(root)
+    cells, groups = k1_cells(data, aux["regime_table"])
+    fills = regimes.fills(root)
     lw = style.min_line_pt(root)
     fig, ax = plt.subplots(figsize=style.figsize(FIGURE["width"], FIGURE["height_cm"], root))
     y, ticks, labels, cur = {}, [], [], 0.0
@@ -130,9 +140,11 @@ def build(data, root, aux):
     x0 = [k * (len(FRAMINGS) + GAP_CLASS) for k in range(len(CLASS_COLUMNS))]
     for (ph, fr), verdicts in cells.items():
         for k, (cls, _col) in enumerate(CLASS_COLUMNS):
-            v = verdicts[cls]
-            ax.add_patch(Rectangle((x0[k] + FRAMINGS.index(fr), y[ph] - 0.5), 1.0, 1.0, facecolor=fills[v],
-                                   edgecolor="black", linewidth=lw, hatch=HATCH[v]))
+            w = verdicts[cls]
+            rect = Rectangle((x0[k] + FRAMINGS.index(fr), y[ph] - 0.5), 1.0, 1.0, facecolor=fills[w],
+                             edgecolor="black", linewidth=lw, hatch=regimes.hatch(w))
+            rect.cell_id = (ph, fr, cls)
+            ax.add_patch(rect)
     ax.set_xlim(-0.2, x0[-1] + len(FRAMINGS) + 0.2)
     ax.set_ylim(min(y.values()) - 0.7, max(y.values()) + 0.7)
     ax.set_xticks([x + len(FRAMINGS) / 2 for x in x0], class_labels(aux["cutoffs"]))

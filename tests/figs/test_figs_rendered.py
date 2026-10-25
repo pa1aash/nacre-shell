@@ -157,9 +157,10 @@ def test_hero_caption_states_the_rulings():
     text = (REPO / "figures/src/captions/fig1.md").read_text()
     draft = re.search(r"^## Draft\n(.*?)(?=^## )", text, re.S | re.M).group(1).lower()
     for must in ("illustrative construction", "not tested by the screen", "open candidate", "not a result",
-                 "thermodynamically excluded at high voltage", "schematic", "without quantitative meaning",
+                 "schematic", "without quantitative meaning", "oxide not drawn", "layering and polymorph structure",
                  "whether or how a film forms", "p–o lengths normalised"):
         assert must in draft, must
+    assert "thermodynamically excluded" not in draft
     assert len(draft.split()) <= 70
 
 

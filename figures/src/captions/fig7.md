@@ -4,7 +4,7 @@ Built from W4's production run `table_r2` (`results/preprint/screen/table_r2/sum
 
 ## Draft
 
-**Fig. 7** CaCO₃ stability. (a) Slurry dissolution verdict, calcium dose Ca_T by dissolved carbonate C_T: feasible (blue), inconclusive (yellow, hatched), falsified (vermillion, cross-hatched); both water activities agree. Line: median Ω_bulk = 1. (b) Windows vs Li⁺/Li (LiClO₄ sink), per phase: experimental route (black, governing), JANAF (blue) and MP (vermillion) DFT, dashed when corrected. Open circle, undetermined; open square, no route. Grey: margin to the \NumCellFalsifiedAbove bound. Dashed: cutoffs (LFP, NMC/NCA, LCO and LMO, LNMO). Other sinks undetermined.
+**Fig. 7** (a) Slurry dissolution verdict over calcium dose Ca_T and dissolved carbonate C_T: feasible (blue), inconclusive (yellow, hatched), falsified (vermillion, cross-hatched); line: median Ω_bulk = 1. (b) Windows against Li⁺/Li per phase: experimental route (black), JANAF (blue) and MP (vermillion) DFT, dashed when corrected; open circle: undetermined; open square: no route. Grey: margin to the \NumCellFalsifiedAbove bound; dashed lines: cathode-class cutoffs.
 
 ## Checklist (R4, R5, R6, R7)
 

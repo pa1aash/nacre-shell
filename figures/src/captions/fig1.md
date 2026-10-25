@@ -4,7 +4,7 @@ Source: `figures/src/blender/hero.py` with atom positions from `src/nacre/figs/h
 
 ## Draft
 
-**Fig. 1** Illustrative construction. (a) Processing: aluminium in water with Ca²⁺, CO₃²⁻. (b) Cell: condensed phosphate chain on aluminium in propylene carbonate with Li⁺, ClO₄⁻; an open candidate, not a result (carbonate and hydroxyapatite are thermodynamically excluded at high voltage). Positions schematic, without quantitative meaning; P–O lengths normalised; oxide not drawn. Nothing shows whether or how a film forms. Layering and polymorph structure are not tested by the screen.
+**Fig. 1** Illustrative construction with schematic positions, without quantitative meaning (P–O lengths normalised; oxide not drawn). (a) Processing: aluminium in water with Ca²⁺ and CO₃²⁻; (b) cell: a condensed phosphate chain on aluminium in propylene carbonate with Li⁺ and ClO₄⁻, an open candidate, not a result. Whether or how a film forms, and layering and polymorph structure, are not tested by the screen.
 
 ## Checklist
 

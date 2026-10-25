@@ -4,7 +4,7 @@ Source of the states and arrows: `theory/derivation_body.tex`, Section 7 ("Where
 
 ## Draft
 
-**Fig. 3** Where Ca²⁺ binding enters the nucleation barrier. Left to right: bulk solution (hydrated Ca²⁺, carbonate); the template–liquid interface with Ca²⁺ bound at catecholate and carboxylate sites; a partially wetting CaCO₃ cap. Blue arrow: sequestration, ΔG_seq, which changes only γ_sl. Black arrow: cap formation. Top route: carbonate from the bulk into the nucleus, at k_BT ln Ω_bulk. Vermillion: the template–nucleus contact, γ_sn, including bridging Ca²⁺. Short arrows: Young's balance. Illustrative construction.
+**Fig. 3** Illustrative construction of where Ca²⁺ binding enters the nucleation barrier: bulk solution, template–liquid interface with bound Ca²⁺, and a partially wetting CaCO₃ cap, left to right. Blue arrow: sequestration, ΔG_seq; black arrow: cap formation; top route: carbonate from the bulk at k_BT ln Ω_bulk; short arrows: Young's balance. Vermillion: the template–nucleus contact, γ_sn, including bridging Ca²⁺.
 
 ## Checklist (R4, R6, R7)
 
