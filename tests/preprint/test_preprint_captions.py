@@ -113,3 +113,9 @@ def test_handoff_drafts_translate_to_the_paper_captions_within_the_limits():
         assert " ".join(caps[label].split()) == " ".join(captions.to_tex(draft).split()), fig
         assert captions.word_count(captions.thermodynamic(draft), REPO) <= 75, fig
         assert len(sentences(captions.to_tex(draft))) <= 3, fig
+
+
+def test_translator_gives_the_sink_dagger_its_latex_form():
+    out = captions.to_tex("thermodynamically excluded†).")
+    assert out == r"thermodynamically excluded$^\dagger$)."   # the \dagger of \nacreSinkMark in the Results
+    assert all(ord(c) < 128 for c in out)
