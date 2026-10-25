@@ -60,3 +60,29 @@ utc,source,query_or_id,failure_kind,detail
 2026-10-17T10:48:09Z,unpaywall+wayback,10.1021/acselectrochem.4c00106,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://pmc.ncbi.nlm.nih.gov/articles/PMC11973861/pdf/ec4c00106.pdf
 2026-10-17T10:48:10Z,europepmc+wayback,10.1021/acselectrochem.4c00106,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC11973861?pdf=render
 2026-10-17T10:52:20Z,unpaywall,10.1021/cr980144k,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-23T22:20:13Z,unpaywall,10.1134/s0036024406080164,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-23T22:20:55Z,semanticscholar,LiClO4 propylene carbonate solubility temperature solid-liquid equilibrium,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-23T22:21:35Z,semanticscholar,solubility of lithium salts in carbonate solvents saturated concentration LiClO4,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-23T22:22:07Z,semanticscholar,LiClO4 propylene carbonate crystal solvate melting point phase diagram,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-23T22:22:38Z,semanticscholar,activity coefficient electrolyte propylene carbonate Debye-Huckel Pitzer lithium perchlorate,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-23T22:23:06Z,semanticscholar,solubility of lithium perchlorate nonaqueous solvents,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-23T22:23:37Z,semanticscholar,vapor pressure osmotic coefficient lithium perchlorate propylene carbonate,rate_limited,HTTP 429 after 6 attempts (https://api.semanticscholar.org/graph/v1/paper/search)
+2026-10-23T22:23:55Z,abstracts,10.1016/j.molliq.2014.08.008,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-23T22:23:56Z,unpaywall,10.1016/j.molliq.2014.08.008,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-23T22:24:34Z,direct,https://sciencetst.lpnu.ua/sites/default/files/journal-paper/2017/may/776/fulltext583.pdf,http_error,"ConnectionError: HTTPSConnectionPool(host='sciencetst.lpnu.ua', port=443): Max retries exceeded with url: /sites/default/files/journal-paper/2017/may/776/fulltext583.pdf (Caused by NameResolutionError(""HTTPSConnection(host='sciencetst.lpnu.ua', port=443): Failed to resolve 'sciencetst.lpnu.ua' ([Errno 8] nodename nor servname provided, or not known)"")) (https://sciencetst.lpnu.ua/sites/default/files/journal-paper/2017/may/776/fulltext583.pdf)"
+2026-10-23T22:24:36Z,direct+wayback,https://sciencetst.lpnu.ua/sites/default/files/journal-paper/2017/may/776/fulltext583.pdf,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://sciencetst.lpnu.ua/sites/default/files/journal-paper/2017/may/776/fulltext583.pdf
+2026-10-23T22:25:07Z,unpaywall,10.1016/0022-0728(93)80059-q,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-23T22:25:10Z,unpaywall,10.1039/c5ee02341f,http_error,HTTP 403 https://pubs.rsc.org/en/content/articlepdf/2015/ee/c5ee02341f
+2026-10-23T22:25:19Z,unpaywall,10.23860/thesis-chapman-navid-2016,http_error,HTTP 403 https://digitalcommons.uri.edu/cgi/viewcontent.cgi?article=1930&context=theses
+2026-10-23T22:25:22Z,unpaywall+wayback,10.23860/thesis-chapman-navid-2016,http_error,HTTP 403 https://web.archive.org/web/2026id_/https://digitalcommons.uri.edu/cgi/viewcontent.cgi?article=1930&context=theses
+2026-10-23T22:25:22Z,fulltext,10.23860/thesis-chapman-navid-2016,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-23T22:27:24Z,unpaywall,10.1016/j.jct.2018.12.016,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1571998 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x10aa4dd30>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/servlets/purl/1571998)"
+2026-10-23T22:27:36Z,unpaywall,10.1007/s10953-015-0335-z,http_error,HTTP 403 https://flore.unifi.it/bitstream/2158/947564/3/propilene-carb.pdf
+2026-10-23T22:27:56Z,europepmc,Marcus Kalugin thermodynamics LiClO4 propylene carbonate,not_indexed,no results
+2026-10-23T22:28:27Z,fulltext,10.6060/ivkkt.20246705.6967,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-23T22:28:27Z,unpaywall,10.25911/5d67b788c55de,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.25911/5d67b788c55de
+2026-10-23T22:29:28Z,openalex,10.25911/5d67b788c55de,http_error,"ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')) (http://hdl.handle.net/1885/144595)"
+2026-10-23T22:29:34Z,openalex+wayback,10.25911/5d67b788c55de,parse_error,not a PDF: https://web.archive.org/web/2026id_/http://hdl.handle.net/1885/144595
+2026-10-23T22:29:34Z,fulltext,10.25911/5d67b788c55de,not_indexed,"1 candidate location(s), none retrieved"
+2026-10-23T22:29:37Z,unpaywall,10.1021/cr030203g,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-23T22:30:43Z,unpaywall,10.1021/je00010a014,paywalled,"no open copy on unpaywall, openalex or europepmc"

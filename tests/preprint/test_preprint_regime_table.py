@@ -107,7 +107,12 @@ def test_vocabulary_footnote_and_kinetic_sentence(rows):
         if "excluded" in r["text"]:
             assert r["column"] != "slurry"
     excluded = [l for l in tex.splitlines() if "excluded" in l and l.startswith(("calcite", "carbonate", "HAp", "ACP", "$"))]
-    assert excluded and all("\\nacreExcludedMark{}" in l for l in excluded)
+    assert excluded and all("\\nacreExcludedMark{}" in l or "\\nacreDissolutionMark{}" in l for l in excluded)
+    # an exclusion against dissolution (K2) carries its own mark, never the tier-one footnote (review M8, W3.8 R6-8)
+    for r in rows:
+        if r["column"] == "acid" and "excluded" in r["text"]:
+            assert "excluded against dissolution" in r["text"], r["row_id"]
+    assert "\\nacreDissolutionMark{} Excluded against dissolution (thermodynamic, $K_2$" in tex
 
 
 def test_row_labels_match_the_rulings(rows):
@@ -116,7 +121,9 @@ def test_row_labels_match_the_rulings(rows):
     labels = {r["row_id"]: r["row_label"] for r in rows}
     assert labels["aragonite"] == "aragonite (dissolution stability only; formation unsupported at slurry pH and room temperature)"
     assert labels["calcite"].startswith("calcite (suitable against dissolution, a necessary condition, in [") and labels["calcite"].endswith("])")
-    assert "218 of 324" in labels["calcite"]
+    # the passing region is named by its Ca_T bound, not by the box of the grid (review B2, claims_redirect 11h)
+    assert "Ca_T >= 1e-04 mol dm^-3, 216 cells, plus 2 cells at 1e-05" in labels["calcite"]
+    assert "218 of 324 cells: Ca_T >= 1e-04" in _cell(rows, "calcite", "slurry")["text"]
     assert tex.count("calcite (suitable against dissolution, a necessary condition, in [") == 1
     assert [r["row_id"] for r in rows if r["column"] == "slurry"] == [r[0] for r in rt.ROWS]
     assert labels["carbonate_ctl"] == "carbonate (K1 control)"
@@ -125,20 +132,29 @@ def test_row_labels_match_the_rulings(rows):
 def test_cells_follow_the_data_and_the_rulings(rows):
     assert _cell(rows, "brushite", "C_hi")["text"] == "excluded above 4.43 V"
     assert _cell(rows, "brushite", "C_mid")["text"] == "open"
-    assert _cell(rows, "ocp", "slurry")["words"] == "open" and _cell(rows, "ocp", "acid")["words"] == "open"
+    # a K2 cell whose control fails reads inconclusive, never open (claims_redirect 11d, amendment rule 4)
+    assert _cell(rows, "ocp", "slurry")["text"] == "inconclusive (control fails)" and _cell(rows, "ocp", "acid")["words"] == "inconclusive"
     for rid in ("brushite", "atcp", "li_ortho"):
         assert _cell(rows, rid, "slurry")["words"] == "undetermined"
     assert "[note b]" in _cell(rows, "brushite", "slurry")["text"] and "[note b]" not in _cell(rows, "li_ortho", "slurry")["text"]
     # below the first pass: excluded where every cell is falsified, open where none passes and some are inconclusive
-    for rid, ph, lead in (("calcite", "6.5", "excluded below pH 6.5; "), ("aragonite", "6.5", "excluded below pH 6.5; "),
-                          ("acc", "8.5", "excluded below pH 6.5; open at pH 6.5 and 7.5; "), ("acp", "5.5", "open below pH 5.5; ")):
+    below = "excluded against dissolution below pH 6.5 (lower passivation window, below the sourced range); "
+    for rid, ph, lead in (("calcite", "6.5", below), ("aragonite", "6.5", below),
+                          ("acc", "8.5", below + "inconclusive at pH 6.5 and 7.5; "), ("acp", "5.5", "inconclusive below pH 5.5; ")):
         c = _cell(rows, rid, "acid")
         assert c["marker"] == "split by pH (alternative b)" and "[split by pH (alternative b)]" in c["text"]
         assert c["text"].startswith(lead + "suitable against dissolution from pH %s up" % ph)
     for rid in ("hap", "btcp"):
         assert _cell(rows, rid, "acid")["text"].startswith("suitable against dissolution from pH 4.5")
     assert _cell(rows, "carbonate_ctl", "C_hi")["words"] == "excluded" and _cell(rows, "carbonate_ctl", "C_lo")["words"] == "open"
-    assert _cell(rows, "hap", "C_mid")["words"] == "excluded"
+    assert _cell(rows, "hap", "C_mid")["words"] == "excluded; excluded"
+    # edge rule of thresholds block v10: robust threshold and edge sensitivity within the tolerance (ruling 2)
+    for rid in ("hap", "btcp"):
+        assert _cell(rows, rid, "C_mid")["text"].startswith(
+            "crystalline: excluded at 4.3 V; edge-sensitive at 4.2 (crossover within 50 mV); amorphous: excluded (by the bound")
+    assert _cell(rows, "atcp", "C_mid")["text"].startswith("crystalline: excluded; amorphous: excluded (by the bound")
+    # pass counts above the first passing pH use the cells of those pH values (claims_redirect 11d, comparator window iv)
+    assert "68 of 162 cells from that pH up" in _cell(rows, "calcite", "acid")["text"]
     assert _cell(rows, "ca_pyro", "slurry")["text"] == "route criteria"
     assert _cell(rows, "baked", "C_hi")["words"] == "undetermined"
 
@@ -160,3 +176,75 @@ def test_cli_and_results_wiring():
     caption = re.search(r"\\caption\{(.*?)\}\\label\{tab:regime\}", results, re.S).group(1)
     assert len(re.sub(r"\\[A-Za-z]+", "", caption).split()) <= 70
     assert not re.search(r"[0-9]", re.sub(r"\$[^$]*\$|\\[A-Za-z]+", "", caption))
+
+
+# ------------------------------------------------------------------ I17a: the amorphous cells (contract v8, block v11)
+AMORPHOUS_ROWS = {"acp": "ACP", "hap": "HAp", "btcp": "b-TCP", "atcp": "a-TCP"}
+BOUND_LABEL = "excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)"
+
+
+def test_amorphous_label_is_read_from_the_thresholds_copy():
+    import yaml
+    copy = yaml.safe_load((REPO / rt.INPUTS["thresholds"]).read_text(encoding="utf-8"))
+    assert copy["screen_ph"]["w36"]["regime_table"]["amorphous_rows"]["cell_word_excluded"] == BOUND_LABEL
+
+
+def test_amorphous_cells_follow_the_crystalline_reference_row(rows):
+    """Excluded by the bound at C_mid and C_hi where the crystalline row is excluded, undetermined at C_lo (ACP names it)."""
+    for rid in AMORPHOUS_ROWS:
+        for col in ("C_mid", "C_hi"):
+            c = _cell(rows, rid, col)
+            assert c["words"] == "excluded; excluded" and c["text"].count(BOUND_LABEL) == 1, (rid, col)
+        assert BOUND_LABEL not in _cell(rows, rid, "C_lo")["text"]
+    assert _cell(rows, "acp", "C_lo")["text"].endswith("amorphous: undetermined")
+
+
+def test_every_changed_amorphous_cell_cites_its_crystalline_reference_row(rows):
+    changed = [r for r in rows if BOUND_LABEL in r["text"]]
+    assert sorted((r["row_id"], r["column"]) for r in changed) == sorted(
+        (rid, col) for rid in AMORPHOUS_ROWS for col in ("C_mid", "C_hi"))
+    ladder = rt.INPUTS["ladder"]
+    for r in changed:
+        assert "crystalline reference row %s, slurry (%s)" % (AMORPHOUS_ROWS[r["row_id"]], ladder) in r["note"], r["row_id"]
+        assert ladder in r["source_files"].split("; ") and "dG_g-to-c >= 0 (I17a)" in r["note"]
+        assert "framing crystalline" in r["note"]           # the crystalline reading it was derived from
+
+
+def test_other_amorphous_readings_are_not_changed_by_the_bound(rows):
+    """Brushite, Ca2P2O7, OCP and the aluminium phosphates carry no excluded-by-bound word; the glass rows keep theirs."""
+    for rid in ("brushite", "ocp", "ca_pyro", "ca_meta_glass", "al_ortho", "al_meta", "al_polyp", "lipo3n", "baked", "li_ortho"):
+        for col in ("C_lo", "C_mid", "C_hi"):
+            assert "by the bound" not in _cell(rows, rid, col)["text"], (rid, col)
+
+
+def test_the_legend_states_the_rule_and_the_old_wording_is_gone():
+    tex = (GEN / rt.OUT_TEX).read_text(encoding="utf-8")
+    assert "where its crystalline row is excluded, and undetermined otherwise" in tex
+    assert "not yet registered" not in tex and "I17a not registered" not in (GEN / rt.OUT_CSV).read_text(encoding="utf-8")
+
+
+def test_a_reference_row_that_is_not_excluded_gives_an_undetermined_amorphous_word():
+    row = {"phase": "HAp", "E_ub_V": "4.0674", "margin_V": "0.1244", "k1_class_lfp": "inconclusive"}
+    label = BOUND_LABEL
+    assert rt.amorphous_word(row, "C_lo", [4.1], label, {"C_lo": "undetermined"}) == "undetermined"
+    with pytest.raises(rt.RegimeTableError, match="disagrees"):
+        rt.amorphous_word(row, "C_lo", [4.1], label, {"C_lo": "falsified (bound)"})
+
+
+def test_every_amorphous_lowest_class_cell_reads_undetermined_explicitly(rows):
+    for rid in ("hap", "btcp", "atcp"):
+        assert _cell(rows, rid, "C_lo")["text"] == "crystalline: open; amorphous: undetermined"
+    assert _cell(rows, "acp", "C_lo")["text"] == "beta-TCP reference: open; amorphous: undetermined"
+
+
+def test_table_and_prose_agree_on_the_amorphous_cells(rows):
+    # C12 of PH-W3.9: a cell that reads excluded by the bound is matched by prose naming the same bound and reference;
+    # a cell that reads undetermined is never called excluded in prose.
+    prose = " ".join((REPO / "preprint/paper/sections" / f).read_text() for f in ("results.tex", "discussion.tex", "design.tex"))
+    flat = re.sub(r"\s+", " ", prose)
+    by_bound = [r for r in rows if r["column"] in ("C_mid", "C_hi") and "excluded (by the bound" in r["text"]]
+    assert {r["row_id"] for r in by_bound} == set(AMORPHOUS_ROWS)
+    assert "$\\Delta G_{\\mathrm{g}\\to\\mathrm{c}}\\ge0$ against the crystalline reference of the same composition plus liquid water" in flat
+    assert "At the lowest class (\\NumClassLo) the crystalline rows are open and the amorphous framing of every phosphate stays undetermined" in flat
+    assert "undetermined: the bound" not in flat and "a reading not yet registered" not in flat
+    assert not any("excluded" in r["text"].split("amorphous:")[-1] for r in rows if r["column"] == "C_lo" and r["row_id"] in AMORPHOUS_ROWS)

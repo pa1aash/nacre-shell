@@ -1,0 +1,20 @@
+{
+ "10.1038/s41467-024-46117-x": {
+  "container": "Nature Communications",
+  "doi": "10.1038/s41467-024-46117-x",
+  "fetched_at": "2026-10-23T22:45:56Z",
+  "status": 200,
+  "title": "Myriad Mapping of nanoscale minerals reveals calcium carbonate hemihydrate in forming nacre and coral biominerals",
+  "type": "journal-article",
+  "year": 2024
+ },
+ "10.1615/int.j.uncertaintyquantification.2019028372": {
+  "container": "International Journal for Uncertainty Quantification",
+  "doi": "10.1615/int.j.uncertaintyquantification.2019028372",
+  "fetched_at": "2026-10-23T22:45:57Z",
+  "status": 200,
+  "title": "SHAPLEY EFFECTS FOR SENSITIVITY ANALYSIS WITH CORRELATED INPUTS: COMPARISONS WITH SOBOL'  INDICES, NUMERICAL ESTIMATION AND APPLICATIONS",
+  "type": "journal-article",
+  "year": 2019
+ }
+}

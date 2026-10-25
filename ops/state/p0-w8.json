@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W8.3",
+  "last_session": "PH-W8.5",
   "status": "DONE",
   "day": 7,
   "artifacts": [
@@ -61,7 +61,10 @@
     "ops/reports/P0-W8.PH-W8.2g.md",
     "preprint/paper/sections/abstract.tex",
     "preprint/paper/sections/discussion.tex",
-    "ops/reports/P0-W8.PH-W8.3.md"
+    "ops/reports/P0-W8.PH-W8.3.md",
+    "ops/reports/P0-W8.PH-W8.4.md",
+    "preprint/paper/briefs/abstract.md",
+    "ops/reports/P0-W8.PH-W8.5.md"
   ],
   "notes": [
     "skeleton retargeted: design, predictions added; inputs and outlook removed; carbonate text marked 'carbonate control (frozen)'",
@@ -75,6 +78,8 @@
     "PH-W8.2e: per-pH dose table (8 phases x 5 pH), dose qualifier, post-freeze rerun table, F1 to F5 wording; regime table regenerated, 300 macros added; 223 passed",
     "PH-W8.2f: below-lowest-pass words follow the figure rule (ACP open at 4.5; ACC excluded below 6.5, open at 6.5 and 7.5); Al-salt table (6 undetermined rows) generated beside the regime table; fig17 omission statement and dose-order sentence; 6 macros; 223 passed; W6 pin of regime_table.csv stale",
     "PH-W8.2g: ratio-grid numbers in the wording; second column group in the per-pH table, both doses in the HAp and beta-TCP first-pass cells, Methods F2 and SI text, 60+ macros; 228 passed; W6 pin of regime_table.csv stale",
-    "PH-W8.3: Results (1856 words, seven subsections), Predictions (512), Discussion and limits (877), abstract (220) written in the regime frame; 23 macros (14 sources.yaml, 9 generator: precision map and deletion test); ledger 12 new, 32 drafted, 9 withdrawn; 228 passed; draft build main 13 pp, SI 13 pp; release guard still refuses (18)"
+    "PH-W8.3: Results (1856 words, seven subsections), Predictions (512), Discussion and limits (877), abstract (220) written in the regime frame; 23 macros (14 sources.yaml, 9 generator: precision map and deletion test); ledger 12 new, 32 drafted, 9 withdrawn; 228 passed; draft build main 13 pp, SI 13 pp; release guard still refuses (18)",
+    "PH-W8.4: review fixes applied (blocking 4/4, material 26/26, minor 18/18), W3.8 table 47/48 (R3-2 waits for I17a), rulings 1 to 6 in force; citations per W1.4/W1.9 (8 keys added by DOI); 20 macros added; SI figures fig4, fig7, fig10, fig11, fig14; fig5, fig9, fig12 not used; tab:conditions replaces fig:conditions, fig:pathway dropped; 228 passed; draft build main 14 pp, SI 15 pp; release guard still refuses (18)",
+    "PH-W8.5: W4.8 regime-table patch applied (8 cells + 3 C_lo cells), C1 to C12 and R3-2 in results, discussion, design; hero hooked (fig1, panel letters, caption); p0-w6 merged for the artwork; 1069 passed; draft build main 15 pp, SI 15 pp; release guard still refuses (18)"
   ]
 }

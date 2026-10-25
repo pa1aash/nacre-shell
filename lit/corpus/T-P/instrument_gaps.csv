@@ -1,3 +1,25 @@
 utc,source,query_or_id,failure_kind,detail
 2026-10-19T11:42:47Z,unpaywall,10.1137/130936233,paywalled,"no open copy on unpaywall, openalex or europepmc"
 2026-10-19T11:42:58Z,unpaywall,10.1137/15m1048070,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-23T22:32:19Z,fulltext,10.1016/j.jpowsour.2020.229097,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-23T22:32:23Z,unpaywall,10.1016/j.jpowsour.2013.10.039,paywalled,"no open copy on unpaywall, openalex or europepmc"
+2026-10-23T22:32:35Z,unpaywall,10.1073/pnas.0910218107,not_indexed,HTTP 404 https://api.unpaywall.org/v2/10.1073/pnas.0910218107
+2026-10-23T22:32:35Z,openalex,10.1073/pnas.0910218107,not_indexed,HTTP 404 https://api.openalex.org/works/doi:10.1073/pnas.0910218107
+2026-10-23T22:32:37Z,fulltext,10.1073/pnas.0910218107,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-23T22:32:39Z,europepmc,10.1073/pnas.0914218107,http_error,HTTP 403 https://europepmc.org/articles/PMC2851957?pdf=render
+2026-10-23T22:32:46Z,europepmc+wayback,10.1073/pnas.0914218107,http_error,HTTP 403 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC2851957?pdf=render
+2026-10-23T22:33:20Z,europepmc,PMC2851957,http_error,HTTP 500 after 6 attempts (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC2851957/fullTextXML)
+2026-10-23T22:33:20Z,fulltext,10.1073/pnas.0914218107,not_indexed,"2 candidate location(s), none retrieved"
+2026-10-23T22:33:28Z,unpaywall,10.1002/advs.202203759,http_error,HTTP 403 https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/advs.202203759
+2026-10-23T22:33:47Z,europepmc,10.3390/biomimetics11020148,http_error,HTTP 403 https://europepmc.org/articles/PMC12938370?pdf=render
+2026-10-23T22:33:49Z,europepmc+wayback,10.3390/biomimetics11020148,not_indexed,HTTP 404 https://web.archive.org/web/2026id_/https://europepmc.org/articles/PMC12938370?pdf=render
+2026-10-23T22:33:53Z,unpaywall,10.3390/coatings13020306,http_error,HTTP 403 https://www.mdpi.com/2079-6412/13/2/306/pdf?version=1674985347
+2026-10-23T22:34:02Z,unpaywall,10.3390/md13031133,http_error,HTTP 403 https://www.mdpi.com/1660-3397/13/3/1133/pdf?version=1425289172
+2026-10-23T22:34:03Z,europepmc,10.3390/md13031133,http_error,HTTP 403 https://europepmc.org/articles/PMC4377977?pdf=render
+2026-10-23T22:34:18Z,abstracts,10.1016/j.jpowsour.2013.10.039,not_indexed,"no abstract on crossref, openalex, europepmc or semanticscholar"
+2026-10-23T22:35:57Z,fulltext,10.1021/jacs.5b07931,not_indexed,"0 candidate location(s), none retrieved"
+2026-10-23T22:37:09Z,unpaywall,10.1063/1.4812323,parse_error,not a PDF: https://aip.scitation.org/doi/pdf/10.1063/1.4812323
+2026-10-23T22:39:10Z,unpaywall,10.1063/1.4812323,http_error,"ConnectTimeout: HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /biblio/1511347 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.osti.gov', port=443) at 0x108a27680>, 'Connection to www.osti.gov timed out. (connect timeout=60.0)')) (https://www.osti.gov/biblio/1511347)"
+2026-10-23T22:39:13Z,unpaywall+wayback,10.1063/1.4812323,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://aip.scitation.org/doi/pdf/10.1063/1.4812323
+2026-10-23T22:39:14Z,unpaywall+wayback,10.1063/1.4812323,parse_error,not a PDF: https://web.archive.org/web/2026id_/https://www.osti.gov/biblio/1511347
+2026-10-23T22:39:14Z,fulltext,10.1063/1.4812323,not_indexed,"2 candidate location(s), none retrieved"

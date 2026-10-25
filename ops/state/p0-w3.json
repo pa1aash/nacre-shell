@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-W3.7",
+  "last_session": "PH-W3.9",
   "status": "DONE",
-  "day": 6,
+  "day": 7,
   "equation_sheet": {
     "status": "ready",
     "sha": "4d03ab0a3db0e866825ebc99684a7bf7203f0f2a",
@@ -256,5 +256,49 @@
     "thresholds_block_version": 8,
     "sha256_thresholds_block": "d92b42e9106e574fd330635fdc0d54e56d4a1dec4a7f38ece93d8bdfe922b04b",
     "check_contract": "PASS (107 functions)"
+  },
+  "ph_w33": {
+    "report": "ops/reports/P0-W3.PH-W3.3.md",
+    "notes": "theory/review/PH-W3.3_derivation_check.md",
+    "merge": "origin/preprint/p0-w8 aaed242 merged --no-ff",
+    "findings": {
+      "blocking": 4,
+      "material": 26,
+      "minor": 18
+    },
+    "numbers_checked": 68,
+    "inconsistencies": 13,
+    "paper_files_edited": false
+  },
+  "ph_w38": {
+    "report": "ops/reports/P0-W3.PH-W3.8.md",
+    "contract_version": 7,
+    "functions": 110,
+    "thresholds_block_version": 10,
+    "sha256_thresholds_block": "a1ef029328963613a33108b310923c78bba8e12903be12e84c120e2a1d3508e7",
+    "check_contract": "PASS (110 functions)",
+    "items": {
+      "note_fix": "f108a70",
+      "1_vocabulary_D78": "0a160a5",
+      "2_m_sink": "4e3212f",
+      "3_I17": "7332772",
+      "6_comparator_window": "ea4bfb2",
+      "also_wording": "fee6180"
+    },
+    "m_sink": "registered, value unbound (keys liclo4_solubility_pc, liclo4_activity_coefficient_pc, regimes.R-cell.parameters.c_liclo4)",
+    "I17": "same-composition form not stated for hydrated amorphous phases; amendment proposed (I17a, E_ub_hydrated_am), not registered; ACP and amorphous HAp/TCP rows undetermined",
+    "text_changes_for_w8": 48,
+    "for_w4": "regenerate configs/preprint/thresholds.yaml from block v10 (tests/screen/test_screen_thresholds.py asserts 9/6); implement m_sink, E_ub_sink, E_ub_prod_unsat for contract v7"
+  },
+  "ph_w39": {
+    "report": "ops/reports/P0-W3.PH-W3.9.md",
+    "contract_version": 8,
+    "functions": 111,
+    "thresholds_block_version": 11,
+    "sha256_thresholds_block": "660930a92fb77d4f34cc9f38783d0f5f7412f804cc9f04d68bafbedfdd014a16",
+    "check_contract": "PASS (111 functions)",
+    "I17a": "registered (E_ub_hydrated_am, Delta_G_gc_w); amorphous rows of ACP, HAp, b-TCP, a-TCP excluded by the bound where the crystalline reference row is excluded (C_mid, C_hi), undetermined elsewhere; brushite, Ca2P2O7, OCP, Al phosphates amorphous stay undetermined; ACC not covered",
+    "text_changes_for_w8": 12,
+    "for_w4": "regenerate configs/preprint/thresholds.yaml from block v11, pin contract v8; implement E_ub_hydrated_am and its eight unit tests"
   }
 }

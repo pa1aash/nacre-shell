@@ -1,9 +1,9 @@
 {
-  "last_session": "PH-W4.6",
+  "last_session": "PH-W4.8",
   "status": "DONE",
-  "day": 6,
-  "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
-  "contract_checked_ref": "2aa96fb (W3 contract v6)",
+  "day": 7,
+  "contract_sha": "733277275edfb1ccf6060be8581ac9aed34404ed",
+  "contract_checked_ref": "3fb0745 (W3 contract v7, block v10)",
   "artifacts": {
     "physics_core": "src/nacre/physics/",
     "contract_registry": "src/nacre/physics/contract.py",
@@ -57,7 +57,11 @@
     "precision_map": "results/preprint/screen/precision_ph/precision_map.json",
     "report_w4_2g": "ops/reports/P0-W4.PH-W4.2g.md",
     "report_w4_5": "ops/reports/P0-W4.PH-W4.5.md",
-    "report_w4_6": "ops/reports/P0-W4.PH-W4.6.md"
+    "report_w4_6": "ops/reports/P0-W4.PH-W4.6.md",
+    "sink_margin": "src/nacre/physics/sink.py",
+    "report_w4_7": "ops/reports/P0-W4.PH-W4.7.md",
+    "report_w4_8": "ops/reports/P0-W4.PH-W4.8.md",
+    "amorphous_module": "src/nacre/physics/amorphous.py"
   },
   "notes": [
     "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
@@ -79,7 +83,8 @@
     "PH-W4.2g: thresholds copy from block v9 (05589fb); text-only diff; version pins 8 to 9 in two tests and ph_prov.THRESHOLDS_BLOCK_VERSION; 766 tests pass in tests/physics tests/screen. W6 must re-pin configs/preprint/thresholds.yaml.",
     "PH-W4.5 Part 1 facts: production crossed Ca_T and P_T independently (k2_grid.phosphate_cells nests both axes over one decade grid; 36 pairs per pH, I, a_w cell: 648 alkaline and 540 acid-adjusted cells), so the rerun reduces to the post-freeze keys (brushite, Li3PO4, OCP Ca4H basis) and the rule-based supersaturated control (cell of maximum median Omega, wet slurry state). pre_run_sha_ph2 d32da3d holds the code; its commit message ('PH-W4.5 pre_run_sha_ph2') is mislabelled because a first commit with the intended message was refused by the trailer hook; pushed, not rewritten.",
     "PH-W4.5: 2 runs (252.9 s and 67.3 s, peak 156 MB, 0 capped) beside the frozen runs; brushite undetermined to feasible, OCP Ca4H basis new row feasible, other rows unchanged (0 cells moved); Li3PO4 and a-TCP undetermined; per-pH tables and F3 numbers committed; 772 tests pass (tests/physics tests/screen).",
-    "PH-W4.6: Ca:P ratio grid (P_T = Ca_T/1.67, /1.5, /1.0) for HAp, ACP, b-TCP, OCP Ca4H, brushite; 2 runs (1.7 min, peak 173 MB, 0 capped); verdicts unchanged, no pass/fail flips, 43 of 120 phase/ratio/pH groups differ in minimum Ca_T only; 774 tests pass."
+    "PH-W4.6: Ca:P ratio grid (P_T = Ca_T/1.67, /1.5, /1.0) for HAp, ACP, b-TCP, OCP Ca4H, brushite; 2 runs (1.7 min, peak 173 MB, 0 capped); verdicts unchanged, no pass/fail flips, 43 of 120 phase/ratio/pH groups differ in minimum Ca_T only; 774 tests pass.",
+    "PH-W4.8: contract v8 E_ub_hydrated_am and amorphous verdicts; thresholds copy from block v11 (2f6aec1); regime-table patch for lane p0-w8 kept in .local/ph_w4_8_task4.patch (sha256 dfe793b1...2e4f), not committed (ownership); 832 tests pass in tests/physics tests/screen. W6 must re-pin configs/preprint/thresholds.yaml and, after W8 applies the patch, regime_table.csv."
   ],
   "schema": {
     "version": "5",
@@ -311,5 +316,12 @@
     "k2_alkaline_ph3": "results/preprint/screen/k2_alkaline_ph3/summary.json",
     "k2_acid_ph3": "results/preprint/screen/k2_acid_ph3/summary.json",
     "k2_perph_ph3": "results/preprint/screen/k2_perph_ph3/"
+  },
+  "thresholds_v11": {
+    "source_sha": "2f6aec1f95e23e06521407d5e9f23fbac1814c11",
+    "block_version": 11,
+    "block_sha256": "660930a92fb77d4f34cc9f38783d0f5f7412f804cc9f04d68bafbedfdd014a16",
+    "copy_sha256": "5444a4a090dad6b532566499d63f405b8710e3b9470a0f4c99fdba35b096c74b",
+    "equality": "EQUAL"
   }
 }
