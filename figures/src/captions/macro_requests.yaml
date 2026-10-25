@@ -4,21 +4,6 @@
 # figures/src/schemas/upstream.yaml. Percent macros: the formatter must escape the % sign (or use
 # unit '\%' with a scaled value); W8 chooses.
 requests:
-  NumRetroNullMedian:
-    source: preprint/retrodiction/results/results.json
-    key: summary/permutation_null/within_study/median
-    format: g
-    figure: Fig 4
-  NumRetroNullLow:
-    source: preprint/retrodiction/results/results.json
-    key: summary/permutation_null/within_study/range95/0
-    format: g
-    figure: Fig 4
-  NumRetroNullHigh:
-    source: preprint/retrodiction/results/results.json
-    key: summary/permutation_null/within_study/range95/1
-    format: g
-    figure: Fig 4
   NumBoundaryMassThetaPi:
     source: results/preprint/screen/ignorance/summary.json
     key: regimes/R-slurry/boundary_mass/nucleate/cos_theta/fraction_theta_180
@@ -34,18 +19,6 @@ requests:
     pattern: '^OUTLINE_MASS = ([0-9.]+)'
     format: .0%
     figure: Fig 5
-  NumCellFalsifiedAbove:
-    source: results/preprint/screen/table_r2/summary.json
-    key: claims/C5/tests/C5c_ox/crossovers/CaCO3/LiClO4/falsified_above_V
-    format: .3f
-    unit: '\,\mathrm{V}'
-    figure: Fig 7
-  NumCellMarginExpt:
-    source: results/preprint/screen/table_r2/summary.json
-    key: claims/C5/tests/C5c_ox/margin_V
-    format: .3f
-    unit: '\,\mathrm{V}'
-    figure: Fig 7
   NumSlurryPh:
     source: lit/params.yaml
     pattern: '^  ph_slurry:\n(?:    .*\n)*?    value: ([0-9.]+)'
