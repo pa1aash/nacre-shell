@@ -1,6 +1,6 @@
 {
-  "last_session": "PH-W8.8",
-  "status": "DONE",
+  "last_session": "PH-W8.9",
+  "status": "BLOCKED",
   "day": 7,
   "artifacts": [
     "ops/reports/P0-W8.3.md",
@@ -75,10 +75,11 @@
     "preprint/generated/breakeven_table.tex",
     "preprint/generated/breakeven_table.json",
     "tests/preprint/test_preprint_breakeven_table.py",
-    "tests/preprint/test_preprint_patents.py",
     "tests/preprint/test_preprint_captions.py",
     "src/nacre/preprint/captions.py",
-    "ops/reports/P0-W8.PH-W8.8.md"
+    "ops/reports/P0-W8.PH-W8.8.md",
+    "ops/reports/P0-W8.PH-W8.9.md",
+    "preprint/paper/layout/captions_w6.md"
   ],
   "notes": [
     "skeleton retargeted: design, predictions added; inputs and outlook removed; carbonate text marked 'carbonate control (frozen)'",
@@ -97,6 +98,7 @@
     "PH-W8.5: W4.8 regime-table patch applied (8 cells + 3 C_lo cells), C1 to C12 and R3-2 in results, discussion, design; hero hooked (fig1, panel letters, caption); p0-w6 merged for the artwork; 1069 passed; draft build main 15 pp, SI 15 pp; release guard still refuses (18)",
     "PH-W8.6: cp6 F1, F3 to F9, F12 to F14, F16 to F18, F20 to F22 applied; regime table as three continued floats (19/19 rows in the PDF); input-tables generator (Tables 2, 3, SI reaction, database, conversion tables, speciation); abstract 195 words, 6 sentences; SI placeholders filled or removed; 249 passed; draft build main 17 pp, SI 61 pp; release guard refuses (9); W6 re-pin of regime_table.csv needed",
     "PH-W8.7: break-even table generated (26 rows, pinned csv sha256, --check); four patents cited with kind codes and claim numbers from the PH-W2.7 record (waiver a-d met); 11 placeholders filled, 11 left to authors; AI-use draft local-only; 10 captions at most three sentences; NumPrecKOneRows added; 264 passed; draft build main 17 pp, SI 62 pp; release guard refuses (8)",
-    "PH-W8.8: 10 paper captions equal the W6 drafts (captions.py translation, equality test); max 73 words; thermodynamically added in fig15, fig17; 3 findings moved to body; NA15 allowlist; release guard refuses (8)"
+    "PH-W8.8: 10 paper captions equal the W6 drafts (captions.py translation, equality test); max 73 words; thermodynamically added in fig15, fig17; 3 findings moved to body; NA15 allowlist; release guard refuses (8)",
+    "PH-W8.9: patents removed (4 sentences, 28 macros, patent test; CL-V03, CL-V04 withdrawn); G1-G6, G8 applied, G9 not (word cap); silicates kept (CL-S20); break-even table now Table 5 beside 4.3; 269 passed, 1 xfailed; BLOCKED: Bharti affiliation in ops/tracks/p0_authors.yaml (integrator), SI params-table patent labels (W1)"
   ]
 }
