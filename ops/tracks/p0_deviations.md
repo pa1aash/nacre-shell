@@ -165,3 +165,35 @@ Re-audit: cp6
 ## 2026-10-22 results/preprint/screen/*_ph3/, results/preprint/screen/k2_perph_ph3/
 Change: PH-W4.6 (ops/reports/P0-W4.PH-W4.6.md; pre-run commit 6a86837) adds new directories k2_alkaline_ph3, k2_acid_ph3 and k2_perph_ph3 under results/preprint/screen/. Additive: no frozen path changed and no existing result file is edited. The Ca:P ratio grid changed no pass or fail and no headline verdict; 43 of 120 groups differ in the minimum passing Ca_T only.
 Re-audit: cp6
+
+## 2026-10-24 theory/thresholds.md, theory/claims_redirect.md
+Change: PH-W3.8 and PH-W3.9 (ops/reports/P0-W3.PH-W3.8.md, ops/reports/P0-W3.PH-W3.9.md). Thresholds block version 9 to 10 (PH-W3.8, block sha256 a1ef029328963613a33108b310923c78bba8e12903be12e84c120e2a1d3508e7) and 10 to 11 (PH-W3.9, block sha256 660930a92fb77d4f34cc9f38783d0f5f7412f804cc9f04d68bafbedfdd014a16). claims_redirect: 11d wording (open, feasible, kinetically stabilised, not thermodynamically excluded), the sink structure and I17a. Structure and text; no number, margin, class edge or verdict changed.
+Re-audit: cp6
+
+## 2026-10-24 theory/contract.yaml
+Change: contract version 6 to 7 (PH-W3.8: m_sink, E_ub_sink, E_ub_prod_unsat registered) and 7 to 8 (PH-W3.9: E_ub_hydrated_am, symbol Delta_G_gc_w with its unit_tests). Registration of functions and tests; check_contract passes at 111 functions on the merged tree. No existing function changed.
+Re-audit: cp6
+
+## 2026-10-24 configs/preprint/thresholds.yaml
+Change: PH-W4.7 and PH-W4.8 regenerate the copy from block v10 and then block v11 (v11 copy sha256 5444a4a090dad6b532566499d63f405b8710e3b9470a0f4c99fdba35b096c74b). Text and structure only: version 10 to 11 and contract_version 7 to 8 are the only numeric changes; the copy-equality test passes.
+Re-audit: cp6
+
+## 2026-10-24 lit/params.yaml, lit/corpus
+Change: PH-W1.9 adds 2 gap keys (liclo4_solubility_pc, liclo4_gamma_pc; no value) and PH-W1.10 adds liclo4_ka_pc_25c (K_A of LiClO4 in PC, Barthel 1993, grade C, fixed prior, single source), with rows TP-009 to TP-030 and TK-076 to TK-083. No existing value changed.
+Re-audit: cp6
+
+## 2026-10-24 src/nacre/physics, src/nacre/screen
+Change: PH-W4.7 and PH-W4.8 add the functions m_sink, E_ub_sink, E_ub_prod_unsat (stability.py, sink.py), E_ub_hydrated_am and Delta_G_gc_w (stability.py, amorphous.py), and pins in screen/ph_prov.py. No frozen output and no verdict changed; the crystalline verdicts are unchanged; m_sink has no bound value.
+Re-audit: cp6
+
+## 2026-10-24 preprint/generated/regime_table.*, src/nacre/preprint/regime_table.py
+Change: PH-W4.8 and PH-W8.5 change 11 regime-table cells under I17a, text only: ACP, HAp, beta-TCP and alpha-TCP at C_mid and C_hi (8 cells; amorphous reads excluded by the bound dG_g-to-c >= 0 against the crystalline reference plus water), and HAp, beta-TCP and alpha-TCP at C_lo (3 cells; crystalline: open, amorphous: undetermined). Every amorphous C_lo cell stays undetermined; ACC, brushite, Ca2P2O7, OCP, Al phosphates and glass rows untouched.
+Re-audit: cp6
+
+## 2026-10-24 preprint/paper/**, preprint/claims.yaml
+Change: PH-W8.3, PH-W8.4 and PH-W8.5 (text, tables, macros, hero hook-up) and PH-W3.8/PH-W3.9 text changes. No number is typed in text; numbers come through macros.
+Re-audit: cp6
+
+## 2026-10-24 figures/**, figures/src/schemas/upstream.yaml
+Change: PH-W6.3b, PH-W6.3c-hero and PH-W6.5 rebuild fig1 (hero, two single-phase panels), re-pin thresholds, regime_table and symbols, retire 5 NumRetro/NumCell macros; fig15 and fig17 are byte-identical.
+Re-audit: cp6
