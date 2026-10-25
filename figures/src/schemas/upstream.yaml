@@ -279,15 +279,15 @@ entries:
   symbols:
     kind: contract
     owner: p0-w3
-    branch: preprint/p0
+    branch: preprint/p0-w8
     path: theory/symbols.yaml
-    commit: 89fc9de83f0371f9ef560aad096ef988b37dd99c
-    branch_head: 9544eef9309a7383da8a2f1053715d96efadc84e
+    commit: 2f6aec1f95e23e06521407d5e9f23fbac1814c11
+    branch_head: 0e7da44eb8cf3c586bfd1f002fe2ba9af1f3f258
     snapshot: theory/symbols.yaml
-    sha256: 201acda3b6be2fe82bb409c6fb87620157833505de83372d3929416e0d169d01
+    sha256: 402c8ead9047b00b80559d06d35eeae879cac8c3adf435684f6f021e611f08fb
     merged_tree:
-      ref: origin/preprint/p0
-      head: 9544eef9309a7383da8a2f1053715d96efadc84e
+      ref: preprint/p0-w6
+      head: 81382f51acf7f8e02186a8fa0b57b7fe0d3e7250
       same_bytes: true
     used_for: axis titles and parameter labels (theory symbol ids)
   thresholds:
