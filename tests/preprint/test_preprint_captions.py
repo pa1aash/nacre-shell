@@ -75,7 +75,7 @@ def test_paper_captions_carry_the_cp6_reaudit_wording():
     cross = r"cross: excluded ($K_2$: every cell dissolves; $K_1$: thermodynamically excluded$^\dagger$)"
     assert cross in caps["fig:ladder"] and cross in caps["fig:heatmap"]
     assert "single hatching: open ($K_1$) or inconclusive ($K_2$)" in caps["fig:heatmap"]
-    assert ("Brushite at 4.4--4.5 V is thermodynamically excluded only above "
+    assert (r"Brushite at \NumClassHiLow--\NumClassHiHigh\ is thermodynamically excluded only above "
             r"\NumRegCrossBrushiteHi.") in caps["fig:heatmap"]
 
 
