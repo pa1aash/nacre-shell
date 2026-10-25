@@ -16,6 +16,14 @@ These exclusions are thermodynamic ceilings; kinetic stabilisation is not exclud
 The map is a design rule matched to the regime: calcite meets the dissolution condition over the named region of the alkaline grid, and carbonate is thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ above \NumCarbonateCrossover; bone mineral shares that ceiling, and at the higher cutoff classes only the condensed calcium phosphates remain not thermodynamically excluded, with the aluminium phosphates undetermined. % CL-S13
 No phase passes the oxidation condition in this version: $E_\mathrm{lb}$, computed from aqueous formation data with every ionic product at its standard state, bounds the onset only if $\Delta G_\mathrm{tr}^\mathrm{rel}\ge0$, which no measured datum tests, so no row can pass and the map can exclude a phase but not admit one. % CL-S16
 
+% Table 6 of the re-audit (break-even ratios) is set before the regime-table floats, so it leaves the float
+% queue near Section 4.3, which cites it; behind the three full-width regime parts it floated four pages on.
+\begin{table}[t]
+\caption{Break-even ratio $r^*$ of the saturated-sink exclusions\nacreSinkMark, per phase and cutoff: the headroom $E_\mathrm{c}-E_\mathrm{ub}-m$ of the upper bound and its margin below the cutoff, and the mean-activity ratio of saturated to actual \ce{LiClO4} at which the sink term $m_\mathrm{sink}$ uses up that headroom. A negative headroom is not an exclusion and has no ratio.}
+\label{tab:breakeven}
+\nacreBreakevenTable
+\end{table}
+
 % The regime table is taller than a page: it is set as consecutive full-width floats, one per part, the
 % later parts continuing the table number (cp6 F1; parts and notes from the generator).
 \input{../generated/regime_table}
@@ -74,12 +82,6 @@ The silicates \ce{CaSiO3}, \ce{Ca2SiO4} and \ce{Li2SiO3} are comparators of the 
 The lower end of every upper bound is conditional on the transfer premise, which is pending, so the bars of Fig.~\ref{fig:ladder} are open below. % CL-M17
 These exclusions are thermodynamic: kinetic stabilisation is not ruled out for phosphates, because tier-two records of coated cathode particles exist in \ce{LiPF6} electrolytes\cite{xiao2015unravelling,hofmann2020surface}, not in fluorine-free ones. % CL-L09
 The upper bounds of this ladder were seen before the regime framing of the paper was adopted. % CL-M08
-
-\begin{table}[t]
-\caption{Break-even ratio $r^*$ of the saturated-sink exclusions\nacreSinkMark, per phase and cutoff: the headroom $E_\mathrm{c}-E_\mathrm{ub}-m$ of the upper bound and its margin below the cutoff, and the mean-activity ratio of saturated to actual \ce{LiClO4} at which the sink term $m_\mathrm{sink}$ uses up that headroom. A negative headroom is not an exclusion and has no ratio.}
-\label{tab:breakeven}
-\nacreBreakevenTable
-\end{table}
 
 \begin{figure*}[t]
   \centering
