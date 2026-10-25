@@ -13,7 +13,7 @@
 authors:
   - given_name: Palash
     family_name: Bharti
-    affiliation: Jayshree Periwal International School
+    affiliation: "Jayshree Periwal International School, Jaipur, India"
     orcid: 0009-0000-8926-5520
     orcid_check: {checksum: pass, record_name: Palash Bharti, name_match: pass, date: 2026-10-16}
     corresponding: false
