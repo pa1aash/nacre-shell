@@ -1172,6 +1172,10 @@ decisions:
     read DONE and are pushed.}
 - {id: D82, date: '2026-10-23', decision: 'The day-7 requirements are corrected from cp5r to cp5b (PH-W8.3, PH-W7.1, PH-W1.4, PH-W3.3); no new checkpoint is created and the tag p0-cp5r is not made.',
   reason: Integrator record at PH-I6g; the audited checkpoint is cp5b (tag p0-cp5b exists).}
+- {id: D83, date: '2026-10-24', decision: 'The sink term m_sink is registered but unbound: there is no open source for LiClO4 saturation or activity in propylene carbonate. The tier-1 exclusions read "for a LiClO4-saturated sink".', reason: 'Integrator record at PH-I7 (PH-W4.7, PH-W1.9, PH-W1.10). PH-W1.10 reads BLOCKED for the value (liclo4_ka_pc_25c) but its items are complete; recorded done with this note.'}
+- {id: D84, date: '2026-10-24', decision: 'Patent references are cited by number only. The release guard stays blocked until Palaash supplies fetched metadata (logged as an outstanding action).', reason: Integrator record at PH-I7 (PH-W1.4).}
+- {id: D85, date: '2026-10-24', decision: 'I17a is registered; ACC is not covered by I17a.', reason: Integrator record at PH-I7 (PH-W3.9, PH-W4.8).}
+- {id: D86, date: '2026-10-24', decision: 'The hero is two single-phase panels, with three accepted within-panel colour exceptions (Ca/carbonate 16.8, H/phosphate 15.3, C/Li 18.2).', reason: Integrator record at PH-I7 (PH-W6.3c-hero, PH-W6.5).}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1531,7 +1535,8 @@ deferred_v2:
 done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6, PH-W4.2e, PH-W6.2, PH-W8.2,
   PH-W4.2g, PH-W4.3, PH-W4.2, PH-W2.2, PH-W3.7, PH-W1.7, PH-W1.7b, PH-W1.7c, PH-W2.6, PH-W8.2c, PH-W6.2b,
   PH-W8.2b, PH-W6.2c, PH-W6.2d, PH-W8.2d, PH-W1.8, PH-W4.5, PH-W8.2e, PH-W6.3, PH-W4.6, PH-W8.2f, PH-W8.2g,
-  PH-W6.3c, PH-W6.3d, PH-I6, PH-I6e]
+  PH-W6.3c, PH-W6.3d, PH-I6, PH-I6e,
+  PH-W8.3, PH-W3.3, PH-W1.4, PH-W6.4, PH-W3.8, PH-W1.9, PH-W6.3b, PH-W1.10, PH-W4.7, PH-W8.4, PH-W3.9, PH-W6.3c-hero, PH-W4.8, PH-W8.5, PH-W6.5, PH-I6g]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
