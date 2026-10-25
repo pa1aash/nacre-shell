@@ -83,4 +83,33 @@ def test_every_draft_is_at_most_three_sentences_and_75_words_with_macros_expande
 
 def test_the_class_name_excluded_is_always_thermodynamically_excluded():
     for fig in captions.USED:
-        assert not re.search(r"(?<!thermodynamically )\bexcluded\b", captions.tex_caption(REPO, fig)), fig
+        assert not re.search(r"(?<!thermodynamically )\bexcluded\b" + captions.QUALIFIED, captions.tex_caption(REPO, fig)), fig
+
+
+def test_paper_captions_carry_the_cp6_reaudit_wording():
+    caps = {k: " ".join(v.split()) for k, v in figure_captions().items()}
+    cross = r"cross: excluded ($K_2$: every cell dissolves; $K_1$: thermodynamically excluded$^\dagger$)"
+    assert cross in caps["fig:ladder"] and cross in caps["fig:heatmap"]
+    assert "single hatching: open ($K_1$) or inconclusive ($K_2$)" in caps["fig:heatmap"]
+    assert (r"Brushite at \NumClassHiLow--\NumClassHiHigh\ is thermodynamically excluded only above "
+            r"\NumRegCrossBrushiteHi.") in caps["fig:heatmap"]
+
+
+def _w6_handoff():
+    """{fig: draft} of preprint/paper/briefs/captions_w6.md, the drafts W6 copies (PH-W8.9)."""
+    text = (paths.paper(REPO) / "briefs" / "captions_w6.md").read_text(encoding="utf-8")
+    return dict(re.findall(r"^## (fig\d+)\n\n```text\n(.*?)\n```", text, re.M | re.S))
+
+
+def test_handoff_drafts_translate_to_the_paper_captions_within_the_limits():
+    if not (REPO / "preprint/generated/numbers.tex").exists():
+        from nacre.preprint import build
+        build.generate(REPO)
+    caps = figure_captions()
+    drafts = _w6_handoff()
+    assert set(drafts) == {"fig2", "fig15", "fig17"}
+    for fig, draft in drafts.items():
+        label = captions.USED[fig]
+        assert " ".join(caps[label].split()) == " ".join(captions.to_tex(draft).split()), fig
+        assert captions.word_count(captions.thermodynamic(draft), REPO) <= 75, fig
+        assert len(sentences(captions.to_tex(draft))) <= 3, fig
