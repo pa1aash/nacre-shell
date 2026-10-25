@@ -67,7 +67,8 @@ benchmark on tabulated formation data passes (W5): until then they are labelled 
 falsify. Every number in the per-reaction table carries one of `expt`, `dft-benchmarked`, `dft-unbenchmarked`.
 
 **Solvated sink and the bracket (cp4 F2).** Tier 1 is a bracket [E_lb, E_ub] per reaction (Section 2f): E_ub is the
-onset with the solid-salt (LiClO4) sink, an upper bound on the onset (a falsification on it stands); E_lb is the onset
+onset with the solid-salt (LiClO4) sink, an upper bound on the onset for a LiClO4-saturated sink (Section 2h; a
+falsification on it stands for that sink); E_lb is the onset
 with the most favourable sink, every ion aqueous from tabulated standard data, a lower bound under the transfer premise
 of Section 2f. A pass needs E_lb; a falsification needs E_ub. One scheme per row.
 
@@ -99,7 +100,7 @@ T1 = tier 1 (the bracket [E_lb, E_ub] of Section 2f against E_c, margin m_1; "be
 | 1 | pass: E_lb >= E_c + m_1 (Section 2f), benchmarked route, transfer premise supported | any or none | feasible | `tier 1`; if T2 is below, `service limit below cutoff, class X` printed beside | E_ox = E_c + 2 m_1 |
 | 2 | below: E_ub < E_c - m_1 (Section 2f) | available and below: E_svc < E_c - m_svc | **falsified at E_c** | `tier 1 and tier 2 (class X)` | E_ox = E_c - 2 m_1, E_svc = E_c - 2 m_svc |
 | 3 | below | none | falsified at E_c | `tier 1 only` (no tier 2 exists) | E_ox = E_c - 2 m_1 |
-| 4 | below | class A or B, E_svc >= E_c + m_svc | **not excluded, kinetically stabilised** | label carries the class (A or B) | E_ox = E_c - 2 m_1, E_svc = E_c + 2 m_svc |
+| 4 | below | class A or B, E_svc >= E_c + m_svc | **kinetically stabilised** (tier 1 below; amended PH-W3.8, D78) | label carries the class (A or B); thermodynamically excluded at tier 1 printed beside | E_ox = E_c - 2 m_1, E_svc = E_c + 2 m_svc |
 | 5 | below | class C only, E_svc >= E_c + m_svc | inconclusive | `bulk-phase LSV only; not evidence for a film` | as row 4 with class C |
 | 6 | within the bracket: neither E_lb >= E_c + m_1 nor E_ub < E_c - m_1 | any | inconclusive | tier 2 printed beside; E_lb, E_ub printed | E_lb < E_c < E_ub |
 | 7 | undetermined (Section 2a) | any | inconclusive | `undetermined never passes`; tier 2 printed beside | E_r unsourced |
@@ -107,6 +108,14 @@ T1 = tier 1 (the bracket [E_lb, E_ub] of Section 2f against E_c, margin m_1; "be
 Rule behind the table: falsified at E_c only if tier 1 and the available tier 2 both fall below it; tier 1 only if
 no tier 2 exists. Rows 5 to 7 and the tier-2-below note of row 1 are the places where the plan is silent: they are
 registered here conservatively (interpretations I1 to I3, Section 8).
+
+**Amorphous rows of hydrated amorphous phases (I17a, PH-W3.9).** The amorphous row of ACP, HAp, beta-TCP and alpha-TCP
+takes its K1 verdict from the crystalline reference row of the same composition (interpretation I17a, Section 9h): where
+that row is falsified at a cutoff (row 2 or 3, tier 1 below by more than the margin), the amorphous row reads
+**excluded** with the label `excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)`, in
+place of the labels of rows 2 and 3, and the label of the reference row is printed beside it. Where the reference row is
+not falsified (rows 1, 4 to 6) or is a gap (row 7), the amorphous row reads **undetermined** (row 7), never open and
+never feasible. The bound only falsifies: no amorphous row passes by it.
 
 **Carbonate.** CaCO3 runs through the same table (reaction r1 with the exchange route registered in C5c_ox; its
 tier 2 records are looked up like any other). Its row is the negative control for K1; it is expected to remain
@@ -120,8 +129,8 @@ A phase proceeds to K3 and K4 unless its K1 verdict is falsified at EVERY regist
 inconclusive or undetermined at any class proceeds, and its K1 status is shown in its row.
 
 Equivalently: K3 and K4 are skipped only for a phase whose class verdict (Section 2e) is `falsified for the class`
-for C_lo, C_mid and C_hi alike; its row then says so. A phase that is feasible or not excluded (kinetically
-stabilised, class A or B) at some class proceeds with that class named; a phase that is only inconclusive,
+for C_lo, C_mid and C_hi alike; its row then says so. A phase that is feasible or kinetically stabilised
+(class A or B) at some class proceeds with that class named; a phase that is only inconclusive,
 undetermined or partial proceeds with its per-class K1 status printed in its row beside K2 to K4. The reason (cp4
 ruling): while the solvated sink is a gap no phase can pass K1, and the earlier rule (proceed only on a pass) would
 have run nothing. K2 is evaluated for every phase (it is a property of the slurry) and gates the study row, not the
@@ -188,7 +197,8 @@ So E_lb is a lower bound on the onset in the carbonate solvent iff the **transfe
     Delta_G_tr_rel = DG_tr(M, w->S) - z DG_tr(Li+, w->S) >= 0     for every ionic product M (and for H+ in r3).
 
 The solid-salt sink is one of the product states the oxidation can reach, so the thermodynamic onset with every sink
-available is min(E_S, E_ub) <= E_ub: E_ub is an upper bound whatever the solvent.
+available is min(E_S, E_ub) <= E_ub: E_ub is an upper bound whatever the solvent, for a LiClO4-saturated sink (the
+consumed salt at the activity of the solid; Section 2h gives the bound below saturation).
 
 **Vetting.**
 
@@ -272,6 +282,65 @@ orthophosphate (slurry-stage) phase as one film. A film is reported across stage
 conversion row, cell row with the same `film_id`, and the chain is only as strong as its weakest member: a chain with an
 `undetermined` or `requires a higher temperature` conversion row is labelled so in its summary line.
 
+### 2h. The sink reference state of E_ub and the dilute-electrolyte margin m_sink (PH-W3.8, ruling 2)
+
+**Finding (P0-W3.PH-W3.3, B3).** The registered solid-salt reaction of Section 2f takes Li+ and the anion from solid
+LiClO4. In the cell they come from the electrolyte. The bound E_ub is therefore the onset for a **LiClO4-saturated sink
+(solid-salt reference state)**, and this section registers the correction for an electrolyte below saturation.
+
+**Derivation.** Write the solid-salt route with the salt taken from solution, nu_salt formula units of LiClO4 consumed
+per transferred electron (nu_salt = 1 for the exchange route, z salt units per z electrons):
+
+    P(s) + z [Li+ + ClO4-](S) -> M(ClO4)z(s) + (neutral products) + z Li(s)
+
+Its free energy differs from Delta_G_r_ss by z [mu_LiClO4(s) - mu_LiClO4(S)]. With the salt activity a_salt = a_pm^2 of
+the 1:1 salt (a_pm the stoichiometric mean ionic activity, ion pairing inside its coefficient), mu_LiClO4(S) =
+mu_LiClO4(s) + R T ln(a_salt / a_salt,sat), because the solution saturated with the solid has the solid's chemical
+potential. So the onset of the route in the cell is E_ub + m_sink with
+
+    m_sink = nu_salt (R T / F) ln(a_salt,sat / a_salt) = 2 nu_salt (R T / F) ln(a_pm,sat / a_pm)          (contract m_sink)
+
+that is (2 ln 10) R T / F per decade of the mean ionic activity per LiClO4 consumed per electron. In concentrations,
+a_pm = gamma_pm c_salt / c_std, so m_sink = 2 nu_salt (R T / F) [ln(c_salt,sat / c_salt) + ln(gamma_pm,sat / gamma_pm)].
+
+**Sign analysis.**
+
+1. *Reactant salt below saturation raises the onset.* For an electrolyte that is not supersaturated, a_pm <= a_pm,sat,
+   because the activity of a stable solution rises with its concentration; so m_sink >= 0, with equality only at
+   saturation. The term is one-sided: it raises the upper bound and is not covered by the symmetric margin m_1. The
+   activity-coefficient ratio can enter with either sign; the total stays non-negative.
+2. *Product salt below saturation lowers the onset.* If M(ClO4)z dissolves at a saturation ratio x_p < 1 instead of
+   precipitating, the onset falls by nu_p (R T / F) ln(1 / x_p), nu_p the product salt units per electron (contract E_ub_prod_unsat <= E_ub). The solid
+   product is the saturated-product case, the highest onset among the product states, so it is the worst case for an
+   exclusion and no product term enters the bound.
+3. *No salt consumed, no term.* A registered reaction that consumes no LiClO4 has nu_salt = 0 and m_sink = 0.
+4. *The pass side is untouched.* E_lb takes every ion aqueous and does not use the solid salt; m_sink never enters a pass.
+
+**Rule.** The rigorous upper bound for an electrolyte at the registered concentration is E_ub_sink = E_ub + m_sink. The
+exclusion for that electrolyte is E_ub < E_c - m_1 - m_sink (test `K1_falsify_dilute` of the thresholds block, version
+10), and the falsifying crossover of Section 2e becomes E_x- = E_ub + m_1 + m_sink. The registered state is a design
+axis: LiClO4 at c_salt (`regimes.R-cell.parameters.c_liclo4`, primary one mole per cubic decimetre) in propylene
+carbonate, the registered proxy of the cell solvent class. The inputs are bound by key name and are unresolved here:
+
+| Input | Key | Supplied by |
+|---|---|---|
+| c_salt,sat, LiClO4 solubility in propylene carbonate (with DOI and locator) | `liclo4_solubility_pc` | W1, PH-W1.9 |
+| gamma_pm at c_salt and gamma_pm,sat at c_salt,sat, from a cited activity-coefficient treatment of LiClO4 in propylene carbonate | `liclo4_activity_coefficient_pc` | W1, PH-W1.9 |
+| c_salt | `regimes.R-cell.parameters.c_liclo4` | registration (design axis) |
+
+The bound takes the end of each input interval that makes m_sink largest (upper c_salt,sat and gamma_pm,sat, lower
+gamma_pm). A solubility on the molal scale is converted by the rule of Section 11g. A missing key leaves the
+dilute-electrolyte exclusion undetermined; it never sets m_sink to zero.
+
+**Status and consequences.** The structure is registered; the value is unbound. A class verdict or crossover that moves
+when m_sink is bound is verdict-bearing and needs a dated entry with a `Re-audit:` line in `ops/tracks/p0_deviations.md`,
+written by the integrator, before the regenerated verdict is used. Until the value is bound:
+
+- every tier-1 exclusion of the paper reads "for a LiClO4-saturated sink (solid-salt reference state)";
+- where a row's crossover lies within the registered edge tolerance of a class edge (`screen_ph.sink_v10.edge_rule`, 50
+  mV), the prose states the robust threshold, the lowest registered class edge that clears the crossover by at least
+  the tolerance ("excluded at [edge] and above"), and names the edge sensitivity, with the crossover by macro.
+
 ## 3. K2, K3, K4
 
 ### 3a. K2
@@ -322,8 +391,8 @@ up by at least p_deg). A pass that does not degrade is labelled `generic`, not t
 Film candidates: AlPO4, Al(PO3)3, Al-borate, Al-oxalate, Al2O3, and the bare-Al onset as the reference rung. Cut order
 keeps AlPO4, Al(PO3)3 and Al2O3. A film F passes the ladder iff all three hold at the cutoff E_c:
 
-- **(a) Oxidation limit.** The K1 table of Section 2c for F at E_c is feasible or not excluded (kinetically
-  stabilised, class A or B); tier 1 and tier 2 both printed. Undetermined never passes.
+- **(a) Oxidation limit.** The K1 table of Section 2c for F at E_c is feasible or kinetically stabilised
+  (class A or B); tier 1 and tier 2 both printed. Undetermined never passes.
 - **(b) Insolubility in the electrolyte.** With K_sp,el(F) the solubility product of F in the registered electrolyte
   (solvent and salt set; `params`), the equilibrium dissolved level of the film cation at the registered anion
   activity is s_sat = (K_sp,el / prod_other a_i^nu_i)^(1/nu_Al). Pass iff s_sat <= s_tol (the loss budget that keeps
@@ -412,8 +481,8 @@ existing keys used: `dfg_ca2_aq`, `dfg_al3_aq`, `dfg_li_aq`, `hydration_free_ene
 - **I3.** Rows 6 and 7: within the margin band, or undetermined tier 1, is inconclusive even where tier 2 is above or
   below; the plan's falsification needs tier 1 below.
 - **I4.** Superseded by cp4 F1 (Section 2d): the test is no longer "passes at any class" but "not falsified at every
-  class"; the not-excluded, kinetically stabilised verdict (class A or B) is one of the statuses that proceed.
-- **I5.** Tier 2 records logged with a fluoride-containing electrolyte are kept, labelled F_el, and not excluded; the
+  class"; the kinetically stabilised verdict (class A or B) is one of the statuses that proceed.
+- **I5.** Tier 2 records logged with a fluoride-containing electrolyte are kept, labelled F_el, and retained; the
   plan asks only that the electrolyte be logged.
 - **I6.** The bulk-precipitation competition in K3 uses the same absolute criterion B_acc for the homogeneous
   barrier (as stated in the brief); a separate bulk prefactor and volume is deferred to PH-W3.2 as a labelled sensitivity.
@@ -479,7 +548,7 @@ same formula unit (`polyp_log10_ksp_al`, a gap):
 |---|---|---|---|
 | F1r | K_sp,AlPP is a gap | undetermined | flip value K_sp* = IAP_AlPP printed (the K_sp below which the gel is accessible) |
 | F2r | P(Omega_AlPP < 1) >= p_cred | falsified at that state | `gel cannot form (thermodynamic accessibility)` |
-| F3r | P(Omega_AlPP > 1) >= p_cred | not excluded | `not excluded by thermodynamic accessibility` (never a pass) |
+| F3r | P(Omega_AlPP > 1) >= p_cred | open | `open (not thermodynamically excluded by accessibility)` (never a pass; Section 11d) |
 | F4r | otherwise | inconclusive | |
 
 - **Two labelled a(Al3+) states.** *Oxide-equilibrium* (slurry stage): a_Al fixed by the oxide or hydroxide in contact,
@@ -499,7 +568,7 @@ same formula unit (`polyp_log10_ksp_al`, a gap):
 |---|---|---|---|
 | B1 | state outside the covered region | any | undetermined |
 | B2 | covered | state outside the two-phase region with P >= p_cred | falsified at that state (`no liquid precursor`) |
-| B3 | covered | state inside the two-phase region with P >= p_cred | not excluded (a liquid precursor exists; K4 route form next) |
+| B3 | covered | state inside the two-phase region with P >= p_cred | open (a liquid precursor exists; K4 route form next; Section 11d) |
 | B4 | covered | otherwise | inconclusive |
 
 - **R3** has no formation criterion of its own: it is the dried form of the slurry state and is decided by K2h (9a)
@@ -590,7 +659,9 @@ Dgamma = gamma_nl cos theta directly).
 - **Baked baselines** (unspecified structure): both framings are reported, neither governs; the row carries
   `structure unspecified`.
 - **Nucleus framings unchanged.** For the Ca orthophosphate nucleus framings (ACP versus apatite), "falsified only if
-  falsified under every framing" stays (Section 3d). The governing rule above applies to the route products only.
+  falsified under every framing" stays (Section 3d). The governing rule above applies to the route products only. The
+  ACP framing of HAp, beta-TCP and alpha-TCP, and ACP itself, is excluded wherever the same-composition crystalline row
+  is, by the bound of I17a (Section 9h; reference: the crystalline phase plus liquid water at a_w = 1).
 
 ### 9e. Matrix and baseline rules (rulings C5, C6)
 
@@ -648,7 +719,7 @@ Section 2g).
 - **I11.** C1: first-order loss in the condensed fraction; coverage includes interpolation in pH between the two measured
   values and nothing else; with Ca2+ present only the Ca rows bracket the state.
 - **I12.** C2: with the oxide present a(Al3+) is pinned by the oxide equilibrium, so polyphosphate complexation acts on
-  the free ligand; a complexation gap is evaluated at f_PP,free = 1 and flagged (falsification stands, not-excluded
+  the free ligand; a complexation gap is evaluated at f_PP,free = 1 and flagged (falsification stands, open
   labelled optimistic).
 - **I13.** C3: at coexistence the Gibbs-Langmuir site and exclusion terms cancel in gamma_sl - gamma_sn; the substrate
   preference is the site-free contact difference (a gap) and the R2 K4 route form is undetermined until it or a contact
@@ -665,6 +736,41 @@ Section 2g).
   falsified wherever its crystalline row is falsified, labelled `falsified (bound)`, and stays undetermined everywhere
   else. It can never pass this way. For the nucleus framings (ACP versus apatite) this makes "falsified under every
   framing" decidable from the crystalline row alone, on the falsifying side only.
+- **I17a.** (PH-W3.9, planning-chat ruling 3, binding; **registered**, contract version 8.) *Check.* The bound
+  DeltaG_g->c >= 0 holds only between phases of the SAME composition. Contract version 7 states DeltaG_gc = G_glass -
+  G_crystal "per formula unit" (`E_window_glass`, `E_lb_glass`, `E_ub_glass`): that is the same-composition form for an
+  anhydrous glass of the crystal's formula (the Ca(PO3)2 glass, the (LiPO3)n glass), and I17 stands for those rows as
+  written. It does not state the reference of a hydrated amorphous phase, whose formula unit carries n_hyd water that the
+  crystal does not. *Registered form.* For a hydrated amorphous phase A = C . n_hyd H2O the reference is the crystalline
+  phase or phases C of the same Ca:P (and OH, HPO4) composition PLUS n_hyd liquid water at a_w = 1:
+
+      DeltaG_g->c,w = G(A) - G(C) - n_hyd mu_w(l, a_w = 1) >= 0          (A is metastable against C + water; symbol `Delta_G_gc_w`)
+
+  The oxidation of A releases its water at the cell water activity a_w <= 1, so
+
+      E_ub(A) = E_ub(C) - [DeltaG_g->c,w - n_hyd R T ln a_w] / (Delta_n_Li F) <= E_ub(C)       (function `E_ub_hydrated_am`)
+
+  Any further reaction of the released water (r3) only lowers the onset, since E_ox is a minimum. *Reference-state
+  sentence.* The reference of a hydrated amorphous phase is the crystalline phase or phases of the same composition plus
+  liquid water at a_w = 1; ACP is metastable against crystalline calcium phosphates in water. A crystalline reference of
+  a different Ca:P (beta-TCP for an ACP of another Ca:P) does not satisfy the condition. *Rule.* The sign bound is
+  exact, so the amorphous row uses the margin of its crystalline reference row, unchanged (the same m_expt, and the same
+  m_sink where a dilute electrolyte is stated), and the reference state of the sink (Section 2h) carries over. The
+  amorphous row is **excluded** at a cutoff exactly where its same-composition crystalline reference row is excluded
+  (falsified at tier 1; tier 2 of the amorphous framing is read like any other row, and none is registered for these
+  rows), with the label `excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)`. It can
+  never pass this way. *Rows.* The rule applies to the amorphous rows of ACP (on its beta-TCP reference row, the
+  composition registered for the ACP formula unit), HAp (on the HAp row), beta-TCP (on the beta-TCP row) and alpha-TCP
+  (on the alpha-TCP row), at the classes where that reference row is excluded. *Rows that stay undetermined.* Every
+  amorphous phase whose crystalline reference row is not excluded at the class (brushite, whose reference row is partial
+  at the highest class and not falsified below it; Ca2P2O7, whose reference row is not falsified), and every amorphous
+  phase whose reference row is a gap (OCP, the aluminium phosphates), reads **undetermined**; so does every row at a
+  class where its reference row is not falsified. Amorphous calcium carbonate has no K1 amorphous row registered and is
+  not covered by this rule. A calcium orthophosphate whose crystalline row is excluded at a class is then excluded under
+  every nucleus framing at that class, because both of its framings (apatite and ACP) are. *Unit tests* for W4 are
+  specified on the function `E_ub_hydrated_am` in `theory/contract.yaml` (items i to viii). Table and prose say the same:
+  where a table cell reads excluded by this bound, the prose states the same bound and the same reference; where a cell
+  reads undetermined, the prose does not call the phase excluded on that framing.
 
 ## 10. PH-W3.2 rulings: W5's post-hoc choices and the bracket verdict
 
@@ -697,8 +803,8 @@ water, at room temperature. Three points decide the extension:
    window supports (the film holds at that state).
 3. *R1 runs the other way.* At oxide equilibrium a(Al3+) is pinned by the film solid, and the amorphous solid gives the
    highest a(Al3+) (`a_al3_oxide.csv`). For the falsifying-only R1 test the amorphous state is the hardest to falsify, so
-   an R1 falsification there stands under every film framing. A "not excluded" verdict there is optimistic if the film is
-   in fact crystalline.
+   an R1 falsification there stands under every film framing. An open verdict there (not thermodynamically excluded,
+   Section 11d) is optimistic if the film is in fact crystalline.
 
 **Ruling.** The extension of C4 to the oxide film is justified in direction, by points 1 and 2, and conditional on the
 phase identity of point 1. The rows are:
@@ -708,8 +814,8 @@ phase identity of point 1. The rows are:
 | passivation window (comparator state, Section 5) | Al(OH)3 am, at the TR-091 Al level | boehmite (grade A, the gated Al phase of the R-cell window) | gibbsite, corundum; every registered Al level; the published windows TR-090 and TR-091 |
 | R1 oxide-equilibrium a(Al3+) (Section 9b) | Al(OH)3 am | boehmite | none |
 
-Both rows are reported wherever either is used. An R1 "not excluded" (F3r) that holds at the amorphous state and fails
-at the boehmite state is labelled `not excluded only if the film is amorphous`. An R1 falsification (F2r) at the
+Both rows are reported wherever either is used. An R1 open verdict (F3r) that holds at the amorphous state and fails
+at the boehmite state is labelled `open only if the film is amorphous` (amended PH-W3.8, Section 11d). An R1 falsification (F2r) at the
 amorphous state is reported as robust to the film framing. Corundum is an anhydrous high-temperature phase. It is a
 reference only, never a candidate for the hydrated film.
 
@@ -782,7 +888,9 @@ Every tier-1 row therefore stays solid-salt-only (Section 2f, `plausible only`).
 **Go/no-go consequence.** With no pass possible, K1 can only falsify or leave a row inconclusive. By tier 1 alone (the
 ladder of PH-W5.1 with the margins of `margins_v6`, before any tier 2 record is applied), the following hold. HAp,
 beta-TCP and alpha-TCP, and ACP on its beta-TCP reference, are falsified at C_mid and C_hi. By I17 they are also
-falsified on the amorphous framing there, so under every nucleus framing. The carbonate control falls with them.
+excluded on the amorphous framing there, so under every nucleus framing (amended PH-W3.9: by the bound dG_g-to-c >= 0
+in the same-composition form of I17a, against the crystalline reference plus liquid water at a_w = 1; each amorphous
+row is excluded exactly at the classes where its crystalline reference row is, and reads undetermined elsewhere). The carbonate control falls with them.
 Brushite is partial at C_hi: falsified only above its crossover inside that class. The silicate comparator Ca2SiO4 is
 falsified at all three classes. Nothing is falsified at C_lo. Open, falsified at no class, are the condensed phases and
 the Al phosphates. Ca2P2O7 (crystalline; its amorphous row undetermined), Ca(PO3)2 glass and crystal, and the Li
@@ -953,14 +1061,15 @@ or "the slurry". The rules that go with the label, in the same section of the pa
 
 - It does not address Al's own instability above its passivation window and is not evidence of protection. It is a
   statement about the mineral against its solution at the registered states, and nothing else.
-- The acid-adjusted pH state (`params.ph_slurry_acid_adjusted`) is shown as the incumbent comparator in the same table,
-  evaluated by the same test and printed beside the registered region.
+- The acid-adjusted pH state is shown as the incumbent comparator in the same table, evaluated by the same test and
+  printed beside the registered region. Its primary comparator state is the sourced slurry range after acid adjustment,
+  the range of `params.ph_slurry_acid_adjusted` (amended PH-W3.8, ruling 6; Section 11d).
 - No sentence of the paper may use "suitable" without the conditions "for [phase] in [region]" within six words. A
   sentence that cannot carry both conditions uses the vocabulary of Section 11d instead.
 
 ### 11c. C4: the low-voltage wording
 
-**Class.** The low-voltage class is **not excluded** at the nominal cutoff (the C_lo class of Section 2e,
+**Class.** The low-voltage class is **not thermodynamically excluded** (table word `open`, Section 11d) at the nominal cutoff (the C_lo class of Section 2e,
 `regimes.R-cell.parameters.cutoff_classes`), with a cutoff of 4 V registered as a sensitivity line beside it (a
 registered design cutoff, not a result). Both are read off the K1 verdict table of Section 2c for the carbonate row and
 the phosphate rows, per cutoff, and the word "excluded" is used only in the sense of Section 11d.
@@ -982,23 +1091,73 @@ printed and the sentence is dropped. Proposed; the planning chat rules at cp5b.
 
 ### 11d. C5: the regime-table vocabulary
 
-The regime table of the paper uses exactly these terms, and no other verdict word (cp5 closure ruling Q4):
+The regime table of the paper uses exactly these terms, and no other verdict word (cp5 closure ruling Q4, amended at
+PH-W3.8 by D78; the amendment is recorded below the table):
 
 | Term | Meaning | Source of the entry |
 |---|---|---|
-| excluded | falsified (D68) at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed. Footnote, verbatim: "excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)" | K1 verdict table, Section 2c |
-| not excluded | not falsified, with a feasible or kinetically stabilised K1 verdict (class A or B named) | K1 verdict table, Section 2c |
+| excluded | falsified (D68) at the cutoff; where the class verdict is partial (Section 2e) the numeric crossover (E_x-) is printed. Footnote, verbatim (amended PH-W3.8, ruling 2): "excluded (thermodynamic, tier 1: solid-salt upper bound plus margin, for a LiClO4-saturated sink)". For an amorphous row of ACP, HAp, beta-TCP or alpha-TCP the cell reads, verbatim (PH-W3.9, I17a): "excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)", with the footnote of its crystalline reference row | K1 verdict table, Section 2c; I17a for the amorphous rows |
+| open | not falsified, no lower bound: the test is inconclusive on both sides, or the bracket contains the cutoff. Never a pass, and never evidence of feasibility | verdict row 6 of Section 2c, and every row whose tier 1 is solid-salt-only and not below (E_lb pending) |
 | suitable against dissolution | K2 passes at every state of the registered grid; always inside the row text of Section 11a ("a necessary condition, in [region]"), the full label of Section 11b | K2 test of Section 11a |
-| open | not falsified, no lower bound: the test is inconclusive on both sides, or the bracket contains the cutoff | verdict row 6 of Section 2c |
 | undetermined | data missing: a gap key, an unbenchmarked number or an unregistered sink (`undetermined (data missing)`) | verdict row 7 of Section 2c |
+| inconclusive | a K2 entry that neither passes at every state nor fails at every state of a pH, or whose falsifiability control fails (`inconclusive (control fails)`); a K2 word only | K2 test of Section 11a |
+| feasible; kinetically stabilised (class A or B) | reserved for verdict rows 1 and 4 of Section 2c; no cell of version 1 can carry them (E_lb is pending, Section 11f, and no class A or B record exists in a fluorine-free electrolyte) | K1 verdict table, Section 2c |
+
+**Amendment (PH-W3.8; D78, binding).** The term "not excluded" of the cp5 closure table, defined there as "not
+falsified, with a feasible or kinetically stabilised K1 verdict", is withdrawn. D78 governs: the prose phrase means the
+table word **open** (not falsified, no lower bound). Rules:
+
+1. The paper writes the full phrase **not thermodynamically excluded**, never the bare "not excluded", in the text, the
+   captions, the table legend and the SI. Its meaning is defined once, at its first use: "not thermodynamically excluded
+   (open): not falsified at the cutoff, with no lower bound on the onset". Every later use carries that meaning only.
+2. The phrase never implies feasibility, a pass, stability or protection. A sentence that needs a positive statement uses
+   a pass word of its own test (feasible, suitable against dissolution with its conditions), and in version 1 no K1
+   sentence can.
+3. The former second meaning is split. A tier-1 pass is **feasible** (row 1); a tier-1 fall with a class A or B record
+   above the cutoff is **kinetically stabilised (class X)**, printed with "thermodynamically excluded at tier 1" beside it
+   (row 4). The two are not synonyms of open.
+4. "open" is a K1 word. A K2 cell that is neither a pass nor a falsification reads `inconclusive`, and a K2 cell whose
+   falsifiability control fails reads `inconclusive (control fails)`; neither reads open.
+5. The same reading holds for every falsifying-only test (the R1 gelation criterion, Section 9b, F3r): a state that is
+   not falsified there is open in the table and not thermodynamically excluded in the prose, and the label of Section 10a
+   reads `open only if the film is amorphous`.
+
+**Amendment (PH-W3.9; planning-chat ruling 3, binding).** The vocabulary is unchanged (no new verdict word). The amorphous
+rows of the four calcium orthophosphates take the word of their crystalline reference row by the bound of I17a: the
+cell reads `excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)` where the reference
+row is excluded, and `undetermined` where the reference row is not excluded; every other amorphous row (brushite,
+Ca2P2O7, OCP, the aluminium phosphates) reads `undetermined` unless it has its own budget. A cell never reads open on
+the amorphous framing by this rule, and never feasible. Prose and table agree: the prose phrase is "excluded by the bound
+dG_g-to-c >= 0, against the crystalline reference plus water", never "excluded" for an amorphous framing without that
+reference, and never for a row that reads undetermined.
+
+The machine form is `screen_ph.w36.regime_table` of the thresholds block (block version 11).
 
 **Kinetic stabilisation.** "excluded" is a thermodynamic statement. Kinetic stabilisation is not ruled out for
 phosphates: tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones. A sentence of the paper never
 says "fails at high voltage" without the word "thermodynamically" in the same sentence.
 
 **Acid-adjusted slurry state row.** The table carries a row for the acid-adjusted slurry state (the incumbent
-phosphoric-acid pH control, `params.ph_slurry_acid_adjusted`, whose range is registered there and printed by macro). Where calcite is undersaturated there, the
-carbonate cell reads "excluded against dissolution". The Ca-phosphate phases are tested on K2 in the same state with the
+phosphoric-acid pH control). Where calcite is undersaturated there, the carbonate cell reads "excluded against
+dissolution", with the pH threshold.
+
+**Comparator window (PH-W3.8, ruling 6; binding).** Two pH ranges are in play and are never interchanged:
+
+| Range | Source | Role |
+|---|---|---|
+| the sourced slurry range after acid adjustment, `params.ph_slurry_acid_adjusted` (min to max, by macro) | sourced slurries | the **primary comparator state** of the text |
+| the aluminium passivation window: the published statement (grade D, comparator E5 of `params.al_passivation_window`) and the model windows of our Al-O-H construction at the registered Al level (W5, `al_window.json`) | literature and W5 | **context** for the K2 acid grid, which spans that window (`configs/preprint/screen.yaml`, `pH_acid_adjusted`) |
+
+Rules. (i) The text names the sourced range as the comparator state and the grid as spanning the passivation window;
+the grid is never called the incumbent's pH. (ii) A K2 statement made on the grid is read against both: where a phase's
+first passing pH (by macro, for calcite `NumRegAcidFirstCalcite`) lies inside the sourced range, the phase is not
+excluded against dissolution in sourced acid-adjusted slurries, and its exclusion against dissolution holds only in the
+lower part of the passivation window, below that pH. (iii) For carbonate this is the case: calcite and aragonite first
+pass inside the sourced range, so carbonate is excluded against dissolution only in the lower part of the passivation
+window (pH below the first passing pH), not in sourced acid-adjusted slurries. The sentence "carbonate fails (or
+dissolves) in acid-adjusted slurries" is never written without the pH threshold, and "chemically opposed" is not used
+for the carbonate route and the incumbent state. (iv) A pass count at or above the first passing pH is printed with the
+cells of those pH values as its denominator, never the whole acid grid. The Ca-phosphate phases are tested on K2 in the same state with the
 same code path, and their cells are the K2 outputs of that state. If a Ca phosphate does not pass there, the table
 says so in that cell; no cell is softened. The cells are generated from the K2 outputs.
 
@@ -1048,4 +1207,28 @@ converted by this rule, never copied. K_P is bound in `symbol_bindings` with a u
 converted by a documented rule or excluded; the declared scale is printed beside each such key.
 
 **Ca(PO3)2 glass-to-crystal bound.** The bound registered in Section 10b stays as registered (ruling (b)). The sign
-bound DG_g-to-c >= 0 is kept for falsification (I17). It is not tightened without new calorimetry.
+bound DG_g-to-c >= 0 is kept for falsification (I17). It is not tightened without new calorimetry. The sign bound is a same-composition statement; its reading for
+hydrated amorphous phases is I17a (Section 9h, registered at PH-W3.9: the crystalline reference plus liquid water at a_w = 1).
+
+### 11h. PH-W3.8 wording registrations (no ruling needed)
+
+Three points of the draft review are registered here as wording rules; their paper sentences are listed for W8 in
+`ops/reports/P0-W3.PH-W3.8.md` (section "text changes for W8").
+
+1. **Sign of the dissolution free energy.** Per mole of formula units, Delta_G_diss = + R T ln Omega_bulk, the free energy
+   of dissolving the mineral into the solution of the state (zero at saturation, positive when the mineral is stable,
+   Omega_bulk >= 1). The form with a minus sign is the free energy of precipitation and is not written as
+   Delta_G_diss.
+2. **Pass-class wording of the transfer precision.** The required precision of the Ca2+ transfer is a precision on the
+   charge-balanced Delta_G_tr_rel = DG_tr(Ca2+) - 2 DG_tr(Li+) (Section 2f), the headroom of the row it decides; it is
+   not a single-ion precision on DG_tr(Ca2+). It decides the low class for the calcium orthophosphates. It does not
+   restrict the condensed rows to the low class: the Ca(PO3)2 glass could pass up to the highest class (its upper bound
+   clears every class edge), while Ca2P2O7 can never pass above the low class, whatever the transfer data, because its
+   upper bound plus margin lies below the top of C_mid. The sentence "opens a pass at the low class only" is withdrawn.
+   The headroom is printed with its row, by macro.
+3. **Calcite region (review B2).** The passing region of calcite on grid R-slurry K2 is named by its Ca_T bound, not by
+   the box of the grid: "Ca_T >= [NumRegWindowFullLoCalcite] for calcite ([NumRegSlurryPassFullCalcite] cells), plus 2
+   cells at [NumRegWindowLoCalcite]", every figure by macro (the threshold, the count of the full region, the count and
+   the Ca_T of the two further cells). A sentence that names the region at Ca_T from the lowest grid value states the
+   failing cells inside it, or is not written; the label of Section 11b ("over which Omega_bulk >= 1 holds at every
+   state") applies to the full region only.

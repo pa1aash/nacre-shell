@@ -817,6 +817,10 @@ Every number above comes from these keys. Registration conventions are set at cp
 | `thresholds.K1.premise_rmse_cap` | R_cap | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise (benchmark acceptance) |
 | `thresholds.K1.premise_inflation` | f_z | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise |
 | `thresholds.K1.premise_level` | q | registration (PH-C0; proposed, cp5a2 rules) | screen_ph K1 computed premise |
+| `thresholds.K1.margin_sink` | m_sink (per reaction; one-sided) | derived (contract `m_sink` from the three keys below; structure registered at PH-W3.8, value unbound) | screen_ph K1 exclusion for an electrolyte below LiClO4 saturation |
+| `params.liclo4_solubility_pc` | c_salt_sat | literature (LiClO4 solubility in propylene carbonate, with DOI and locator; W1, PH-W1.9; unresolved here) | m_sink |
+| `params.liclo4_activity_coefficient_pc` | gamma_pm, gamma_pm_sat | literature (cited activity-coefficient treatment of LiClO4 in propylene carbonate, evaluated at c_salt and at c_salt_sat; W1, PH-W1.9; unresolved here) | m_sink |
+| `regimes.R-cell.parameters.c_liclo4` | c_salt | registration (design axis; primary one mole per cubic decimetre) | m_sink |
 | `params.hydrolysis_f_min` | f_min | registration (set with the K1 rows; PH-W3.2) | screen_ph K2h |
 | `params.log10_ksp_aragonite_25c_i0` | K_sp (aragonite; the older `log10_ksp_aragonite` is superseded, not read) | literature (W1) | screen_ph.w36 carbonate K2, label rule |
 | `params.log10_ksp_acc` | K_sp (ACC) | literature | screen_ph.w36 carbonate K2 (reported, not required) |
@@ -836,7 +840,7 @@ checks that every expression parses, that only registered ids appear, and that e
 unit of its quantity.
 
 ```thresholds
-version: 9
+version: 11
 authority: theory/thresholds.md
 written_before_screen_output: true
 base_commit: 49100a9d92b5dc48f1db1d15529967dfeeece12d
@@ -862,7 +866,11 @@ revised_w36: {session: PH-W3.6, rule: 'carbonate K2 polymorph framings and the l
               disclosure: 'registered after the K1 ladder outputs and the carbonate K2 results existed and were seen; no carbonate link, edge or margin changed'}
 revised_w37: {session: PH-W3.7, rule: 'cp5 closure rulings Q1 and Q5: aragonite K2 input key log10_ksp_aragonite_25c_i0; label rule without a nacre-type label (screen_ph.w36.carbonate_k2)',
               authority: theory/claims_redirect.md Sections 11a and 11g, no_value_computed: true, screen_output_consulted: false}
-contract_version: 6
+revised_w38: {session: PH-W3.8, rule: 'planning-chat rulings after the draft review: (1) regime vocabulary amended by D78 (open; prose "not thermodynamically excluded"); (2) the solid-salt reference state and the dilute-electrolyte margin m_sink (structure only, value unbound); (3) the same-composition reading of I17 (amendment proposed, not registered); (6) the comparator window',
+              authority: theory/claims_redirect.md Sections 2h, 9h and 11d to 11h, no_value_computed: true, screen_output_consulted: 'the PH-W3.3 review figures only (crossovers of the ladder and K2 pass counts, read, not recomputed)'}
+revised_w39: {session: PH-W3.9, rule: 'planning-chat ruling 3 (binding): I17a registered, the same-composition glass-to-crystal bound for hydrated amorphous phases (reference: the crystalline phase or phases plus liquid water at a_w = 1); the amorphous rows of ACP, HAp, beta-TCP and alpha-TCP read excluded by the bound where their crystalline reference row is excluded, undetermined elsewhere (screen_ph.i17a, screen_ph.w36.regime_table.amorphous_rows)',
+              authority: theory/claims_redirect.md Sections 2c, 9h and 11d, contract version 8 (function E_ub_hydrated_am), text and structure only, no_value_computed: true, screen_output_consulted: false}
+contract_version: 8
 decision:
   statistic: band_mass
   credible_level: {symbol: p_cred, params: thresholds.decision.credible_level}
@@ -1352,6 +1360,46 @@ screen_ph:
     K4: {m_S: 'unchanged (thresholds.C4.margin_S_spread, zero: the priors carry the method error)'}
   # END generated margins_v6
   proceed_rule: 'K3 and K4 run unless the K1 verdict is falsified at every registered cutoff class (cp4 F1)'
+  i17a:
+    authority: theory/claims_redirect.md I17a (PH-W3.9, ruling 3, registered)
+    check: 'contract v7 stated Delta_G_gc = G_glass - G_crystal per formula unit: the same-composition form for an anhydrous glass, not for a hydrated amorphous phase'
+    status: 'registered (contract v8, function E_ub_hydrated_am, symbol Delta_G_gc_w): reference of a hydrated amorphous phase = the crystalline phase or phases of the same Ca:P (and OH, HPO4) composition plus liquid water at a_w = 1; ACP is metastable against crystalline calcium phosphates in water'
+    bound: 'Delta_G_gc_w = G(A) - G(C) - n_hyd mu_w(l, a_w = 1) >= 0; E_ub(A) <= E_ub(C); margins and the sink reference state of the crystalline reference row carry over unchanged; the bound only falsifies, never passes'
+    applies_to: {ACP_amorphous: 'reference row ACP crystalline (beta-TCP formula unit)', HAp_amorphous: 'reference row HAp crystalline', b-TCP_amorphous: 'reference row b-TCP crystalline', a-TCP_amorphous: 'reference row a-TCP crystalline'}
+    rule: 'amorphous row = excluded at a class where its crystalline reference row is excluded (falsified at tier 1), undetermined at every class where it is not excluded or is a gap'
+    label: 'excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)'
+    stay_undetermined: {brushite_amorphous: 'reference row partial at the highest class, not falsified below', Ca2P2O7_amorphous: 'reference row not falsified', OCP_amorphous: 'reference row is a gap', Al_phosphates_amorphous: 'reference rows are gaps', all_amorphous_rows_at_C_lo: 'reference rows not falsified at the lowest class'}
+    not_covered: 'amorphous calcium carbonate (no K1 amorphous row registered)'
+    by_bound_entries: 'margins_v6.tier1_amorphous_by_bound (generated, unchanged) is the by-bound listing; its falsified (bound) entries are the registered excluded-by-bound cells for ACP, HAp, b-TCP and a-TCP, read with the label above; its undetermined entries stay undetermined'
+    framing_rule: 'a calcium orthophosphate whose crystalline row is excluded at a class is excluded under every nucleus framing at that class (apatite and ACP framings both)'
+    unit_tests: 'contract.yaml function E_ub_hydrated_am, unit_tests items i to viii (W4)'
+  sink_v10:
+    authority: theory/claims_redirect.md Section 2h (PH-W3.8, ruling 2)
+    status: 'structure registered; value unbound (the keys are unresolved here; W1 supplies them at PH-W1.9, W5 evaluates)'
+    reference_state: 'E_ub (solid LiClO4 consumed, solid product) is the onset for a LiClO4-saturated sink'
+    m_sink:
+      function: m_sink
+      expression: '2 nu_salt (R T / F) ln(a_pm_sat / a_pm)  (= nu_salt (R T / F) ln(a_salt,sat / a_salt), a_salt = a_pm^2)'
+      per: [phase, framing, reaction]
+      nu_salt: 'LiClO4 consumed per transferred electron by the registered solid-salt reaction (one for the exchange route; zero if no salt is consumed)'
+      inputs: {c_salt: regimes.R-cell.parameters.c_liclo4, c_salt_sat: params.liclo4_solubility_pc, gamma_pm: params.liclo4_activity_coefficient_pc, gamma_pm_sat: params.liclo4_activity_coefficient_pc}
+      design_axis: {c_salt: {primary: 1, unit: mol dm^-3, role: design axis, reported_as: 'm_sink(c_salt) curve, never a single number off the primary'}}
+      scale: 'molar, a_pm = gamma_pm c / c_std; a molal source converted by the rule of claims_redirect Section 11g'
+      rigorous_bound: 'upper end of c_salt_sat and gamma_pm_sat, lower end of gamma_pm (the evaluation that makes m_sink largest)'
+      sign_analysis:
+        reactant_salt_below_saturation: 'raises the onset by m_sink >= 0 (a_pm <= a_pm_sat for any electrolyte not supersaturated, since the activity rises with concentration)'
+        product_salt_below_saturation: 'lowers the onset (contract E_ub_prod_unsat <= E_ub); the solid (saturated) product is the worst case for an exclusion, so no product term enters'
+        one_sided: 'raises the upper bound only; not inside the symmetric m_1; never enters the pass side (E_lb)'
+      dependence: {c_salt: 'decreasing; zero at c_salt = c_salt_sat', c_salt_sat: increasing, nu_salt: increasing, gamma_ratio: 'ln(gamma_pm_sat / gamma_pm) enters with either sign; the total stays >= 0'}
+      combine: {rule: linear sum, falsify_edge: E_c - m_expt - m_sink, crossover: E_x- = E_ub + m_expt + m_sink}
+      test: screen_ph.links.K1.tests.K1_falsify_dilute
+      unit_tests: contract m_sink, field unit_tests (W4)
+    verdict_change: 'a class verdict or crossover that changes when m_sink is bound is verdict-bearing: it needs a dated entry with a Re-audit line in ops/tracks/p0_deviations.md, written by the integrator, before the regenerated verdict is used'
+    prose_until_bound: 'every tier-1 exclusion reads "for a LiClO4-saturated sink (solid-salt reference state)"'
+    edge_rule:
+      tolerance: {value: 50, unit: mV}
+      rule: 'where a row''s crossover E_x- lies within the tolerance of a class edge, the prose states the robust threshold (the lowest registered class edge that clears the crossover by at least the tolerance: "excluded at [edge] and above") and names the edge sensitivity (the crossover and its distance to the near edge, by macro)'
+      source: crossovers from the hash-pinned ladder by macro; never typed
   w36:
     carbonate_k2:
       framings: [calcite, aragonite, ACC]
@@ -1367,10 +1415,21 @@ screen_ph:
       falsifiability_control: 'the same test flags undersaturation (Omega_bulk < 1) at the low-dose corner of the grid, for each polymorph; otherwise that polymorph is inconclusive in every row'
       authority: claims_redirect Section 11a
     regime_table:
-      vocabulary: [excluded, not excluded, suitable against dissolution, open, undetermined]
-      excluded_footnote: 'excluded (thermodynamic, tier 1: solid-salt upper bound plus margin)'
+      vocabulary: [excluded, open, suitable against dissolution, undetermined, inconclusive]
+      reserved: {feasible: 'verdict row 1 (no v1 cell)', kinetically_stabilised: 'verdict row 4, class A or B named, with thermodynamically excluded at tier 1 beside (no v1 cell)'}
+      prose_open: {phrase: not thermodynamically excluded, means: open, defined: once at first use, bare_not_excluded: never written, implies_feasibility: never, authority: D78}
+      k2_words: {neither_pass_nor_falsified: inconclusive, control_fails: inconclusive (control fails), open: never a K2 word}
+      excluded_footnote: 'excluded (thermodynamic, tier 1: solid-salt upper bound plus margin, for a LiClO4-saturated sink)'
+      amorphous_rows: {authority: 'claims_redirect I17a (PH-W3.9)', cell_word_excluded: 'excluded (by the bound dG_g-to-c >= 0, against the crystalline reference plus water)', cell_word_otherwise: undetermined, rows_excluded_by_bound: [ACP, HAp, b-TCP, a-TCP], rule: 'word of the crystalline reference row; excluded only where that row is excluded; never open, never feasible', every_other_amorphous_row: undetermined, prose: 'excluded by the bound dG_g-to-c >= 0, against the crystalline reference plus water; never excluded on an amorphous framing without that reference, never for a row that reads undetermined'}
       kinetic_note: 'kinetic stabilisation is not ruled out for phosphates (tier-2 class B records exist in LiPF6 electrolytes, not in fluorine-free ones); never "fails at high voltage" without "thermodynamically"'
-      acid_adjusted_row: {state: params.ph_slurry_acid_adjusted (range from the key), carbonate: 'excluded against dissolution where calcite is undersaturated', ca_phosphates: 'tested on K2 in the same state; failures stated in the cell', source: generated from K2 outputs}
+      acid_adjusted_row: {state: params.ph_slurry_acid_adjusted (range from the key), carbonate: 'excluded against dissolution where calcite is undersaturated, with the pH threshold', ca_phosphates: 'tested on K2 in the same state; failures stated in the cell', source: generated from K2 outputs}
+      comparator_window:
+        primary_state: 'params.ph_slurry_acid_adjusted (sourced slurry range after acid adjustment; min to max by macro)'
+        grid_context: 'the K2 acid grid (configs/preprint/screen.yaml pH_acid_adjusted) spans the Al passivation window: the published statement (grade D, comparator E5 of params.al_passivation_window) and the W5 model windows at the registered Al level'
+        rule: 'a phase whose first passing pH lies inside the sourced range is not excluded against dissolution in sourced acid-adjusted slurries; its exclusion holds only below that pH, in the lower part of the passivation window'
+        carbonate: 'excluded against dissolution only below the first passing pH of calcite and aragonite (macros), not in sourced acid-adjusted slurries; never "carbonate fails in acid-adjusted slurries" without the pH threshold; never "chemically opposed"'
+        denominators: 'a pass count at or above the first passing pH uses the cells of those pH values'
+        authority: claims_redirect Section 11d (PH-W3.8, ruling 6)
       authority: claims_redirect Section 11d
     low_voltage:
       class: not excluded at the nominal cutoff (regimes.R-cell.parameters.cutoff_classes, C_lo)
@@ -1402,6 +1461,16 @@ screen_ph:
           tier2: 'claims_redirect Section 2c rows 2 to 5 (falsified only if the available tier 2 is also below)'
           params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.K1.margin_expt}
           where_expt_missing: {edge: E_c - m_E, label: DFT-decided, params: {m_E: thresholds.K1.margin_dft}}
+          reference_state: 'LiClO4-saturated sink (solid-salt reference state); every exclusion by this test alone is stated for that sink'
+        - id: K1_falsify_dilute
+          quantity: E_ub
+          comparator: '<'
+          edge: E_c - m_expt - m_sink
+          role: 'exclusion for an electrolyte at the registered LiClO4 concentration (below saturation); m_sink is an added, one-sided margin (PH-W3.8 ruling 2)'
+          tier2: as K1_falsify
+          params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.K1.margin_expt, m_sink: thresholds.K1.margin_sink}
+          where_expt_missing: {edge: E_c - m_E - m_sink, label: DFT-decided, params: {m_E: thresholds.K1.margin_dft, m_sink: thresholds.K1.margin_sink}}
+          missing_m_sink: 'undetermined for the dilute electrolyte; the K1_falsify exclusion is stated for the saturated sink only, never upgraded'
         - id: K1_tier2_pass
           quantity: E_svc
           comparator: '>='
@@ -1464,7 +1533,7 @@ screen_ph:
           params: {E_c: regimes.R-cell.parameters.cutoff_classes, m_expt: thresholds.K1.margin_expt}
           where_expt_missing: {edge: E_c - m_E, label: DFT-decided, params: {m_E: thresholds.K1.margin_dft}}
       labels: {crystalline_pass_amorphous_fail: requires crystallisation, baked_baselines: both framings reported, structure unspecified}
-      nucleus_framings: unchanged (falsified only if falsified under every framing; ACP versus apatite)
+      nucleus_framings: unchanged (falsified only if falsified under every framing; ACP versus apatite); the ACP framing of ACP, HAp, b-TCP and a-TCP is excluded where the crystalline reference row is excluded, by the bound of I17a (screen_ph.i17a)
     K2_route:
       role: K2 of the route products under the governing amorphous framing (ruling C4)
       regime: R-slurry
@@ -1618,7 +1687,10 @@ re-derives the entry and fails on any difference. Nothing in it is typed. The ru
   baseline). Otherwise m_am = m_cr + u(DeltaG_g->c)/(n_e F), symbolic while the correction is a gap, and the row is
   undetermined except on the falsifying side: since DeltaG_g->c >= 0, E_ub,glass <= E_ub,crystal, so an amorphous row is
   falsified wherever its crystalline row is (interpretation I17). The entry lists these rows separately as
-  `tier1_amorphous_by_bound`. The Ca(PO3)2 glass-to-crystal correction follows ruling (b) of claims_redirect.md
+  `tier1_amorphous_by_bound`. For the hydrated amorphous phases (ACP, HAp, beta-TCP, alpha-TCP) the bound is the
+  same-composition form of I17a (PH-W3.9; the crystalline reference plus liquid water at a_w = 1): their amorphous
+  rows read excluded by that bound where the crystalline reference row is excluded and undetermined elsewhere
+  (`screen_ph.i17a`). The Ca(PO3)2 glass-to-crystal correction follows ruling (b) of claims_redirect.md
   Section 10: the direct Ca(PO3)2 value replaces the alkali-analogue value. Its uncertainty is the inflation factor of
   cp4 F3 times (half the polymorph span + the tabulated uncertainty of the glass enthalpy). The residual glass entropy is
   bounded by [0, R ln 2] per PO3, taken at its upper end for E_ub and at zero for E_lb.
@@ -1637,3 +1709,32 @@ re-derives the entry and fails on any difference. Nothing in it is typed. The ru
 A class verdict uses the per-class rule of Section 6 with these margins. "Tier 1 alone" verdicts (no tier 2 record
 consulted) are listed in the entry as `tier1_crossovers`; a tier 2 record above the cutoff moves such a row to row 4 or
 5 of claims_redirect.md Section 2c.
+
+## 8. The sink reference state and the margin m_sink (PH-W3.8, block version 10)
+
+Ruling 2 of the planning chat after the draft review (report P0-W3.PH-W3.3, finding B3). Structure and text only: no
+value is bound here, and the entry `screen_ph.sink_v10` of the block names the keys that will bind it. The derivation and
+the sign analysis are in `claims_redirect.md` Section 2h; the functions are `m_sink`, `E_ub_sink` and `E_ub_prod_unsat`
+of contract version 7.
+
+- **Reference state.** E_ub consumes solid LiClO4 and forms the solid product perchlorate, so it is the onset for a
+  LiClO4-saturated sink (the solid-salt reference state). Every exclusion made by `K1_falsify` alone is stated for that
+  sink.
+- **m_sink.** In an electrolyte below saturation the consumed salt is less energetic than the solid, and the onset of the
+  same route rises by m_sink = 2 nu_salt (R T / F) ln(a_pm,sat / a_pm) >= 0, (2 ln 10) R T / F per decade of the mean
+  ionic activity per LiClO4 consumed per electron. It is an added, one-sided margin: the exclusion for the registered
+  electrolyte is `K1_falsify_dilute`, E_ub < E_c - m_1 - m_sink, and the crossover becomes E_ub + m_1 + m_sink. The pass
+  side (E_lb) is unchanged.
+- **Product side.** A product perchlorate below saturation lowers the onset, so the solid product is already the worst
+  case for an exclusion and no product term is added.
+- **Binding.** m_sink is evaluated at the registered LiClO4 concentration (`regimes.R-cell.parameters.c_liclo4`, a design
+  axis with primary one mole per cubic decimetre) with the sourced solubility in propylene carbonate
+  (`params.liclo4_solubility_pc`) and the cited activity-coefficient treatment (`params.liclo4_activity_coefficient_pc`),
+  taking the end of each interval that makes m_sink largest. The keys are unresolved here (W1, PH-W1.9). A missing key
+  leaves the dilute-electrolyte exclusion undetermined; it never sets m_sink to zero.
+- **Verdict-bearing.** A class verdict or crossover that moves when m_sink is bound needs a dated deviation entry with a
+  `Re-audit:` line, written by the integrator, before it is used.
+- **Prose.** Until m_sink is bound, every tier-1 exclusion reads "for a LiClO4-saturated sink (solid-salt reference
+  state)". Where a crossover lies within the registered edge tolerance (`screen_ph.sink_v10.edge_rule`) of a class edge,
+  the prose states the robust threshold, the lowest registered class edge that clears the crossover by at least the
+  tolerance ("excluded at [edge] and above"), and names the edge sensitivity.

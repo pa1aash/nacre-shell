@@ -10,7 +10,7 @@ The paper is a thermodynamic screen, not a promise of a pass. Carbonate is the c
 2. **Introduction** (`briefs/introduction.md`): setting; incumbents and prior art (the Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 films are claimed prior art); the bone-mineral idea with the plain statement that hydroxyapatite and the tricalcium phosphates sit near carbonate; why a screen; the carbonate control; what the paper does not do.
 3. **Design rules** (`briefs/design.md`): the four conditions (K1 to K4, two-tier K1, STAGE); templating thermodynamics (mineral-neutral, kept); the route layer (R1 to R3).
 4. **Methods** (`briefs/methods.md`): sourced parameters; priors; onset pipeline and benchmark; solubility and the Al window; thresholds and the freeze; sensitivity; baselines and the control; retrodiction rule; reproducibility; disclosures.
-5. **Results** (`briefs/results.md`): carbonate control; phosphate phases including OH and water; condensed and amorphous phases; processing regime; required precision for the template-nucleus energy; candidate ranking with baselines.
+5. **Results** (`briefs/results.md`; order set at PH-W8.3): the regime map; processing-stage dissolution stability and the acid-adjusted comparator; the carbonate control and the K1 exclusion map; phosphates and the condensed and aluminium phosphates; nucleation and templating as model statements; the required-precision map; the baselines.
 6. **Predictions** (`briefs/predictions.md`): the initial experiment and the conditional predictions.
 7. **Discussion and limits** (`briefs/discussion.md`).
 8. **Declarations** (`briefs/declarations.md`) and **SI** (`briefs/si.md`).

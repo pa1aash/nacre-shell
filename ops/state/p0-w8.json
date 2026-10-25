@@ -1,7 +1,7 @@
 {
-  "last_session": "PH-W8.2g",
+  "last_session": "PH-W8.3",
   "status": "DONE",
-  "day": 6,
+  "day": 7,
   "artifacts": [
     "ops/reports/P0-W8.3.md",
     "ops/reports/P0-W8.PH-W8.1.md",
@@ -58,7 +58,10 @@
     "ops/reports/P0-W8.PH-W8.2e.md",
     "tests/preprint/test_preprint_regime_perph.py",
     "ops/reports/P0-W8.PH-W8.2f.md",
-    "ops/reports/P0-W8.PH-W8.2g.md"
+    "ops/reports/P0-W8.PH-W8.2g.md",
+    "preprint/paper/sections/abstract.tex",
+    "preprint/paper/sections/discussion.tex",
+    "ops/reports/P0-W8.PH-W8.3.md"
   ],
   "notes": [
     "skeleton retargeted: design, predictions added; inputs and outlook removed; carbonate text marked 'carbonate control (frozen)'",
@@ -71,6 +74,7 @@
     "PH-W8.2b: regime table generated (19 rows x 5 columns, 95 cells, 28 macros, CSV with sha256 of 6 inputs); acid-adjusted column split by pH (alternative b); tab:regime wired into Results; booktabs required",
     "PH-W8.2e: per-pH dose table (8 phases x 5 pH), dose qualifier, post-freeze rerun table, F1 to F5 wording; regime table regenerated, 300 macros added; 223 passed",
     "PH-W8.2f: below-lowest-pass words follow the figure rule (ACP open at 4.5; ACC excluded below 6.5, open at 6.5 and 7.5); Al-salt table (6 undetermined rows) generated beside the regime table; fig17 omission statement and dose-order sentence; 6 macros; 223 passed; W6 pin of regime_table.csv stale",
-    "PH-W8.2g: ratio-grid numbers in the wording; second column group in the per-pH table, both doses in the HAp and beta-TCP first-pass cells, Methods F2 and SI text, 60+ macros; 228 passed; W6 pin of regime_table.csv stale"
+    "PH-W8.2g: ratio-grid numbers in the wording; second column group in the per-pH table, both doses in the HAp and beta-TCP first-pass cells, Methods F2 and SI text, 60+ macros; 228 passed; W6 pin of regime_table.csv stale",
+    "PH-W8.3: Results (1856 words, seven subsections), Predictions (512), Discussion and limits (877), abstract (220) written in the regime frame; 23 macros (14 sources.yaml, 9 generator: precision map and deletion test); ledger 12 new, 32 drafted, 9 withdrawn; 228 passed; draft build main 13 pp, SI 13 pp; release guard still refuses (18)"
   ]
 }
