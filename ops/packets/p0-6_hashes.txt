@@ -1,0 +1,66 @@
+# p0-6 hash manifest (tree checked at preprint/p0 3f15236640a0d76fc5af5713f934d5d9a8536c47; tags p0-cp5 1682411984b16e66c06c05b10e5eac52839d022b, p0-cp5b 03b2812aaf8bccbb27a84971b94ce4d865dccd54)
+# columns: path | sha256 | git blob sha | note
+
+lit/params.yaml | 9e7fd52f4b608cb71f1292c83fc4e4b50f4d685a528e8e789374ab7244a1c11c | 5eb0b17066e3e902476e58774ae8024f6ce60496 | 
+theory/thresholds.md | 6cacead75ded31a94863c4110039eb7eebb246bedc1e84416bc704c072bb52fb | 847e03e2330ce2543f547383a12a744f3f3bfeb5 | block v11 fenced-block sha256 660930a92fb77d4f34cc9f38783d0f5f7412f804cc9f04d68bafbedfdd014a16
+theory/contract.yaml | 6c99414aa9a4ea192d1ecc813283a1e1bdc8f71cd6d68552c5d38ede7c920c92 | 56558893dae982dd13ead4ba8d868275fc6ea8c6 | contract version 8
+configs/preprint/thresholds.yaml | 5444a4a090dad6b532566499d63f405b8710e3b9470a0f4c99fdba35b096c74b | 39755dea11a999ca02330ab0da8c4fcc90daa20e | copy of block v11
+configs/preprint/symbol_bindings.yaml | 416c954b1d0cebe707f7640dd1efb2491da4c724aea5f202573b106d9ae1e3e9 | f6d00899be181ea153f35f14e0012b54265d9025 | 
+configs/preprint/gap_resolution_ph.yaml | a34528c67cea7ca0abdfbcf6c382a416193d8b33405ebccd252df1c3458ee52b | 9305d179cce3ef56852c45cd70b3de83eb0c9308 | 
+results/preprint/pourbaix/ph_w52/ladder_v3.csv | 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b | e2f05519c6cdd47ce260df631f851a798f25ad15 | 
+preprint/generated/regime_table.csv | c9495e501c6b735898490ba131602b1dd219d53ef65eb938a4a355b487d4e0cc | 828e8c9c3fc215287c272861577ec5f204ec2abb | 
+preprint/generated/regime_table.json | c9689893652d253b7ec9552f1228d4cf46551d3505488893718d8060d2df5c4a | fd006743088de940b9b709f0f92f2064d9afdbf0 | 
+preprint/generated/regime_table.tex | 296cc33b3ef26e6dea0c2aa9f21469cc806a86a596d8017aa643e3b312d33fdf | c7ac042eee3f88f6d269a2e2c2a6d4b425c02a49 | 
+figures/out/tables/al_salt_ladder.csv | 44635488428bc08439030849796d2eaee34ddf0c6a7d01b5e37741d5c41d44e5 | da3b1e89913695eba3d2a275208982dd807cae39 | 
+results/preprint/screen/precision_ph/precision_map.json | be5dcb073c204fd63de01631b1713c2878391d3d0b8d3785849f5385a54f20df | 820252d5dabd49db466b14105fcf840c657346da | 
+
+# regime_table.json inputs (sha256 per input, as recorded in the table)
+configs/preprint/thresholds.yaml | 5444a4a090dad6b532566499d63f405b8710e3b9470a0f4c99fdba35b096c74b
+figures/out/tables/al_salt_ladder.csv | 44635488428bc08439030849796d2eaee34ddf0c6a7d01b5e37741d5c41d44e5
+lit/corpus/gaps.md | aea62b87d5e36814c2abac9b9404645b9220cb4f2e08e0c83b0536e433e46a4a
+lit/params.yaml | 9e7fd52f4b608cb71f1292c83fc4e4b50f4d685a528e8e789374ab7244a1c11c
+results/preprint/pourbaix/ph_w52/ladder_v3.csv | 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b
+results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv | 595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b
+results/preprint/pourbaix/ph_w52/passivation_window_v3.csv | 5aaf04dafbd21993b577a1a42ed50c18860771c670d489476e9b771e2a43267f
+results/preprint/screen/f3_ph2/f3_numbers.json | 01c27b815d9db8b8b1b9cdb9417456fb6b6f4fced638f8e9b16c3b0cc7578927
+results/preprint/screen/ignorance_ph/summary.json | 8335354aed587ae431c828025706b3fb7c4be30e30b9603f6d8b32ea42a1b838
+results/preprint/screen/k2_grid_ph/summary.json | 9df2b4b54159d074ff94ca46ea2959a1c5fcd82102de821d0779820d9a2b1fc8
+results/preprint/screen/k2_perph_ph2/perph.csv | a41716b2ca1afb730f6bbcd4b9244903542bb85e906502c099e06a4d821f6b32
+results/preprint/screen/k2_perph_ph2/perph.json | d2de4e735c2f152f17d48e4582666933aa9b25ed2a218a640611a18c89bdb558
+results/preprint/screen/k2_perph_ph3/perph.csv | f2c661266dd346d7b4c344e7ceeb13f7cf18c5d8db32917d4b0fac67eda031c1
+results/preprint/screen/k2_perph_ph3/perph.json | 74069749a7d0b5d8be745e533676649c8e7276822ef738189afa37caa518c431
+results/preprint/screen/phosphate_films_ph/summary.json | 9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800
+results/preprint/screen/precision_ph/precision_map.json | be5dcb073c204fd63de01631b1713c2878391d3d0b8d3785849f5385a54f20df
+theory/thresholds.md | 6cacead75ded31a94863c4110039eb7eebb246bedc1e84416bc704c072bb52fb
+
+# production runs (summary.json) and the ph2 / ph3 reruns
+results/preprint/screen/f3_ph2/f3_numbers.json | 01c27b815d9db8b8b1b9cdb9417456fb6b6f4fced638f8e9b16c3b0cc7578927 | a29b4e78ca8cfdf66a3848a8a00fc64e2cc433a7 | 
+results/preprint/screen/ignorance_ph/summary.json | 8335354aed587ae431c828025706b3fb7c4be30e30b9603f6d8b32ea42a1b838 | de63d46756f69fb39d86da4164673e705ffae7fa | 
+results/preprint/screen/k2_acid_ph2/summary.json | e8f6858496922a5212179fe381870c1af6a9d00f4b108118e2bcc0b6861402e7 | b22a3f1b4f5028ca4b303043ef9e79147f61310d | 
+results/preprint/screen/k2_acid_ph3/summary.json | 25fa7e7316272d59eeeb2a654a52d71f03fece2b63df5af892b6c8a6db8f1d43 | acc7ddfd4fea3b86d960190ff739425dc0d30f16 | 
+results/preprint/screen/k2_alkaline_ph2/summary.json | d2fd4601f90dcb88d0a123da184332a9a61b8a7f8eb3a813eb4d0edf0cb22740 | 30816fc646ee6db36558a950f5066b669a479fb2 | 
+results/preprint/screen/k2_alkaline_ph3/summary.json | 545e187e99f3afc1e2dbc903de577e23ff15b0b975363a474d6019fea9e981f6 | cbd31e723557ba6a19ca40d69b6c7270f16cc6ce | 
+results/preprint/screen/k2_grid_ph/summary.json | 9df2b4b54159d074ff94ca46ea2959a1c5fcd82102de821d0779820d9a2b1fc8 | 7f0e2acbca4a9630b3ece410d60ed322a3fe16ed | 
+results/preprint/screen/k2_perph_ph2/perph.csv | a41716b2ca1afb730f6bbcd4b9244903542bb85e906502c099e06a4d821f6b32 | 0733c9942eb3989b51b4a0978f8fb3f692963ab3 | 
+results/preprint/screen/k2_perph_ph2/perph.json | d2de4e735c2f152f17d48e4582666933aa9b25ed2a218a640611a18c89bdb558 | b366851d03e2abadec14c99c767fc7cc8d04ee3c | 
+results/preprint/screen/k2_perph_ph3/perph.csv | f2c661266dd346d7b4c344e7ceeb13f7cf18c5d8db32917d4b0fac67eda031c1 | 0267a5bde48c49e23437dc6f5481aab11249de38 | 
+results/preprint/screen/k2_perph_ph3/perph.json | 74069749a7d0b5d8be745e533676649c8e7276822ef738189afa37caa518c431 | c335c3e0dddaa60ac98c3361ba6a6c79cc148d08 | 
+results/preprint/screen/phosphate_films_ph/summary.json | 9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800 | 768113cb1d5071243f0752f90a4821f5f5c61ec9 | 
+results/preprint/screen/sens_acc_omega_ph/summary.json | 597af794cedcd31bfd64351740de25c6ab25e3fb748fb96f086c0bc70e69c96c | 68760c8bf13f2a16619ad86903550968877a9286 | 
+results/preprint/screen/sens_gamma_sl0_untruncated_ph/summary.json | 1ccf5aded002ba4cff2cb4cac4e64cc6d7c46ea64e7dd6638b5b8389e5f4b63b | e4245068e720e477b7c84e9e94322e74f6252ddb | 
+results/preprint/screen/sens_gamma_sl0_untruncated_r2_ph/summary.json | 4f0741c05a113bdcf7db285574ff0f4c4eb7591b3933334e8f6af1d7b75894ea | a20c2774301199ed2fd4d5f643cb46da0f3f8a1d | 
+results/preprint/screen/sweep_independent_ph/summary.json | f358ef19d585656b35a3c9cbdd3d868bf9dc623ffeb0f5d902d39a84c1869ea0 | 1580fa8fd86f7e6541d996d7eb99250c0c8de4f5 | 
+results/preprint/screen/sweep_mcos_0.1_ph/summary.json | bc275f97020629b37ce000613d27db41b1c3bfa59606fbc082a261755dcfb90a | f3e37525f7800d495ab232b1fac85e5af1eaa674 | 
+results/preprint/screen/sweep_mcos_0.2_ph/summary.json | 8892fba906611848049757135dfcd924afe7692748912c968a183201e5c65cee | c6cda372289427bdff4b858fd176fca74c874112 | 
+results/preprint/screen/sweep_pcred_0.6_ph/summary.json | 2d20a44240b3be666037bd2e2ad71bab32682f91965d973776a3e604c28c3fc7 | cedb39e155ea497b3d59a800a1f53a0f7831e905 | 
+results/preprint/screen/sweep_pcred_0.99_ph/summary.json | 4cb47e4d30fae316bfdde9cac95fe76652f5fcb011ce611b6050307c3a8b32c4 | 978b45d79f3466e57e8e62b30ab4ffa79df37d0f | 
+results/preprint/screen/sweep_untruncated_ph/summary.json | 159cfbc50b9eca24cdb0115e7d6d864bb6a8d0247fb83ed10949d85aadd61492 | dfe8e13ad7c52187a3af8bed54d0a337f01caffe | 
+results/preprint/screen/table_ph/summary.json | 90770f03867aa36fad66137e80518b221ae90580a4b704a013baf84d70eea0be | e056827a7be4c8ca70c6789e01cadef1dd5c9214 | 
+
+# built drafts (not tracked)
+preprint/paper/build/draft/main.pdf | e161954e5a352c2816c67f01276c40a1bd9b67f9cb4625e6bf727090dfb00db3 | untracked | draft build, placeholders visible
+preprint/paper/build/draft/si/main_si.pdf | 2c7fa84fde21a98e794845342e7753be1edc54494767398592ad368c13b44adf | untracked | draft build, placeholders visible
+
+# code trees
+src/nacre/screen | tree 6a21cb3c94a120d4fdc16332a09cf9d96d24308f
+src/nacre/physics | tree a4f6e23a75bfe31291b868529a066b012caac6fd
