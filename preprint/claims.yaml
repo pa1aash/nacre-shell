@@ -144,29 +144,13 @@ claims:
       ref: lit/novelty.md#BL3
     - kind: dossier
       ref: lit/novelty.md#BL4
-    - kind: record
-      ref: preprint/paper/sections/introduction.tex#CL-V03
-    - kind: macro
-      ref: NumPatentAlPhosA
-    - kind: macro
-      ref: NumPatentAlPhosB
-    - kind: macro
-      ref: NumPatentCureLow
-    - kind: macro
-      ref: NumPatentCureHigh
-    - kind: macro
-      ref: NumPatentFoilUm
-    - kind: macro
-      ref: NumPatentAlPhosAKind
-    - kind: macro
-      ref: NumPatentAlPhosBKind
     - kind: dossier
       ref: lit/novelty.md#PR-2
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
-    status: drafted
-    notes: 'PH-W8.2c: PH-W2.6 verdict (d), partly supported: the claim scope is a metal plate, not aluminium foil; US 8,821,969 recites no film formula. F8: stated plainly in the Introduction. The patents have no DOI, so `nacre bib add` cannot take them: the
+    status: withdrawn
+    notes: 'withdrawn: author decision (PH-W8.9): every patent is removed from the paper and SI; the sentences, their number macros and the patent test are deleted; the comparator rows stay, named by chemistry. PH-W8.2c: PH-W2.6 verdict (d), partly supported: the claim scope is a metal plate, not aluminium foil; US 8,821,969 recites no film formula. F8: stated plainly in the Introduction. The patents have no DOI, so `nacre bib add` cannot take them: the
       numbers are text macros from lit/novelty.md rows BL3 and BL4 and the citation is a missing-input marker (PH-W8.2
       outstanding). PH-W8.7 (cp6 Q2 waiver, conditions a to d): each patent is cited in the text by number and kind code
       as printed, read by macro from the PH-W2.7 record (PR-1), with the claim numbers of PR-2; the foil is relabelled
@@ -187,26 +171,13 @@ claims:
       ref: lit/novelty.md#NS1
     - kind: dossier
       ref: lit/novelty.md#BL1
-    - kind: record
-      ref: preprint/paper/sections/introduction.tex#CL-V04
-    - kind: macro
-      ref: NumPatentLiPolyA
-    - kind: macro
-      ref: NumPatentLiPolyB
-    - kind: macro
-      ref: NumPatentCellTemp
-    - kind: macro
-      ref: NumPatentRechargeV
     - kind: dossier
       ref: lit/novelty.md#BL2
-    - kind: macro
-      ref: NumPatentLiPolyAKind
-    - kind: macro
-      ref: NumPatentLiPolyBKind
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
-    status: drafted
+    status: withdrawn
+    notes: 'withdrawn: author decision (PH-W8.9): every patent is removed from the paper and SI; the sentences, their number macros and the patent test are deleted; the comparator rows stay, named by chemistry.'
   - id: CL-V05
     statement: >-
       Phosphoric acid lowers the pH of water-processed electrode slurries to avoid corrosion of the aluminium collector,
@@ -788,8 +759,8 @@ claims:
     status: drafted
   - id: CL-M14
     statement: Baselines enter as comparator rows through the oxidation, solubility and thin-film conditions
-      only, with no statement of their electrical behaviour; a solubility not printed in the patent is marked
-      undetermined, and a literature value for the composition is marked composition-based.
+      only, with no statement of their electrical behaviour; a solubility not sourced for the composition is
+      marked undetermined, and a literature value for the composition is marked composition-based.
     section: methods
     type: method
     polarity: claims
@@ -1067,8 +1038,8 @@ claims:
     scope_check: clean
     status: drafted
   - id: CL-S11
-    statement: 'The two patent baselines enter only through the oxidation and dissolution rows: the lithium
-      polyphosphate film is not excluded at any cutoff class on its glass row and undetermined on
+    statement: 'The two baselines, a lithium polyphosphate film and a baked aluminophosphate, enter only through
+      the oxidation and dissolution rows: the lithium polyphosphate film is not excluded at any cutoff class on its glass row and undetermined on
       dissolution, the baked aluminophosphate undetermined on both; no ranking against them follows.'
     section: results
     type: screen result
@@ -1489,7 +1460,7 @@ claims:
     - kind: record
       ref: ops/tracks/redirect_plan.md#Conditional predictions
     - kind: reference
-      ref: 'pending: film solubility of the baselines (a gap: not printed in the patents)'
+      ref: 'pending: film solubility of the baselines (a gap: not sourced)'
     checkpoint: cp5r
     supplier: p0-w8
     scope_check: clean
@@ -1562,7 +1533,7 @@ claims:
     status: withdrawn
   - id: CL-L08
     statement: 'Against the incumbents the screen shows nothing comparative: phosphoric-acid pH control is the
-      comparator state of the dissolution test, carbon-coated foil and the patent baselines enter only through
+      comparator state of the dissolution test, carbon-coated foil and the two baselines enter only through
       their rows, and the patent search stays a logged gap.'
     section: discussion
     type: limitation

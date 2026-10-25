@@ -119,10 +119,9 @@ def test_f6_is_in_the_abstract_and_introduction_briefs():
 
 def test_f8_prior_art_is_stated_plainly_in_the_introduction_brief():
     text = _flat(_brief("introduction"))
-    # PH-W8.2c: the claim scope is a metal plate (example: aluminium foil), not aluminium foil
-    assert "Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 on a metal plate (example: aluminium foil) are claimed" in text
-    assert "recites no film formula" in text
-    assert "US 8,252,463" in text and "US 8,821,969" in text
+    # PH-W8.9 author decision: no patent in the paper or SI; the comparator rows are named by chemistry
+    assert "no patent is cited or described" in text
+    assert not re.search(r"US \d,\d{3},\d{3}", text)
     assert "four qualifiers" in text and "in situ" in text
 
 

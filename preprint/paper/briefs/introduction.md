@@ -12,9 +12,8 @@ Pose the design question: which mineral phases, if any, can serve as a thermodyn
 
 1. **The setting.** Water-processed cathodes with fluorine-free binders; the alkaline slurry and the native oxide (slurry stage); the oxidising cell (cell stage). The two stages are separate sets of conditions. Carried by the carbonate-era claims CL-K01 to CL-K04.
 2. **Incumbents and prior art, stated plainly (F8).**
-   - Aluminophosphate films of the forms Al(x)M(y)PO4 and Al(x)M(y)(PO3)3 on a metal plate (example: aluminium foil) are claimed in US 8,252,463; US 8,821,969 claims the method (heat treatment 100 to 350 C) and recites no film formula (Tsinghua / Hon Hai). The patent numbers enter through `nacre bib add`, never typed. CL-V03.
-   - Phosphate and polyphosphate collector coatings from aqueous dispersion (Hydro-Quebec family) CL-V04; phosphoric-acid pH control CL-V05; carbon-coated foil CL-V06; in-situ polyphosphate films on steel CL-V10.
-   - The electrical data and electrolyte printed in those patents are recorded in the reference table (W2.2b), not summarised as results here.
+   - PH-W8.9 author decision: no patent is cited or described in the paper or SI (CL-V03 and CL-V04 withdrawn). The baked aluminophosphate film and (LiPO3)n stay as comparator rows, named by chemistry only.
+   - Phosphoric-acid pH control CL-V05; carbon-coated foil CL-V06; in-situ polyphosphate films on steel CL-V10.
    - The wording NS7 appears only with its four qualifiers (in situ; crosslinked and water-insoluble; Al foil; fluorine-free), scan-limited, with the patent-search gap stated beside it (CL-V08). The F8 candidate wording (an oxidation-limit ladder across condensation states) stays unwritten until verified (CL-V09).
 3. **The bone-mineral idea and its plain statement (F6).**
    - Bone mineral is hydroxyapatite templated on an organic matrix via amorphous and condensed precursors; the transplant to a collector is a hypothesis with four conditions (the hero `fig:hero` here; `fig:pathway` is dropped, PH-W8.4 ruling 4).
