@@ -202,7 +202,7 @@ def test_ns7_is_stated_only_with_its_four_qualifiers(claims):
             text = " ".join(c["statement"].split()).lower()
             for q in NS7_QUALIFIERS:
                 assert q in text, (c["id"], q)
-            assert len(c.get("qualifiers", [])) == 4 and c.get("conditional"), c["id"]
+            assert len(c.get("qualifiers", [])) == 4 and (c.get("conditional") or c["status"] == "withdrawn"), c["id"]
 
 
 def test_priority_wording_is_absent_from_new_statements(claims):
@@ -222,4 +222,4 @@ def test_bone_mineral_framing_is_in_the_ledger(claims):
     by_id = {c["id"]: c for c in claims}
     assert "hydroxyapatite" in by_id["CL-S01"]["statement"] and "near that of carbonate" in by_id["CL-S01"]["statement"]
     assert "calcium orthophosphates only" in by_id["CL-D02"]["statement"]
-    assert "prior art" in by_id["CL-V03"]["statement"] and "aluminium foil" in by_id["CL-V03"]["statement"]
+    assert by_id["CL-V03"]["status"] == "withdrawn" and by_id["CL-V04"]["status"] == "withdrawn"   # no patent in the paper

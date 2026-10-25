@@ -126,7 +126,7 @@ claims:
     status: drafted
     notes: Written in the wording of the frame that the ladder gives; the Abstract states which frame applies.
   - id: CL-V03
-    statement: 'Withdrawn by author decision (PH-W8.9): the comparator films are named by chemistry only.'
+    statement: 'Withdrawn by author decision: the comparator films are named by chemistry only.'
     section: introduction
     type: novelty
     polarity: claims
@@ -146,7 +146,7 @@ claims:
     status: withdrawn
     notes: 'withdrawn: author decision (PH-W8.9): the comparator rows stay, named by chemistry.'
   - id: CL-V04
-    statement: 'Withdrawn by author decision (PH-W8.9): the comparator films are named by chemistry only.'
+    statement: 'Withdrawn by author decision: the comparator films are named by chemistry only.'
     section: introduction
     type: novelty
     polarity: claims
@@ -218,7 +218,6 @@ claims:
     type: novelty
     polarity: claims
     origin: redirect
-    conditional: true
     evidence:
     - kind: dossier
       ref: lit/novelty.md#NS5
@@ -234,7 +233,6 @@ claims:
     type: novelty
     polarity: claims
     origin: redirect
-    conditional: true
     qualifiers:
     - in situ
     - crosslinked and water-insoluble
