@@ -24,6 +24,12 @@ requests:
     pattern: '^  ph_slurry:\n(?:    .*\n)*?    value: ([0-9.]+)'
     format: g
     figure: Fig 12
+  NumPrecKOneRows:
+    source: results/preprint/screen/precision_ph/precision_map.json
+    pattern: '^\s*"id": "k1_'
+    reduce: count
+    format: d
+    figure: Fig 14
 # Already defined by W8 (preprint/generated/sources.yaml) and used as they are. Captions read the
 # registered names NumClassLo, NumClassSensitivity, NumRegHighDose, NumRegAcidPhLow, NumRegAcidPhHigh,
 # NumDftTolerance, NumMpOxideCorr and NumPrecRows; no request exists for them.

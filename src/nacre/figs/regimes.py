@@ -7,7 +7,7 @@ carries "not excluded"), and four fills clear the palette threshold in every vis
 (nacre.figs.colours.distinct_fills), so the figures draw those four, each with its own
 hatching; the fill and the hatching both tell them apart.
 """
-from nacre.figs import colours
+from nacre.figs import colours, style
 
 # Data word -> registered word, for a K1 ladder cell or a K2 cell.
 FROM_VERDICT = {
@@ -17,8 +17,11 @@ FROM_VERDICT = {
     "undetermined": "undetermined",
 }
 REGISTERED = tuple(FROM_VERDICT.values())
-HUE = {"excluded": "vermillion", "open": "yellow", "undetermined": "blue",
+HUE = {"excluded": "vermillion", "open": "yellow", "undetermined": "gray",
        "suitable against dissolution": "skyblue"}
+# The four-fill search still names blue as its fourth colour; "undetermined" takes the palette's neutral grey
+# in its place so that it is not read as "suitable" (light blue). The set is checked again below.
+SEARCH_FOURTH = "blue"
 HATCH = {"excluded": "xxxx", "open": "////", "undetermined": None, "suitable against dissolution": ".."}
 HIGH_DOSE_HATCH = "||"  # added to the hatching of a suitable cell whose minimum passing dose is high
 ORDER = ("suitable against dissolution", "undetermined", "open", "excluded")  # drawing and key order
@@ -45,9 +48,16 @@ def fills(root=None):
     """{registered word: sRGB fill} from the four-colour set that clears delta_e_min."""
     cols, names, _f, _d = colours.distinct_fills(len(ORDER), root)
     by_name = dict(zip(names, cols))
-    if set(HUE.values()) != set(names):
+    if set(HUE.values()) - {"gray"} | {SEARCH_FOURTH} != set(names):
         raise ValueError("regimes: the distinct four-fill set %s is not the one the regime hues name" % (names,))
-    return {w: by_name[HUE[w]] for w in ORDER}
+    pal = style.palette(root)
+    by_name["gray"] = tuple(round(float(x), 4) for x in pal["categorical"]["okabe_ito"]["gray"]["srgb"])
+    out = {w: by_name[HUE[w]] for w in ORDER}
+    d = colours.min_delta_e(list(out.values()))
+    if d < float(pal["delta_e_min"]):
+        raise ValueError("regimes: the regime fills are %.1f apart in some vision condition, under %s"
+                         % (d, pal["delta_e_min"]))
+    return out
 
 
 def aggregate(verdicts):
