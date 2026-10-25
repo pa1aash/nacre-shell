@@ -72,3 +72,21 @@ def test_methods_sets_both_tables_and_no_pending_marker():
     assert "\\nacreParameterTable" in methods and "\\nacreBenchmarkTable" in methods
     assert "parameter table generated from the parameter file" not in methods
     assert "benchmark table generated from the benchmark file" not in methods
+
+
+def test_methods_and_table_three_cite_the_tabulated_data_sources():
+    """PH-W8.9 (G2): NIST-JANAF and the NBS Selected Values volumes the SI cites are cited in the main text, in Methods
+    'Oxidation onsets' and in the Table 3 caption."""
+    bib = refs.source(REPO).read_text(encoding="utf-8")
+    janaf = re.search(r"@\w+\{([^,]+),[^@]*doi=\{10\.18434/t42s31\}", bib, re.I).group(1)
+    si = (paths.paper(REPO) / "si" / "main_si.tex").read_text(encoding="utf-8")
+    nbs = sorted({k for c in re.findall(r"\\cite\{([^}]*)\}", si) for k in c.split(",")
+                  if re.search(r"@\w+\{%s,[^@]*10\.6028/nbs" % re.escape(k), bib)})
+    assert nbs
+    methods = (paths.paper(REPO) / "sections" / "methods.tex").read_text(encoding="utf-8")
+    onsets = methods[methods.index("\\paragraph*{Oxidation onsets.}"):]
+    onsets = onsets[:onsets.index("\n\n")]
+    caption = methods[methods.index("\\caption{Thermochemistry benchmark"):methods.index("\\label{tab:thermo}")]
+    for part in (onsets, caption):
+        cited = {k for c in re.findall(r"\\cite\{([^}]*)\}", part) for k in c.split(",")}
+        assert janaf in cited and set(nbs) <= cited, (cited, janaf, nbs)
