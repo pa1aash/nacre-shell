@@ -241,3 +241,11 @@ def test_planted_ratio_grid_disagreement_is_refused(tmp_path):
     path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     with pytest.raises(rt.RegimeTableError, match="differs from the per-pH table"):
         rt.generate(root)
+
+
+def test_carbonate_acid_sentence_names_the_grid_points_inside_the_sourced_range():
+    """PH-W8.9 (G8): Section 4.2 names the grid points inside the sourced range, by macro, not 'sourced slurries'."""
+    text = (PAPER / "sections" / "results.tex").read_text(encoding="utf-8")
+    assert "not in sourced acid-adjusted slurries" not in text
+    assert (r"and not at the grid points inside the sourced range (pH \NumRegPhGridSixFive, "
+            r"\NumRegPhGridSevenFive\ and \NumRegPhGridEightFive)") in text

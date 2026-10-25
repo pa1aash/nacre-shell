@@ -126,13 +126,7 @@ claims:
     status: drafted
     notes: Written in the wording of the frame that the ladder gives; the Abstract states which frame applies.
   - id: CL-V03
-    statement: >-
-      Films of AlxMyPO4 and AlxMy(PO3)3 on a metal plate are claimed prior art in one of two patents of one family
-      (Tsinghua University and Hon Hai Precision), each film in its own independent claim, the plate material list
-      (aluminium, copper, nickel or their alloys) belonging to a claim that depends on the AlxMyPO4 claim only; the
-      other claims the method, with a heat treatment in a stated range, and recites no film formula. An aluminium foil
-      of stated thickness is described in an example of the description, not claimed; claim and example numbers are
-      read from the patent record.
+    statement: 'Withdrawn by author decision: the comparator films are named by chemistry only.'
     section: introduction
     type: novelty
     polarity: claims
@@ -144,40 +138,15 @@ claims:
       ref: lit/novelty.md#BL3
     - kind: dossier
       ref: lit/novelty.md#BL4
-    - kind: record
-      ref: preprint/paper/sections/introduction.tex#CL-V03
-    - kind: macro
-      ref: NumPatentAlPhosA
-    - kind: macro
-      ref: NumPatentAlPhosB
-    - kind: macro
-      ref: NumPatentCureLow
-    - kind: macro
-      ref: NumPatentCureHigh
-    - kind: macro
-      ref: NumPatentFoilUm
-    - kind: macro
-      ref: NumPatentAlPhosAKind
-    - kind: macro
-      ref: NumPatentAlPhosBKind
     - kind: dossier
       ref: lit/novelty.md#PR-2
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
-    status: drafted
-    notes: 'PH-W8.2c: PH-W2.6 verdict (d), partly supported: the claim scope is a metal plate, not aluminium foil; US 8,821,969 recites no film formula. F8: stated plainly in the Introduction. The patents have no DOI, so `nacre bib add` cannot take them: the
-      numbers are text macros from lit/novelty.md rows BL3 and BL4 and the citation is a missing-input marker (PH-W8.2
-      outstanding). PH-W8.7 (cp6 Q2 waiver, conditions a to d): each patent is cited in the text by number and kind code
-      as printed, read by macro from the PH-W2.7 record (PR-1), with the claim numbers of PR-2; the foil is relabelled
-      as an example of the description; the sentence on the only printed test is deleted (the description also prints
-      a conductivity test and an SEM comparison).'
+    status: withdrawn
+    notes: 'withdrawn: author decision (PH-W8.9): the comparator rows stay, named by chemistry.'
   - id: CL-V04
-    statement: >-
-      One Hydro-Quebec patent claims collector coatings of a vitreous alkali-metal phosphate or polyphosphate
-      with a conduction additive and a related patent the borate or polyborate form, each in three independent claims;
-      a polymer-electrolyte cell cycled at a stated temperature with a stated recharge limit is described in an example
-      of the description of both, not claimed; claim and example numbers are read from the patent record.
+    statement: 'Withdrawn by author decision: the comparator films are named by chemistry only.'
     section: introduction
     type: novelty
     polarity: claims
@@ -187,26 +156,13 @@ claims:
       ref: lit/novelty.md#NS1
     - kind: dossier
       ref: lit/novelty.md#BL1
-    - kind: record
-      ref: preprint/paper/sections/introduction.tex#CL-V04
-    - kind: macro
-      ref: NumPatentLiPolyA
-    - kind: macro
-      ref: NumPatentLiPolyB
-    - kind: macro
-      ref: NumPatentCellTemp
-    - kind: macro
-      ref: NumPatentRechargeV
     - kind: dossier
       ref: lit/novelty.md#BL2
-    - kind: macro
-      ref: NumPatentLiPolyAKind
-    - kind: macro
-      ref: NumPatentLiPolyBKind
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
-    status: drafted
+    status: withdrawn
+    notes: 'withdrawn: author decision (PH-W8.9): the comparator rows stay, named by chemistry.'
   - id: CL-V05
     statement: >-
       Phosphoric acid lowers the pH of water-processed electrode slurries to avoid corrosion of the aluminium collector,
@@ -257,15 +213,11 @@ claims:
     status: drafted
   - id: CL-V07
     statement: Among the open sources scanned, none combines a polydopamine- or chitosan-templated calcium
-      phosphate film, a quantitative design rule, fluorine-free cells and aqueous-slurry processing; the
-      patent search is a logged gap.
+      phosphate film, a quantitative design rule, fluorine-free cells and aqueous-slurry processing.
     section: introduction
     type: novelty
     polarity: claims
     origin: redirect
-    conditional: true
-    depends_on:
-    - patent keyword search, a logged gap
     evidence:
     - kind: dossier
       ref: lit/novelty.md#NS5
@@ -281,9 +233,6 @@ claims:
     type: novelty
     polarity: claims
     origin: redirect
-    conditional: true
-    depends_on:
-    - patent keyword search, a logged gap
     qualifiers:
     - in situ
     - crosslinked and water-insoluble
@@ -297,10 +246,10 @@ claims:
     checkpoint: cp4
     supplier: p0-w2
     scope_check: clean
-    status: drafted
-    notes: NS7 stands only with all four qualifiers. Dropping in situ brings in the baked aluminophosphate
+    status: withdrawn
+    notes: 'withdrawn: author decision (PH-W8.10): the Discussion sentence is deleted with the search-gap clause it carried. NS7 stands only with all four qualifiers. Dropping in situ brings in the baked aluminophosphate
       films; dropping fluorine-free brings in the lithium polyphosphate coating on aluminium. No priority
-      or novelty wording accompanies it.
+      or novelty wording accompanies it.'
   - id: CL-V09
     statement: No scanned source gives an oxidation-limit ladder across phosphate condensation states.
     section: introduction
@@ -788,8 +737,8 @@ claims:
     status: drafted
   - id: CL-M14
     statement: Baselines enter as comparator rows through the oxidation, solubility and thin-film conditions
-      only, with no statement of their electrical behaviour; a solubility not printed in the patent is marked
-      undetermined, and a literature value for the composition is marked composition-based.
+      only, with no statement of their electrical behaviour; a solubility not sourced for the composition is
+      marked undetermined, and a literature value for the composition is marked composition-based.
     section: methods
     type: method
     polarity: claims
@@ -1067,8 +1016,8 @@ claims:
     scope_check: clean
     status: drafted
   - id: CL-S11
-    statement: 'The two patent baselines enter only through the oxidation and dissolution rows: the lithium
-      polyphosphate film is not excluded at any cutoff class on its glass row and undetermined on
+    statement: 'The two baselines, a lithium polyphosphate film and a baked aluminophosphate, enter only through
+      the oxidation and dissolution rows: the lithium polyphosphate film is not excluded at any cutoff class on its glass row and undetermined on
       dissolution, the baked aluminophosphate undetermined on both; no ranking against them follows.'
     section: results
     type: screen result
@@ -1318,6 +1267,40 @@ claims:
     scope_check: clean
     status: drafted
 
+  - id: CL-S20
+    statement: The silicates CaSiO3, Ca2SiO4 and Li2SiO3 are comparators of the oxidation ladder, not candidate
+      barriers; CaSiO3 and Li2SiO3 are undetermined for want of a printed uncertainty for SiO2, and Ca2SiO4 is
+      thermodynamically excluded already at the nominal low class, its limiting oxidation to CaSiO3 handing half its
+      calcium to the perchlorate sink with an upper bound and margin whose sum lies below that class.
+    section: results
+    type: screen result
+    polarity: claims
+    origin: redirect
+    stage: cell
+    conditional: true
+    depends_on:
+    - the solid-salt upper bounds and margins of the onset ladder
+    evidence:
+    - kind: macro
+      ref: NumBenCaSilOrthoROneSEub
+    - kind: macro
+      ref: NumBenCaSilOrthoROneSMargin
+    - kind: macro
+      ref: NumClassLo
+    - kind: figure
+      ref: fig:ladder
+    - kind: figure
+      ref: fig:heatmap
+    - kind: record
+      ref: 'results/preprint/pourbaix/ph_w52/ladder_v3.csv#Ca2SiO4,crystalline,comparator,ALL'
+    - kind: record
+      ref: preprint/paper/sections/results.tex#CL-S20
+    checkpoint: cp6
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+    notes: 'PH-W8.9 (cp6 re-audit G5): the silicate rows of Fig. 4b, Fig. 5 and Table 6 are explained in the text,
+      not dropped.'
   - id: CL-D21
     statement: In the regime table a phase that is not falsified at a cutoff but has no lower bound reads
       open; in the text it is called not excluded; neither is a pass.
@@ -1489,7 +1472,7 @@ claims:
     - kind: record
       ref: ops/tracks/redirect_plan.md#Conditional predictions
     - kind: reference
-      ref: 'pending: film solubility of the baselines (a gap: not printed in the patents)'
+      ref: 'pending: film solubility of the baselines (a gap: not sourced)'
     checkpoint: cp5r
     supplier: p0-w8
     scope_check: clean
@@ -1562,8 +1545,8 @@ claims:
     status: withdrawn
   - id: CL-L08
     statement: 'Against the incumbents the screen shows nothing comparative: phosphoric-acid pH control is the
-      comparator state of the dissolution test, carbon-coated foil and the patent baselines enter only through
-      their rows, and the patent search stays a logged gap.'
+      comparator state of the dissolution test, carbon-coated foil and the two baselines enter only through
+      their rows.'
     section: discussion
     type: limitation
     polarity: claims
@@ -2749,7 +2732,7 @@ claims:
     origin: carbonate control (frozen)
     statement: >-
       To our knowledge, based on a structured search of the indexed journal and preprint
-      literature with patent literature not searched, no previous study has evaluated, for an
+      literature, no previous study has evaluated, for an
       aluminium current collector in the alkaline aqueous-slurry regime, the combined
       thermodynamic chain of wet adhesion of a catechol or polysaccharide template to the
       native oxide, Ca2+ sequestration by that template, templated nucleation on it and the

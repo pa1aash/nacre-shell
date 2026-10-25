@@ -209,7 +209,7 @@ def test_the_head_carries_no_journal_front_matter():
 
 
 # Draft markers that stay until a later session: the local-only AI-use disclosure (the patent citations of cp6 F15
-# are in the text since PH-W8.7). Every other pending-input marker, and the debris below, must be gone from the built text.
+# are removed by author decision, PH-W8.9). Every other pending-input marker, and the debris below, must be gone from the built text.
 LATER_PENDING = ("AI-use",)    # leading words of the AI-use disclosure marker
 DEBRIS = ("still to come", "macroNum", "Journal Name", "ARTICLE TYPE", "Received Date", "00.0000/")
 
@@ -236,3 +236,16 @@ def test_sources_carry_no_debris_and_only_the_later_missing_inputs():
             assert d not in text, (f.name, d)
         for arg in re.findall(r"\\nacreMissing\{([^}]*)\}", text):
             assert arg.startswith(LATER_PENDING) or "pending}" in arg or arg.endswith(", pending"), (f.name, arg)
+
+
+def test_guard_refuses_placeholder_and_dashed_box_wording(tmp_path):
+    """PH-W8.9 (G1): "placeholder" (outside the \\nacrePlaceholder macro name) and "dashed box" are refused, any case;
+    comments are not prose. The guard reads manuscript and generated files only, so test files are exempt."""
+    root = copy_tree(tmp_path)
+    write(paths.ai_ack(root), "Disclosure.\n")
+    _clean_manuscript(root)
+    assert build.guard(root) == []
+    write(paths.paper(root) / "sections" / "results.tex", "Dashed boxes mark renders.\nA PLACEHOLDER render.\n"
+          "% a comment about a placeholder\n")
+    assert build.guard(root) == ["preprint/paper/sections/results.tex:1: draft wording 'Dashed boxes' remains",
+                                 "preprint/paper/sections/results.tex:2: draft wording 'PLACEHOLDER' remains"]

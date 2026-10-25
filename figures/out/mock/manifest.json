@@ -66,39 +66,6 @@
    },
    "checker": "pass (artists and PDF text)"
   },
-  "fig12": {
-   "id": "fig12",
-   "claim": "In the registered alkaline slurry every polymorph passes K2 over part of the dose window and the Omega_bulk = 1 line runs through it; in the acid-adjusted state the carbonates are thermodynamically excluded at the low pH values and pass only near the top of the registered range, and the calcium phosphates differ among themselves.",
-   "caption_key": "(a to c) K2 verdict of calcite, aragonite and ACC over the registered total calcium dose (horizontal, log scale) and total dissolved carbonate (vertical) at the registered slurry pH value, ionic strength value and the wet-film water activity; fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); line: Omega_bulk = 1 at the median activities. (d) Comparator: the acid-adjusted slurry state at each of its registered pH values; one row per carbonate and Ca-phosphate phase; a cell takes the regime of its grid cells (suitable where any cell passes, otherwise open where any is inconclusive, otherwise excluded); K2 only, no K3 or K4 verdict is drawn from this state.",
-   "mock": true,
-   "width": "double",
-   "size_cm": [
-    17.1,
-    11.0
-   ],
-   "input": "figures/src/mock/k2_grid.json",
-   "input_sha256": "7cb6ce8c64cb8475dbf223cf2e5e32dc5cc2c41629d2b8b76a43eb3ae4d65692",
-   "input_source": {
-    "path": "figures/src/mock/k2_grid.json"
-   },
-   "schema": "figures/src/schemas/k2_grid.schema.json",
-   "aux": {
-    "params": "figures/src/mock/params.yaml sha256:ba922768ea5c4180044c4bd91632465a8a77c56b45cef25f2ac25f9e551002b7"
-   },
-   "font": {
-    "family": "Arial",
-    "file": "Arial.ttf",
-    "release": true
-   },
-   "outputs": {
-    "figures/out/mock/fig12.pdf": "d5d5744624839a8f75f19d66c86e2aaedeefefd71f697fb078dd8db84e608d86",
-    "figures/out/mock/fig12.png": "ac55208de9b9057041cdd26dc76686cbe9ca72897ae6949cb322c9300e0ba9ed",
-    "figures/out/mock/cvd/fig12_deuteranopia.png": "04d5e15ce65c3f2a648c2b6962f26e1d70841d3c86b029a3902d85ad7d29f822",
-    "figures/out/mock/cvd/fig12_protanopia.png": "6d65f107fa6d22e18f810154b8df01bb0e19302a8adfef38ba0b623321caa954",
-    "figures/out/mock/cvd/fig12_tritanopia.png": "754b6ab4b536bdc7db03647378c582374c4e77fbc817a3a99598f6968cfa75df"
-   },
-   "checker": "pass (artists and PDF text)"
-  },
   "fig14": {
    "id": "fig14",
    "claim": "Few quantities can settle a verdict by measurement alone: most flip values lie outside the present prior range or need a width well below it, and the rows without a registered prior have no required precision at all.",
@@ -236,40 +203,6 @@
    },
    "checker": "pass (artists and PDF text)"
   },
-  "fig5": {
-   "id": "fig5",
-   "claim": "At equilibrium the template acts on the barrier only through the wetting angle: at a given bulk saturation ratio the barrier on the template falls as the angle closes, and only angles on the wetting side of the C3a edge halve it; the screen's ignorance prior sits on the non-wetting side.",
-   "caption_key": "Colour: DG*_het/k_B T = f(theta) DG*_hom(Omega_bulk)/k_B T on a logarithmic scale (colour bar), from the contract functions at the reference inputs of the record's barrier prefactor (reference nucleus-liquid energy, molar volume and temperature, the prior medians of the primary state); the template never changes Omega_bulk. Vertical black line: the C3a edge f(theta) = f at cos(theta) = m_cos (configs/preprint/thresholds.yaml, parameter table). The C3b absolute-barrier bound DG*_het = k_B T ln(J0_het t_proc A_patch / ln(1/(1 - p_cred))) is drawn as a black contour only when every input has a value; A_patch is a registered gap, so it is absent and the caption says so. Outlines: the central 90 % (5 % to 95 % quantiles) of the screen's draws in theta and Omega_bulk under the ignorance prior set, primary state solid, further states dashed in record order: a property of the prior, not a finding. The caption reports the cos(theta) boundary mass (draws clipped to theta = 180 deg and theta = 0) and the favourable-template condition gamma_sn < gamma_sl (model section).",
-   "mock": true,
-   "width": "single",
-   "size_cm": [
-    8.3,
-    7.0
-   ],
-   "input": "figures/src/mock/screen_summary.json",
-   "input_sha256": "b2b287033ce92d3b8f91aa0e5eba0e06100d960e3fcfa5b100dc39f8b34477b7",
-   "input_source": {
-    "path": "figures/src/mock/screen_summary.json"
-   },
-   "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
-   "aux": {
-    "params": "figures/src/mock/params.yaml sha256:b8f4e013dcfdbf9386e5324a5fbb0e2d15a994834179da33a35734ca5e91e6f8",
-    "thresholds": "configs/preprint/thresholds.yaml@4ed8fcf (p0-w4)"
-   },
-   "font": {
-    "family": "Arial",
-    "file": "Arial.ttf",
-    "release": true
-   },
-   "outputs": {
-    "figures/out/mock/fig5.pdf": "b22c6535a75b15eb2db5bc70f93b2145a2e7333b1807ec61f90934dcd9345886",
-    "figures/out/mock/fig5.png": "e3aeaf28b9410d7c9aae1abd33a665b4da4652116907b3b8f07463a0c261a6b1",
-    "figures/out/mock/cvd/fig5_deuteranopia.png": "801b54a8ba9d8cc1c2db2aa9a99e7212ed9ee39e46adda169f621ececcb621a3",
-    "figures/out/mock/cvd/fig5_protanopia.png": "1a3e85765c612d25a2c681e2b30f9673e41eefe7c16186c8f20dbb3e0ca2b5cc",
-    "figures/out/mock/cvd/fig5_tritanopia.png": "2b356436524b3f7993d527f0cf644060b645c39f140e5d8c800b08bc479bd4c3"
-   },
-   "checker": "pass (artists and PDF text)"
-  },
   "fig6": {
    "id": "fig6",
    "claim": "A few inputs carry most of the variance of the predicted barrier on the template, and those inputs need the tightest precision from first-principles validation.",
@@ -331,40 +264,6 @@
     "figures/out/mock/cvd/fig7_deuteranopia.png": "60899adfb32d59e8ed60cff194b8e2b2493641219136fb08d3346e47c70d9ede",
     "figures/out/mock/cvd/fig7_protanopia.png": "12c8da6ff6283ce0bc54c5e58e8dfb7f548061eca579393094d41c098cb54fbf",
     "figures/out/mock/cvd/fig7_tritanopia.png": "24e7e2350a76d842ecaca86039a609b31a325974ec9db895eb11af02c99c06e0"
-   },
-   "checker": "pass (artists and PDF text)"
-  },
-  "fig9": {
-   "id": "fig9",
-   "claim": "The tier-1 verdict depends on the cutoff class and on the framing: crystalline calcium orthophosphates and the carbonate control are excluded at the two higher classes and not at the lowest, Ca2SiO4 is excluded at all three, and the amorphous framing is undetermined except for two phases.",
-   "caption_key": "One row per phase, grouped top to bottom by regime and role: R-slurry phases, R-cell phases, silicate comparators, the carbonate control (gaps between groups). Three pairs of columns, one pair per registered cutoff class (tick labels, V vs Li+/Li; the lowest class is the nominal value, and the sensitivity with the sourced upper cutoff leaves every verdict unchanged); within a pair, crystalline framing left and amorphous framing right. Fill and hatching: verdict of the tier-1 aggregate at the class (excluded, cross hatching; inconclusive, single hatching; undetermined, plain).",
-   "mock": true,
-   "width": "double",
-   "size_cm": [
-    17.1,
-    9.0
-   ],
-   "input": "figures/src/mock/ladder_v3.json",
-   "input_sha256": "c09196c9aabbc16ebcdbee17c7cfc8208c637d8c59041c5ac938a8db5d27ecd2",
-   "input_source": {
-    "path": "figures/src/mock/ladder_v3.json"
-   },
-   "schema": "figures/src/schemas/ladder_v3.schema.json",
-   "aux": {
-    "cutoffs": "figures/src/mock/ladder_cutoffs.yaml sha256:8376f88f1a522a84fef8b93e6536daba241b12527c5a200bb0bbe00d2c355ea3",
-    "sens40": "figures/src/mock/ladder_v3_sens40.json sha256:c09196c9aabbc16ebcdbee17c7cfc8208c637d8c59041c5ac938a8db5d27ecd2"
-   },
-   "font": {
-    "family": "Arial",
-    "file": "Arial.ttf",
-    "release": true
-   },
-   "outputs": {
-    "figures/out/mock/fig9.pdf": "95b32cce13a2c5db6efc8918f5247e235ffedd3d6839c4269f20eaac3d1a49cc",
-    "figures/out/mock/fig9.png": "c26b73771750391a163d15a8c88e266d3446f50b191f28cdbf6190684796bec7",
-    "figures/out/mock/cvd/fig9_deuteranopia.png": "73521481e11cf821d4ce9376deea4f4667b4773b0e6b9ba01f15d93922df474c",
-    "figures/out/mock/cvd/fig9_protanopia.png": "c2d49437a1dad689597c94f15d3af75bf1c7d1b3b268a95277e0a395c2c8ba3c",
-    "figures/out/mock/cvd/fig9_tritanopia.png": "7cb32af59dbaf854b3a3350de8d856770821f2fe829c07bbe68855dcb26a0da8"
    },
    "checker": "pass (artists and PDF text)"
   }

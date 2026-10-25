@@ -13,8 +13,12 @@ _CHEM = {"Ca²⁺": r"\ce{Ca^2+}", "CO₃²⁻": r"\ce{CO3^2-}", "Li⁺": r"\ce{
 _MATH = [("k_BT ln Ω_bulk", r"$\kB T\ln\Omb$"), ("ΔG_seq", r"$\DGseq$"), ("γ_sn", r"$\gsn$"), ("γ_sl", r"$\gsl$"),
          ("Ω_bulk = 1", r"$\Omb=1$"), ("Ω_bulk", r"$\Omb$"), ("E_ub", r"$E_\mathrm{ub}$"),
          ("Ca_T", r"$\mathrm{Ca_T}$"), ("C_T", r"$\mathrm{C_T}$"), ("P_T", r"$\mathrm{P_T}$"),
+         ("4.4–4.5 V", r"\NumClassHiLow–\NumClassHiHigh"),   # class edges by macro (numbers come through macros only)
          ("α-TCP", r"$\alpha$-TCP"), ("β-TCP", r"$\beta$-TCP")]
-_PLAIN = {"–": "--", "—": "---", "’": "'"}
+_PLAIN = {"–": "--", "—": "---", "’": "'", "†": r"$^\dagger$"}   # † is the saturated-sink mark of the Results
+# A cross key that names both conditions, "excluded (K2: ...; K1: thermodynamically excluded†)" (cp6 re-audit G4), is
+# qualified by its own parenthesis and keeps the bare word.
+QUALIFIED = r"(?! \((?:K2|\$K_2\$):)"
 
 
 def draft_text(root, fig):
@@ -28,7 +32,7 @@ def draft_text(root, fig):
 
 def thermodynamic(text):
     """The class name 'excluded' is always the regime word (standing rule on the vocabulary)."""
-    return re.sub(r"(?<!thermodynamically )\bexcluded\b", "thermodynamically excluded", text)
+    return re.sub(r"(?<!thermodynamically )\bexcluded\b" + QUALIFIED, "thermodynamically excluded", text)
 
 
 def to_tex(text):

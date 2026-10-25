@@ -27,6 +27,7 @@ from nacre.lit import params as P
 from nacre.lit import si_table
 from nacre.preprint import macros, paths
 from nacre.preprint.regime_table import Num, tex_of
+from nacre.screen import k2_carbonate
 
 INPUTS = {
     "params": "lit/params.yaml",
@@ -34,6 +35,7 @@ INPUTS = {
     "ladder": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
     "benchmark": "results/preprint/pourbaix/ph_w51/benchmark_w51.csv",
     "refs": "preprint/paper/refs.bib",
+    "screen": "configs/preprint/screen.yaml",
 }
 OUT_TEX, OUT_JSON = "input_tables.tex", "input_tables.json"
 JSON_SOURCE = "preprint/generated/input_tables.json"
@@ -51,7 +53,7 @@ class InputTableError(Exception):
 PARAM_GROUPS = (
     ("solubility products, $\\log_{10}K_\\mathrm{sp}$ per formula unit", (
         ("log_ksp_calcite", "log10_ksp_calcite", "KspCalcite"),
-        ("log_ksp_aragonite", "log10_ksp_aragonite", "KspAragonite"),
+        ("log_ksp_aragonite", "log10_ksp_aragonite_25c_i0", "KspAragonite"),
         ("log_ksp_acc", "log10_ksp_acc", "KspAcc"),
         ("log_ksp_hap", "log10_ksp_hap", "KspHap"),
         ("log_ksp_acp", "log10_ksp_acp", "KspAcp"),
@@ -71,6 +73,9 @@ PARAM_GROUPS = (
         ("pkw", "pkw", "PkWater"),
     )),
 )
+# Table 2 rows of the carbonate framings of K2 (row parameter key -> framing): each must read the K_sp key that the
+# dissolution test binds in screen.yaml (PH-W8.9, G3: the aragonite row read the superseded key).
+K2_FRAMING_OF = {"log10_ksp_calcite": "calcite", "log10_ksp_aragonite_25c_i0": "aragonite", "log10_ksp_acc": "ACC"}
 PRIOR_WORD = {"fixed": "fixed", "uniform": "uniform", "normal": "normal", "loguniform": "log-uniform"}
 
 
@@ -88,8 +93,22 @@ def doi_keys(bib_text):
     return out
 
 
+def check_k2_keys(screen_cfg):
+    """Every carbonate row of Table 2 reads the K_sp key that K2 binds; the K2 framings all have a row."""
+    bound = k2_carbonate.ksp_keys(screen_cfg)
+    rows = {f: k for k, f in K2_FRAMING_OF.items()}
+    if set(bound) != set(rows):
+        raise InputTableError("K2 framings %s, Table 2 carbonate rows %s" % (sorted(bound), sorted(rows)))
+    table_keys = {pkey for _t, members in PARAM_GROUPS for _j, pkey, _s in members}
+    bad = ["%s: Table 2 reads %s, K2 reads %s" % (f, rows[f], bound[f]) for f in sorted(bound)
+           if rows[f] != bound[f] or rows[f] not in table_keys]
+    if bad:
+        raise InputTableError("; ".join(bad))
+
+
 def param_rows(docs):
     params, rows, labels, keys = docs["params"], docs["evidence"], docs["labels"], doi_keys(docs["refs"])
+    check_k2_keys(docs["screen"])
     out, missing = [], []
     for title, members in PARAM_GROUPS:
         group = []
@@ -110,7 +129,8 @@ def param_rows(docs):
             missing += [d for d in dois if d not in keys]
             # reference numbers in the text line (\\citenum), not the article's superscript citation style
             cite = ", ".join("\\citenum{%s}" % keys[d] for d in dois if d in keys) if dois else "--"
-            label = _conv_text(labels[pkey]["label"]).replace("beta-", "$\\beta$-").replace("alpha-", "$\\alpha$-")
+            # a labelled alternative (`of:`) prints the label of the quantity it stands for
+            label = _conv_text(labels[e.get("of") or pkey]["label"]).replace("beta-", "$\\beta$-").replace("alpha-", "$\\alpha$-")
             group.append(([label], [val], rng, [PRIOR_WORD[fam]], [e.get("best_grade") or "--"], [cite]))
         out.append((title, group))
     if missing:
@@ -424,7 +444,8 @@ def read_inputs(root):
         bench = list(csv.DictReader(l for l in fh if not l.startswith("#")))
     docs = {"params": p.entries, "evidence": {r["row_id"]: r for r in ev}, "ladder": ladder, "benchmark": bench,
             "labels": yaml.safe_load((root / INPUTS["labels"]).read_text(encoding="utf-8")),
-            "refs": (root / INPUTS["refs"]).read_text(encoding="utf-8")}
+            "refs": (root / INPUTS["refs"]).read_text(encoding="utf-8"),
+            "screen": yaml.safe_load((root / INPUTS["screen"]).read_text(encoding="utf-8"))}
     return docs, {k: sha256(root / rel) for k, rel in INPUTS.items()}
 
 

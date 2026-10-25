@@ -72,42 +72,6 @@
    },
    "checker": "pass (artists and PDF text)"
   },
-  "fig12": {
-   "id": "fig12",
-   "claim": "In the registered alkaline slurry every polymorph passes K2 over part of the dose window and the Omega_bulk = 1 line runs through it; in the acid-adjusted state the carbonates are thermodynamically excluded at the low pH values and pass only near the top of the registered range, and the calcium phosphates differ among themselves.",
-   "caption_key": "(a to c) K2 verdict of calcite, aragonite and ACC over the registered total calcium dose (horizontal, log scale) and total dissolved carbonate (vertical) at the registered slurry pH value, ionic strength value and the wet-film water activity; fill and hatching: suitable against dissolution (dots), undetermined (plain), open (single hatching), thermodynamically excluded (cross hatching); line: Omega_bulk = 1 at the median activities. (d) Comparator: the acid-adjusted slurry state at each of its registered pH values; one row per carbonate and Ca-phosphate phase; a cell takes the regime of its grid cells (suitable where any cell passes, otherwise open where any is inconclusive, otherwise excluded); K2 only, no K3 or K4 verdict is drawn from this state.",
-   "mock": false,
-   "width": "double",
-   "size_cm": [
-    17.1,
-    11.0
-   ],
-   "input": "results/preprint/screen/k2_grid_ph/summary.json",
-   "input_sha256": "9df2b4b54159d074ff94ca46ea2959a1c5fcd82102de821d0779820d9a2b1fc8",
-   "input_source": {
-    "owner": "p0-w4",
-    "path": "results/preprint/screen/k2_grid_ph/summary.json",
-    "commit": "8612b89295d1b3c316b8ed3aa526c55a7f59f04c",
-    "sha256": "9df2b4b54159d074ff94ca46ea2959a1c5fcd82102de821d0779820d9a2b1fc8"
-   },
-   "schema": "figures/src/schemas/k2_grid.schema.json",
-   "aux": {
-    "params": "lit/params.yaml sha256:f7c109d848ae1cb014a549954e2b9ccc92b248c390535dcd8a5adb0ec63e3666"
-   },
-   "font": {
-    "family": "Arial",
-    "file": "Arial.ttf",
-    "release": true
-   },
-   "outputs": {
-    "figures/out/fig12.pdf": "9b1cd4e2ebf50c0abaf3f3094f2d60628d74a5b7550c570eee2dee5544c06033",
-    "figures/out/fig12.png": "4ae5ee5b762e01f2e0b56846f616b9123420d84d776fa03529699ecf215b1478",
-    "figures/out/cvd/fig12_deuteranopia.png": "dc46fb63eed541a3c53fea9b3ad219e2c850f6f9f3cc136fd531024983ae9412",
-    "figures/out/cvd/fig12_protanopia.png": "7eb9991452412405ebd0f987859b791f7a7aa2d2a9ab4ffa914df0f47346e8d8",
-    "figures/out/cvd/fig12_tritanopia.png": "0a3c4352e5d2ce0490f1fc39629c44ddc54db13e2c591195cbbb59c2f16996b6"
-   },
-   "checker": "pass (artists and PDF text)"
-  },
   "fig14": {
    "id": "fig14",
    "claim": "Few quantities can settle a verdict by measurement alone: most flip values lie outside the present prior range or need a width well below it, and the rows without a registered prior have no required precision at all.",
@@ -257,43 +221,6 @@
    },
    "checker": "pass (artists and PDF text)"
   },
-  "fig5": {
-   "id": "fig5",
-   "claim": "At equilibrium the template acts on the barrier only through the wetting angle: at a given bulk saturation ratio the barrier on the template falls as the angle closes, and only angles on the wetting side of the C3a edge halve it; the screen's ignorance prior sits on the non-wetting side.",
-   "caption_key": "Colour: DG*_het/k_B T = f(theta) DG*_hom(Omega_bulk)/k_B T on a logarithmic scale (colour bar), from the contract functions at the reference inputs of the record's barrier prefactor (reference nucleus-liquid energy, molar volume and temperature, the prior medians of the primary state); the template never changes Omega_bulk. Vertical black line: the C3a edge f(theta) = f at cos(theta) = m_cos (configs/preprint/thresholds.yaml, parameter table). The C3b absolute-barrier bound DG*_het = k_B T ln(J0_het t_proc A_patch / ln(1/(1 - p_cred))) is drawn as a black contour only when every input has a value; A_patch is a registered gap, so it is absent and the caption says so. Outlines: the central 90 % (5 % to 95 % quantiles) of the screen's draws in theta and Omega_bulk under the ignorance prior set, primary state solid, further states dashed in record order: a property of the prior, not a finding. The caption reports the cos(theta) boundary mass (draws clipped to theta = 180 deg and theta = 0) and the favourable-template condition gamma_sn < gamma_sl (model section).",
-   "mock": false,
-   "width": "single",
-   "size_cm": [
-    8.3,
-    7.0
-   ],
-   "input": "figures/src/data/upstream/screen_ignorance.json",
-   "input_sha256": "5f2b59d128479c4f3f66fb24608e4026fbff731b8c1ef2b374d689d3f85c7482",
-   "input_source": {
-    "owner": "p0-w4",
-    "path": "results/preprint/screen/ignorance/summary.json",
-    "commit": "eb6be52b5913e33c994968ee174110c91cc85a92",
-    "sha256": "5f2b59d128479c4f3f66fb24608e4026fbff731b8c1ef2b374d689d3f85c7482"
-   },
-   "schema": "configs/preprint/results_schema.json@7cb8572 (p0-w4)",
-   "aux": {
-    "params": "lit/params.yaml sha256:f7c109d848ae1cb014a549954e2b9ccc92b248c390535dcd8a5adb0ec63e3666",
-    "thresholds": "configs/preprint/thresholds.yaml@4ed8fcf (p0-w4)"
-   },
-   "font": {
-    "family": "Arial",
-    "file": "Arial.ttf",
-    "release": true
-   },
-   "outputs": {
-    "figures/out/fig5.pdf": "f08bb9607a1961be8c27703ecf2379772bbdb66e4f69d8243efe6382110cefbc",
-    "figures/out/fig5.png": "c9d1a4a050653f7fd11b2b97e4075afc7ac36d5e184450c94c92ccaa766b3aef",
-    "figures/out/cvd/fig5_deuteranopia.png": "12321bc587b27a52b06cb87d272ea147f62a3c201f16a117ffd2cdde77046f61",
-    "figures/out/cvd/fig5_protanopia.png": "fbcd19066c81b8fc3c925a7c853775b41dd89f4ea8c169926d68455294f7bbfc",
-    "figures/out/cvd/fig5_tritanopia.png": "fa2f2c0c83d685b1820ea3f9039252de280fab4dbf53d2d999edf49c6b7ac510"
-   },
-   "checker": "pass (artists and PDF text)"
-  },
   "fig7": {
    "id": "fig7",
    "claim": "CaCO3 resists dissolution in the slurry only where the calcium dose and the dissolved carbonate keep the bulk supersaturated, and in the cell it is oxidised below the charge cutoffs of most cathode classes; the aluminium-oxide phases have no determined oxidation limit.",
@@ -327,44 +254,6 @@
     "figures/out/cvd/fig7_deuteranopia.png": "c599b229a3ee462c347dbbdedc694c6353209b2aeba9833fedbeaf32d7a0416c",
     "figures/out/cvd/fig7_protanopia.png": "ddd454666c1a08c7ad4201bb4e4036dd7c13d6299d2fba0a32d4b4e75d59c3b1",
     "figures/out/cvd/fig7_tritanopia.png": "9926119249fe668e0fbd2f2763ed729c0e7150ecb14d9c09fdb7d45088799043"
-   },
-   "checker": "pass (artists and PDF text)"
-  },
-  "fig9": {
-   "id": "fig9",
-   "claim": "The tier-1 verdict depends on the cutoff class and on the framing: crystalline calcium orthophosphates and the carbonate control are excluded at the two higher classes and not at the lowest, Ca2SiO4 is excluded at all three, and the amorphous framing is undetermined except for two phases.",
-   "caption_key": "One row per phase, grouped top to bottom by regime and role: R-slurry phases, R-cell phases, silicate comparators, the carbonate control (gaps between groups). Three pairs of columns, one pair per registered cutoff class (tick labels, V vs Li+/Li; the lowest class is the nominal value, and the sensitivity with the sourced upper cutoff leaves every verdict unchanged); within a pair, crystalline framing left and amorphous framing right. Fill and hatching: verdict of the tier-1 aggregate at the class (excluded, cross hatching; inconclusive, single hatching; undetermined, plain grey). Cells the regime table states are drawn from the table, the others from the ladder file.",
-   "mock": false,
-   "width": "double",
-   "size_cm": [
-    17.1,
-    9.0
-   ],
-   "input": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
-   "input_sha256": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
-   "input_source": {
-    "owner": "p0-w5",
-    "path": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
-    "commit": "73316df2314b14fb5a16ba6bf15077dfcc658c8c",
-    "sha256": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b"
-   },
-   "schema": "figures/src/schemas/ladder_v3.schema.json",
-   "aux": {
-    "cutoffs": "configs/preprint/thresholds.yaml@597ad43 (p0-w4)",
-    "regime_table": "preprint/generated/regime_table.csv@cdf68e2 (p0-w8)",
-    "sens40": "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv@73316df (p0-w5)"
-   },
-   "font": {
-    "family": "Arial",
-    "file": "Arial.ttf",
-    "release": true
-   },
-   "outputs": {
-    "figures/out/fig9.pdf": "89ded131f4c9eab521b657473901c2d3ba3026c296b6c5bf20cf1ce9c988ff85",
-    "figures/out/fig9.png": "90329bed8efcc6870ad4a7ff504c5b694a40755b8d4fa6eeac9887b9e3d69238",
-    "figures/out/cvd/fig9_deuteranopia.png": "8531e500e1a7ba5ebd08aa0e4f295338ed61594573eb3f7221a640b31a373dca",
-    "figures/out/cvd/fig9_protanopia.png": "869f83db292eaeef8ed8dba3457a02a82e75947a3134d2f6d67272edb3015163",
-    "figures/out/cvd/fig9_tritanopia.png": "312ca2c6254fe2d0b045a9f5ec54fb62977b94f9972fa02b0c72a27bc6712fb9"
    },
    "checker": "pass (artists and PDF text)"
   }
@@ -701,11 +590,11 @@
    "checker": "pass (PDF: no text, strokes, page width)",
    "font": "none (no text)",
    "outputs": {
-    "figures/out/fig2.pdf": "b38689a7eccb715f3d33aca7d20cbb55b0382b084c0fa6655b56ee3afa3ce31d",
-    "figures/out/fig2.png": "ea0b1a90321da643d5c2f0afb3c710a3569417b603517944cdb8076dee6b8cda",
-    "figures/out/cvd/fig2_deuteranopia.png": "c11dc99a884bba679272f361c2d1e55ba4fe74319fb8da1a5b8fcd42a177a79a",
-    "figures/out/cvd/fig2_protanopia.png": "90ba23bb5980704d1ef1718bf359b336c1b4dbcbb5e5bf75cddfd7404287329f",
-    "figures/out/cvd/fig2_tritanopia.png": "4e705a4b6f437a9b034a251b2ece9ce51eb5f3486d49d3efeb2e553f92ffa3c5"
+    "figures/out/fig2.pdf": "ab9acdf76ac012fb02917c2da044057be3ff99b37d5188a352d15ad48f2e30ed",
+    "figures/out/fig2.png": "0116e13802381e97953f18ec924281bb7da4cc9f3e066a4aed92f2fc2d559a84",
+    "figures/out/cvd/fig2_deuteranopia.png": "4c5ec40f5ec36276b5fdffc041635b3a3ab53145c6dc0a5f8a9c092fe9119124",
+    "figures/out/cvd/fig2_protanopia.png": "b7679d4a77080ec9d70081c2cfad0515813f57d618fc9b551ebc083f7b4e4db8",
+    "figures/out/cvd/fig2_tritanopia.png": "833fe7bff4452244d419a68c090a0daf2566dc1ebf93e956e69eb35d4ffeeaf9"
    }
   },
   "fig3": {

@@ -16,7 +16,7 @@
   - in release mode, runs the release guard and refuses on any problem.
 
 The release guard fails when the local-only AI disclosure is missing, when any placeholder,
-pending marker or TBD remains in the manuscript or generated files, when a mock macro is
+pending marker, TBD, "placeholder" or "dashed box" wording remains in the manuscript or generated files, when a mock macro is
 used, when a cited reference has no pages or article number, when a \\cite key is unresolved,
 or when either linter fails. The LaTeX layer (nacre-preamble.tex) repeats the
 placeholder, missing-input and mock checks at use time, so a release PDF cannot carry them.
@@ -30,6 +30,9 @@ from nacre.report import template
 _SAFE_PATH = re.compile(r"^[A-Za-z0-9/._-]+$")
 _MARKERS = re.compile(r"\\nacre(Placeholder|Pending)\b")
 _TBD = re.compile(r"\bTBD\b")
+# Draft wording about artwork that is not final (PH-W8.9, G1): "placeholder" outside the \nacrePlaceholder macro name,
+# and "dashed box". Case-insensitive; the guard reads only manuscript and generated files, so tests and this rule are exempt.
+_DRAFT_WORDS = re.compile(r"(?<!\\nacre)placeholders?\b|\bdashed[- ]box(es)?\b", re.I)
 # The template's journal artwork: name, logo and article-type bar (one block), the DOI and dates boxes of the
 # title table, and the journal footer. Every \includegraphics of head_foot/ is journal front matter.
 _JOURNAL_BLOCK = re.compile(r"\{\\includegraphics\[height=30pt\]\{head_foot/journal_name\}.*?\{head_foot/header_bar\}\}\\par", re.S)
@@ -102,6 +105,8 @@ def guard(root):
                 problems.append("%s:%d: \\nacre%s remains" % (rel, no, m.group(1)))
             if _TBD.search(text):
                 problems.append("%s:%d: TBD remains" % (rel, no))
+            for w in _DRAFT_WORDS.finditer(text):
+                problems.append("%s:%d: draft wording %r remains" % (rel, no, w.group(0)))
             if mock_rx and not is_numbers:
                 for name in mock_rx.findall(text):
                     problems.append("%s:%d: mock macro \\%s used" % (rel, no, name))

@@ -51,16 +51,35 @@ def test_every_paper_caption_equals_its_w6_draft():
         assert " ".join(caps[label].split()) == " ".join(captions.tex_caption(REPO, fig).split()), (fig, label)
 
 
-def test_every_draft_is_at_most_three_sentences_and_75_words_with_macros_expanded():
-    if not (REPO / "preprint/generated/numbers.tex").exists():  # git-ignored; a fresh checkout has none
-        from nacre.preprint import build
-        build.generate(REPO)
+def test_no_caption_names_placeholders_or_dashed_boxes():
+    caps = {k: " ".join(v.split()) for k, v in figure_captions().items()}
+    for label, cap in caps.items():
+        assert not re.search(r"placeholder|dashed box", cap, re.I), label
+
+
+def test_every_draft_is_at_most_three_sentences_and_75_words():
+    # W6's own limit (tests/figs/test_fig_captions.py): the raw draft counted with its bold figure label.
     for fig in captions.USED:
-        draft = captions.thermodynamic(captions.draft_text(REPO, fig))
-        assert captions.word_count(draft, REPO) <= 75, (fig, captions.word_count(draft, REPO))
-        assert len(sentences(captions.to_tex(draft))) <= 3, fig
+        draft = captions.draft_text(REPO, fig)
+        assert len(("**Fig. 0** " + draft).split()) <= 75, fig
+        assert len(sentences(captions.to_tex(captions.thermodynamic(draft)))) <= 3, fig
 
 
 def test_the_class_name_excluded_is_always_thermodynamically_excluded():
     for fig in captions.USED:
-        assert not re.search(r"(?<!thermodynamically )\bexcluded\b", captions.tex_caption(REPO, fig)), fig
+        assert not re.search(r"(?<!thermodynamically )\bexcluded\b" + captions.QUALIFIED, captions.tex_caption(REPO, fig)), fig
+
+
+def test_paper_captions_carry_the_cp6_reaudit_wording():
+    caps = {k: " ".join(v.split()) for k, v in figure_captions().items()}
+    cross = r"cross: excluded ($K_2$: every cell dissolves; $K_1$: thermodynamically excluded$^\dagger$)"
+    assert cross in caps["fig:ladder"] and cross in caps["fig:heatmap"]
+    assert "single hatching: open ($K_1$) or inconclusive ($K_2$)" in caps["fig:heatmap"]
+    assert (r"Brushite at \NumClassHiLow--\NumClassHiHigh\ is thermodynamically excluded only above "
+            r"\NumRegCrossBrushiteHi.") in caps["fig:heatmap"]
+
+
+def test_translator_gives_the_sink_dagger_its_latex_form():
+    out = captions.to_tex("thermodynamically excluded†).")
+    assert out == r"thermodynamically excluded$^\dagger$)."   # the \dagger of \nacreSinkMark in the Results
+    assert all(ord(c) < 128 for c in out)

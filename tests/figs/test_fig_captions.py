@@ -10,13 +10,15 @@ from figs_helpers import REPO
 from nacre.figs import upstream
 
 CAPTIONS = REPO / "figures/src/captions"
-FIGS = ["fig1", "fig2", "fig3", "fig4", "fig5", "fig7", "fig9", "fig10", "fig11", "fig12", "fig14", "fig15", "fig17"]
+FIGS = ["fig1", "fig2", "fig3", "fig4", "fig7", "fig10", "fig11", "fig14", "fig15", "fig17"]  # release set (fig5, fig9, fig12 dropped)
 MAX_WORDS = 75  # PH-W6.7: short descriptive captions, counting the bold figure label
 MAX_SENTENCES = 3
+CROSS_KEY = "cross: excluded (K2: every cell dissolves; K1: thermodynamically excluded†)"  # G4, verbatim
 MACRO_RE = re.compile(r"\\(Num[A-Z][A-Za-z]*)")
 # Digits a caption may carry that are not numbers of the study: the figure label, case and link
-# identifiers (RC04, C3a), and the saturation condition Omega_bulk = 1, which is a definition.
-ALLOWED_DIGITS = [r"\*\*Fig\. [0-9]+\*\*", r"\bRC[0-9]{2}\b", r"\bC[0-9][a-z]?\b", r"\bK[0-9]\b", r"Ω_bulk = 1\b"]
+# identifiers (RC04, C3a), the saturation condition Omega_bulk = 1, which is a definition, and the
+# class edges "4.4–4.5 V" the brushite sentence of fig15 names (G7).
+ALLOWED_DIGITS = [r"\*\*Fig\. [0-9]+\*\*", r"\bRC[0-9]{2}\b", r"\bC[0-9][a-z]?\b", r"\bK[0-9]\b", r"Ω_bulk = 1\b", r"4\.4–4\.5 V"]
 
 
 def _draft(fid):
@@ -69,7 +71,7 @@ def test_draft_has_at_most_three_sentences(fid):
 def test_draft_states_no_findings_and_no_hedging_chains(fid):
     text = _draft(fid)
     assert not re.search(r"\b(consistent with|suggests?|appears?|may|might|could|shows? that|confirms?)\b", text, re.I)
-    assert "thermodynamically excluded" not in text
+    assert "thermodynamically excluded" not in text.replace(CROSS_KEY, "")
 
 
 def test_the_sentence_counter_catches_a_fourth_sentence():

@@ -488,173 +488,6 @@ macros:
     pattern: 'Footnote, verbatim[^:]*: "([^"]+)"'
     format: text
     claim: CL-D04
-  # Patent numbers of the incumbents (lit/novelty.md, baseline rows BL1 to BL4; no DOI exists).
-  # The four patents (PH-W2.7 patent record, lit/novelty.md PR-1): number and kind code as printed, column by column.
-  NumPatentAlPhosA:
-    source: lit/novelty.md
-    section: 'PR-1. What was read, and the bibliographic data as printed'
-    pattern: '^\| Field \|(?: [^|]*\|){0} US ([0-9,]+) \|'
-    format: text
-    claim: CL-V03
-  NumPatentAlPhosAKind:
-    source: lit/novelty.md
-    section: 'PR-1. What was read, and the bibliographic data as printed'
-    pattern: '^\| Kind code as printed \|(?: [^|]*\|){0} ([A-Z][0-9]?) '
-    format: text
-    claim: CL-V03
-  NumPatentAlPhosB:
-    source: lit/novelty.md
-    section: 'PR-1. What was read, and the bibliographic data as printed'
-    pattern: '^\| Field \|(?: [^|]*\|){1} US ([0-9,]+) \|'
-    format: text
-    claim: CL-V03
-  NumPatentAlPhosBKind:
-    source: lit/novelty.md
-    section: 'PR-1. What was read, and the bibliographic data as printed'
-    pattern: '^\| Kind code as printed \|(?: [^|]*\|){1} ([A-Z][0-9]?) '
-    format: text
-    claim: CL-V03
-  NumPatentLiPolyA:
-    source: lit/novelty.md
-    section: 'PR-1. What was read, and the bibliographic data as printed'
-    pattern: '^\| Field \|(?: [^|]*\|){2} US ([0-9,]+) \|'
-    format: text
-    claim: CL-V04
-  NumPatentLiPolyAKind:
-    source: lit/novelty.md
-    section: 'PR-1. What was read, and the bibliographic data as printed'
-    pattern: '^\| Kind code as printed \|(?: [^|]*\|){2} ([A-Z][0-9]?) '
-    format: text
-    claim: CL-V04
-  NumPatentLiPolyB:
-    source: lit/novelty.md
-    section: 'PR-1. What was read, and the bibliographic data as printed'
-    pattern: '^\| Field \|(?: [^|]*\|){3} US ([0-9,]+) \|'
-    format: text
-    claim: CL-V04
-  NumPatentLiPolyBKind:
-    source: lit/novelty.md
-    section: 'PR-1. What was read, and the bibliographic data as printed'
-    pattern: '^\| Kind code as printed \|(?: [^|]*\|){3} ([A-Z][0-9]?) '
-    format: text
-    claim: CL-V04
-  # Claim numbers as printed (PR-2) and the examples of the descriptions (PR-3).
-  NumPatentAlPhosAClaimPoFour:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 8,252,463 [A-Z][0-9] \| ([0-9]+) \(independent\) \| Modified current collector of a lithium ion battery: a metal plate and a protective film whose composition \"consists of\" Al x M y PO 4'
-    format: text
-    claim: CL-V03
-  NumPatentAlPhosAClaimPoThree:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 8,252,463 [A-Z][0-9] \| ([0-9]+) \(independent\) \| Modified current collector: a metal plate and a protective film whose composition is Al x M y \(PO 3\) 3'
-    format: text
-    claim: CL-V03
-  NumPatentAlPhosAClaimPlate:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 8,252,463 [A-Z][0-9] \| ([0-9]+) \(depends on [0-9]+ only\) \| The material of the metal plate'
-    format: text
-    claim: CL-V03
-  NumPatentAlPhosAClaimPlateParent:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 8,252,463 [A-Z][0-9] \| [0-9]+ \(depends on ([0-9]+) only\) \| The material of the metal plate'
-    format: text
-    claim: CL-V03
-  NumPatentAlPhosBClaimMethodA:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 8,821,969 [A-Z][0-9] \| ([0-9]+) and [0-9]+ \(independent\) \| Method for making'
-    format: text
-    claim: CL-V03
-  NumPatentAlPhosBClaimMethodB:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 8,821,969 [A-Z][0-9] \| [0-9]+ and ([0-9]+) \(independent\) \| Method for making'
-    format: text
-    claim: CL-V03
-  NumPatentAlPhosBClaimCure:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 8,821,969 [A-Z][0-9] \| ([0-9]+) \(depends on [0-9]+\) \| Temperature of the heat treating'
-    format: text
-    claim: CL-V03
-  NumPatentLiPolyAClaimA:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 6,485,866 [A-Z][0-9] \| ([0-9]+), [0-9]+, [0-9]+ \(independent\)'
-    format: text
-    claim: CL-V04
-  NumPatentLiPolyAClaimB:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 6,485,866 [A-Z][0-9] \| [0-9]+, ([0-9]+), [0-9]+ \(independent\)'
-    format: text
-    claim: CL-V04
-  NumPatentLiPolyAClaimC:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 6,485,866 [A-Z][0-9] \| [0-9]+, [0-9]+, ([0-9]+) \(independent\)'
-    format: text
-    claim: CL-V04
-  NumPatentLiPolyBClaimA:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 6,844,114 [A-Z][0-9] \| ([0-9]+) \(generator\), [0-9]+ \(electrode\), [0-9]+ \(process\)'
-    format: text
-    claim: CL-V04
-  NumPatentLiPolyBClaimB:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 6,844,114 [A-Z][0-9] \| [0-9]+ \(generator\), ([0-9]+) \(electrode\), [0-9]+ \(process\)'
-    format: text
-    claim: CL-V04
-  NumPatentLiPolyBClaimC:
-    source: lit/novelty.md
-    section: 'PR-2. Claims as printed that the paper uses'
-    pattern: '^\| US 6,844,114 [A-Z][0-9] \| [0-9]+ \(generator\), [0-9]+ \(electrode\), ([0-9]+) \(process\)'
-    format: text
-    claim: CL-V04
-  NumPatentExampleFoil:
-    source: lit/novelty.md
-    section: 'PR-3. The paper''s sentences about the four patents, checked against the claims printed above'
-    pattern: '^\| S2 \|.*supported by the description \(Example ([0-9]+):'
-    format: text
-    claim: CL-V03
-  NumPatentExampleCell:
-    source: lit/novelty.md
-    section: 'PR-3. The paper''s sentences about the four patents, checked against the claims printed above'
-    pattern: '^\| S7 \|.*\(Example ([0-9]+) and FIG\.'
-    format: text
-    claim: CL-V04
-  # Printed facts of the four patents (lit/novelty.md, printed-data table under the baseline rows).
-  NumPatentCureLow:
-    source: lit/novelty.md
-    pattern: '^\| Cure range \| Heat treatment ([0-9]+) to [0-9]+ C'
-    format: text
-    claim: CL-V03
-  NumPatentCureHigh:
-    source: lit/novelty.md
-    pattern: '^\| Cure range \| Heat treatment [0-9]+ to ([0-9]+) C'
-    format: text
-    claim: CL-V03
-  NumPatentFoilUm:
-    source: lit/novelty.md
-    pattern: 'example 52 nm on ([0-9]+) um Al foil'
-    format: text
-    claim: CL-V03
-  NumPatentCellTemp:
-    source: lit/novelty.md
-    pattern: '^\| Temperature \|.*\| Cycling at ([0-9]+) C \(Example 3\)'
-    format: text
-    claim: CL-V04
-  NumPatentRechargeV:
-    source: lit/novelty.md
-    pattern: 'Recharge upper voltage limit ([0-9.]+) V'
-    format: text
-    claim: CL-V04
   # Cutoff classes and the sensitivity line (thresholds copy; equal to block v9 for these keys).
   NumClassLo:
     source: configs/preprint/thresholds.yaml
@@ -6751,6 +6584,26 @@ macros:
     source: preprint/generated/input_tables.json
 
     key: numbers/params/log_ksp_acp/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspAragoniteHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_aragonite/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspAragoniteLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_aragonite/min
 
     format: .2f
 
