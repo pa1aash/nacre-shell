@@ -102,3 +102,10 @@ def test_wording_policy(name):
     assert not re.search(r"\bfirst\b|\bnovel|self-heal", text, re.I)
     assert not re.search(r"\b(barrier|film|layer|coating)s? (works|protects|prevents|outperforms)\b|"
                          r"\b(protects|prevents|outperforms)\b", text, re.I)
+
+
+def test_msink_activity_is_the_mean_activity_squared():
+    """PH-W8.9 (G6): a_s = a_pm^2 beside the m_sink definition, so it matches the mean-activity ratio of Table 6."""
+    text = " ".join((paths.paper(REPO) / "sections" / "design.tex").read_text(encoding="utf-8").split())
+    i = text.index(r"m_\mathrm{sink}=")
+    assert r"with $a_\mathrm{s}=a_\pm^2$" in text[i:i + 200]
