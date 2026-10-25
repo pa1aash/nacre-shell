@@ -18,8 +18,7 @@ The paper is a thermodynamic screen, not a promise of a pass. Carbonate is the c
 ## Figures (labels; numbered by order of citation)
 
 - `fig:hero`: hero render (phosphate, alone, late; cut before the schematic). Introduction.
-- `fig:pathway`: four-panel bone-like pathway schematic. Design rules.
-- `fig:conditions`: four-conditions diagram. Design rules.
+- `tab:conditions`: the four conditions, their test and their status (replaces the four-conditions diagram, PH-W8.4 ruling 4; the pathway schematic is dropped). Design rules.
 - `fig:ladder`: window ladder (oxidation limits versus cutoffs and the bare-Al onset). Results.
 - `fig:phmap`: pH versus supersaturation map with the Al passivation window. Results.
 - `fig:nucmap`: nucleation-barrier map. Results.

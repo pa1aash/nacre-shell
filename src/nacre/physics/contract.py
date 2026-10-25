@@ -1,4 +1,4 @@
-"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v6).
+"""Registry of the theory contract's functions (theory/contract.yaml, lane p0-w3; contract v8).
 
 Maps every contract function name to the physics function that implements it and to the
 contract symbol ids of its arguments, in call order. Constants (k_B, N_A, R_gas, F_c, q_e,
@@ -20,7 +20,7 @@ from nacre.physics import wetting
 from nacre.physics.devtools import wrong_variants
 
 #: Contract version this registry implements; the contract tests skip a different version.
-CONTRACT_VERSION = 6
+CONTRACT_VERSION = 8
 
 CONSTANT_IDS = {"k_B", "N_A", "R_gas", "F_c", "q_e", "hbar", "m_e", "m_std", "c_std"}
 
@@ -191,6 +191,16 @@ FUNCTIONS = {
     "E_ub_glass": Entry(stability.onset_solid_salt_sink_glass, ("Delta_G_r_ss", "Delta_G_gc", "Delta_n_Li"),
                         _li_exchanged),
     "Omega_glass": Entry(sat.saturation_ratio_glass, MINERAL + ("K_sp", "Delta_G_gc", "T")),
+    # hydrated amorphous phases against the crystalline reference plus water (contract v8; I17a)
+    "E_ub_hydrated_am": Entry(stability.onset_solid_salt_sink_hydrated_amorphous,
+                              ("Delta_G_r_ss", "Delta_G_gc_w", "n_hyd", "a_w", "T", "Delta_n_Li"), _li_exchanged),
+    # sink reference state of E_ub (contract v7; PH-W3.8 ruling 2)
+    "m_sink": Entry(stability.sink_margin, ("nu_salt", "T", "a_pm_sat", "a_pm")),
+    "E_ub_sink": Entry(stability.onset_solid_salt_sink_dilute,
+                       ("Delta_G_r_ss", "Delta_n_Li", "nu_salt", "T", "a_pm_sat", "a_pm"), _li_exchanged),
+    "E_ub_prod_unsat": Entry(stability.onset_solid_salt_sink_product_unsaturated,
+                             ("Delta_G_r_ss", "Delta_n_Li", "nu_prod", "T", "x_sat_prod"),
+                             lambda Delta_G_r_ss, Delta_n_Li, nu_prod, T, x_sat_prod: (Delta_n_Li != 0) & (x_sat_prod <= 1.0)),
     # hydrolysis descriptor (contract v6; ruling C1)
     "k_hyd_eff": Entry(hydrolysis.effective_rate_constant, ("tau_k", "k_hyd")),
     "t_half_hyd_fn": Entry(hydrolysis.half_life, ("tau_k", "k_hyd")),

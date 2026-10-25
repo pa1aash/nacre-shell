@@ -1,7 +1,7 @@
 {
-  "checked_utc": "2026-10-20T20:04:26Z",
-  "contract_sha": "91ce4d5f8fcd46c80b2d60bc4bafca6265acfee1",
-  "contract_version": 6,
+  "checked_utc": "2026-10-24T19:48:30Z",
+  "contract_sha": "2f6aec1f95e23e06521407d5e9f23fbac1814c11",
+  "contract_version": 8,
   "coverage": [],
   "functions": {
     "A_carb_fn": {
@@ -236,6 +236,32 @@
     "E_ub_glass": {
       "limit_cases": 1,
       "max_rel_err": 2.493727738494001e-16,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_ub_hydrated_am": {
+      "limit_cases": 2,
+      "max_rel_err": 5.956397779383405e-16,
+      "monotonicity_samples": 0,
+      "notes": [
+        "skipped Delta_G_gc_w (reparametrised statement; proven by the theory checker)"
+      ],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_ub_prod_unsat": {
+      "limit_cases": 1,
+      "max_rel_err": 2.3718013131800724e-15,
+      "monotonicity_samples": 0,
+      "notes": [],
+      "points": 256,
+      "status": "PASS"
+    },
+    "E_ub_sink": {
+      "limit_cases": 1,
+      "max_rel_err": 8.36857689620206e-15,
       "monotonicity_samples": 0,
       "notes": [],
       "points": 256,
@@ -816,6 +842,18 @@
       "points": 256,
       "status": "PASS"
     },
+    "m_sink": {
+      "limit_cases": 2,
+      "max_rel_err": 7.173660266980677e-15,
+      "monotonicity_samples": 0,
+      "notes": [
+        "skipped a_pm (reparametrised statement; proven by the theory checker)",
+        "skipped a_pm_sat (reparametrised statement; proven by the theory checker)",
+        "skipped nu_salt (reparametrised statement; proven by the theory checker)"
+      ],
+      "points": 256,
+      "status": "PASS"
+    },
     "mu_Li": {
       "limit_cases": 1,
       "max_rel_err": 2.217696551603579e-16,
@@ -897,10 +935,10 @@
       "status": "PASS"
     }
   },
-  "implementation_sha": "913d8b2357657025b9e11014511171dcdb6aa179",
+  "implementation_sha": "f7d283918d3956b1ea055aba9a0cda1bf6eab9ed",
   "points": 256,
-  "ref": "origin/preprint/p0-w3",
-  "ref_sha": "2aa96fbb2b192aab4676b72e1971ff29f59a67c9",
+  "ref": "HEAD",
+  "ref_sha": "f7d283918d3956b1ea055aba9a0cda1bf6eab9ed",
   "reference": "40-digit evaluation of the contract expression; a point beyond rtol passes only where the implementation is at least as accurate as the direct floating-point evaluation of the contract expression (ill-conditioned points, listed in notes)",
   "rtol": 1e-12,
   "seed": 0,

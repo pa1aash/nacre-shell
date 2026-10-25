@@ -70,8 +70,8 @@ def _contract_symbols():
     if not (CONTRACT.exists() and SYMBOLS.exists()):
         pytest.skip("theory/contract.yaml is not in the working tree")
     doc = yaml.safe_load(CONTRACT.read_text(encoding="utf-8"))
-    if doc.get("version") != 6:
-        pytest.skip("contract version %s, bindings target 6" % doc.get("version"))
+    if doc.get("version") != 8:
+        pytest.skip("contract version %s, bindings target 8" % doc.get("version"))
     used = set()
     for f in doc["functions"]:
         used.update(re.findall(r"[A-Za-z_][A-Za-z_0-9]*", str(f.get("expression", ""))))

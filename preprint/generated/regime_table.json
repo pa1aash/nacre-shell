@@ -3,8 +3,8 @@
  "inputs": {
   "configs/preprint/thresholds.yaml": "37c17b673ccef4b8526b41acefbccb6e31dbb1f247848c6667355c606686cb61",
   "figures/out/tables/al_salt_ladder.csv": "44635488428bc08439030849796d2eaee34ddf0c6a7d01b5e37741d5c41d44e5",
-  "lit/corpus/gaps.md": "0cb805078660f89922c93029dc83da9c84fdfd3b297c6c41aea35b0ea7311e0f",
-  "lit/params.yaml": "f7c109d848ae1cb014a549954e2b9ccc92b248c390535dcd8a5adb0ec63e3666",
+  "lit/corpus/gaps.md": "9e2a788ff67a8039a496989a8c40ed43fe16e3ccdeeba9b1c9b2191b12ef2eb8",
+  "lit/params.yaml": "85ebf54edb2026532749855e5e16226838888c51a98a51ee703339639c660cd5",
   "results/preprint/pourbaix/ph_w52/ladder_v3.csv": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
   "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
   "results/preprint/pourbaix/ph_w52/passivation_window_v3.csv": "5aaf04dafbd21993b577a1a42ed50c18860771c670d489476e9b771e2a43267f",
@@ -16,14 +16,15 @@
   "results/preprint/screen/k2_perph_ph3/perph.csv": "f2c661266dd346d7b4c344e7ceeb13f7cf18c5d8db32917d4b0fac67eda031c1",
   "results/preprint/screen/k2_perph_ph3/perph.json": "74069749a7d0b5d8be745e533676649c8e7276822ef738189afa37caa518c431",
   "results/preprint/screen/phosphate_films_ph/summary.json": "9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800",
-  "results/preprint/screen/precision_ph/precision_map.json": "be5dcb073c204fd63de01631b1713c2878391d3d0b8d3785849f5385a54f20df"
+  "results/preprint/screen/precision_ph/precision_map.json": "be5dcb073c204fd63de01631b1713c2878391d3d0b8d3785849f5385a54f20df",
+  "theory/thresholds.md": "6e4f71e77fd56134ebb9b0b106f1c9f1c18397ab49191d291256f0b1e9aac45f"
  },
  "numbers": {
   "acid": {
    "acc": {
     "first_pass_ph": 8.5,
     "min_ca": 0.1,
-    "n_cells": 270,
+    "n_cells_above": 54,
     "n_pass": 5,
     "open_ph_hi": 7.5,
     "open_ph_lo": 6.5
@@ -32,13 +33,13 @@
     "first_pass_ph": 5.5,
     "min_ca": 0.1,
     "min_p": 0.1,
-    "n_cells": 540,
+    "n_cells_above": 432,
     "n_pass": 49
    },
    "aragonite": {
     "first_pass_ph": 6.5,
     "min_ca": 0.01,
-    "n_cells": 270,
+    "n_cells_above": 162,
     "n_pass": 64
    },
    "btcp": {
@@ -53,7 +54,7 @@
    "calcite": {
     "first_pass_ph": 6.5,
     "min_ca": 0.01,
-    "n_cells": 270,
+    "n_cells_above": 162,
     "n_pass": 68
    },
    "hap": {
@@ -99,6 +100,9 @@
    "wt_hi": 2.68,
    "wt_lo": 0.5
   },
+  "edge": {
+   "tolerance_mV": 50
+  },
   "grid_id": "g1",
   "k2": {
    "acc": {
@@ -122,10 +126,12 @@
     "n_pass": 300
    },
    "calcite": {
-    "dose_hi": 0.1,
     "dose_lo": 1e-05,
+    "full_lo": 0.0001,
     "n_cells": 324,
-    "n_pass": 218
+    "n_pass": 218,
+    "n_pass_extra": 2,
+    "n_pass_full": 216
    },
    "hap": {
     "n_cells": 648,
@@ -465,11 +471,13 @@
   "precision": {
    "closed": 14,
    "dupre_mJ": 5.423152404864945,
+   "gamma_sn_confirm_J": 0.3338,
    "gamma_sn_mJ": 1.2193036152489043,
    "gap": 10,
    "mc": 8,
+   "meta_glass_hi_headroom_V": 0.2581,
    "rows": 32,
-   "transfer_ca_kJ": 31.955941998143995
+   "transfer_ca_kJ": 30.0
   },
   "ratio": {
    "brushite": 1.0,
@@ -646,6 +654,9 @@
      "rerun": 74
     }
    }
+  },
+  "sensitivity": {
+   "shapley_gamma_sn_shape_factor": 0.8688
   },
   "slurry": {
    "ph_high": 13.0,
