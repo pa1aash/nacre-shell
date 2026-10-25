@@ -1004,9 +1004,9 @@ glass_crystal_correction_alpmeta3:
   label: glass-to-crystal correction, Al(PO3)3
   latex: \Delta_\mathrm{f}H
 matrix_baseline_hq_film_thickness:
-  label: film thickness, Hydro-Quebec Li polyphosphate (patent)
+  label: film thickness, lithium polyphosphate coating (comparator)
 matrix_baseline_tsinghua_film_thickness:
-  label: film thickness, Tsinghua aluminophosphate (patent)
+  label: film thickness, baked aluminophosphate film (comparator)
 hydration_free_energy_al_marcus:
   label: hydration free energy of Al3+, Marcus scale (full-text reading)
   latex: \Delta G_\mathrm{hyd}
