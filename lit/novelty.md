@@ -888,3 +888,96 @@ Correction to W-3 (PH-W2.3, not edited): W-3 says the films are "claimed ... on 
 | VG2 | DeVol 2015 and Gong 2012 are abstract level in this session (no open full text for DeVol; Europe PMC XML for Gong returned HTTP 500, 1 attempt). The PH-W2.4b full-text read of Gong (PMC page) stands |
 | VG3 | Patent claims were read in the Google Patents text for these four patents only; no family, amendment or legal-status check (RG2 stands) |
 | VG4 | RW1 (10.1039/c5ta08574h) resolves in Crossref and was not read (RG1); it is not one of the two papers in (f) |
+
+## Patent record for the waiver condition (PH-W2.7, 2026-10-25)
+
+Scope: the four patents named in the Introduction, for the cp6 Q2 waiver (cited by number only). Everything below was read in this session on the Google Patents page of each patent, fetched headless with curl on 2026-10-25 (HTTP 200, attempt 1 of 3 for each). "As printed" means as printed on that page (page title, metadata block, claims block, event list). The USPTO front page or PDF was not read (PG1). Nothing here is filled from memory. Earlier sections (V-1, W-3, R-P3) are not edited; corrections to them are in PR-5.
+
+### PR-1. What was read, and the bibliographic data as printed
+
+| Field | US 8,252,463 | US 8,821,969 | US 6,485,866 | US 6,844,114 |
+|---|---|---|---|---|
+| Source page | patents.google.com/patent/US8252463B2/en | patents.google.com/patent/US8821969B2/en | patents.google.com/patent/US6485866B1/en | patents.google.com/patent/US6844114B2/en |
+| Retrieved (UTC), HTTP, attempt | 2026-10-25 17:54:22, 200, 1 | 2026-10-25 17:54:24, 200, 1 | 2026-10-25 17:54:25, 200, 1 | 2026-10-25 17:54:26, 200, 1 |
+| Source file (local, untracked) | .local/w27/US8252463B2.html, 351253 bytes | .local/w27/US8821969B2.html, 337405 bytes | .local/w27/US6485866B1.html, 158854 bytes | .local/w27/US6844114B2.html, 160279 bytes |
+| sha256 of that file | c7b43d3d56423e53d0775459749f3603b443fae8e618397b2ffe88982f5019a0 | f225ecedc32f49dc4fc924d8ce29bd9b354895843d5789f9d0bf87e0a88c08c2 | 731d647ae476c7299625c5cd0d9ca020e2b0a6db0a9bd317a2502b5c61ead6d9 | bdc0b543e393d1dd90228568152fe0ebe4e70837c6ff7a3f493c151a43311e7c |
+| Kind code as printed | B2 (page title "US8252463B2"; event "Publication of US8252463B2") | B2 ("US8821969B2") | B1 ("US6485866B1") | B2 ("US6844114B2") |
+| Title as printed | Modified current collector of lithium ion battery, method for making the same, and lithium ion battery using the same | Method for making modified current collector of lithium ion battery | LiPO3-based coating for collectors | LiPO3-based coating for collectors |
+| Assignee as printed (original) | Tsinghua University; Hon Hai Precision Industry Co Ltd | Tsinghua University; Hon Hai Precision Industry Co Ltd | Hydro-Québec | Hydro-Québec |
+| Assignee as printed (current) | Tsinghua University; Hon Hai Precision Industry Co Ltd | Tsinghua University; Hon Hai Precision Industry Co Ltd | Avestor LP; Bathium Canada Inc | Avestor LP; Bathium Canada Inc |
+| Application number as printed | US13/036,015 | US13/463,005 | US09/544,133 | US10/252,580 |
+| Priority date as printed | 2010-08-27 | 2010-08-27 | 1999-04-07 | 1999-04-07 |
+| Filing date as printed | 2011-02-28 | 2012-05-03 | 2000-04-06 | 2002-09-24 |
+| Grant date as printed (event "Application granted"; metadata "issue") | 2012-08-28 | 2014-09-02 | 2002-11-26 | 2005-01-18 |
+| Claims on the page | 1 to 12 | 1 to 15 | 1 to 22 | 1 to 15 |
+
+The sha256 values are of the saved page files. A Google Patents page is regenerated on each request, so a later fetch need not reproduce the hash; the files exist only in `.local/w27/` of the Mac that ran this session (ignored by git, not in the repository cache). Before this session no file of any of the four was found in the repository or in the `.local` caches searched, and the earlier readings of 2026-10-22 kept none. The only logged earlier attempt (`lit/corpus/audit/ph_w1_4/retrieval_log.jsonl`, 2026-10-23, URLs without the kind code) answered HTTP 503 for all four, body sha256 9010e5a841cf0acfb13facfaa2c3318bc8118020ec071d15de099eb9a628fd01.
+
+### PR-2. Claims as printed that the paper uses
+
+| Patent | Claim | What the claim prints |
+|---|---|---|
+| US 8,252,463 B2 | 1 (independent) | Modified current collector of a lithium ion battery: a metal plate and a protective film whose composition "consists of" Al x M y PO 4, M one or more of Cr, Zn, Mg, Zr, Mo, V, Nb, Ta, 0<x<1, 0<y<1, 3x+ky=3, molar ratio (Al + M):P about 1:2.5 to about 1:4 |
+| US 8,252,463 B2 | 5 (depends on 1 only) | The material of the metal plate is selected from aluminum, copper, nickel and alloys thereof |
+| US 8,252,463 B2 | 9 (independent) | Modified current collector: a metal plate and a protective film whose composition is Al x M y (PO 3) 3, same M list, 0<x<1, 0<y<=1, 3x+ky=3. No claim depending on 9 lists metal-plate materials (claims 10 to 12 give the molar ratio and the thickness) |
+| US 8,252,463 B2 | 3 (on claim 1), 12 (on claim 9) | Film thickness about 10 to about 200 nanometers |
+| US 8,252,463 B2 | 8 | A lithium ion battery whose electrode current collector is a modified current collector with a film selected from Al x M y PO 4 and Al x M y (PO 3) 3 |
+| US 8,821,969 B2 | 1 and 12 (independent) | Method for making a modified current collector: a modifier (clear solution from a phosphorus source with phosphate radical, a trivalent aluminum source and a metallic oxide) is coated on a metal plate and heat treated "to transform the coating layer into a protective film"; claim 12 adds that the liquid phase solvent is N-methyl-pyrrolidone. No film composition is recited |
+| US 8,821,969 B2 | 11 (depends on 1) | Temperature of the heat treating "in a range from about 100° C. to about 350° C." |
+| US 6,485,866 B1 | 1, 12, 16 (independent) | Generator (1), coating process from an aqueous dispersion (12), electrode (16): a metallic current collector coated with a mineral binder "being vitreous or partly vitreous and comprising an alkaline metal phosphate, an alkaline metal polyphosphate, or mixtures thereof", with an electronic conduction additive dispersed; the coating protects the surface "from the formation of passivation films" |
+| US 6,485,866 B1 | 2, 10 | 2: the alkaline metal comprises lithium, potassium or mixtures; 10: the separating electrolyte is a polymer electrolyte (claim 10 depends on claim 8) |
+| US 6,844,114 B2 | 1 (generator), 6 (electrode), 11 (process), all independent | The same construction with "an alkaline metal borate, an alkaline metal polyborate or mixtures thereof"; no claim recites phosphate or polyphosphate |
+
+The claim blocks of all four pages were read in full (12, 15, 22 and 15 claims). In US 8,252,463 B2 claim 7 depends on claim 1 but recites Al x Cr 1-x (PO 3) 3 while claim 1 recites PO 4, as printed; claim 7 is not used.
+
+### PR-3. The paper's sentences about the four patents, checked against the claims printed above
+
+Paper files as of HEAD 414d8cb. Macro values are from `preprint/generated/sources.yaml` and the BL rows; the sentence text is the TeX source. Verdicts use the claims only (condition b); where the description alone supports a statement the verdict says so.
+
+| # | Location | Patent | Sentence part | Claim numbers | Verdict |
+|---|---|---|---|---|---|
+| S1 | introduction.tex:17 | US 8,252,463 | "claims a film of Al_xM_yPO4 or Al_xM_y(PO3)3 on a metal plate of aluminium, copper, nickel or their alloys" | 1, 9; 5 | not supported as worded: the material list is claim 5, which depends on claim 1 (the PO4 film) only; the (PO3)3 film is claimed (claim 9) on "a metal plate" with no material list. The film and metal-plate clauses are otherwise supported |
+| S2 | introduction.tex:17 | US 8,252,463 | "(example: a 20 um aluminium foil)" | none | not supported by any claim; supported by the description (Example 2: "An aluminum foil with 20 microns thickness and 30 millimeters width") |
+| S3 | introduction.tex:17 | US 8,821,969 | "claims the method, with a heat treatment between 100 and 350 C" | 1, 12; 11 | supported (claim 11 prints "about 100° C. to about 350° C."; the paper omits "about"; the method makes "a protective film" and no film formula is recited) |
+| S4 | introduction.tex:18 | US 8,252,463 and US 8,821,969 | "The only test printed is immersion in hydrochloric acid for 4 h with no bubbles seen; the acid concentration is not stated." | none | not supported. No claim recites a test. The description (Example 2, both patents) prints the 4 h immersion and no concentration, but also prints a conductivity test ("is also tested ... still has good conductivity"), an SEM comparison with the conventional foil, and, in the separator example of US 8,252,463, shrinkage tests and a LiFePO4/graphite cell test; "the only test" is false on the page read |
+| S5 | introduction.tex:19 | US 6,485,866 | "A collector coating of a vitreous alkali-metal phosphate or polyphosphate with a conduction additive is claimed" | 1, 12, 16 | supported. Printed wording is "vitreous or partly vitreous" and "alkaline metal"; claim 2 limits the metal to lithium, potassium or mixtures |
+| S6 | introduction.tex:19 | US 6,844,114 | "claims the borate or polyborate form" | 1, 6, 11 | supported (alkaline metal borate or polyborate; no phosphate in the claims) |
+| S7 | introduction.tex:19 | US 6,485,866 and US 6,844,114 | "the printed cell is a polymer-electrolyte cell cycled at 60 C with a recharge limit of 3.1 V" | 10 (US 6,485,866 only, "polymer electrolyte") | not supported by claims: 60° C and the 3.1 V are in the description only (Example 3 and FIG. 3: "cycling at 60° C"; "recharge superior voltage limit of 3.1 V", constant current, 6 hours), and are identical in the description of both patents. Supported by the description |
+| S8 | introduction.tex:17 and 19 | all four | citation: "US~\NumPatent..." (digits only) followed by `\nacreMissing{patent citations, pending}` | n/a | fails condition (a): the kind code is not printed in the text (macros capture digits; the B2 and B1 sit in the extraction pattern, not in the macro), and the two missing-input markers remain |
+| S9 | methods.tex:88, results.tex:116, discussion.tex:40, 43, 44 | "the patent baselines", "their patents" | statements about the model's treatment of the baselines (rows K1, K2, K4) and about the patent search being a gap; methods.tex:88 adds "a solubility their patents do not print" | none | no claim of any patent is asserted and no patent number is named. The solubility remark is consistent with the page text (no solubility of a finished film is printed; US 8,252,463 calls AlPO4 particles "water insoluble" in its background, and US 6,485,866 describes the compounds "in solution in water"), but it is an absence statement and has no claim number |
+
+Replacement wording that fits what the claims print (kind codes as printed; to be applied by lane W8, which owns the paper):
+- US 8,252,463 B2 claims a modified current collector with a metal plate and a protective film consisting of Al_xM_yPO4 (claim 1; plate of aluminium, copper, nickel or alloys thereof, claim 5) and one whose protective film is Al_xM_y(PO3)3 (claim 9), M being one or more of Cr, Zn, Mg, Zr, Mo, V, Nb and Ta.
+- US 8,821,969 B2 claims a method of making a modified current collector (claims 1 and 12), with heat treatment at about 100 to about 350 C (claim 11).
+- US 6,485,866 B1 claims a generator (claim 1), a coating process (claim 12) and an electrode (claim 16) whose metallic collector is coated with a vitreous or partly vitreous binder comprising an alkaline metal phosphate or polyphosphate and a dispersed electronic conduction additive; US 6,844,114 B2 claims the same constructions with an alkaline metal borate or polyborate (claims 1, 6 and 11).
+- S2, S4 and S7 have no claim to name. Under condition (b) they are deleted, or each is reintroduced as a statement of the description ("The description of US 8,252,463 B2 (Example 2) states ..."), which is for the planning chat to rule on. If S4 stays, "the only test printed" is replaced by what the description prints (HCl immersion for 4 h without bubbles, concentration not stated; conductivity "still good", no number; SEM comparison).
+
+### PR-4. Table for the waiver
+
+| Patent | Kind code as printed | Sources read | sha256 of the file read | Claim numbers used | Record (c) | Paper sentences (b) | Status |
+|---|---|---|---|---|---|---|---|
+| US 8,252,463 | B2 | Google Patents page, 2026-10-25, HTTP 200 | c7b43d3d56423e53d0775459749f3603b443fae8e618397b2ffe88982f5019a0 | 1, 5, 9 (3, 8, 12 read, not used) | complete (PR-1) | S1 reword; S2, S4 have no claim | supported (record); paper edit pending |
+| US 8,821,969 | B2 | Google Patents page, 2026-10-25, HTTP 200 | f225ecedc32f49dc4fc924d8ce29bd9b354895843d5789f9d0bf87e0a88c08c2 | 1, 11, 12 | complete (PR-1) | S3 supported; S4 as above | supported (record); paper edit pending |
+| US 6,485,866 | B1 | Google Patents page, 2026-10-25, HTTP 200 | 731d647ae476c7299625c5cd0d9ca020e2b0a6db0a9bd317a2502b5c61ead6d9 | 1, 12, 16 (2, 10 read) | complete (PR-1) | S5 supported; S7 has no claim | supported (record); paper edit pending |
+| US 6,844,114 | B2 | Google Patents page, 2026-10-25, HTTP 200 | bdc0b543e393d1dd90228568152fe0ebe4e70837c6ff7a3f493c151a43311e7c | 1, 6, 11 | complete (PR-1) | S6 supported; S7 has no claim | supported (record); paper edit pending |
+
+Conditions on the paper as it stands at 414d8cb: (a) fails (no kind code in the text; two missing-input markers); (b) fails for S1 (one clause), S2, S4 and S7; (c) is met by PR-1; (d) is met today (preprint/paper/refs.bib has 69 entries and none is a patent; `nacre bib add` takes DOIs only). Nothing in the record needs input from the operator: every bibliographic field was read from the page. What is left is a wording change in `preprint/paper/` (lane W8, standing rule 16) and the macro change that carries the kind code.
+
+### PR-5. Corrections to earlier text (earlier sections not edited)
+
+| Where | Earlier text | Page read on 2026-10-25 |
+|---|---|---|
+| V-1 row (d), US 8,252,463 B2 | "claims 7, 8, 9: AlxMy(PO3)3" | Claim 9 is the independent (PO3)3 claim; claim 7 depends on claim 1 (and recites Al x Cr 1-x (PO 3) 3); claim 8 is the battery claim reciting both formulae |
+| V-1 row (d), US 8,252,463 B2 | "claim 5: metal plate is aluminium, copper, nickel or alloys" | Confirmed, and claim 5 depends on claim 1 only (see S1) |
+| W-3 | films "claimed ... on aluminium foil" | Already corrected by the note after V-2; confirmed (claims recite "a metal plate") |
+| V-1 rows for US 8,821,969 B2, US 6,485,866 B1, US 6,844,114 B2 | claim numbers and contents | Confirmed unchanged |
+| BL2, claim ledger CL-V04 | "continuation" / "same family" | The page of US 6,485,866 B1 lists "Priority to US10/252,580" (the application of US 6,844,114 B2); the word "continuation" is not printed on the pages read and is not used here |
+
+### PR-6. Gaps
+
+| ID | Gap |
+|---|---|
+| PG1 | The USPTO front page or PDF of each patent was not fetched or read; kind code, title, assignee and dates are as printed by Google Patents. If the waiver requires the USPTO document itself, that is a separate retrieval (not attempted, so no attempts are used up) |
+| PG2 | The saved page files are local to this Mac and untracked; the sha256 identify those files only |
+| PG3 | The 2026-10-23 retrieval log shows HTTP 503 for the four URLs without kind code; today's pages with kind code answered 200 at the first attempt |
+| PG4 | Family members, amendments, legal status and citations were not read (RG2 and VG3 stand) |

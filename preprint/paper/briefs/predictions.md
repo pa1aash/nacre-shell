@@ -16,7 +16,7 @@ State, conditionally on the cutoff class, what the screen predicts for an experi
 
 ## Figures and tables
 
-None. A reference to `fig:precision` and `fig:ladder`.
+`tab:predictions` (cp6 F12): test, observable, expected outcome under the model and what would refute it, one row per film and test. A reference to `fig:precision` and `fig:ladder`.
 
 ## Macros needed
 

@@ -34,6 +34,7 @@ The paper is a thermodynamic screen, not a promise of a pass. Carbonate is the c
 - `tab:parameters`: sourced parameters (full provenance in the SI). Methods.
 - `tab:thermo`: thermochemistry benchmark. Methods.
 - `tab:thresholds`: thresholds and decision criteria (frozen at cp5). Methods.
+- `tab:predictions`: the conditional predictions of the experiment (test, observable, expected under the model, what would refute it; cp6 F12). Predictions.
 - `tab:baselines`: baselines (baked aluminophosphate, Li polyphosphate) through K1, K2 and K4. Results.
 - `tab:retrodiction`: retrodiction cases (SI, Table S1).
 

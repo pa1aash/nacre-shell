@@ -4,4 +4,4 @@ Source: `precision_map.json` (lane p0-w4, PH-W4.3), pinned in `figures/src/schem
 
 ## Draft
 
-**Fig. 14** Required precision for \NumPrecRows quantities, grouped by verdict link. (a) Prior range scaled to unit width (grey), flip value with credible range. (b) Required width as a fraction of the present prior width. (c) No numerical width: no flip or closed (left), unreachable (middle), gap (right). Marker: evidence grade (circle A, square B, triangle C, inverted triangle D, diamond ignorance, cross none); open marker, dashed line: gap row.
+**Fig. 14** Required precision for \NumPrecRows quantities by verdict link; the \NumPrecKOneRows identical K1 rows drawn once. (a) Prior range at unit width (grey); flip value with credible range. (b) Required width over present prior width. (c) No numerical width: no flip or closed (left), unreachable (middle), gap (right). Marker: evidence grade (circle A, square B, triangle C, inverted triangle D, diamond ignorance, cross none); open marker, dashed line: gap.

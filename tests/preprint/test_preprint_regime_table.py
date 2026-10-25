@@ -137,10 +137,11 @@ def test_cells_follow_the_data_and_the_rulings(rows):
     for rid in ("brushite", "atcp", "li_ortho"):
         assert _cell(rows, rid, "slurry")["words"] == "undetermined"
     assert "[note b]" in _cell(rows, "brushite", "slurry")["text"] and "[note b]" not in _cell(rows, "li_ortho", "slurry")["text"]
-    # below the first pass: excluded where every cell is falsified, open where none passes and some are inconclusive
-    below = "excluded against dissolution below pH 6.5 (lower passivation window, below the sourced range); "
+    # below the first pass: excluded where every cell is falsified, open where none passes and some are inconclusive;
+    # cp6 F9: the lowest run is named by its grid pH values, never as "below pH x"
+    below = "excluded against dissolution at pH 4.5 and 5.5 (every cell dissolves; lower passivation window, below the sourced range); "
     for rid, ph, lead in (("calcite", "6.5", below), ("aragonite", "6.5", below),
-                          ("acc", "8.5", below + "inconclusive at pH 6.5 and 7.5; "), ("acp", "5.5", "inconclusive below pH 5.5; ")):
+                          ("acc", "8.5", below + "inconclusive at pH 6.5 and 7.5; "), ("acp", "5.5", "inconclusive at pH 4.5; ")):
         c = _cell(rows, rid, "acid")
         assert c["marker"] == "split by pH (alternative b)" and "[split by pH (alternative b)]" in c["text"]
         assert c["text"].startswith(lead + "suitable against dissolution from pH %s up" % ph)
@@ -248,3 +249,26 @@ def test_table_and_prose_agree_on_the_amorphous_cells(rows):
     assert "At the lowest class (\\NumClassLo) the crystalline rows are open and the amorphous framing of every phosphate stays undetermined" in flat
     assert "undetermined: the bound" not in flat and "a reading not yet registered" not in flat
     assert not any("excluded" in r["text"].split("amorphous:")[-1] for r in rows if r["column"] == "C_lo" and r["row_id"] in AMORPHOUS_ROWS)
+
+
+def test_no_acid_cell_states_a_sharp_threshold_below_a_grid_point():
+    # cp6 F9: the acid grid has points only at its pH values, so no cell says "below pH"
+    with (GEN / rt.OUT_CSV).open(encoding="utf-8") as fh:
+        rows = list(csv.DictReader(fh))
+    assert not [r["row_id"] for r in rows if "below pH" in r["text"]]
+    assert "below pH" not in (GEN / rt.OUT_TEX).read_text(encoding="utf-8")
+
+
+def test_k1_row_count_of_fig14_comes_from_the_precision_map():
+    """NumPrecKOneRows (W6 macro request for fig14): the K1 rows of the precision map, which fig14 draws as one row."""
+    import importlib.util
+    pmap = json.loads((REPO / rt.INPUTS["precision"]).read_text(encoding="utf-8"))
+    n = sum(1 for r in pmap["rows"] if r["id"].startswith("k1_"))
+    gen = json.loads((paths.generated(REPO) / "regime_table.json").read_text(encoding="utf-8"))
+    assert gen["numbers"]["precision"]["k1_rows"] == n > 1
+    spec = macros.load_sources(REPO)["macros"]["NumPrecKOneRows"]
+    assert spec["source"] == "preprint/generated/regime_table.json" and spec["key"] == "numbers/precision/k1_rows"
+    mod = importlib.util.spec_from_file_location("fig14_for_test", REPO / "figures" / "src" / "fig14.py")
+    fig14 = importlib.util.module_from_spec(mod)
+    mod.loader.exec_module(fig14)
+    assert fig14.collapse_k1(fig14.rows_of(pmap))[1] == n

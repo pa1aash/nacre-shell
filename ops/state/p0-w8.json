@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W8.5",
+  "last_session": "PH-W8.7",
   "status": "DONE",
   "day": 7,
   "artifacts": [
@@ -64,7 +64,19 @@
     "ops/reports/P0-W8.PH-W8.3.md",
     "ops/reports/P0-W8.PH-W8.4.md",
     "preprint/paper/briefs/abstract.md",
-    "ops/reports/P0-W8.PH-W8.5.md"
+    "ops/reports/P0-W8.PH-W8.5.md",
+    "ops/reports/P0-W8.PH-W8.6.md",
+    "src/nacre/preprint/input_tables.py",
+    "preprint/generated/input_tables.tex",
+    "preprint/generated/input_tables.json",
+    "tests/preprint/test_preprint_input_tables.py",
+    "ops/reports/P0-W8.PH-W8.7.md",
+    "src/nacre/preprint/breakeven_table.py",
+    "preprint/generated/breakeven_table.tex",
+    "preprint/generated/breakeven_table.json",
+    "tests/preprint/test_preprint_breakeven_table.py",
+    "tests/preprint/test_preprint_patents.py",
+    "tests/preprint/test_preprint_captions.py"
   ],
   "notes": [
     "skeleton retargeted: design, predictions added; inputs and outlook removed; carbonate text marked 'carbonate control (frozen)'",
@@ -80,6 +92,8 @@
     "PH-W8.2g: ratio-grid numbers in the wording; second column group in the per-pH table, both doses in the HAp and beta-TCP first-pass cells, Methods F2 and SI text, 60+ macros; 228 passed; W6 pin of regime_table.csv stale",
     "PH-W8.3: Results (1856 words, seven subsections), Predictions (512), Discussion and limits (877), abstract (220) written in the regime frame; 23 macros (14 sources.yaml, 9 generator: precision map and deletion test); ledger 12 new, 32 drafted, 9 withdrawn; 228 passed; draft build main 13 pp, SI 13 pp; release guard still refuses (18)",
     "PH-W8.4: review fixes applied (blocking 4/4, material 26/26, minor 18/18), W3.8 table 47/48 (R3-2 waits for I17a), rulings 1 to 6 in force; citations per W1.4/W1.9 (8 keys added by DOI); 20 macros added; SI figures fig4, fig7, fig10, fig11, fig14; fig5, fig9, fig12 not used; tab:conditions replaces fig:conditions, fig:pathway dropped; 228 passed; draft build main 14 pp, SI 15 pp; release guard still refuses (18)",
-    "PH-W8.5: W4.8 regime-table patch applied (8 cells + 3 C_lo cells), C1 to C12 and R3-2 in results, discussion, design; hero hooked (fig1, panel letters, caption); p0-w6 merged for the artwork; 1069 passed; draft build main 15 pp, SI 15 pp; release guard still refuses (18)"
+    "PH-W8.5: W4.8 regime-table patch applied (8 cells + 3 C_lo cells), C1 to C12 and R3-2 in results, discussion, design; hero hooked (fig1, panel letters, caption); p0-w6 merged for the artwork; 1069 passed; draft build main 15 pp, SI 15 pp; release guard still refuses (18)",
+    "PH-W8.6: cp6 F1, F3 to F9, F12 to F14, F16 to F18, F20 to F22 applied; regime table as three continued floats (19/19 rows in the PDF); input-tables generator (Tables 2, 3, SI reaction, database, conversion tables, speciation); abstract 195 words, 6 sentences; SI placeholders filled or removed; 249 passed; draft build main 17 pp, SI 61 pp; release guard refuses (9); W6 re-pin of regime_table.csv needed",
+    "PH-W8.7: break-even table generated (26 rows, pinned csv sha256, --check); four patents cited with kind codes and claim numbers from the PH-W2.7 record (waiver a-d met); 11 placeholders filled, 11 left to authors; AI-use draft local-only; 10 captions at most three sentences; NumPrecKOneRows added; 264 passed; draft build main 17 pp, SI 62 pp; release guard refuses (8)"
   ]
 }

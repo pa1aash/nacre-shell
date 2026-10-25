@@ -17,7 +17,7 @@ Pose the design question: which mineral phases, if any, can serve as a thermodyn
    - The electrical data and electrolyte printed in those patents are recorded in the reference table (W2.2b), not summarised as results here.
    - The wording NS7 appears only with its four qualifiers (in situ; crosslinked and water-insoluble; Al foil; fluorine-free), scan-limited, with the patent-search gap stated beside it (CL-V08). The F8 candidate wording (an oxidation-limit ladder across condensation states) stays unwritten until verified (CL-V09).
 3. **The bone-mineral idea and its plain statement (F6).**
-   - Bone mineral is hydroxyapatite templated on an organic matrix via amorphous and condensed precursors; the transplant to a collector is a hypothesis with four conditions (Fig `fig:pathway` is cited in Design; the hero `fig:hero` here).
+   - Bone mineral is hydroxyapatite templated on an organic matrix via amorphous and condensed precursors; the transplant to a collector is a hypothesis with four conditions (the hero `fig:hero` here; `fig:pathway` is dropped, PH-W8.4 ruling 4).
    - State plainly that bone mineral (HAp) and the tricalcium phosphates have a thermodynamic onset near carbonate (tier one, solid-salt sink); numbers by macro from the onset ladder (`NumOnsetBoneLow`, `NumOnsetBoneHigh`, registered). Frame C applies to the calcium orthophosphates only; condensed and aluminium phosphates decide frames A, B or C. CL-S01, CL-D02.
 4. **Why a screen, and what it can report.** A link that is unfavourable for every plausible input ends the chain; inputs are weakly constrained; so the screen reports a verdict per cutoff class, a bracket instead of a point, and undetermined where no source exists. CL-D03, CL-D04.
 5. **The carbonate control.** One paragraph: carbonate runs through the same pipeline as the negative control for the oxidation condition and the positive control for the solubility condition; contrary evidence on carbonate scale and on polydopamine (CL-E01 to CL-E03, carbonate era). CL-S02.
@@ -25,7 +25,7 @@ Pose the design question: which mineral phases, if any, can serve as a thermodyn
 
 ## Figures and tables
 
-- `fig:hero`: hero render (phosphate, alone, late). Until delivered the float holds a missing-input marker. Cut order: the hero is cut before the schematic; use `fig:pathway` instead.
+- `fig:hero`: hero render (phosphate, alone, late). Until delivered the float holds a missing-input marker. The pathway schematic `fig:pathway` is dropped (PH-W8.4 ruling 4).
 - `tab:candidates` is initially cited at step 6 (forward reference).
 
 ## Macros needed

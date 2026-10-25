@@ -37,17 +37,53 @@ STATUS_COLUMNS = {  # status word of the output -> column of panel c
     "gap": 2, "not_computable": 2,
 }
 GAP_GROUP = 0.7
+K1_ROW = "k1"  # the one row that stands for every K1 row of the output
+
+
+PHASE = {"hap": "HAp", "btcp": r"$\beta$-TCP", "acp": "ACP", "ocp": "OCP", "brushite": "brushite",
+         "atcp": r"$\alpha$-TCP", "li3po4": r"Li$_3$PO$_4$"}
+KSP = r"$K_{\mathrm{sp}}$"
+# Typeset tick label of each output row id; the quantity names are those of the output's own `quantity` field.
+LABELS = {
+    "gamma_sn": r"$\gamma_{\mathrm{sn}}$", "gamma_nv": r"$\gamma_{\mathrm{nv}}$", "gamma_nl": r"$\gamma_{\mathrm{nl}}$",
+    "A_patch": r"$A_{\mathrm{patch}}$", "c1_dupre_gamma_ow": r"C1 $\gamma_{\mathrm{ow}}$",
+    "c1_dupre_gamma_op": r"C1 $\gamma_{\mathrm{op}}$", "c1_dupre_joint": r"C1 $\gamma_{\mathrm{ow}},\gamma_{\mathrm{op}}$",
+    "c1_analog_w_adh_wet": r"C1 $W_{\mathrm{adh,wet}}$", "c1_pmf": r"C1 $\Delta F_{\mathrm{pmf}}$, $A_{\mathrm{c}}$",
+    "n_hyd_acp": r"$n_{\mathrm{hyd}}$ ACP", "t_wet": r"$t_{\mathrm{wet}}$", "f_min": r"$f_{\mathrm{min}}$",
+    "ksp_alpp": KSP + " Al polyphosphate", "binodal_map": "binodal map",
+    "gamma_nl_coacervate": r"$\gamma_{\mathrm{nl}}$ coacervate",
+    K1_ROW: "K1",
+}
+LABELS.update({"k2_ksp_" + k: "K2 %s %s" % (KSP, v) for k, v in PHASE.items()})
 
 
 def label(row_id):
-    """Row tick label from the output's id: gamma ids as symbols, others with spaces."""
-    m = re.fullmatch(r"gamma_(sn|nv|nl|nl_coacervate)", row_id)
-    if m and m.group(1) != "nl_coacervate":
-        return r"$\gamma_{\mathrm{%s}}$" % m.group(1)
-    m = re.fullmatch(r"c1_dupre_gamma_(ow|op)", row_id)
-    if m:
-        return r"C1 $\gamma_{\mathrm{%s}}$" % m.group(1)
-    return row_id.replace("k2_ksp_", "K2 $K_{sp}$ ").replace("k1_", "K1 ").replace("_", " ")
+    """Typeset tick label of an output row id; refuses an id without one."""
+    if row_id not in LABELS:
+        raise ValueError("fig14: no typeset label for the row id %r" % row_id)
+    return LABELS[row_id]
+
+
+def collapse_k1(rows):
+    """The K1 rows (ids k1_*) as one row, when they all draw the same; refuses a K1 row that differs.
+
+    Returns (rows with the K1 block replaced by one row of id K1_ROW, number of K1 rows collapsed).
+    """
+    k1 = [r for r in rows if r["id"].startswith("k1_")]
+    if not k1:
+        return rows, 0
+    sig = lambda r: {k: v for k, v in r.items() if k != "id"}  # noqa: E731
+    if any(sig(r) != sig(k1[0]) for r in k1):
+        raise ValueError("fig14: the K1 rows no longer draw identically; they cannot be collapsed")
+    out, done = [], False
+    for r in rows:
+        if r["id"].startswith("k1_"):
+            if not done:
+                out.append(dict(k1[0], id=K1_ROW))
+                done = True
+        else:
+            out.append(r)
+    return out, len(k1)
 
 
 def grade(row):
@@ -154,7 +190,7 @@ def rows_of(data):
 def build(data, root, aux):
     import matplotlib.pyplot as plt
 
-    rows = rows_of(data)
+    rows, _n = collapse_k1(rows_of(data))
     y, cur, prev = {}, 0.0, None
     for r in rows:
         if prev is not None and r["group"] != prev:

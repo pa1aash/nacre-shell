@@ -33,10 +33,10 @@ BUILD_BIB = "refs_build.bib"
 MISSING_PAGES = r"\nacreMissing{article number}"
 _BARE_AMP = re.compile(r"(?<!\\)&")
 # U+2500 is how Crossref writes the em dash of some ACS titles ("GFN2-xTB\u2500An ...").
-TEX_MAP = {"\u2010": "-", "\u2011": "-", "\u03b3": r"$\gamma$", "\u2500": "---", "\u0107": r"\'{c}"}
+TEX_MAP = {"\u2010": "-", "\u2011": "-", "\u03b2": r"$\beta$", "\u03b3": r"$\gamma$", "\u2500": "---", "\u0107": r"\'{c}"}
 _TEX_KNOWN = set("\u2013\u2014\u2018\u2019\u201c\u201d")
 
-_CITE = re.compile(r"\\(?:cite|citep|citet|citealp|nocite)\*?(?:\[[^\]]*\]){0,2}\{([^}]*)\}")
+_CITE = re.compile(r"\\(?:cite|citep|citet|citealp|citenum|nocite)\*?(?:\[[^\]]*\]){0,2}\{([^}]*)\}")
 
 
 class RefsError(Exception):
@@ -63,9 +63,11 @@ def entries(root):
 
 
 def cited(root, files=None):
-    """{key: [(file, line)]} for every citation key in the manuscript sources (comments ignored)."""
+    """{key: [(file, line)]} for every citation key in the manuscript sources and the generated tables (comments ignored)."""
     out = {}
-    for f in files if files is not None else texscan.manuscript_tex(root):
+    if files is None:
+        files = texscan.manuscript_tex(root) + sorted(f for f in paths.generated(root).glob("*.tex") if f.is_file())
+    for f in files:
         for no, line in enumerate(f.read_text(encoding="utf-8").splitlines(), 1):
             for m in _CITE.finditer(texscan.strip_comment(line)):
                 for key in m.group(1).split(","):

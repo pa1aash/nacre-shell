@@ -22,6 +22,8 @@
  "numbers": {
   "acid": {
    "acc": {
+    "excl_ph_hi": 5.5,
+    "excl_ph_lo": 4.5,
     "first_pass_ph": 8.5,
     "min_ca": 0.1,
     "n_cells_above": 54,
@@ -30,6 +32,7 @@
     "open_ph_lo": 6.5
    },
    "acp": {
+    "excl_ph_lo": 4.5,
     "first_pass_ph": 5.5,
     "min_ca": 0.1,
     "min_p": 0.1,
@@ -37,6 +40,8 @@
     "n_pass": 49
    },
    "aragonite": {
+    "excl_ph_hi": 5.5,
+    "excl_ph_lo": 4.5,
     "first_pass_ph": 6.5,
     "min_ca": 0.01,
     "n_cells_above": 162,
@@ -52,6 +57,8 @@
     "stoich_p": 0.0666667
    },
    "calcite": {
+    "excl_ph_hi": 5.5,
+    "excl_ph_lo": 4.5,
     "first_pass_ph": 6.5,
     "min_ca": 0.01,
     "n_cells_above": 162,
@@ -474,6 +481,7 @@
    "gamma_sn_confirm_J": 0.3338,
    "gamma_sn_mJ": 1.2193036152489043,
    "gap": 10,
+   "k1_rows": 10,
    "mc": 8,
    "meta_glass_hi_headroom_V": 0.2581,
    "rows": 32,

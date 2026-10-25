@@ -4,7 +4,9 @@
   - locates the local-only publisher template (paths.template_dir), provisioning it with
     `nacre paper template --ensure` logic when no copy exists, and verifies every file
     against charter/venue/template.yaml;
-  - renders build/rsc_head.tex from the template (nacre.report.template.render_head);
+  - renders build/rsc_head.tex from the template (nacre.report.template.render_head), without the
+    template's journal front matter (journal name, article-type bar, DOI, received and accepted dates,
+    journal footer; cp6 F3), which a preprint does not carry;
   - writes build/mode.tex (draft or release), build/paths.tex (repository root and the
     AI-disclosure include) and build/template_dir.txt (read by build.sh);
   - regenerates numbers.tex and the declarations files in preprint/generated (git-ignored,
@@ -28,6 +30,10 @@ from nacre.report import template
 _SAFE_PATH = re.compile(r"^[A-Za-z0-9/._-]+$")
 _MARKERS = re.compile(r"\\nacre(Placeholder|Pending)\b")
 _TBD = re.compile(r"\bTBD\b")
+# The template's journal artwork: name, logo and article-type bar (one block), the DOI and dates boxes of the
+# title table, and the journal footer. Every \includegraphics of head_foot/ is journal front matter.
+_JOURNAL_BLOCK = re.compile(r"\{\\includegraphics\[height=30pt\]\{head_foot/journal_name\}.*?\{head_foot/header_bar\}\}\\par", re.S)
+_JOURNAL_ART = re.compile(r"\\includegraphics(\[[^\]]*\])?\{head_foot/[^}]*\}")
 
 
 class PrepareError(Exception):
@@ -52,6 +58,22 @@ def _tex_path(p, what):
     if not _SAFE_PATH.match(s):
         raise PrepareError("%s path %r has characters TeX cannot take in a file name" % (what, s))
     return s
+
+
+def strip_journal_front(head):
+    """The rendered template head without the journal's front matter; refuses a head whose layout has changed."""
+    out, n = _JOURNAL_BLOCK.subn("", head)
+    if n != 1:
+        raise PrepareError("template head: the journal name and article-type block was not found once (%d)" % n)
+    # the dates box gave the abstract its space below the authors; the template's own spacer row replaces it
+    out = out.replace("\\includegraphics{head_foot/dates} &", "\\vspace{0.3cm} & \\vspace{0.3cm} \\\\\n &", 1)
+    out, n = _JOURNAL_ART.subn("", out)
+    if n < 3:
+        raise PrepareError("template head: expected the DOI box and the journal footer, found %d" % n)
+    # the SI provenance tables (lane W1) are long tables; the template loads no package for them
+    if out.count("\\begin{document}") != 1:
+        raise PrepareError("template head: \\begin{document} not found once")
+    return out.replace("\\begin{document}", "\\usepackage{longtable}\n\\begin{document}", 1)
 
 
 def guard_files(root):
@@ -107,7 +129,7 @@ def prepare(root, mode, out=print):
     tdir, nfiles = resolve_template(root, out)
     b = paths.build(root)
     b.mkdir(parents=True, exist_ok=True)
-    (b / "rsc_head.tex").write_text(template.render_head(tdir), encoding="utf-8", newline="\n")
+    (b / "rsc_head.tex").write_text(strip_journal_front(template.render_head(tdir)), encoding="utf-8", newline="\n")
     (b / "mode.tex").write_text("\\nacrerelease%s\n" % ("true" if mode == "release" else "false"),
                                 encoding="utf-8", newline="\n")
     (b / "paths.tex").write_text(

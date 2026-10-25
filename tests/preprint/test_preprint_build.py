@@ -1,4 +1,6 @@
 """Draft build, the release guard (Python layer) and the release stops (LaTeX layer)."""
+import csv
+import re
 import shutil
 import subprocess
 
@@ -9,7 +11,10 @@ from preprint_helpers import REPO, copy_tree, write
 
 HAVE_LATEX = shutil.which("latexmk") is not None and shutil.which("pdflatex") is not None
 HAVE_TEMPLATE = paths.template_dir(REPO) is not None
+HAVE_PDFTOTEXT = shutil.which("pdftotext") is not None
 BUILD_SH = paths.paper(REPO) / "build.sh"
+NEEDS_BUILD = pytest.mark.skipif(not (HAVE_LATEX and HAVE_TEMPLATE and shutil.which("zsh")),
+                                 reason="needs zsh, latexmk and the local-only template")
 
 
 def _clean_manuscript(root):
@@ -104,13 +109,26 @@ def test_release_build_fails_while_placeholders_or_the_ai_file_are_missing():
     assert not (paths.build(REPO) / "release" / "main.pdf").exists()
 
 
-@pytest.mark.skipif(not (HAVE_LATEX and HAVE_TEMPLATE and shutil.which("zsh")),
-                    reason="needs zsh, latexmk and the local-only template")
-def test_draft_build_compiles():
+@pytest.fixture(scope="module")
+def draft_build():
+    """One draft build for every test that reads the built PDFs."""
     gen = paths.generated(REPO)
     for f in ("numbers", "front", "authors", "declarations"):
         (gen / (f + ".tex")).unlink(missing_ok=True)       # the build must regenerate them itself
-    p = subprocess.run(["zsh", str(BUILD_SH), "draft"], capture_output=True, text=True)
+    return subprocess.run(["zsh", str(BUILD_SH), "draft"], capture_output=True, text=True)
+
+
+def _pdf_pages(pdf, layout=True):
+    """The text of each page of a built PDF (pdftotext), in layout mode or in reading order."""
+    out = subprocess.run(["pdftotext"] + (["-layout"] if layout else []) + [str(pdf), "-"],
+                         capture_output=True, text=True, check=True).stdout
+    return out.split("\f")
+
+
+@NEEDS_BUILD
+def test_draft_build_compiles(draft_build):
+    gen = paths.generated(REPO)
+    p = draft_build
     assert p.returncode == 0, (p.stdout + p.stderr)[-3000:]
     assert all((gen / (f + ".tex")).is_file() for f in ("numbers", "front", "authors", "declarations"))
     assert (paths.build(REPO) / "draft" / "main.pdf").is_file()
@@ -147,3 +165,74 @@ def test_main_and_si_load_theory_macros_before_any_theory_input():
         for theory_input in ("theory/derivation_body", "theory/si_derivation"):
             if theory_input in text:
                 assert text.index(load) < text.index(theory_input), rel
+
+
+# --- the built text (cp6 F1, F22) --------------------------------------------------------------------
+
+def _label_on_its_row(label, tag):
+    """A regex for one regime-table row as pdftotext lays it out: the label (its words before a long
+    parenthesis, which wraps) and then, on the same line, the stage tag. Whitespace is dropped on both sides,
+    since subscripts come out with spaces (Ca2 P2 O7)."""
+    label = label.replace("beta-", "\u03b2-").replace("alpha-", "\u03b1-")
+    if " (" in label and len(label) > 25:
+        label = label[:label.index(" (")]
+    return re.compile(re.escape(re.sub(r"\s+", "", label)) + r".*" + re.escape(tag))
+
+
+@NEEDS_BUILD
+@pytest.mark.skipif(not HAVE_PDFTOTEXT, reason="needs pdftotext")
+def test_every_regime_table_row_is_in_the_built_pdf(draft_build):
+    assert draft_build.returncode == 0
+    rows = {}
+    with (paths.generated(REPO) / "regime_table.csv").open(encoding="utf-8") as fh:
+        for r in csv.DictReader(fh):
+            rows.setdefault(r["row_id"], (r["row_label"], r["stage_tag"]))
+    pages = [p for p in _pdf_pages(paths.build(REPO) / "draft" / "main.pdf")
+             if "Regime map of the thermodynamic screen" in p]
+    assert pages, "no page carries the regime table"
+    lines = [re.sub(r"\s+", "", line) for p in pages for line in p.splitlines()]
+    missing = [rid for rid, (label, tag) in rows.items()
+               if not any(_label_on_its_row(label, tag).search(line) for line in lines)]
+    assert not missing, "regime-table rows absent from the built PDF: %s" % ", ".join(missing)
+    assert len(rows) == 19
+
+
+
+@pytest.mark.skipif(not HAVE_TEMPLATE, reason="needs the local-only template")
+def test_the_head_carries_no_journal_front_matter():
+    from nacre.report import template
+    head = build.strip_journal_front(template.render_head(paths.template_dir(REPO)))
+    assert "head_foot/" not in head
+    assert "\\nacreTitle" in head and "\\nacreAuthors" in head and "\\nacreAbstract" in head
+    with pytest.raises(build.PrepareError):
+        build.strip_journal_front(head)          # a head without the journal block is refused, not passed through
+
+
+# Draft markers that stay until a later session: the local-only AI-use disclosure (the patent citations of cp6 F15
+# are in the text since PH-W8.7). Every other pending-input marker, and the debris below, must be gone from the built text.
+LATER_PENDING = ("AI-use",)    # leading words of the AI-use disclosure marker
+DEBRIS = ("still to come", "macroNum", "Journal Name", "ARTICLE TYPE", "Received Date", "00.0000/")
+
+
+@NEEDS_BUILD
+@pytest.mark.skipif(not HAVE_PDFTOTEXT, reason="needs pdftotext")
+@pytest.mark.parametrize("pdf", ["main.pdf", "si/main_si.pdf"])
+def test_built_text_has_no_debris_or_unplanned_pending_input(draft_build, pdf):
+    assert draft_build.returncode == 0
+    text = " ".join(_pdf_pages(paths.build(REPO) / "draft" / pdf, layout=False))
+    flat = re.sub(r"\s+", " ", text)
+    for d in DEBRIS:
+        assert d not in flat, (pdf, d)
+    pending = re.findall(r"\[pending input: ([^\]]*)\]", flat)
+    assert [p for p in pending if not p.startswith(LATER_PENDING)] == [], (pdf, pending)
+
+
+def test_sources_carry_no_debris_and_only_the_later_missing_inputs():
+    # the source-level half of the check above, without a build: every \nacreMissing left names a later item
+    from nacre.preprint import texscan
+    for f in texscan.manuscript_tex(REPO):
+        text = "\n".join(texscan.strip_comment(l) for l in f.read_text(encoding="utf-8").splitlines())
+        for d in ("still to come", "macroNum", "Journal Name"):
+            assert d not in text, (f.name, d)
+        for arg in re.findall(r"\\nacreMissing\{([^}]*)\}", text):
+            assert arg.startswith(LATER_PENDING) or "pending}" in arg or arg.endswith(", pending"), (f.name, arg)

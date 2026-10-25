@@ -489,24 +489,144 @@ macros:
     format: text
     claim: CL-D04
   # Patent numbers of the incumbents (lit/novelty.md, baseline rows BL1 to BL4; no DOI exists).
+  # The four patents (PH-W2.7 patent record, lit/novelty.md PR-1): number and kind code as printed, column by column.
   NumPatentAlPhosA:
     source: lit/novelty.md
-    pattern: '^\| BL3 \| US ([0-9,]+) B2'
+    section: 'PR-1. What was read, and the bibliographic data as printed'
+    pattern: '^\| Field \|(?: [^|]*\|){0} US ([0-9,]+) \|'
+    format: text
+    claim: CL-V03
+  NumPatentAlPhosAKind:
+    source: lit/novelty.md
+    section: 'PR-1. What was read, and the bibliographic data as printed'
+    pattern: '^\| Kind code as printed \|(?: [^|]*\|){0} ([A-Z][0-9]?) '
     format: text
     claim: CL-V03
   NumPatentAlPhosB:
     source: lit/novelty.md
-    pattern: '^\| BL4 \| US ([0-9,]+) B2'
+    section: 'PR-1. What was read, and the bibliographic data as printed'
+    pattern: '^\| Field \|(?: [^|]*\|){1} US ([0-9,]+) \|'
+    format: text
+    claim: CL-V03
+  NumPatentAlPhosBKind:
+    source: lit/novelty.md
+    section: 'PR-1. What was read, and the bibliographic data as printed'
+    pattern: '^\| Kind code as printed \|(?: [^|]*\|){1} ([A-Z][0-9]?) '
     format: text
     claim: CL-V03
   NumPatentLiPolyA:
     source: lit/novelty.md
-    pattern: '^\| BL1 \| US ([0-9,]+) B1'
+    section: 'PR-1. What was read, and the bibliographic data as printed'
+    pattern: '^\| Field \|(?: [^|]*\|){2} US ([0-9,]+) \|'
+    format: text
+    claim: CL-V04
+  NumPatentLiPolyAKind:
+    source: lit/novelty.md
+    section: 'PR-1. What was read, and the bibliographic data as printed'
+    pattern: '^\| Kind code as printed \|(?: [^|]*\|){2} ([A-Z][0-9]?) '
     format: text
     claim: CL-V04
   NumPatentLiPolyB:
     source: lit/novelty.md
-    pattern: '^\| BL2 \| US ([0-9,]+) B2'
+    section: 'PR-1. What was read, and the bibliographic data as printed'
+    pattern: '^\| Field \|(?: [^|]*\|){3} US ([0-9,]+) \|'
+    format: text
+    claim: CL-V04
+  NumPatentLiPolyBKind:
+    source: lit/novelty.md
+    section: 'PR-1. What was read, and the bibliographic data as printed'
+    pattern: '^\| Kind code as printed \|(?: [^|]*\|){3} ([A-Z][0-9]?) '
+    format: text
+    claim: CL-V04
+  # Claim numbers as printed (PR-2) and the examples of the descriptions (PR-3).
+  NumPatentAlPhosAClaimPoFour:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 8,252,463 [A-Z][0-9] \| ([0-9]+) \(independent\) \| Modified current collector of a lithium ion battery: a metal plate and a protective film whose composition \"consists of\" Al x M y PO 4'
+    format: text
+    claim: CL-V03
+  NumPatentAlPhosAClaimPoThree:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 8,252,463 [A-Z][0-9] \| ([0-9]+) \(independent\) \| Modified current collector: a metal plate and a protective film whose composition is Al x M y \(PO 3\) 3'
+    format: text
+    claim: CL-V03
+  NumPatentAlPhosAClaimPlate:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 8,252,463 [A-Z][0-9] \| ([0-9]+) \(depends on [0-9]+ only\) \| The material of the metal plate'
+    format: text
+    claim: CL-V03
+  NumPatentAlPhosAClaimPlateParent:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 8,252,463 [A-Z][0-9] \| [0-9]+ \(depends on ([0-9]+) only\) \| The material of the metal plate'
+    format: text
+    claim: CL-V03
+  NumPatentAlPhosBClaimMethodA:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 8,821,969 [A-Z][0-9] \| ([0-9]+) and [0-9]+ \(independent\) \| Method for making'
+    format: text
+    claim: CL-V03
+  NumPatentAlPhosBClaimMethodB:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 8,821,969 [A-Z][0-9] \| [0-9]+ and ([0-9]+) \(independent\) \| Method for making'
+    format: text
+    claim: CL-V03
+  NumPatentAlPhosBClaimCure:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 8,821,969 [A-Z][0-9] \| ([0-9]+) \(depends on [0-9]+\) \| Temperature of the heat treating'
+    format: text
+    claim: CL-V03
+  NumPatentLiPolyAClaimA:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 6,485,866 [A-Z][0-9] \| ([0-9]+), [0-9]+, [0-9]+ \(independent\)'
+    format: text
+    claim: CL-V04
+  NumPatentLiPolyAClaimB:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 6,485,866 [A-Z][0-9] \| [0-9]+, ([0-9]+), [0-9]+ \(independent\)'
+    format: text
+    claim: CL-V04
+  NumPatentLiPolyAClaimC:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 6,485,866 [A-Z][0-9] \| [0-9]+, [0-9]+, ([0-9]+) \(independent\)'
+    format: text
+    claim: CL-V04
+  NumPatentLiPolyBClaimA:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 6,844,114 [A-Z][0-9] \| ([0-9]+) \(generator\), [0-9]+ \(electrode\), [0-9]+ \(process\)'
+    format: text
+    claim: CL-V04
+  NumPatentLiPolyBClaimB:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 6,844,114 [A-Z][0-9] \| [0-9]+ \(generator\), ([0-9]+) \(electrode\), [0-9]+ \(process\)'
+    format: text
+    claim: CL-V04
+  NumPatentLiPolyBClaimC:
+    source: lit/novelty.md
+    section: 'PR-2. Claims as printed that the paper uses'
+    pattern: '^\| US 6,844,114 [A-Z][0-9] \| [0-9]+ \(generator\), [0-9]+ \(electrode\), ([0-9]+) \(process\)'
+    format: text
+    claim: CL-V04
+  NumPatentExampleFoil:
+    source: lit/novelty.md
+    section: 'PR-3. The paper''s sentences about the four patents, checked against the claims printed above'
+    pattern: '^\| S2 \|.*supported by the description \(Example ([0-9]+):'
+    format: text
+    claim: CL-V03
+  NumPatentExampleCell:
+    source: lit/novelty.md
+    section: 'PR-3. The paper''s sentences about the four patents, checked against the claims printed above'
+    pattern: '^\| S7 \|.*\(Example ([0-9]+) and FIG\.'
     format: text
     claim: CL-V04
   # Printed facts of the four patents (lit/novelty.md, printed-data table under the baseline rows).
@@ -523,11 +643,6 @@ macros:
   NumPatentFoilUm:
     source: lit/novelty.md
     pattern: 'example 52 nm on ([0-9]+) um Al foil'
-    format: text
-    claim: CL-V03
-  NumPatentAcidHours:
-    source: lit/novelty.md
-    pattern: '^\| Durations \| Immersion in HCl ([0-9]+) h'
     format: text
     claim: CL-V03
   NumPatentCellTemp:
@@ -742,6 +857,19 @@ macros:
     unit: '\mathrm{V}'
     figure: fig7
     claim: CL-S03
+  # Margins of the cell rule in the SI derivation (theory/si_derivation.tex, P0-W3.4 report), from the parameter file (cp6 F4).
+  NumMexpt:
+    source: lit/params.yaml
+    key: params/window_margin_expt/value
+    format: .3f
+    unit: '\mathrm{V}'
+    claim: CL-M06
+  NumMwindow:
+    source: lit/params.yaml
+    key: params/window_margin/value
+    format: .3f
+    unit: '\mathrm{V}'
+    claim: CL-M06
   NumCellMarginExpt:
     source: results/preprint/screen/table_r2/summary.json
     key: claims/C5/tests/C5c_ox/margin_V
@@ -1094,6 +1222,16 @@ macros:
 
     claim: CL-D04
 
+  NumPrecKOneRows:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/precision/k1_rows
+
+    format: d
+
+    claim: CL-D04
+
   NumPrecMetaGlassHiHeadroom:
 
     source: preprint/generated/regime_table.json
@@ -1335,6 +1473,76 @@ macros:
     key: numbers/acid/hap/n_cells
 
     format: d
+
+    claim: CL-D04
+
+  NumRegAcidExclHiAcc:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/acc/excl_ph_hi
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclHiAragonite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/aragonite/excl_ph_hi
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclHiCalcite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/calcite/excl_ph_hi
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclLoAcc:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/acc/excl_ph_lo
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclLoAcp:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/acp/excl_ph_lo
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclLoAragonite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/aragonite/excl_ph_lo
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclLoCalcite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/calcite/excl_ph_lo
+
+    format: .1f
 
     claim: CL-D04
 
@@ -4953,3 +5161,2577 @@ macros:
     claim: CL-D04
 
   # END regime-table macros
+  # BEGIN input-tables macros (generated by `nacre preprint input-tables`; do not edit)
+  NumBenAcpErr:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Acp/dft_error
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumBenAcpEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Acp/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAcpMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Acp/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAcpROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/AcpROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAcpROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/AcpROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAcpROneSEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/AcpROneS/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAcpROneSMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/AcpROneS/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAlOrthoErr:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/AlOrtho/dft_error
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumBenAlOrthoRFourEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/AlOrthoRFour/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAtcpErr:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Atcp/dft_error
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumBenAtcpEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Atcp/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAtcpMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Atcp/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAtcpROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/AtcpROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAtcpROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/AtcpROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAtcpROneSEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/AtcpROneS/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenAtcpROneSMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/AtcpROneS/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBakedErr:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Baked/dft_error
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumBenBakedRFourEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BakedRFour/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBrushiteErr:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Brushite/dft_error
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumBenBrushiteEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Brushite/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBrushiteMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Brushite/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBrushiteROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BrushiteROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBrushiteROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BrushiteROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBrushiteROneSEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BrushiteROneS/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBrushiteROneSMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BrushiteROneS/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBrushiteRThreeEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BrushiteRThree/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBrushiteRThreeMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BrushiteRThree/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBtcpErr:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Btcp/dft_error
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumBenBtcpEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Btcp/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBtcpMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Btcp/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBtcpROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BtcpROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBtcpROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BtcpROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBtcpROneSEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BtcpROneS/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenBtcpROneSMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/BtcpROneS/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaMetaAmEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/CaMetaAm/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaMetaAmMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/CaMetaAm/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaMetaAmROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaMetaAmROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaMetaAmROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaMetaAmROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaMetaEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/CaMeta/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaMetaMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/CaMeta/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaMetaROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaMetaROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaMetaROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaMetaROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaPyroErr:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/CaPyro/dft_error
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumBenCaPyroEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/CaPyro/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaPyroMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/CaPyro/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaPyroROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaPyroROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaPyroROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaPyroROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaPyroROneSEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaPyroROneS/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaPyroROneSMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaPyroROneS/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaSilMetaROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaSilMetaROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaSilOrthoROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaSilOrthoROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaSilOrthoROneSEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaSilOrthoROneS/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCaSilOrthoROneSMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CaSilOrthoROneS/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCarbonateEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Carbonate/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCarbonateMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Carbonate/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCarbonateROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CarbonateROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenCarbonateROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/CarbonateROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenHapErr:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Hap/dft_error
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumBenHapEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Hap/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenHapMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/Hap/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenHapROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/HapROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenHapROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/HapROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenHapROneSEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/HapROneS/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenHapROneSMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/HapROneS/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenHapRTwoEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/HapRTwo/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenHapRTwoMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/HapRTwo/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenLiMetaAmEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/LiMetaAm/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenLiMetaAmMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/LiMetaAm/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenLiMetaAmROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/LiMetaAmROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenLiMetaAmROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/LiMetaAmROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenLiMetaErr:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/LiMeta/dft_error
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumBenLiMetaEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/LiMeta/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenLiMetaMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/LiMeta/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenLiMetaROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/LiMetaROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenLiMetaROneMargin:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/LiMetaROne/margin
+
+    format: .3f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumBenLiOrthoErr:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/main/LiOrtho/dft_error
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumBenLiSilROneEub:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/ladder/si/LiSilROne/e_ub
+
+    format: .2f
+
+    unit: \mathrm{V}
+
+    claim: CL-M11
+
+  NumConvAAw:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvA/aw
+
+    format: .3g
+
+    claim: CL-M11
+
+  NumConvAAwHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvA/awhi
+
+    format: .3g
+
+    claim: CL-M11
+
+  NumConvAAwLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvA/awlo
+
+    format: .3g
+
+    claim: CL-M11
+
+  NumConvBAw:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvB/aw
+
+    format: .3g
+
+    claim: CL-M11
+
+  NumConvBAwHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvB/awhi
+
+    format: .3g
+
+    claim: CL-M11
+
+  NumConvBAwLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvB/awlo
+
+    format: .3g
+
+    claim: CL-M11
+
+  NumConvCAw:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvC/aw
+
+    format: sci:2
+
+    claim: CL-M11
+
+  NumConvCAwHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvC/awhi
+
+    format: .3g
+
+    claim: CL-M11
+
+  NumConvCAwLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvC/awlo
+
+    format: sci:2
+
+    claim: CL-M11
+
+  NumConvEAw:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvE/aw
+
+    format: sci:2
+
+    claim: CL-M11
+
+  NumConvEAwHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvE/awhi
+
+    format: sci:2
+
+    claim: CL-M11
+
+  NumConvEAwLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/conversion/ConvE/awlo
+
+    format: sci:2
+
+    claim: CL-M11
+
+  NumDftAlPOFourDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/AlPOFour/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftAlPOFourDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/AlPOFour/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftAlPOFourDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/AlPOFour/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaPOThreeTwoglassDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaPOThreeTwoglass/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaPOThreeTwoglassDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaPOThreeTwoglass/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaPOThreeTwoglassDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaPOThreeTwoglass/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaSiOThreeDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaSiOThree/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaSiOThreeDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaSiOThree/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaSiOThreeDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaSiOThree/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaTwoPTwoOSevenDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaTwoPTwoOSeven/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaTwoPTwoOSevenDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaTwoPTwoOSeven/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaTwoPTwoOSevenDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaTwoPTwoOSeven/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaTwoSiOFourDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaTwoSiOFour/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaTwoSiOFourDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaTwoSiOFour/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftCaTwoSiOFourDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/CaTwoSiOFour/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftHApDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/HAp/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftHApDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/HAp/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftHApDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/HAp/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiClOFourDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiClOFour/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiClOFourDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiClOFour/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiClOFourDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiClOFour/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiPOThreeDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiPOThree/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiPOThreeDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiPOThree/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiPOThreeDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiPOThree/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiPOThreeglassDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiPOThreeglass/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiPOThreeglassDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiPOThreeglass/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiPOThreeglassDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiPOThreeglass/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiThreePOFourDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiThreePOFour/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiThreePOFourDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiThreePOFour/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiThreePOFourDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiThreePOFour/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiTwoSiOThreeDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiTwoSiOThree/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiTwoSiOThreeDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiTwoSiOThree/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftLiTwoSiOThreeDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/LiTwoSiOThree/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftPTwoOFiveDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/PTwoOFive/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftPTwoOFiveDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/PTwoOFive/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftPTwoOFiveDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/PTwoOFive/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftaTCPDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/aTCP/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftaTCPDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/aTCP/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftaTCPDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/aTCP/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftbTCPDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/bTCP/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftbTCPDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/bTCP/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftbTCPDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/bTCP/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftbrushiteDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/brushite/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftbrushiteDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/brushite/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftbrushiteDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/brushite/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftgibbsiteDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/gibbsite/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftgibbsiteDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/gibbsite/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftgibbsiteDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/gibbsite/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftmonetiteDfh:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/monetite/expt_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftmonetiteDiff:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/monetite/dft_minus_dfH_kJ
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumDftmonetiteDiffAtom:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/dft/monetite/dft_minus_dfH_kJ_per_atom
+
+    format: .1f
+
+    claim: CL-M11
+
+  NumParKspAccHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_acc/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspAccLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_acc/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspAccVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_acc/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspAcpHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_acp/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspAcpLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_acp/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspAcpVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_acp/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspAragoniteVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_aragonite/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspAtcpVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_atcp/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspBrushiteHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_brushite/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspBrushiteLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_brushite/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspBrushiteVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_brushite/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspBtcpHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_btcp/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspBtcpLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_btcp/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspBtcpVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_btcp/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspCalciteVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_calcite/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspHapHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_hap/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspHapLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_hap/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspHapVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_hap/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspLiPhosHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_li3po4/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspLiPhosLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_li3po4/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspLiPhosVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_li3po4/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspOcpCahHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_ocp_ca4h/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspOcpCahLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_ocp_ca4h/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspOcpCahVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_ocp_ca4h/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspOcpHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_ocp/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspOcpLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_ocp/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParKspOcpVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/log_ksp_ocp/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkCarbonicAHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pk1_carbonic/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkCarbonicALo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pk1_carbonic/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkCarbonicAVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pk1_carbonic/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkCarbonicBHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pk2_carbonic/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkCarbonicBLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pk2_carbonic/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkCarbonicBVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pk2_carbonic/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkPhosAHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pka1_phosphoric/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkPhosALo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pka1_phosphoric/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkPhosAVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pka1_phosphoric/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkPhosBHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pka2_phosphoric/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkPhosBLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pka2_phosphoric/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkPhosBVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pka2_phosphoric/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkPhosCHi:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pka3_phosphoric/max
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkPhosCLo:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pka3_phosphoric/min
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkPhosCVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pka3_phosphoric/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumParPkWaterVal:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/params/pkw/value
+
+    format: .2f
+
+    claim: CL-M11
+
+  NumSpecCarbonateLow:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/speciation/co3_pct_low
+
+    format: .0f
+
+    unit: \%
+
+    claim: CL-S07
+
+  NumSpecPhLow:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/speciation/ph_low
+
+    format: .0f
+
+    claim: CL-S07
+
+  NumSpecPhMid:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/speciation/ph_mid
+
+    format: .0f
+
+    claim: CL-S07
+
+  NumSpecPhosphateLow:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/speciation/po4_pct_low
+
+    format: .2f
+
+    unit: \%
+
+    claim: CL-S07
+
+  NumSpecPhosphateMid:
+
+    source: preprint/generated/input_tables.json
+
+    key: numbers/speciation/po4_pct_mid
+
+    format: .0f
+
+    unit: \%
+
+    claim: CL-S07
+
+  # END input-tables macros
+  # BEGIN breakeven-table macros (generated by `nacre preprint breakeven-table`; do not edit)
+  NumBeAcpHiLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Acp/HiLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeAcpHiLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Acp/HiLo/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeAcpHiUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Acp/HiUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeAcpHiUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Acp/HiUp/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeAcpMidLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Acp/MidLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeAcpMidLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Acp/MidLo/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeAcpMidUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Acp/MidUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeAcpMidUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Acp/MidUp/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeAlphaTcpHiLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/AlphaTcp/HiLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeAlphaTcpHiLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/AlphaTcp/HiLo/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeAlphaTcpHiUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/AlphaTcp/HiUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeAlphaTcpHiUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/AlphaTcp/HiUp/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeAlphaTcpMidLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/AlphaTcp/MidLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeAlphaTcpMidLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/AlphaTcp/MidLo/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeAlphaTcpMidUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/AlphaTcp/MidUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeAlphaTcpMidUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/AlphaTcp/MidUp/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeBetaTcpHiLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/BetaTcp/HiLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeBetaTcpHiLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/BetaTcp/HiLo/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeBetaTcpHiUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/BetaTcp/HiUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeBetaTcpHiUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/BetaTcp/HiUp/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeBetaTcpMidLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/BetaTcp/MidLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeBetaTcpMidLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/BetaTcp/MidLo/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeBetaTcpMidUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/BetaTcp/MidUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeBetaTcpMidUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/BetaTcp/MidUp/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeBrushiteHiLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Brushite/HiLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeBrushiteHiUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Brushite/HiUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeBrushiteHiUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Brushite/HiUp/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeCaSilicateHiLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/CaSilicate/HiLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeCaSilicateHiLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/CaSilicate/HiLo/r_star
+
+    format: sci:2
+
+    claim: CL-S14
+
+  NumBeCaSilicateHiUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/CaSilicate/HiUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeCaSilicateHiUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/CaSilicate/HiUp/r_star
+
+    format: sci:2
+
+    claim: CL-S14
+
+  NumBeCaSilicateMidLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/CaSilicate/MidLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeCaSilicateMidLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/CaSilicate/MidLo/r_star
+
+    format: sci:2
+
+    claim: CL-S14
+
+  NumBeCaSilicateMidUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/CaSilicate/MidUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeCaSilicateMidUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/CaSilicate/MidUp/r_star
+
+    format: sci:2
+
+    claim: CL-S14
+
+  NumBeCarbonateHiLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Carbonate/HiLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S03
+
+  NumBeCarbonateHiLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Carbonate/HiLo/r_star
+
+    format: sci:2
+
+    claim: CL-S03
+
+  NumBeCarbonateHiUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Carbonate/HiUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S03
+
+  NumBeCarbonateHiUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Carbonate/HiUp/r_star
+
+    format: sci:2
+
+    claim: CL-S03
+
+  NumBeCarbonateMidLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Carbonate/MidLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S03
+
+  NumBeCarbonateMidLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Carbonate/MidLo/r_star
+
+    format: .3g
+
+    claim: CL-S03
+
+  NumBeCarbonateMidUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Carbonate/MidUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S03
+
+  NumBeCarbonateMidUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Carbonate/MidUp/r_star
+
+    format: .3g
+
+    claim: CL-S03
+
+  NumBeCutHiLo:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/cutoff/HiLo
+
+    format: .1f
+
+    claim: CL-S14
+
+  NumBeCutHiUp:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/cutoff/HiUp
+
+    format: .1f
+
+    claim: CL-S14
+
+  NumBeCutMidLo:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/cutoff/MidLo
+
+    format: .1f
+
+    claim: CL-S14
+
+  NumBeCutMidUp:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/cutoff/MidUp
+
+    format: .1f
+
+    claim: CL-S14
+
+  NumBeHapHiLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Hap/HiLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeHapHiLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Hap/HiLo/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeHapHiUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Hap/HiUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeHapHiUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Hap/HiUp/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeHapMidLoHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Hap/MidLo/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeHapMidLoRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Hap/MidLo/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  NumBeHapMidUpHead:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Hap/MidUp/headroom_V
+
+    format: .4f
+
+    claim: CL-S14
+
+  NumBeHapMidUpRatio:
+
+    source: preprint/generated/breakeven_table.json
+
+    key: numbers/breakeven/Hap/MidUp/r_star
+
+    format: .3g
+
+    claim: CL-S14
+
+  # END breakeven-table macros

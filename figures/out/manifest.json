@@ -134,11 +134,11 @@
     "release": true
    },
    "outputs": {
-    "figures/out/fig14.pdf": "6dacd67c55908602ec0505c3c9314aa4d4ed102d8619ea090199ce2bad69d97c",
-    "figures/out/fig14.png": "8af664cd7684c01e576d38a62507b361741bae2b2fb0b179c6016b44eb686cf2",
-    "figures/out/cvd/fig14_deuteranopia.png": "1c7edbe82e02611e6f1654e79bc685af1a849e7b9d71ed8f22a4101fde76677a",
-    "figures/out/cvd/fig14_protanopia.png": "1c7edbe82e02611e6f1654e79bc685af1a849e7b9d71ed8f22a4101fde76677a",
-    "figures/out/cvd/fig14_tritanopia.png": "1c7edbe82e02611e6f1654e79bc685af1a849e7b9d71ed8f22a4101fde76677a"
+    "figures/out/fig14.pdf": "73f91cef669d6394ee414e2c60e45b2ae558bea26594dd12a6cd738114eaae65",
+    "figures/out/fig14.png": "1b22af696b78fea345cc68587b3196fe8ac07fb88c316f98a5677dedde994325",
+    "figures/out/cvd/fig14_deuteranopia.png": "639bfc4e5c3bfb45cb26d614382f84e431b77ba149c70ab005b911aef530c518",
+    "figures/out/cvd/fig14_protanopia.png": "639bfc4e5c3bfb45cb26d614382f84e431b77ba149c70ab005b911aef530c518",
+    "figures/out/cvd/fig14_tritanopia.png": "639bfc4e5c3bfb45cb26d614382f84e431b77ba149c70ab005b911aef530c518"
    },
    "checker": "pass (artists and PDF text)"
   },
@@ -175,11 +175,11 @@
     "release": true
    },
    "outputs": {
-    "figures/out/fig15.pdf": "e501345792edfe891d9abe208c3c77858e4101bae68b687612822c5ece895ecb",
-    "figures/out/fig15.png": "6b551636489a768dd383ee04f5c81c9682e274bca35432e78546e660faaa1353",
-    "figures/out/cvd/fig15_deuteranopia.png": "49a1bde12d33e4f1f2c01174ade36a1dce26bcc4a14c70428a35ed56961d334f",
-    "figures/out/cvd/fig15_protanopia.png": "6eaa6174dc73d94ebefff6934c3bc1de752b92eb9436fcaec32f59a02fb6687e",
-    "figures/out/cvd/fig15_tritanopia.png": "fafd7907c279486a919f3ea5096be6b29b46bb0bd19cb01d381397119f7a1726"
+    "figures/out/fig15.pdf": "afdb5491f61a5cf4d8c755fc640b38f5f5d74578cffc8c4d416c7d3a35e08a8e",
+    "figures/out/fig15.png": "94e5a450726f9b45943afa9649747115a1e5e613727d30debb4b5a91cab8e9b6",
+    "figures/out/cvd/fig15_deuteranopia.png": "94f83008cdbc1b73764133496464fc901afb120e084c0069e0133cacad23331f",
+    "figures/out/cvd/fig15_protanopia.png": "3d688dc7b42b8a091bb0bfb32367fda64bb7dabbf0bbd26fb08a451d5d8d5581",
+    "figures/out/cvd/fig15_tritanopia.png": "6501151727b59265f78037d121cdbf0047566588fa00a4093f9bf254c791d8f4"
    },
    "checker": "pass (artists and PDF text)"
   },
@@ -215,11 +215,11 @@
     "release": true
    },
    "outputs": {
-    "figures/out/fig17.pdf": "bd33efa422fa1f1717d76d0f097e8de32cfd630fe9ec3025c07d3995b54f4663",
-    "figures/out/fig17.png": "4c77bf1f3edd8631c3e24fc28d23698cd864ecdd0763823e5470aeb7f49fa3df",
-    "figures/out/cvd/fig17_deuteranopia.png": "c4e283e69103080271c293a008c334b01c86c6713fb524d9648bf4d1b6e74d75",
-    "figures/out/cvd/fig17_protanopia.png": "87fe5eb136aa90e78e52d5500c54ef8fc824d42a412b6628e3bd70edf630f1f0",
-    "figures/out/cvd/fig17_tritanopia.png": "13f4d48c21cbbef8cb7de6405024874fa549a19ebbdd8e84893d2c327443384f"
+    "figures/out/fig17.pdf": "0f687c2d560d8b10886aa3329b98c4b04ecbb272c69beea9ffae7eba9072006e",
+    "figures/out/fig17.png": "7132e86bb4f1f660ad290111353dec904975590a5d7aa7e0e59f074e711fb586",
+    "figures/out/cvd/fig17_deuteranopia.png": "5aeda164036958fb5be692bc6e83f3eaf57d7926da9ef38eea65211e69f1c9ff",
+    "figures/out/cvd/fig17_protanopia.png": "ce9125b2189662857c54615876715e538b18ff88a1867743c2d4b57f5e455103",
+    "figures/out/cvd/fig17_tritanopia.png": "796df2f31613e3bceac0d5a683e67e3213a4c550c39a43783aa60c7f74e87d8c"
    },
    "checker": "pass (artists and PDF text)"
   },
