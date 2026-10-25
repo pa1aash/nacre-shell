@@ -174,7 +174,8 @@ def test_cli_and_results_wiring():
     assert callable(build_parser().parse_args(["preprint", "regime-table"]).func)
     results = (paths.paper(REPO) / "sections" / "results.tex").read_text(encoding="utf-8")
     assert "\\input{../generated/regime_table}" in results and "\\label{tab:regime}" in results
-    caption = re.search(r"\\caption\{(.*?)\}\\label\{tab:regime\}", results, re.S).group(1)
+    # the caption right before the label (the break-even table's caption precedes it in the source since PH-W8.9)
+    caption = re.search(r"\\caption\{((?:(?!\\caption\{).)*?)\}\\label\{tab:regime\}", results, re.S).group(1)
     assert len(re.sub(r"\\[A-Za-z]+", "", caption).split()) <= 70
     assert not re.search(r"[0-9]", re.sub(r"\$[^$]*\$|\\[A-Za-z]+", "", caption))
 

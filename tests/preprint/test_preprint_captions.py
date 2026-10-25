@@ -96,8 +96,8 @@ def test_paper_captions_carry_the_cp6_reaudit_wording():
 
 
 def _w6_handoff():
-    """{fig: draft} of preprint/paper/briefs/captions_w6.md, the drafts W6 copies (PH-W8.9)."""
-    text = (paths.paper(REPO) / "briefs" / "captions_w6.md").read_text(encoding="utf-8")
+    """{fig: draft} of preprint/paper/layout/captions_w6.md, the drafts W6 copies (PH-W8.9)."""
+    text = (paths.paper(REPO) / "layout" / "captions_w6.md").read_text(encoding="utf-8")
     return dict(re.findall(r"^## (fig\d+)\n\n```text\n(.*?)\n```", text, re.M | re.S))
 
 
