@@ -36,7 +36,7 @@ _BARE_AMP = re.compile(r"(?<!\\)&")
 TEX_MAP = {"\u2010": "-", "\u2011": "-", "\u03b2": r"$\beta$", "\u03b3": r"$\gamma$", "\u2500": "---", "\u0107": r"\'{c}"}
 _TEX_KNOWN = set("\u2013\u2014\u2018\u2019\u201c\u201d")
 
-_CITE = re.compile(r"\\(?:cite|citep|citet|citealp|nocite)\*?(?:\[[^\]]*\]){0,2}\{([^}]*)\}")
+_CITE = re.compile(r"\\(?:cite|citep|citet|citealp|citenum|nocite)\*?(?:\[[^\]]*\]){0,2}\{([^}]*)\}")
 
 
 class RefsError(Exception):
