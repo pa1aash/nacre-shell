@@ -167,7 +167,7 @@
     "cutoffs": "configs/preprint/thresholds.yaml@597ad43 (p0-w4)",
     "k2": "results/preprint/screen/k2_grid_ph/summary.json@8612b89 (p0-w4)",
     "perph": "results/preprint/screen/k2_perph_ph2/perph.csv@5a1af81 (p0-w4)",
-    "regime_table": "preprint/generated/regime_table.csv@265b095 (p0-w8)"
+    "regime_table": "preprint/generated/regime_table.csv@cdf68e2 (p0-w8)"
    },
    "font": {
     "family": "Arial",
@@ -351,7 +351,7 @@
    "schema": "figures/src/schemas/ladder_v3.schema.json",
    "aux": {
     "cutoffs": "configs/preprint/thresholds.yaml@597ad43 (p0-w4)",
-    "regime_table": "preprint/generated/regime_table.csv@265b095 (p0-w8)",
+    "regime_table": "preprint/generated/regime_table.csv@cdf68e2 (p0-w8)",
     "sens40": "results/preprint/pourbaix/ph_w52/ladder_v3_sens40.csv@73316df (p0-w5)"
    },
    "font": {

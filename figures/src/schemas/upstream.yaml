@@ -182,14 +182,14 @@ entries:
     owner: p0-w8
     branch: preprint/p0-w8
     path: preprint/generated/regime_table.csv
-    commit: 265b0959bdf7d9ba61f86bc2d335707214f9ac4a
-    branch_head: 0e7da44eb8cf3c586bfd1f002fe2ba9af1f3f258
+    commit: cdf68e2256eda6e29cd0258602b18970ed62d2b3
+    branch_head: 2c1ef37e0eb77f67f92cadaab2a62ac0382bf8f6
     snapshot: preprint/generated/regime_table.csv
-    sha256: c9495e501c6b735898490ba131602b1dd219d53ef65eb938a4a355b487d4e0cc
+    sha256: b1535369b145e6d6e95d63fbafae2c0a89baea7d63edb3c91bf6d63936d3fcae
     merged_tree:
-      ref: preprint/p0-w6
-      head: 31bfd348a52e089d562c9ae424c59b5684405df0
-      same_bytes: true
+      ref: origin/preprint/p0
+      head: 414d8cb97ce616ba471b7f7d6465a0d714b8c880
+      same_bytes: false
     used_for: 'fig15 cross-check: the first-pass pH of the acid-adjusted column of the regime table'
   results_schema:
     kind: contract
