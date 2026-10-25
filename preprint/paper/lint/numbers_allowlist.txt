@@ -27,6 +27,8 @@ NA12  \\ln\s*\(\s*1\s*\+\s*x\s*\)
 NA13  \\theta\s*/\s*2|\\pi\s*/\s*2
 # the right angle of the hemisphere, written as a contact angle (theta below 90 degrees is the wetting side)
 NA14  \b90\s+degrees\b
+# registered retrodiction case identifiers (RC01 to RC12), names of cases and not reported values
+NA15  \bRC[0-9]{2}\b
 # chemical formulae and ion charges written with mhchem
 NA01  \\ce\{(?:[^{}]|\{[^{}]*\})*\}
 # ion-charge superscripts in math, e.g. Ca^{2+}, CO_3^{2-}, OH^-

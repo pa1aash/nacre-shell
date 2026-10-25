@@ -38,3 +38,29 @@ def test_every_figure_caption_has_at_most_three_sentences():
 def test_captions_carry_no_footnote_or_sink_mark():
     for label, cap in figure_captions().items():
         assert "\\nacreExcludedMark" not in cap and "\\nacreSinkMark" not in cap, label
+
+
+# PH-W8.8: one caption source. The paper captions are the W6 drafts, translated by nacre.preprint.captions.
+from nacre.preprint import captions
+
+
+def test_every_paper_caption_equals_its_w6_draft():
+    caps = figure_captions()
+    assert set(caps) == set(captions.USED.values())
+    for fig, label in captions.USED.items():
+        assert " ".join(caps[label].split()) == " ".join(captions.tex_caption(REPO, fig).split()), (fig, label)
+
+
+def test_every_draft_is_at_most_three_sentences_and_75_words_with_macros_expanded():
+    if not (REPO / "preprint/generated/numbers.tex").exists():  # git-ignored; a fresh checkout has none
+        from nacre.preprint import build
+        build.generate(REPO)
+    for fig in captions.USED:
+        draft = captions.thermodynamic(captions.draft_text(REPO, fig))
+        assert captions.word_count(draft, REPO) <= 75, (fig, captions.word_count(draft, REPO))
+        assert len(sentences(captions.to_tex(draft))) <= 3, fig
+
+
+def test_the_class_name_excluded_is_always_thermodynamically_excluded():
+    for fig in captions.USED:
+        assert not re.search(r"(?<!thermodynamically )\bexcluded\b", captions.tex_caption(REPO, fig)), fig
