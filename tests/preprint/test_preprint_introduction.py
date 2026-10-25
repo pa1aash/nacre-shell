@@ -113,7 +113,7 @@ def test_no_novelty_negative_is_stated():
 def test_length_and_paragraphs_follow_the_brief():
     paras = _paragraphs()
     assert len(paras) == 7      # PH-W8.2: problem, incumbents, lineage, control, frame, bone mineral, scope
-    assert 600 <= sum(_words(p) for p in paras) <= 860   # about 700 (brief), plus the qualifiers of the PH-W8.4 rulings and review fixes and the cp6 F6 wording (12 words); the count includes marker text
+    assert 600 <= sum(_words(p) for p in paras) <= 880   # about 700 (brief), plus the qualifiers of the PH-W8.4 rulings and review fixes, the cp6 F6 wording (12 words) and the kind codes and claim numbers of the cp6 Q2 patent waiver (PH-W8.7); the count includes marker text
 
 
 def test_lineage_and_polymorph_statements_are_the_supported_ones():

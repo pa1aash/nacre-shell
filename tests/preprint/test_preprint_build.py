@@ -208,9 +208,9 @@ def test_the_head_carries_no_journal_front_matter():
         build.strip_journal_front(head)          # a head without the journal block is refused, not passed through
 
 
-# Draft markers that stay until a later session: the patent citations (cp6 F15) and the local-only AI-use
-# disclosure. Every other pending-input marker, and the debris below, must be gone from the built text.
-LATER_PENDING = ("patent", "AI-use")    # leading words of "patent citations, pending" and the AI-use disclosure
+# Draft markers that stay until a later session: the local-only AI-use disclosure (the patent citations of cp6 F15
+# are in the text since PH-W8.7). Every other pending-input marker, and the debris below, must be gone from the built text.
+LATER_PENDING = ("AI-use",)    # leading words of the AI-use disclosure marker
 DEBRIS = ("still to come", "macroNum", "Journal Name", "ARTICLE TYPE", "Received Date", "00.0000/")
 
 
