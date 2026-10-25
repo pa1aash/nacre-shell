@@ -267,7 +267,7 @@ A minimum passing dose at or above \NumRegHighDose\ is flagged \NumRegHighDoseSt
 \nacreRegimePerPh
 \end{table*}
 
-The Sobol indices of the nucleation chain reach a total-order half-width of \NumSobolNucHalfWidth\ against the target of \NumSobolNucTarget, capped at \NumSobolNucBase\ base rows, so Sobol indices are indicative and the Shapley effects carry the ranking. % CL-M03
+The Sobol indices of the nucleation chain reach a total-order half-width of \NumSobolNucHalfWidth\ against the target of \NumSobolNucTarget, at \NumSobolNucBase\ base rows, a memory cap below the draw cap of \NumSizingDrawCap\ that the sizing rule sets, so Sobol indices are indicative and the Shapley effects carry the ranking. % CL-M03
 \nacreRegimeSensNote{} % CL-D04
 The supersaturated control state of each phase and state is the grid state of maximum $\Omega$ for that phase and state; the earlier move of the control from pH \NumCtlPhFrom\ to pH \NumCtlPhTo\ came from a dry run, an output seen before the choice, and the runs below use the maximum-$\Omega$ rule, which moves \NumCtlCellsMoved\ cells of the original keys. % CL-M08
 
