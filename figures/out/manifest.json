@@ -164,10 +164,10 @@
    "aux": {
     "acid": "results/preprint/screen/k2_acid_ph2/summary.json@f648d3a (p0-w4)",
     "alkaline": "results/preprint/screen/k2_alkaline_ph2/summary.json@30f194d (p0-w4)",
-    "cutoffs": "configs/preprint/thresholds.yaml@2345f00 (p0-w4)",
+    "cutoffs": "configs/preprint/thresholds.yaml@597ad43 (p0-w4)",
     "k2": "results/preprint/screen/k2_grid_ph/summary.json@8612b89 (p0-w4)",
     "perph": "results/preprint/screen/k2_perph_ph2/perph.csv@5a1af81 (p0-w4)",
-    "regime_table": "preprint/generated/regime_table.csv@90d60c9 (p0-w8)"
+    "regime_table": "preprint/generated/regime_table.csv@265b095 (p0-w8)"
    },
    "font": {
     "family": "Arial",
@@ -205,7 +205,7 @@
    "aux": {
     "acid": "results/preprint/screen/k2_acid_ph2/summary.json@f648d3a (p0-w4)",
     "alkaline": "results/preprint/screen/k2_alkaline_ph2/summary.json@30f194d (p0-w4)",
-    "cutoffs": "configs/preprint/thresholds.yaml@2345f00 (p0-w4)",
+    "cutoffs": "configs/preprint/thresholds.yaml@597ad43 (p0-w4)",
     "k2": "results/preprint/screen/k2_grid_ph/summary.json@8612b89 (p0-w4)",
     "ladder": "results/preprint/pourbaix/ph_w52/ladder_v3.csv@73316df (p0-w5)"
    },
