@@ -126,13 +126,7 @@ claims:
     status: drafted
     notes: Written in the wording of the frame that the ladder gives; the Abstract states which frame applies.
   - id: CL-V03
-    statement: >-
-      Films of AlxMyPO4 and AlxMy(PO3)3 on a metal plate are claimed prior art in one of two patents of one family
-      (Tsinghua University and Hon Hai Precision), each film in its own independent claim, the plate material list
-      (aluminium, copper, nickel or their alloys) belonging to a claim that depends on the AlxMyPO4 claim only; the
-      other claims the method, with a heat treatment in a stated range, and recites no film formula. An aluminium foil
-      of stated thickness is described in an example of the description, not claimed; claim and example numbers are
-      read from the patent record.
+    statement: 'Withdrawn by author decision (PH-W8.9): the comparator films are named by chemistry only.'
     section: introduction
     type: novelty
     polarity: claims
@@ -150,18 +144,9 @@ claims:
     supplier: p0-w2
     scope_check: clean
     status: withdrawn
-    notes: 'withdrawn: author decision (PH-W8.9): every patent is removed from the paper and SI; the sentences, their number macros and the patent test are deleted; the comparator rows stay, named by chemistry. PH-W8.2c: PH-W2.6 verdict (d), partly supported: the claim scope is a metal plate, not aluminium foil; US 8,821,969 recites no film formula. F8: stated plainly in the Introduction. The patents have no DOI, so `nacre bib add` cannot take them: the
-      numbers are text macros from lit/novelty.md rows BL3 and BL4 and the citation is a missing-input marker (PH-W8.2
-      outstanding). PH-W8.7 (cp6 Q2 waiver, conditions a to d): each patent is cited in the text by number and kind code
-      as printed, read by macro from the PH-W2.7 record (PR-1), with the claim numbers of PR-2; the foil is relabelled
-      as an example of the description; the sentence on the only printed test is deleted (the description also prints
-      a conductivity test and an SEM comparison).'
+    notes: 'withdrawn: author decision (PH-W8.9): the comparator rows stay, named by chemistry.'
   - id: CL-V04
-    statement: >-
-      One Hydro-Quebec patent claims collector coatings of a vitreous alkali-metal phosphate or polyphosphate
-      with a conduction additive and a related patent the borate or polyborate form, each in three independent claims;
-      a polymer-electrolyte cell cycled at a stated temperature with a stated recharge limit is described in an example
-      of the description of both, not claimed; claim and example numbers are read from the patent record.
+    statement: 'Withdrawn by author decision (PH-W8.9): the comparator films are named by chemistry only.'
     section: introduction
     type: novelty
     polarity: claims
@@ -177,7 +162,7 @@ claims:
     supplier: p0-w2
     scope_check: clean
     status: withdrawn
-    notes: 'withdrawn: author decision (PH-W8.9): every patent is removed from the paper and SI; the sentences, their number macros and the patent test are deleted; the comparator rows stay, named by chemistry.'
+    notes: 'withdrawn: author decision (PH-W8.9): the comparator rows stay, named by chemistry.'
   - id: CL-V05
     statement: >-
       Phosphoric acid lowers the pH of water-processed electrode slurries to avoid corrosion of the aluminium collector,
@@ -228,15 +213,12 @@ claims:
     status: drafted
   - id: CL-V07
     statement: Among the open sources scanned, none combines a polydopamine- or chitosan-templated calcium
-      phosphate film, a quantitative design rule, fluorine-free cells and aqueous-slurry processing; the
-      patent search is a logged gap.
+      phosphate film, a quantitative design rule, fluorine-free cells and aqueous-slurry processing.
     section: introduction
     type: novelty
     polarity: claims
     origin: redirect
     conditional: true
-    depends_on:
-    - patent keyword search, a logged gap
     evidence:
     - kind: dossier
       ref: lit/novelty.md#NS5
@@ -253,8 +235,6 @@ claims:
     polarity: claims
     origin: redirect
     conditional: true
-    depends_on:
-    - patent keyword search, a logged gap
     qualifiers:
     - in situ
     - crosslinked and water-insoluble
@@ -1568,7 +1548,7 @@ claims:
   - id: CL-L08
     statement: 'Against the incumbents the screen shows nothing comparative: phosphoric-acid pH control is the
       comparator state of the dissolution test, carbon-coated foil and the two baselines enter only through
-      their rows, and the patent search stays a logged gap.'
+      their rows.'
     section: discussion
     type: limitation
     polarity: claims
@@ -2754,7 +2734,7 @@ claims:
     origin: carbonate control (frozen)
     statement: >-
       To our knowledge, based on a structured search of the indexed journal and preprint
-      literature with patent literature not searched, no previous study has evaluated, for an
+      literature, no previous study has evaluated, for an
       aluminium current collector in the alkaline aqueous-slurry regime, the combined
       thermodynamic chain of wet adhesion of a catechol or polysaccharide template to the
       native oxide, Ca2+ sequestration by that template, templated nucleation on it and the
