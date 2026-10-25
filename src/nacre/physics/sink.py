@@ -7,8 +7,12 @@ sink_margin_checked raises SinkInputUnbound and rigorous_sink_margin returns UND
 import math
 
 from nacre.physics.bindings import UNDETERMINED
-from nacre.physics.constants import STANDARD_CONCENTRATION
+from nacre.physics.constants import FARADAY, GAS_CONSTANT, STANDARD_CONCENTRATION
 from nacre.physics.stability import sink_margin
+
+
+#: breakeven_ratio result for a row whose headroom is negative: the exclusion does not stand even for a saturated sink.
+NOT_EXCLUDED_WITHOUT_CORRECTION = "not excluded without correction"
 
 
 class SinkInputUnbound(ValueError):
@@ -69,3 +73,19 @@ def edge_rule(crossover, edges, tolerance):
     robust = next((e for e in es if e - crossover >= tolerance), None)
     return {"status": "ok", "near_edge": near, "distance": near - crossover,
             "within_tolerance": abs(near - crossover) < tolerance, "robust_threshold": robust}
+
+
+def breakeven_ratio(E_c, E_ub, m_expt, T):
+    """Break-even mean-activity ratio r* = a_pm_sat / a_pm of a tier-1 exclusion at one class cutoff (nu_salt = 1).
+
+    The exclusion for a dilute electrolyte stands while E_ub + m_expt + m_sink < E_c with m_sink = 2 (R T / F) ln(a_pm_sat / a_pm)
+    (claims_redirect Section 2h), so it stands while the ratio stays below r* = exp[(E_c - E_ub - m_expt) / (2 R T / F)].
+    Zero headroom gives 1 (a saturated sink only); one decade of ratio costs 2 ln10 R T / F of headroom. A negative headroom
+    returns NOT_EXCLUDED_WITHOUT_CORRECTION, and a gap (None or NaN) in any input returns UNDETERMINED. E_c, E_ub, m_expt in V, T in K.
+    """
+    if any(_gap(v) for v in (E_c, E_ub, m_expt, T)):
+        return UNDETERMINED
+    headroom = E_c - E_ub - m_expt
+    if headroom < 0:
+        return NOT_EXCLUDED_WITHOUT_CORRECTION
+    return math.exp(headroom * FARADAY / (2.0 * GAS_CONSTANT * T))

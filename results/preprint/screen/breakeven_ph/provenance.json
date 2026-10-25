@@ -1,0 +1,26 @@
+{
+ "classes": [
+  "C_mid",
+  "C_hi"
+ ],
+ "code_sha": "9863ef632871a3c0a19a6edecd029cc3b5b778f1",
+ "edges": {
+  "C_hi": [
+   4.4,
+   4.5
+  ],
+  "C_mid": [
+   4.2,
+   4.3
+  ]
+ },
+ "git_dirty": false,
+ "ladder_file": "results/preprint/pourbaix/ph_w52/ladder_v3.csv",
+ "ladder_sha256": "595636ef1c7cfd774e27040f7a60f5f32ff7e55569525a7a84e009ef37354d6b",
+ "n_rows": 26,
+ "nu_salt": 1,
+ "session": "PH-W4.9",
+ "temperature_K": 298.15,
+ "thresholds_copy_file": "configs/preprint/thresholds.yaml",
+ "thresholds_copy_sha256": "5444a4a090dad6b532566499d63f405b8710e3b9470a0f4c99fdba35b096c74b"
+}
