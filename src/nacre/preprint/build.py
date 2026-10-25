@@ -70,7 +70,10 @@ def strip_journal_front(head):
     out, n = _JOURNAL_ART.subn("", out)
     if n < 3:
         raise PrepareError("template head: expected the DOI box and the journal footer, found %d" % n)
-    return out
+    # the SI provenance tables (lane W1) are long tables; the template loads no package for them
+    if out.count("\\begin{document}") != 1:
+        raise PrepareError("template head: \\begin{document} not found once")
+    return out.replace("\\begin{document}", "\\usepackage{longtable}\n\\begin{document}", 1)
 
 
 def guard_files(root):

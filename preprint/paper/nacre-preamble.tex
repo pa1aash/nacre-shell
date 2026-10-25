@@ -39,3 +39,6 @@
 % Dissolution vocabulary: an exclusion against dissolution ($K_2$) carries its own mark, explained in the regime-table
 % legend, never the tier-one oxidation footnote.
 \newcommand{\nacreDissolutionMark}{\textsuperscript{\ensuremath{\ddagger}}}
+% Sources of the SI provenance tables (lane W1, lit/corpus/si_table) print as DOIs that may break across lines;
+% defined here so the tables' own \providecommand fallback is not used.
+\newcommand{\paramcite}[1]{\nolinkurl{#1}}

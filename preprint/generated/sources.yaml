@@ -742,6 +742,19 @@ macros:
     unit: '\mathrm{V}'
     figure: fig7
     claim: CL-S03
+  # Margins of the cell rule in the SI derivation (theory/si_derivation.tex, P0-W3.4 report), from the parameter file (cp6 F4).
+  NumMexpt:
+    source: lit/params.yaml
+    key: params/window_margin_expt/value
+    format: .3f
+    unit: '\mathrm{V}'
+    claim: CL-M06
+  NumMwindow:
+    source: lit/params.yaml
+    key: params/window_margin/value
+    format: .3f
+    unit: '\mathrm{V}'
+    claim: CL-M06
   NumCellMarginExpt:
     source: results/preprint/screen/table_r2/summary.json
     key: claims/C5/tests/C5c_ox/margin_V

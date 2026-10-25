@@ -2046,7 +2046,7 @@ claims:
     type: physical relation
     polarity: claims
     evidence:
-      - {kind: derivation, ref: si:no-double-counting}
+      - {kind: derivation, ref: si:derivation}
       - {kind: figure, ref: Fig 1}
       - {kind: figure, ref: Fig 3}
       - {kind: record, ref: preprint/paper/sections/model.tex#CL-R05}
@@ -2228,7 +2228,7 @@ claims:
     polarity: claims
     evidence:
       - {kind: figure, ref: Fig 8}
-      - {kind: derivation, ref: si:anchor}
+      - {kind: derivation, ref: si:methods}
       - {kind: macro, ref: NumAnchorValue}
       - {kind: macro, ref: NumAnchorPriorQuantile}
     checkpoint: cp4

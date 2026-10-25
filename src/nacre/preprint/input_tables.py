@@ -108,9 +108,10 @@ def param_rows(docs):
                        Num("NumPar%sHi" % stem, "params/%s/max" % jkey, float(e["range"]["max"]), ".2f")]
             dois = si_table.dois_of(e, rows)
             missing += [d for d in dois if d not in keys]
-            cite = "\\cite{%s}" % ",".join(keys[d] for d in dois if d in keys) if dois else "--"
-            label = labels[pkey]["label"]
-            group.append(([_tex_text(label)], [val], rng, [PRIOR_WORD[fam]], [e.get("best_grade") or "--"], [cite]))
+            # reference numbers in the text line (\\citenum), not the article's superscript citation style
+            cite = ", ".join("\\citenum{%s}" % keys[d] for d in dois if d in keys) if dois else "--"
+            label = _conv_text(labels[pkey]["label"]).replace("beta-", "$\\beta$-").replace("alpha-", "$\\alpha$-")
+            group.append(([label], [val], rng, [PRIOR_WORD[fam]], [e.get("best_grade") or "--"], [cite]))
         out.append((title, group))
     if missing:
         raise InputTableError("sources of Table 2 with no refs.bib entry (add each with `nacre bib add --bib "
@@ -237,7 +238,7 @@ def _onset_parts(r, key, stem):
 def _undetermined_reason(r):
     s = r["budget_status"]
     if s.startswith("symbolic: expt route undetermined: "):
-        return "undetermined: no tabulated data for " + ", ".join("\\ce{%s}" % x.strip() for x in s.split(": ")[-1].split(","))
+        return "undetermined: no tabulated data for " + ", ".join(_conv_text(x.strip()) for x in s.split(": ")[-1].split(","))
     if s == "incomplete":
         return "undetermined: incomplete uncertainty budget"
     raise InputTableError("budget status not covered: %s" % s)
@@ -282,7 +283,8 @@ def dft_rows(docs):
         stem = re.sub(r"[^A-Za-z]", "", r["phase"].replace("2", "Two").replace("3", "Three").replace("4", "Four")
                       .replace("5", "Five").replace("6", "Six").replace("7", "Seven").replace("8", "Eight"))
         key = "dft/" + stem
-        cells = [["\\ce{%s}" % r["formula"]] if _FORMULA.match(r["formula"]) else [_tex_text(r["formula"])]]
+        name = _conv_text(r["phase"]).replace("b-TCP", "$\\beta$-TCP").replace("a-TCP", "$\\alpha$-TCP")
+        cells = [[name], ["\\ce{%s}" % r["formula"]] if _is_formula(r["formula"]) else [_tex_text(r["formula"])]]
         for col, name, fmt in (("expt_dfH_kJ", "Dfh", ".1f"), ("dft_minus_dfH_kJ", "Diff", ".1f"),
                                ("dft_minus_dfH_kJ_per_atom", "DiffAtom", ".1f")):
             v = _num(r[col]) if r[col] else None
@@ -340,9 +342,12 @@ _ION = re.compile(r"^([A-Z][a-z]?)([0-9]*)([+-])$")
 _ELEMENT_FORMULA = re.compile(r"^(?:(?:H|Li|C|O|P|Al|Ca|Si|Cl|Na|Mg|K)[0-9]*|\(|\)[0-9]*n?)+$")
 
 
+_ABBREVIATIONS = ("OCP", "ACP", "ACC", "HAp")   # phase names that spell element symbols
+
+
 def _is_formula(core):
     """A chemical formula: element symbols of the screen with counts and balanced parentheses, holding an element."""
-    return bool(_ELEMENT_FORMULA.match(core)) and core.count("(") == core.count(")") and re.search(r"[A-Z]", core) is not None
+    return core not in _ABBREVIATIONS and bool(_ELEMENT_FORMULA.match(core)) and core.count("(") == core.count(")") and re.search(r"[A-Z]", core) is not None
 
 
 def _conv_word(core):

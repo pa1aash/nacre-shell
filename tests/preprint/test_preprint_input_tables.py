@@ -27,11 +27,9 @@ def test_committed_outputs_are_a_fresh_generation():
 def test_no_digit_in_a_table_outside_macros_formulas_and_keys():
     for name in ("nacreParameterTable", "nacreBenchmarkTable", "nacreReactionTable", "nacreDftTable", "nacreConversionTable"):
         body = _body(name)
-        body = re.sub(r"\\ce\{[^}]*\}|\\cite\{[^}]*\}|\\begin\{tabular\}\{.*\}|\\multicolumn\{\d+\}|\\addlinespace\[[^]]*\]"
+        body = re.sub(r"\\ce\{[^}]*\}|\\cite(?:num)?\{[^}]*\}|\\begin\{tabular\}\{.*\}|\\multicolumn\{\d+\}|\\addlinespace\[[^]]*\]"
                       r"|\\setlength\{[^}]*\}\{[^}]*\}|\\Num[A-Za-z]+\{\}|\\log_\{10\}|K_\\mathrm\{sp\}|\\mathrm\{kJ\\,mol\^\{-1\}\}"
                       r"|\(\\ce\{[^}]*\}\)\$_n\$", "", body)
-        # labels of the parameter file name formulas in plain text (Li3PO4, H3PO4, Ca4H(PO4)3)
-        body = re.sub(r"\b(?:Li3PO4|H3PO4|Ca4H\(PO4\)3)\b", "", body)
         assert not re.search(r"[0-9]", body), (name, re.findall(r".{20}[0-9].{20}", body)[:3])
 
 
@@ -41,7 +39,8 @@ def test_table_two_carries_the_dissolution_inputs_with_cited_sources():
     rows = [l for l in body.splitlines() if l.endswith(" \\\\") and not l.startswith(("quantity", "\\multicolumn"))]
     assert len(keys) == 17 and len(rows) == len(keys)
     bib = refs.source(REPO).read_text(encoding="utf-8")
-    for key in re.findall(r"\\cite\{([^}]*)\}", body):
+    assert re.findall(r"\\citenum\{([^}]*)\}", body)
+    for key in re.findall(r"\\citenum\{([^}]*)\}", body):
         for k in key.split(","):
             assert re.search(r"@\w+\{%s," % re.escape(k), bib), k
 
@@ -68,7 +67,8 @@ def test_speciation_follows_the_registered_acid_constants():
 
 def test_methods_sets_both_tables_and_no_pending_marker():
     methods = (paths.paper(REPO) / "sections" / "methods.tex").read_text(encoding="utf-8")
-    assert "\\input{../generated/input_tables}" in methods
+    for doc in ("main.tex", "si/main_si.tex"):
+        assert "\\input{../generated/input_tables}" in (paths.paper(REPO) / doc).read_text(encoding="utf-8"), doc
     assert "\\nacreParameterTable" in methods and "\\nacreBenchmarkTable" in methods
     assert "parameter table generated from the parameter file" not in methods
     assert "benchmark table generated from the benchmark file" not in methods

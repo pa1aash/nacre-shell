@@ -8,26 +8,26 @@ quantity & value & sourced range & prior & grade & sources \\
 \midrule
 \multicolumn{6}{l}{\emph{solubility products, $\log_{10}K_\mathrm{sp}$ per formula unit}} \\
 \addlinespace[2pt]
-solubility product, calcite & \NumParKspCalciteVal{} & fixed & fixed & C & \cite{ucar2024exploiting} \\
-solubility product, aragonite & \NumParKspAragoniteVal{} & fixed & fixed & C & \cite{sawada2021pure} \\
-solubility product, ACC & \NumParKspAccVal{} & \NumParKspAccLo{} to \NumParKspAccHi{} & uniform & B & \cite{hamm2014reconciling,cavanaugh2019crystallization,bergwerff2021review,gebauer2008stable,kellermeier2013straightforward,purgstaller2019solubility} \\
-solubility product, hydroxyapatite & \NumParKspHapVal{} & \NumParKspHapLo{} to \NumParKspHapHi{} & uniform & A & \cite{moreno1968preparation} \\
-solubility product, ACP & \NumParKspAcpVal{} & \NumParKspAcpLo{} to \NumParKspAcpHi{} & uniform & D & \cite{combes2010amorphous} \\
-solubility product, beta-TCP & \NumParKspBtcpVal{} & \NumParKspBtcpLo{} to \NumParKspBtcpHi{} & normal & A & \cite{li2009solubility} \\
-solubility product, alpha-TCP & \NumParKspAtcpVal{} & fixed & fixed & D & \cite{combes2010amorphous} \\
-solubility product, OCP & \NumParKspOcpVal{} & \NumParKspOcpLo{} to \NumParKspOcpHi{} & normal & A & \cite{tung1988octacalcium} \\
-solubility product, OCP per Ca4H(PO4)3 & \NumParKspOcpCahVal{} & \NumParKspOcpCahLo{} to \NumParKspOcpCahHi{} & normal & A & \cite{tung1988octacalcium} \\
-solubility product, brushite & \NumParKspBrushiteVal{} & \NumParKspBrushiteLo{} to \NumParKspBrushiteHi{} & normal & A & \cite{gregory1970solubility} \\
-solubility product, Li3PO4 (concentration basis) & \NumParKspLiPhosVal{} & \NumParKspLiPhosLo{} to \NumParKspLiPhosHi{} & uniform & B & \cite{emmanuelndnucleation} \\
+solubility product, calcite & \NumParKspCalciteVal{} & fixed & fixed & C & \citenum{ucar2024exploiting} \\
+solubility product, aragonite & \NumParKspAragoniteVal{} & fixed & fixed & C & \citenum{sawada2021pure} \\
+solubility product, ACC & \NumParKspAccVal{} & \NumParKspAccLo{} to \NumParKspAccHi{} & uniform & B & \citenum{hamm2014reconciling}, \citenum{cavanaugh2019crystallization}, \citenum{bergwerff2021review}, \citenum{gebauer2008stable}, \citenum{kellermeier2013straightforward}, \citenum{purgstaller2019solubility} \\
+solubility product, hydroxyapatite & \NumParKspHapVal{} & \NumParKspHapLo{} to \NumParKspHapHi{} & uniform & A & \citenum{moreno1968preparation} \\
+solubility product, ACP & \NumParKspAcpVal{} & \NumParKspAcpLo{} to \NumParKspAcpHi{} & uniform & D & \citenum{combes2010amorphous} \\
+solubility product, $\beta$-TCP & \NumParKspBtcpVal{} & \NumParKspBtcpLo{} to \NumParKspBtcpHi{} & normal & A & \citenum{li2009solubility} \\
+solubility product, $\alpha$-TCP & \NumParKspAtcpVal{} & fixed & fixed & D & \citenum{combes2010amorphous} \\
+solubility product, OCP & \NumParKspOcpVal{} & \NumParKspOcpLo{} to \NumParKspOcpHi{} & normal & A & \citenum{tung1988octacalcium} \\
+solubility product, OCP per \ce{Ca4H(PO4)3} & \NumParKspOcpCahVal{} & \NumParKspOcpCahLo{} to \NumParKspOcpCahHi{} & normal & A & \citenum{tung1988octacalcium} \\
+solubility product, brushite & \NumParKspBrushiteVal{} & \NumParKspBrushiteLo{} to \NumParKspBrushiteHi{} & normal & A & \citenum{gregory1970solubility} \\
+solubility product, \ce{Li3PO4} (concentration basis) & \NumParKspLiPhosVal{} & \NumParKspLiPhosLo{} to \NumParKspLiPhosHi{} & uniform & B & \citenum{emmanuelndnucleation} \\
 \midrule
 \multicolumn{6}{l}{\emph{acid constants (dissociation, $\mathrm{p}K$)}} \\
 \addlinespace[2pt]
-first dissociation constant of carbonic acid & \NumParPkCarbonicAVal{} & \NumParPkCarbonicALo{} to \NumParPkCarbonicAHi{} & uniform & C & \cite{goldberg2002thermodynamic,ball1991users} \\
-second dissociation constant of carbonic acid & \NumParPkCarbonicBVal{} & \NumParPkCarbonicBLo{} to \NumParPkCarbonicBHi{} & uniform & C & \cite{goldberg2002thermodynamic,ball1991users} \\
-first dissociation constant of H3PO4 & \NumParPkPhosAVal{} & \NumParPkPhosALo{} to \NumParPkPhosAHi{} & uniform & C & \cite{tung1988octacalcium,carey2000measurement,li2009solubility} \\
-second dissociation constant of H3PO4 & \NumParPkPhosBVal{} & \NumParPkPhosBLo{} to \NumParPkPhosBHi{} & uniform & C & \cite{tung1988octacalcium,carey2000measurement,li2009solubility} \\
-third dissociation constant of H3PO4 & \NumParPkPhosCVal{} & \NumParPkPhosCLo{} to \NumParPkPhosCHi{} & uniform & C & \cite{tung1988octacalcium,carey2000measurement,li2009solubility} \\
-ionic product of water (pKw) & \NumParPkWaterVal{} & fixed & fixed & C & \cite{li2009solubility} \\
+first dissociation constant of carbonic acid & \NumParPkCarbonicAVal{} & \NumParPkCarbonicALo{} to \NumParPkCarbonicAHi{} & uniform & C & \citenum{goldberg2002thermodynamic}, \citenum{ball1991users} \\
+second dissociation constant of carbonic acid & \NumParPkCarbonicBVal{} & \NumParPkCarbonicBLo{} to \NumParPkCarbonicBHi{} & uniform & C & \citenum{goldberg2002thermodynamic}, \citenum{ball1991users} \\
+first dissociation constant of \ce{H3PO4} & \NumParPkPhosAVal{} & \NumParPkPhosALo{} to \NumParPkPhosAHi{} & uniform & C & \citenum{tung1988octacalcium}, \citenum{carey2000measurement}, \citenum{li2009solubility} \\
+second dissociation constant of \ce{H3PO4} & \NumParPkPhosBVal{} & \NumParPkPhosBLo{} to \NumParPkPhosBHi{} & uniform & C & \citenum{tung1988octacalcium}, \citenum{carey2000measurement}, \citenum{li2009solubility} \\
+third dissociation constant of \ce{H3PO4} & \NumParPkPhosCVal{} & \NumParPkPhosCLo{} to \NumParPkPhosCHi{} & uniform & C & \citenum{tung1988octacalcium}, \citenum{carey2000measurement}, \citenum{li2009solubility} \\
+ionic product of water (pKw) & \NumParPkWaterVal{} & fixed & fixed & C & \citenum{li2009solubility} \\
 \bottomrule
 \end{tabular}
 \endgroup
@@ -42,7 +42,7 @@ phase & framing & governing reaction (experimental route, solid \ce{LiClO4} sink
 brushite & crystalline & \ce{CaPH5O6 + 2 LiClO4 -> Ca(ClO4)2 + H3PO4 + H2O + 0.5 O2 + 2 Li} & \NumBenBrushiteEub{} & \NumBenBrushiteMargin{} & \NumBenBrushiteErr{} (outside the band) \\
 ACP ($\beta$-TCP reference) & crystalline & \ce{Ca3(PO4)2 + 2 LiClO4 -> Ca2P2O7 + Ca(ClO4)2 + 0.5 O2 + 2 Li} & \NumBenAcpEub{} & \NumBenAcpMargin{} & \NumBenAcpErr{} (benchmarked) \\
 HAp & crystalline & \ce{Ca5(PO4)3OH + 4 LiClO4 -> 1.5 Ca2P2O7 + 2 Ca(ClO4)2 + 0.5 H2O + O2 + 4 Li} & \NumBenHapEub{} & \NumBenHapMargin{} & \NumBenHapErr{} (benchmarked) \\
-OCP & crystalline & undetermined: no tabulated data for \ce{OCP} & -- & -- & unbenchmarked: no tabulated enthalpy \\
+OCP & crystalline & undetermined: no tabulated data for OCP & -- & -- & unbenchmarked: no tabulated enthalpy \\
 $\beta$-TCP & crystalline & \ce{Ca3(PO4)2 + 2 LiClO4 -> Ca2P2O7 + Ca(ClO4)2 + 0.5 O2 + 2 Li} & \NumBenBtcpEub{} & \NumBenBtcpMargin{} & \NumBenBtcpErr{} (benchmarked) \\
 $\alpha$-TCP & crystalline & \ce{Ca3(PO4)2 + 2 LiClO4 -> Ca2P2O7 + Ca(ClO4)2 + 0.5 O2 + 2 Li} & \NumBenAtcpEub{} & \NumBenAtcpMargin{} & \NumBenAtcpErr{} (benchmarked) \\
 \ce{Li3PO4} & crystalline & undetermined: no tabulated data for \ce{Li3PO4} & -- & -- & \NumBenLiOrthoErr{} (benchmarked) \\
@@ -75,8 +75,8 @@ ACP ($\beta$-TCP reference) & crystalline & \ce{Ca3(PO4)2 + 2 LiClO4 -> Ca2P2O7 
 HAp & crystalline & \ce{Ca5(PO4)3OH + 10 LiClO4 -> 5 Ca(ClO4)2 + 1.5 P2O5 + 0.5 H2O + 2.5 O2 + 10 Li} & \NumBenHapROneEub{} & \NumBenHapROneMargin{} & complete \\
 HAp & crystalline & \ce{Ca5(PO4)3OH + 4 LiClO4 -> 1.5 Ca2P2O7 + 2 Ca(ClO4)2 + 0.5 H2O + O2 + 4 Li} & \NumBenHapROneSEub{} & \NumBenHapROneSMargin{} & complete \\
 HAp & crystalline & \ce{Ca5(PO4)3OH + LiClO4 -> 1.5 Ca3(PO4)2 + 0.5 Ca(ClO4)2 + 0.5 H2O + 0.25 O2 + Li} & \NumBenHapRTwoEub{} & \NumBenHapRTwoMargin{} & complete \\
-OCP & crystalline & \ce{Ca8P6H12O29 + 16 LiClO4 -> 8 Ca(ClO4)2 + 3 P2O5 + 6 H2O + 4 O2 + 16 Li} & -- & -- & undetermined: no tabulated data for \ce{OCP} \\
-OCP & crystalline & \ce{Ca8P6H12O29 + 4 LiClO4 -> 3 Ca2P2O7 + 2 Ca(ClO4)2 + 6 H2O + O2 + 4 Li} & -- & -- & undetermined: no tabulated data for \ce{OCP} \\
+OCP & crystalline & \ce{Ca8P6H12O29 + 16 LiClO4 -> 8 Ca(ClO4)2 + 3 P2O5 + 6 H2O + 4 O2 + 16 Li} & -- & -- & undetermined: no tabulated data for OCP \\
+OCP & crystalline & \ce{Ca8P6H12O29 + 4 LiClO4 -> 3 Ca2P2O7 + 2 Ca(ClO4)2 + 6 H2O + O2 + 4 Li} & -- & -- & undetermined: no tabulated data for OCP \\
 $\beta$-TCP & crystalline & \ce{Ca3(PO4)2 + 6 LiClO4 -> 3 Ca(ClO4)2 + P2O5 + 1.5 O2 + 6 Li} & \NumBenBtcpROneEub{} & \NumBenBtcpROneMargin{} & complete \\
 $\beta$-TCP & crystalline & \ce{Ca3(PO4)2 + 2 LiClO4 -> Ca2P2O7 + Ca(ClO4)2 + 0.5 O2 + 2 Li} & \NumBenBtcpROneSEub{} & \NumBenBtcpROneSMargin{} & complete \\
 $\alpha$-TCP & crystalline & \ce{Ca3(PO4)2 + 6 LiClO4 -> 3 Ca(ClO4)2 + P2O5 + 1.5 O2 + 6 Li} & \NumBenAtcpROneEub{} & \NumBenAtcpROneMargin{} & complete \\
@@ -111,27 +111,27 @@ calcium carbonate (control) & crystalline & \ce{CaCO3 + 2 LiClO4 -> Ca(ClO4)2 + 
 \toprule
 phase & formula & $\Delta_\mathrm{f}H$ tabulated & database minus tabulated & per atom & benchmark \\
 \midrule
-\ce{P2O5} & \NumDftPTwoOFiveDfh{} & \NumDftPTwoOFiveDiff{} & \NumDftPTwoOFiveDiffAtom{} & outside the band \\
-\ce{H3PO4} & -- & -- & -- & unbenchmarked \\
-\ce{Ca5(PO4)3OH} & \NumDftHApDfh{} & \NumDftHApDiff{} & \NumDftHApDiffAtom{} & benchmarked \\
-\ce{Ca3(PO4)2} & \NumDftbTCPDfh{} & \NumDftbTCPDiff{} & \NumDftbTCPDiffAtom{} & benchmarked \\
-\ce{Ca3(PO4)2} & \NumDftaTCPDfh{} & \NumDftaTCPDiff{} & \NumDftaTCPDiffAtom{} & benchmarked \\
-\ce{Ca8P6H12O29} & -- & -- & -- & unbenchmarked \\
-\ce{CaPH5O6} & \NumDftbrushiteDfh{} & \NumDftbrushiteDiff{} & \NumDftbrushiteDiffAtom{} & outside the band \\
-\ce{CaHPO4} & \NumDftmonetiteDfh{} & \NumDftmonetiteDiff{} & \NumDftmonetiteDiffAtom{} & outside the band \\
-\ce{Ca2P2O7} & \NumDftCaTwoPTwoOSevenDfh{} & \NumDftCaTwoPTwoOSevenDiff{} & \NumDftCaTwoPTwoOSevenDiffAtom{} & outside the band \\
-\ce{AlPO4} & \NumDftAlPOFourDfh{} & \NumDftAlPOFourDiff{} & \NumDftAlPOFourDiffAtom{} & outside the band \\
-\ce{Li3PO4} & \NumDftLiThreePOFourDfh{} & \NumDftLiThreePOFourDiff{} & \NumDftLiThreePOFourDiffAtom{} & benchmarked \\
-\ce{LiPO3} & \NumDftLiPOThreeDfh{} & \NumDftLiPOThreeDiff{} & \NumDftLiPOThreeDiffAtom{} & outside the band \\
-\ce{LiPO3} & \NumDftLiPOThreeglassDfh{} & \NumDftLiPOThreeglassDiff{} & \NumDftLiPOThreeglassDiffAtom{} & unbenchmarked \\
-\ce{Ca(PO3)2} & \NumDftCaPOThreeTwoglassDfh{} & \NumDftCaPOThreeTwoglassDiff{} & \NumDftCaPOThreeTwoglassDiffAtom{} & unbenchmarked \\
-\ce{CaSiO3} & \NumDftCaSiOThreeDfh{} & \NumDftCaSiOThreeDiff{} & \NumDftCaSiOThreeDiffAtom{} & outside the band \\
-\ce{Ca2SiO4} & \NumDftCaTwoSiOFourDfh{} & \NumDftCaTwoSiOFourDiff{} & \NumDftCaTwoSiOFourDiffAtom{} & outside the band \\
-\ce{Li2SiO3} & \NumDftLiTwoSiOThreeDfh{} & \NumDftLiTwoSiOThreeDiff{} & \NumDftLiTwoSiOThreeDiffAtom{} & benchmarked \\
-\ce{AlHO2} & -- & -- & -- & unbenchmarked \\
-\ce{Al(OH)3} & \NumDftgibbsiteDfh{} & \NumDftgibbsiteDiff{} & \NumDftgibbsiteDiffAtom{} & outside the band \\
-\ce{CaCO3} & -- & -- & -- & unbenchmarked \\
-\ce{LiClO4} & \NumDftLiClOFourDfh{} & \NumDftLiClOFourDiff{} & \NumDftLiClOFourDiffAtom{} & outside the band \\
+\ce{P2O5} & \ce{P2O5} & \NumDftPTwoOFiveDfh{} & \NumDftPTwoOFiveDiff{} & \NumDftPTwoOFiveDiffAtom{} & outside the band \\
+\ce{H3PO4} & \ce{H3PO4} & -- & -- & -- & unbenchmarked \\
+HAp & \ce{Ca5(PO4)3OH} & \NumDftHApDfh{} & \NumDftHApDiff{} & \NumDftHApDiffAtom{} & benchmarked \\
+$\beta$-TCP & \ce{Ca3(PO4)2} & \NumDftbTCPDfh{} & \NumDftbTCPDiff{} & \NumDftbTCPDiffAtom{} & benchmarked \\
+$\alpha$-TCP & \ce{Ca3(PO4)2} & \NumDftaTCPDfh{} & \NumDftaTCPDiff{} & \NumDftaTCPDiffAtom{} & benchmarked \\
+OCP & \ce{Ca8P6H12O29} & -- & -- & -- & unbenchmarked \\
+brushite & \ce{CaPH5O6} & \NumDftbrushiteDfh{} & \NumDftbrushiteDiff{} & \NumDftbrushiteDiffAtom{} & outside the band \\
+monetite & \ce{CaHPO4} & \NumDftmonetiteDfh{} & \NumDftmonetiteDiff{} & \NumDftmonetiteDiffAtom{} & outside the band \\
+\ce{Ca2P2O7} & \ce{Ca2P2O7} & \NumDftCaTwoPTwoOSevenDfh{} & \NumDftCaTwoPTwoOSevenDiff{} & \NumDftCaTwoPTwoOSevenDiffAtom{} & outside the band \\
+\ce{AlPO4} & \ce{AlPO4} & \NumDftAlPOFourDfh{} & \NumDftAlPOFourDiff{} & \NumDftAlPOFourDiffAtom{} & outside the band \\
+\ce{Li3PO4} & \ce{Li3PO4} & \NumDftLiThreePOFourDfh{} & \NumDftLiThreePOFourDiff{} & \NumDftLiThreePOFourDiffAtom{} & benchmarked \\
+\ce{LiPO3} & \ce{LiPO3} & \NumDftLiPOThreeDfh{} & \NumDftLiPOThreeDiff{} & \NumDftLiPOThreeDiffAtom{} & outside the band \\
+\ce{LiPO3} glass & \ce{LiPO3} & \NumDftLiPOThreeglassDfh{} & \NumDftLiPOThreeglassDiff{} & \NumDftLiPOThreeglassDiffAtom{} & unbenchmarked \\
+\ce{Ca(PO3)2} glass & \ce{Ca(PO3)2} & \NumDftCaPOThreeTwoglassDfh{} & \NumDftCaPOThreeTwoglassDiff{} & \NumDftCaPOThreeTwoglassDiffAtom{} & unbenchmarked \\
+\ce{CaSiO3} & \ce{CaSiO3} & \NumDftCaSiOThreeDfh{} & \NumDftCaSiOThreeDiff{} & \NumDftCaSiOThreeDiffAtom{} & outside the band \\
+\ce{Ca2SiO4} & \ce{Ca2SiO4} & \NumDftCaTwoSiOFourDfh{} & \NumDftCaTwoSiOFourDiff{} & \NumDftCaTwoSiOFourDiffAtom{} & outside the band \\
+\ce{Li2SiO3} & \ce{Li2SiO3} & \NumDftLiTwoSiOThreeDfh{} & \NumDftLiTwoSiOThreeDiff{} & \NumDftLiTwoSiOThreeDiffAtom{} & benchmarked \\
+boehmite & \ce{AlHO2} & -- & -- & -- & unbenchmarked \\
+gibbsite & \ce{Al(OH)3} & \NumDftgibbsiteDfh{} & \NumDftgibbsiteDiff{} & \NumDftgibbsiteDiffAtom{} & outside the band \\
+\ce{CaCO3} & \ce{CaCO3} & -- & -- & -- & unbenchmarked \\
+\ce{LiClO4} & \ce{LiClO4} & \NumDftLiClOFourDfh{} & \NumDftLiClOFourDiff{} & \NumDftLiClOFourDiffAtom{} & outside the band \\
 \bottomrule
 \end{tabular}
 \endgroup
