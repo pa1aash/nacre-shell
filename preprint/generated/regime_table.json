@@ -1,7 +1,7 @@
 {
  "generator": "nacre preprint regime-table",
  "inputs": {
-  "configs/preprint/thresholds.yaml": "37c17b673ccef4b8526b41acefbccb6e31dbb1f247848c6667355c606686cb61",
+  "configs/preprint/thresholds.yaml": "5444a4a090dad6b532566499d63f405b8710e3b9470a0f4c99fdba35b096c74b",
   "figures/out/tables/al_salt_ladder.csv": "44635488428bc08439030849796d2eaee34ddf0c6a7d01b5e37741d5c41d44e5",
   "lit/corpus/gaps.md": "9e2a788ff67a8039a496989a8c40ed43fe16e3ccdeeba9b1c9b2191b12ef2eb8",
   "lit/params.yaml": "85ebf54edb2026532749855e5e16226838888c51a98a51ee703339639c660cd5",
@@ -17,7 +17,7 @@
   "results/preprint/screen/k2_perph_ph3/perph.json": "74069749a7d0b5d8be745e533676649c8e7276822ef738189afa37caa518c431",
   "results/preprint/screen/phosphate_films_ph/summary.json": "9fa9c33984afe5a1d1c326c57a01b94bea6b52e3c69f2f6709f6a1982e4ea800",
   "results/preprint/screen/precision_ph/precision_map.json": "be5dcb073c204fd63de01631b1713c2878391d3d0b8d3785849f5385a54f20df",
-  "theory/thresholds.md": "6e4f71e77fd56134ebb9b0b106f1c9f1c18397ab49191d291256f0b1e9aac45f"
+  "theory/thresholds.md": "6cacead75ded31a94863c4110039eb7eebb246bedc1e84416bc704c072bb52fb"
  },
  "numbers": {
   "acid": {

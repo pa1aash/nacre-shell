@@ -321,3 +321,32 @@ def check_pdf_schematic(pdf_path, min_line_pt, widths_pt, max_height_pt, text_fr
             if thin:
                 problems.append("schematic strokes below %.1f pt: %s" % (min_line_pt, ", ".join("%g" % t for t in thin)))
     return problems
+
+
+# ------------------------------------------------------------------------- raster figures
+
+
+def check_raster(png_path, dpi, widths_in, max_height_in):
+    """Problems for a rendered figure PNG (nacre.figs.rendered): 8-bit RGB without an alpha channel
+    or text chunks, the dpi recorded, exactly one RSC column wide (within a pixel) and no taller
+    than the RSC maximum. Text inside a raster cannot be read back; the scene check in
+    nacre.figs.rendered refuses text objects, and the panel letters are set outside the artwork."""
+    from PIL import Image
+    problems = []
+    with Image.open(png_path) as im:
+        if im.format != "PNG":
+            problems.append("raster figure is %s, not PNG" % im.format)
+        if im.mode != "RGB":
+            problems.append("raster figure mode %s is not 8-bit RGB (no alpha channel)" % im.mode)
+        extra = sorted(k for k in im.info if k not in ("dpi", "gamma", "srgb"))
+        if extra:
+            problems.append("raster figure carries metadata chunks: %s" % ", ".join(extra))
+        got = im.info.get("dpi")
+        if not got or abs(got[0] - dpi) > 0.5 or abs(got[1] - dpi) > 0.5:
+            problems.append("raster figure dpi %s is not %d" % (got, dpi))
+        w, h = im.size
+    if not any(abs(w - round(x * dpi)) <= 1 for x in widths_in):
+        problems.append("raster figure width %d px is not an RSC column width at %d dpi" % (w, dpi))
+    if h > max_height_in * dpi + 1:
+        problems.append("raster figure height %d px exceeds the RSC maximum" % h)
+    return problems

@@ -28,8 +28,11 @@ The screen does not test layered architecture or polymorph structure, and altern
 
 \begin{figure}[t]
   \centering
-  \nacreMissing{hero render, pending}
-  \caption{Illustrative construction; the screen does not test layered architecture or polymorph structure. (a) A layered carbonate film on the hydrated alumina of an aluminium collector in water, the nacre lineage of the slurry stage. (b) The kind of condensed phosphate film that the in-situ routes of Section~\ref{sec:routes} aim to form, the bone lineage of the cell stage; the screen does not show that it forms.}
+  \IfFileExists{\nacreRepoRoot/figures/out/fig1.pdf}{%
+    \nacreFigOnePanelLetters
+    \includegraphics[width=\linewidth]{\nacreRepoRoot/figures/out/fig1.pdf}}%
+    {\nacreMissing{hero render, pending}}
+  \caption{Illustrative construction. (a) Processing: aluminium in water with \ce{Ca^{2+}} and \ce{CO3^{2-}}. (b) Cell: a condensed phosphate chain on aluminium in propylene carbonate with \ce{Li+} and \ce{ClO4-}; an open candidate, not a result (carbonate and hydroxyapatite are thermodynamically excluded\nacreExcludedMark\ at the higher cutoff classes). Ion and molecule positions are schematic and have no quantitative meaning; the \ce{P-O} and \ce{Cl-O} lengths are drawn at one normalised schematic length, equal to the carbonate \ce{C-O} length. Nothing shows whether or how a film forms. Layering and polymorph structure are not tested by the screen.}
   \label{fig:hero}
 \end{figure}
 
