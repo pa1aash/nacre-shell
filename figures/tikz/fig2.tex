@@ -1,8 +1,6 @@
 % Fig. 2: the mechanism chain, panels a-d left to right (illustrative construction, not a
 % simulated structure). No text (R7): panel letters are set by the manuscript outside the
 % artwork, and every identification is in figures/src/captions/fig2.md, by position.
-% The dashed boxes with diagonals are placeholders for the small renders of lane p0-w7
-% (session P0-W7.3); they are replaced, not removed, when those renders exist.
 % Built by `nacre figs`.
 \documentclass[tikz,border=0pt]{standalone}
 \input{schematic_preamble.tex}
@@ -13,7 +11,6 @@
 \begin{tikzpicture}
 \useasboundingbox (0,0) rectangle (17.1,4.6);
 \foreach \x in {0.05,4.3,8.55,12.8} {\fill[statebox] (\x,0.15) rectangle ++(4.25,4.3);}
-\foreach \x in {0.05,4.3,8.55,12.8} {\placeholder{\x+2.75}{3.0}{\x+4.1}{4.3}}
 
 % ------------------------------------------------- a: adhesion in water, water displaced
 \begin{scope}[shift={(0.05,0)}]

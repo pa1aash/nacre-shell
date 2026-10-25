@@ -44,7 +44,7 @@ def _manifest():
 def test_ladder_input_is_the_registered_file():
     assert upstream.entry("ladder_v3", REPO)["sha256"] == LADDER_SHA
     upstream.snapshot_bytes("ladder_v3", REPO)  # raises on a mismatch
-    rec = _manifest()["figures"]["fig9"]
+    rec = _manifest()["figures"]["fig15"]
     assert rec["input_sha256"] == LADDER_SHA and rec["input_source"]["owner"] == "p0-w5"
 
 
@@ -95,7 +95,7 @@ def test_passivation_windows_read_the_governing_and_reference_rows():
     assert w[1e-4]["governing"][0] > w[1e-4]["reference"][0]  # inside the crystalline window
 
 
-@pytest.mark.parametrize("fid", ["fig9", "fig10", "fig11", "fig12", "fig14", "fig15", "fig17"])
+@pytest.mark.parametrize("fid", ["fig10", "fig11", "fig14", "fig15", "fig17"])
 def test_new_captions_stay_short_and_avoid_banned_words(fid):
     text = (REPO / "figures/src/captions" / (fid + ".md")).read_text()
     draft = re.search(r"^## Draft\n(.*?)(?=^## |\Z)", text, re.S | re.M).group(1).strip()

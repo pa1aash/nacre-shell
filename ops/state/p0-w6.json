@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W6.7",
+  "last_session": "PH-W6.8",
   "status": "DONE",
   "day": 7,
   "palette_sha": "9307edcac3e6a014920e02ed8e8a855c4d56660e",
@@ -29,7 +29,6 @@
   "artifacts": [
     "figures/out/fig3.pdf",
     "figures/out/fig4.pdf",
-    "figures/out/fig5.pdf",
     "figures/out/fig7.pdf",
     "figures/out/manifest.json",
     "figures/out/cvd/",
@@ -65,9 +64,11 @@
     "ops/reports/P0-W6.PH-W6.6.md",
     "src/nacre/figs/k1table.py",
     "figures/src/fig9.py",
-    "figures/out/fig9.pdf",
     "tests/figs/test_figs_fig9_table.py",
-    "ops/reports/P0-W6.PH-W6.7.md"
+    "ops/reports/P0-W6.PH-W6.7.md",
+    "figures/src/dropped.yaml",
+    "tests/figs/test_figs_release_set.py",
+    "ops/reports/P0-W6.PH-W6.8.md"
   ],
   "notes": [
     "N18 font fallback explicit and recorded in provenance; RDKit tests font-independent (Linux CI confirmation pending on this push)",
@@ -84,6 +85,7 @@
     "PH-W6.3c-hero: fig1 rebuilt as a molecular scene (generated Al(111), G2 water, RDKit PC, TM-030 C-O, schematic P-O/Cl-O), two renders byte-identical; Cl-phosphate 2.7 and Ca-carbonate 16.8 CVD dE recorded, not gated",
     "PH-W6.5: thresholds, regime_table and symbols re-pinned (source branch p0-w8); five caption requests retired; hero Cl slate, Cl-phosphate dE 75.0 gated, sub-20 pairs recorded in manifest (H-phosphate 15.3, Ca-carbonate 16.8, C-Li 18.2); fig15 and fig17 images unchanged, provenance only",
     "PH-W6.6: fig15 K1 cells read from regime_table.csv (60 of 60 match, test added), undetermined neutral grey; fig17 panel b open-ended hatched bars; fig14 typeset labels and K1 rows collapsed; fig1 caption only; no pin moved",
-    "PH-W6.7: fig9 grey undetermined and K1 cells from regime_table.csv (60 of 60), shared k1table; 13 captions rewritten to at most 3 short sentences; no pin moved"
+    "PH-W6.7: fig9 grey undetermined and K1 cells from regime_table.csv (60 of 60), shared k1table; 13 captions rewritten to at most 3 short sentences; no pin moved",
+    "PH-W6.8: fig2 dashed boxes removed; fig15/fig17 cross key and fig15 key/brushite sentence (NumRegCrossBrushiteHi); fig5, fig9, fig12 dropped from the release set (figures/src/dropped.yaml, sources kept, no re-pin); G10 release-set test; W8 translator needs a dagger mapping"
   ]
 }
