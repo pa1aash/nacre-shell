@@ -206,3 +206,33 @@ def test_the_head_carries_no_journal_front_matter():
     assert "\\nacreTitle" in head and "\\nacreAuthors" in head and "\\nacreAbstract" in head
     with pytest.raises(build.PrepareError):
         build.strip_journal_front(head)          # a head without the journal block is refused, not passed through
+
+
+# Draft markers that stay until a later session: the patent citations (cp6 F15) and the local-only AI-use
+# disclosure. Every other pending-input marker, and the debris below, must be gone from the built text.
+LATER_PENDING = ("patent", "AI-use")    # leading words of "patent citations, pending" and the AI-use disclosure
+DEBRIS = ("still to come", "macroNum", "Journal Name", "ARTICLE TYPE", "Received Date", "00.0000/")
+
+
+@NEEDS_BUILD
+@pytest.mark.skipif(not HAVE_PDFTOTEXT, reason="needs pdftotext")
+@pytest.mark.parametrize("pdf", ["main.pdf", "si/main_si.pdf"])
+def test_built_text_has_no_debris_or_unplanned_pending_input(draft_build, pdf):
+    assert draft_build.returncode == 0
+    text = " ".join(_pdf_pages(paths.build(REPO) / "draft" / pdf, layout=False))
+    flat = re.sub(r"\s+", " ", text)
+    for d in DEBRIS:
+        assert d not in flat, (pdf, d)
+    pending = re.findall(r"\[pending input: ([^\]]*)\]", flat)
+    assert [p for p in pending if not p.startswith(LATER_PENDING)] == [], (pdf, pending)
+
+
+def test_sources_carry_no_debris_and_only_the_later_missing_inputs():
+    # the source-level half of the check above, without a build: every \nacreMissing left names a later item
+    from nacre.preprint import texscan
+    for f in texscan.manuscript_tex(REPO):
+        text = "\n".join(texscan.strip_comment(l) for l in f.read_text(encoding="utf-8").splitlines())
+        for d in ("still to come", "macroNum", "Journal Name"):
+            assert d not in text, (f.name, d)
+        for arg in re.findall(r"\\nacreMissing\{([^}]*)\}", text):
+            assert arg.startswith(LATER_PENDING) or "pending}" in arg or arg.endswith(", pending"), (f.name, arg)
