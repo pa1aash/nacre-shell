@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W6.3c-hero",
+  "last_session": "PH-W6.5",
   "status": "DONE",
   "day": 7,
   "palette_sha": "9307edcac3e6a014920e02ed8e8a855c4d56660e",
@@ -17,11 +17,13 @@
     "thresholds": "p0-w4 configs/preprint/thresholds.yaml@4ed8fcf",
     "retro_schema": "p0-w2 preprint/retrodiction/SCHEMA.md@4ded6c7",
     "retro_cases": "p0-w2 preprint/retrodiction/cases.yaml@4ded6c7",
-    "symbols": "p0-w3 theory/symbols.yaml@4c0a3b0",
+    "symbols": "p0-w3 theory/symbols.yaml@2f6aec1 (source branch p0-w8)",
     "retro_results": "p0-w2 preprint/retrodiction/results/results.json@2a1f386",
     "screen_table_r2": "p0-w4 results/preprint/screen/table_r2/summary.json@5766c18",
     "screen_ignorance": "p0-w4 results/preprint/screen/ignorance/summary.json@eb6be52",
-    "merged_tree": "origin/preprint/p0@227d997: I2.6 not landed, no owner file matches"
+    "merged_tree": "origin/preprint/p0@227d997: I2.6 not landed, no owner file matches",
+    "thresholds_screen_ph": "p0-w4 configs/preprint/thresholds.yaml@597ad43 (block v11, source branch p0-w8)",
+    "regime_table": "p0-w8 preprint/generated/regime_table.csv@265b095 (source branch p0-w8)"
   },
   "fig3_w3_commit": "f23632d91c4a47fab4b7ff6dfa46e2315e6d4ea6",
   "artifacts": [
@@ -58,7 +60,8 @@
     "tests/figs/test_figs_rendered.py",
     "ops/reports/P0-W6.PH-W6.3b.md",
     "src/nacre/figs/hero_geometry.py",
-    "ops/reports/P0-W6.PH-W6.3c-hero.md"
+    "ops/reports/P0-W6.PH-W6.3c-hero.md",
+    "ops/reports/P0-W6.PH-W6.5.md"
   ],
   "notes": [
     "N18 font fallback explicit and recorded in provenance; RDKit tests font-independent (Linux CI confirmation pending on this push)",
@@ -72,6 +75,7 @@
     "PH-W6.3: fig17 stability map, fig15 per pH with high-dose hatch, fig13 dropped (Al-salt table CSV, W8 table request), PH-W6.2 row count corrected to 32",
     "PH-W6.4: caption macros renamed to registered ones, 9 requests remain, regime_table pin unchanged (needs a run against preprint/p0 after W8 merges), fig16 left a stub",
     "PH-W6.3b: hero fig1 rendered in Blender, two renders byte-identical, checker.check_raster added",
-    "PH-W6.3c-hero: fig1 rebuilt as a molecular scene (generated Al(111), G2 water, RDKit PC, TM-030 C-O, schematic P-O/Cl-O), two renders byte-identical; Cl-phosphate 2.7 and Ca-carbonate 16.8 CVD dE recorded, not gated"
+    "PH-W6.3c-hero: fig1 rebuilt as a molecular scene (generated Al(111), G2 water, RDKit PC, TM-030 C-O, schematic P-O/Cl-O), two renders byte-identical; Cl-phosphate 2.7 and Ca-carbonate 16.8 CVD dE recorded, not gated",
+    "PH-W6.5: thresholds, regime_table and symbols re-pinned (source branch p0-w8); five caption requests retired; hero Cl slate, Cl-phosphate dE 75.0 gated, sub-20 pairs recorded in manifest (H-phosphate 15.3, Ca-carbonate 16.8, C-Li 18.2); fig15 and fig17 images unchanged, provenance only"
   ]
 }

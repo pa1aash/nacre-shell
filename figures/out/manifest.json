@@ -164,10 +164,10 @@
    "aux": {
     "acid": "results/preprint/screen/k2_acid_ph2/summary.json@f648d3a (p0-w4)",
     "alkaline": "results/preprint/screen/k2_alkaline_ph2/summary.json@30f194d (p0-w4)",
-    "cutoffs": "configs/preprint/thresholds.yaml@2345f00 (p0-w4)",
+    "cutoffs": "configs/preprint/thresholds.yaml@597ad43 (p0-w4)",
     "k2": "results/preprint/screen/k2_grid_ph/summary.json@8612b89 (p0-w4)",
     "perph": "results/preprint/screen/k2_perph_ph2/perph.csv@5a1af81 (p0-w4)",
-    "regime_table": "preprint/generated/regime_table.csv@90d60c9 (p0-w8)"
+    "regime_table": "preprint/generated/regime_table.csv@265b095 (p0-w8)"
    },
    "font": {
     "family": "Arial",
@@ -205,7 +205,7 @@
    "aux": {
     "acid": "results/preprint/screen/k2_acid_ph2/summary.json@f648d3a (p0-w4)",
     "alkaline": "results/preprint/screen/k2_alkaline_ph2/summary.json@30f194d (p0-w4)",
-    "cutoffs": "configs/preprint/thresholds.yaml@2345f00 (p0-w4)",
+    "cutoffs": "configs/preprint/thresholds.yaml@597ad43 (p0-w4)",
     "k2": "results/preprint/screen/k2_grid_ph/summary.json@8612b89 (p0-w4)",
     "ladder": "results/preprint/pourbaix/ph_w52/ladder_v3.csv@73316df (p0-w5)"
    },
@@ -556,9 +556,9 @@
      0.0
     ],
     "Cl": [
-     0.122,
-     0.941,
-     0.122
+     0.12,
+     0.16,
+     0.22
     ],
     "H": [
      1.0,
@@ -586,13 +586,30 @@
      0.2959
     ]
    },
-   "palette_sha256": "e6b6308663d0b4be5f2f8c7c1387b517ed8da6700605bd48c00148b3ed4aa8f6",
+   "palette_sha256": "49d1046d370b4485f1553ea3f6dd299800d345095018901f513940ad3d39a189",
    "palette_min_delta_e_solids": 21.0,
-   "palette_rule": "slab, carbonate and phosphate pairwise, and slab against every class, >= delta_e_min",
+   "palette_rule": "slab, carbonate and phosphate pairwise, Cl against phosphate, and slab against every class, >= delta_e_min",
    "palette_min_delta_e_all_classes": [
-    2.7,
-    "Cl",
+    15.3,
+    "H",
     "phosphate"
+   ],
+   "palette_pairs_below_delta_e_min_recorded": [
+    [
+     15.3,
+     "H",
+     "phosphate"
+    ],
+    [
+     16.8,
+     "Ca",
+     "carbonate"
+    ],
+    [
+     18.2,
+     "C",
+     "Li"
+    ]
    ],
    "geometry_sha256": "8ba0f873b3d5158022ebd37e90c3700f94c21a9c167fd006b050e55c9286a001",
    "geometry_sources": {
@@ -637,18 +654,18 @@
    },
    "renders": 2,
    "render_hashes": [
-    "d918157e69a56e3a3421123619c68afd8884817931796d63dba0286a918e8bd9",
-    "d918157e69a56e3a3421123619c68afd8884817931796d63dba0286a918e8bd9"
+    "2114ca0128455194b343a8feb6ac1651f7d8f746a5195a214074210aad3c842c",
+    "2114ca0128455194b343a8feb6ac1651f7d8f746a5195a214074210aad3c842c"
    ],
    "render_hashes_identical": true,
    "reproducibility": "byte-identical across 2 renders",
    "font": "none (no text)",
    "outputs": {
-    "figures/out/fig1.png": "d918157e69a56e3a3421123619c68afd8884817931796d63dba0286a918e8bd9",
-    "figures/out/fig1.pdf": "ed375dce42123a42578d5023bb89facd37b64f05a72c3d62d64736465e15f088",
-    "figures/out/cvd/fig1_deuteranopia.png": "786492e9ac416b2bdd5374087e33ba2614c63d184c39479ed7ae3dffd3d47296",
-    "figures/out/cvd/fig1_protanopia.png": "1b3a44892ba92881417a17d80cd047928acfe130c054e85fc14aa51bcdaafd26",
-    "figures/out/cvd/fig1_tritanopia.png": "9df5d27c9075636dc19dd75635393617b7a811b004cec4b47a783a710000546e"
+    "figures/out/fig1.png": "2114ca0128455194b343a8feb6ac1651f7d8f746a5195a214074210aad3c842c",
+    "figures/out/fig1.pdf": "86211f728237dfbadcd7c96c4b08d6fa860fa872091e2d928344345849c059b2",
+    "figures/out/cvd/fig1_deuteranopia.png": "72a34b2dc3d1b1197304d433be877a64c26f97a1aff5ba2522b7a2ce21e04a04",
+    "figures/out/cvd/fig1_protanopia.png": "569dd3dce1df26436c2d1fcda4c852d690c3e9f03ce1af54b5d1055e83d09b34",
+    "figures/out/cvd/fig1_tritanopia.png": "5e26da704b652f477a156c2ce6dc313af7351d24a55ca62cc18f3bea9386fc05"
    },
    "checker": "pass (raster: size, mode, no text chunks; PDF wrapper: no text; scene: no text objects)"
   }

@@ -182,13 +182,13 @@ entries:
     owner: p0-w8
     branch: preprint/p0-w8
     path: preprint/generated/regime_table.csv
-    commit: 90d60c933e3afaf46984f13da71b5eb6c0af0a34
-    branch_head: 90d60c933e3afaf46984f13da71b5eb6c0af0a34
+    commit: 265b0959bdf7d9ba61f86bc2d335707214f9ac4a
+    branch_head: 0e7da44eb8cf3c586bfd1f002fe2ba9af1f3f258
     snapshot: preprint/generated/regime_table.csv
-    sha256: aa754f357dfce1db31c36a20d62e2dad7f1cc568694ea7add9ff840d7905e15a
+    sha256: c9495e501c6b735898490ba131602b1dd219d53ef65eb938a4a355b487d4e0cc
     merged_tree:
       ref: preprint/p0-w6
-      head: ea0acf4800440485df15d21ffe86821fe7160ced
+      head: 31bfd348a52e089d562c9ae424c59b5684405df0
       same_bytes: true
     used_for: 'fig15 cross-check: the first-pass pH of the acid-adjusted column of the regime table'
   results_schema:
@@ -279,15 +279,15 @@ entries:
   symbols:
     kind: contract
     owner: p0-w3
-    branch: preprint/p0
+    branch: preprint/p0-w8
     path: theory/symbols.yaml
-    commit: 89fc9de83f0371f9ef560aad096ef988b37dd99c
-    branch_head: 9544eef9309a7383da8a2f1053715d96efadc84e
+    commit: 2f6aec1f95e23e06521407d5e9f23fbac1814c11
+    branch_head: 0e7da44eb8cf3c586bfd1f002fe2ba9af1f3f258
     snapshot: theory/symbols.yaml
-    sha256: 201acda3b6be2fe82bb409c6fb87620157833505de83372d3929416e0d169d01
+    sha256: 402c8ead9047b00b80559d06d35eeae879cac8c3adf435684f6f021e611f08fb
     merged_tree:
-      ref: origin/preprint/p0
-      head: 9544eef9309a7383da8a2f1053715d96efadc84e
+      ref: preprint/p0-w6
+      head: 81382f51acf7f8e02186a8fa0b57b7fe0d3e7250
       same_bytes: true
     used_for: axis titles and parameter labels (theory symbol ids)
   thresholds:
@@ -307,14 +307,14 @@ entries:
   thresholds_screen_ph:
     kind: data
     owner: p0-w4
-    branch: preprint/p0
+    branch: preprint/p0-w8
     path: configs/preprint/thresholds.yaml
-    commit: 2345f00813d127e02496c3fd474d09f3b374427c
-    branch_head: 693a59020f5544a96f8904a27c04522a9725dc11
+    commit: 597ad43525f818079756e39cb759097a61f3b750
+    branch_head: 0e7da44eb8cf3c586bfd1f002fe2ba9af1f3f258
     snapshot: configs/preprint/thresholds.yaml
-    sha256: 37c17b673ccef4b8526b41acefbccb6e31dbb1f247848c6667355c606686cb61
+    sha256: 5444a4a090dad6b532566499d63f405b8710e3b9470a0f4c99fdba35b096c74b
     merged_tree:
       ref: preprint/p0-w6
-      head: 693a59020f5544a96f8904a27c04522a9725dc11
+      head: cd9e9c452fa8f728c48f5799a99a08ddbc078f34
       same_bytes: true
     used_for: 'fig9 tick labels: the registered cutoff classes (screen_ph.margins_v6.cutoff_classes)'
