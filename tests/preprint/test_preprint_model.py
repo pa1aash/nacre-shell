@@ -189,5 +189,7 @@ def test_hero_is_hooked_with_panel_letters_outside_the_image():
     intro = (paths.paper(REPO) / "sections" / "introduction.tex").read_text(encoding="utf-8")
     fig = intro[intro.index(r"\begin{figure}"):intro.index(r"\label{fig:hero}")]
     assert fig.index(r"\nacreFigOnePanelLetters") < fig.index(r"\includegraphics") and "figures/out/fig1.pdf" in fig
-    assert "Nothing shows whether or how a film forms." in fig and "polymorph structure are not tested by the screen" in fig
-    assert "schematic length" in fig and r"\ce{P-O}" in fig and r"\ce{Cl-O}" in fig
+    # PH-W8.7: the honesty statements of the hero, compressed into a caption of three sentences
+    assert "nothing shows whether or how a film forms" in fig.lower() and "polymorph structure are not tested by the screen" in fig
+    assert "Illustrative construction, not a result" in fig and "open candidate" in fig and "the oxide is not drawn" in fig
+    assert "Positions and bond lengths are schematic" in fig
