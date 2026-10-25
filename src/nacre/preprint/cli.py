@@ -124,6 +124,25 @@ def _input_tables(args):
     return 0
 
 
+def _breakeven_table(args):
+    from nacre.preprint import breakeven_table
+    root = _util.repo_root()
+    try:
+        if args.check:
+            stale = breakeven_table.check(root)
+            for f in stale:
+                print("breakeven-table: STALE %s" % f.relative_to(root).as_posix())
+            print("breakeven-table: %s" % ("STALE (run `nacre preprint breakeven-table`)" if stale else "up to date"))
+            return 1 if stale else 0
+        written = breakeven_table.write(root)
+    except (breakeven_table.BreakevenTableError, macros_error()) as exc:
+        print("breakeven-table: FAIL\n" + str(exc))
+        return 1
+    for f in written:
+        print("wrote " + f.relative_to(root).as_posix())
+    return 0
+
+
 def macros_error():
     from nacre.preprint import macros
     return macros.MacroError
@@ -160,5 +179,8 @@ def register(subparsers):
     q = sub.add_parser("input-tables", help="write the parameter, benchmark and conversion tables and their macro block")
     q.add_argument("--check", action="store_true", help="only report whether the committed outputs are byte-identical to a fresh run")
     q.set_defaults(func=_input_tables)
+    q = sub.add_parser("breakeven-table", help="write the break-even table of the saturated-sink exclusions and its macro block")
+    q.add_argument("--check", action="store_true", help="only report whether the committed outputs are byte-identical to a fresh run")
+    q.set_defaults(func=_breakeven_table)
     q = sub.add_parser("guard", help="run the release guard only")
     q.set_defaults(func=_guard)

@@ -1,0 +1,135 @@
+{
+ "generator": "nacre preprint breakeven-table",
+ "inputs": {
+  "results/preprint/screen/breakeven_ph/breakeven.csv": "182dda634eebbcbc22f07bda1203b4bb537689ba200ccd9972333d3a3abc8ce2",
+  "results/preprint/screen/breakeven_ph/provenance.json": "4fb887822259c49f5b04fb54fd92d4a93e9c575f898764e72b29fba8daea12e8"
+ },
+ "numbers": {
+  "breakeven": {
+   "Acp": {
+    "HiLo": {
+     "headroom_V": 0.2297,
+     "r_star": 87.3709
+    },
+    "HiUp": {
+     "headroom_V": 0.3297,
+     "r_star": 611.705
+    },
+    "MidLo": {
+     "headroom_V": 0.0297,
+     "r_star": 1.78245
+    },
+    "MidUp": {
+     "headroom_V": 0.1297,
+     "r_star": 12.4793
+    }
+   },
+   "AlphaTcp": {
+    "HiLo": {
+     "headroom_V": 0.2536,
+     "r_star": 139.112
+    },
+    "HiUp": {
+     "headroom_V": 0.3536,
+     "r_star": 973.954
+    },
+    "MidLo": {
+     "headroom_V": 0.0536,
+     "r_star": 2.83801
+    },
+    "MidUp": {
+     "headroom_V": 0.1536,
+     "r_star": 19.8696
+    }
+   },
+   "BetaTcp": {
+    "HiLo": {
+     "headroom_V": 0.2297,
+     "r_star": 87.3709
+    },
+    "HiUp": {
+     "headroom_V": 0.3297,
+     "r_star": 611.705
+    },
+    "MidLo": {
+     "headroom_V": 0.0297,
+     "r_star": 1.78245
+    },
+    "MidUp": {
+     "headroom_V": 0.1297,
+     "r_star": 12.4793
+    }
+   },
+   "Brushite": {
+    "HiLo": {
+     "headroom_V": -0.0323
+    },
+    "HiUp": {
+     "headroom_V": 0.0677,
+     "r_star": 3.73408
+    }
+   },
+   "CaSilicate": {
+    "HiLo": {
+     "headroom_V": 0.8502,
+     "r_star": 15334800.0
+    },
+    "HiUp": {
+     "headroom_V": 0.9502,
+     "r_star": 107362000.0
+    },
+    "MidLo": {
+     "headroom_V": 0.6502,
+     "r_star": 312844.0
+    },
+    "MidUp": {
+     "headroom_V": 0.7502,
+     "r_star": 2190290.0
+    }
+   },
+   "Carbonate": {
+    "HiLo": {
+     "headroom_V": 0.3752,
+     "r_star": 1482.85
+    },
+    "HiUp": {
+     "headroom_V": 0.4752,
+     "r_star": 10381.8
+    },
+    "MidLo": {
+     "headroom_V": 0.1752,
+     "r_star": 30.2515
+    },
+    "MidUp": {
+     "headroom_V": 0.2752,
+     "r_star": 211.798
+    }
+   },
+   "Hap": {
+    "HiLo": {
+     "headroom_V": 0.2082,
+     "r_star": 57.4982
+    },
+    "HiUp": {
+     "headroom_V": 0.3082,
+     "r_star": 402.559
+    },
+    "MidLo": {
+     "headroom_V": 0.0082,
+     "r_star": 1.17302
+    },
+    "MidUp": {
+     "headroom_V": 0.1082,
+     "r_star": 8.21257
+    }
+   },
+   "cutoff": {
+    "HiLo": 4.4,
+    "HiUp": 4.5,
+    "MidLo": 4.2,
+    "MidUp": 4.3
+   }
+  }
+ },
+ "schema": 1
+}
