@@ -42,12 +42,19 @@ def _sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def dropped(root):
+    """{figN: reason} for the sources kept in figures/src that are not in the release set."""
+    path = paths(root)["src"] / "dropped.yaml"
+    return dict(yaml.safe_load(path.read_text()).get("dropped") or {}) if path.exists() else {}
+
+
 def discover(root):
     src = paths(root)["src"]
+    skip = dropped(root)
     found = []
     for p in src.iterdir() if src.is_dir() else []:
         m = _FIG_RE.match(p.name)
-        if m:
+        if m and p.stem not in skip:
             found.append((int(m.group(1)), p))
     return [p for _, p in sorted(found)]
 

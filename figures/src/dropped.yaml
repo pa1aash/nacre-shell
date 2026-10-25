@@ -1,0 +1,7 @@
+# Figure sources kept in figures/src but not in the release set (PH-W6.8): the paper and the SI do
+# not reference them, so `nacre figs` does not build them and the manifest does not list them.
+# Their pins are not refreshed.
+dropped:
+  fig5: not referenced in the paper or the SI
+  fig9: not referenced in the paper or the SI
+  fig12: not referenced in the paper or the SI
