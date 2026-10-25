@@ -1351,6 +1351,76 @@ macros:
 
     claim: CL-D04
 
+  NumRegAcidExclHiAcc:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/acc/excl_ph_hi
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclHiAragonite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/aragonite/excl_ph_hi
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclHiCalcite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/calcite/excl_ph_hi
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclLoAcc:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/acc/excl_ph_lo
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclLoAcp:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/acp/excl_ph_lo
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclLoAragonite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/aragonite/excl_ph_lo
+
+    format: .1f
+
+    claim: CL-D04
+
+  NumRegAcidExclLoCalcite:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/acid/calcite/excl_ph_lo
+
+    format: .1f
+
+    claim: CL-D04
+
   NumRegAcidFirstAcc:
 
     source: preprint/generated/regime_table.json

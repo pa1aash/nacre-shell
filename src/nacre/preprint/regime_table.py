@@ -587,9 +587,13 @@ def acid_cell(row_id, ref, docs):
     lead, words = [], []
     for i, (word, run) in enumerate(runs):
         if i == 0:
-            seg = ([DISS_WORD, DISS_MARK] if word == "excluded" else [word]) + [" below pH~", low if len(runs) == 1 else Num("NumRegAcidOpenLo" + name, "acid/%s/open_ph_lo" % row_id, runs[1][1][0], ".1f")]
+            # cp6 F9: the grid has points only at its pH values, so the lowest run is named by its pH values (every cell
+            # dissolving there), never as a sharp "below pH x" threshold
+            seg = ([DISS_WORD, DISS_MARK] if word == "excluded" else [word]) + [" at pH~", Num("NumRegAcidExclLo" + name, "acid/%s/excl_ph_lo" % row_id, run[0], ".1f")]
+            if len(run) > 1:
+                seg += [" and " if len(run) == 2 else " to ", Num("NumRegAcidExclHi" + name, "acid/%s/excl_ph_hi" % row_id, run[-1], ".1f")]
             if word == "excluded":
-                seg += below_sourced_parts(docs, run, first)
+                seg += [p.replace(" (", " (every cell dissolves; ", 1) for p in below_sourced_parts(docs, run, first)]
         else:
             seg = [word, " at pH~", Num("NumRegAcidOpenLo" + name, "acid/%s/open_ph_lo" % row_id, run[0], ".1f")]
             if len(run) > 1:
