@@ -1222,6 +1222,16 @@ macros:
 
     claim: CL-D04
 
+  NumPrecKOneRows:
+
+    source: preprint/generated/regime_table.json
+
+    key: numbers/precision/k1_rows
+
+    format: d
+
+    claim: CL-D04
+
   NumPrecMetaGlassHiHeadroom:
 
     source: preprint/generated/regime_table.json

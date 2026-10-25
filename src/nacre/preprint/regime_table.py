@@ -1066,6 +1066,11 @@ def results_numbers(docs):
     if set(kinds) - {k for k, _ in PREC_KINDS}:
         raise RegimeTableError("the precision map has a row kind the text does not name: %s" % sorted(set(kinds)))
     out = [Num("NumPrecRows", "precision/rows", len(rows), "d")]
+    # the K1 rows (ids k1_*) that fig14 draws once, as one row (W6 macro request NumPrecKOneRows)
+    k1_rows = [r for r in rows if r["id"].startswith("k1_")]
+    if not k1_rows:
+        raise RegimeTableError("the precision map has no K1 row (id k1_*) for fig14 to collapse")
+    out.append(Num("NumPrecKOneRows", "precision/k1_rows", len(k1_rows), "d"))
     out += [Num(name, "precision/" + kind, kinds[kind], "d") for kind, name in PREC_KINDS]
     by_id = {r["id"]: r for r in rows}
     sn = by_id["gamma_sn"]["flip"]["q05_q50_q95"][1] * 1000

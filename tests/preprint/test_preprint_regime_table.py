@@ -257,3 +257,18 @@ def test_no_acid_cell_states_a_sharp_threshold_below_a_grid_point():
         rows = list(csv.DictReader(fh))
     assert not [r["row_id"] for r in rows if "below pH" in r["text"]]
     assert "below pH" not in (GEN / rt.OUT_TEX).read_text(encoding="utf-8")
+
+
+def test_k1_row_count_of_fig14_comes_from_the_precision_map():
+    """NumPrecKOneRows (W6 macro request for fig14): the K1 rows of the precision map, which fig14 draws as one row."""
+    import importlib.util
+    pmap = json.loads((REPO / rt.INPUTS["precision"]).read_text(encoding="utf-8"))
+    n = sum(1 for r in pmap["rows"] if r["id"].startswith("k1_"))
+    gen = json.loads((paths.generated(REPO) / "regime_table.json").read_text(encoding="utf-8"))
+    assert gen["numbers"]["precision"]["k1_rows"] == n > 1
+    spec = macros.load_sources(REPO)["macros"]["NumPrecKOneRows"]
+    assert spec["source"] == "preprint/generated/regime_table.json" and spec["key"] == "numbers/precision/k1_rows"
+    mod = importlib.util.spec_from_file_location("fig14_for_test", REPO / "figures" / "src" / "fig14.py")
+    fig14 = importlib.util.module_from_spec(mod)
+    mod.loader.exec_module(fig14)
+    assert fig14.collapse_k1(fig14.rows_of(pmap))[1] == n

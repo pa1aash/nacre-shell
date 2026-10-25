@@ -481,6 +481,7 @@
    "gamma_sn_confirm_J": 0.3338,
    "gamma_sn_mJ": 1.2193036152489043,
    "gap": 10,
+   "k1_rows": 10,
    "mc": 8,
    "meta_glass_hi_headroom_V": 0.2581,
    "rows": 32,
