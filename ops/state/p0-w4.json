@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W4.8",
+  "last_session": "PH-W4.9",
   "status": "DONE",
   "day": 7,
   "contract_sha": "733277275edfb1ccf6060be8581ac9aed34404ed",
@@ -61,7 +61,9 @@
     "sink_margin": "src/nacre/physics/sink.py",
     "report_w4_7": "ops/reports/P0-W4.PH-W4.7.md",
     "report_w4_8": "ops/reports/P0-W4.PH-W4.8.md",
-    "amorphous_module": "src/nacre/physics/amorphous.py"
+    "amorphous_module": "src/nacre/physics/amorphous.py",
+    "report_w4_9": "ops/reports/P0-W4.PH-W4.9.md",
+    "breakeven_ph": "results/preprint/screen/breakeven_ph/breakeven.csv"
   },
   "notes": [
     "P0-W4.3b (D27): 15 reruns under the admissibility rule (AM3 5123c99, AM4 ccb653d) in new *_adm directories; 0 capped decision layers; 2.07 h; peak 2.02 GB (ignorance_adm Sobol/Shapley). P0-W4.3 documents untouched.",
@@ -84,7 +86,8 @@
     "PH-W4.5 Part 1 facts: production crossed Ca_T and P_T independently (k2_grid.phosphate_cells nests both axes over one decade grid; 36 pairs per pH, I, a_w cell: 648 alkaline and 540 acid-adjusted cells), so the rerun reduces to the post-freeze keys (brushite, Li3PO4, OCP Ca4H basis) and the rule-based supersaturated control (cell of maximum median Omega, wet slurry state). pre_run_sha_ph2 d32da3d holds the code; its commit message ('PH-W4.5 pre_run_sha_ph2') is mislabelled because a first commit with the intended message was refused by the trailer hook; pushed, not rewritten.",
     "PH-W4.5: 2 runs (252.9 s and 67.3 s, peak 156 MB, 0 capped) beside the frozen runs; brushite undetermined to feasible, OCP Ca4H basis new row feasible, other rows unchanged (0 cells moved); Li3PO4 and a-TCP undetermined; per-pH tables and F3 numbers committed; 772 tests pass (tests/physics tests/screen).",
     "PH-W4.6: Ca:P ratio grid (P_T = Ca_T/1.67, /1.5, /1.0) for HAp, ACP, b-TCP, OCP Ca4H, brushite; 2 runs (1.7 min, peak 173 MB, 0 capped); verdicts unchanged, no pass/fail flips, 43 of 120 phase/ratio/pH groups differ in minimum Ca_T only; 774 tests pass.",
-    "PH-W4.8: contract v8 E_ub_hydrated_am and amorphous verdicts; thresholds copy from block v11 (2f6aec1); regime-table patch for lane p0-w8 kept in .local/ph_w4_8_task4.patch (sha256 dfe793b1...2e4f), not committed (ownership); 832 tests pass in tests/physics tests/screen. W6 must re-pin configs/preprint/thresholds.yaml and, after W8 applies the patch, regime_table.csv."
+    "PH-W4.8: contract v8 E_ub_hydrated_am and amorphous verdicts; thresholds copy from block v11 (2f6aec1); regime-table patch for lane p0-w8 kept in .local/ph_w4_8_task4.patch (sha256 dfe793b1...2e4f), not committed (ownership); 832 tests pass in tests/physics tests/screen. W6 must re-pin configs/preprint/thresholds.yaml and, after W8 applies the patch, regime_table.csv.",
+    "PH-W4.9: breakeven_ratio in nacre.physics.sink; 26-row r* table (C_mid, C_hi) in results/preprint/screen/breakeven_ph/, csv sha256 182dda63...8ce2; matches the planning chat's figures; 847 tests pass in tests/physics tests/screen."
   ],
   "schema": {
     "version": "5",
