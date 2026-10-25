@@ -1,4 +1,6 @@
 """Draft build, the release guard (Python layer) and the release stops (LaTeX layer)."""
+import csv
+import re
 import shutil
 import subprocess
 
@@ -9,7 +11,10 @@ from preprint_helpers import REPO, copy_tree, write
 
 HAVE_LATEX = shutil.which("latexmk") is not None and shutil.which("pdflatex") is not None
 HAVE_TEMPLATE = paths.template_dir(REPO) is not None
+HAVE_PDFTOTEXT = shutil.which("pdftotext") is not None
 BUILD_SH = paths.paper(REPO) / "build.sh"
+NEEDS_BUILD = pytest.mark.skipif(not (HAVE_LATEX and HAVE_TEMPLATE and shutil.which("zsh")),
+                                 reason="needs zsh, latexmk and the local-only template")
 
 
 def _clean_manuscript(root):
@@ -104,13 +109,26 @@ def test_release_build_fails_while_placeholders_or_the_ai_file_are_missing():
     assert not (paths.build(REPO) / "release" / "main.pdf").exists()
 
 
-@pytest.mark.skipif(not (HAVE_LATEX and HAVE_TEMPLATE and shutil.which("zsh")),
-                    reason="needs zsh, latexmk and the local-only template")
-def test_draft_build_compiles():
+@pytest.fixture(scope="module")
+def draft_build():
+    """One draft build for every test that reads the built PDFs."""
     gen = paths.generated(REPO)
     for f in ("numbers", "front", "authors", "declarations"):
         (gen / (f + ".tex")).unlink(missing_ok=True)       # the build must regenerate them itself
-    p = subprocess.run(["zsh", str(BUILD_SH), "draft"], capture_output=True, text=True)
+    return subprocess.run(["zsh", str(BUILD_SH), "draft"], capture_output=True, text=True)
+
+
+def _pdf_pages(pdf, layout=True):
+    """The text of each page of a built PDF (pdftotext), in layout mode or in reading order."""
+    out = subprocess.run(["pdftotext"] + (["-layout"] if layout else []) + [str(pdf), "-"],
+                         capture_output=True, text=True, check=True).stdout
+    return out.split("\f")
+
+
+@NEEDS_BUILD
+def test_draft_build_compiles(draft_build):
+    gen = paths.generated(REPO)
+    p = draft_build
     assert p.returncode == 0, (p.stdout + p.stderr)[-3000:]
     assert all((gen / (f + ".tex")).is_file() for f in ("numbers", "front", "authors", "declarations"))
     assert (paths.build(REPO) / "draft" / "main.pdf").is_file()
@@ -147,3 +165,34 @@ def test_main_and_si_load_theory_macros_before_any_theory_input():
         for theory_input in ("theory/derivation_body", "theory/si_derivation"):
             if theory_input in text:
                 assert text.index(load) < text.index(theory_input), rel
+
+
+# --- the built text (cp6 F1, F22) --------------------------------------------------------------------
+
+def _label_on_its_row(label, tag):
+    """A regex for one regime-table row as pdftotext lays it out: the label (its words before a long
+    parenthesis, which wraps) and then, on the same line, the stage tag. Whitespace is dropped on both sides,
+    since subscripts come out with spaces (Ca2 P2 O7)."""
+    label = label.replace("beta-", "\u03b2-").replace("alpha-", "\u03b1-")
+    if " (" in label and len(label) > 25:
+        label = label[:label.index(" (")]
+    return re.compile(re.escape(re.sub(r"\s+", "", label)) + r".*" + re.escape(tag))
+
+
+@NEEDS_BUILD
+@pytest.mark.skipif(not HAVE_PDFTOTEXT, reason="needs pdftotext")
+def test_every_regime_table_row_is_in_the_built_pdf(draft_build):
+    assert draft_build.returncode == 0
+    rows = {}
+    with (paths.generated(REPO) / "regime_table.csv").open(encoding="utf-8") as fh:
+        for r in csv.DictReader(fh):
+            rows.setdefault(r["row_id"], (r["row_label"], r["stage_tag"]))
+    pages = [p for p in _pdf_pages(paths.build(REPO) / "draft" / "main.pdf")
+             if "Regime map of the thermodynamic screen" in p]
+    assert pages, "no page carries the regime table"
+    lines = [re.sub(r"\s+", "", line) for p in pages for line in p.splitlines()]
+    missing = [rid for rid, (label, tag) in rows.items()
+               if not any(_label_on_its_row(label, tag).search(line) for line in lines)]
+    assert not missing, "regime-table rows absent from the built PDF: %s" % ", ".join(missing)
+    assert len(rows) == 19
+

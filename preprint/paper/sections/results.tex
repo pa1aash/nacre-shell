@@ -14,10 +14,22 @@ A phase that is not thermodynamically excluded (open) is not falsified at the cu
 The map is a design rule matched to the regime: calcite meets the dissolution condition over the named region of the alkaline grid, and, for a \ce{LiClO4}-saturated sink (solid-salt reference state), carbonate is thermodynamically excluded\nacreExcludedMark\ above \NumCarbonateCrossover; bone mineral shares that ceiling, and at the higher cutoff classes only the condensed calcium phosphates remain not thermodynamically excluded, with the aluminium phosphates undetermined. % CL-S13
 No phase passes the oxidation condition in this version: $E_\mathrm{lb}$, computed from aqueous formation data at the stated product activity, bounds the onset only if $\Delta G_\mathrm{tr}^\mathrm{rel}\ge0$, which no measured datum tests, so no row can pass and the map can exclude a phase but not admit one. % CL-S16
 
-\begin{table*}[t]
-\caption{Regime map of the thermodynamic screen, generated from the onset ladder and the production outputs. Dissolution ($K_2$) is read at the processing stage (grid \NumRegGridId) and in the acid-adjusted comparator, the sourced slurries at pH \NumAcidSourcedLo\ to \NumAcidSourcedHi\ on a grid that spans the passivation window of aluminium, oxidation ($K_1$) per cutoff class. Entries use the vocabulary of the screen and carry their stage.}\label{tab:regime}
+% The regime table is taller than a page: it is set as consecutive full-width floats, one per part, the
+% later parts continuing the table number (cp6 F1; parts and notes from the generator).
 \input{../generated/regime_table}
-\nacreRegimeTable
+\begin{table*}[tp]
+\caption{Regime map of the thermodynamic screen, generated from the onset ladder and the production outputs. Dissolution ($K_2$) is read at the processing stage (grid \NumRegGridId) and in the acid-adjusted comparator, the sourced slurries at pH \NumAcidSourcedLo\ to \NumAcidSourcedHi\ on a grid that spans the passivation window of aluminium, oxidation ($K_1$) per cutoff class. Entries use the vocabulary of the screen and carry their stage; continued below.}\label{tab:regime}
+\nacreRegimeTablePartA
+\end{table*}
+\begin{table*}[tp]
+\ContinuedFloat
+\caption{Regime map of the thermodynamic screen (continued): slurry-stage phosphates.}
+\nacreRegimeTablePartB
+\end{table*}
+\begin{table*}[tp]
+\ContinuedFloat
+\caption{Regime map of the thermodynamic screen (continued): cell-stage phosphates and baselines, with the notes of the table.}
+\nacreRegimeTablePartC
 \end{table*}
 
 \subsection{Processing-stage dissolution stability and the acid-adjusted comparator}\label{sec:res-dissolution}
