@@ -1178,6 +1178,7 @@ decisions:
 - {id: D86, date: '2026-10-24', decision: 'The hero is two single-phase panels, with three accepted within-panel colour exceptions (Ca/carbonate 16.8, H/phosphate 15.3, C/Li 18.2).', reason: Integrator record at PH-I7 (PH-W6.3c-hero, PH-W6.5).}
 - {id: D87, date: '2026-10-26', decision: 'The cp6 fixes are applied; patents are cited by number with kind codes under the planning chat waiver conditions a to d; the break-even table is added.', reason: Integrator record at PH-I8 (PH-W8.6, PH-W8.7, PH-W6.6, PH-W6.7, PH-W4.9, PH-W2.7).}
 - {id: D88, date: '2026-10-26', decision: 'Patents are removed from the paper and SI by author decision (claims CL-V03, CL-V04, CL-V08 withdrawn; lit/novelty.md record kept internally). The cp6 re-audit fixes G1 to G8 are applied and G9 (abstract sentence length) is not applied. fig5, fig9 and fig12 are dropped from the release set. The break-even table is Table 5, beside Section 4.3. The fig15 caption prints 80 words with macros expanded (accepted).', reason: Integrator record at PH-I9 (PH-W6.8, PH-W8.9, PH-W8.10, PH-W1.11, PH-W1.12).}
+- {id: D89, date: '2026-10-26', decision: 'cp6 PASS (planning chat), effective once the author inputs are applied. The text edits of the cp6 PASS are in; edit 3 is worded "no measured outcome of either is used" under the scope rule.', reason: Integrator record at PH-I10 (PH-W8.12, PH-W8.11, PH-W2.8).}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1541,7 +1542,8 @@ done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6
   PH-W8.3, PH-W3.3, PH-W1.4, PH-W6.4, PH-W3.8, PH-W1.9, PH-W6.3b, PH-W1.10, PH-W4.7, PH-W8.4, PH-W3.9, PH-W6.3c-hero, PH-W4.8, PH-W8.5, PH-W6.5, PH-I6g,
   PH-W2.7, PH-W4.9, PH-W6.6, PH-W8.6, PH-W6.7, PH-W8.7,
   PH-W6.7b, PH-W8.8,
-  PH-W6.8, PH-W8.9, PH-W8.10, PH-W1.11, PH-W1.12]
+  PH-W6.8, PH-W8.9, PH-W8.10, PH-W1.11, PH-W1.12,
+  PH-W8.11, PH-W2.8, PH-W8.12]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
