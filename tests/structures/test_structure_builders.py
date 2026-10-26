@@ -359,6 +359,65 @@ def test_no_clashes_in_committed(committed):
         assert min_distance(a) >= CLASH_THRESHOLD, name
 
 
+def _dense_min_distance(atoms, exclude_pairs=None) -> float:
+    """The previous dense (n, n, 3) minimum-image routine, kept as the reference."""
+    pos = atoms.get_positions()
+    n = len(pos)
+    if n < 2:
+        return float("inf")
+    d = pos[:, None, :] - pos[None, :, :]
+    if any(atoms.pbc):
+        cell = np.asarray(atoms.cell)
+        frac = d @ np.linalg.inv(cell)
+        for k in range(3):
+            if atoms.pbc[k]:
+                frac[..., k] -= np.round(frac[..., k])
+        d = frac @ cell
+    r = np.linalg.norm(d, axis=-1)
+    r[np.diag_indices(n)] = np.inf
+    if exclude_pairs is not None:
+        r[exclude_pairs] = np.inf
+    return float(r.min())
+
+
+def _random_atoms(cell, pbc, n=40, seed=3):
+    from ase import Atoms
+
+    rng = np.random.default_rng(seed)
+    frac = rng.random((n, 3))
+    return Atoms("C" * n, positions=frac @ np.asarray(cell), cell=cell, pbc=pbc)
+
+
+def test_min_distance_matches_dense_reference_triclinic_periodic():
+    cell = [[9.0, 0, 0], [2.5, 8.0, 0], [1.0, 1.5, 10.0]]
+    a = _random_atoms(cell, True)
+    assert min_distance(a) == pytest.approx(_dense_min_distance(a), abs=1e-9)
+    rep = a.repeat((2, 1, 2))
+    assert min_distance(rep) == pytest.approx(_dense_min_distance(rep), abs=1e-9)
+    assert min_distance(rep) == pytest.approx(min_distance(a), abs=1e-9)
+
+
+def test_min_distance_matches_dense_reference_non_periodic():
+    a = _random_atoms([[12.0, 0, 0], [0, 12.0, 0], [0, 0, 12.0]], False)
+    assert min_distance(a) == pytest.approx(_dense_min_distance(a), abs=1e-9)
+    rep = a.repeat((2, 1, 1))
+    assert min_distance(rep) == pytest.approx(_dense_min_distance(rep), abs=1e-9)
+    # Sparse pair far beyond the first cutoff: the search must widen, not return inf.
+    from ase import Atoms
+
+    far = Atoms("CC", positions=[[0, 0, 0], [0, 0, 30.0]], pbc=False)
+    assert min_distance(far) == pytest.approx(30.0, abs=1e-9)
+
+
+def test_min_distance_matches_dense_reference_mixed_pbc_and_mask():
+    a = _random_atoms([[10.0, 0, 0], [3.0, 9.0, 0], [0, 0, 20.0]], [True, True, False], n=30)
+    assert min_distance(a) == pytest.approx(_dense_min_distance(a), abs=1e-9)
+    group = np.arange(len(a)) % 2
+    mask = group[:, None] == group[None, :]
+    assert min_distance(a, exclude_pairs=mask) == pytest.approx(
+        _dense_min_distance(a, exclude_pairs=mask), abs=1e-9)
+
+
 # ---------------------------------------------------------------- machine independence
 def test_bytes_do_not_depend_on_xtb_environment(tmp_path, monkeypatch):
     # Two builds on this machine, with and without ~/.nacre-envs/xtb, must give identical bytes;

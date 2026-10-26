@@ -39,15 +39,41 @@ def formal_charge(symbols) -> int:
     return int(sum(FORMAL_OXIDATION[s] for s in symbols))
 
 
+# Neighbour-list search for the smallest distance: first cutoff and the cap (angstrom). The
+# cutoff doubles until a pair is found; past the cap the dense routine takes over.
+_NL_START = 4.0
+_NL_CAP = 64.0
+
+
+def _min_distance_neighbours(atoms):
+    """Smallest i != j distance from a neighbour list (memory linear in the pair count), or None."""
+    from ase.neighborlist import neighbor_list
+
+    cutoff = _NL_START
+    while cutoff <= _NL_CAP:
+        i, j, d = neighbor_list("ijd", atoms, cutoff)
+        keep = i != j
+        if keep.any():
+            return float(d[keep].min())
+        cutoff *= 2
+    return None
+
+
 def min_distance(atoms, exclude_pairs=None) -> float:
     """Smallest interatomic distance, with minimum image in periodic directions.
 
-    ``exclude_pairs`` is an optional boolean (n, n) mask of pairs to ignore.
+    ``exclude_pairs`` is an optional boolean (n, n) mask of pairs to ignore. Without it the
+    distance comes from a neighbour list, so large cells need no (n, n, 3) arrays; with it the
+    dense routine is used (its only caller builds structures of a few hundred atoms).
     """
     pos = atoms.get_positions()
     n = len(pos)
     if n < 2:
         return float("inf")
+    if exclude_pairs is None:
+        r = _min_distance_neighbours(atoms)
+        if r is not None:
+            return r
     d = pos[:, None, :] - pos[None, :, :]
     if any(atoms.pbc):
         cell = np.asarray(atoms.cell)
