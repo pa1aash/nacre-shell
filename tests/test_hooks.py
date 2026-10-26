@@ -1,10 +1,13 @@
 """Hook self-test in a scratch repo wired to the real hook scripts."""
+import subprocess
 import sys
 
 import pytest
 
+import conftest
+
 from conftest import (COAUTHOR, HOOKS_SRC, LOCAL_GUIDE, LOCAL_SETTINGS, MAKER, PRODUCT, R1_EMAIL, R1_NAME,
-                      git, run)
+                      git, run, stage_all)
 
 ZERO = "0" * 40
 
@@ -222,3 +225,48 @@ def test_merge_commit_hook_scans_content(hook_repo):
     _diverge(hook_repo, "see %s\n" % PRODUCT)
     r = git(hook_repo, "merge", "--no-ff", "-m", "ops(test): merge", "lane/b-test")
     assert r.returncode != 0 and "a.txt:1" in r.stderr
+
+
+# scratch_clone's staging helper, with git stubbed
+def stub_git(monkeypatch, steps):
+    """Replace conftest.run with a stub that answers git calls from `steps` in order and records the calls."""
+    calls = []
+    answers = iter(steps)
+
+    def fake(args, cwd, **kw):
+        calls.append(args[1:])
+        rc, err = next(answers)
+        return subprocess.CompletedProcess(args, rc, stdout="", stderr=err)
+
+    sleeps = []
+    monkeypatch.setattr(conftest, "run", fake)
+    monkeypatch.setattr(conftest.time, "sleep", sleeps.append)
+    return calls, sleeps
+
+
+def test_stage_all_first_attempt_succeeds_without_pause(monkeypatch, tmp_path):
+    calls, sleeps = stub_git(monkeypatch, [(0, ""), (1, "")])
+    stage_all(tmp_path)
+    assert calls == [["add", "-A"], ["diff", "--cached", "--quiet"]]
+    assert sleeps == []
+
+
+def test_stage_all_retries_once_after_empty_stage(monkeypatch, tmp_path):
+    calls, sleeps = stub_git(monkeypatch, [(0, ""), (0, ""), (0, ""), (1, "")])
+    stage_all(tmp_path)
+    assert [c[0] for c in calls] == ["add", "diff", "add", "diff"]
+    assert sleeps == [1.0]
+
+
+def test_stage_all_retries_once_after_add_failure(monkeypatch, tmp_path):
+    calls, sleeps = stub_git(monkeypatch, [(128, "index.lock exists"), (0, ""), (0, ""), (1, "")])
+    stage_all(tmp_path)
+    assert len(calls) == 4 and sleeps == [1.0]
+
+
+def test_stage_all_raises_with_stderr_when_retry_also_fails(monkeypatch, tmp_path):
+    calls, sleeps = stub_git(monkeypatch, [(128, "fatal: first"), (0, ""), (128, "fatal: second"), (0, "")])
+    with pytest.raises(RuntimeError) as exc:
+        stage_all(tmp_path)
+    assert "fatal: second" in str(exc.value) and "staged nothing" in str(exc.value)
+    assert len(calls) == 4 and sleeps == [1.0]

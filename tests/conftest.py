@@ -1,6 +1,7 @@
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import pytest
@@ -74,6 +75,24 @@ def hook_repo(tmp_path):
     return repo
 
 
+def stage_all(repo, pause=1.0):
+    """git add -A, asserted: it must succeed and leave something staged. One retry after a pause, then a clear error."""
+    last = None
+    for attempt in (1, 2):
+        added = git(repo, "add", "-A")
+        staged = git(repo, "diff", "--cached", "--quiet")
+        if added.returncode == 0 and staged.returncode != 0:
+            return
+        last = (added, staged)
+        if attempt == 1:
+            time.sleep(pause)
+    added, staged = last
+    raise RuntimeError(
+        "git add -A staged nothing in %s after 2 attempts (add rc=%s, diff --cached --quiet rc=%s); stderr: %s %s"
+        % (repo, added.returncode, staged.returncode, added.stderr.strip(), staged.stderr.strip())
+    )
+
+
 @pytest.fixture
 def scratch_clone(tmp_path):
     """A copy of the working tree (tracked and untracked, not ignored) as a new repo."""
@@ -85,7 +104,7 @@ def scratch_clone(tmp_path):
             (dest / rel).parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dest / rel)
     init_repo(dest, copy_ops=False)
-    git(dest, "add", "-A")
+    stage_all(dest)
     assert git(dest, "commit", "-q", "--no-verify", "-m", "scratch: snapshot").returncode == 0
     return dest
 
