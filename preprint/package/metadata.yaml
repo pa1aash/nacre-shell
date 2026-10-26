@@ -45,7 +45,7 @@ authors_source: ops/tracks/p0_authors.yaml
 authors:
 - given_name: Palash
   family_name: Bharti
-  affiliations: ['Jayshree Periwal International School']
+  affiliations: ['Jayshree Periwal International School, Jaipur, India']
   orcid: 0009-0000-8926-5520
   corresponding: false
   credit_roles: TBD (Palaash)

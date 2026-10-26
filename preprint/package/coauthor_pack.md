@@ -31,7 +31,7 @@ Each co-author receives the text below with their own block filled in. Replies a
 > 1. **Scope.** A thermodynamic screen of nacre- and bone-inspired barrier films for aluminium current collectors in fluorine-free lithium-ion cells: a regime map and a design rule, with the limits stated in the one-page summary. Nucleation and templating statements are hypotheses. No experiment is reported.
 > 2. **Working title.** "Thermodynamic screening of nacre- and bone-inspired barriers for aluminium current collectors in fluorine-free lithium-ion cells". It is a working title; the final title is decided at checkpoint cp6 and you will see it before upload.
 > 3. **Author order and affiliations.**
->    1. Palash Bharti, Jayshree Periwal International School
+>    1. Palash Bharti, Jayshree Periwal International School, Jaipur, India
 >    2. Palaash Gang (corresponding), Indus International School, Pune
 >    3. Ahaana Goswamy, Grainger College of Engineering, University of Illinois Urbana-Champaign
 >    4. Kabir Agarwal, Grainger College of Engineering, University of Illinois Urbana-Champaign
