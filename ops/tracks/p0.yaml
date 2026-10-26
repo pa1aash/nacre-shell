@@ -1543,7 +1543,7 @@ done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6
   PH-W2.7, PH-W4.9, PH-W6.6, PH-W8.6, PH-W6.7, PH-W8.7,
   PH-W6.7b, PH-W8.8,
   PH-W6.8, PH-W8.9, PH-W8.10, PH-W1.11, PH-W1.12,
-  PH-W8.11, PH-W2.8, PH-W8.12]
+  PH-W8.11, PH-W2.8, PH-W8.12, PH-W7.2]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]

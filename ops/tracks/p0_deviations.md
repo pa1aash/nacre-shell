@@ -197,3 +197,7 @@ Re-audit: cp6
 ## 2026-10-24 figures/**, figures/src/schemas/upstream.yaml
 Change: PH-W6.3b, PH-W6.3c-hero and PH-W6.5 rebuild fig1 (hero, two single-phase panels), re-pin thresholds, regime_table and symbols, retire 5 NumRetro/NumCell macros; fig15 and fig17 are byte-identical.
 Re-audit: cp6
+
+## 2026-10-27 src/nacre/structures/meta.py, tests/structures/test_structure_builders.py
+Change: PH-W7.2 algorithm change in min_distance: without exclude_pairs it uses a neighbour list (cutoff doubling, dense fallback) instead of the N x N x 3 array, which exceeded memory on hero_interface (13854 atoms, about 14 GB of working arrays). Results are identical to the previous routine: maximum difference 1.1e-16 on the committed structures; no structure file, manifest or result changes. Reason: memory on the 8 GB machine.
+Re-audit: cp6
