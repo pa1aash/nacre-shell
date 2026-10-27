@@ -311,13 +311,12 @@ Read plainly, an exclusion stands while the mean-activity ratio of saturated to 
 % checked with --check); they are set in one column. Their sources print as DOIs.
 \onecolumn
 \section{Sourced parameters and conflicts}\label{si:sourced}\label{si:parameters}
-Every input of the screen is listed with its quantity, value or sourced range, prior and prior rule, the evidence grade of its best source and the DOIs of its sources (Table~\ref{tab:si-params}). % CL-M01, CL-M11
-The disagreements between sources beyond their stated uncertainties, and how the parameter file resolves each, are in Table~\ref{tab:si-conflicts}. % CL-M01, CL-M11
-Two keys are printed under chemistry names; their parameter keys differ and both rows are gaps with no admitted value.
+Every input of the screen is listed in Table~\ref{tab:si-params} with its symbol, quantity, value with unit, range and how it is drawn (uniform, log-uniform, normal, fixed, or computed or set by the study design), the evidence grade of its best source and the DOIs of its sources. % CL-M01, CL-M11
+Where sources disagree beyond their stated uncertainties, Table~\ref{tab:si-conflicts} gives the quantity, the value used and a one-line reason for the choice. % CL-M01, CL-M11
 % PH-W8.13: the two long tables are set small with tight columns, so the SI keeps every row in fewer pages.
 \begingroup\scriptsize\setlength{\tabcolsep}{2.5pt}%
-\input{../../lit/corpus/si_table/conflicts_table}
 \input{../../lit/corpus/si_table/params_table}
+\input{../../lit/corpus/si_table/conflicts_table}
 \endgroup
 \twocolumn
 
