@@ -1,17 +1,21 @@
 % Design rules. Brief: briefs/design.md. Claims carried: the entries of ../claims.yaml with section
 % design (the four conditions and the route layer) and section model (templating thermodynamics,
 % input below). Prose: PH-W8.2, written to theory/claims_redirect.md Sections 2, 3, 9 and 11 (contract v6,
-% thresholds block v9). One sentence per line; each ends with a comment naming its ledger id. Each
-% condition is argued physically before it is stated. No number and no result is stated here.
+% thresholds block v9); sentences shortened to at most 35 words at PH-W8.13. One sentence per line; each ends with a
+% comment naming its ledger id. Each condition is argued physically before it is stated. No number and no result is stated here.
 \section{Design rules}\label{sec:design}
 
 \subsection{The four conditions}\label{sec:conditions}
 
 % (1) What a mineral barrier has to do, and the four conditions that follow.
 A mineral film is of use on the collector only if it forms where it is needed, is continuous, outlasts the water it forms in and then holds at the cathode potential. % CL-D04, CL-D05, CL-D06, CL-D07
-Each requirement is a free-energy test that a phase can fail, unless a measured service limit shows kinetic stabilisation ($K_1$, tier two), so each becomes a necessary condition (Table~\ref{tab:conditions}): % CL-D04, CL-D05, CL-D06, CL-D07
-$K_1$, the oxidation onset of the phase lies above the charge cutoff; $K_2$, the phase does not dissolve at the slurry states; $K_3$, a dose window exists in which the phase nucleates on the template but not in the bulk; and $K_4$, the film is continuous while thin enough to conduct. % CL-D04, CL-D05, CL-D06, CL-D07
-Adhesion of the template to the oxide and \ce{Ca^2+} binding at the template are descriptors reported beside the conditions, not gates, and a pass of $K_3$ or $K_4$ must degrade when the template is replaced by the bare oxide, or it is labelled generic. % CL-D03
+Each requirement is a free-energy test that a phase can fail, so each becomes a necessary condition (Table~\ref{tab:conditions}). % CL-D04, CL-D05, CL-D06, CL-D07
+The exception is kinetic stabilisation, which only a measured service limit can show ($K_1$, tier two). % CL-D09
+$K_1$ asks that the oxidation onset of the phase lie above the charge cutoff, and $K_2$ that the phase not dissolve at the slurry states. % CL-D04, CL-D05
+$K_3$ asks for a dose window in which the phase nucleates on the template but not in the bulk. % CL-D06
+$K_4$ asks that the film be continuous while thin enough to conduct. % CL-D07
+Adhesion of the template to the oxide and \ce{Ca^2+} binding at the template are descriptors reported beside the conditions, not gates. % CL-D03
+A pass of $K_3$ or $K_4$ must degrade when the template is replaced by the bare oxide, or it is labelled generic. % CL-D03
 
 \begin{table}[t]
 \small
@@ -31,43 +35,64 @@ Conversion (slurry to cell) & precursor to cell-stage product & water-activity t
 \end{table}
 
 % (2) K1: the oxidation onset as a bracket, with two tiers, per cutoff class.
-At the cutoff the cell holds the collector at a fixed lithium chemical potential, and a film oxidises once releasing its cation and oxygen, with the electrons going to plate lithium, lowers the free energy. % CL-D08
+At the cutoff the cell holds the collector at a fixed lithium chemical potential. % CL-D08
+A film oxidises once releasing its cation and oxygen, with the electrons plating lithium, lowers the free energy. % CL-D08
 The onset is $E=\Delta G_\mathrm{r}/(\Delta n_\mathrm{Li}\Fc)$, and it depends on where the released cation goes. % CL-D08
-Pairing it with the salt anion as a solid salt, with the lithium salt drawn from its solid, is one state the product can reach, so that onset $E_\mathrm{ub}$ is an upper bound for an electrolyte saturated in the salt (the solid-salt reference state). % CL-D08
-Below saturation the consumed salt is less stable than the solid and the bound rises by $m_\mathrm{sink}=\nu_\mathrm{s}(RT/F)\ln(a_\mathrm{s,sat}/a_\mathrm{s})\ge0$, with $a_\mathrm{s}=a_\pm^2$ the activity of the salt (its mean ionic activity squared) and $\nu_\mathrm{s}$ the salt consumed per electron, while a product salt left in solution only lowers the onset; a phase is ruled out at the cutoff $E_\mathrm{c}$ whatever the product state when $E_\mathrm{ub}<E_\mathrm{c}-m_1-m_\mathrm{sink}$. % CL-D08
-Every ion hydrated at its standard state gives a lower bound $E_\mathrm{lb}$ only if the product cation loses at least as much solvation per unit charge as \ce{Li+} on passing from water to the cell solvent, so a pass needs $E_\mathrm{lb}\ge E_\mathrm{c}+m_1$ with that premise measured, and a cutoff inside the bracket is inconclusive. % CL-D08
-These bounds are tier one; tier two is a measured service limit $E_\mathrm{svc}$ of coated foil, a coated particle or the bulk phase, and a phase is ruled out at a cutoff only where tier one and the available tier two both fall below it (\nacreSIref{si:templating}{Templating detail}). % CL-D09
+Pairing the cation with the salt anion as a solid salt, with the lithium salt drawn from its solid, is one state the product can reach. % CL-D08
+That onset, $E_\mathrm{ub}$, is therefore an upper bound for an electrolyte saturated in the salt (the solid-salt reference state). % CL-D08
+Below saturation the consumed salt is less stable than the solid, and the bound rises by $m_\mathrm{sink}=\nu_\mathrm{s}(RT/F)\ln(a_\mathrm{s,sat}/a_\mathrm{s})\ge0$, with $a_\mathrm{s}=a_\pm^2$ the salt activity. % CL-D08
+Here $a_\pm$ is the mean ionic activity of the salt and $\nu_\mathrm{s}$ the salt consumed per electron; a product salt left in solution only lowers the onset. % CL-D08
+A phase is ruled out at the cutoff $E_\mathrm{c}$, whatever the product state, when $E_\mathrm{ub}<E_\mathrm{c}-m_1-m_\mathrm{sink}$. % CL-D08
+With every ion hydrated at its standard state, the onset gives a lower bound $E_\mathrm{lb}$ under one premise. % CL-D08
+The premise is that the product cation loses at least as much solvation per unit charge as \ce{Li+} on passing from water to the cell solvent. % CL-D08
+A pass therefore needs $E_\mathrm{lb}\ge E_\mathrm{c}+m_1$ with that premise measured, and a cutoff inside the bracket is inconclusive. % CL-D08
+These bounds are tier one; tier two is a measured service limit $E_\mathrm{svc}$ of coated foil, a coated particle or the bulk phase. % CL-D09
+A phase is ruled out at a cutoff only where tier one and the available tier two both fall below it (\nacreSIref{si:templating}{Templating detail}). % CL-D09
 A condition with a missing input is undetermined and never passes. % CL-D09
-Because a pass at one cutoff is a pass at every lower one, verdicts are given per cutoff class, never as one verdict, and a class reads excluded, partial (excluded above its crossover), open or undetermined; a phase ruled out in this way is reported as thermodynamically excluded\nacreExcludedMark. % CL-D04
+A pass at one cutoff is a pass at every lower one, so verdicts are given per cutoff class, never as one verdict. % CL-D04
+A class reads excluded, partial (excluded above its crossover), open or undetermined, and a phase ruled out in this way is reported as thermodynamically excluded\nacreExcludedMark. % CL-D04
 
 % (3) K2: the processing-stage dissolution criterion and the label it earns.
-A film formed in the slurry dissolves wherever the slurry is undersaturated with respect to it, and the measure is the supersaturation that also drives its nucleation, % CL-D05
+A film formed in the slurry dissolves wherever the slurry is undersaturated with respect to it. % CL-D05
+The measure is the supersaturation that also drives its nucleation, % CL-D05
 \begin{equation}\label{eq:stability}
 \Delta G_\mathrm{diss}=\Rg T\ln\Omb,\qquad \Omb=\frac{\prod_i a_i^{\nu_i}\,a_\mathrm{w}^{n}}{\Ksp}\ge1
 \end{equation}
-per mole of formula units, positive when the phase is stable, with the free-ion activities of the speciation at the slurry state and the measured solubility product of the phase. % CL-D05
-The test runs at every state of a grid of total calcium, total phosphate or carbonate, pH and ionic strength: the label holds only over a region in which every state passes, and that region is named; a failure at one state stands, and a test that does not report dissolution at an undersaturated control state is inconclusive. % CL-D05
+per mole of formula units, positive when the phase is stable. % CL-D05
+The activities are the free-ion activities of the speciation at the slurry state, and $\Ksp$ is the measured solubility product of the phase. % CL-D05
+The test runs at every state of a grid of total calcium, total phosphate or carbonate, pH and ionic strength. % CL-D05
+The label holds only over a named region in which every state passes, and a failure at one state stands. % CL-D05
+A test that does not report dissolution at an undersaturated control state is inconclusive. % CL-D05
 A pass earns one label, thermodynamically suitable against dissolution (a necessary condition) for that phase in that grid, and no more. % CL-D20
-The label does not address the instability of aluminium itself outside its passivation window and is not evidence of protection; the acid-adjusted slurry of the incumbent route is evaluated in the same way beside the grid, as a comparator and not as a regime of the barrier. % CL-D20
+The label does not address the instability of aluminium itself outside its passivation window and is not evidence of protection. % CL-D20
+The acid-adjusted slurry of the incumbent route is evaluated in the same way beside the grid, as a comparator and not as a regime of the barrier. % CL-D20
 
 % (4) K3: an accessible nucleation window along the dose axis.
-A film nucleates on the template only if the template lowers the barrier enough for nuclei to appear in the time available before the bulk solution precipitates the mineral itself. % CL-D06
-Along the dose axis the homogeneous barrier falls as $(\ln\Omb)^{-2}$ and the templated one is the fraction $f(\theta)$ of it, so a window opens between the dose at which the templated barrier meets the criterion of Eq.~\eqref{eq:access} and the dose at which the homogeneous barrier meets it too (Section~\ref{sec:model}). % CL-D06
-The window is empty unless $f<1$, is bounded below by $\Omb\ge1$, and is reported with the saturation of every competing phase, which can close it from above. % CL-D06
+A film nucleates on the template only if the template lowers the barrier enough for nuclei to appear before the bulk solution precipitates the mineral. % CL-D06
+Along the dose axis the homogeneous barrier falls as $(\ln\Omb)^{-2}$, and the templated barrier is the fraction $f(\theta)$ of it. % CL-D06
+A window therefore opens between two doses: where the templated barrier meets the criterion of Eq.~\eqref{eq:access}, and where the homogeneous barrier meets it too (Section~\ref{sec:model}). % CL-D06
+The window is empty unless $f<1$ and is bounded below by $\Omb\ge1$. % CL-D06
+It is reported with the saturation of every competing phase, which can close it from above. % CL-D06
 
 % (5) K4: a thin continuous film.
 A film blocks only where it is continuous, yet it must stay thin enough to pass the electrons of the electrode. % CL-D07
-It can be continuous because the mineral spreads over the template, $\Ssp$ of Eq.~\eqref{eq:spread} above its margin, or because islands nucleate densely enough to meet below the insulating thickness; $K_4$ passes if either holds and is ruled out only when both fail on the same draws. % CL-D07
+It can be continuous because the mineral spreads over the template, with $\Ssp$ of Eq.~\eqref{eq:spread} above its margin. % CL-D07
+It can also be continuous because islands nucleate densely enough to meet below the insulating thickness. % CL-D07
+$K_4$ passes if either holds and is ruled out only when both fail on the same draws. % CL-D07
 
 % (6) The stage rule and the proceed rule.
 The phase that forms in the slurry is in general not the phase that faces the cell, so the conditions apply at different stages. % CL-D11
-Slurry-stage phases are tested on $K_2$ to $K_4$, cell-stage phases on $K_1$, and a conversion step joins a precursor to its cell-stage product; the conversion rows are water-activity thresholds only, each kinetically gated or undetermined (\nacreSIref{si:conversion}{Conversion steps and thresholds}), so the summary line of each chain reads undetermined. % CL-D11
+Slurry-stage phases are tested on $K_2$ to $K_4$, cell-stage phases on $K_1$, and a conversion step joins a precursor to its cell-stage product. % CL-D11
+The conversion rows are water-activity thresholds only, each kinetically gated or undetermined (\nacreSIref{si:conversion}{Conversion steps and thresholds}), so the summary line of each chain reads undetermined. % CL-D11
 A slurry-stage phase also carries a $K_1$ reference row, its own ceiling if it were retained, which is not a gate. % CL-D11
-$K_1$ of a condensed phase and $K_2$ to $K_4$ of an orthophosphate are never presented as one film: a film is reported across stages only as the chain of its slurry, conversion and cell rows, and the chain is as strong as its weakest member. % CL-D11
-A phase proceeds to $K_3$ and $K_4$ unless $K_1$ rules it out at every cutoff class, and proceeding is not passing: an inconclusive or undetermined $K_1$ stays in its row. % CL-D10
+$K_1$ of a condensed phase and $K_2$ to $K_4$ of an orthophosphate are never presented as one film. % CL-D11
+A film is reported across stages only as the chain of its slurry, conversion and cell rows, and the chain is as strong as its weakest member. % CL-D11
+A phase proceeds to $K_3$ and $K_4$ unless $K_1$ rules it out at every cutoff class. % CL-D10
+Even so, proceeding is not passing: an inconclusive or undetermined $K_1$ stays in its row. % CL-D10
 
 % (7) A barrier that is not itself stable.
-A barrier need not be thermodynamically stable at the cutoff if its corrosion product is insoluble and oxidation-stable, as aluminium fluoride is in fluorinated electrolytes; the screen tests the properties of such a film, and the supply of phosphate to a pit is a hypothesis outside it. % CL-D12
+A barrier need not be thermodynamically stable at the cutoff if its corrosion product is insoluble and oxidation-stable, as aluminium fluoride is in fluorinated electrolytes. % CL-D12
+The screen tests the properties of such a film, and the supply of phosphate to a pit is a hypothesis outside it. % CL-D12
 
 % Templating thermodynamics: the carbonate-era Physical model, made mineral-neutral at PH-W8.2.
 % carbonate control (frozen): the artwork of its two figures shows a calcium carbonate nucleus.
@@ -76,25 +101,42 @@ A barrier need not be thermodynamically stable at the cutoff if its corrosion pr
 \subsection{The route layer}\label{sec:routes}
 
 % (1) Why routes: a condensed phosphate does not survive water as such; the race against hydrolysis.
-The cell-stage candidates are condensed phosphates, and a condensed phosphate cannot simply be precipitated from the slurry: in water its P--O--P bonds hydrolyse towards orthophosphate, the phase with the lower oxidation onset. % CL-D13
-Three in-situ routes try to outrun that hydrolysis: gelation of a soluble polyphosphate at the oxide by the aluminium ions released there; a calcium polyphosphate coacervate, a dense liquid phase that separates from solution\cite{wang2024liquidliquid}, which wets the foil and dries to a glass; and calcium polyphosphate trapped by fast drying. % CL-D13
+The cell-stage candidates are condensed phosphates, and a condensed phosphate cannot simply be precipitated from the slurry. % CL-D13
+In water its P--O--P bonds hydrolyse towards orthophosphate, the phase with the lower oxidation onset. % CL-D13
+Three in-situ routes try to outrun that hydrolysis. % CL-D13
+One is gelation of a soluble polyphosphate at the oxide by the aluminium ions released there. % CL-D13
+Another is a calcium polyphosphate coacervate, a dense liquid phase that separates from solution\cite{wang2024liquidliquid}, which wets the foil and dries to a glass. % CL-D13
+The third is calcium polyphosphate trapped by fast drying. % CL-D13
 The routes enter the screen as thermodynamic criteria; whether gelation or drying outruns hydrolysis is kinetics, and the race stays a labelled hypothesis. % CL-D13, CL-D15
 
 % (2) The hydrolysis constraint.
-Hydrolysis removes condensed phosphorus at a rate proportional to what is left, so the condensed fraction at the end of the wet period is $f_\mathrm{cond}=\exp(-k_\mathrm{eff}t_\mathrm{wet})$ and halves with every half-life of hydrolysis. % CL-D14
+Hydrolysis removes condensed phosphorus at a rate proportional to what is left. % CL-D14
+The condensed fraction at the end of the wet period is therefore $f_\mathrm{cond}=\exp(-k_\mathrm{eff}t_\mathrm{wet})$, and it halves with every half-life of hydrolysis. % CL-D14
 Here $k_\mathrm{eff}$ is the rate constant measured on alumina particles at room temperature\cite{wan2019polyphosphate} times a transfer factor to the process state, bracketed from both sides. % CL-D14
-The smallest tolerable condensed fraction is a percolation bound for the orthophosphate that hydrolysis leaves, so the descriptor is reported beside each route and never gates a row; states outside the measured pH and temperature are undetermined. % CL-D14
+The smallest tolerable condensed fraction is a percolation bound for the orthophosphate that hydrolysis leaves. % CL-D14
+The descriptor is reported beside each route and never gates a row; states outside the measured pH and temperature are undetermined. % CL-D14
 
 % (3) Formation criteria in route form.
-Thermodynamics can only rule gelation out: an aluminium polyphosphate whose supersaturation is below unity cannot form at that state, while one above unity is not thermodynamically excluded (open), which is never a pass. % CL-D15
-At the slurry stage the free \ce{Al^3+} activity is pinned by the oxide itself, and at the cell stage it is the activity in a corrosion pit, a separate state never combined with it. % CL-D15
+Thermodynamics can only rule gelation out. % CL-D15
+An aluminium polyphosphate whose supersaturation is below unity cannot form at that state. % CL-D15
+One above unity is not thermodynamically excluded (open), which is never a pass. % CL-D15
+At the slurry stage the free \ce{Al^3+} activity is pinned by the oxide itself. % CL-D15
+At the cell stage it is the activity in a corrosion pit, a separate state never combined with it. % CL-D15
 The coacervate route can be ruled out only where a measured phase map of the coacervate covers the slurry state, and is undetermined elsewhere. % CL-D15
 
 % (4) The liquid-precursor wetting condition.
-A liquid precursor covers the foil if the oxide prefers the dense coacervate to the dilute liquid it coexists with by more than the tension between the two liquids. % CL-D16
-With the spreading coefficient written for that pair, $S_\mathrm{c}=\gamma_\mathrm{sl}^\mathrm{c}-\gamma_\mathrm{sn}^\mathrm{c}-\gamma_\mathrm{nl}^\mathrm{c}$, with the oxide against the dilute liquid, the oxide against the coacervate and the coacervate against the dilute liquid, the tension $\gamma_\mathrm{nl}^\mathrm{c}$ between coexisting liquids is far below a solid--water energy, and in the limit of negligible $\gamma_\mathrm{nl}^\mathrm{c}$ the condition reduces to $\gamma_\mathrm{sn}^\mathrm{c}\le\gamma_\mathrm{sl}^\mathrm{c}$. % CL-D16
-The preference is the difference of the polyphosphate-free contacts, which is unmeasured, so the spreading coefficient on alumina is a design result with its flip value, and the self-limiting thickness of the film is a descriptor. % CL-D16
+A liquid precursor covers the foil if the oxide prefers the dense coacervate to the dilute liquid by more than the tension between the two liquids. % CL-D16
+The spreading coefficient for that pair is $S_\mathrm{c}=\gamma_\mathrm{sl}^\mathrm{c}-\gamma_\mathrm{sn}^\mathrm{c}-\gamma_\mathrm{nl}^\mathrm{c}$. % CL-D16
+Its terms are the oxide against the dilute liquid, the oxide against the coacervate, and the coacervate against the dilute liquid. % CL-D16
+The tension $\gamma_\mathrm{nl}^\mathrm{c}$ between coexisting liquids is far below a solid--water energy. % CL-D16
+In the limit of negligible $\gamma_\mathrm{nl}^\mathrm{c}$ the condition reduces to $\gamma_\mathrm{sn}^\mathrm{c}\le\gamma_\mathrm{sl}^\mathrm{c}$. % CL-D16
+The preference is the difference of the polyphosphate-free contacts, which is unmeasured. % CL-D16
+The spreading coefficient on alumina is therefore a design result with its flip value, and the self-limiting thickness of the film is a descriptor. % CL-D16
 
 % (5) Framings and the organic matrix.
-The in-situ products are amorphous, and a glass lies above its crystal in free energy, (the bound $\Delta G_{\mathrm{g}\to\mathrm{c}}\ge0$ holds between phases of the same composition; for a hydrated amorphous phase the reference is the crystalline phase plus liquid water at unit activity), so the amorphous framing governs these routes, the crystalline one is an optimistic upper reference, and a phase that passes only as a crystal is labelled as requiring crystallisation. % CL-D17
-An organic matrix such as chitosan or polydopamine has no meaningful thermodynamic onset here, so only a measured service limit enters, as a ceiling printed beside the mineral; the matrix never gates a row on its own, and polydopamine carries a stated oxidation risk. % CL-D18
+The in-situ products are amorphous, and a glass lies above its crystal in free energy. % CL-D17
+The bound $\Delta G_{\mathrm{g}\to\mathrm{c}}\ge0$ holds between phases of the same composition; for a hydrated amorphous phase the reference is the crystal plus liquid water at unit activity. % CL-D17
+The amorphous framing therefore governs these routes, and the crystalline one is an optimistic upper reference. % CL-D17
+A phase that passes only as a crystal is labelled as requiring crystallisation. % CL-D17
+An organic matrix such as chitosan or polydopamine has no meaningful thermodynamic onset here, so only a measured service limit enters, as a ceiling printed beside the mineral. % CL-D18
+The matrix never gates a row on its own, and polydopamine carries a stated oxidation risk. % CL-D18

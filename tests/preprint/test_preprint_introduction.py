@@ -152,7 +152,7 @@ def test_hero_figure_is_cited_and_labelled():
     assert "\\label{fig:hero}" in text and "Fig.~\\ref{fig:hero}" in text
 
 
-TERMS = ("screen", "processing stage", "cell stage", "sink (solid-salt reference state)", "upper bound $E_\\mathrm{ub}$",
+TERMS = ("screen", "processing stage", "cell stage", "cutoff class", "sink (solid-salt reference state)", "upper bound $E_\\mathrm{ub}$",
          "thermodynamically excluded\\nacreExcludedMark", "not thermodynamically excluded", "open",
          "suitable against dissolution (a necessary condition)", "inconclusive", "undetermined", "break-even ratio $r^*$",
          "tier-one and tier-two evidence")

@@ -246,5 +246,5 @@ def test_carbonate_acid_sentence_names_the_grid_points_inside_the_sourced_range(
     """PH-W8.9 (G8): Section 4.2 names the grid points inside the sourced range, by macro, not 'sourced slurries'."""
     text = (PAPER / "sections" / "results.tex").read_text(encoding="utf-8")
     assert "not in sourced acid-adjusted slurries" not in text
-    assert (r"and not at the grid points inside the sourced range (pH \NumRegPhGridSixFive, "
+    assert (r"It is not excluded against dissolution at the grid points inside the sourced range (pH \NumRegPhGridSixFive, "
             r"\NumRegPhGridSevenFive\ and \NumRegPhGridEightFive)") in text

@@ -2,19 +2,24 @@
 % control and the oxidation map, phosphates, nucleation, required precision, baselines). Claims carried:
 % the entries of ../claims.yaml with section results. Prose: PH-W8.3, in the regime frame. Each subsection
 % opens with the physical question and its physical reading, then the numbers; every number is a macro
-% from a committed output file. One sentence per line; each ends with a comment naming its ledger id.
+% from a committed output file. One sentence per line; each ends with a comment naming its ledger id. Sentences of
+% at most 35 words (PH-W8.13).
 % carbonate control (frozen): the control row and its paragraph are taken unchanged from the carbonate screen.
 \section{Results}\label{sec:results}
 
 \subsection{The regime map}\label{sec:res-regime}
 % (1) The physical question and the map that answers it.
-A mineral on the collector is asked two separate questions: whether it stays undissolved in the alkaline water it meets during processing, and whether it stays unoxidised at the potential the cathode sets in the cell. % CL-S13
-The regime map answers both per phase, per stage and per cutoff class (Table~\ref{tab:regime}; the per-pH tables of the acid-adjusted state are in \nacreSIref{si:regime}{Regime table detail and later reruns}). % CL-S13, CL-D04
-A phase that is not thermodynamically excluded (open) is not ruled out at the cutoff and has no lower bound on its onset; the table reads open, and neither word implies feasibility or a pass. % CL-D21
-Every tier-one exclusion of this paper holds for a \ce{LiClO4}-saturated sink (solid-salt reference state), marked \nacreSinkMark\ from here on: the sink is a perchlorate electrolyte, \ce{LiClO4} being the fluorine-free lithium salt with tabulated thermochemistry, and nothing is stated for bis(oxalato)borate or any other anion. % CL-M17, CL-L05
-These exclusions are thermodynamic ceilings; kinetic stabilisation is not excluded and is what the potential hold of Section~\ref{sec:predictions} measures. % CL-L09, CL-Q01
-The map is a design rule matched to the regime: calcite meets the dissolution condition over the named region of the alkaline grid, and carbonate is thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ above \NumCarbonateCrossover; bone mineral shares that ceiling, and at the higher cutoff classes only the condensed calcium phosphates remain not thermodynamically excluded, with the aluminium phosphates undetermined. % CL-S13
-No phase passes the oxidation condition in this version: $E_\mathrm{lb}$, computed from aqueous formation data with every ionic product at its standard state, bounds the onset only if $\Delta G_\mathrm{tr}^\mathrm{rel}\ge0$, which no measured datum tests, so no row can pass and the map can exclude a phase but not admit one. % CL-S16
+A mineral on the collector is asked two separate questions. % CL-S13
+Does it stay undissolved in the alkaline water it meets during processing, and does it stay unoxidised at the potential the cathode sets in the cell? % CL-S13
+The regime map answers both per phase, per stage and per cutoff class (Table~\ref{tab:regime}); the per-pH tables of the acid-adjusted state are in \nacreSIref{si:regime}{Regime table detail and later reruns}. % CL-S13, CL-D04
+A phase that is not thermodynamically excluded (open) has no lower bound on its onset, and neither word implies feasibility or a pass. % CL-D21
+Every tier-one exclusion in this paper holds for a \ce{LiClO4}-saturated sink (solid-salt reference state), marked \nacreSinkMark\ from here on. % CL-M17
+The sink is a perchlorate electrolyte, because \ce{LiClO4} is the fluorine-free lithium salt with tabulated thermochemistry; nothing is stated for bis(oxalato)borate or any other anion. % CL-M17, CL-L05
+These exclusions are thermodynamic ceilings: kinetic stabilisation is not excluded, and the potential hold of Section~\ref{sec:predictions} measures it. % CL-L09, CL-Q01
+Calcite meets the dissolution condition over a named region of the alkaline grid, and carbonate is thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ above \NumCarbonateCrossover. % CL-S13
+Bone mineral shares that ceiling; at the higher cutoff classes only the condensed calcium phosphates remain not thermodynamically excluded, and the aluminium phosphates are undetermined. % CL-S13
+No phase passes the oxidation condition in this version. % CL-S16
+$E_\mathrm{lb}$ bounds the onset only if $\Delta G_\mathrm{tr}^\mathrm{rel}\ge0$, which no measured datum tests, so the map can exclude a phase but not admit one. % CL-S16
 
 % Table 6 of the re-audit (break-even ratios) is set before the regime-table floats, so it leaves the float
 % queue near Section 4.3, which cites it; behind the three full-width regime parts it floated four pages on.
@@ -44,43 +49,84 @@ No phase passes the oxidation condition in this version: $E_\mathrm{lb}$, comput
 
 \subsection{Processing-stage dissolution stability and the acid-adjusted comparator}\label{sec:res-dissolution}
 % (2) Why the alkaline slurry favours the calcium minerals, then the one positive statement.
-In the alkaline slurry the deprotonated anions \ce{CO3^{2-}} and \ce{PO4^{3-}} become more abundant with pH, so the supersaturation of a calcium mineral grows with pH: from the sourced acid constants at infinite dilution, \ce{CO3^{2-}} is about \NumSpecCarbonateLow\ of the dissolved carbonate at pH \NumSpecPhLow, and \ce{PO4^{3-}} about \NumSpecPhosphateLow\ of the phosphate at pH \NumSpecPhLow\ and \NumSpecPhosphateMid\ at pH \NumSpecPhMid. % CL-S07
-The one positive statement reads: thermodynamically suitable against dissolution (a necessary condition) for calcite in grid \NumRegGridId\ at $\mathrm{Ca_T}\ge$ \NumRegWindowFullLoCalcite\ (\NumRegSlurryPassFullCalcite\ cells, every carbonate, pH, ionic-strength and drying state passing), at pH \NumRegSlurryPhLow\ to \NumRegSlurryPhHigh; \NumRegSlurryPassExtraCalcite\ further cells pass at \NumRegWindowLoCalcite, where the other cells of that dose fail, so the label does not extend to it; the grid carries no phosphate, and the phosphate rows assume $\mathrm{P_T}$ on the same decade grid, \NumRegWindowPLo\ to \NumRegWindowPHi, because no slurry phosphate total is sourced. % CL-S17
+In the alkaline slurry the deprotonated anions \ce{CO3^{2-}} and \ce{PO4^{3-}} become more abundant with pH, so the supersaturation of a calcium mineral grows with pH. % CL-S07
+From the sourced acid constants at infinite dilution, \ce{CO3^{2-}} is about \NumSpecCarbonateLow\ of the dissolved carbonate at pH \NumSpecPhLow. % CL-S07
+\ce{PO4^{3-}} is about \NumSpecPhosphateLow\ of the phosphate at pH \NumSpecPhLow\ and \NumSpecPhosphateMid\ at pH \NumSpecPhMid. % CL-S07
+The one positive statement reads: thermodynamically suitable against dissolution (a necessary condition) for calcite in grid \NumRegGridId\ at $\mathrm{Ca_T}\ge$ \NumRegWindowFullLoCalcite. % CL-S17
+The passing region covers pH \NumRegSlurryPhLow\ to \NumRegSlurryPhHigh\ and \NumRegSlurryPassFullCalcite\ cells, with every carbonate, pH, ionic-strength and drying state passing. % CL-S17
+\NumRegSlurryPassExtraCalcite\ further cells pass at \NumRegWindowLoCalcite, where the other cells of that dose fail, so the label does not extend to that dose. % CL-S17
+The grid carries no phosphate; the phosphate rows assume $\mathrm{P_T}$ on the same decade grid, \NumRegWindowPLo\ to \NumRegWindowPHi, because no slurry phosphate total is sourced. % CL-S17
 This is a necessary condition only: it is not evidence of protection and does not address the instability of aluminium itself above its passivation window. % CL-D20
-Aragonite passes in \NumRegSlurryPassAragonite\ of \NumRegSlurryCellsAragonite\ cells, at $\mathrm{Ca_T}$ \NumRegWindowLoAragonite\ to \NumRegWindowHiAragonite, as dissolution stability only, because its formation is unsupported at slurry pH and room temperature\cite{nahi2022polyamines,hanifa2025effects}. % CL-S17, CL-K15
+Aragonite passes in \NumRegSlurryPassAragonite\ of \NumRegSlurryCellsAragonite\ cells, at $\mathrm{Ca_T}$ \NumRegWindowLoAragonite\ to \NumRegWindowHiAragonite. % CL-S17
+That is dissolution stability only, because its formation is unsupported at slurry pH and room temperature\cite{nahi2022polyamines,hanifa2025effects}. % CL-S17, CL-K15
 Amorphous calcium carbonate, the precursor of the formation stage, passes in \NumRegSlurryPassAcc\ cells, at $\mathrm{Ca_T}$ \NumRegWindowLoAcc\ to \NumRegWindowHiAcc; it is reported beside the two polymorphs and is not required. % CL-S17
 Alternating aragonite and calcite layers would not be nacre-like, and the screen tests neither layering nor polymorph structure. % CL-L10
 Each of the three reports dissolution at the low-dose corner of the grid, so a pass is not an artefact of the test. % CL-S17
-Among the calcium phosphates the same test passes hydroxyapatite in \NumRegSlurryPassHap\ of \NumRegSlurryCellsHap\ cells, $\beta$-TCP in \NumRegSlurryPassBtcp\ and amorphous calcium phosphate in \NumRegSlurryPassAcp; octacalcium phosphate is inconclusive because its control fails, and brushite, $\alpha$-TCP and \ce{Li3PO4} are undetermined in the main run. % CL-S07
-In a later rerun with keys added after the main run, brushite passes in \NumRegRerunBrushiteAlkalineRerun\ of \NumRegRerunBrushiteAlkalineCells\ alkaline cells and octacalcium phosphate on the \ce{Ca4H(PO4)3} basis in \NumRegRerunOcpCahAlkalineRerun, reported beside the main-run rows (\nacreSIref{si:regime}{Regime table detail and later reruns}). % CL-S18
+Among the calcium phosphates the same test passes hydroxyapatite in \NumRegSlurryPassHap\ of \NumRegSlurryCellsHap\ cells, $\beta$-TCP in \NumRegSlurryPassBtcp\ and amorphous calcium phosphate in \NumRegSlurryPassAcp. % CL-S07
+Octacalcium phosphate is inconclusive because its control fails, and brushite, $\alpha$-TCP and \ce{Li3PO4} are undetermined in the main run. % CL-S07
+A later rerun used keys added after the main run. % CL-S18
+In it, brushite passes in \NumRegRerunBrushiteAlkalineRerun\ of \NumRegRerunBrushiteAlkalineCells\ alkaline cells and octacalcium phosphate on the \ce{Ca4H(PO4)3} basis in \NumRegRerunOcpCahAlkalineRerun. % CL-S18
+Both are reported beside the main-run rows (\nacreSIref{si:regime}{Regime table detail and later reruns}). % CL-S18
 
 % (3) The acid-adjusted comparator: the incumbent route, with both minimum doses.
-Phosphoric acid in the incumbent route brings the slurry to pH \NumAcidSourcedLo\ to \NumAcidSourcedHi, the sourced acid-adjusted state and the comparator of this section; the dissolution test runs on a grid from pH \NumRegAcidPhLow\ to \NumRegAcidPhHigh\ that spans the passivation window of aluminium (a grade-D statement; our model windows run from \NumAcidModelLo\ to \NumAcidModelHi), and lowering the pH protonates carbonate and phosphate and drives every calcium mineral toward dissolution. % CL-S08
-Calcite and aragonite dissolve at every cell at pH \NumRegAcidExclLoCalcite\ and \NumRegAcidExclHiCalcite, and calcite passes from pH \NumRegAcidFirstCalcite\ up, from a calcium total of \NumRegAcidMinCaCalcite\ at that pH, in \NumRegAcidPassCalcite\ of the \NumRegAcidCellsAboveCalcite\ cells at that pH and above, inside the sourced range; the grid has no point between these pH values, so carbonate is excluded against dissolution at the two lowest pH values of the grid, in the lower part of the passivation window, and not at the grid points inside the sourced range (pH \NumRegPhGridSixFive, \NumRegPhGridSevenFive\ and \NumRegPhGridEightFive). % CL-S08
-Hydroxyapatite and $\beta$-TCP pass at every pH of the acid-adjusted grid, but at pH \NumRegAcidFirstHap\ only at high dose: hydroxyapatite from $\mathrm{Ca_T}$ \NumRegAcidMinCaHap\ and $\mathrm{P_T}$ \NumRegAcidMinPHap\ on the crossed decade grid and from \NumRegAcidStoichCaHap\ and \NumRegAcidStoichPHap\ at its own Ca:P of \NumRatioHap, and $\beta$-TCP from \NumRegAcidMinCaBtcp\ and \NumRegAcidMinPBtcp\ crossed and \NumRegAcidStoichCaBtcp\ and \NumRegAcidStoichPBtcp\ at \NumRatioTcp. % CL-S08
-At their own stoichiometry both pass at low dose at higher pH: hydroxyapatite from $\mathrm{Ca_T}$ \NumRegOwnHapAcidCa\ ($\mathrm{P_T}$ \NumRegOwnHapAcidP) at pH \NumRegOwnHapAcidPh\ and $\beta$-TCP from \NumRegOwnBtcpAcidCa\ (\NumRegOwnBtcpAcidP) at pH \NumRegOwnBtcpAcidPh. % CL-S08
-In the later rerun, brushite stays a high-dose phase at pH \NumRegPhGridFourFive, needing $\mathrm{Ca_T}$ \NumRegPhStoichCaBrushiteFourFive\,$\mathrm{mol\,dm^{-3}}$ on its own ratio line; octacalcium phosphate, read on the \ce{Ca4H(PO4)3} basis, passes in \NumRegRerunOcpCahAcidRerun\ of \NumRegRerunOcpCahAcidCells\ cells in the later rerun, and $\alpha$-TCP (grade D) and \ce{Li3PO4} (a concentration-product key) remain undetermined. % CL-S08, CL-S18
-These passing doses are comparable to the order of the sourced additive doses, never equal to them: the one derivable sourced figure is about \NumDoseMolPerKgLiquid\ of liquid, in other units, and the table flags passing doses at or above \NumRegHighDose, of which \NumRegDoseSameOrder\ is of the same order as that figure. % CL-S08
+Phosphoric acid in the incumbent route brings the slurry to pH \NumAcidSourcedLo\ to \NumAcidSourcedHi, the sourced acid-adjusted state and the comparator of this section. % CL-S08
+The dissolution test runs on a grid from pH \NumRegAcidPhLow\ to \NumRegAcidPhHigh\ that spans the passivation window of aluminium. % CL-S08
+That window is a grade-D statement, and our model windows run from \NumAcidModelLo\ to \NumAcidModelHi. % CL-S08
+Lowering the pH protonates carbonate and phosphate and drives every calcium mineral toward dissolution. % CL-S08
+Calcite and aragonite dissolve at every cell at pH \NumRegAcidExclLoCalcite\ and \NumRegAcidExclHiCalcite. % CL-S08
+Calcite passes from pH \NumRegAcidFirstCalcite\ up, from a calcium total of \NumRegAcidMinCaCalcite\ at that pH, in \NumRegAcidPassCalcite\ of the \NumRegAcidCellsAboveCalcite\ cells at that pH and above, inside the sourced range. % CL-S08
+The grid has no point between these pH values. % CL-S08
+Carbonate is therefore excluded against dissolution at the two lowest pH values of the grid, in the lower part of the passivation window. % CL-S08
+It is not excluded against dissolution at the grid points inside the sourced range (pH \NumRegPhGridSixFive, \NumRegPhGridSevenFive\ and \NumRegPhGridEightFive). % CL-S08
+Hydroxyapatite and $\beta$-TCP pass at every pH of the acid-adjusted grid, but at pH \NumRegAcidFirstHap\ only at high dose. % CL-S08
+There, hydroxyapatite passes from $\mathrm{Ca_T}$ \NumRegAcidMinCaHap\ and $\mathrm{P_T}$ \NumRegAcidMinPHap\ on the crossed decade grid, and from \NumRegAcidStoichCaHap\ and \NumRegAcidStoichPHap\ at its own Ca:P of \NumRatioHap. % CL-S08
+$\beta$-TCP passes from \NumRegAcidMinCaBtcp\ and \NumRegAcidMinPBtcp\ on the crossed grid, and from \NumRegAcidStoichCaBtcp\ and \NumRegAcidStoichPBtcp\ at \NumRatioTcp. % CL-S08
+At their own stoichiometry both pass at low dose at higher pH. % CL-S08
+Hydroxyapatite passes from $\mathrm{Ca_T}$ \NumRegOwnHapAcidCa\ ($\mathrm{P_T}$ \NumRegOwnHapAcidP) at pH \NumRegOwnHapAcidPh, and $\beta$-TCP from \NumRegOwnBtcpAcidCa\ (\NumRegOwnBtcpAcidP) at pH \NumRegOwnBtcpAcidPh. % CL-S08
+In the later rerun, brushite stays a high-dose phase at pH \NumRegPhGridFourFive, needing $\mathrm{Ca_T}$ \NumRegPhStoichCaBrushiteFourFive\,$\mathrm{mol\,dm^{-3}}$ on its own ratio line. % CL-S08, CL-S18
+Octacalcium phosphate, read on the \ce{Ca4H(PO4)3} basis, passes in \NumRegRerunOcpCahAcidRerun\ of \NumRegRerunOcpCahAcidCells\ cells in the later rerun. % CL-S18
+$\alpha$-TCP (grade D) and \ce{Li3PO4} (a concentration-product key) remain undetermined. % CL-S08
+These passing doses are comparable to the order of the sourced additive doses, never equal to them. % CL-S08
+The one derivable sourced figure is about \NumDoseMolPerKgLiquid\ of liquid, in other units. % CL-S08
+The table flags passing doses at or above \NumRegHighDose, of which \NumRegDoseSameOrder\ is of the same order as that figure. % CL-S08
 The sourced acid-adjusted state is the incumbent comparator, not a regime of the barrier, and the grid that spans the passivation window is context for it. % CL-S08, CL-M13
 
 \subsection{The carbonate control and the $K_1$ exclusion map}\label{sec:res-carbonate}
 % (4) The physics of the oxidation onset of an isolated-oxoanion mineral, then the control.
 % carbonate control (frozen)
-At the cutoff a calcium mineral oxidises once handing its calcium to the electrolyte salt and its lattice oxygen to oxygen gas, with the electrons plating lithium, lowers the free energy; taking the solid perchlorate as the sink, with the lithium salt drawn from its solid, gives an upper bound on that onset for the saturated sink\nacreSinkMark; below saturation the bound rises by the one-sided term $m_\mathrm{sink}$ of Section~\ref{sec:design}, whose value is not yet bound. % CL-S03
-For calcium carbonate that bound is \NumCarbonateOnset, so with its margin carbonate is not thermodynamically excluded at the nominal low class of \NumClassLo\ and thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ above \NumCarbonateCrossover, which is every cutoff of the two higher classes (Figs.~\ref{fig:ladder} and~\ref{fig:heatmap}, where the carbonate $K_1$ cells are those of calcite). % CL-S03
-Lithium carbonate, oxidised in glyme electrolytes, evolves gas from \NumTierTwoLow\ to \NumTierTwoHigh, close to the equilibrium value of its own reaction\cite{mahne2018electrochemical,cao2022oxidative}; read across to calcium carbonate, this is a bulk-phase record of another phase, and the claim is worded as low voltage up to about \NumTierTwoLow\ (a contrary reading is in \nacreSIref{si:templating}{Templating detail}). % CL-S15
-At the \NumClassSensitivity\ sensitivity line the carbonate crossover lies within the margin of the line, so carbonate is close to thermodynamic exclusion there; rebuilt at that line, the ladder changes no verdict (the files are identical, because class verdicts use the class bounds). % CL-S15
+At the cutoff a calcium mineral oxidises once releasing its calcium to the electrolyte salt and its lattice oxygen as oxygen gas, with the electrons plating lithium, lowers the free energy. % CL-S03
+Taking the solid perchlorate as the sink, with the lithium salt drawn from its solid, gives an upper bound on that onset for the saturated sink\nacreSinkMark. % CL-S03
+Below saturation the bound rises by the one-sided term $m_\mathrm{sink}$ of Section~\ref{sec:design}, whose value is not evaluated. % CL-S03
+For calcium carbonate that bound is \NumCarbonateOnset. % CL-S03
+With its margin, carbonate is not thermodynamically excluded at the nominal low class of \NumClassLo. % CL-S03
+It is thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ above \NumCarbonateCrossover, which is every cutoff of the two higher classes (Figs.~\ref{fig:ladder} and~\ref{fig:heatmap}, where the carbonate $K_1$ cells are those of calcite). % CL-S03
+Lithium carbonate, oxidised in glyme electrolytes, evolves gas from \NumTierTwoLow\ to \NumTierTwoHigh, close to the equilibrium value of its own reaction\cite{mahne2018electrochemical,cao2022oxidative}. % CL-S15
+Read across to calcium carbonate, this is a bulk-phase record of another phase, so the claim is worded as low voltage up to about \NumTierTwoLow\ (a contrary reading is in \nacreSIref{si:templating}{Templating detail}). % CL-S15
+At the \NumClassSensitivity\ sensitivity line the carbonate crossover lies within the margin of the line, so carbonate is close to thermodynamic exclusion there. % CL-S15
+Rebuilt at that line, the ladder changes no verdict; the files are identical, because class verdicts use the class bounds. % CL-S15
 % (5) Bone mineral beside carbonate, and the rest of the ladder.
 Hydroxyapatite and the tricalcium phosphates strip calcium from a lattice of isolated anions in the same way, and their upper bounds lie at \NumOnsetBoneLow\ to \NumOnsetBoneHigh, beside that of carbonate. % CL-S01
-Hydroxyapatite and $\beta$-TCP, and amorphous calcium phosphate on its crystalline $\beta$-TCP reference, are thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ at \NumClassMidHigh\ and above, and $\alpha$-TCP from \NumClassMidLow; the crossovers of hydroxyapatite (\NumHapCrossover) and $\beta$-TCP (\NumBtcpCrossover) lie within \NumEdgeTolerance\ of the \NumClassMidLow\ edge, so their exclusion at that edge depends on the sink term. % CL-S14
-On the amorphous framing these phases are thermodynamically excluded\nacreExcludedMark\ with them, at the same classes, by the bound $\Delta G_{\mathrm{g}\to\mathrm{c}}\ge0$ against the crystalline reference of the same composition plus liquid water at unit activity (amorphous calcium phosphate is metastable against crystalline calcium phosphates in water), so hydroxyapatite is excluded under both framings at \NumClassMidHigh\ and above, and at the \NumClassMidLow\ class within the edge sensitivity stated above. At the lowest class (\NumClassLo) the crystalline rows are open and the amorphous framing of every phosphate stays undetermined; the amorphous framing of every other phosphate, and amorphous calcium carbonate, are not covered by the bound. % CL-S14
-Brushite is excluded only in part: not thermodynamically excluded at the two lower classes and thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ above \NumRegCrossBrushiteHi\ inside the highest class, so at \NumClassHiHigh\ (hydrate-water oxidation at the water activity fixed for the screen; a precursor, not a cell-stage phase); that crossover lies within \NumEdgeTolerance\ of the \NumClassHiLow\ edge. % CL-S14
-Table~\ref{tab:breakeven} gives the headroom of each exclusion\nacreSinkMark\ below its cutoff and its break-even ratio $r^*$: an exclusion stands while the mean-activity ratio of saturated to actual \ce{LiClO4} stays below $r^*$. % CL-S03, CL-S14
+Hydroxyapatite, $\beta$-TCP and amorphous calcium phosphate on its crystalline $\beta$-TCP reference are thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ at \NumClassMidHigh\ and above, and $\alpha$-TCP from \NumClassMidLow. % CL-S14
+The crossovers of hydroxyapatite (\NumHapCrossover) and $\beta$-TCP (\NumBtcpCrossover) lie within \NumEdgeTolerance\ of the \NumClassMidLow\ edge, so their exclusion at that edge depends on the sink term. % CL-S14
+On the amorphous framing these phases are thermodynamically excluded\nacreExcludedMark\ with them, at the same classes. % CL-S14
+The reason is the bound $\Delta G_{\mathrm{g}\to\mathrm{c}}\ge0$ against the crystalline reference of the same composition plus liquid water at unit activity; amorphous calcium phosphate is metastable against crystalline calcium phosphates in water. % CL-S14
+Hydroxyapatite is therefore excluded under both framings at \NumClassMidHigh\ and above, and at the \NumClassMidLow\ class within the edge sensitivity stated above. % CL-S14
+At the lowest class (\NumClassLo) the crystalline rows are open and the amorphous framing of every phosphate stays undetermined. % CL-S14
+The bound does not cover the amorphous framing of every other phosphate, nor amorphous calcium carbonate. % CL-S14
+Brushite is excluded only in part: it is not thermodynamically excluded at the two lower classes. % CL-S14
+It is thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ above \NumRegCrossBrushiteHi\ inside the highest class, so at \NumClassHiHigh, by oxidation of its hydrate water at the water activity fixed for the screen. % CL-S14
+Brushite is a precursor, not a cell-stage phase, and its crossover lies within \NumEdgeTolerance\ of the \NumClassHiLow\ edge. % CL-S14
+Table~\ref{tab:breakeven} gives the headroom of each exclusion\nacreSinkMark\ below its cutoff and its break-even ratio $r^*$. % CL-S03, CL-S14
+Read plainly, an exclusion stands while the mean-activity ratio of saturated to actual \ce{LiClO4} stays below $r^*$. % CL-S03, CL-S14
 Octacalcium phosphate, \ce{Li3PO4}, \ce{Al(PO3)3} and the aluminium polyphosphate gel have no oxidation bound and are omitted from the map. % CL-S12
-The silicates \ce{CaSiO3}, \ce{Ca2SiO4} and \ce{Li2SiO3} are comparators of the oxidation ladder, calcium and lithium held by silicate instead of phosphate anions, not candidate barriers; \ce{CaSiO3} and \ce{Li2SiO3} are undetermined, because no uncertainty is printed for \ce{SiO2} (\nacreSIref{si:thermo}{Thermochemistry benchmark and the DFT spread}). % CL-S20
-\ce{Ca2SiO4} is thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ already at \NumClassLo: its limiting oxidation hands half its calcium to the perchlorate sink and leaves \ce{CaSiO3}, with an upper bound of \NumBenCaSilOrthoROneSEub\ and a margin of \NumBenCaSilOrthoROneSMargin, whose sum lies below that class (Figs.~\ref{fig:ladder} and~\ref{fig:heatmap}, Table~\ref{tab:breakeven}). % CL-S20
+The silicates \ce{CaSiO3}, \ce{Ca2SiO4} and \ce{Li2SiO3} are comparators of the oxidation ladder, not candidate barriers: calcium and lithium are held by silicate instead of phosphate anions. % CL-S20
+\ce{CaSiO3} and \ce{Li2SiO3} are undetermined, because no uncertainty is printed for \ce{SiO2} (\nacreSIref{si:thermo}{Thermochemistry benchmark and the DFT spread}). % CL-S20
+\ce{Ca2SiO4} is thermodynamically excluded\nacreExcludedMark\nacreSinkMark\ already at \NumClassLo. % CL-S20
+Its limiting oxidation hands half its calcium to the perchlorate sink and leaves \ce{CaSiO3}, with an upper bound of \NumBenCaSilOrthoROneSEub\ and a margin of \NumBenCaSilOrthoROneSMargin. % CL-S20
+Their sum lies below that class (Figs.~\ref{fig:ladder} and~\ref{fig:heatmap}, Table~\ref{tab:breakeven}). % CL-S20
 The lower end of every upper bound is conditional on the transfer premise, which is pending, so the bars of Fig.~\ref{fig:ladder} are open below. % CL-M17
-These exclusions are thermodynamic: kinetic stabilisation is not ruled out for phosphates, because tier-two records of coated cathode particles exist in \ce{LiPF6} electrolytes\cite{xiao2015unravelling,hofmann2020surface}, not in fluorine-free ones. % CL-L09
+These exclusions are thermodynamic. % CL-L09
+Kinetic stabilisation is not ruled out for phosphates, because tier-two records of coated cathode particles exist in \ce{LiPF6} electrolytes\cite{xiao2015unravelling,hofmann2020surface}, not in fluorine-free ones. % CL-L09
 The upper bounds of this ladder were seen before the regime framing of the paper was adopted. % CL-M08
 
 \begin{figure*}[t]
@@ -99,18 +145,27 @@ The upper bounds of this ladder were seen before the regime framing of the paper
 
 \subsection{Phosphates and the condensed and aluminium phosphates}\label{sec:res-phosphate}\label{sec:res-condensed}
 % (6) Why condensation raises the onset; the amorphous framing; the aluminium phases.
-For hydroxyapatite the limiting oxidation is the release of lattice oxygen with condensation of the remaining phosphate to pyrophosphate, below the oxidation of its hydroxide, so linking phosphate into chains is itself the reaction that sets the ceiling. % CL-S05
-A phase whose phosphate is already condensed can release lattice oxygen only by condensing further toward the phosphorus oxide, and its upper bound rises: \NumPyroOnset\ for \ce{Ca2P2O7} and \NumMetaGlassOnset\ for \ce{Ca(PO3)2} glass, against \NumMetaCrystalOnset\ for its crystal. % CL-S06
+For hydroxyapatite the limiting oxidation releases lattice oxygen and condenses the remaining phosphate to pyrophosphate. % CL-S05
+That reaction lies below the oxidation of its hydroxide, so linking phosphate into chains is itself the reaction that sets the ceiling. % CL-S05
+A phase whose phosphate is already condensed can release lattice oxygen only by condensing further toward the phosphorus oxide, and its upper bound rises. % CL-S06
+The bound is \NumPyroOnset\ for \ce{Ca2P2O7} and \NumMetaGlassOnset\ for \ce{Ca(PO3)2} glass, against \NumMetaCrystalOnset\ for its crystal. % CL-S06
 With no lower bound these phases are not thermodynamically excluded at any cutoff class, which is not a pass. % CL-S06
-The in-situ routes give glasses, and a glass lies above its crystal in free energy, so the glass row governs and the crystal is an optimistic reference; the amorphous row of \ce{Ca2P2O7} is undetermined for want of glass data. % CL-S06
-The aluminium phosphates, \ce{AlPO4}, \ce{Al(PO3)3}, the aluminium polyphosphate gel and the baked aluminophosphate, are undetermined: the exchange entropy of the aluminium perchlorate sink has no bound and \ce{Al(PO3)3} has no thermochemistry (\nacreSIref{si:regime}{Regime table detail and later reruns}). % CL-S12
+The in-situ routes give glasses, and a glass lies above its crystal in free energy, so the glass row governs and the crystal is an optimistic reference. % CL-S06
+The amorphous row of \ce{Ca2P2O7} is undetermined for want of glass data. % CL-S06
+The aluminium phosphates, \ce{AlPO4}, \ce{Al(PO3)3}, the aluminium polyphosphate gel and the baked aluminophosphate, are undetermined (\nacreSIref{si:regime}{Regime table detail and later reruns}). % CL-S12
+The exchange entropy of the aluminium perchlorate sink has no bound, and \ce{Al(PO3)3} has no thermochemistry. % CL-S12
 The single most useful datum for that ladder is the standard Gibbs energy of formation, or the entropy, of solid \ce{Al(ClO4)3}, whose enthalpy alone is tabulated. % CL-S12
 % (7) The database benchmark as a method finding.
-Database formation energies differ from tabulated enthalpies by \NumDftCaPhosLow\ to \NumDftCaPhosHigh\ per formula unit over the calcium phosphates of the onset ladder, and the cause is a method finding: the \NumMpCorrectionScheme\ scheme applies one oxide correction, \NumMpOxideCorr\ per oxygen atom fitted on ionic oxides, to every oxygen, including lattice water, where the database error of brushite differs from that of monetite by \NumBrushiteWaterExcess\ per lattice water, and the covalent oxygen of condensed phosphates. % CL-X03
-On one reaction the density functional onset differs from the experimental route by \NumDftOnsetSpreadLow\ to \NumDftOnsetSpreadHigh\ (density functional minus experiment, \NumDftOnsetPairs\ reaction-scheme pairs, median \NumDftOnsetMedian), so density functional values appear only as labelled comparators and decide no row (\nacreSIref{si:thermo}{Thermochemistry benchmark and the DFT spread}). % CL-X03
+Database formation energies differ from tabulated enthalpies by \NumDftCaPhosLow\ to \NumDftCaPhosHigh\ per formula unit over the calcium phosphates of the onset ladder. % CL-X03
+The cause is a method finding: the \NumMpCorrectionScheme\ scheme applies one oxide correction, \NumMpOxideCorr\ per oxygen atom fitted on ionic oxides, to every oxygen. % CL-X03
+That includes lattice water, where the database error of brushite differs from that of monetite by \NumBrushiteWaterExcess\ per lattice water, and the covalent oxygen of condensed phosphates. % CL-X03
+On one reaction the density functional onset differs from the experimental route by \NumDftOnsetSpreadLow\ to \NumDftOnsetSpreadHigh\ (density functional minus experiment, \NumDftOnsetPairs\ reaction-scheme pairs, median \NumDftOnsetMedian). % CL-X03
+Density functional values therefore appear only as labelled comparators and decide no row (\nacreSIref{si:thermo}{Thermochemistry benchmark and the DFT spread}). % CL-X03
 % (8) The route layer, screened as thermodynamics.
 A condensed film reaches the cell only by a route that forms it before its chains hydrolyse in the slurry, and screened as thermodynamics every route is undetermined. % CL-S09
-The hydrolysis descriptor is outside its data at every process state (no temperature tolerance, transfer factor or wet residence time is sourced), gelation at the oxide lacks a solubility product of the aluminium polyphosphate and the coacervate route a phase map, and the race of gelation or drying against hydrolysis stays a labelled hypothesis. % CL-S09, CL-D13
+The hydrolysis descriptor is outside its data at every process state: no temperature tolerance, transfer factor or wet residence time is sourced. % CL-S09
+Gelation at the oxide lacks a solubility product of the aluminium polyphosphate, and the coacervate route lacks a phase map. % CL-S09
+The race of gelation or drying against hydrolysis stays a labelled hypothesis. % CL-S09, CL-D13
 
 \subsection{Nucleation and templating as model statements}\label{sec:res-nucleation}
 % (9) The F3 sentence form, numbers from the file.
@@ -120,21 +175,30 @@ A measured or computed $\gsn$ to within about \NumNucDecideWithin\ would decide 
 The nucleation half of the model failed its retrodiction (\NumRetroCorrect\ of \NumRetroUsableCases\ against \NumRetroPassCount), so this is a model statement, not evidence that templated nucleation is impossible. % CL-T03
 % (10) The carbonate chain, the deletion test and the sensitivity ranking.
 The carbonate chain is ruled out under the model's assumptions at \NumNucLinkFalsified\ of \NumNucLinkDesigns\ design points; the other \NumNucLinkInconclusive\ are inconclusive. % CL-T03
-The deletion test, which asks whether a pass degrades when the template is replaced by the bare oxide, finds no degradation at any of the \NumDeletionFramings\ point-framings of the carbonate chain, because neither the template nor the bare oxide passes, so no step of it can be credited to the template. % CL-S19
-The Sobol indices of the nucleation link reach a half-width of \NumSobolNucHalfWidth\ against the target of \NumSobolNucTarget, so the Shapley effects carry the ranking, and in them, under the stated priors, the template--nucleus energy governs the shape factor, with a Shapley share of \NumShapleyGsnShape. % CL-S19
+The deletion test asks whether a pass degrades when the template is replaced by the bare oxide. % CL-S19
+It finds no degradation at any of the \NumDeletionFramings\ point-framings of the carbonate chain, because neither the template nor the bare oxide passes, so no step of it can be credited to the template. % CL-S19
+The Sobol indices of the nucleation link reach a half-width of \NumSobolNucHalfWidth\ against the target of \NumSobolNucTarget, so the Shapley effects carry the ranking. % CL-S19
+In them, under the stated priors, the template--nucleus energy governs the shape factor, with a Shapley share of \NumShapleyGsnShape. % CL-S19
 The nucleation-window and thin-film conditions of every phosphate framing are undetermined, because the nucleus--liquid and nucleus--vapour energies, the molar volumes or the hydration numbers are gaps. % CL-S19
 
 \subsection{The required-precision map}\label{sec:res-precision}
 % (11) What would decide the open verdicts.
 Each open verdict has a flip value, and the precision a measurement needs to cross it is the useful output where the screen leaves a verdict open. % CL-P04
-The map has \NumPrecRows\ rows: \NumPrecClosed\ are closed, decided at the prior or by a computed bound, \NumPrecMonteCarlo\ are set by Monte Carlo contraction of the prior, and \NumPrecGap\ are gaps with no prior to contract (\nacreSIref{si:sensitivity}{Sensitivity detail}). % CL-P04
+The map has \NumPrecRows\ rows (\nacreSIref{si:sensitivity}{Sensitivity detail}). % CL-P04
+\NumPrecClosed\ are closed, decided at the prior or by a computed bound; \NumPrecMonteCarlo\ are set by Monte Carlo contraction of the prior; and \NumPrecGap\ are gaps with no prior to contract. % CL-P04
 Two measurements decide the most. % CL-P04
-A pass of the nucleation condition would need $\gsn$ of hydroxyapatite within about \NumNucDecideWithin\ of zero, beyond current methods, while confirming its failure needs a precision of only about \NumPrecGammaSnConfirm, within reach; the relative transfer free energy $\Delta G_\mathrm{tr}^\mathrm{rel}$, that of \ce{Ca^2+} less that of two \ce{Li+}, from water to propylene carbonate, to about \NumPrecTransferCaKj, a charge-balanced headroom and not a single-ion precision, decides the low class for the calcium orthophosphates; the \ce{Ca(PO3)2} glass could pass up to the highest class (headroom \NumPrecMetaGlassHiHeadroom), and \ce{Ca2P2O7} passes no class above the low class whatever the transfer data. % CL-P04
+A pass of the nucleation condition would need $\gsn$ of hydroxyapatite within about \NumNucDecideWithin\ of zero, beyond current methods. % CL-P04
+Confirming its failure needs a precision of only about \NumPrecGammaSnConfirm, which is within reach. % CL-P04
+The relative transfer free energy $\Delta G_\mathrm{tr}^\mathrm{rel}$ is that of \ce{Ca^2+} less that of two \ce{Li+}, from water to propylene carbonate. % CL-P04
+Measured to about \NumPrecTransferCaKj, a charge-balanced headroom and not a single-ion precision, it decides the low class for the calcium orthophosphates. % CL-P04
+The \ce{Ca(PO3)2} glass could then pass up to the highest class (headroom \NumPrecMetaGlassHiHeadroom), and \ce{Ca2P2O7} passes no class above the low class whatever the transfer data. % CL-P04
 For the adhesion descriptor, the two contact energies of the Dupr\'e comparator would have to be measured together to about \NumPrecDupreMj. % CL-P04
 For the aluminium-salt ladder the single most useful datum is the Gibbs energy or entropy of solid \ce{Al(ClO4)3}. % CL-S12
 
 \subsection{The baselines}\label{sec:res-baselines}
 % (12) The two baselines (comparator films, named by chemistry), through K1 and K2 only.
-The two baselines, a lithium polyphosphate film and a baked aluminophosphate, enter only through the oxidation, dissolution and thin-film rows, the thin-film row undetermined for both for want of a film thickness, and no ranking against them follows. % CL-S11
-The lithium polyphosphate film is not thermodynamically excluded at any cutoff class on its glass row, with an upper bound of \NumLipoGlassOnset; its dissolution row is undetermined, since no solubility for its composition is sourced and its water solubility is an inference from chemistry. % CL-S11
+The two baselines, a lithium polyphosphate film and a baked aluminophosphate, enter only through the oxidation, dissolution and thin-film rows, and no ranking against them follows. % CL-S11
+The thin-film row is undetermined for both, for want of a film thickness. % CL-S11
+The lithium polyphosphate film is not thermodynamically excluded at any cutoff class on its glass row, with an upper bound of \NumLipoGlassOnset. % CL-S11
+Its dissolution row is undetermined, since no solubility for its composition is sourced and its water solubility is an inference from chemistry. % CL-S11
 The baked aluminophosphate is undetermined in the oxidation and dissolution rows, for want of the aluminium-salt datum above and of a solubility for its composition. % CL-S11
