@@ -28,8 +28,12 @@ def test_every_key_has_a_row_and_every_doi_is_an_evidence_doi(generated):
     p = P.load_params(ROOT / P.PARAMS, ROOT)
     table = generated["params_table.tex"]
     labels = yaml.safe_load((ROOT / S.LABELS).read_text(encoding="utf-8"))
-    for key in p.entries:
-        assert S.texkey(S.display_key(key, labels)) in table, key
+    symbols = P.load_symbols(ROOT)
+    body = table.split(r"\begin{longtable}")[1].split(r"\end{longtable}")[0]
+    rows = [r for r in body.split("\n") if r.endswith(r"\\") and r.count(" & ") == 5 and not r.startswith("Symbol")]
+    assert len(rows) == len(p.entries)
+    for key, e in p.entries.items():
+        assert S.label_of(key, e, symbols, labels) in table, key
     dois = {r["doi"].lower() for r in E.read_csv(ROOT / P.TABLE)[1]}
     cited = set(re.findall(r"\\paramcite\{([^}]*)\}", table + generated["conflicts_table.tex"]))
     assert cited and cited <= dois
@@ -63,12 +67,33 @@ def test_tex_escapes_specials():
     assert S.tex("a_b & 50%") == r"a\_b \& 50\%"
 
 
-def test_display_key_overrides_the_printed_key_only(generated):
-    assert S.display_key("v_m_calcite", {}) == "v_m_calcite"
-    assert S.display_key("k", {"k": {"label": "x", "display_key": "shown"}}) == "shown"
-    params_tex = generated["params_table.tex"]
-    for shown in ("matrix_baseline_lipo3_film_thickness", "matrix_baseline_alpo4_baked_film_thickness"):
-        assert S.texkey(shown) in params_tex
-    for hidden in ("matrix_baseline_hq_film_thickness", "matrix_baseline_tsinghua_film_thickness"):
-        assert S.texkey(hidden) not in params_tex
-        assert S.texkey(hidden) not in generated["conflicts_table.tex"]
+def test_registry_keys_and_rule_codes_are_not_printed(generated):
+    p = P.load_params(ROOT / P.PARAMS, ROOT)
+    text = generated["params_table.tex"] + generated["conflicts_table.tex"]
+    for key in ("gamma_nl_calcite", "matrix_baseline_hq_film_thickness", "matrix_baseline_tsinghua_film_thickness"):
+        assert key in p.entries and key not in text and key.replace("_", r"\_") not in text
+    assert not re.search(r"\((?:N|U|L|P|T|W|I|D|R|G|M|X|A)[0-9]\)", text)
+
+
+def test_printed_tables_carry_no_process_vocabulary(generated):
+    pattern = re.compile(r"regist|ruling|ruled|\bcp[0-9]|deviation|frozen|checkpoint|ledger|session|pre-reg|freeze",
+                         re.I)
+    for name in ("params_table.tex", "conflicts_table.tex"):
+        assert not pattern.findall(generated[name]), (name, pattern.findall(generated[name]))
+
+
+def test_conflicts_table_keeps_conflicts_that_bear_on_a_used_value(generated):
+    entries = S.conflicts_block(ROOT)
+    p = P.load_params(ROOT / P.PARAMS, ROOT).entries
+    kept = [c for c in entries if any(S.screen_uses(p[k]) for k in c["keys"])]
+    body = generated["conflicts_table.tex"].split(r"\endfoot")[1]
+    assert body.count(r"\\") == len(kept)
+    assert all(S.tex(c["title"]) in body for c in kept)
+
+
+def test_conflict_lines_match_the_conflicts_block_and_carry_no_typed_numbers():
+    lines = yaml.safe_load((ROOT / S.CONFLICT_LINES).read_text(encoding="utf-8"))
+    assert set(lines) == {c["title"] for c in S.conflicts_block(ROOT)}
+    for title, text in lines.items():
+        bare = re.findall(r"(?<![A-Za-z0-9)(])[-+]?\d+(?:\.\d+)?(?![A-Za-z0-9(])", text)
+        assert not bare, (title, bare)

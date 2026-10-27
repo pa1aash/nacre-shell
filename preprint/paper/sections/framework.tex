@@ -1,0 +1,66 @@
+% The screening framework. Brief: briefs/framework.md. Claims carried: the entries of ../claims.yaml with section
+% framework (CL-M18, CL-M19), with the design and methods entries it summarises. Prose: PH-W8.13. It states the inputs,
+% the stage logic, the outputs and how to add a candidate phase, in about 600 words and one compact table. No number is
+% typed and no result is stated; the release location is a pending field the authors fill (\nacreRepoURL).
+\section{The screening framework}\label{sec:framework}
+
+% (1) What the framework does and its inputs.
+The framework turns sourced thermochemistry into stage-resolved verdicts for any candidate mineral phase (Table~\ref{tab:framework}). % CL-M18
+It has three inputs. % CL-M18
+The thermochemical data are solubility products, formation free energies, enthalpies and entropies, molar volumes and interfacial energies, each with its uncertainty. % CL-M18, CL-M11
+Every value carries its DOI, its locator and an evidence grade, and the grade limits the prior built from it (Section~\ref{sec:methods}). % CL-M11, CL-M01
+The candidate list names each phase with its formula unit, its stage and its framing, crystalline or amorphous. % CL-M18
+The windows are the grid of pH, calcium dose and anion dose at the processing stage and the cutoff classes of the cell stage. % CL-M02
+An input with no sourced value leaves its test undetermined, and an undetermined test never passes. % CL-M11, CL-D09
+
+\begin{table}[t]
+\small
+\caption{The screening framework: inputs, stage logic, outputs and how a phase is added. Symbols as in Section~\ref{sec:design}; file paths are those of the released repository.}
+\label{tab:framework}
+\begin{tabular*}{\columnwidth}{@{}>{\raggedright\arraybackslash}p{0.21\columnwidth}>{\raggedright\arraybackslash}p{0.75\columnwidth}@{}}
+\hline
+Part & Content\\
+\hline
+Inputs & sourced thermochemistry with uncertainties and evidence grades; the candidate list; the pH and dose grid and the cutoff classes\\
+Processing stage & dissolution test, $\Omb\ge1$ at every state of the grid ($K_2$); nucleation and thin-film tests ($K_3$, $K_4$)\\
+Cell stage & upper bound $E_\mathrm{ub}$ of the oxidation onset for a saturated sink; exclusion per cutoff class ($K_1$)\\
+Between stages & water-activity thresholds of the conversion steps\\
+Outputs & exclusion map; break-even ratio $r^*$; required-precision map; the input value at which each verdict flips\\
+New phase & data in \texttt{lit/params.yaml}; phase in \texttt{configs/preprint/screen.yaml}; reactions in the onset ladder; rerun the screen\\
+\hline
+\end{tabular*}
+\end{table}
+
+% (2) The stage logic.
+Each phase is tested at the stage at which it would exist. % CL-D11
+At the processing stage the screen asks whether the phase dissolves in the slurry. % CL-D05
+It computes the supersaturation $\Omb$ of Eq.~\eqref{eq:stability} at every state of the grid. % CL-D05
+A phase passes only over a region in which every state has $\Omb\ge1$, and that pass is a necessary condition, not a sufficient one. % CL-D05, CL-D20
+At the cell stage the screen bounds the oxidation onset from above. % CL-D08
+Releasing the cation into a solid salt of the electrolyte anion gives the upper bound $E_\mathrm{ub}$ for a saturated electrolyte. % CL-D08
+A phase whose upper bound plus its margin lies below a cutoff is thermodynamically excluded\nacreExcludedMark\ at that cutoff. % CL-D08
+A pass would need a lower bound, and the lower bound needs transfer free energies that are unmeasured. % CL-M17
+The cell stage can therefore exclude a phase but cannot admit one. % CL-M17
+Conversion steps between the stages are water-activity thresholds only (Section~\ref{sec:design}). % CL-D11
+Kinetic stabilisation lies outside the screen; only a measured service limit, tier-two evidence, can show it. % CL-D09
+
+% (3) The outputs.
+The framework returns four outputs. % CL-M18
+The exclusion map gives each phase a verdict per stage and per cutoff class (Table~\ref{tab:regime}). % CL-S13
+The break-even ratio $r^*$ states how far below saturation the electrolyte may fall before an exclusion lapses (Table~\ref{tab:breakeven}). % CL-S03
+The required-precision map gives the precision a measurement needs to decide each open verdict (Section~\ref{sec:res-precision}). % CL-P04
+The flip values give the input value at which each verdict would change. % CL-P04
+The relations are written per formula unit for any mineral, so a new phase receives the same four outputs. % CL-R09, CL-M18
+
+% (4) How to add a candidate phase.
+A new phase needs a sourced solubility product with its uncertainty for the dissolution test. % CL-M18
+It needs the formation thermochemistry of the phase and of its oxidation products for the upper bound. % CL-M18
+The nucleation and thin-film tests also need its molar volume and interfacial energies; without them those tests read undetermined. % CL-M18, CL-D09
+The values go into the parameter file, \texttt{lit/params.yaml}, each with its DOI, locator and grade. % CL-M18
+The phase goes into the candidate list, \texttt{configs/preprint/screen.yaml}, with its formula unit, stoichiometry and parameter keys. % CL-M18
+Its oxidation reactions go into the onset ladder of the package \texttt{nacre.pourbaix}. % CL-M18
+The screen is then rerun through \texttt{python -m nacre.screen}, and \texttt{nacre preprint regime-table} rebuilds the map from the outputs. % CL-M18
+Every number of the rebuilt map is traced to its source file. % CL-M09
+
+% (5) Release.
+The code and data are released as the open repository \texttt{biomin-screen} (\nacreRepoURL). % CL-M19

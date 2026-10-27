@@ -2,6 +2,9 @@
 # preprint/generated/declarations.tex. A TBD value renders as a visible placeholder in a draft
 # build and stops a release build. Owners: Palaash supplies competing interests, funding and
 # compute at P0-W8.5; the repository URL, Zenodo DOI and SI DOI are filled at C3 (post-posting).
+# The title of the paper is set here (PH-W8.13); it takes precedence over meta.title_working of ops/tracks/p0.yaml.
+title: >-
+  Processing- and cell-stage thermodynamic screening of nacre- and bone-inspired carbonate and phosphate phases on aluminium current collectors in fluorine-free lithium-ion cells with an open screening framework
 repository_url: TBD
 zenodo_doi: TBD
 si_doi: TBD

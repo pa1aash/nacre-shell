@@ -923,9 +923,9 @@ def ph_state_parts(docs):
 
 def notes_parts(docs, shas):
     notes = [
-        ["Verdict words are the registered ones: excluded, open, suitable against dissolution, inconclusive and undetermined (data missing). "
-         "Open means not falsified at the cutoff, with no lower bound on the onset (in the prose: not thermodynamically excluded); it is not a pass. "
-         "Inconclusive is a $K_2$ word: the cells of a pH neither all pass nor all fail, or the falsifiability control fails. "
+        ["Verdict words: excluded, open, suitable against dissolution, inconclusive and undetermined (data missing). "
+         "Open means not ruled out at the cutoff, with no lower bound on the onset (in the prose: not thermodynamically excluded); it is not a pass. "
+         "Inconclusive is a $K_2$ word: the cells of a pH neither all pass nor all fail, or the control state fails. "
          "A dash means the test is not applied to the row; route criteria means the row is cell-stage and the route criteria replace $K_2$."],
         ["\\nacreExcludedMark{} \\NumExcludedNote. Kinetic stabilisation is not ruled out for phosphates: tier-two class B records exist in "
          "\\ce{LiPF6} electrolytes, not in fluorine-free ones."],
@@ -933,16 +933,16 @@ def notes_parts(docs, shas):
          "An amorphous cell of a calcium orthophosphate reads excluded by the bound ", label_part(BOUND_SYMBOL), " against the crystalline reference plus water "
          "where its crystalline row is excluded, and undetermined otherwise."],
         [DISS_MARK + " Excluded against dissolution (thermodynamic, $K_2$: $\\Omega_\\mathrm{bulk}<1$ at every cell of that pH); not the tier-one oxidation footnote."],
-        ["Suitable against dissolution is a necessary condition, stated for the cells of the registered grid that pass; it does not address "
+        ["Suitable against dissolution is a necessary condition, stated for the cells of the grid that pass; it does not address "
          "the instability of aluminium above its passivation window and is not evidence of protection. Pass counts are given per row, with the windows: "]
         + window_parts(docs) + ["."],
         dose_note_short_parts(docs),
-        ["Acid-adjusted column: split by pH (alternative b): below the lowest pH of the grid that has a passing cell, a pH reads excluded against dissolution where every cell is falsified and inconclusive where none passes and some cells are inconclusive; "
+        ["Acid-adjusted column, split by pH: below the lowest pH of the grid that has a passing cell, a pH reads excluded against dissolution where every cell fails and inconclusive where none passes and some cells are inconclusive; "
          "suitable against dissolution from the lowest passing pH up. Slurry-stage $K_1$ is the phase's own ceiling and is not a gate for that stage."],
     ]
     if post_freeze_note(docs, shas):
-        notes.append(["\\textsuperscript{b}~No $K_{\\mathrm{sp}}$ key existed for this phase at the freeze; keys added afterwards are not used in the "
-                      "frozen production, and their reruns are reported beside the frozen rows (\\nacreSIref{si:regime}{Regime table detail and later reruns})."])
+        notes.append(["\\textsuperscript{b}~No $K_{\\mathrm{sp}}$ key existed for this phase when the main run was made; keys added later are not used in "
+                      "it, and their reruns are reported beside the main-run rows (\\nacreSIref{si:regime}{Regime table detail and later reruns})."])
     return notes
 
 
@@ -1186,7 +1186,7 @@ def perph_rows_parts(docs):
             else:
                 frac, ca, pp, ratio, dose = ["--"], ["--"], ["--"], ["--"], ["--"]
             first = i == 0
-            rows.append(([label if first else "", ("post-freeze rerun" if src == "rerun" else "frozen") if first else "", [phn],
+            rows.append(([label if first else "", ("later rerun" if src == "rerun" else "main run") if first else "", [phn],
                           [npass, " of ", cells_n], frac, ca, pp, ratio, dose] + stoich_cells(docs, key, nm, ph, lt)))
     return rows
 
@@ -1213,8 +1213,8 @@ PERPH_GROUPS = "\\multicolumn{3}{l}{} & \\multicolumn{6}{c}{crossed decade grid}
 def perph_notes(docs):
     ca, pt = grid_axes(docs)
     return [["Acid-adjusted comparator state, wet slurry, dissolution verdict after the control gate. A cell passes when it is suitable against dissolution; "
-             "doses are in $\\mathrm{mol\\,dm^{-3}}$. The $\\mathrm{Ca_T}$ and $\\mathrm{P_T}$ minima are taken separately. Frozen rows are the production run; "
-             "post-freeze rows use keys added after the freeze (a necessary condition only; frozen and rerun rows agree wherever both exist)."],
+             "doses are in $\\mathrm{mol\\,dm^{-3}}$. The $\\mathrm{Ca_T}$ and $\\mathrm{P_T}$ minima are taken separately. Main-run rows come from the main run; "
+             "later-rerun rows use keys added after it (a necessary condition only; main-run and rerun rows agree wherever both exist)."],
             dose_note_parts(docs), ph_state_parts(docs),
             ["The left group of columns is the crossed decade grid, where $\\mathrm{Ca_T}$ and $\\mathrm{P_T}$ are crossed independently (", Num("NumRegGridPairs", "window/n_pairs", len(ca) * len(pt), "d"),
              " pairs per cell group), so the Ca:P ratios are powers of ten and the apatite ratios ", Num("NumRatioTcp", "ratio/tcp", 3 / 2, ".3g"), " and ",
@@ -1250,7 +1250,7 @@ def rerun_rows_parts(docs):
         for field in ("frozen_verdict", "rerun_verdict"):
             if a[field] != c[field]:
                 raise RegimeTableError("the alkaline and acid verdicts of %s differ" % key)
-        fz = rerun_word(a["frozen_verdict"], a["frozen_controls_pass"]) or "not in the frozen run"
+        fz = rerun_word(a["frozen_verdict"], a["frozen_controls_pass"]) or "not in the main run"
         rr = rerun_word(a["rerun_verdict"], a["rerun_controls_pass"]) or "not rerun"
         cols = []
         for grid, h in (("Alkaline", a), ("Acid", c)):
@@ -1268,16 +1268,16 @@ def rerun_rows_parts(docs):
     return rows
 
 
-RERUN_HEAD = ["phase or key", "frozen run", "post-freeze rerun", "passing cells, alkaline grid (frozen / rerun of all)",
-              "passing cells, acid-adjusted grid (frozen / rerun of all)"]
+RERUN_HEAD = ["phase or key", "main run", "later rerun", "passing cells, alkaline grid (main run / rerun of all)",
+              "passing cells, acid-adjusted grid (main run / rerun of all)"]
 
 
 def rerun_notes(docs):
-    return [["The rerun used the keys added after the freeze (brushite, \\ce{Li3PO4} and the \\ce{Ca4H(PO4)3} basis of the octacalcium phosphate key) and the rule that the "
+    return [["The rerun used the keys added after the main run (brushite, \\ce{Li3PO4} and the \\ce{Ca4H(PO4)3} basis of the octacalcium phosphate key) and the rule that the "
              "supersaturated control is the grid state of maximum median $\\Omega$; it changed ", Num("NumCtlCellsMoved", "control/cells_moved", cells_moved(docs), "d"),
-             " cells of the original keys. It is a deviation from the frozen production, reported beside the frozen rows and not in place of them; "
+             " cells of the original keys. It departs from the main run and is reported beside its rows, not in place of them; "
              "the carbonate rows were not rerun. Open: the control of the original octacalcium phosphate key fails. "
-             "\\ce{Li3PO4} stays undetermined because its key is a concentration product, the chain has no activity coefficients for it, and no \\ce{Li+} dose is registered; "
+             "\\ce{Li3PO4} stays undetermined because its key is a concentration product, the chain has no activity coefficients for it, and no \\ce{Li+} dose is set; "
              "$\\alpha$-TCP stays undetermined (grade D)."]]
 
 

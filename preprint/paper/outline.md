@@ -1,13 +1,14 @@
 # P0 preprint outline (paragraph level), retargeted at PH-W8.1
 
-Working title (from `ops/tracks/p0.yaml`, unfrozen, final at cp6): *Thermodynamic screening of bone-inspired calcium phosphate barriers for aluminium current collectors in fluorine-free lithium-ion cells.*
+Title (from `preprint/paper/declarations.yaml`, PH-W8.13): *Processing- and cell-stage thermodynamic screening of nacre- and bone-inspired carbonate and phosphate phases on aluminium current collectors in fluorine-free lithium-ion cells with an open screening framework.*
 
 The paper is a thermodynamic screen, not a promise of a pass. Carbonate is the control: one paragraph, one table row, one figure panel. The text follows the decisions of `ops/tracks/redirect_plan.md`. Every number is a macro from `preprint/generated/numbers.tex`, every claim an id in `preprint/claims.yaml`, and each section has a brief in `briefs/`. Carbonate-era text is kept for adaptation and marked `carbonate control (frozen)` in the source.
 
 ## Sections
 
 1. **Abstract** (`briefs/abstract.md`), written last in the wording of the outcome frame (A, B or C).
-2. **Introduction** (`briefs/introduction.md`): setting; incumbents and prior art (phosphoric-acid pH control, carbon-coated foil; no patent is cited, PH-W8.9); the bone-mineral idea with the plain statement that hydroxyapatite and the tricalcium phosphates sit near carbonate; why a screen; the carbonate control; what the paper does not do.
+2. **Introduction** (`briefs/introduction.md`; framework-led order at PH-W8.13): setting; incumbents and prior art (phosphoric-acid pH control, carbon-coated foil; no patent is cited, PH-W8.9); the bone-mineral idea with the plain statement that hydroxyapatite and the tricalcium phosphates sit near carbonate; why a screen; the carbonate control; what the paper does not do.
+3. **The screening framework** (`briefs/framework.md`, PH-W8.13): inputs, stage logic, outputs and how a phase is added; the open repository biomin-screen.
 3. **Design rules** (`briefs/design.md`): the four conditions (K1 to K4, two-tier K1, STAGE); templating thermodynamics (mineral-neutral, kept); the route layer (R1 to R3).
 4. **Methods** (`briefs/methods.md`): sourced parameters; priors; onset pipeline and benchmark; solubility and the Al window; thresholds and the freeze; sensitivity; baselines and the control; retrodiction rule; reproducibility; disclosures.
 5. **Results** (`briefs/results.md`; order set at PH-W8.3): the regime map; processing-stage dissolution stability and the acid-adjusted comparator; the carbonate control and the K1 exclusion map; phosphates and the condensed and aluminium phosphates; nucleation and templating as model statements; the required-precision map; the baselines.
@@ -18,6 +19,7 @@ The paper is a thermodynamic screen, not a promise of a pass. Carbonate is the c
 ## Figures (labels; numbered by order of citation)
 
 - `fig:hero`: hero render (phosphate, alone, late; cut before the schematic). Introduction.
+- `tab:framework`: inputs, stage logic, outputs and how a phase is added (PH-W8.13). The screening framework.
 - `tab:conditions`: the four conditions, their test and their status (replaces the four-conditions diagram, PH-W8.4 ruling 4; the pathway schematic is dropped). Design rules.
 - `fig:ladder`: window ladder (oxidation limits versus cutoffs and the bare-Al onset). Results.
 - `fig:phmap`: pH versus supersaturation map with the Al passivation window. Results.

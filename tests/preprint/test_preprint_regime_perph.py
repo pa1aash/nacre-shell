@@ -105,26 +105,25 @@ def test_f3_sentence_and_forbidden_words():
     res = " ".join(res.split())
     for frag in ("For a solid phosphate nucleus on a hydrophilic template, a contact angle below 90 degrees requires $\\gsn$ below $\\gsl$, which lies between "
                  "\\NumNucGslQFive\\ and \\NumNucGslQNinetyFive\\ (median \\NumNucGslMedian; admitted draws span \\NumNucGslMin\\ to \\NumNucGslMax).",
-                 "The registered ignorance prior puts \\NumNucMassSourced\\ of its mass there under the sourced calcite",
+                 "The ignorance prior puts \\NumNucMassSourced\\ of its mass there under the sourced calcite",
                  "and at most \\NumNucMassDesignMax\\ over the design points with enough admitted draws, whatever",
                  "(its support widens with",
                  "would decide it.",
                  "The nucleation half of the model failed its retrodiction (\\NumRetroCorrect\\ of \\NumRetroUsableCases\\ against \\NumRetroPassCount), "
                  "so this is a model statement, not evidence that templated nucleation is impossible.",
-                 "falsified within the registered model at \\NumNucLinkFalsified\\ of \\NumNucLinkDesigns\\ design points; the other \\NumNucLinkInconclusive\\ are inconclusive."):
+                 "ruled out under the model's assumptions at \\NumNucLinkFalsified\\ of \\NumNucLinkDesigns\\ design points; the other \\NumNucLinkInconclusive\\ are inconclusive."):
         assert frag in res, frag
     assert "cannot" not in res
     assert res.count("impossible") == 1 and res.index("impossible") > res.index("so this is a model statement")
-    for m in re.finditer(r"(?<!not )falsified", res):    # "not falsified" defines the word open (W3.8 R1-1), not a verdict
-        assert "within the registered model" in res[m.start() - 80:m.start() + 60]
+    assert not re.search(r"falsif", res)    # PH-W8.13: the verdict word is "ruled out", scoped to the model's assumptions
 
 
 def test_methods_f2_f4_f5_wording():
     meth = " ".join(re.sub(r"%.*", "", l) for l in _read("sections", "methods.tex").splitlines())
     meth = " ".join(meth.split())
-    assert "The production run of the phosphate dissolution test crossed total calcium and total phosphate independently on one decade grid" in meth
+    assert "The main run of the phosphate dissolution test crossed total calcium and total phosphate independently on one decade grid" in meth
     assert "the apatite ratios \\NumRatioTcp\\ and \\NumRatioHap\\ do not occur in it" in meth
-    assert "A ratio grid was run as a separate, labelled run beside the production run" in meth and "ratio-grid run, with total phosphate" not in meth
+    assert "A ratio grid was run as a separate, labelled run beside the main run" in meth and "ratio-grid run, with total phosphate" not in meth
     assert "The verdicts are unchanged: \\NumRatioVerdictSame\\ of \\NumRatioVerdictTotal\\" in meth
     assert "\\NumRatioGroupsDiffer\\ differ in the lowest passing $\\mathrm{Ca_T}$ only" in meth
     assert "the ratio itself on a ratio line" in meth
@@ -139,7 +138,7 @@ def test_si_reruns_and_sensitivity(rendered):
     tex = (GEN / rt.OUT_TEX).read_text(encoding="utf-8")
     assert "byte-identical to the nominal ladder, so no verdict changes at" in tex
     assert "\\nacreRegimeSensNote{}" in si and "\\nacreRegimeReruns" in si and "\\nacreRegimePerPh" in si
-    assert "brushite" in si.lower() and "are a deviation from the frozen production" in si
+    assert "brushite" in si.lower() and "they depart from the main run and do not replace it" in si
     assert rendered["NumRegRerunBrushiteAcidRerun"] == "85" and rendered["NumRegRerunBrushiteAcidCells"] == "540"
     assert rendered["NumRegRerunBrushiteAlkalineRerun"] == "3"
     assert rendered["NumCtlCellsMoved"] == "0" and rendered["NumCtlPhFrom"] == "12" and rendered["NumCtlPhTo"] == "7.65"
@@ -223,7 +222,7 @@ def test_ratio_grid_text_is_plain_and_scoped():
     assert "lie well below the order of the sourced additive doses" in si and "the comparison is of order only" in si
     assert "stays a high-dose phase at the low-pH end" in si
     assert "the lowest passing dose of the apatites is at or above \\NumRegHighDose, on the crossed grid" in si   # review M9: the flag names its threshold
-    mine = si[si.index("The production run crossed"):si.index("on the crossed grid. ")]
+    mine = si[si.index("The acid-adjusted column of the regime table"):si.index("\\nacreRegimePerPh")]   # PH-W8.13: the ratio-grid paragraph is in the Methods
     assert "equal" not in mine and not re.search(r"suitable against dissolution from pH", si)
 
 
@@ -247,5 +246,5 @@ def test_carbonate_acid_sentence_names_the_grid_points_inside_the_sourced_range(
     """PH-W8.9 (G8): Section 4.2 names the grid points inside the sourced range, by macro, not 'sourced slurries'."""
     text = (PAPER / "sections" / "results.tex").read_text(encoding="utf-8")
     assert "not in sourced acid-adjusted slurries" not in text
-    assert (r"and not at the grid points inside the sourced range (pH \NumRegPhGridSixFive, "
+    assert (r"It is not excluded against dissolution at the grid points inside the sourced range (pH \NumRegPhGridSixFive, "
             r"\NumRegPhGridSevenFive\ and \NumRegPhGridEightFive)") in text

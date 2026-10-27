@@ -17,8 +17,9 @@ SECTIONS = paths.paper(REPO) / "sections"
 DESIGN = SECTIONS / "design.tex"
 FRAME_FILES = ("introduction", "design", "model", "methods")
 MARKER = re.compile(r"%\s*(CL-[A-Z]\d{2}(?:,\s*CL-[A-Z]\d{2})*)\s*$")
-PROCESS = re.compile(r"\b(register\w*|registration|pre-regist\w*|checkpoint\w*|frozen|freez\w*|deviations?|"
-                     r"sessions?|rulings?|lanes?|planning chat)\b", re.I)
+PROCESS = re.compile(r"\b(register\w*|registration|pre-regist\w*|checkpoint\w*|frozen|freez\w*|post-freeze|deviations?|"
+                     r"sessions?|rulings?|lanes?|planning chat|ledgers?|production|falsif\w*|fixed in advance)\b", re.I)
+PROSE_FILES = FRAME_FILES + ("abstract", "results", "predictions", "discussion")
 
 
 def _prose(name):
@@ -71,11 +72,16 @@ def test_four_conditions_stage_rule_and_label():
     assert "undetermined and never passes" in text
 
 
-def test_process_language_is_one_plain_sentence_in_the_methods():
-    # ruling (2) of PH-W8.4: the dilute-electrolyte correction is "registered but unevaluated", said once in Methods and in the limits
-    hits = [(name, s) for name in FRAME_FILES for s in _sentences(name) if PROCESS.search(s.replace("is registered but unevaluated", ""))]
-    assert len(hits) == 1, hits
-    assert hits[0][0] == "methods" and "fixed with content hashes before the production screen" in hits[0][1]
+def test_no_process_language_in_the_prose():
+    # PH-W8.13: plain methods language everywhere; the disclosures are one Transparency paragraph in the Methods
+    hits = [(name, s) for name in PROSE_FILES for s in _sentences(name) if PROCESS.search(s)]
+    assert hits == [], hits
+    si = paths.paper(REPO) / "si" / "main_si.tex"
+    text = re.sub(r"\\begin\{figure\}.*?\\end\{figure\}", " ", si.read_text(encoding="utf-8"), flags=re.S)   # captions are the W6 drafts
+    prose = " ".join(texscan.strip_comment(line) for line in text.splitlines())
+    assert not PROCESS.search(prose), PROCESS.search(prose)
+    meth = " ".join(_prose("methods").split())
+    assert "\\paragraph*{Transparency.}" in meth and "fixed before the main run, with a content hash of each file" in meth
 
 
 @pytest.mark.parametrize("name", FRAME_FILES)
@@ -109,3 +115,34 @@ def test_msink_activity_is_the_mean_activity_squared():
     text = " ".join((paths.paper(REPO) / "sections" / "design.tex").read_text(encoding="utf-8").split())
     i = text.index(r"m_\mathrm{sink}=")
     assert r"with $a_\mathrm{s}=a_\pm^2$" in text[i:i + 200]
+
+
+def test_main_text_sentences_are_at_most_35_words():
+    """PH-W8.13: short declarative sentences; no prose sentence of the main text runs over 35 words."""
+    long = []
+    for name in PROSE_FILES + ("framework",):
+        text = (SECTIONS / (name + ".tex")).read_text(encoding="utf-8")
+        text = "\n".join(texscan.strip_comment(line) for line in text.splitlines())
+        text = re.sub(r"\\begin\{(figure\*?|table\*?|tabular\*?)\}.*?\\end\{\1\}", " ", text, flags=re.S)
+        text = re.sub(r"\\begin\{equation\}(.*?)\\end\{equation\}",
+                      lambda m: " EQ. " if m.group(1).strip().endswith(".") else " EQ ", text, flags=re.S)
+        text = re.sub(r"\\(input|section|subsection|paragraph)\*?\{[^}]*\}", " ", text)
+        text = re.sub(r"\\(cite|ref|label|eqref)\{[^}]*\}|\\nacreSIref\{[^}]*\}\{[^}]*\}", " ", text)
+        text = re.sub(r"\$[^$]*\$|\\ce\{(?:[^{}]|\{[^{}]*\})*\}", "X", text)
+        text = re.sub(r"\\[A-Za-z]+\\?", " X ", text)
+        text = " ".join(re.sub(r"[{}~]", " ", text).split())
+        for s in re.split(r"(?<=[.?!])\s+(?=[A-Z(`])", text):
+            if len(s.split()) > 35 and name != "abstract":    # the abstract is checked on its own below
+                long.append((name, len(s.split()), s[:80]))
+    assert long == [], long
+
+
+def test_abstract_has_six_sentences_of_at_most_35_words():
+    text = (SECTIONS / "abstract.tex").read_text(encoding="utf-8")
+    body = text[text.index("\\newcommand{\\nacreAbstract}{%") + len("\\newcommand{\\nacreAbstract}{%"):text.rindex("%\n}")]
+    sentences = [s for s in body.strip().splitlines() if s.strip()]
+    assert len(sentences) == 6
+    for s in sentences:
+        flat = re.sub(r"\\ce\{[^}]*\}|\\[A-Za-z]+\\?", " X ", s)
+        assert len(flat.split()) <= 35, s
+    assert sentences[0].startswith("We present an open thermodynamic screening framework")

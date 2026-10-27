@@ -1,0 +1,11 @@
+# Prose patterns for `nacre preprint lint-scope` (PH-W8.13), applied case-insensitively to each sentence of the
+# visible prose of every .tex file under preprint/paper: comments are removed first, and figure environments are
+# skipped, because figure captions are the W6 drafts checked by tests/preprint/test_preprint_captions.py.
+# One pattern per line: an id (PP..), whitespace, then a Python regular expression.
+#
+# process vocabulary: the paper states its methods in plain words ("fixed before the screen was run", "ruled out
+# under the model's assumptions", "the main run"); the honest disclosures live in the Transparency paragraph
+PP01  \b(pre-?regist\w*|regist(ered|ration|ry)|frozen|freez\w*|post-freeze|checkpoints?|ledgers?|deviations?|rulings?|production runs?|production screen|falsif\w*)\b
+PP02  \bfixed in advance\b|\brule fixed in advance\b
+# no binder claim: the coatings are "biomimetic, biopolymer-templated mineral coatings"
+PP03  \bbio-?binders?\b

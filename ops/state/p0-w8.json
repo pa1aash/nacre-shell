@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W8.12",
+  "last_session": "PH-W8.14",
   "status": "DONE",
   "day": 7,
   "artifacts": [
@@ -80,7 +80,13 @@
     "ops/reports/P0-W8.PH-W8.8.md",
     "ops/reports/P0-W8.PH-W8.9.md",
     "ops/reports/P0-W8.PH-W8.10.md",
-    "ops/reports/P0-W8.PH-W8.12.md"
+    "ops/reports/P0-W8.PH-W8.12.md",
+    "ops/reports/P0-W8.PH-W8.13.md",
+    "preprint/paper/sections/framework.tex",
+    "preprint/paper/briefs/framework.md",
+    "preprint/paper/lint/prose_patterns.txt",
+    "preprint/paper/declarations.yaml",
+    "ops/reports/P0-W8.PH-W8.14.md"
   ],
   "notes": [
     "skeleton retargeted: design, predictions added; inputs and outlook removed; carbonate text marked 'carbonate control (frozen)'",
@@ -102,6 +108,8 @@
     "PH-W8.8: 10 paper captions equal the W6 drafts (captions.py translation, equality test); max 73 words; thermodynamically added in fig15, fig17; 3 findings moved to body; NA15 allowlist; release guard refuses (8)",
     "PH-W8.9: patents removed (4 sentences, 28 macros, patent test; CL-V03, CL-V04 withdrawn); G1-G6, G8 applied, G9 not (word cap); silicates kept (CL-S20); break-even table now Table 5 beside 4.3; 269 passed, 1 xfailed; BLOCKED: Bharti affiliation in ops/tracks/p0_authors.yaml (integrator), SI params-table patent labels (W1)",
     "PH-W8.10: fig15 and fig17 captions equal the W6 drafts (10 of 10), xfail removed, dagger test; no patent in paper, SI, captions or claims; 270 passed; draft build main 17 pp, SI 62 pp; release guard refuses (8, author inputs); open: W1 SI params-table patent labels (PH-W1.11)",
-    "PH-W8.12: cp6 PASS text edits 1-5 applied; credit.yaml owned by p0-int, unchanged; 270 passed; no patent in built PDFs; release guard refuses (8, author inputs)"
+    "PH-W8.12: cp6 PASS text edits 1-5 applied; credit.yaml owned by p0-int, unchanged; 270 passed; no patent in built PDFs; release guard refuses (8, author inputs)",
+    "PH-W8.13: framework-led rewrite (title, Introduction, Framework section, Terms table, Transparency paragraph); plain methods language (main PDF 0 process words); sentences <=35 words; SI 62 -> 37 pp; lint-scope PP01-PP03 prose rules; 282 passed; release guard refuses (8, author inputs)",
+    "PH-W8.14: SI Fig. S3 and S4 captions equal the W6 drafts; SI sourced-section intro by actual columns; main 18 pp, SI 24 pp; 0 process words in PDFs; 282 passed; release guard refuses (8, author inputs)"
   ]
 }
