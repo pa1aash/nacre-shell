@@ -18,6 +18,11 @@ patterns that match the word nacre, and by no other pattern.
 
 The only exempt sentences are the explicit "does not claim" sentences listed verbatim in
 preprint/paper/lint/scope_allowlist.txt. An allowlist line without "does not claim" is an error.
+
+A third set, preprint/paper/lint/prose_patterns.txt (PP..), applies to the visible prose of the .tex files only:
+comments are removed and figure environments skipped (their captions are the W6 drafts). It keeps process
+vocabulary (registered, frozen, checkpoint, ledger, deviation, ruling, production run, falsified) and the word
+bio-binder out of the paper (PH-W8.13). Comments, briefs and claim statements may still use them.
 """
 import re
 from pathlib import Path
@@ -28,6 +33,7 @@ from nacre.preprint import paths, texscan
 
 ALLOWLIST = "scope_allowlist.txt"
 PATTERNS = "scope_patterns.txt"
+PROSE_PATTERNS = "prose_patterns.txt"
 _BLOCK = re.compile(r"```scope-guard\n(.*?)```", re.S)
 _WARN_BLOCK = re.compile(r"```scope-guard-warn\n(.*?)```", re.S)
 WARN_EXEMPT = {
@@ -79,6 +85,20 @@ def warn_rules(root):
 
 def rules(root):
     return charter_rules(root) + texscan.load_rules(paths.lint_dir(root) / PATTERNS, "PS")
+
+
+def prose_rules(root):
+    path = paths.lint_dir(root) / PROSE_PATTERNS
+    return texscan.load_rules(path, "PP") if path.is_file() else []
+
+
+_FIGURE = re.compile(r"\\begin\{(figure\*?)\}.*?\\end\{\1\}", re.S)
+
+
+def visible_prose_lines(text):
+    """Lines of a .tex file with comments removed and figure environments blanked, line numbers kept."""
+    text = _FIGURE.sub(lambda m: "\n" * m.group(0).count("\n"), text)
+    return [texscan.strip_comment(line) for line in text.splitlines()]
 
 
 def normalise(sentence):
@@ -200,13 +220,16 @@ def scanned_files(root):
 
 
 def lint(root, files=None):
-    rs, allowed, warn = rules(root), allowlist(root), warn_rules(root)
+    rs, allowed, warn, prose = rules(root), allowlist(root), warn_rules(root), prose_rules(root)
     problems = []
     targets = files if files is not None else scanned_files(root)
     for f in targets:
-        lines = Path(f).read_text(encoding="utf-8").splitlines()
+        text = Path(f).read_text(encoding="utf-8")
+        lines = text.splitlines()
         blocks = _blocks_md(lines) if Path(f).suffix == ".md" else _blocks_tex(lines)
         problems += check_text_blocks(blocks, texscan.rel(root, f), rs, allowed, warn)
+        if Path(f).suffix == ".tex" and prose:
+            problems += check_text_blocks(_blocks_tex(visible_prose_lines(text)), texscan.rel(root, f), prose, allowed)
     if files is None and paths.claims_yaml(root).is_file():
         problems += lint_claims(root, rs, allowed, warn=warn)
     return problems

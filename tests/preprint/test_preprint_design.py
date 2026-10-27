@@ -115,3 +115,34 @@ def test_msink_activity_is_the_mean_activity_squared():
     text = " ".join((paths.paper(REPO) / "sections" / "design.tex").read_text(encoding="utf-8").split())
     i = text.index(r"m_\mathrm{sink}=")
     assert r"with $a_\mathrm{s}=a_\pm^2$" in text[i:i + 200]
+
+
+def test_main_text_sentences_are_at_most_35_words():
+    """PH-W8.13: short declarative sentences; no prose sentence of the main text runs over 35 words."""
+    long = []
+    for name in PROSE_FILES + ("framework",):
+        text = (SECTIONS / (name + ".tex")).read_text(encoding="utf-8")
+        text = "\n".join(texscan.strip_comment(line) for line in text.splitlines())
+        text = re.sub(r"\\begin\{(figure\*?|table\*?|tabular\*?)\}.*?\\end\{\1\}", " ", text, flags=re.S)
+        text = re.sub(r"\\begin\{equation\}(.*?)\\end\{equation\}",
+                      lambda m: " EQ. " if m.group(1).strip().endswith(".") else " EQ ", text, flags=re.S)
+        text = re.sub(r"\\(input|section|subsection|paragraph)\*?\{[^}]*\}", " ", text)
+        text = re.sub(r"\\(cite|ref|label|eqref)\{[^}]*\}|\\nacreSIref\{[^}]*\}\{[^}]*\}", " ", text)
+        text = re.sub(r"\$[^$]*\$|\\ce\{(?:[^{}]|\{[^{}]*\})*\}", "X", text)
+        text = re.sub(r"\\[A-Za-z]+\\?", " X ", text)
+        text = " ".join(re.sub(r"[{}~]", " ", text).split())
+        for s in re.split(r"(?<=[.?!])\s+(?=[A-Z(`])", text):
+            if len(s.split()) > 35 and name != "abstract":    # the abstract is checked on its own below
+                long.append((name, len(s.split()), s[:80]))
+    assert long == [], long
+
+
+def test_abstract_has_six_sentences_of_at_most_35_words():
+    text = (SECTIONS / "abstract.tex").read_text(encoding="utf-8")
+    body = text[text.index("\\newcommand{\\nacreAbstract}{%") + len("\\newcommand{\\nacreAbstract}{%"):text.rindex("%\n}")]
+    sentences = [s for s in body.strip().splitlines() if s.strip()]
+    assert len(sentences) == 6
+    for s in sentences:
+        flat = re.sub(r"\\ce\{[^}]*\}|\\[A-Za-z]+\\?", " X ", s)
+        assert len(flat.split()) <= 35, s
+    assert sentences[0].startswith("We present an open thermodynamic screening framework")

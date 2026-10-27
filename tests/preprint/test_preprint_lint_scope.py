@@ -170,3 +170,36 @@ def test_allow_marker_skips_only_the_nacre_pattern(tmp_path):
     assert problems and not any("SG19" in p for p in problems)
     unmarked_next = write(tmp_path / "d.tex", "<!-- sg:allow nacre -->\nA.\n\nThe nacre-like architecture is shown.\n")
     assert any("SG28" in p for p in lint_scope.lint(REPO, [unmarked_next]))
+
+
+# ---------------------------------------------------------------- prose rules (PH-W8.13)
+
+@pytest.mark.parametrize("body", [
+    "The thresholds were frozen before the production run.",
+    "The rule was pre-registered at the checkpoint.",
+    "Any change is recorded in the ledger as a deviation.",
+    "The carbonate chain is falsified within the registered model.",
+    "The reruns after the freeze sit beside the post-freeze rows.",
+    "The decision rule was fixed in advance.",
+    "The bio-binder holds the particles.",
+])
+def test_process_vocabulary_and_bio_binder_fail_in_prose(tmp_path, body):
+    f = write(tmp_path / "t.tex", body + "\n")
+    assert any(" PP0" in p for p in lint_scope.lint(REPO, [f])), body
+
+
+def test_prose_rules_skip_comments_and_figure_captions(tmp_path):
+    body = ("The prior was fixed before the screen was run. % CL-M15: registered, frozen, ledger\n"
+            "% carbonate control (frozen)\n"
+            "\\begin{figure}\n\\caption{Grey band: registered error band; falsified (vermillion).}\n\\end{figure}\n"
+            "The carbonate chain is ruled out under the model's assumptions.\n")
+    f = write(tmp_path / "t.tex", body)
+    assert lint_scope.lint(REPO, [f]) == []
+
+
+def test_prose_rules_are_loaded_and_do_not_replace_the_honesty_rules():
+    ids = [rid for rid, _ in lint_scope.prose_rules(REPO)]
+    assert ids == ["PP01", "PP02", "PP03"]
+    scope = [rid for rid, _ in lint_scope.rules(REPO)]
+    assert {"PS01", "PS02", "PS03", "PS08", "SG14", "SG21"} <= set(scope)
+    assert [rid for rid, _ in lint_scope.warn_rules(REPO)] == ["SG17W", "SG26W", "SG27W", "SG29W", "SG30W"]
