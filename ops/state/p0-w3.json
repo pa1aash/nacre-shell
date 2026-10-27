@@ -1,5 +1,5 @@
 {
-  "last_session": "PH-W3.9",
+  "last_session": "PH-W3.10",
   "status": "DONE",
   "day": 7,
   "equation_sheet": {
@@ -300,5 +300,12 @@
     "I17a": "registered (E_ub_hydrated_am, Delta_G_gc_w); amorphous rows of ACP, HAp, b-TCP, a-TCP excluded by the bound where the crystalline reference row is excluded (C_mid, C_hi), undetermined elsewhere; brushite, Ca2P2O7, OCP, Al phosphates amorphous stay undetermined; ACC not covered",
     "text_changes_for_w8": 12,
     "for_w4": "regenerate configs/preprint/thresholds.yaml from block v11, pin contract v8; implement E_ub_hydrated_am and its eight unit tests"
+  },
+  "ph_w310": {
+    "report": "ops/reports/P0-W3.PH-W3.10.md",
+    "file": "theory/si_derivation.tex",
+    "words": "5245->3523",
+    "standalone_pages": "11->7",
+    "thresholds_block": "unchanged"
   }
 }
