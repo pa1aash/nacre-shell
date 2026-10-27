@@ -8,11 +8,11 @@ from nacre.preprint import macros, paths
 from preprint_helpers import REPO
 
 PAPER = paths.paper(REPO)
-SECTIONS = ["abstract", "introduction", "design", "methods", "results", "predictions", "discussion", "declarations"]
+SECTIONS = ["abstract", "introduction", "framework", "design", "methods", "results", "predictions", "discussion", "declarations"]
 BRIEF_HEADINGS = ["Purpose", "Figures and tables", "Macros needed", "Claims carried", "Supplying lanes"]
 # PH-W8.4 ruling 4: fig:pathway is dropped and fig:conditions became tab:conditions
 FIGURES = ["hero", "ladder", "phmap", "nucmap", "precision", "heatmap", "alsalt", "k1panel"]
-TABLES = ["candidates", "conditions", "parameters", "thermo", "thresholds", "baselines", "retrodiction"]
+TABLES = ["candidates", "conditions", "parameters", "thermo", "thresholds", "baselines", "retrodiction", "framework"]
 
 
 def _brief(name):

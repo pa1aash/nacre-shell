@@ -3216,6 +3216,43 @@ claims:
       Lane note N5 asks for "the primary framing here is chosen on literature grounds". Since cp3
       R6 both framings are registered and neither is primary, so the sentence says the framings
       were chosen on literature grounds and are both run as whole chains.
+  - id: CL-M18
+    origin: redirect
+    statement: >-
+      The screening framework takes sourced thermochemical data with uncertainties and evidence grades, a
+      candidate list and the windows of both stages; it tests dissolution at the processing stage and bounds
+      the oxidation onset from above at the cell stage; it returns the exclusion map, the break-even ratio,
+      the required-precision map and the flip values; a phase is added by entering its data, its candidate
+      entry and its oxidation reactions and rerunning the screen.
+    section: framework
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: claim, ref: CL-M11}
+      - {kind: claim, ref: CL-D05}
+      - {kind: claim, ref: CL-D08}
+      - {kind: claim, ref: CL-P04}
+      - {kind: record, ref: preprint/paper/sections/framework.tex#CL-M18}
+    checkpoint: none
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+    notes: PH-W8.13; the file paths and commands named are those of this repository, released as biomin-screen.
+  - id: CL-M19
+    origin: redirect
+    statement: >-
+      The code and data of the screening framework are released as the open repository biomin-screen; the
+      repository URL and archive DOI are pending fields that the authors fill.
+    section: framework
+    type: method
+    polarity: claims
+    evidence:
+      - {kind: record, ref: "preprint/paper/declarations.yaml#repository_url"}
+      - {kind: record, ref: preprint/paper/sections/framework.tex#CL-M19}
+    checkpoint: none
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
   - id: CL-M09
     origin: carbonate control (frozen)
     statement: >-

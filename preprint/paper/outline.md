@@ -7,7 +7,8 @@ The paper is a thermodynamic screen, not a promise of a pass. Carbonate is the c
 ## Sections
 
 1. **Abstract** (`briefs/abstract.md`), written last in the wording of the outcome frame (A, B or C).
-2. **Introduction** (`briefs/introduction.md`): setting; incumbents and prior art (phosphoric-acid pH control, carbon-coated foil; no patent is cited, PH-W8.9); the bone-mineral idea with the plain statement that hydroxyapatite and the tricalcium phosphates sit near carbonate; why a screen; the carbonate control; what the paper does not do.
+2. **Introduction** (`briefs/introduction.md`; framework-led order at PH-W8.13): setting; incumbents and prior art (phosphoric-acid pH control, carbon-coated foil; no patent is cited, PH-W8.9); the bone-mineral idea with the plain statement that hydroxyapatite and the tricalcium phosphates sit near carbonate; why a screen; the carbonate control; what the paper does not do.
+3. **The screening framework** (`briefs/framework.md`, PH-W8.13): inputs, stage logic, outputs and how a phase is added; the open repository biomin-screen.
 3. **Design rules** (`briefs/design.md`): the four conditions (K1 to K4, two-tier K1, STAGE); templating thermodynamics (mineral-neutral, kept); the route layer (R1 to R3).
 4. **Methods** (`briefs/methods.md`): sourced parameters; priors; onset pipeline and benchmark; solubility and the Al window; thresholds and the freeze; sensitivity; baselines and the control; retrodiction rule; reproducibility; disclosures.
 5. **Results** (`briefs/results.md`; order set at PH-W8.3): the regime map; processing-stage dissolution stability and the acid-adjusted comparator; the carbonate control and the K1 exclusion map; phosphates and the condensed and aluminium phosphates; nucleation and templating as model statements; the required-precision map; the baselines.
@@ -18,6 +19,7 @@ The paper is a thermodynamic screen, not a promise of a pass. Carbonate is the c
 ## Figures (labels; numbered by order of citation)
 
 - `fig:hero`: hero render (phosphate, alone, late; cut before the schematic). Introduction.
+- `tab:framework`: inputs, stage logic, outputs and how a phase is added (PH-W8.13). The screening framework.
 - `tab:conditions`: the four conditions, their test and their status (replaces the four-conditions diagram, PH-W8.4 ruling 4; the pathway schematic is dropped). Design rules.
 - `fig:ladder`: window ladder (oxidation limits versus cutoffs and the bare-Al onset). Results.
 - `fig:phmap`: pH versus supersaturation map with the Al passivation window. Results.
