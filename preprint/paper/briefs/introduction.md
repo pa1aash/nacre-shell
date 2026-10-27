@@ -3,6 +3,7 @@
 - **File:** `sections/introduction.tex`.
 - **Written:** PH-W8.2 (day 6). The carbonate-era text is kept for adaptation; paragraphs marked `carbonate control (frozen)` shrink to one paragraph.
 - **Length target:** 600 to 750 words, six paragraphs, one per step below.
+- **PH-W8.13 order (framework-led):** (i) the two-stage problem and the incumbents; (ii) biomineral chemistry as the source of candidate phases, and what the screen tests (biomimetic, biopolymer-templated mineral coatings; catechol- or polydopamine-like templates, chitosan considered; no binder behaviour); (iii) the open screening framework as the main contribution; (iv) what is applied here, the carbonate control, bone mineral beside it, and the narrow results, then the scope sentences. Sentences of at most 35 words.
 
 ## Purpose
 
@@ -33,7 +34,7 @@ Pose the design question: which mineral phases, if any, can serve as a thermodyn
 
 ## Claims carried
 
-CL-S01, CL-D02, CL-D04, CL-D19, CL-V03 to CL-V10 (CL-V07 to CL-V09 not written), CL-K12 to CL-K15, CL-L10, CL-S02, CL-N01, CL-N02, CL-N03, CL-N08, CL-N09; carbonate era: CL-K01 to CL-K04, CL-K06, CL-R08, CL-R13, CL-E01, CL-E02, CL-P03 (reworded). Withdrawn at PH-W8.2: CL-K05, CL-K07 to CL-K10, CL-R06, CL-R07, CL-G03, CL-V01, CL-V02, CL-E03. CL-D03 moved to Design.
+CL-S01, CL-D02, CL-D04, CL-D19, CL-V03 to CL-V10 (CL-V07 to CL-V09 not written), CL-K12 to CL-K15, CL-L10, CL-L14 (PH-W8.13), CL-S02, CL-N01, CL-N02, CL-N03, CL-N08, CL-N09; carbonate era: CL-K01 to CL-K04, CL-K06, CL-R08, CL-R13, CL-E01, CL-E02, CL-P03 (reworded). Withdrawn at PH-W8.2: CL-K05, CL-K07 to CL-K10, CL-R06, CL-R07, CL-G03, CL-V01, CL-V02, CL-E03. CL-D03 moved to Design.
 
 ## Supplying lanes
 

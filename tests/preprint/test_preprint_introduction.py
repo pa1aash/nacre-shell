@@ -112,7 +112,7 @@ def test_no_novelty_negative_is_stated():
 
 def test_length_and_paragraphs_follow_the_brief():
     paras = _paragraphs()
-    assert len(paras) == 7      # PH-W8.2: problem, incumbents, lineage, control, frame, bone mineral, scope
+    assert len(paras) == 7      # PH-W8.13: problem, incumbents, lineage, templates, framework, applied phases, question and scope
     assert 600 <= sum(_words(p) for p in paras) <= 880   # about 700 (brief), plus the qualifiers of the PH-W8.4 rulings and review fixes, the cp6 F6 wording (12 words); the patent sentences of PH-W8.7 removed at PH-W8.9; the count includes marker text
 
 

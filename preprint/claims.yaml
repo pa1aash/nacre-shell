@@ -1785,6 +1785,25 @@ claims:
     scope_check: clean
     status: drafted
     notes: NU19 (cp5 closure ruling Q5). Open lead PM8 (pH 9.7 to 11 reports, unread) is not used.
+  - id: CL-L14
+    origin: redirect
+    statement: >-
+      The coatings in view are biomimetic, biopolymer-templated mineral coatings with a catechol- or
+      polydopamine-like template, chitosan considered as an alternative; the screen tests the mineral
+      phases and the thermodynamic stability of such coatings at both stages, not the mechanical or
+      electrochemical behaviour of a binder, and a phase left open is a candidate, not a demonstrated coating.
+    section: introduction
+    type: limitation
+    polarity: claims
+    evidence:
+      - {kind: claim, ref: CL-D18}
+      - {kind: claim, ref: CL-P03}
+      - {kind: record, ref: preprint/paper/sections/introduction.tex#CL-L14}
+    checkpoint: none
+    supplier: p0-w8
+    scope_check: clean
+    status: drafted
+    notes: PH-W8.13 framing; the scope of the screen in plain words, with no binder claim.
   - id: CL-L10
     statement: The screen does not test layered architecture or polymorph structure, and alternating aragonite and
       calcite layers are not nacre-like.
