@@ -45,7 +45,7 @@ def _prose():
 
 
 def _paragraphs():
-    text = re.sub(r"\\begin\{figure\}.*?\\end\{figure\}", "", INTRO.read_text(encoding="utf-8"), flags=re.S)
+    text = re.sub(r"\\begin\{(figure|table\*?)\}.*?\\end\{\1\}", "", INTRO.read_text(encoding="utf-8"), flags=re.S)
     lines = [texscan.strip_comment(line) for line in text.splitlines() if not line.lstrip().startswith("%")]
     return [p for p in re.split(r"\n\s*\n", "\n".join(lines)) if p.strip() and "\\section" not in p]
 
@@ -134,6 +134,8 @@ def test_excluded_is_always_thermodynamic_and_carries_the_footnote():
     for s in hits:
         if "does not claim" in s:
             continue
+        if not re.sub(r"not thermodynamically excluded", "", s).count("exclud"):
+            continue    # "not thermodynamically excluded" is the prose of the table word open, not an exclusion (as in the Design rules)
         assert "thermodynamically excluded" in s, s
         assert "fn:excluded" in s or "\\nacreExcludedMark" in s, s
     assert r"\label{fn:excluded}\NumExcludedNote" in prose
@@ -148,3 +150,24 @@ def test_bone_mineral_and_carbonate_numbers_are_macros():
 def test_hero_figure_is_cited_and_labelled():
     text = INTRO.read_text(encoding="utf-8")
     assert "\\label{fig:hero}" in text and "Fig.~\\ref{fig:hero}" in text
+
+
+TERMS = ("screen", "processing stage", "cell stage", "sink (solid-salt reference state)", "upper bound $E_\\mathrm{ub}$",
+         "thermodynamically excluded\\nacreExcludedMark", "not thermodynamically excluded", "open",
+         "suitable against dissolution (a necessary condition)", "inconclusive", "undetermined", "break-even ratio $r^*$",
+         "tier-one and tier-two evidence")
+
+
+def test_terms_table_defines_each_term_in_one_sentence_before_first_use():
+    """PH-W8.13: the Terms table sits in the Introduction, is cited in its first paragraph, and defines each term once."""
+    text = INTRO.read_text(encoding="utf-8")
+    table = text[text.index("\\begin{table*}"):text.index("\\end{table*}")]
+    assert "\\caption{Terms used in this paper.}" in table and "\\label{tab:terms}" in table
+    lines = [r.replace("\\hline", "").strip() for r in table.split("\\\\\n")]
+    rows = {r.split(" & ", 1)[0]: r.split(" & ", 1)[1] for r in lines if " & " in r and "Definition" not in r}
+    assert tuple(rows) == TERMS
+    for term, definition in rows.items():
+        assert definition.strip().count(". ") == 0 and definition.strip().endswith("."), term
+    first = _paragraphs()[0]
+    assert "Table~\\ref{tab:terms}" in first
+    assert text.index("\\label{tab:terms}") < text.index("\\label{fn:excluded}")
