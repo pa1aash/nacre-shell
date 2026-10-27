@@ -145,9 +145,13 @@ def test_registered_macros_named_in_briefs_exist():
             assert m in registered or planned, (name, m)
 
 
-def test_title_macro_is_the_working_title():
-    track = yaml.safe_load(paths.track_yaml(REPO).read_text(encoding="utf-8"))["meta"]["title_working"]
-    assert " ".join(track.split()) == ("Thermodynamic screening of nacre- and bone-inspired barriers for "
-                                       "aluminium current collectors in fluorine-free lithium-ion cells")
+TITLE = ("Processing- and cell-stage thermodynamic screening of nacre- and bone-inspired carbonate and phosphate phases "
+         "on aluminium current collectors in fluorine-free lithium-ion cells with an open screening framework")
+
+
+def test_title_macro_is_the_paper_title():
+    title = yaml.safe_load(paths.declarations_yaml(REPO).read_text(encoding="utf-8"))["title"]
+    assert " ".join(title.split()) == TITLE
     from nacre.preprint import declarations
-    assert " ".join(track.split()) in declarations.front_matter(REPO)
+    assert "\\newcommand{\\nacreTitle}{%s}" % TITLE in declarations.front_matter(REPO)
+    assert TITLE in " ".join((PAPER / "outline.md").read_text(encoding="utf-8").split())

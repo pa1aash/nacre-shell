@@ -59,9 +59,13 @@ def test_declaration_values(tmp_path):
     assert r"\newcommand{\nacreSIDOI}{\nacrePlaceholder{" in text
 
 
-def test_title_comes_from_the_track_ledger():
-    meta = yaml.safe_load(paths.track_yaml(REPO).read_text(encoding="utf-8"))["meta"]
-    assert " ".join(meta["title_working"].split()) in declarations.front_matter(REPO)
+def test_title_comes_from_the_paper_declarations_and_falls_back_to_the_track_ledger(tmp_path):
+    title = yaml.safe_load(paths.declarations_yaml(REPO).read_text(encoding="utf-8"))["title"]
+    assert " ".join(title.split()) in declarations.front_matter(REPO)
+    root = copy_tree(tmp_path)
+    _edit(paths.declarations_yaml(root), lambda d: d.pop("title"))
+    meta = yaml.safe_load(paths.track_yaml(root).read_text(encoding="utf-8"))["meta"]
+    assert " ".join(meta["title_working"].split()) in declarations.front_matter(root)
 
 
 # --- build-time generation: determinism and content-keyed provenance ----------------------------
@@ -106,7 +110,7 @@ def test_unconsumed_ledger_changes_leave_the_output_alone(tmp_path):
 def test_consumed_field_changes_alter_the_output(tmp_path):
     root = _fixture(tmp_path)
     before = _generate_all(root)
-    _edit(paths.track_yaml(root), lambda d: d["meta"].update(title_working="A different title"))
+    _edit(paths.declarations_yaml(root), lambda d: d.update(title="A different title"))
     after = _generate_all(root)
     assert after["front.tex"] != before["front.tex"]
     assert {n for n in after if after[n] != before[n]} == {"front.tex"}

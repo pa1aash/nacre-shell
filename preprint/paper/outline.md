@@ -1,6 +1,6 @@
 # P0 preprint outline (paragraph level), retargeted at PH-W8.1
 
-Working title (from `ops/tracks/p0.yaml`, unfrozen, final at cp6): *Thermodynamic screening of bone-inspired calcium phosphate barriers for aluminium current collectors in fluorine-free lithium-ion cells.*
+Title (from `preprint/paper/declarations.yaml`, PH-W8.13): *Processing- and cell-stage thermodynamic screening of nacre- and bone-inspired carbonate and phosphate phases on aluminium current collectors in fluorine-free lithium-ion cells with an open screening framework.*
 
 The paper is a thermodynamic screen, not a promise of a pass. Carbonate is the control: one paragraph, one table row, one figure panel. The text follows the decisions of `ops/tracks/redirect_plan.md`. Every number is a macro from `preprint/generated/numbers.tex`, every claim an id in `preprint/claims.yaml`, and each section has a brief in `briefs/`. Carbonate-era text is kept for adaptation and marked `carbonate control (frozen)` in the source.
 

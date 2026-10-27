@@ -1,7 +1,7 @@
 """Generated front and end matter: title, author block and declarations.
 
 Inputs are never retyped into the manuscript:
-  - title          ops/tracks/p0.yaml meta.title_working;
+  - title          preprint/paper/declarations.yaml title, else ops/tracks/p0.yaml meta.title_working;
   - author block   ops/tracks/p0_authors.yaml (author order, affiliations, corresponding author);
   - declarations   preprint/paper/declarations.yaml (repository, Zenodo DOI, competing
                    interests, funding and compute), filled at W8.5 and C3.
@@ -124,11 +124,16 @@ def author_block(root, path=None):
 
 
 def front_matter(root):
-    path = paths.track_yaml(root)
-    meta = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("meta") or {}
-    title = meta.get("title_working")
+    """The title of the paper: the `title` of preprint/paper/declarations.yaml when it is set, else the working
+    title of the track ledger."""
+    path, field = paths.declarations_yaml(root), "title"
+    title = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("title") if path.is_file() else None
+    if is_tbd(title):
+        path, field = paths.track_yaml(root), "meta.title_working"
+        meta = (yaml.safe_load(path.read_text(encoding="utf-8")) or {}).get("meta") or {}
+        title = meta.get("title_working")
     text = placeholder("title TBD") if is_tbd(title) else esc(" ".join(str(title).split()))
-    return _header(root, path, "meta.title_working", title) + "\\newcommand{\\nacreTitle}{%s}\n" % text
+    return _header(root, path, field, title) + "\\newcommand{\\nacreTitle}{%s}\n" % text
 
 
 DECL_FIELDS = {
