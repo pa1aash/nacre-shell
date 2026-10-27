@@ -4,4 +4,4 @@ Source: `benchmark_w51.csv` and `benchmark_w51.json` (lane p0-w5, PH-W5.1), pinn
 
 ## Draft
 
-**Fig. 10** DFT minus tabulated formation enthalpy per atom for each phase with a like-for-like value, grouped by family (phosphates, silicates, Al-O-H phases, sink salt). Grey band: registered error band, \NumDftTolerance per atom. Filled circle: inside the band; open square: outside; open diamond: tabulated phase is a glass.
+**Fig. 10** DFT minus tabulated formation enthalpy per atom for each phase with a like-for-like value, grouped by family (phosphates, silicates, Al-O-H phases, sink salt). Grey band: tolerance of \NumDftTolerance per atom. Filled circle: inside the band; open square: outside; open diamond: tabulated phase is a glass.

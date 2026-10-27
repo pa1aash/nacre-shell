@@ -74,6 +74,18 @@ def test_draft_states_no_findings_and_no_hedging_chains(fid):
     assert "thermodynamically excluded" not in text.replace(CROSS_KEY, "")
 
 
+PROCESS_RE = re.compile(r"\b(registered|ruling|cp[0-9]+|deviations?|frozen|checkpoints?|ledger|pre-registered|sessions?|falsified)\b", re.I)
+
+
+@pytest.mark.parametrize("fid", FIGS)
+def test_draft_has_no_process_vocabulary(fid):
+    assert not PROCESS_RE.findall(_draft(fid)), PROCESS_RE.findall(_draft(fid))
+
+
+def test_the_process_vocabulary_check_catches_a_planted_word():
+    assert PROCESS_RE.search("Grey band: registered error band.") and PROCESS_RE.search("falsified (vermillion)")
+
+
 def test_the_sentence_counter_catches_a_fourth_sentence():
     assert len(_sentences("**Fig. 1** One. Two. Three. Four.")) == 4
 
