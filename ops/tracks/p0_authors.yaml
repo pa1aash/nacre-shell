@@ -9,7 +9,8 @@
 # ORCID checks (P0-I1, 2026-10-16, headless via pub.orcid.org v3.0): ISO 7064 MOD 11-2 checksum, and the record
 # name (GET /v3.0/<id>/person) against the listed name.
 #
-# YOU: CRediT roles for all six authors, and Braun's email, department and ORCID, before the Day 3 co-author read.
+# YOU: CRediT roles for all six authors, and Braun's consent, before the Day 3 co-author read.
+# Author order ends with Braun (D91). His entry stays status YOU-confirm until he consents.
 authors:
   - given_name: Palash
     family_name: Bharti
@@ -58,18 +59,14 @@ authors:
     status: given
   - given_name: Paul V.
     family_name: Braun
-    affiliation: University of Illinois Urbana-Champaign
-    department_status: to-confirm
-    orcid: TBD
-    orcid_search:
-      - 'given-names:Paul AND family-name:Braun AND affiliation-org-name:"University of Illinois" (0 found)'
-      - 'family-name:Braun AND affiliation-org-name:(University of Illinois Urbana-Champaign) (579 found, no Paul in the first 25)'
-      - 'given-names:Paul AND family-name:Braun (8 found)'
-    orcid_candidates:
-      - {orcid: 0000-0002-9219-9031, name: Paul Victor Bela Braun, institution: none listed}
-      - {orcid: 0000-0003-4079-8160, name: Paul Braun, institution: none listed}
-      - {orcid: 0009-0004-9190-5012, name: Paul Braun, institution: none listed}
-    orcid_candidates_note: name-only matches; no record lists the University of Illinois
+    affiliation: "Department of Materials Science and Engineering, University of Illinois Urbana-Champaign, Urbana, Illinois 61801, USA"
+    orcid: 0000-0003-4079-8160
+    orcid_check:
+      checksum: pass
+      record_name: Paul Braun
+      name_match: pass (given name Paul and family name Braun agree; the record does not list the middle initial V.)
+      date: 2026-10-27
     corresponding: false
     credit_roles: TBD
+    consent: pending
     status: YOU-confirm

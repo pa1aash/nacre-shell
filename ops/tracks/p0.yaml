@@ -19,8 +19,7 @@
 #
 # Exactly one day is open. `nacre track open-day <n>` (integrator, on preprint/p0) closes day n-1 and
 # opens day n with the commit "ops(p0): open day <n>".
-meta: {title_working: Thermodynamic screening of nacre- and bone-inspired barriers for aluminium current
-    collectors in fluorine-free lithium-ion cells, venue: ChemRxiv, base: preprint/p0}
+meta: {title_working: Processing- and cell-stage thermodynamic screening of nacre- and bone-inspired carbonate and phosphate phases on aluminium current collectors in fluorine-free lithium-ion cells with an open screening framework, venue: ChemRxiv, base: preprint/p0}
 lanes:
 - {id: p0-w1, branch: preprint/p0-w1, worktree: ~/Desktop/nacre-shell-p-w1, model: Opus}
 - {id: p0-w2, branch: preprint/p0-w2, worktree: ~/Desktop/nacre-shell-p-w2, model: Opus; Sonnet from P0-W2.4}
@@ -1179,6 +1178,7 @@ decisions:
 - {id: D87, date: '2026-10-26', decision: 'The cp6 fixes are applied; patents are cited by number with kind codes under the planning chat waiver conditions a to d; the break-even table is added.', reason: Integrator record at PH-I8 (PH-W8.6, PH-W8.7, PH-W6.6, PH-W6.7, PH-W4.9, PH-W2.7).}
 - {id: D88, date: '2026-10-26', decision: 'Patents are removed from the paper and SI by author decision (claims CL-V03, CL-V04, CL-V08 withdrawn; lit/novelty.md record kept internally). The cp6 re-audit fixes G1 to G8 are applied and G9 (abstract sentence length) is not applied. fig5, fig9 and fig12 are dropped from the release set. The break-even table is Table 5, beside Section 4.3. The fig15 caption prints 80 words with macros expanded (accepted).', reason: Integrator record at PH-I9 (PH-W6.8, PH-W8.9, PH-W8.10, PH-W1.11, PH-W1.12).}
 - {id: D89, date: '2026-10-26', decision: 'cp6 PASS (planning chat), effective once the author inputs are applied. The text edits of the cp6 PASS are in; edit 3 is worded "no measured outcome of either is used" under the scope rule.', reason: Integrator record at PH-I10 (PH-W8.12, PH-W8.11, PH-W2.8).}
+- {id: D91, date: '2026-10-27', decision: 'Title locked. The writing pass is framework-first, the SI is shorter, and the public repository is biomin-screen (MIT code, CC BY 4.0 data; the same content on GitHub and Zenodo; no rendering scripts). The author order ends with Braun.', reason: Integrator record at PH-I11.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
