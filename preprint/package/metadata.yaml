@@ -18,11 +18,10 @@ schema: chemrxiv-package/v1
 status: final-structure
 
 title:
-  working: Thermodynamic screening of nacre- and bone-inspired barriers for aluminium current collectors in
-    fluorine-free lithium-ion cells
+  working: Processing- and cell-stage thermodynamic screening of nacre- and bone-inspired carbonate and phosphate phases on aluminium current collectors in fluorine-free lithium-ion cells with an open screening framework
   working_source: ops/tracks/p0.yaml meta.title_working (rendered as \nacreTitle in preprint/generated/front.tex)
-  working_source_note: confirmed equal to ops/tracks/p0.yaml meta.title_working at PH-W2.2 (this lane does not
-    edit that file)
+  working_source_note: set at PH-W2.9 to the new working title; ops/tracks/p0.yaml meta.title_working is updated by
+    the integrator in PH-I11, so the equality check fails until both merge (this lane does not edit that file)
   final: TBD (final title decided at cp6; the working title above is not final)
 
 content_type:
@@ -76,9 +75,9 @@ authors:
   credit_roles: TBD (Palaash)
 - given_name: Paul V.
   family_name: Braun
-  affiliations: ['University of Illinois Urbana-Champaign']
-  department: TBD (Palaash; register field department_status to-confirm)
-  orcid: TBD (Palaash; candidates in ops/tracks/p0_authors.yaml orcid_candidates, none chosen)
+  affiliations: ['Department of Materials Science and Engineering, University of Illinois Urbana-Champaign, Urbana, Illinois 61801, USA']
+  orcid: 0000-0003-4079-8160
+  consent: pending (Prof. Braun has not yet replied to the consent request in coauthor_pack.md)
   corresponding: false
   credit_roles: TBD (Palaash)
 
@@ -170,6 +169,8 @@ data_and_code_availability:
   repository: \nacreRepoURL (filled at C3)
   archive_doi: \nacreZenodoDOI (Zenodo DOI, filled at C3 at release)
   si_doi: \nacreSIDOI (filled at C3)
+  open_repository: code and data are released as the open repository biomin-screen (MIT licence for code, CC BY 4.0 for data); the DOI is added after release
+  patents: removed by author decision; the paper cites none and claims no priority
   code: no separate code policy is stated; code is linked through the repository and archive above
   rule: a Data Availability Statement in the content; FAIR deposit encouraged
   source: [T2-1, T1-1, T1-2]
@@ -254,9 +255,7 @@ prior_posting:
   recheck_live: true
 
 placeholders:
-  # Every TBD above, with the person who supplies it. Braun's items go to Palaash through the consent reply.
-  authors[5].department: Palaash, from Prof. Braun's reply (coauthor_pack.md)
-  authors[5].orcid: Palaash, from Prof. Braun's reply
+  # Every TBD above, with the person who supplies it. Braun's CRediT roles and consent come to Palaash through the consent reply.
   authors[*].credit_roles: Palaash, confirmed by each author's reply
   funding.statement: Palaash at W8.5
   competing_interests.statement: Palaash at W8.5
