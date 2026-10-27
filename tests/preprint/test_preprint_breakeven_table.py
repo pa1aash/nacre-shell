@@ -90,9 +90,10 @@ def test_results_and_si_set_the_table_and_state_the_reading():
     results = (paths.paper(REPO) / "sections" / "results.tex").read_text(encoding="utf-8")
     si = (paths.paper(REPO) / "si" / "main_si.tex").read_text(encoding="utf-8")
     assert "\\input{../generated/breakeven_table}" in (paths.paper(REPO) / "main.tex").read_text(encoding="utf-8")
-    assert "\\input{../generated/breakeven_table}" in si
-    assert "\\label{tab:breakeven}" in results and "\\label{tab:si-breakeven}" in si
-    assert results.count("\\nacreBreakevenTable") == 1 and si.count("\\nacreBreakevenTable") == 1
+    # PH-W8.13: the SI no longer repeats the table; it points to the main-text table and states the reading
+    assert "\\label{tab:breakeven}" in results and "tab:si-breakeven" not in si
+    assert results.count("\\nacreBreakevenTable") == 1 and "\\nacreBreakevenTable" not in si
+    assert "break-even table of the main text" in si
     reading = "an exclusion stands while the mean-activity ratio of saturated to actual \\ce{LiClO4} stays below $r^*$"
     assert reading in results and reading in si
     # the sink mark is defined once, in the Results opening; the SI, which does not define it, spells the qualifier out

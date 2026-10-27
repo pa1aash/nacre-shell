@@ -222,7 +222,7 @@ def test_ratio_grid_text_is_plain_and_scoped():
     assert "lie well below the order of the sourced additive doses" in si and "the comparison is of order only" in si
     assert "stays a high-dose phase at the low-pH end" in si
     assert "the lowest passing dose of the apatites is at or above \\NumRegHighDose, on the crossed grid" in si   # review M9: the flag names its threshold
-    mine = si[si.index("The main run crossed"):si.index("on the crossed grid. ")]
+    mine = si[si.index("The acid-adjusted column of the regime table"):si.index("\\nacreRegimePerPh")]   # PH-W8.13: the ratio-grid paragraph is in the Methods
     assert "equal" not in mine and not re.search(r"suitable against dissolution from pH", si)
 
 

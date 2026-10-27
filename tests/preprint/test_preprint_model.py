@@ -31,11 +31,11 @@ METHODS_ORDER = [  # PH-W8.2: the main-text Methods; the carbonate-era detail is
     r"\paragraph*{Baselines, control and retrodiction.}", r"\paragraph*{Transparency.}",
     r"\paragraph*{Reproducibility.}",
 ]
-SI_METHODS_ORDER = [
+SI_METHODS_ORDER = [  # PH-W8.13: the carbonate-era link table and the compute-anchor paragraph were removed
     r"\paragraph*{Priors.}", r"\paragraph*{Propagation and sensitivity.}",
-    r"\paragraph*{Thresholds and the decision rule.}", r"\paragraph*{Retrodiction.}",
-    r"\paragraph*{Pourbaix and window settings.}", r"\paragraph*{Compute anchor.}",
-    r"\paragraph*{Disclosures of the carbonate screen.}",
+    r"\paragraph*{Decision rule.}", r"\paragraph*{Retrodiction rule.}",
+    r"\paragraph*{Pourbaix and window settings.}", r"\paragraph*{Transparency for the carbonate control.}",
+    r"\paragraph*{The carbonate control.}",
 ]
 FORBIDDEN = {
     "engineered out (lane note N5)": r"engineered\s+out",
