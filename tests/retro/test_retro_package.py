@@ -47,8 +47,12 @@ def test_committed_package_passes_with_placeholders_listed():
     errors, info = package.check(ROOT)
     assert errors == []
     paths = {p for p, _ in info["placeholders"]}
-    assert {"title.final", "funding.statement", "competing_interests.statement", "ai_use.wording",
-            "authors[5].orcid"} <= paths
+    assert {"title.final", "funding.statement", "competing_interests.statement", "ai_use.wording"} <= paths
+    orcid = yaml.safe_load((ROOT / package.METADATA).read_text(encoding="utf-8"))["authors"][5]["orcid"]
+    register = yaml.safe_load((ROOT / "ops/tracks/p0_authors.yaml").read_text(encoding="utf-8"))
+    assert package.orcid_checksum_ok(orcid)
+    assert orcid == register["authors"][5]["orcid"] == "0000-0003-4079-8160"
+    assert "authors[5].orcid" not in paths
     assert "Paul V. Braun" in info["credit_missing"]
 
 
