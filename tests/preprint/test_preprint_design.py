@@ -17,8 +17,9 @@ SECTIONS = paths.paper(REPO) / "sections"
 DESIGN = SECTIONS / "design.tex"
 FRAME_FILES = ("introduction", "design", "model", "methods")
 MARKER = re.compile(r"%\s*(CL-[A-Z]\d{2}(?:,\s*CL-[A-Z]\d{2})*)\s*$")
-PROCESS = re.compile(r"\b(register\w*|registration|pre-regist\w*|checkpoint\w*|frozen|freez\w*|deviations?|"
-                     r"sessions?|rulings?|lanes?|planning chat)\b", re.I)
+PROCESS = re.compile(r"\b(register\w*|registration|pre-regist\w*|checkpoint\w*|frozen|freez\w*|post-freeze|deviations?|"
+                     r"sessions?|rulings?|lanes?|planning chat|ledgers?|production|falsif\w*|fixed in advance)\b", re.I)
+PROSE_FILES = FRAME_FILES + ("abstract", "results", "predictions", "discussion")
 
 
 def _prose(name):
@@ -71,11 +72,16 @@ def test_four_conditions_stage_rule_and_label():
     assert "undetermined and never passes" in text
 
 
-def test_process_language_is_one_plain_sentence_in_the_methods():
-    # ruling (2) of PH-W8.4: the dilute-electrolyte correction is "registered but unevaluated", said once in Methods and in the limits
-    hits = [(name, s) for name in FRAME_FILES for s in _sentences(name) if PROCESS.search(s.replace("is registered but unevaluated", ""))]
-    assert len(hits) == 1, hits
-    assert hits[0][0] == "methods" and "fixed with content hashes before the production screen" in hits[0][1]
+def test_no_process_language_in_the_prose():
+    # PH-W8.13: plain methods language everywhere; the disclosures are one Transparency paragraph in the Methods
+    hits = [(name, s) for name in PROSE_FILES for s in _sentences(name) if PROCESS.search(s)]
+    assert hits == [], hits
+    si = paths.paper(REPO) / "si" / "main_si.tex"
+    text = re.sub(r"\\begin\{figure\}.*?\\end\{figure\}", " ", si.read_text(encoding="utf-8"), flags=re.S)   # captions are the W6 drafts
+    prose = " ".join(texscan.strip_comment(line) for line in text.splitlines())
+    assert not PROCESS.search(prose), PROCESS.search(prose)
+    meth = " ".join(_prose("methods").split())
+    assert "\\paragraph*{Transparency.}" in meth and "fixed before the main run, with a content hash of each file" in meth
 
 
 @pytest.mark.parametrize("name", FRAME_FILES)

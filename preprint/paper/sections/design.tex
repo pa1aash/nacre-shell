@@ -23,7 +23,7 @@ Condition (stage) & Test & Status\\
 \hline
 $K_1$ (cell) & oxidation onset against the cutoff, per class & excluded\nacreExcludedMark{} for a \ce{LiClO4}-saturated sink (solid-salt reference state), or open, per class; no pass, for want of transfer data\\
 $K_2$ (slurry) & $\Omb\ge1$ at every state of the grid & calcite suitable against dissolution over a named region; the other rows in Table~\ref{tab:regime}\\
-$K_3$ (slurry) & a templated nucleation window before bulk precipitation & carbonate chain falsified within the model; undetermined for every phosphate framing\\
+$K_3$ (slurry) & a templated nucleation window before bulk precipitation & carbonate chain ruled out under the model's assumptions; undetermined for every phosphate framing\\
 $K_4$ (slurry) & spreading, or closure below the insulating thickness & undetermined\\
 Conversion (slurry to cell) & precursor to cell-stage product & water-activity threshold only; kinetically gated or undetermined\\
 \hline
@@ -34,11 +34,11 @@ Conversion (slurry to cell) & precursor to cell-stage product & water-activity t
 At the cutoff the cell holds the collector at a fixed lithium chemical potential, and a film oxidises once releasing its cation and oxygen, with the electrons going to plate lithium, lowers the free energy. % CL-D08
 The onset is $E=\Delta G_\mathrm{r}/(\Delta n_\mathrm{Li}\Fc)$, and it depends on where the released cation goes. % CL-D08
 Pairing it with the salt anion as a solid salt, with the lithium salt drawn from its solid, is one state the product can reach, so that onset $E_\mathrm{ub}$ is an upper bound for an electrolyte saturated in the salt (the solid-salt reference state). % CL-D08
-Below saturation the consumed salt is less stable than the solid and the bound rises by $m_\mathrm{sink}=\nu_\mathrm{s}(RT/F)\ln(a_\mathrm{s,sat}/a_\mathrm{s})\ge0$, with $a_\mathrm{s}=a_\pm^2$ the activity of the salt (its mean ionic activity squared) and $\nu_\mathrm{s}$ the salt consumed per electron, while a product salt left in solution only lowers the onset; a phase is falsified at the cutoff $E_\mathrm{c}$ whatever the product state when $E_\mathrm{ub}<E_\mathrm{c}-m_1-m_\mathrm{sink}$. % CL-D08
+Below saturation the consumed salt is less stable than the solid and the bound rises by $m_\mathrm{sink}=\nu_\mathrm{s}(RT/F)\ln(a_\mathrm{s,sat}/a_\mathrm{s})\ge0$, with $a_\mathrm{s}=a_\pm^2$ the activity of the salt (its mean ionic activity squared) and $\nu_\mathrm{s}$ the salt consumed per electron, while a product salt left in solution only lowers the onset; a phase is ruled out at the cutoff $E_\mathrm{c}$ whatever the product state when $E_\mathrm{ub}<E_\mathrm{c}-m_1-m_\mathrm{sink}$. % CL-D08
 Every ion hydrated at its standard state gives a lower bound $E_\mathrm{lb}$ only if the product cation loses at least as much solvation per unit charge as \ce{Li+} on passing from water to the cell solvent, so a pass needs $E_\mathrm{lb}\ge E_\mathrm{c}+m_1$ with that premise measured, and a cutoff inside the bracket is inconclusive. % CL-D08
-These bounds are tier one; tier two is a measured service limit $E_\mathrm{svc}$ of coated foil, a coated particle or the bulk phase, and a phase is falsified at a cutoff only where tier one and the available tier two both fall below it (\nacreSIref{si:templating}{Templating detail}). % CL-D09
+These bounds are tier one; tier two is a measured service limit $E_\mathrm{svc}$ of coated foil, a coated particle or the bulk phase, and a phase is ruled out at a cutoff only where tier one and the available tier two both fall below it (\nacreSIref{si:templating}{Templating detail}). % CL-D09
 A condition with a missing input is undetermined and never passes. % CL-D09
-Because a pass at one cutoff is a pass at every lower one, verdicts are given per cutoff class, never as one verdict, and a class reads excluded, partial (excluded above its crossover), open or undetermined; a falsified phase is reported as thermodynamically excluded\nacreExcludedMark. % CL-D04
+Because a pass at one cutoff is a pass at every lower one, verdicts are given per cutoff class, never as one verdict, and a class reads excluded, partial (excluded above its crossover), open or undetermined; a phase ruled out in this way is reported as thermodynamically excluded\nacreExcludedMark. % CL-D04
 
 % (3) K2: the processing-stage dissolution criterion and the label it earns.
 A film formed in the slurry dissolves wherever the slurry is undersaturated with respect to it, and the measure is the supersaturation that also drives its nucleation, % CL-D05
@@ -57,14 +57,14 @@ The window is empty unless $f<1$, is bounded below by $\Omb\ge1$, and is reporte
 
 % (5) K4: a thin continuous film.
 A film blocks only where it is continuous, yet it must stay thin enough to pass the electrons of the electrode. % CL-D07
-It can be continuous because the mineral spreads over the template, $\Ssp$ of Eq.~\eqref{eq:spread} above its margin, or because islands nucleate densely enough to meet below the insulating thickness; $K_4$ passes if either holds and is falsified only when both fail on the same draws. % CL-D07
+It can be continuous because the mineral spreads over the template, $\Ssp$ of Eq.~\eqref{eq:spread} above its margin, or because islands nucleate densely enough to meet below the insulating thickness; $K_4$ passes if either holds and is ruled out only when both fail on the same draws. % CL-D07
 
 % (6) The stage rule and the proceed rule.
 The phase that forms in the slurry is in general not the phase that faces the cell, so the conditions apply at different stages. % CL-D11
 Slurry-stage phases are tested on $K_2$ to $K_4$, cell-stage phases on $K_1$, and a conversion step joins a precursor to its cell-stage product; the conversion rows are water-activity thresholds only, each kinetically gated or undetermined (\nacreSIref{si:conversion}{Conversion steps and thresholds}), so the summary line of each chain reads undetermined. % CL-D11
 A slurry-stage phase also carries a $K_1$ reference row, its own ceiling if it were retained, which is not a gate. % CL-D11
 $K_1$ of a condensed phase and $K_2$ to $K_4$ of an orthophosphate are never presented as one film: a film is reported across stages only as the chain of its slurry, conversion and cell rows, and the chain is as strong as its weakest member. % CL-D11
-A phase proceeds to $K_3$ and $K_4$ unless $K_1$ falsifies it at every cutoff class, and proceeding is not passing: an inconclusive or undetermined $K_1$ stays in its row. % CL-D10
+A phase proceeds to $K_3$ and $K_4$ unless $K_1$ rules it out at every cutoff class, and proceeding is not passing: an inconclusive or undetermined $K_1$ stays in its row. % CL-D10
 
 % (7) A barrier that is not itself stable.
 A barrier need not be thermodynamically stable at the cutoff if its corrosion product is insoluble and oxidation-stable, as aluminium fluoride is in fluorinated electrolytes; the screen tests the properties of such a film, and the supply of phosphate to a pit is a hypothesis outside it. % CL-D12

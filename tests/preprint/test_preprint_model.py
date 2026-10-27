@@ -28,7 +28,7 @@ METHODS_ORDER = [  # PH-W8.2: the main-text Methods; the carbonate-era detail is
     r"\paragraph*{Parameters and priors.}", r"\paragraph*{Oxidation onsets.}",
     r"\paragraph*{Solubility and the aluminium window.}", r"\paragraph*{Thresholds and decision rules.}",
     r"\paragraph*{Propagation and sensitivity.}", r"\paragraph*{Materials Project data.}",
-    r"\paragraph*{Baselines, control and retrodiction.}", r"\paragraph*{Disclosures.}",
+    r"\paragraph*{Baselines, control and retrodiction.}", r"\paragraph*{Transparency.}",
     r"\paragraph*{Reproducibility.}",
 ]
 SI_METHODS_ORDER = [
@@ -140,7 +140,7 @@ def test_methods_disclosures_and_conventions():
     assert "were seen before the regime-matched frame of this paper was adopted" in text
     assert "amorphous \\ce{Al(OH)3} as the film solid that governs the passivation window" in text
     assert "glass-to-crystal correction of \\ce{Ca(PO3)2}" in text
-    assert "they were not set before every calculation the project made" in text
+    assert "were not set before every calculation the project made" in text
     assert "after the scheme values for calcium carbonate with lithium perchlorate had been seen" in si
     for macro in (r"\NumPcredSweepLow", r"\NumPcredSweepHigh", r"\NumMcosSweepLow", r"\NumMcosSweepHigh"):
         assert macro in si, macro    # the published sweeps moved to si:methods at PH-W8.2c

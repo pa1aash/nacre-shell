@@ -6,7 +6,7 @@
 \input{../generated/declarations}
 \let\nacrePaperTitle\nacreTitle
 \renewcommand{\nacreTitle}{Supplementary Information: \nacrePaperTitle}
-\newcommand{\nacreAbstract}{This Supplementary Information holds the full derivation of the relations the screen evaluates, the sensitivity, retrodiction and thermochemistry detail behind the verdicts of the main text, the conversion steps between the slurry and cell stages, the templating detail, the methods of the carbonate control, the regime-table detail with the reruns after the freeze, and the sourced parameters with the conflicts between their sources.}
+\newcommand{\nacreAbstract}{This Supplementary Information holds the full derivation of the relations the screen evaluates, the sensitivity, retrodiction and thermochemistry detail behind the verdicts of the main text, the conversion steps between the slurry and cell stages, the templating detail, the methods of the carbonate control, the regime-table detail with the later reruns, and the sourced parameters with the conflicts between their sources.}
 \newcommand{\nacreTitleMark}{}
 \newcommand{\nacreFootnotes}{\nacreAffiliations}
 
@@ -74,7 +74,7 @@ Every oxidation reaction of the onset ladder, with its upper bound for the solid
 \nacreReactionTable
 \end{table*}
 \begin{table*}[t]
-\caption{Database formation enthalpies against tabulated values per phase, in $\mathrm{kJ\,mol^{-1}}$ per formula unit and per atom, with the benchmark reading against the registered band of \NumDftTolerance\ per atom; database values are comparators and decide no row.}\label{tab:si-dft}
+\caption{Database formation enthalpies against tabulated values per phase, in $\mathrm{kJ\,mol^{-1}}$ per formula unit and per atom, with the benchmark reading against the error band of \NumDftTolerance\ per atom; database values are comparators and decide no row.}\label{tab:si-dft}
 \nacreDftTable
 \end{table*}
 
@@ -83,7 +83,7 @@ Every oxidation reaction of the onset ladder, with its upper bound for the solid
 % conversion temperatures are not yet registered, so the table carries none.
 The conversion steps that join a slurry-stage precursor to its cell-stage product are thermodynamic thresholds of the water activity only (Table~\ref{tab:si-conversion}): each is kinetically gated, a threshold whose range spans unity decides nothing, and a step without the data for a threshold is undetermined, so every chain summary line in the main text reads undetermined. % CL-D11
 \begin{table*}[t]
-\caption{Conversion steps between the slurry and cell stages, from the onset ladder: the threshold water activity $a_\mathrm{w}^{*}$ of each dehydration or condensation step with its range, or the missing datum that leaves the step undetermined. Thresholds only; no conversion temperature is registered.}\label{tab:si-conversion}
+\caption{Conversion steps between the slurry and cell stages, from the onset ladder: the threshold water activity $a_\mathrm{w}^{*}$ of each dehydration or condensation step with its range, or the missing datum that leaves the step undetermined. Thresholds only; no conversion temperature is used.}\label{tab:si-conversion}
 \nacreConversionTable
 \end{table*}
 
@@ -121,7 +121,7 @@ The model leaves out four things, each taken up in the Discussion: the validity 
 \paragraph*{Conditions and routes.}
 These bounds are tier one; tier two is a measured service limit $E_\mathrm{svc}$ from a potential hold on coated foil, a coated cathode particle cycled to a stated cutoff or voltammetry of the bulk phase, in that order of weight. % CL-D09
 The lithium carbonate record that words the low-voltage claim has a contrary reading: with protic impurities in a carbonate electrolyte, carbon dioxide evolves from lithium carbonate from about \NumTierTwoContrary\ (grade D, abstract only)\cite{freiberg2020li2co3}. % CL-S15
-A phase is falsified at a cutoff only where tier one and the available tier two both fall below it, a hold or particle record above the cutoff makes a tier-one fall read kinetically stabilised (class A or B), with the tier-one exclusion printed beside it, and a record in a fluorinated electrolyte, where aluminium fluoride forms on the foil, can counter-indicate but never support. % CL-D09
+A phase is ruled out at a cutoff only where tier one and the available tier two both fall below it, a hold or particle record above the cutoff makes a tier-one fall read kinetically stabilised (class A or B), with the tier-one exclusion printed beside it, and a record in a fluorinated electrolyte, where aluminium fluoride forms on the foil, can counter-indicate but never support. % CL-D09
 Slurry-stage phases (brushite, amorphous calcium phosphate, hydroxyapatite) are tested on $K_2$ to $K_4$, cell-stage phases (calcium pyrophosphate and metaphosphate, the aluminium phosphates) on $K_1$, and a conversion step joins a precursor to its cell-stage product through the water activity at which it dehydrates or condenses, the literature conversion temperature and the cure range of the baked aluminophosphate. % CL-D11
 A barrier need not be thermodynamically stable at the cutoff if its corrosion product is insoluble and oxidation-stable: aluminium fluoride plays that part in fluorinated electrolytes, and the fluorine-free analogue would be an aluminium phosphate or borate film. % CL-D12
 The screen tests the properties of such a film, its oxidation onset, its insolubility in the electrolyte and its blocking of the corrosion ions, while the supply of phosphate to a pit is a hypothesis outside the screen. % CL-D12
@@ -139,7 +139,7 @@ Adsorption of polyphosphate on alumina lowers both energies equally, because the
 % each with its ledger id; every number is a macro.
 % (1) Priors.
 \paragraph*{Priors.}
-Every input of the chain is a prior built from fetched evidence by one rule, written down before any value entered the parameter table and before any screen output existed; the clauses for truncation, widening, analog, ignorance, derived and recorded entries were added later, after some values existed, and select or move no value by judgement. % CL-M01
+Every input of the chain is a prior built from fetched evidence by one rule, fixed before any value entered the parameter table and before any screen output existed; the clauses for truncation, widening, analog, ignorance, derived and recorded entries were added later, after some values existed, and select or move no value by judgement. % CL-M01
 A literature row is admitted for an input only if it measures the quantity the input defines, under its conditions or under conditions stated as different; a proxy, a different quantity used in its place, is never admitted, and rows that cite one original determination count once. % CL-M01
 Each row carries a grade, from A and B for determinations read at source to C for model fits, derivations and compilations and D for abstract-only or unchecked secondary citations, and the grade limits the prior: a normal prior needs concordant grade-A or grade-B values with stated uncertainties, grade-C and grade-D rows give only uniform or log-uniform priors over the sourced span, and grade-D rows enter only where nothing better exists. % CL-M01
 Inputs that a source or the physics ties together, such as the three interfacial energies of Young's relation or the solubility products of the framings and the amorphous offset, form correlation groups, which are held independent where no source reports a correlation, so that the sensitivity of the results to that assumption can be tested. % CL-M01
@@ -161,18 +161,18 @@ The required precision of a governing input is the least narrowing of its prior 
 \paragraph*{Thresholds and the decision rule.}
 Each link has one decisive quantity and an edge where the physics changes, moved by a margin in the conservative direction for method error that the priors do not already carry (Table~\ref{tab:thresholds-carbonate}). % CL-M04
 The edges come from the model: the sign of $\Wwet$ for adhesion; for nucleation, the hemisphere, the only shape factor between zero and one at which the Young numerator changes sign, so that on its wetting side the template prefers the nucleus to the liquid, together with the absolute criterion of the accessibility criterion (\nacreMainref{eq:access}{Templating thermodynamics}); for coverage, complete wetting or closure by nucleation density; for slurry stability $\Omb\ge1$ and a competing-phase tolerance from the formation-energy error of the database; and for the cell the window rule of the \nacreMainref{sec:model}{Templating thermodynamics}. % CL-M04
-The statistic is the prior-weighted mass on each side of the edge: a link is feasible if the mass on the side it needs is at least the credible level $p_\mathrm{cred}$, falsified if the mass on the other side is, and inconclusive otherwise. % CL-M04
+The statistic is the prior-weighted mass on each side of the edge: a link is feasible if the mass on the side it needs is at least the credible level $p_\mathrm{cred}$, ruled out if the mass on the other side is, and inconclusive otherwise. % CL-M04
 The primary credible level is $p_\mathrm{cred}=\NumPcred$, with a published sweep at \NumPcredSweepLow, \NumPcred\ and \NumPcredSweepHigh, and the nucleation margin is $m_{\cos}=\NumMcos$, because each interfacial-energy prior carries its own method error, with published sweeps at \NumMcosSweepLow\ and \NumMcosSweepHigh; a sweep is reported beside the primary result, and a verdict that changes within it is reported as sensitive to that convention. % CL-M04
-The admissible fraction of empty patches in the accessibility criterion (\nacreMainref{eq:access}{Templating thermodynamics}) is $q_0=1-p_\mathrm{cred}$, and the smallest rise of a falsified-side mass that counts as degradation is $p_\mathrm{deg}=1-p_\mathrm{cred}$, \NumPdeg\ at the primary level, so both move with the sweep. % CL-M04
+The admissible fraction of empty patches in the accessibility criterion (\nacreMainref{eq:access}{Templating thermodynamics}) is $q_0=1-p_\mathrm{cred}$, and the smallest rise of a ruled-out-side mass that counts as degradation is $p_\mathrm{deg}=1-p_\mathrm{cred}$, \NumPdeg\ at the primary level, so both move with the sweep. % CL-M04
 A link with several tests is good on a draw only if every test is, and coverage if either route is; its masses are formed on the same draws, a worst-state link takes its worst state, and the accessibility criterion sums nuclei along the path of states. % CL-M04
-With a state missing, a worst-state link can still be falsified at an evaluated state but cannot pass, while for the path sum a pass stands and a shortfall is inconclusive, because the missing terms can only add nuclei. % CL-M04
-The study gates on adhesion, nucleation, coverage and stability, while \ce{Ca^2+} binding is reported as a descriptor with its own finding on the premise $\DGseq<0$; the study is falsified if any gating link is falsified, and feasible only if all are feasible and a deletion test holds, in which replacing the template by the bare oxide and by poly(vinylidene fluoride) must degrade nucleation or coverage, or the result describes generic adhesion rather than the mechanism. % CL-M05
-Calcite and amorphous calcium carbonate are both framings, and each is run as a whole chain with its own solubility product, molar volume and nucleus--liquid energy, never mixed across links; the verdict is falsified only if the study is falsified under every framing and feasible if it is feasible under at least one, which is then named with the other beside it, while the dissolution test uses the calcite solubility product under both. % CL-M05
-The thresholds and decision rules were fixed before the production screen, and any later change is recorded as a dated deviation. % CL-P02
+With a state missing, a worst-state link can still be ruled out at an evaluated state but cannot pass, while for the path sum a pass stands and a shortfall is inconclusive, because the missing terms can only add nuclei. % CL-M04
+The study gates on adhesion, nucleation, coverage and stability, while \ce{Ca^2+} binding is reported as a descriptor with its own finding on the premise $\DGseq<0$; the study is ruled out if any gating link is ruled out, and feasible only if all are feasible and a deletion test holds, in which replacing the template by the bare oxide and by poly(vinylidene fluoride) must degrade nucleation or coverage, or the result describes generic adhesion rather than the mechanism. % CL-M05
+Calcite and amorphous calcium carbonate are both framings, and each is run as a whole chain with its own solubility product, molar volume and nucleus--liquid energy, never mixed across links; the verdict is ruled out only if the study is ruled out under every framing and feasible if it is feasible under at least one, which is then named with the other beside it, while the dissolution test uses the calcite solubility product under both. % CL-M05
+The thresholds and decision rules were fixed before the main run, and any later change is recorded with its effect on the verdicts. % CL-P02
 
 \begin{table*}[t]
 \small
-\caption{Decisive quantity, criterion and physical origin of each link. A link is feasible when the prior-weighted mass satisfying its criterion is at least $p_\mathrm{cred}$, falsified when the mass violating it is, and inconclusive otherwise; the margins $m$ cover method error the priors do not carry. Symbols as in the \nacreMainref{sec:model}{Templating thermodynamics}.}
+\caption{Decisive quantity, criterion and physical origin of each link. A link is feasible when the prior-weighted mass satisfying its criterion is at least $p_\mathrm{cred}$, ruled out when the mass violating it is, and inconclusive otherwise; the margins $m$ cover method error the priors do not carry. Symbols as in the \nacreMainref{sec:model}{Templating thermodynamics}.}
 \label{tab:thresholds-carbonate}
 \begin{tabular*}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}>{\raggedright\arraybackslash}p{0.39\textwidth}@{}}
 \hline
@@ -194,7 +194,7 @@ Reduction (\Rc) & $E_\mathrm{red}+m_\mathrm{expt}\le E_\mathrm{cell}^{\min}$ & l
 % carbonate control (frozen)
 % (4) Retrodiction.
 \paragraph*{Retrodiction.}
-The nucleation link is tested against literature cases with measured outcomes; the case selection, the cases, the correctness rule and the pass rule were written down before the run, and the controls and the interface mapping below were added in a further revision, also before the run. % CL-T02
+The nucleation link is tested against literature cases with measured outcomes; the case selection, the cases, the correctness rule and the pass rule were fixed before the run, and the controls and the interface mapping below were added in a further revision, also before the run. % CL-T02
 The usable cases are pairwise orderings within one study, and each input maps to the interface it belongs to: \ce{Ca^2+} binding to the template--liquid energy through the Gibbs--Langmuir term, and template--crystal adhesion to the template--nucleus energy; the one case initially specified through a local enrichment of the driving force is remapped to that bookkeeping. % CL-T02
 For each case the run propagates \NumRetroDraws\ joint draws, with the template-independent inputs shared by both surfaces, and scores the per-draw difference between the barriers on the test and the reference surface. % CL-T02
 A case is correct when the central \NumRetroIntervalLevel\ interval of that difference excludes zero on the observed side, incorrect when it excludes zero on the other side, and inconclusive otherwise, and an inconclusive case counts as a miss. % CL-T02
@@ -213,7 +213,7 @@ The slurry construction holds carbon in the carbonate system at the regime disso
 The $\Omb$ test is checked at an undersaturated and a supersaturated control state, where it must report dissolution and stability respectively, and a failed control makes the dissolution verdict inconclusive. % CL-M06
 Because the cell limits combine database solids with a \ce{CO2} and \ce{O2} reference, each gas-reference scheme, one with the tabulated \ce{CO2} enthalpy and one with the database's own \ce{CO2}, was benchmarked against the measured free energies of carbonate decomposition and oxidation reactions, and the two schemes bracket experiment from opposite sides. % CL-M06
 The all-experimental route uses tabulated thermochemistry for every reactant and product\cite{rossini1971selected,rossini1981selected,allison2013nist}, and its margin $m_\mathrm{expt}$ combines the tabulated uncertainties per transferred electron with a bound on the neglected solid entropy of \ce{Ca(ClO4)2} taken from analog salts; it does not hold the one-sided sink term $m_\mathrm{sink}$, which is defined separately and whose value is not yet bound. % CL-M06
-Where an input of that route is missing, a limit is decided over the computed schemes, a pass under the scheme with the lowest onset and a falsification under every scheme, and is marked as decided by them; a limit whose sink thermochemistry is missing is undetermined and never counts as a pass. % CL-M06
+Where an input of that route is missing, a limit is decided over the computed schemes and marked as decided by them: a pass needs the scheme with the lowest onset, and a phase is ruled out only if every scheme rules it out; a limit whose sink thermochemistry is missing is undetermined and never counts as a pass. % CL-M06
 
 % carbonate control (frozen)
 % (6) The compute anchor protocol.
@@ -249,14 +249,14 @@ The passivation window of aluminium in the Methods comes from our Al--O--H const
 % PH-W8.2e (cp5b F1, F2, F4, F5). The tables are generated by `nacre preprint regime-table` from the committed outputs; every number is a macro.
 \input{../generated/regime_table}
 The acid-adjusted column of the regime table reports, for each phase and each pH of the grid, the passing fraction, the lowest passing total calcium and total phosphate, and the Ca:P range of the passing cells (Table~\ref{tab:regime-perph}); a second group of columns gives the lowest passing doses of hydroxyapatite, $\beta$-TCP and brushite on the line of their own Ca:P, from the ratio-grid run. % CL-D04
-The production run crossed total calcium and total phosphate independently on one decade grid, so its Ca:P ratios are powers of ten and the apatite ratios \NumRatioTcp\ and \NumRatioHap\ do not occur in it. The ratio grid is a separate, labelled run beside it: total phosphate is the calcium dose divided by \NumRatioHap\ (hydroxyapatite), \NumRatioTcp\ ($\beta$-TCP) or \NumRatioBrushite\ (brushite), and amorphous calcium phosphate and the \ce{Ca4H(PO4)3} basis of octacalcium phosphate are run on both apatite ratios. It leaves every verdict unchanged (\NumRatioVerdictSame\ of \NumRatioVerdictTotal), changes no group between passing and failing (\NumRatioFlips\ of \NumRatioGroups), and moves the lowest passing $\mathrm{Ca_T}$ of \NumRatioGroupsDiffer\ groups by one decade, up in \NumRatioGroupsHigher\ and down in \NumRatioGroupsLower. % CL-M04
+The main run crossed total calcium and total phosphate independently on one decade grid, so its Ca:P ratios are powers of ten and the apatite ratios \NumRatioTcp\ and \NumRatioHap\ do not occur in it. The ratio grid is a separate, labelled run beside it: total phosphate is the calcium dose divided by \NumRatioHap\ (hydroxyapatite), \NumRatioTcp\ ($\beta$-TCP) or \NumRatioBrushite\ (brushite), and amorphous calcium phosphate and the \ce{Ca4H(PO4)3} basis of octacalcium phosphate are run on both apatite ratios. It leaves every verdict unchanged (\NumRatioVerdictSame\ of \NumRatioVerdictTotal), changes no group between passing and failing (\NumRatioFlips\ of \NumRatioGroups), and moves the lowest passing $\mathrm{Ca_T}$ of \NumRatioGroupsDiffer\ groups by one decade, up in \NumRatioGroupsHigher\ and down in \NumRatioGroupsLower. % CL-M04
 At pH \NumRegPhGridFourFive, the lowest pH of the acid-adjusted grid, the lowest passing dose of the apatites is at or above \NumRegHighDose, on the crossed grid (hydroxyapatite: $\mathrm{Ca_T}$ \NumRegPhMinCaHapFourFive, $\mathrm{P_T}$ \NumRegPhMinPHapFourFive; $\beta$-TCP: $\mathrm{Ca_T}$ \NumRegPhMinCaBtcpFourFive, $\mathrm{P_T}$ \NumRegPhMinPBtcpFourFive) and at their own Ca:P (hydroxyapatite: $\mathrm{Ca_T}$ \NumRegPhStoichCaHapFourFive, $\mathrm{P_T}$ \NumRegPhStoichPHapFourFive; $\beta$-TCP: $\mathrm{Ca_T}$ \NumRegPhStoichCaBtcpFourFive, $\mathrm{P_T}$ \NumRegPhStoichPBtcpFourFive). % CL-D04
 At their own Ca:P the lowest passing doses at the higher pH values lie well below the order of the sourced additive doses, which is about \NumDoseMolPerKgLiquid\ of liquid (the units differ, so the comparison is of order only): hydroxyapatite at \NumRatioHap\ passes from $\mathrm{Ca_T}$ \NumRegOwnHapSlurryCa\ ($\mathrm{P_T}$ \NumRegOwnHapSlurryP) at pH \NumRegOwnHapSlurryPh\ in the alkaline slurry and from $\mathrm{Ca_T}$ \NumRegOwnHapAcidCa\ ($\mathrm{P_T}$ \NumRegOwnHapAcidP) at pH \NumRegOwnHapAcidPh\ in the acid-adjusted state, and $\beta$-TCP at \NumRatioTcp\ from $\mathrm{Ca_T}$ \NumRegOwnBtcpSlurryCa\ ($\mathrm{P_T}$ \NumRegOwnBtcpSlurryP) at pH \NumRegOwnBtcpSlurryPh\ in the slurry and from $\mathrm{Ca_T}$ \NumRegOwnBtcpAcidCa\ ($\mathrm{P_T}$ \NumRegOwnBtcpAcidP) at pH \NumRegOwnBtcpAcidPh\ acid-adjusted. % CL-D04
 Brushite at \NumRatioBrushite\ stays a high-dose phase at the low-pH end: it needs $\mathrm{Ca_T}$ \NumRegOwnBrushiteSlurryCa\ at pH \NumRegOwnBrushiteSlurryPh\ in the slurry and \NumRegOwnBrushiteAcidCa\ at pH \NumRegOwnBrushiteAcidPh\ acid-adjusted, and at pH \NumRegPhGridFourFive\ it needs \NumRegPhStoichCaBrushiteFourFive\ on its ratio line against \NumRegPhMinCaBrushiteFourFive\ on the crossed grid. % CL-D04
 A minimum passing dose at or above \NumRegHighDose\ is flagged \NumRegHighDoseStatements\ times in the regime table and this table together, a threshold and not a comparison with the sourced doses; the sourced doses could not be converted to a concentration, and the passing doses are comparable to the order of the sourced additive doses, not equal to them. % CL-D04
 
 \begin{table*}[t]
-\caption{Minimum passing doses in the acid-adjusted comparator state, per phase and pH: passing fraction, lowest passing total calcium and total phosphate, Ca:P range of the passing cells, and whether the lowest dose is at or above \NumRegHighDose, on the crossed decade grid, followed by the same quantities for hydroxyapatite, $\beta$-TCP and brushite on the line of their own Ca:P (ratio-grid run). Frozen rows are the production run; post-freeze rows use keys added afterwards.}\label{tab:regime-perph}
+\caption{Minimum passing doses in the acid-adjusted comparator state, per phase and pH: passing fraction, lowest passing total calcium and total phosphate, Ca:P range of the passing cells, and whether the lowest dose is at or above \NumRegHighDose, on the crossed decade grid, followed by the same quantities for hydroxyapatite, $\beta$-TCP and brushite on the line of their own Ca:P (ratio-grid run). Main-run rows come from the main run; later-rerun rows use keys added afterwards.}\label{tab:regime-perph}
 \nacreRegimePerPh
 \end{table*}
 
@@ -264,13 +264,13 @@ The Sobol indices of the nucleation chain reach a total-order half-width of \Num
 \nacreRegimeSensNote{} % CL-D04
 The supersaturated control state of each phase and state is the grid state of maximum $\Omega$ for that phase and state; the earlier move of the control from pH \NumCtlPhFrom\ to pH \NumCtlPhTo\ came from a dry run, an output seen before the choice, and the runs below use the maximum-$\Omega$ rule, which moves \NumCtlCellsMoved\ cells of the original keys. % CL-M08
 
-The reruns after the freeze are reported beside the frozen rows (Table~\ref{tab:regime-reruns}) and are a deviation from the frozen production. % CL-M08
+The later reruns are reported beside the main-run rows (Table~\ref{tab:regime-reruns}); they depart from the main run and do not replace it. % CL-M08
 Brushite moves from undetermined to suitable against dissolution, in \NumRegRerunBrushiteAcidRerun\ of \NumRegRerunBrushiteAcidCells\ acid-adjusted cells and \NumRegRerunBrushiteAlkalineRerun\ of \NumRegRerunBrushiteAlkalineCells\ alkaline cells. % CL-D04
 Octacalcium phosphate on the \ce{Ca4H(PO4)3} basis is suitable against dissolution in \NumRegRerunOcpCahAcidRerun\ acid-adjusted cells, while the original key still fails its control. % CL-D04
-$\alpha$-TCP stays undetermined (grade D), and \ce{Li3PO4} stays undetermined because its key is a concentration product with no activity coefficients and no \ce{Li+} dose is registered. % CL-D04
+$\alpha$-TCP stays undetermined (grade D), and \ce{Li3PO4} stays undetermined because its key is a concentration product with no activity coefficients and no \ce{Li+} dose is set. % CL-D04
 
 \begin{table*}[t]
-\caption{Post-freeze reruns beside the frozen rows of the dissolution test, in the registered vocabulary, with the passing cells of the alkaline and acid-adjusted grids.}\label{tab:regime-reruns}
+\caption{Later reruns beside the main-run rows of the dissolution test, in the vocabulary of the screen, with the passing cells of the alkaline and acid-adjusted grids.}\label{tab:regime-reruns}
 \nacreRegimeReruns
 \end{table*}
 
@@ -293,7 +293,7 @@ The break-even ratio of every exclusion for a \ce{LiClO4}-saturated sink (solid-
 \onecolumn
 \section{Sourced parameters and conflicts}\label{si:sourced}\label{si:parameters}
 Every input of the screen is listed with its quantity, value or sourced range, prior, the rule that built the prior, the grade of its best source and the DOIs of its sources (Table~\ref{tab:si-params}); the disagreements between sources beyond their stated uncertainties, and how the parameter file resolves each, are in Table~\ref{tab:si-conflicts}. % CL-M01, CL-M11
-Two keys are printed under chemistry names; their registry keys differ and both rows are gaps with no admitted value.
+Two keys are printed under chemistry names; their parameter keys differ and both rows are gaps with no admitted value.
 \input{../../lit/corpus/si_table/conflicts_table}
 \input{../../lit/corpus/si_table/params_table}
 \twocolumn
