@@ -1179,6 +1179,7 @@ decisions:
 - {id: D88, date: '2026-10-26', decision: 'Patents are removed from the paper and SI by author decision (claims CL-V03, CL-V04, CL-V08 withdrawn; lit/novelty.md record kept internally). The cp6 re-audit fixes G1 to G8 are applied and G9 (abstract sentence length) is not applied. fig5, fig9 and fig12 are dropped from the release set. The break-even table is Table 5, beside Section 4.3. The fig15 caption prints 80 words with macros expanded (accepted).', reason: Integrator record at PH-I9 (PH-W6.8, PH-W8.9, PH-W8.10, PH-W1.11, PH-W1.12).}
 - {id: D89, date: '2026-10-26', decision: 'cp6 PASS (planning chat), effective once the author inputs are applied. The text edits of the cp6 PASS are in; edit 3 is worded "no measured outcome of either is used" under the scope rule.', reason: Integrator record at PH-I10 (PH-W8.12, PH-W8.11, PH-W2.8).}
 - {id: D91, date: '2026-10-27', decision: 'Title locked. The writing pass is framework-first, the SI is shorter, and the public repository is biomin-screen (MIT code, CC BY 4.0 data; the same content on GitHub and Zenodo; no rendering scripts). The author order ends with Braun.', reason: Integrator record at PH-I11.}
+- {id: D92, date: '2026-10-27', decision: 'Export point p0-cp6: framework-first paper, SI 24 pages, public repository biomin-screen to be built from this tag.', reason: Integrator record at PH-I12.}
 lane_notes:
 - id: N1
   date: '2026-10-16'
@@ -1543,7 +1544,8 @@ done: [PH-W8.1, PH-W1.3, PH-W4.2a, PH-W6.1, PH-W4.2b, PH-W1.5, PH-W4.2d, PH-W1.6
   PH-W2.7, PH-W4.9, PH-W6.6, PH-W8.6, PH-W6.7, PH-W8.7,
   PH-W6.7b, PH-W8.8,
   PH-W6.8, PH-W8.9, PH-W8.10, PH-W1.11, PH-W1.12,
-  PH-W8.11, PH-W2.8, PH-W8.12, PH-W7.2]
+  PH-W8.11, PH-W2.8, PH-W8.12, PH-W7.2,
+  PH-W2.9, PH-I11, PH-W8.13, PH-W1.13, PH-W3.10, PH-W6.9, PH-W8.14]
 freeze:
   tag: p0-carbonate-control
   paths: [results/preprint/**, ops/reports/P0-W*.md, preprint/retrodiction/results/**]
